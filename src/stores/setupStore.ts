@@ -26,6 +26,7 @@ export interface SetupData {
   calendar: {
     isConnected: boolean;
     selectedCalendar: string;
+    calendarConnected: 'none' | 'google' | 'microsoft';
     appointmentTypes: Array<{
       name: string;
       duration: number;
@@ -134,6 +135,7 @@ const defaultData: SetupData = {
   calendar: {
     isConnected: false,
     selectedCalendar: '',
+    calendarConnected: 'none' as 'none',
     appointmentTypes: [],
   },
   phone: {

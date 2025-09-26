@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { MessageSquare, Bot, Calendar, ArrowDown } from 'lucide-react';
 import Card from './ui/Card';
 import Section from './ui/Section';
@@ -7,7 +7,6 @@ import Section from './ui/Section';
 const HowItWorks: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { scrollYProgress } = useScroll();
-  const progress = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   const steps = [
     {
@@ -115,7 +114,6 @@ const HowItWorks: React.FC = () => {
                 <motion.div
                   className="relative"
                   whileHover={{ scale: 1.02, y: -5 }}
-                  transition={{ duration: 0.3 }}
                 >
                   <Card className={`relative overflow-hidden bg-gradient-to-br ${step.bgGradient} border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group`}>
                     {/* Gradient Overlay */}
@@ -126,7 +124,6 @@ const HowItWorks: React.FC = () => {
                       <motion.div
                         className={`w-12 h-12 bg-gradient-to-br ${step.gradient} text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg`}
                         whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
                       >
                         {step.step}
                       </motion.div>
@@ -138,7 +135,6 @@ const HowItWorks: React.FC = () => {
                       <motion.div
                         className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center mb-6 shadow-lg`}
                         whileHover={{ rotate: [0, -10, 10, 0] }}
-                        transition={{ duration: 0.5 }}
                       >
                         <step.icon className="w-8 h-8 text-white" />
                       </motion.div>
@@ -163,7 +159,6 @@ const HowItWorks: React.FC = () => {
                 <motion.div
                   className="relative"
                   whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
                 >
                   <div className={`relative rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br ${step.bgGradient} p-4`}>
                     {/* Placeholder Image */}
@@ -254,7 +249,6 @@ const HowItWorks: React.FC = () => {
               className="bg-white text-brand-blue px-8 py-3 rounded-xl font-semibold text-lg shadow-lg"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
             >
               Get Started Today
             </motion.button>

@@ -36,7 +36,7 @@ const WizardShell: React.FC = () => {
       case 2:
         return !!businessProfile.mainCategory && businessProfile.serviceAreas.length > 0;
       case 3:
-        return calendar.isConnected && calendar.appointmentTypes.length > 0;
+        return true; // Calendar step is always complete since it's optional
       case 4:
         return phone.useExistingNumber ? !!phone.existingNumber : !!phone.newNumber.number;
       case 5:
@@ -64,6 +64,14 @@ const WizardShell: React.FC = () => {
         updateStep(stepId);
         setExpandedStep(stepId);
       }
+    }
+  };
+
+  const handleContinue = () => {
+    if (isStepCompleted(currentStep) && currentStep < setupSteps.length) {
+      const nextStep = currentStep + 1;
+      updateStep(nextStep);
+      setExpandedStep(nextStep);
     }
   };
 
@@ -200,6 +208,25 @@ const WizardShell: React.FC = () => {
                           }>
                             <StepComponent />
                           </Suspense>
+                        )}
+                        
+                        {/* Continue Button */}
+                        {expandedStep === currentStep && (
+                          <div className="mt-6 pt-6 border-t border-gray-200">
+                            <div className="flex justify-end">
+                              <Button
+                                onClick={handleContinue}
+                                disabled={!isStepCompleted(currentStep)}
+                                className={`px-8 py-3 ${
+                                  isStepCompleted(currentStep)
+                                    ? 'bg-brand-blue text-white hover:bg-brand-blue/90'
+                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                } transition-colors duration-200`}
+                              >
+                                Continue
+                              </Button>
+                            </div>
+                          </div>
                         )}
                       </Card>
                     </div>

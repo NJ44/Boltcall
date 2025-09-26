@@ -19,12 +19,34 @@ const StepCalendar: React.FC = () => {
       setTimeout(() => {
         updateCalendar({
           isConnected: true,
-          selectedCalendar: 'Primary Calendar',
+          selectedCalendar: 'Google Calendar',
+          calendarConnected: 'google',
         });
         setIsConnecting(false);
       }, 2000);
     } catch (error) {
       console.error('Error connecting to Google Calendar:', error);
+      setIsConnecting(false);
+    }
+  };
+
+  const handleMicrosoftConnect = async () => {
+    setIsConnecting(true);
+    try {
+      // TODO: Implement Microsoft OAuth
+      console.log('Connecting to Microsoft Calendar...');
+      
+      // Mock connection
+      setTimeout(() => {
+        updateCalendar({
+          isConnected: true,
+          selectedCalendar: 'Microsoft Calendar',
+          calendarConnected: 'microsoft',
+        });
+        setIsConnecting(false);
+      }, 2000);
+    } catch (error) {
+      console.error('Error connecting to Microsoft Calendar:', error);
       setIsConnecting(false);
     }
   };
@@ -74,30 +96,65 @@ const StepCalendar: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Google Calendar Connection */}
+      {/* Calendar Connections */}
       <div className="space-y-6">
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">Connect Your Calendar</h3>
           
           {!calendar.isConnected ? (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <div className="flex items-center space-x-3 mb-4">
-                <Calendar className="w-8 h-8 text-blue-600" />
-                <div>
-                  <h4 className="text-lg font-medium text-blue-900">Google Calendar</h4>
-                  <p className="text-blue-700">Connect your Google Calendar to enable appointment booking</p>
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Calendar className="w-8 h-8 text-blue-600" />
+                  <div>
+                    <h4 className="text-lg font-medium text-blue-900">Google Calendar</h4>
+                    <p className="text-blue-700">Connect your Google Calendar to enable appointment booking</p>
+                  </div>
+                </div>
+                
+                <Button
+                  onClick={handleGoogleConnect}
+                  disabled={isConnecting}
+                  variant="primary"
+                  className="flex items-center space-x-2"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>{isConnecting ? 'Connecting...' : 'Connect Google Calendar'}</span>
+                </Button>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Calendar className="w-8 h-8 text-blue-600" />
+                  <div>
+                    <h4 className="text-lg font-medium text-blue-900">Microsoft Calendar</h4>
+                    <p className="text-blue-700">Connect your Microsoft Calendar to enable appointment booking</p>
+                  </div>
+                </div>
+                
+                <Button
+                  onClick={handleMicrosoftConnect}
+                  disabled={isConnecting}
+                  variant="primary"
+                  className="flex items-center space-x-2"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>{isConnecting ? 'Connecting...' : 'Connect Microsoft Calendar'}</span>
+                </Button>
+              </div>
+
+              {/* Optional note */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <Clock className="w-5 h-5 text-yellow-600 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-medium text-yellow-900">Optional</h4>
+                    <p className="text-yellow-700 text-sm mt-1">
+                      You can connect your calendar now or skip this step and add it later in your dashboard settings.
+                    </p>
+                  </div>
                 </div>
               </div>
-              
-              <Button
-                onClick={handleGoogleConnect}
-                disabled={isConnecting}
-                variant="primary"
-                className="flex items-center space-x-2"
-              >
-                <Calendar className="w-4 h-4" />
-                <span>{isConnecting ? 'Connecting...' : 'Connect Google Calendar'}</span>
-              </Button>
             </div>
           ) : (
             <div className="bg-green-50 border border-green-200 rounded-lg p-6">
