@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Button from './ui/Button';
 import Section from './ui/Section';
@@ -9,11 +9,6 @@ import ModalVideo from './ModalVideo';
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  const trustBadges = [
-    '30-second response time',
-    '24/7 availability',
-    '15 qualified leads guaranteed'
-  ];
 
   return (
     <Section id="hero" className="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
@@ -24,8 +19,8 @@ const Hero: React.FC = () => {
           loop
           autoplay
           style={{ 
-            width: '80%', 
-            height: '80%',
+            width: '84%', 
+            height: '84%',
             opacity: 0.3
           }}
         />
@@ -34,7 +29,7 @@ const Hero: React.FC = () => {
       <div className="relative z-10 text-center">
         {/* Main Headline */}
         <motion.h1
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-main mb-6"
+          className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-main mb-6 pt-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -52,23 +47,6 @@ const Hero: React.FC = () => {
           We answer in 30 seconds, 24/7, and book the slot. If you don't get 15 qualified leads in 30 days, we work free until you do.
         </motion.p>
 
-        {/* Trust Badges */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-4 mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          {trustBadges.map((badge, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-border"
-            >
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span className="text-sm font-medium text-text-main">{badge}</span>
-            </div>
-          ))}
-        </motion.div>
 
         {/* CTA Buttons */}
         <motion.div

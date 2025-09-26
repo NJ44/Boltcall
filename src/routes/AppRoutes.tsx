@@ -17,12 +17,17 @@ const NavigationWrapper: React.FC = () => {
   const location = useLocation();
 
   React.useEffect(() => {
-    setIsNavigating(true);
-    const timer = setTimeout(() => {
-      setIsNavigating(false);
-    }, 2000); // Show loader for 2000ms (2 seconds)
+    // Only show loading animation when navigating TO dashboard (not FROM dashboard)
+    if (location.pathname === '/dashboard') {
+      setIsNavigating(true);
+      const timer = setTimeout(() => {
+        setIsNavigating(false);
+      }, 2000); // Show loader for 2000ms (2 seconds)
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    } else {
+      setIsNavigating(false);
+    }
   }, [location.pathname]);
 
   return (

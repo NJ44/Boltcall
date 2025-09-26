@@ -11,9 +11,7 @@ const Header: React.FC = () => {
 
   const navItems = [
     { label: 'Features', href: '#features' },
-    { label: 'How It Works', href: '#how-it-works' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -33,13 +31,13 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 z-50 bg-white-smoke/50 backdrop-blur-sm"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center h-16">
           {/* Logo */}
           <Link to="/">
             <motion.div
@@ -54,8 +52,8 @@ const Header: React.FC = () => {
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Moved to left */}
+          <nav className="hidden md:flex items-center space-x-8 ml-8">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
@@ -77,8 +75,8 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Auth Buttons - pushed to right */}
+          <div className="hidden md:flex items-center space-x-4 ml-auto">
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" className="text-text-muted hover:text-brand-blue transition-colors">
@@ -100,13 +98,14 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="text-text-muted hover:text-brand-blue transition-colors">
+                <Link to="/login" className="text-text-muted hover:text-brand-blue transition-colors font-medium">
                   Login
                 </Link>
                 <Button
                   onClick={() => scrollToSection('#contact')}
                   variant="primary"
                   size="md"
+                  className="bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-6 py-2.5 rounded-xl"
                 >
                   Start now
                 </Button>
@@ -176,7 +175,7 @@ const Header: React.FC = () => {
                   onClick={() => scrollToSection('#contact')}
                   variant="primary"
                   size="md"
-                  className="w-full mt-4"
+                  className="w-full mt-4 bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-6 py-2.5 rounded-xl"
                 >
                   Start now
                 </Button>

@@ -91,7 +91,7 @@ const PricingSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gradient-to-b from-white-smoke via-white-smoke to-white-smoke">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="text-center mb-12">

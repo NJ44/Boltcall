@@ -18,6 +18,7 @@ const config: Config = {
           muted: "#475569",
         },
         bg: "#FFFFFF",
+        "white-smoke": "#F5F5F5",
         border: "#E5E7EB",
       }
     }

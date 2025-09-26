@@ -4,7 +4,7 @@ import { Plus, Minus } from 'lucide-react';
 import Section from './ui/Section';
 
 const FAQ: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -54,7 +54,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <Section id="faq" background="gray">
+    <Section id="faq" background="gray" className="bg-gradient-to-b from-white-smoke to-gray-200">
       <div className="text-center mb-16">
         <motion.h2
           className="text-3xl md:text-4xl font-bold text-text-main mb-4"
@@ -77,32 +77,34 @@ const FAQ: React.FC = () => {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <div className="space-y-4">
+        <div className="space-y-6">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="bg-white rounded-xl border border-border overflow-hidden">
+              <div className="group bg-white-smoke rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg transition-all duration-300">
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-inset"
+                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-white-smoke transition-all duration-300 focus:outline-none rounded-t-2xl"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="text-lg font-semibold text-text-main pr-4">
+                  <span className="text-xl font-bold text-gray-900 pr-6 group-hover:text-brand-blue transition-colors duration-300">
                     {faq.question}
                   </span>
-                  <div className="flex-shrink-0">
+                  <motion.div 
+                    className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky flex items-center justify-center shadow-md transition-shadow duration-300"
+                  >
                     {openIndex === index ? (
-                      <Minus className="w-5 h-5 text-brand-blue" />
+                      <Minus className="w-5 h-5 text-white" />
                     ) : (
-                      <Plus className="w-5 h-5 text-text-muted" />
+                      <Plus className="w-5 h-5 text-white" />
                     )}
-                  </div>
+                  </motion.div>
                 </button>
                 
                 <AnimatePresence>
@@ -112,11 +114,15 @@ const FAQ: React.FC = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      transition={{ 
+                        duration: 0.4, 
+                        ease: [0.04, 0.62, 0.23, 0.98],
+                        type: "spring"
+                      }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-4">
-                        <p className="text-text-muted leading-relaxed">
+                      <div className="px-8 pb-6 bg-gradient-to-b from-white-smoke to-gray-50/30">
+                        <p className="text-gray-700 leading-relaxed text-lg">
                           {faq.answer}
                         </p>
                       </div>
@@ -127,30 +133,6 @@ const FAQ: React.FC = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Contact CTA */}
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <div className="bg-brand-blue/10 rounded-xl p-8">
-            <h3 className="text-xl font-semibold text-text-main mb-2">
-              Still have questions?
-            </h3>
-            <p className="text-text-muted mb-6">
-              Our team is here to help. Get in touch and we'll answer any questions you have.
-            </p>
-            <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex items-center px-6 py-3 bg-brand-blue text-white rounded-xl font-medium hover:bg-brand-blueDark transition-colors duration-200"
-            >
-              Contact Us
-            </button>
-          </div>
-        </motion.div>
       </div>
     </Section>
   );
