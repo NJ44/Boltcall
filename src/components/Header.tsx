@@ -41,17 +41,19 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.div
-            className="flex items-center"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          >
-            <img 
-              src="/boltcall_full_logo.png" 
-              alt="Boltcall" 
-              className="h-16 w-auto"
-            />
-          </motion.div>
+          <Link to="/">
+            <motion.div
+              className="flex items-center cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <img 
+                src="/boltcall_full_logo.png" 
+                alt="Boltcall" 
+                className="h-16 w-auto"
+              />
+            </motion.div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">

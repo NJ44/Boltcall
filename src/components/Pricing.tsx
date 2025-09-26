@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Card from './ui/Card';
 import Section from './ui/Section';
 import Button from './ui/Button';
@@ -161,14 +162,15 @@ const Pricing: React.FC = () => {
                   </div>
                 </div>
 
-                <Button
-                  variant={plan.popular ? 'primary' : 'outline'}
-                  size="lg"
-                  className="w-full"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Get Started
-                </Button>
+                <Link to="/setup" className="w-full">
+                  <Button
+                    variant={plan.popular ? 'primary' : 'outline'}
+                    size="lg"
+                    className="w-full"
+                  >
+                    Get Started
+                  </Button>
+                </Link>
               </div>
 
               <div className="space-y-4">
@@ -198,24 +200,6 @@ const Pricing: React.FC = () => {
         ))}
       </div>
 
-      {/* Guarantee */}
-      <motion.div
-        className="text-center mt-16"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <div className="bg-brand-sky/10 rounded-xl p-8 max-w-2xl mx-auto">
-          <h3 className="text-xl font-semibold text-text-main mb-2">
-            30-Day Money-Back Guarantee
-          </h3>
-          <p className="text-text-muted">
-            If you don't get 15 qualified leads in 30 days, we work free until you do. 
-            No questions asked.
-          </p>
-        </div>
-      </motion.div>
     </Section>
   );
 };

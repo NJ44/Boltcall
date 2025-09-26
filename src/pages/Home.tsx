@@ -5,7 +5,6 @@ import ValueProps from '../components/ValueProps';
 import HowItWorks from '../components/HowItWorks';
 import FeaturesTabs from '../components/FeaturesTabs';
 import Pricing from '../components/Pricing';
-import Metrics from '../components/Metrics';
 import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
@@ -20,7 +19,6 @@ const Home: React.FC = () => {
         <HowItWorks />
         <FeaturesTabs />
         <Pricing />
-        <Metrics />
         <FAQ />
         <FinalCTA />
       </main>
