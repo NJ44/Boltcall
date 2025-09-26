@@ -211,7 +211,7 @@ interface SetupStore extends SetupData {
 
 export const useSetupStore = create<SetupStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       ...defaultData,
       currentStep: 1,
       isCompleted: false,

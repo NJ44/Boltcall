@@ -37,13 +37,6 @@ const PlanCard: React.FC<PlanCardProps> = ({
     console.log(`Selected plan: ${title}`);
   };
 
-  const getPriceDisplay = () => {
-    if (currency === 'USD') {
-      return `$${priceUsd.toLocaleString()}/mo (₪${priceIls.toLocaleString()}) + usage`;
-    } else {
-      return `₪${priceIls.toLocaleString()}/mo ($${priceUsd.toLocaleString()}) + usage`;
-    }
-  };
 
   const cardClasses = `
     relative bg-white border rounded-2xl shadow-sm p-6 md:p-8 h-full flex flex-col

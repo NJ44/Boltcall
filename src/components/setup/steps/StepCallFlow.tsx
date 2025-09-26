@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MessageSquare, Settings, Volume2, Shield, CheckCircle } from 'lucide-react';
+import React from 'react';
+import { MessageSquare } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 

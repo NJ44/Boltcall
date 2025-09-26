@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle, ChevronDown } from 'lucide-react';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
+import Button from '../ui/Button';
 
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepAccount = React.lazy(() => import('./steps/StepAccount'));
@@ -22,10 +23,9 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, account, businessProfile, calendar, phone, knowledgeBase } = useSetupStore();
+  const { currentStep, updateStep, account, businessProfile, phone, knowledgeBase } = useSetupStore();
   const [expandedStep, setExpandedStep] = useState(1);
 
-  const currentStepData = setupSteps.find(step => step.id === currentStep);
   const StepComponent = stepComponents[currentStep as keyof typeof stepComponents];
 
   // Check if step is completed

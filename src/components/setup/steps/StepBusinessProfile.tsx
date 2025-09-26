@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Globe, MapPin, Clock, Languages, ArrowDown } from 'lucide-react';
+import { Globe, MapPin, ArrowDown } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import MultiSelect from '../forms/MultiSelect';
@@ -8,8 +7,8 @@ import HoursEditor from '../forms/HoursEditor';
 
 const StepBusinessProfile: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
-  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isScraping, setIsScraping] = useState(false);
+  const [errors] = useState<Record<string, string>>({});
 
   const categories = [
     { value: 'dentist', label: 'Dentist' },
@@ -38,46 +37,7 @@ const StepBusinessProfile: React.FC = () => {
     { value: 'ko', label: 'Korean' },
   ];
 
-  const validateUrl = (url: string) => {
-    if (!url.trim()) return true; // URL is optional
-    try {
-      new URL(url.startsWith('http') ? url : `https://${url}`);
-      return true;
-    } catch {
-      return false;
-    }
-  };
 
-  const handleSubmit = async () => {
-    const newErrors: Record<string, string> = {};
-
-    if (businessProfile.websiteUrl && !validateUrl(businessProfile.websiteUrl)) {
-      newErrors.websiteUrl = 'Please enter a valid URL';
-    }
-
-    if (!businessProfile.mainCategory) {
-      newErrors.mainCategory = 'Please select a business category';
-    }
-
-    if (businessProfile.serviceAreas.length === 0) {
-      newErrors.serviceAreas = 'Please add at least one service area';
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        // TODO: Implement API call
-        await fetch('/api/setup/business', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(businessProfile),
-        });
-      } catch (error) {
-        console.error('Error updating business profile:', error);
-      }
-    }
-  };
 
   const handleScrapeWebsite = async () => {
     if (!businessProfile.websiteUrl) return;

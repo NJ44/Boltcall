@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Phone, ArrowRight, Clock, Volume2, Voicemail, Calendar, Info } from 'lucide-react';
+import { Phone, ArrowRight, Clock, Voicemail, Calendar } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 

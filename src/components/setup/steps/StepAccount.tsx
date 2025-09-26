@@ -1,78 +1,13 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { User, Mail, Lock, Building, Globe, ArrowRight } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 
 const StepAccount: React.FC = () => {
   const { account, updateAccount } = useSetupStore();
-  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [errors] = useState<Record<string, string>>({});
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    return password.length >= 8;
-  };
-
-  const handleSubmit = async () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!account.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
-    }
-
-    if (!account.workEmail.trim()) {
-      newErrors.workEmail = 'Email is required';
-    } else if (!validateEmail(account.workEmail)) {
-      newErrors.workEmail = 'Please enter a valid email address';
-    }
-
-    if (!account.password.trim()) {
-      newErrors.password = 'Password is required';
-    } else if (!validatePassword(account.password)) {
-      newErrors.password = 'Password must be at least 8 characters';
-    }
-
-    if (!account.businessName.trim()) {
-      newErrors.businessName = 'Business name is required';
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      setIsLoading(true);
-      try {
-        // TODO: Implement API call
-        const response = await fetch('/api/setup/workspace', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            fullName: account.fullName,
-            workEmail: account.workEmail,
-            password: account.password,
-            businessName: account.businessName,
-            timezone: account.timezone,
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          updateAccount({
-            workspaceId: data.workspaceId,
-            userId: data.userId,
-          });
-        }
-      } catch (error) {
-        console.error('Error creating workspace:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
 
   const handleGoogleAuth = async () => {
     setIsLoading(true);

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Edit, Phone, Calendar, Globe, MessageSquare, Settings, Play } from 'lucide-react';
 import { useSetupStore, setupSteps } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
+import PageLoader from '../../PageLoader';
+import SetupCompletionPopup from '../../SetupCompletionPopup';
 
 const StepReview: React.FC = () => {
+  const navigate = useNavigate();
   const { 
     account, 
     businessProfile, 
@@ -14,10 +18,12 @@ const StepReview: React.FC = () => {
     callFlow, 
     review,
     updateStep,
-    updateReview 
+    updateReview,
+    complete 
   } = useSetupStore();
   
   const [isLaunching, setIsLaunching] = useState(false);
+  const [showCompletionPopup, setShowCompletionPopup] = useState(false);
 
   const handleLaunch = async () => {
     setIsLaunching(true);
@@ -32,12 +38,31 @@ const StepReview: React.FC = () => {
         }),
       });
       
+      // Wait for loading animation to show (1.5 seconds)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mark setup as completed
+      complete();
       updateReview({ isLaunched: true });
+      
+      // Stop loading animation
+      setIsLaunching(false);
+      
+      // Show completion popup after a brief moment
+      setTimeout(() => {
+        setShowCompletionPopup(true);
+      }, 300);
+      
     } catch (error) {
       console.error('Error launching setup:', error);
-    } finally {
       setIsLaunching(false);
     }
+  };
+
+  const handleSetupComplete = () => {
+    setShowCompletionPopup(false);
+    // Navigate to dashboard
+    navigate('/dashboard');
   };
 
   const getCompletionStatus = () => {
@@ -249,7 +274,7 @@ const StepReview: React.FC = () => {
             variant="primary"
             className="bg-white text-brand-blue hover:bg-gray-50 px-8 py-3 text-lg font-semibold"
           >
-            {isLaunching ? 'Launching...' : 'Launch AI Receptionist'}
+            {isLaunching ? 'Finishing Setup...' : 'Finish Setup'}
           </Button>
 
           {review.isLaunched && (
@@ -291,6 +316,15 @@ const StepReview: React.FC = () => {
           </p>
         </div>
       </div>
+      
+      {/* Setup Completion Popup */}
+      <SetupCompletionPopup 
+        isOpen={showCompletionPopup}
+        onClose={handleSetupComplete}
+      />
+      
+      {/* Loading Animation */}
+      <PageLoader isLoading={isLaunching} />
     </div>
   );
 };
