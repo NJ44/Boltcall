@@ -109,6 +109,9 @@ const StepKnowledge: React.FC = () => {
       <div className="space-y-6">
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">Services</h3>
+          <p className="text-gray-600 mb-6">
+            Define the services your business offers. This helps your AI receptionist understand what customers can book and provide accurate information.
+          </p>
           <ServicesTable
             services={knowledgeBase.services}
             onChange={(services) => updateKnowledgeBase({ services })}
@@ -116,208 +119,13 @@ const StepKnowledge: React.FC = () => {
         </div>
       </div>
 
-      {/* FAQs */}
-      <div className="space-y-6">
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Frequently Asked Questions</h3>
-            <div className="flex space-x-2">
-              <Button
-                onClick={handleScrapeWebsite}
-                disabled={isScraping}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-2"
-              >
-                <Link className="w-4 h-4" />
-                <span>{isScraping ? 'Scraping...' : 'Scrape from website'}</span>
-              </Button>
-              <Button
-                onClick={handleAddFAQ}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-2"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add FAQ</span>
-              </Button>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <AnimatePresence>
-              {knowledgeBase.faqs.map((faq, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="bg-gray-50 border border-gray-200 rounded-lg p-4"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-sm font-medium text-gray-900">FAQ #{index + 1}</h4>
-                      <button
-                        onClick={() => handleRemoveFAQ(index)}
-                        className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Question
-                      </label>
-                      <input
-                        type="text"
-                        value={faq.question}
-                        onChange={(e) => handleUpdateFAQ(index, 'question', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                        placeholder="What are your business hours?"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Answer
-                      </label>
-                      <textarea
-                        value={faq.answer}
-                        onChange={(e) => handleUpdateFAQ(index, 'answer', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                        rows={3}
-                        placeholder="We are open Monday through Friday from 9 AM to 5 PM..."
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {knowledgeBase.faqs.length === 0 && (
-              <div className="text-center py-8 text-gray-500">
-                <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p>No FAQs added yet.</p>
-                <p className="text-sm">Add your first FAQ to help customers get quick answers.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Policies */}
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Policies</h3>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Cancellation Policy
-              </label>
-              <textarea
-                value={knowledgeBase.policies.cancellation}
-                onChange={(e) => updateKnowledgeBase({
-                  policies: { ...knowledgeBase.policies, cancellation: e.target.value }
-                })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                rows={3}
-                placeholder="Cancellations must be made 24 hours in advance..."
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Reschedule Policy
-              </label>
-              <textarea
-                value={knowledgeBase.policies.reschedule}
-                onChange={(e) => updateKnowledgeBase({
-                  policies: { ...knowledgeBase.policies, reschedule: e.target.value }
-                })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                rows={3}
-                placeholder="Rescheduling is allowed up to 2 hours before your appointment..."
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Deposit Policy
-              </label>
-              <textarea
-                value={knowledgeBase.policies.deposit}
-                onChange={(e) => updateKnowledgeBase({
-                  policies: { ...knowledgeBase.policies, deposit: e.target.value }
-                })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                rows={3}
-                placeholder="A 50% deposit is required to secure your appointment..."
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Intake Questions */}
-      <div className="space-y-6">
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Intake Questions</h3>
-            <Button
-              onClick={handleAddIntakeQuestion}
-              variant="outline"
-              size="sm"
-              className="flex items-center space-x-2"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Question</span>
-            </Button>
-          </div>
-
-          <div className="space-y-3">
-            <AnimatePresence>
-              {knowledgeBase.intakeQuestions.map((question, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="flex items-center space-x-3"
-                >
-                  <span className="text-sm text-gray-500 w-6">{index + 1}.</span>
-                  <input
-                    type="text"
-                    value={question}
-                    onChange={(e) => handleUpdateIntakeQuestion(index, e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                    placeholder="What is the nature of your inquiry?"
-                  />
-                  <button
-                    onClick={() => handleRemoveIntakeQuestion(index)}
-                    className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {knowledgeBase.intakeQuestions.length === 0 && (
-              <div className="text-center py-6 text-gray-500">
-                <p>No intake questions added yet.</p>
-                <p className="text-sm">Add questions to help qualify leads.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
       {/* File Uploads */}
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Upload Documents</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Upload Documents (Optional)</h3>
+          <p className="text-gray-600 mb-6">
+            Upload service brochures, policies, or other documents for your AI to reference when answering questions.
+          </p>
           
           <div className="space-y-4">
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">

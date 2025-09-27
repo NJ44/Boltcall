@@ -190,24 +190,16 @@ const StepPhone: React.FC = () => {
                 </div>
               </div>
 
-              <Button
-                onClick={handleSearchNumbers}
-                disabled={isSearching}
-                variant="outline"
-                className="flex items-center space-x-2"
-              >
-                <Phone className="w-4 h-4" />
-                <span>{isSearching ? 'Searching...' : 'Search Available Numbers'}</span>
-              </Button>
-
-              {/* Mock Available Numbers */}
-              {isSearching && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-blue-900 mb-2">Phone Number Selection</h4>
+                <p className="text-blue-700 text-sm mb-3">
+                  We'll automatically assign you a local phone number in your selected area code.
+                </p>
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-gray-900">Available Numbers</h4>
-                  {mockNumbers.map((number, index) => (
+                  {mockNumbers.slice(0, 2).map((number, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
+                      className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-200"
                     >
                       <div>
                         <p className="font-medium text-gray-900">{number.number}</p>
@@ -225,7 +217,7 @@ const StepPhone: React.FC = () => {
                     </div>
                   ))}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -316,80 +308,10 @@ const StepPhone: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ring Strategy
-                </label>
-                <select
-                  value={phone.routing.ringStrategy}
-                  onChange={(e) => updatePhone({
-                    routing: { 
-                      ...phone.routing, 
-                      ringStrategy: e.target.value as 'sequential' | 'all'
-                    }
-                  })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                >
-                  <option value="sequential">Sequential (one at a time)</option>
-                  <option value="all">All at once</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Max Ring Time (seconds)
-                </label>
-                <div className="relative">
-                  <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="number"
-                    value={phone.routing.maxRingTime}
-                    onChange={(e) => updatePhone({
-                      routing: { 
-                        ...phone.routing, 
-                        maxRingTime: parseInt(e.target.value) || 30
-                      }
-                    })}
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                    min="5"
-                    max="300"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Test Call */}
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Test Your Setup</h3>
-          
-          <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <Phone className="w-6 h-6 text-green-600" />
-              <div>
-                <h4 className="text-sm font-medium text-green-900">Test Call</h4>
-                <p className="text-green-700 text-sm">
-                  Place a test call to verify your phone setup is working correctly
-                </p>
-              </div>
-            </div>
-            
-            <Button
-              onClick={handleTestCall}
-              disabled={isTesting}
-              variant="outline"
-              className="flex items-center space-x-2"
-            >
-              <Phone className="w-4 h-4" />
-              <span>{isTesting ? 'Placing test call...' : 'Place Test Call'}</span>
-            </Button>
-          </div>
-        </div>
-      </div>
 
     </div>
   );

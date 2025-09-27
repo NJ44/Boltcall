@@ -67,7 +67,7 @@ const StepBusinessProfile: React.FC = () => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Website URL
+                Website URL (Optional)
               </label>
               <div className="relative">
                 <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -84,22 +84,6 @@ const StepBusinessProfile: React.FC = () => {
               {errors.websiteUrl && (
                 <p className="mt-1 text-sm text-red-600">{errors.websiteUrl}</p>
               )}
-              <p className="mt-1 text-sm text-gray-500">
-                We can automatically extract business information from your website
-              </p>
-            </div>
-
-            {businessProfile.websiteUrl && (
-              <Button
-                onClick={handleScrapeWebsite}
-                disabled={isScraping}
-                variant="outline"
-                className="flex items-center space-x-2"
-              >
-                <Globe className="w-4 h-4" />
-                <span>{isScraping ? 'Pulling from website...' : 'Pull from website'}</span>
-              </Button>
-            )}
           </div>
         </div>
       </div>

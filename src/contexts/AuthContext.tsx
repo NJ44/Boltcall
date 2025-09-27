@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import type { User, AuthState, LoginCredentials, SignupCredentials } from '../lib/auth';
-import { mockLogin, mockSignup, mockLogout } from '../lib/auth';
+import { login as supabaseLogin, signup as supabaseSignup, logout as supabaseLogout, getCurrentUser, onAuthStateChange } from '../lib/auth';
 
 interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>;
@@ -51,13 +51,12 @@ const initialState: AuthState = {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Check for existing session on mount
+  // Check for existing session and listen to auth state changes
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const savedUser = localStorage.getItem('boltcall_user');
-        if (savedUser) {
-          const user = JSON.parse(savedUser);
+        const user = await getCurrentUser();
+        if (user) {
           dispatch({ type: 'LOGIN_SUCCESS', payload: user });
         } else {
           dispatch({ type: 'SET_LOADING', payload: false });
@@ -68,13 +67,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     checkAuth();
+
+    // Listen to auth state changes
+    const { data: { subscription } } = onAuthStateChange((user) => {
+      if (user) {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+      } else {
+        dispatch({ type: 'LOGOUT' });
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
     try {
       dispatch({ type: 'LOGIN_START' });
-      const user = await mockLogin(credentials);
-      localStorage.setItem('boltcall_user', JSON.stringify(user));
+      const user = await supabaseLogin(credentials);
       dispatch({ type: 'LOGIN_SUCCESS', payload: user });
     } catch (error) {
       dispatch({ type: 'LOGIN_ERROR' });
@@ -85,8 +94,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signup = async (credentials: SignupCredentials) => {
     try {
       dispatch({ type: 'LOGIN_START' });
-      const user = await mockSignup(credentials);
-      localStorage.setItem('boltcall_user', JSON.stringify(user));
+      const user = await supabaseSignup(credentials);
       dispatch({ type: 'LOGIN_SUCCESS', payload: user });
     } catch (error) {
       dispatch({ type: 'LOGIN_ERROR' });
@@ -96,8 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      await mockLogout();
-      localStorage.removeItem('boltcall_user');
+      await supabaseLogout();
       dispatch({ type: 'LOGOUT' });
     } catch (error) {
       console.error('Logout error:', error);

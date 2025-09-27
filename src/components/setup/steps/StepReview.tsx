@@ -238,7 +238,7 @@ const StepReview: React.FC = () => {
         ))}
       </div>
 
-      {/* Launch Section */}
+      {/* Finish Setup Section */}
       <div className="bg-gradient-to-r from-brand-blue to-brand-sky rounded-2xl p-8 text-white">
         <div className="text-center">
           <motion.div
@@ -247,30 +247,18 @@ const StepReview: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.8 }}
             className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4"
           >
-            <Play className="w-6 h-6" />
+            <CheckCircle className="w-6 h-6" />
           </motion.div>
           
-          <h3 className="text-xl font-bold mb-2">Ready to Launch!</h3>
+          <h3 className="text-xl font-bold mb-2">Setup Complete!</h3>
           <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-            Your AI receptionist is configured and ready to start handling calls. 
-            Enable it now to begin capturing leads 24/7.
+            Your AI receptionist has been configured successfully. 
+            Click finish setup to complete the process and start using your dashboard.
           </p>
-
-          <div className="flex items-center justify-center space-x-4 mb-6">
-            <label className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={review.isEnabled}
-                onChange={(e) => updateReview({ isEnabled: e.target.checked })}
-                className="w-4 h-4 text-brand-blue bg-white border-gray-300 rounded focus:ring-brand-blue focus:ring-2"
-              />
-              <span className="text-sm font-medium">Enable AI Receptionist</span>
-            </label>
-          </div>
 
           <Button
             onClick={handleLaunch}
-            disabled={isLaunching || !review.isEnabled}
+            disabled={isLaunching}
             variant="primary"
             className="bg-white text-brand-blue hover:bg-gray-50 px-8 py-3 text-lg font-semibold"
           >
@@ -284,36 +272,9 @@ const StepReview: React.FC = () => {
               className="mt-4 flex items-center justify-center space-x-2 text-green-200"
             >
               <CheckCircle className="w-5 h-5" />
-              <span className="font-medium">Successfully launched!</span>
+              <span className="font-medium">Setup completed successfully!</span>
             </motion.div>
           )}
-        </div>
-      </div>
-
-      {/* Usage Metrics Placeholder */}
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-        <h4 className="text-lg font-medium text-gray-900 mb-4">Usage Overview</h4>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-brand-blue mb-1">0</div>
-            <div className="text-sm text-gray-600">Calls Handled</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-brand-blue mb-1">0</div>
-            <div className="text-sm text-gray-600">Appointments Booked</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-brand-blue mb-1">0</div>
-            <div className="text-sm text-gray-600">Leads Captured</div>
-          </div>
-        </div>
-        
-        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h5 className="text-sm font-medium text-blue-900 mb-2">Current Plan</h5>
-          <p className="text-sm text-blue-700">
-            You're on the Starter plan with 100 calls/month. 
-            <a href="#" className="underline hover:no-underline">Upgrade</a> for more capacity.
-          </p>
         </div>
       </div>
       

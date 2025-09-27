@@ -86,55 +86,64 @@ const plans = [
 - Features: `src/components/FeaturesTabs.tsx`
 - Testimonials: `src/components/Testimonials.tsx`
 
-## 🔧 API Integration
+## 🔧 Supabase Integration
 
 ### Current Setup
-The project includes a mock API for development (`src/server/mockApi.ts`) that logs form submissions to the console.
+The project is now integrated with Supabase for authentication and database operations:
 
-### Production Integration
+- **Authentication**: User signup, login, and session management
+- **Database**: Lead submissions and user profiles
+- **Real-time**: Auth state changes and session persistence
 
-**TODO**: Replace mock API with one of these options:
+### Environment Setup
 
-#### Option 1: Supabase
-```typescript
-// Install: npm install @supabase/supabase-js
-import { createClient } from '@supabase/supabase-js'
+Create a `.env` file in your project root with your Supabase credentials:
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-// In FinalCTA.tsx, replace handleLeadSubmission with:
-const result = await supabase
-  .from('leads')
-  .insert([formData])
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-#### Option 2: Airtable
-```typescript
-// Install: npm install airtable
-import Airtable from 'airtable'
+### Database Schema
 
-const base = new Airtable({apiKey: 'YOUR_API_KEY'}).base('YOUR_BASE_ID')
+The following tables are required in your Supabase database:
 
-// In FinalCTA.tsx:
-const result = await base('Leads').create([formData])
+#### Users Table
+```sql
+CREATE TABLE users (
+  id UUID REFERENCES auth.users(id) PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  company TEXT NOT NULL,
+  role TEXT DEFAULT 'user' CHECK (role IN ('admin', 'user')),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 ```
 
-#### Option 3: Email Service
-```typescript
-// Install: npm install @sendgrid/mail
-import sgMail from '@sendgrid/mail'
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-
-const msg = {
-  to: 'leads@yourcompany.com',
-  from: 'noreply@yourcompany.com',
-  subject: 'New Lead Submission',
-  html: `<p>Name: ${formData.name}</p>...`
-}
-
-await sgMail.send(msg)
+#### Leads Table
+```sql
+CREATE TABLE leads (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  company TEXT NOT NULL,
+  website TEXT,
+  phone TEXT,
+  message TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 ```
+
+### Authentication Features
+
+- User registration with email verification
+- Secure login/logout
+- Session persistence
+- Real-time auth state updates
+- Protected routes
+
 
 ## 🚀 Deployment
 
