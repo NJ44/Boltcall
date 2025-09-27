@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Phone, ArrowRight, Clock, Voicemail, Calendar } from 'lucide-react';
+import React from 'react';
+import { Phone, ArrowRight, Voicemail, Calendar } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 
 const StepPhone: React.FC = () => {
   const { phone, updatePhone } = useSetupStore();
-  const [isSearching, setIsSearching] = useState(false);
 
   const mockNumbers = [
     { number: '+1 (555) 123-4567', location: 'New York, NY' },
@@ -21,37 +20,7 @@ const StepPhone: React.FC = () => {
     { name: 'Sprint', instructions: 'Call *72 + your new number' },
   ];
 
-  const handleSearchNumbers = async () => {
-    setIsSearching(true);
-    try {
-      // TODO: Implement number search API
-      console.log('Searching for numbers...');
-      setTimeout(() => setIsSearching(false), 2000);
-    } catch (error) {
-      console.error('Error searching numbers:', error);
-      setIsSearching(false);
-    }
-  };
 
-  const handleTestCall = async () => {
-    setIsTesting(true);
-    try {
-      // TODO: Implement test call API
-      await fetch('/api/voice/testcall', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          workspaceId: 'test',
-          toNumber: phone.useExistingNumber ? phone.existingNumber : phone.newNumber.number,
-        }),
-      });
-      console.log('Test call initiated');
-    } catch (error) {
-      console.error('Error placing test call:', error);
-    } finally {
-      setIsTesting(false);
-    }
-  };
 
   return (
     <div className="space-y-8">

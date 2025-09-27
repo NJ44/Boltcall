@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Calendar, Clock, Plus, Trash2, TestTube } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 
@@ -50,48 +49,9 @@ const StepCalendar: React.FC = () => {
     }
   };
 
-  const handleAddAppointmentType = () => {
-    const newType = {
-      name: '',
-      duration: 60,
-      buffer: 15,
-      minNotice: 24,
-    };
-    
-    updateCalendar({
-      appointmentTypes: [...calendar.appointmentTypes, newType],
-    });
-  };
 
-  const handleUpdateAppointmentType = (index: number, field: string, value: string | number) => {
-    const updated = [...calendar.appointmentTypes];
-    updated[index] = { ...updated[index], [field]: value };
-    updateCalendar({ appointmentTypes: updated });
-  };
 
-  const handleRemoveAppointmentType = (index: number) => {
-    const updated = calendar.appointmentTypes.filter((_, i) => i !== index);
-    updateCalendar({ appointmentTypes: updated });
-  };
 
-  const handleTestEvent = async () => {
-    setIsTesting(true);
-    try {
-      // TODO: Implement test event creation
-      await fetch('/api/setup/calendar/test', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId: 'test' }),
-      });
-      
-      // Show success message
-      console.log('Test event created successfully');
-    } catch (error) {
-      console.error('Error creating test event:', error);
-    } finally {
-      setIsTesting(false);
-    }
-  };
 
   return (
     <div className="space-y-8">

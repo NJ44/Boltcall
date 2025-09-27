@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Mail, Lock, Building, Globe, ArrowRight, LogIn } from 'lucide-react';
+import { User, Building, Globe, LogIn } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { useAuth } from '../../../contexts/AuthContext';
 import Button from '../../ui/Button';
@@ -9,20 +9,7 @@ const StepAccount: React.FC = () => {
   const { account, updateAccount } = useSetupStore();
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-
-
-  const handleGoogleAuth = async () => {
-    setIsLoading(true);
-    try {
-      // TODO: Implement Google OAuth
-      console.log('Google authentication...');
-    } catch (error) {
-      console.error('Google auth error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [errors] = useState<Record<string, string>>({});
 
   const timezoneOptions = [
     'America/New_York',

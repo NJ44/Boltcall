@@ -1,49 +1,17 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Plus, Trash2, Upload, Link, CheckCircle, Clock } from 'lucide-react';
+import { FileText, Upload, CheckCircle, Clock } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
-import Button from '../../ui/Button';
 import ServicesTable from '../forms/ServicesTable';
 
 const StepKnowledge: React.FC = () => {
   const { knowledgeBase, updateKnowledgeBase } = useSetupStore();
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleAddFAQ = () => {
-    const newFAQ = { question: '', answer: '' };
-    updateKnowledgeBase({
-      faqs: [...knowledgeBase.faqs, newFAQ],
-    });
-  };
 
-  const handleUpdateFAQ = (index: number, field: 'question' | 'answer', value: string) => {
-    const updated = [...knowledgeBase.faqs];
-    updated[index] = { ...updated[index], [field]: value };
-    updateKnowledgeBase({ faqs: updated });
-  };
 
-  const handleRemoveFAQ = (index: number) => {
-    const updated = knowledgeBase.faqs.filter((_, i) => i !== index);
-    updateKnowledgeBase({ faqs: updated });
-  };
 
-  const handleAddIntakeQuestion = () => {
-    const newQuestion = '';
-    updateKnowledgeBase({
-      intakeQuestions: [...knowledgeBase.intakeQuestions, newQuestion],
-    });
-  };
 
-  const handleUpdateIntakeQuestion = (index: number, value: string) => {
-    const updated = [...knowledgeBase.intakeQuestions];
-    updated[index] = value;
-    updateKnowledgeBase({ intakeQuestions: updated });
-  };
 
-  const handleRemoveIntakeQuestion = (index: number) => {
-    const updated = knowledgeBase.intakeQuestions.filter((_, i) => i !== index);
-    updateKnowledgeBase({ intakeQuestions: updated });
-  };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -78,29 +46,6 @@ const StepKnowledge: React.FC = () => {
     }
   };
 
-  const handleScrapeWebsite = async () => {
-    setIsScraping(true);
-    try {
-      // TODO: Implement website scraping for FAQs
-      const response = await fetch('/api/kb/seed', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: 'https://example.com' }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        // Add scraped FAQs to existing ones
-        updateKnowledgeBase({
-          faqs: [...knowledgeBase.faqs, ...data.faqs],
-        });
-      }
-    } catch (error) {
-      console.error('Error scraping website:', error);
-    } finally {
-      setIsScraping(false);
-    }
-  };
 
   return (
     <div className="space-y-8">

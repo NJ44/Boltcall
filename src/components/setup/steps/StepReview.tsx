@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Edit, Phone, Calendar, Globe, MessageSquare, Settings, Play } from 'lucide-react';
+import { CheckCircle, Edit, Phone, Calendar, Globe, MessageSquare, Settings } from 'lucide-react';
 import { useSetupStore, setupSteps } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import PageLoader from '../../PageLoader';

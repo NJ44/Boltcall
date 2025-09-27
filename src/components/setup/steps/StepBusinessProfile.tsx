@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Globe, MapPin, ArrowDown } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
-import Button from '../../ui/Button';
 import MultiSelect from '../forms/MultiSelect';
 import HoursEditor from '../forms/HoursEditor';
 
 const StepBusinessProfile: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
-  const [isScraping, setIsScraping] = useState(false);
+  const [errors] = useState<Record<string, string>>({});
 
   const categories = [
     { value: 'dentist', label: 'Dentist' },
@@ -38,23 +37,6 @@ const StepBusinessProfile: React.FC = () => {
 
 
 
-  const handleScrapeWebsite = async () => {
-    if (!businessProfile.websiteUrl) return;
-
-    setIsScraping(true);
-    try {
-      const response = await fetch(`/api/scrape?url=${encodeURIComponent(businessProfile.websiteUrl)}`);
-      if (response.ok) {
-        const data = await response.json();
-        // TODO: Use scraped data to populate fields
-        console.log('Scraped data:', data);
-      }
-    } catch (error) {
-      console.error('Error scraping website:', error);
-    } finally {
-      setIsScraping(false);
-    }
-  };
 
   return (
     <div className="space-y-8">
