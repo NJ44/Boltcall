@@ -35,9 +35,9 @@ const FinalCTA: React.FC = () => {
   };
 
   return (
-    <Section id="contact" background="brand">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <Section id="contact" background="white">
+      <div className="max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Side - Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -45,10 +45,10 @@ const FinalCTA: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-text-main mb-4">
               Ready to join the AI Revolution?
             </h2>
-            <p className="text-lg text-text-muted mb-8 leading-relaxed">
+            <p className="text-base text-text-muted mb-6 leading-relaxed">
               Contact us if you have any questions about our AI receptionist and lead management system. We're here to help you transform your business.
             </p>
           </motion.div>
@@ -60,12 +60,12 @@ const FinalCTA: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <Card className="p-8">
-              <h3 className="text-2xl font-bold text-text-main mb-6 text-center">
+            <Card className="p-6">
+              <h3 className="text-xl font-bold text-text-main mb-4 text-center">
                 Get in Touch
               </h3>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-text-main mb-2">
                     Full Name *
@@ -77,7 +77,7 @@ const FinalCTA: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors text-sm"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -93,7 +93,7 @@ const FinalCTA: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors text-sm"
                     placeholder="Enter your email address"
                   />
                 </div>
@@ -108,7 +108,7 @@ const FinalCTA: React.FC = () => {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors text-sm"
                     placeholder="Enter your company name"
                   />
                 </div>
@@ -123,8 +123,8 @@ const FinalCTA: React.FC = () => {
                     value={formData.message}
                     onChange={handleInputChange}
                     required
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors resize-none"
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors resize-none text-sm"
                     placeholder="Tell us about your needs and questions"
                   />
                 </div>
@@ -132,10 +132,10 @@ const FinalCTA: React.FC = () => {
                 <Button
                   type="submit"
                   variant="primary"
-                  size="lg"
+                  size="md"
                   className="w-full flex items-center justify-center gap-2"
                 >
-                  <Send className="w-5 h-5" />
+                  <Send className="w-4 h-4" />
                   Send Message
                 </Button>
               </form>

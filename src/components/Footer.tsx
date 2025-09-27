@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import Button from './ui/Button';
 
 const Footer: React.FC = () => {
@@ -40,11 +40,11 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-text-main text-white">
+    <footer className="bg-gradient-to-b from-white to-light-blue text-text-main">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Company Info */}
             <div className="lg:col-span-1">
               <motion.div
@@ -53,26 +53,7 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-2xl font-bold mb-4">Boltcall</h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  Never lose a lead again. AI-powered lead capture and booking that works 24/7.
-                </p>
-                
-                {/* Contact Info */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 text-brand-sky" />
-                    <span className="text-gray-300">hello@boltcall.ai</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-brand-sky" />
-                    <span className="text-gray-300">+1 (555) 123-4567</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="w-4 h-4 text-brand-sky" />
-                    <span className="text-gray-300">San Francisco, CA</span>
-                  </div>
-                </div>
+                <h3 className="text-xl font-bold mb-3">Boltcall</h3>
               </motion.div>
             </div>
 
@@ -84,13 +65,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-lg font-semibold mb-4">Product</h4>
-                <ul className="space-y-3">
+                <h4 className="text-base font-semibold mb-3">Product</h4>
+                <ul className="space-y-2">
                   {footerLinks.product.map((link, index) => (
                     <li key={index}>
                       <button
                         onClick={() => scrollToSection(link.href)}
-                        className="text-gray-300 hover:text-brand-sky transition-colors duration-200"
+                        className="text-gray-600 hover:text-brand-blue transition-colors duration-200"
                       >
                         {link.label}
                       </button>
@@ -108,13 +89,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-lg font-semibold mb-4">Company</h4>
-                <ul className="space-y-3">
+                <h4 className="text-base font-semibold mb-3">Company</h4>
+                <ul className="space-y-2">
                   {footerLinks.company.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-gray-300 hover:text-brand-sky transition-colors duration-200"
+                        className="text-gray-600 hover:text-brand-blue transition-colors duration-200"
                       >
                         {link.label}
                       </a>
@@ -132,13 +113,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-lg font-semibold mb-4">Support</h4>
-                <ul className="space-y-3">
+                <h4 className="text-base font-semibold mb-3">Support</h4>
+                <ul className="space-y-2">
                   {footerLinks.support.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-gray-300 hover:text-brand-sky transition-colors duration-200"
+                        className="text-gray-600 hover:text-brand-blue transition-colors duration-200"
                       >
                         {link.label}
                       </a>
@@ -151,10 +132,10 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-gray-700 py-8">
+        <div className="border-t border-gray-300 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <motion.div
-              className="text-gray-400 text-sm"
+              className="text-gray-500 text-sm"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -174,7 +155,7 @@ const Footer: React.FC = () => {
                 onClick={scrollToTop}
                 variant="outline"
                 size="sm"
-                className="text-white border-gray-600 hover:bg-gray-700"
+                className="text-gray-700 border-gray-400 hover:bg-gray-100"
               >
                 <ArrowUp className="w-4 h-4 mr-2" />
                 Back to Top

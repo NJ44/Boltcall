@@ -7,6 +7,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Card from '../components/ui/Card';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -76,8 +77,23 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Lottie Background Animation */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        <DotLottieReact
+          src="/lotie_white_anim.lottie"
+          loop
+          autoplay
+          style={{
+            width: '100%',
+            height: '100%',
+            opacity: 0.6
+          }}
+          onLoad={() => console.log('Lottie animation loaded')}
+          onError={(error) => console.error('Lottie animation error:', error)}
+        />
+      </div>
+      <div className="max-w-md w-full space-y-8 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

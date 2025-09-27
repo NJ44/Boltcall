@@ -104,9 +104,6 @@ const WizardShell: React.FC = () => {
               </div>
             </div>
             
-            <div className="text-sm text-gray-500">
-              Step {currentStep} of {setupSteps.length}
-            </div>
           </div>
         </div>
 
@@ -133,11 +130,9 @@ const WizardShell: React.FC = () => {
                 disabled={!isStepAccessible(step.id)}
                 className={`w-full text-left p-8 mb-0 transition-all duration-200 ${
                   isStepAccessible(step.id)
-                    ? 'cursor-pointer hover:bg-gray-50'
+                    ? 'cursor-pointer'
                     : 'opacity-50 cursor-not-allowed'
                 }`}
-                whileHover={isStepAccessible(step.id) ? { scale: 1.01 } : {}}
-                whileTap={isStepAccessible(step.id) ? { scale: 0.99 } : {}}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6">
@@ -160,7 +155,7 @@ const WizardShell: React.FC = () => {
 
                     {/* Step Info */}
                     <div>
-                      <h3 className={`text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent ${
+                      <h3 className={`text-4xl font-bold text-gray-900 ${
                         !isStepAccessible(step.id) ? 'opacity-50' : ''
                       }`}>
                         {step.title}
@@ -180,7 +175,7 @@ const WizardShell: React.FC = () => {
 
                {/* Separator Line */}
                {index < setupSteps.length - 1 && (
-                 <div className="mx-8">
+                 <div className="mx-0">
                    <div className="h-px bg-gray-300"></div>
                  </div>
                )}

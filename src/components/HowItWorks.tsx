@@ -210,36 +210,6 @@ const HowItWorks: React.FC = () => {
           ))}
         </div>
 
-        {/* Call to Action */}
-        <motion.div
-          className="text-center mt-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <Card className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 text-white shadow-2xl p-8 hover:shadow-3xl transition-all duration-500 hover:scale-105">
-            <div className="text-center">
-              <div className="flex items-center justify-center space-x-2 mb-4">
-                <Zap className="w-6 h-6 text-yellow-400 animate-pulse" />
-                <span className="text-lg font-semibold">Ready to Electrify Your Lead Management?</span>
-              </div>
-              
-              <p className="text-blue-100 mb-6 text-lg">
-                Join thousands of businesses using Boltcall's lightning-fast AI automation.
-              </p>
-              
-            <motion.button
-                className="bg-white text-gray-900 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Get Started Today
-            </motion.button>
-          </div>
-          </Card>
-        </motion.div>
       </div>
     </section>
   );
