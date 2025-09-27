@@ -1,0 +1,41 @@
+/* Navigation underline animation styles */
+.nav-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 0%;
+  background: currentColor;
+  transition: width 220ms ease;
+}
+
+.nav-underline:hover::after {
+  width: 100%;
+}
+
+.nav-underline--active::after {
+  width: 100%;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

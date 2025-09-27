@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const signupSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -57,40 +57,60 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center"
-        >
-          <Link to="/" className="inline-flex items-center text-brand-blue hover:text-brand-blueDark mb-6">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
-          <h2 className="text-3xl font-bold text-text-main">Create your account</h2>
-          <p className="mt-2 text-text-muted">Get started with Boltcall today</p>
-        </motion.div>
+    <div className="min-h-screen bg-zinc-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen flex">
+          {/* Left Panel - White Background with Title and Animation */}
+          <div className="hidden lg:flex lg:w-1/2 bg-white flex-col items-center justify-center p-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center"
+            >
+              <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET STARTED</h1>
+              <div className="w-96 h-96">
+                <DotLottieReact
+                  src="/dental-clinic.lottie"
+                  loop
+                  autoplay
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              </div>
+            </motion.div>
+          </div>
 
-        {/* Signup Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <Card className="p-8">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Right Panel - Blue Background with Signup Form */}
+          <div className="w-full lg:w-1/2 bg-blue-600 flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="w-full max-w-sm"
+            >
+              <Card className="p-6 bg-white shadow-2xl border-0">
+                {/* Header */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center mb-6"
+                >
+                  <h2 className="text-xl font-bold text-zinc-900">SIGN UP</h2>
+                </motion.div>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
               {/* Name */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-text-main mb-2">
+                <label htmlFor="name" className="block text-xs font-medium text-text-main mb-1">
                   Full Name
                 </label>
                 <input
                   {...register('name')}
                   type="text"
-                  className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-sm"
                   placeholder="Enter your full name"
                 />
                 {errors.name && (
@@ -100,13 +120,13 @@ const Signup: React.FC = () => {
 
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-text-main mb-2">
+                <label htmlFor="email" className="block text-xs font-medium text-text-main mb-1">
                   Email Address
                 </label>
                 <input
                   {...register('email')}
                   type="email"
-                  className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-sm"
                   placeholder="Enter your email"
                 />
                 {errors.email && (
@@ -116,13 +136,13 @@ const Signup: React.FC = () => {
 
               {/* Company */}
               <div>
-                <label htmlFor="company" className="block text-sm font-medium text-text-main mb-2">
+                <label htmlFor="company" className="block text-xs font-medium text-text-main mb-1">
                   Company Name
                 </label>
                 <input
                   {...register('company')}
                   type="text"
-                  className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-sm"
                   placeholder="Enter your company name"
                 />
                 {errors.company && (
@@ -132,22 +152,22 @@ const Signup: React.FC = () => {
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-text-main mb-2">
+                <label htmlFor="password" className="block text-xs font-medium text-text-main mb-1">
                   Password
                 </label>
                 <div className="relative">
                   <input
                     {...register('password')}
                     type={showPassword ? 'text' : 'password'}
-                    className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors pr-12"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 pr-10 text-sm"
                     placeholder="Create a password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted hover:text-text-main"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 rounded-md hover:bg-gray-100"
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 {errors.password && (
@@ -157,22 +177,22 @@ const Signup: React.FC = () => {
 
               {/* Confirm Password */}
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-text-main mb-2">
+                <label htmlFor="confirmPassword" className="block text-xs font-medium text-text-main mb-1">
                   Confirm Password
                 </label>
                 <div className="relative">
                   <input
                     {...register('confirmPassword')}
                     type={showConfirmPassword ? 'text' : 'password'}
-                    className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-brand-blue focus:border-transparent transition-colors pr-12"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 pr-10 text-sm"
                     placeholder="Confirm your password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted hover:text-text-main"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 rounded-md hover:bg-gray-100"
                   >
-                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 {errors.confirmPassword && (
@@ -182,26 +202,31 @@ const Signup: React.FC = () => {
 
               {/* Error Message */}
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                  <p className="text-red-600 text-sm">{error}</p>
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <p className="text-red-600 text-xs">{error}</p>
                 </div>
               )}
 
               {/* Submit Button */}
-              <Button
+              <button
                 type="submit"
-                variant="primary"
-                size="lg"
-                className="w-full"
                 disabled={isLoading}
+                className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-sm rounded-md hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                {isLoading ? 'Creating account...' : 'Create Account'}
-              </Button>
+                {isLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Creating account...
+                  </div>
+                ) : (
+                  'Create Account'
+                )}
+              </button>
             </form>
 
             {/* Login Link */}
-            <div className="mt-6 text-center">
-              <p className="text-text-muted">
+            <div className="mt-4 text-center">
+              <p className="text-text-muted text-sm">
                 Already have an account?{' '}
                 <Link to="/login" className="text-brand-blue hover:text-brand-blueDark font-medium">
                   Sign in here
@@ -210,6 +235,8 @@ const Signup: React.FC = () => {
             </div>
           </Card>
         </motion.div>
+      </div>
+        </div>
       </div>
     </div>
   );

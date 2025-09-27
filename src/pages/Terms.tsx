@@ -1,402 +1,180 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { FileText, CheckCircle, AlertTriangle, CreditCard, Shield, Users, Clock, Phone } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Section from '../components/ui/Section';
-import Card from '../components/ui/Card';
+import { Scale } from 'lucide-react';
 
 const Terms: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
-      <main className="pt-20">
-        <Section className="py-16">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+    <div className="min-h-screen bg-zinc-50">
               {/* Header */}
-              <div className="text-center mb-16">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="w-20 h-20 bg-gradient-to-br from-brand-blue to-brand-sky rounded-2xl flex items-center justify-center mx-auto mb-6"
-                >
-                  <FileText className="w-10 h-10 text-white" />
-                </motion.div>
-                <h1 className="text-5xl font-bold text-text-main mb-4">
-                  Terms of Service
-                </h1>
-                <p className="text-xl text-text-muted max-w-3xl mx-auto">
-                  Please read these terms carefully before using our AI-powered lead capture and booking services.
-                </p>
-                <div className="mt-6 inline-flex items-center gap-2 text-sm text-text-muted bg-gray-50 rounded-full px-4 py-2">
-                  <AlertTriangle className="w-4 h-4" />
-                  Last updated: {new Date().toLocaleDateString()}
+      <div className="bg-white border-b border-zinc-200">
+        <div className="max-w-4xl mx-auto px-6 py-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-3 bg-blue-100 rounded-lg">
+              <Scale className="w-6 h-6 text-blue-600" />
+            </div>
+            <h1 className="text-3xl font-bold text-zinc-900">Terms of Service</h1>
+          </div>
+          <p className="text-zinc-600 text-lg">
+            Last updated: December 2024
+          </p>
                 </div>
               </div>
 
-              {/* Key Points */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                  <Card className="text-center p-6">
-                    <CheckCircle className="w-8 h-8 text-brand-blue mx-auto mb-4" />
-                    <h3 className="font-semibold text-text-main mb-2">Fair Use</h3>
-                    <p className="text-sm text-text-muted">Clear guidelines for service usage</p>
-                  </Card>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  <Card className="text-center p-6">
-                    <CreditCard className="w-8 h-8 text-brand-blue mx-auto mb-4" />
-                    <h3 className="font-semibold text-text-main mb-2">Flexible Payment</h3>
-                    <p className="text-sm text-text-muted">30-day money-back guarantee</p>
-                  </Card>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  <Card className="text-center p-6">
-                    <Shield className="w-8 h-8 text-brand-blue mx-auto mb-4" />
-                    <h3 className="font-semibold text-text-main mb-2">99.9% Uptime</h3>
-                    <p className="text-sm text-text-muted">Reliable service guarantee</p>
-                  </Card>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  <Card className="text-center p-6">
-                    <Users className="w-8 h-8 text-brand-blue mx-auto mb-4" />
-                    <h3 className="font-semibold text-text-main mb-2">Lead Guarantee</h3>
-                    <p className="text-sm text-text-muted">15+ qualified leads in 30 days</p>
-                  </Card>
-                </motion.div>
-              </div>
-              
-              <div className="prose prose-lg max-w-none">
-                <div className="space-y-12">
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <CheckCircle className="w-8 h-8 text-brand-blue" />
-                      Acceptance of Terms
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
-                        By accessing and using Boltcall's AI-powered services, you accept and agree to be bound by the 
-                        terms and provisions of this agreement. These terms constitute a legally binding agreement 
-                        between you and Boltcall.
-                      </p>
-                      <div className="bg-white rounded-xl p-6 border-l-4 border-brand-blue">
-                        <p className="text-text-muted font-medium">
-                          <strong>Important:</strong> If you do not agree to abide by these terms, 
-                          please do not use our service. Continued use constitutes acceptance of any modifications.
-                        </p>
-                      </div>
-                    </div>
-                  </motion.section>
+      {/* Content */}
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-8">
+          
+          {/* Introduction */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">1. Introduction</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              Welcome to Boltcall. These Terms of Service ("Terms") govern your use of our AI-powered 
+              receptionist and lead management services. By accessing or using our services, you agree 
+              to be bound by these Terms.
+            </p>
+            <p className="text-zinc-700 leading-relaxed">
+              If you do not agree to these Terms, please do not use our services.
+            </p>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <FileText className="w-8 h-8 text-brand-blue" />
-                      Description of Service
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
-                        Boltcall provides comprehensive AI-powered lead capture and booking services. Our platform includes:
-                      </p>
-                      <ul className="list-disc list-inside space-y-2 text-text-muted ml-4">
-                        <li>AI-powered automated response systems</li>
-                        <li>Multi-channel lead capture (phone, website, social media)</li>
-                        <li>Intelligent calendar integration and booking</li>
-                        <li>Real-time lead qualification and scoring</li>
-                        <li>Comprehensive reporting and analytics</li>
-                        <li>24/7 customer support and monitoring</li>
+          {/* Service Description */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">2. Service Description</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              Boltcall provides AI-powered receptionist services including but not limited to:
+            </p>
+            <ul className="list-disc list-inside text-zinc-700 space-y-2 mb-4">
+              <li>Automated call answering and lead qualification</li>
+              <li>Appointment scheduling and calendar management</li>
+              <li>Lead capture and customer information collection</li>
+              <li>24/7 availability for customer inquiries</li>
+              <li>Integration with third-party business tools</li>
                       </ul>
-                    </div>
-                  </motion.section>
+            <p className="text-zinc-700 leading-relaxed">
+              We reserve the right to modify, suspend, or discontinue any aspect of our services at any time.
+            </p>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <Users className="w-8 h-8 text-brand-blue" />
-                      User Responsibilities
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
+          {/* User Responsibilities */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">3. User Responsibilities</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
                         As a user of our services, you agree to:
                       </p>
-                      <ul className="list-disc list-inside space-y-2 text-text-muted ml-4">
+            <ul className="list-disc list-inside text-zinc-700 space-y-2 mb-4">
+              <li>Provide accurate and complete information during account setup</li>
                         <li>Maintain the confidentiality of your account credentials</li>
-                        <li>Accept responsibility for all activities under your account</li>
-                        <li>Provide accurate and complete information during registration</li>
-                        <li>Use the service in compliance with applicable laws</li>
-                        <li>Not attempt to reverse engineer or compromise our systems</li>
-                        <li>Report any security breaches or suspicious activity immediately</li>
+              <li>Use our services in compliance with applicable laws and regulations</li>
+              <li>Not use our services for illegal, harmful, or unauthorized purposes</li>
+              <li>Respect the intellectual property rights of Boltcall and third parties</li>
                       </ul>
-                    </div>
-                  </motion.section>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <CreditCard className="w-8 h-8 text-brand-blue" />
-                      Payment Terms
-                    </h2>
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-xl p-6 border border-red-100">
-                          <h4 className="font-semibold text-text-main mb-3 flex items-center gap-2">
-                            <Clock className="w-5 h-5 text-brand-blue" />
-                            Payment Schedule
-                          </h4>
-                          <ul className="space-y-2 text-sm text-text-muted">
-                            <li>• Payment due in advance for all services</li>
-                            <li>• Monthly billing cycle</li>
-                            <li>• Setup fees billed separately</li>
+          {/* Payment Terms */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">4. Payment Terms</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              Our services are provided on a subscription basis. Payment terms include:
+            </p>
+            <ul className="list-disc list-inside text-zinc-700 space-y-2 mb-4">
+              <li>Monthly or annual billing cycles as selected during signup</li>
+              <li>Automatic renewal unless cancelled before the renewal date</li>
+              <li>All fees are non-refundable except as required by law</li>
+              <li>Price changes will be communicated with 30 days notice</li>
+              <li>Failed payments may result in service suspension</li>
                           </ul>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 border border-green-100">
-                          <h4 className="font-semibold text-text-main mb-3 flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5 text-green-600" />
-                            Money-Back Guarantee
-                          </h4>
-                          <ul className="space-y-2 text-sm text-text-muted">
-                            <li>• 30-day satisfaction guarantee</li>
-                            <li>• Full refund if not satisfied</li>
-                            <li>• Setup fees non-refundable after 30 days</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.section>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <Shield className="w-8 h-8 text-brand-blue" />
-                      Service Level Agreement
-                    </h2>
-                    <div className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-xl p-6 border border-orange-100">
-                          <h4 className="font-semibold text-text-main mb-3 flex items-center gap-2">
-                            <Clock className="w-5 h-5 text-brand-blue" />
-                            Uptime Guarantee
-                          </h4>
-                          <p className="text-3xl font-bold text-brand-blue mb-2">99.9%</p>
-                          <p className="text-sm text-text-muted">Monthly uptime guarantee for all services</p>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 border border-green-100">
-                          <h4 className="font-semibold text-text-main mb-3 flex items-center gap-2">
-                            <Users className="w-5 h-5 text-brand-blue" />
-                            Lead Guarantee
-                          </h4>
-                          <p className="text-3xl font-bold text-green-600 mb-2">15+</p>
-                          <p className="text-sm text-text-muted">Qualified leads within 30 days</p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
-                        <p className="text-sm text-text-muted">
-                          <strong>Performance Guarantee:</strong> If we don't deliver 15+ qualified leads within 30 days 
-                          of service activation, we will continue working for free until you do.
-                        </p>
-                      </div>
-                    </div>
-                  </motion.section>
+          {/* Data and Privacy */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">5. Data and Privacy</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              Your privacy is important to us. Our collection, use, and protection of your data is 
+              governed by our Privacy Policy, which is incorporated into these Terms by reference.
+            </p>
+            <p className="text-zinc-700 leading-relaxed">
+              You retain ownership of all data you provide to us, and we will not use your data 
+              for purposes other than providing our services.
+            </p>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <AlertTriangle className="w-8 h-8 text-brand-blue" />
-                      Limitation of Liability
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
-                        In no event shall Boltcall be liable for any indirect, incidental, special, 
-                        consequential, or punitive damages, including without limitation:
-                      </p>
-                      <ul className="list-disc list-inside space-y-2 text-text-muted ml-4">
-                        <li>Loss of profits, revenue, or business opportunities</li>
-                        <li>Loss of data or information</li>
-                        <li>Loss of use or goodwill</li>
-                        <li>Business interruption or downtime</li>
-                        <li>Third-party claims or actions</li>
+          {/* Service Level Agreement */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">6. Service Level Agreement</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              We strive to maintain high service availability and performance:
+            </p>
+            <ul className="list-disc list-inside text-zinc-700 space-y-2 mb-4">
+              <li>99.9% uptime target for our core services</li>
+              <li>30-second response time guarantee for lead capture</li>
+              <li>24/7 monitoring and support</li>
+              <li>Regular system maintenance with advance notice</li>
                       </ul>
-                      <p className="text-sm text-text-muted bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-                        <strong>Note:</strong> Our total liability shall not exceed the amount paid by you 
-                        for the services in the 12 months preceding the claim.
-                      </p>
-                    </div>
-                  </motion.section>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <AlertTriangle className="w-8 h-8 text-brand-blue" />
-                      Termination
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
-                        Either party may terminate this agreement under the following circumstances:
-                      </p>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-xl p-6 border border-red-100">
-                          <h4 className="font-semibold text-text-main mb-3">By Boltcall</h4>
-                          <ul className="space-y-2 text-sm text-text-muted">
-                            <li>• Immediate termination for terms breach</li>
-                            <li>• 30-day notice for other reasons</li>
-                            <li>• Non-payment of fees</li>
-                          </ul>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 border border-blue-100">
-                          <h4 className="font-semibold text-text-main mb-3">By You</h4>
-                          <ul className="space-y-2 text-sm text-text-muted">
-                            <li>• 30-day written notice required</li>
-                            <li>• Access continues until end of billing period</li>
-                            <li>• Data export available upon request</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.section>
+          {/* Limitation of Liability */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">7. Limitation of Liability</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              To the maximum extent permitted by law, Boltcall shall not be liable for any indirect, 
+              incidental, special, consequential, or punitive damages, including but not limited to 
+              loss of profits, data, or business opportunities.
+            </p>
+            <p className="text-zinc-700 leading-relaxed">
+              Our total liability shall not exceed the amount paid by you for our services in the 
+              twelve months preceding the claim.
+            </p>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.7 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <FileText className="w-8 h-8 text-brand-blue" />
-                      Changes to Terms
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
-                        We reserve the right to modify or replace these Terms at any time. When we make changes:
-                      </p>
-                      <ul className="list-disc list-inside space-y-2 text-text-muted ml-4">
-                        <li>Material changes will be communicated 30 days in advance</li>
-                        <li>Minor updates may be effective immediately</li>
-                        <li>Continued use constitutes acceptance of new terms</li>
-                        <li>You may terminate if you disagree with changes</li>
+          {/* Termination */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">8. Termination</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
+              Either party may terminate these Terms at any time:
+            </p>
+            <ul className="list-disc list-inside text-zinc-700 space-y-2 mb-4">
+              <li>You may cancel your subscription through your account dashboard</li>
+              <li>We may terminate your account for violation of these Terms</li>
+              <li>Termination does not relieve you of payment obligations for services already provided</li>
+              <li>Data export options available upon request within 30 days of termination</li>
                       </ul>
-                      <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-                        <p className="text-sm text-text-muted">
-                          <strong>Notification:</strong> We will notify you of material changes via email 
-                          and through our platform dashboard.
-                        </p>
-                      </div>
-                    </div>
-                  </motion.section>
+          </section>
 
-                  <motion.section
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl p-8"
-                  >
-                    <h2 className="text-3xl font-bold text-text-main mb-6 flex items-center gap-3">
-                      <Phone className="w-8 h-8 text-brand-blue" />
-                      Contact Information
-                    </h2>
-                    <div className="space-y-4">
-                      <p className="text-text-muted leading-relaxed">
+          {/* Governing Law */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">9. Governing Law</h2>
+            <p className="text-zinc-700 leading-relaxed">
+              These Terms shall be governed by and construed in accordance with the laws of the 
+              State of California, without regard to conflict of law principles. Any disputes 
+              arising from these Terms shall be resolved in the courts of California.
+            </p>
+          </section>
+
+          {/* Contact Information */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">10. Contact Information</h2>
+            <p className="text-zinc-700 leading-relaxed mb-4">
                         If you have any questions about these Terms of Service, please contact us:
                       </p>
-                      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center">
-                              <span className="text-brand-blue font-semibold">@</span>
+            <div className="bg-zinc-50 rounded-lg p-4">
+              <p className="text-zinc-700">
+                <strong>Email:</strong> legal@boltcall.com<br />
+                <strong>Address:</strong> 123 Business Ave, Suite 100, San Francisco, CA 94105<br />
+                <strong>Phone:</strong> (555) 123-4567
+              </p>
                             </div>
-                            <div>
-                              <p className="font-medium text-text-main">Legal Email</p>
-                              <p className="text-text-muted">legal@boltcall.ai</p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center">
-                              <span className="text-brand-blue font-semibold">📞</span>
-                            </div>
-                            <div>
-                              <p className="font-medium text-text-main">Phone</p>
-                              <p className="text-text-muted">+1 (555) 123-4567</p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center">
-                              <span className="text-brand-blue font-semibold">📍</span>
-                            </div>
-                            <div>
-                              <p className="font-medium text-text-main">Address</p>
-                              <p className="text-text-muted">San Francisco, CA</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.section>
+          </section>
+
+          {/* Updates */}
+          <section>
+            <h2 className="text-2xl font-semibold text-zinc-900 mb-4">11. Updates to Terms</h2>
+            <p className="text-zinc-700 leading-relaxed">
+              We may update these Terms from time to time. We will notify you of any material 
+              changes by email or through our service. Your continued use of our services after 
+              such notification constitutes acceptance of the updated Terms.
+            </p>
+          </section>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        </Section>
-      </main>
-      <Footer />
     </div>
   );
 };

@@ -7,6 +7,12 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Dashboard from '../pages/Dashboard';
+import DashboardLayout from '../components/dashboard/DashboardLayout';
+import DashboardPage from '../pages/dashboard/DashboardPage';
+import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
+import AgentsPage from '../pages/dashboard/AgentsPage';
+import BusinessPage from '../pages/dashboard/BusinessPage';
+import SettingsPage from '../pages/dashboard/SettingsPage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Setup from '../pages/Setup';
@@ -44,6 +50,20 @@ const NavigationWrapper: React.FC = () => {
             </ProtectedRoute>
           } 
         />
+        <Route 
+          path="/dashboard/*" 
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          } 
+        >
+          <Route index element={<DashboardPage />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="agents" element={<AgentsPage />} />
+          <Route path="business" element={<BusinessPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+        </Route>
         <Route path="/setup" element={<Setup />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />

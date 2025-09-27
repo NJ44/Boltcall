@@ -11,21 +11,17 @@ const Footer: React.FC = () => {
   const footerLinks = {
     product: [
       { label: 'Features', href: '#features' },
-      { label: 'How It Works', href: '#how-it-works' },
       { label: 'Pricing', href: '#pricing' },
       { label: 'FAQ', href: '#faq' }
     ],
     company: [
-      { label: 'About Us', href: '#' },
       { label: 'Contact', href: '#contact' },
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' }
     ],
     support: [
       { label: 'Help Center', href: '#' },
-      { label: 'Documentation', href: '#' },
-      { label: 'API Reference', href: '#' },
-      { label: 'Status', href: '#' }
+      { label: 'Documentation', href: '#' }
     ]
   };
 
@@ -53,7 +49,11 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-xl font-bold mb-3">Boltcall</h3>
+                <img 
+                  src="/boltcall_full_logo.png" 
+                  alt="Boltcall" 
+                  className="h-8 mb-3"
+                />
               </motion.div>
             </div>
 
