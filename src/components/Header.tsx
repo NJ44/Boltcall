@@ -113,74 +113,122 @@ const Header: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Fixed to top right */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden fixed top-4 right-4 z-50 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <motion.div
+              animate={{ rotate: isMenuOpen ? 90 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </motion.div>
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Full screen overlay */}
         {isMenuOpen && (
           <motion.div
-            className="md:hidden py-4 border-t border-border"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
+            className="md:hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <motion.button
-                  key={item.label}
-                  onClick={() => scrollToSection(item.href)}
-                  className="relative text-left text-text-muted hover:text-brand-blue transition-colors duration-200 font-medium py-2"
-                  whileHover="hover"
-                  initial="initial"
-                >
-                  {item.label}
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-0.5 bg-brand-blue"
-                    variants={{
-                      initial: { width: 0, opacity: 0 },
-                      hover: { width: "100%", opacity: 1 }
-                    }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                  />
-                </motion.button>
-              ))}
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    to="/dashboard"
-                    className="block w-full text-center py-2 px-4 text-brand-blue hover:bg-brand-blue/10 rounded-xl transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
+            <div className="flex flex-col items-center justify-center h-full px-8">
+              <nav className="flex flex-col space-y-8 text-center">
+                {navItems.map((item, index) => (
+                  <motion.button
+                    key={item.label}
+                    onClick={() => scrollToSection(item.href)}
+                    className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    Dashboard
-                  </Link>
-                  <Button
-                    onClick={handleLogout}
-                    variant="outline"
-                    size="md"
-                    className="w-full mt-4"
-                  >
-                    Logout
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  onClick={() => scrollToSection('#contact')}
-                  variant="primary"
-                  size="md"
-                  className="w-full mt-4 bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-6 py-2.5 rounded-xl"
+                    {item.label}
+                    <motion.div
+                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-brand-blue rounded-full"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    />
+                  </motion.button>
+                ))}
+                {/* Auth buttons with smooth animations */}
+                <motion.div
+                  className="flex flex-col space-y-4 mt-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
                 >
-                  Start now
-                </Button>
-              )}
-            </nav>
+                  {isAuthenticated ? (
+                    <>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Link
+                          to="/dashboard"
+                          className="block w-full text-center py-3 px-6 text-brand-blue hover:bg-brand-blue/10 rounded-xl transition-all duration-300 font-medium text-lg"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Dashboard
+                        </Link>
+                      </motion.div>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button
+                          onClick={handleLogout}
+                          variant="outline"
+                          size="md"
+                          className="w-full py-3 text-lg font-medium"
+                        >
+                          Logout
+                        </Button>
+                      </motion.div>
+                    </>
+                  ) : (
+                    <>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Link
+                          to="/login"
+                          className="block w-full text-center py-3 px-6 text-text-muted hover:text-brand-blue transition-colors duration-300 font-medium text-lg"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Login
+                        </Link>
+                      </motion.div>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button
+                          onClick={() => {
+                            scrollToSection('#contact');
+                            setIsMenuOpen(false);
+                          }}
+                          variant="primary"
+                          size="md"
+                          className="w-full py-3 bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium text-lg"
+                        >
+                          Start now
+                        </Button>
+                      </motion.div>
+                    </>
+                  )}
+                </motion.div>
+              </nav>
+            </div>
           </motion.div>
         )}
       </div>
