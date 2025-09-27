@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 
 const loginSchema = z.object({
