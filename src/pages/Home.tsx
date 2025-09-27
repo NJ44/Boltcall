@@ -11,7 +11,7 @@ import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white-smoke">
+    <div className="min-h-screen bg-white">
       <Header />
       <main>
         <Hero />

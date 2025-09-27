@@ -19,6 +19,7 @@ const config: Config = {
         },
         bg: "#FFFFFF",
         "white-smoke": "#F5F5F5",
+        "light-blue": "#DDE2EE",
         border: "#E5E7EB",
       }
     }

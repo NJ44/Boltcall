@@ -65,17 +65,8 @@ const FeaturesTabs: React.FC = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Powerful Features
+          Features
         </motion.h2>
-        <motion.p
-          className="text-lg text-text-muted max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          Everything you need to capture, qualify, and convert leads automatically
-        </motion.p>
       </div>
 
       <div className="max-w-6xl mx-auto">

@@ -34,7 +34,7 @@ const ValueProps: React.FC = () => {
   ];
 
   return (
-    <Section id="value-props" background="gray">
+    <Section id="value-props" background="white">
       <div className="text-center mb-16">
         <motion.h2
           className="text-3xl md:text-4xl font-bold text-text-main mb-4"

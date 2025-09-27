@@ -31,12 +31,12 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-white-smoke/50 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-sm"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -ml-4">
         <div className="flex items-center h-16">
           {/* Logo */}
           <Link to="/">
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation - Moved to left */}
-          <nav className="hidden md:flex items-center space-x-8 ml-8">
+          <nav className="hidden md:flex items-center space-x-8 ml-4">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}

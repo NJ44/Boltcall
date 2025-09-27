@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Check, Star } from 'lucide-react';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
@@ -33,8 +34,11 @@ const PlanCard: React.FC<PlanCardProps> = ({
   anchor = false,
   currency
 }) => {
+  const navigate = useNavigate();
+
   const handleCtaClick = () => {
-    console.log(`Selected plan: ${title}`);
+    // Navigate to setup page
+    navigate('/setup');
   };
 
 

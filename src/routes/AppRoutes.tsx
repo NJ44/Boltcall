@@ -10,7 +10,6 @@ import Dashboard from '../pages/Dashboard';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Setup from '../pages/Setup';
-import Pricing from '../pages/Pricing';
 
 const NavigationWrapper: React.FC = () => {
   const [isNavigating, setIsNavigating] = useState(false);
@@ -45,15 +44,7 @@ const NavigationWrapper: React.FC = () => {
             </ProtectedRoute>
           } 
         />
-        <Route 
-          path="/setup" 
-          element={
-            <ProtectedRoute>
-              <Setup />
-            </ProtectedRoute>
-          } 
-        />
-        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/setup" element={<Setup />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
       </Routes>
