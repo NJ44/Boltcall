@@ -84,6 +84,7 @@ const StepBusinessProfile: React.FC = () => {
               {errors.websiteUrl && (
                 <p className="mt-1 text-sm text-red-600">{errors.websiteUrl}</p>
               )}
+            </div>
           </div>
         </div>
       </div>

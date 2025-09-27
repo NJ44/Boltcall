@@ -20,12 +20,12 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   disabled = false,
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
-    primary: 'bg-brand-blue text-white hover:bg-brand-blueDark focus:ring-brand-blue',
-    secondary: 'bg-gray-100 text-text-main hover:bg-gray-200 focus:ring-gray-500',
-    outline: 'border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white focus:ring-brand-blue'
+    primary: 'bg-brand-blue text-white hover:bg-brand-blue/90 hover:shadow-lg hover:shadow-brand-blue/25 focus:ring-brand-blue transform hover:-translate-y-0.5',
+    secondary: 'bg-gray-100 text-text-main hover:bg-gray-200 hover:shadow-md focus:ring-gray-500 transform hover:-translate-y-0.5',
+    outline: 'border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white hover:shadow-lg hover:shadow-brand-blue/25 focus:ring-brand-blue transform hover:-translate-y-0.5'
   };
   
   const sizeClasses = {
@@ -40,8 +40,8 @@ const Button: React.FC<ButtonProps> = ({
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
       onClick={onClick}
       disabled={disabled}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       {children}
     </motion.button>

@@ -65,8 +65,8 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings" element={<SettingsPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/terms-of-service" element={<Terms />} />
       </Routes>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle, ChevronDown } from 'lucide-react';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
@@ -24,7 +24,13 @@ const stepComponents = {
 
 const WizardShell: React.FC = () => {
   const { currentStep, updateStep, account, businessProfile, phone, knowledgeBase } = useSetupStore();
-  const [expandedStep, setExpandedStep] = useState(1);
+  const [expandedStep, setExpandedStep] = useState(0);
+  const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const StepComponent = stepComponents[currentStep as keyof typeof stepComponents];
 
@@ -36,7 +42,7 @@ const WizardShell: React.FC = () => {
       case 2:
         return !!businessProfile.mainCategory && businessProfile.serviceAreas.length > 0;
       case 3:
-        return true; // Calendar step is always complete since it's optional
+        return false; // Calendar step is never marked as completed to show step number
       case 4:
         return phone.useExistingNumber ? !!phone.existingNumber : !!phone.newNumber.number;
       case 5:
@@ -51,6 +57,8 @@ const WizardShell: React.FC = () => {
   // Check if step is accessible (can be clicked)
   const isStepAccessible = (stepId: number) => {
     if (stepId === 1) return true;
+    if (stepId === 3) return unlockedSteps.includes(3); // Calendar step unlocked when reached
+    if (stepId === 4) return currentStep >= 4; // Phone step only accessible when reached
     return isStepCompleted(stepId - 1);
   };
 
@@ -68,42 +76,40 @@ const WizardShell: React.FC = () => {
   };
 
   const handleContinue = () => {
-    if (isStepCompleted(currentStep) && currentStep < setupSteps.length) {
+    const canContinue = currentStep === 3 ? true : isStepCompleted(currentStep);
+    if (canContinue && currentStep < setupSteps.length) {
       const nextStep = currentStep + 1;
       updateStep(nextStep);
       setExpandedStep(nextStep);
+      
+      // Unlock the calendar step when user reaches it
+      if (nextStep === 3 && !unlockedSteps.includes(3)) {
+        setUnlockedSteps(prev => [...prev, 3]);
+      }
     }
   };
 
 
-  const progressPercentage = (currentStep / setupSteps.length) * 100;
+  // Calculate progress based on completed steps, not current step
+  const completedSteps = setupSteps.filter((_, index) => {
+    const stepId = index + 1;
+    return isStepCompleted(stepId);
+  }).length;
+  const progressPercentage = (completedSteps / setupSteps.length) * 100;
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        {/* Back Button - Fixed to left edge */}
-        <button
-          onClick={() => window.history.back()}
-          className="absolute left-0 top-0 h-16 px-4 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors z-50"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="text-sm font-medium">Back</span>
-        </button>
-        
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4 ml-20">
+          <div className="flex items-center justify-center h-16">
+            <div className="flex items-center space-x-4">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">
                   Voice Receptionist Setup
                 </h1>
-                <p className="text-sm text-gray-500">
-                  Configure your AI receptionist in simple steps
-                </p>
               </div>
             </div>
-            
           </div>
         </div>
 
@@ -175,7 +181,7 @@ const WizardShell: React.FC = () => {
 
                {/* Separator Line */}
                {index < setupSteps.length - 1 && (
-                 <div className="mx-0">
+                 <div className="w-full">
                    <div className="h-px bg-gray-300"></div>
                  </div>
                )}
@@ -211,9 +217,9 @@ const WizardShell: React.FC = () => {
                             <div className="flex justify-end">
                               <Button
                                 onClick={handleContinue}
-                                disabled={!isStepCompleted(currentStep)}
+                                disabled={currentStep === 3 ? false : !isStepCompleted(currentStep)}
                                 className={`px-8 py-3 ${
-                                  isStepCompleted(currentStep)
+                                  currentStep === 3 || isStepCompleted(currentStep)
                                     ? 'bg-brand-blue text-white hover:bg-brand-blue/90'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 } transition-colors duration-200`}
