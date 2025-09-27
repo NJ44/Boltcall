@@ -7,7 +7,6 @@ import Button from '../../ui/Button';
 const StepCalendar: React.FC = () => {
   const { calendar, updateCalendar } = useSetupStore();
   const [isConnecting, setIsConnecting] = useState(false);
-  const [isTesting, setIsTesting] = useState(false);
 
   const handleGoogleConnect = async () => {
     setIsConnecting(true);

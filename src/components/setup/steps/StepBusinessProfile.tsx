@@ -8,7 +8,6 @@ import HoursEditor from '../forms/HoursEditor';
 const StepBusinessProfile: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
   const [isScraping, setIsScraping] = useState(false);
-  const [errors] = useState<Record<string, string>>({});
 
   const categories = [
     { value: 'dentist', label: 'Dentist' },

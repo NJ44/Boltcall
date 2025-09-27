@@ -10,7 +10,6 @@ const StepAccount: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [errors] = useState<Record<string, string>>({});
 
 
   const handleGoogleAuth = async () => {

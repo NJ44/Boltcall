@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
       { label: 'FAQ', href: '#faq' }
     ],
     company: [
-      { label: 'Contact', href: '#contact' },
+      { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms of Service', href: '/terms-of-service' }
     ],
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
                 <img 
                   src="/boltcall_full_logo.png" 
                   alt="Boltcall" 
-                  className="h-8 mb-3"
+                  className="h-12 mb-3"
                 />
               </motion.div>
             </div>

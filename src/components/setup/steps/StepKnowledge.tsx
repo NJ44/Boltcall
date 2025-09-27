@@ -8,7 +8,6 @@ import ServicesTable from '../forms/ServicesTable';
 const StepKnowledge: React.FC = () => {
   const { knowledgeBase, updateKnowledgeBase } = useSetupStore();
   const [isUploading, setIsUploading] = useState(false);
-  const [isScraping, setIsScraping] = useState(false);
 
   const handleAddFAQ = () => {
     const newFAQ = { question: '', answer: '' };

@@ -15,6 +15,7 @@ import BusinessPage from '../pages/dashboard/BusinessPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
+import Contact from '../pages/Contact';
 import Setup from '../pages/Setup';
 
 const NavigationWrapper: React.FC = () => {
@@ -65,6 +66,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings" element={<SettingsPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

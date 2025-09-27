@@ -6,7 +6,6 @@ import Button from '../../ui/Button';
 const StepPhone: React.FC = () => {
   const { phone, updatePhone } = useSetupStore();
   const [isSearching, setIsSearching] = useState(false);
-  const [isTesting, setIsTesting] = useState(false);
 
   const mockNumbers = [
     { number: '+1 (555) 123-4567', location: 'New York, NY' },
