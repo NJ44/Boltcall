@@ -7,7 +7,9 @@ import {
   Building2, 
   Settings,
   Menu,
-  X
+  X,
+  MessageSquare,
+  MessageCircle
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import CharacterSelectionPopup from './CharacterSelectionPopup';
@@ -48,6 +50,8 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-5 h-5" /> },
     { to: '/dashboard/business', label: 'Business Details', icon: <Building2 className="w-5 h-5" /> },
+    { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-5 h-5" /> },
+    { to: '/dashboard/whatsapp', label: 'WhatsApp (Beta)', icon: <MessageCircle className="w-5 h-5" /> },
     { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
   ];
 

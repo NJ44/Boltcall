@@ -11,9 +11,9 @@ const Pricing: React.FC = () => {
 
   const plans = [
     {
-      name: 'Starter',
-      price: 'Free',
-      description: 'Build on Index for free with your entire company. Upgrade for unlimited dashboards, editors, connections and dedicated enterprise features.',
+      name: 'STARTER',
+      price: '$1297',
+      description: 'Perfect for small dental practices getting started with AI receptionist.',
       features: [
         '1 editor',
         '1 connection',
@@ -44,8 +44,8 @@ const Pricing: React.FC = () => {
       buttonColor: 'bg-gray-900 text-white hover:bg-gray-800'
     },
     {
-      name: 'Enterprise',
-      price: 'Custom',
+      name: 'ENTERPRISE',
+      price: '$3997',
       description: 'Everything on PRO plus:',
       features: [
         'Embedded analytics',
@@ -53,7 +53,7 @@ const Pricing: React.FC = () => {
         'Whitelabeling',
         'Dedicated support'
       ],
-      cta: 'Get started with Enterprise',
+      cta: 'Get started with ENTERPRISE',
       popular: false,
       bgColor: 'bg-gray-900',
       textColor: 'text-white',
@@ -168,7 +168,7 @@ const Pricing: React.FC = () => {
               </div>
             )}
             
-            <Card className={`h-full ${plan.bgColor} ${plan.textColor} border border-gray-200 shadow-xl`}>
+            <Card className={`h-full ${plan.bgColor} ${plan.textColor} border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out`}>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
                 
@@ -180,7 +180,7 @@ const Pricing: React.FC = () => {
                 </div>
 
                   <Button
-                  className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${plan.buttonColor}`}
+                  className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 ease-in-out ${plan.buttonColor}`}
                   >
                   {plan.cta}
                   </Button>
@@ -204,6 +204,45 @@ const Pricing: React.FC = () => {
         ))}
       </div>
 
+      {/* Guarantee Section */}
+      <motion.div
+        className="max-w-4xl mx-auto mb-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Check className="w-4 h-4" />
+              30-Day Money-Back Guarantee
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Try Boltcall risk-free for 30 days
+            </h3>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              If you don't get 15 qualified leads in 30 days, we work free until you do. 
+              No questions asked, no strings attached.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex items-center gap-2 text-gray-700">
+                <Check className="w-5 h-5 text-green-500" />
+                <span>Full refund if not satisfied</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-700">
+                <Check className="w-5 h-5 text-green-500" />
+                <span>No setup fees</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-700">
+                <Check className="w-5 h-5 text-green-500" />
+                <span>Cancel anytime</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Comparison Table */}
       <motion.div
         className="max-w-7xl mx-auto"
@@ -214,40 +253,32 @@ const Pricing: React.FC = () => {
       >
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
           {/* Table Header */}
-          <div className="bg-gray-50 px-8 py-6">
-            <div className="grid grid-cols-4 gap-4">
-              <div className="text-left">
-                <h4 className="text-lg font-semibold text-gray-900">Compare our plans</h4>
-              </div>
-              <div className="text-center">
-                <Button className="bg-gray-100 text-gray-900 hover:bg-gray-200 px-4 py-2 text-sm">
-                  Sign up
-                </Button>
-              </div>
-              <div className="text-center">
-                <Button className="bg-gray-100 text-gray-900 hover:bg-gray-200 px-4 py-2 text-sm">
-                  Sign up
-                </Button>
-              </div>
-              <div className="text-center">
-                <Button className="bg-gray-900 text-white hover:bg-gray-800 px-4 py-2 text-sm">
-                  Book demo
-                </Button>
-              </div>
+          <div className="grid grid-cols-4 gap-0">
+            <div className="text-left bg-gray-50 px-8 py-6">
+              <h4 className="text-2xl font-bold text-gray-900">Compare our plans</h4>
+            </div>
+            <div className="text-center bg-gray-50 px-8 py-6">
+              <div className="text-lg font-semibold text-gray-900">STARTER</div>
+            </div>
+            <div className="text-center bg-gray-50 px-8 py-6">
+              <div className="text-lg font-semibold text-gray-900">PRO</div>
+            </div>
+            <div className="text-center bg-gray-900 px-8 py-6">
+              <div className="text-lg font-semibold text-white">ENTERPRISE</div>
             </div>
           </div>
 
           {/* Table Body */}
-          <div className="divide-y divide-gray-200">
+          <div>
             {comparisonFeatures.map((feature, index) => (
               <motion.div
                 key={`${feature.category}-${feature.name}`}
-                className="grid grid-cols-4 gap-4 px-8 py-4 hover:bg-gray-50 transition-colors duration-200"
+                className="group grid grid-cols-4 gap-0 transition-all duration-300 ease-in-out hover:bg-gray-50"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.02 }}
               >
-                <div className="text-left">
+                <div className="text-left px-8 py-4 group-hover:bg-gray-50">
                   <div className="flex items-center gap-2">
                     <span className="text-gray-900 font-medium">{feature.name}</span>
                     {feature.badge && (
@@ -260,7 +291,7 @@ const Pricing: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="text-center">
+                <div className="text-center px-8 py-4 group-hover:bg-gray-50">
                   {typeof feature.starter === 'boolean' ? (
                     feature.starter ? (
                       <Check className="w-5 h-5 text-green-500 mx-auto" />
@@ -268,11 +299,11 @@ const Pricing: React.FC = () => {
                       <X className="w-5 h-5 text-red-400 mx-auto" />
                     )
                   ) : (
-                    <span className="text-gray-900">{feature.starter}</span>
+                    <span className="text-gray-900">{feature.starter || '-'}</span>
                   )}
                 </div>
                 
-                <div className="text-center">
+                <div className="text-center px-8 py-4 group-hover:bg-gray-50">
                   {typeof feature.pro === 'boolean' ? (
                     feature.pro ? (
                       <Check className="w-5 h-5 text-green-500 mx-auto" />
@@ -280,19 +311,19 @@ const Pricing: React.FC = () => {
                       <X className="w-5 h-5 text-red-400 mx-auto" />
                     )
                   ) : (
-                    <span className="text-gray-900">{feature.pro}</span>
+                    <span className="text-gray-900">{feature.pro || '-'}</span>
                   )}
                 </div>
                 
-                <div className="text-center bg-gray-900">
+                <div className="text-center px-8 py-4 bg-gray-900 group-hover:bg-gray-800">
                   {typeof feature.enterprise === 'boolean' ? (
                     feature.enterprise ? (
-                      <Check className="w-5 h-5 text-green-500 mx-auto" />
+                      <Check className="w-5 h-5 text-green-400 mx-auto" />
                     ) : (
-                      <X className="w-5 h-5 text-red-400 mx-auto" />
+                      <X className="w-5 h-5 text-red-300 mx-auto" />
                     )
                   ) : (
-                    <span className="text-white">{feature.enterprise}</span>
+                    <span className="text-white">{feature.enterprise || '-'}</span>
                   )}
                 </div>
               </motion.div>

@@ -12,6 +12,8 @@ import DashboardPage from '../pages/dashboard/DashboardPage';
 import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
 import AgentsPage from '../pages/dashboard/AgentsPage';
 import BusinessPage from '../pages/dashboard/BusinessPage';
+import SmsPage from '../pages/dashboard/SmsPage';
+import WhatsappPage from '../pages/dashboard/WhatsappPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
@@ -63,6 +65,8 @@ const NavigationWrapper: React.FC = () => {
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
           <Route path="business" element={<BusinessPage />} />
+          <Route path="sms" element={<SmsPage />} />
+          <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="settings" element={<SettingsPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
