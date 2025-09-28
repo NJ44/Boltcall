@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Eye, EyeOff } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Card from '../components/ui/Card';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -22,6 +22,10 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get redirect path from URL params, default to dashboard
+  const redirectTo = new URLSearchParams(location.search).get('redirect') || '/dashboard';
 
   const {
     register,
@@ -36,8 +40,8 @@ const Login: React.FC = () => {
       setIsLoading(true);
       setError('');
       await login(data);
-      navigate('/dashboard');
-    } catch (err) {
+      navigate(redirectTo);
+    } catch {
       setError('Invalid email or password. Please try again.');
     } finally {
       setIsLoading(false);
@@ -52,8 +56,8 @@ const Login: React.FC = () => {
       console.log('Google login clicked');
       // Simulate login for now
       await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate('/dashboard');
-    } catch (err) {
+      navigate(redirectTo);
+    } catch {
       setError('Google login failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -68,8 +72,8 @@ const Login: React.FC = () => {
       console.log('Microsoft login clicked');
       // Simulate login for now
       await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate('/dashboard');
-    } catch (err) {
+      navigate(redirectTo);
+    } catch {
       setError('Microsoft login failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -119,7 +123,7 @@ const Login: React.FC = () => {
                   transition={{ duration: 0.5 }}
                   className="text-center mb-6"
                 >
-                  <h2 className="text-xl font-bold text-zinc-900">SIGN IN</h2>
+                  <h2 className="text-2xl font-bold text-zinc-900">SIGN IN</h2>
                 </motion.div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
               {/* Email */}

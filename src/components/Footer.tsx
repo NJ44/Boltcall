@@ -141,7 +141,7 @@ const Footer: React.FC = () => {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © 2024 Boltcall. All rights reserved.
+              © 2025 Boltcall. All rights reserved.
             </motion.div>
 
             <motion.div

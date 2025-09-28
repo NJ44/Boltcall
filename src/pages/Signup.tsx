@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Eye, EyeOff } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Card from '../components/ui/Card';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -29,6 +29,10 @@ const Signup: React.FC = () => {
   const [error, setError] = useState('');
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get redirect path from URL params, default to dashboard
+  const redirectTo = new URLSearchParams(location.search).get('redirect') || '/dashboard';
 
   const {
     register,
@@ -48,8 +52,8 @@ const Signup: React.FC = () => {
         password: data.password,
         company: data.company
       });
-      navigate('/dashboard');
-    } catch (err) {
+      navigate(redirectTo);
+    } catch {
       setError('Failed to create account. Please try again.');
     } finally {
       setIsLoading(false);

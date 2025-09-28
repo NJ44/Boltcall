@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 interface SectionProps {
   children: React.ReactNode;
@@ -21,18 +20,14 @@ const Section: React.FC<SectionProps> = ({
   };
 
   return (
-    <motion.section
+    <section
       id={id}
       className={`py-16 lg:py-24 ${backgroundClasses[background]} ${className}`}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {children}
       </div>
-    </motion.section>
+    </section>
   );
 };
 

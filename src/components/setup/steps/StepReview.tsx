@@ -5,7 +5,6 @@ import { CheckCircle, Edit, Phone, Calendar, Globe, MessageSquare, Settings } fr
 import { useSetupStore, setupSteps } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import PageLoader from '../../PageLoader';
-import SetupCompletionPopup from '../../SetupCompletionPopup';
 
 const StepReview: React.FC = () => {
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ const StepReview: React.FC = () => {
   } = useSetupStore();
   
   const [isLaunching, setIsLaunching] = useState(false);
-  const [showCompletionPopup, setShowCompletionPopup] = useState(false);
 
   const handleLaunch = async () => {
     setIsLaunching(true);
@@ -48,10 +46,8 @@ const StepReview: React.FC = () => {
       // Stop loading animation
       setIsLaunching(false);
       
-      // Show completion popup after a brief moment
-      setTimeout(() => {
-        setShowCompletionPopup(true);
-      }, 300);
+      // Navigate directly to dashboard
+      navigate('/dashboard');
       
     } catch (error) {
       console.error('Error launching setup:', error);
@@ -59,11 +55,6 @@ const StepReview: React.FC = () => {
     }
   };
 
-  const handleSetupComplete = () => {
-    setShowCompletionPopup(false);
-    // Navigate to dashboard
-    navigate('/dashboard');
-  };
 
   const getCompletionStatus = () => {
     const totalSteps = setupSteps.length - 1; // Exclude review step
@@ -250,10 +241,9 @@ const StepReview: React.FC = () => {
             <CheckCircle className="w-6 h-6" />
           </motion.div>
           
-          <h3 className="text-xl font-bold mb-2">Setup Complete!</h3>
+          <h3 className="text-xl font-bold mb-2">Ready to Launch!</h3>
           <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-            Your AI receptionist has been configured successfully. 
-            Click finish setup to complete the process and start using your dashboard.
+            Your AI receptionist is ready to go live. Complete the setup to start using your dashboard.
           </p>
 
           <Button
@@ -262,7 +252,7 @@ const StepReview: React.FC = () => {
             variant="primary"
             className="bg-white text-brand-blue hover:bg-gray-50 px-8 py-3 text-lg font-semibold"
           >
-            {isLaunching ? 'Finishing Setup...' : 'Finish Setup'}
+            {isLaunching ? 'Completing Setup...' : 'Complete Setup'}
           </Button>
 
           {review.isLaunched && (
@@ -277,12 +267,6 @@ const StepReview: React.FC = () => {
           )}
         </div>
       </div>
-      
-      {/* Setup Completion Popup */}
-      <SetupCompletionPopup 
-        isOpen={showCompletionPopup}
-        onClose={handleSetupComplete}
-      />
       
       {/* Loading Animation */}
       <PageLoader isLoading={isLaunching} />

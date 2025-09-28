@@ -137,7 +137,7 @@ export const getCurrentUser = async (): Promise<User | null> => {
 
 // Listen to auth state changes
 export const onAuthStateChange = (callback: (user: User | null) => void) => {
-  return supabase.auth.onAuthStateChange(async (_event: any, session: any) => {
+  return supabase.auth.onAuthStateChange(async (_event: string, session: { user: SupabaseUser } | null) => {
     if (session?.user) {
       const user = await transformSupabaseUser(session.user);
       callback(user);

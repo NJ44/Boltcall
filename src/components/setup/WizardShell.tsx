@@ -23,7 +23,7 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, account, businessProfile, phone, knowledgeBase } = useSetupStore();
+  const { currentStep, updateStep, markStepCompleted, completedSteps } = useSetupStore();
   const [expandedStep, setExpandedStep] = useState(0);
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
 
@@ -34,24 +34,9 @@ const WizardShell: React.FC = () => {
 
   const StepComponent = stepComponents[currentStep as keyof typeof stepComponents];
 
-  // Check if step is completed
+  // Check if step is completed (based on explicit completion, not form data)
   const isStepCompleted = (stepId: number) => {
-    switch (stepId) {
-      case 1:
-        return !!account.businessName && !!account.workEmail;
-      case 2:
-        return !!businessProfile.mainCategory && businessProfile.serviceAreas.length > 0;
-      case 3:
-        return false; // Calendar step is never marked as completed to show step number
-      case 4:
-        return phone.useExistingNumber ? !!phone.existingNumber : !!phone.newNumber.number;
-      case 5:
-        return knowledgeBase.services.length > 0 || knowledgeBase.faqs.length > 0;
-      case 6:
-        return true; // Review step is always accessible if previous steps are done
-      default:
-        return false;
-    }
+    return completedSteps.includes(stepId);
   };
 
   // Check if step is accessible (can be clicked)
@@ -59,7 +44,7 @@ const WizardShell: React.FC = () => {
     if (stepId === 1) return true;
     if (stepId === 3) return unlockedSteps.includes(3); // Calendar step unlocked when reached
     if (stepId === 4) return currentStep >= 4; // Phone step only accessible when reached
-    return isStepCompleted(stepId - 1);
+    return completedSteps.includes(stepId - 1); // Previous step must be explicitly completed
   };
 
   const handleStepClick = (stepId: number) => {
@@ -76,8 +61,10 @@ const WizardShell: React.FC = () => {
   };
 
   const handleContinue = () => {
-    const canContinue = currentStep === 3 ? true : isStepCompleted(currentStep);
-    if (canContinue && currentStep < setupSteps.length) {
+    // Mark current step as completed
+    markStepCompleted(currentStep);
+    
+    if (currentStep < setupSteps.length) {
       const nextStep = currentStep + 1;
       updateStep(nextStep);
       setExpandedStep(nextStep);
@@ -90,12 +77,8 @@ const WizardShell: React.FC = () => {
   };
 
 
-  // Calculate progress based on completed steps, not current step
-  const completedSteps = setupSteps.filter((_, index) => {
-    const stepId = index + 1;
-    return isStepCompleted(stepId);
-  }).length;
-  const progressPercentage = (completedSteps / setupSteps.length) * 100;
+  // Calculate progress based on explicitly completed steps
+  const progressPercentage = (completedSteps.length / setupSteps.length) * 100;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -217,12 +200,7 @@ const WizardShell: React.FC = () => {
                             <div className="flex justify-end">
                               <Button
                                 onClick={handleContinue}
-                                disabled={currentStep === 3 ? false : !isStepCompleted(currentStep)}
-                                className={`px-8 py-3 ${
-                                  currentStep === 3 || isStepCompleted(currentStep)
-                                    ? 'bg-brand-blue text-white hover:bg-brand-blue/90'
-                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                } transition-colors duration-200`}
+                                className="px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors duration-200"
                               >
                                 Continue
                               </Button>

@@ -232,7 +232,7 @@ const StepCallFlow: React.FC = () => {
                       name="tone"
                       value={tone.value}
                       checked={callFlow.tone === tone.value}
-                      onChange={(e) => updateCallFlow({ tone: e.target.value as any })}
+                      onChange={(e) => updateCallFlow({ tone: e.target.value as 'friendly_concise' | 'formal' | 'playful' | 'calm' })}
                       className="text-brand-blue focus:ring-brand-blue mt-1"
                     />
                     <div>

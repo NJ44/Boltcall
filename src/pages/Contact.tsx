@@ -66,7 +66,7 @@ const Contact: React.FC = () => {
               <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET IN TOUCH</h1>
               <div className="w-96 h-96">
                 <DotLottieReact
-                  src="/Animation_contact.lottie"
+                  src="/Email.lottie"
                   loop
                   autoplay
                   style={{
@@ -88,15 +88,6 @@ const Contact: React.FC = () => {
             >
               <Card className="p-8 bg-white shadow-2xl border-0">
                 {/* Header */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-center mb-8"
-                >
-                  <h2 className="text-2xl font-bold text-zinc-900 mb-2">Contact Us</h2>
-                  <p className="text-zinc-600">We'll get back to you within 24 hours</p>
-                </motion.div>
 
                 {/* Success Message */}
                 {isSubmitted && (

@@ -12,7 +12,7 @@ const Header: React.FC = () => {
   const navItems = [
     { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   const handleLogout = async () => {
@@ -20,11 +20,17 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const scrollToSection = (href: string) => {
-    const elementId = href.replace('#', '');
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('#')) {
+      // Handle hash links (scroll to section)
+      const elementId = href.replace('#', '');
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Handle page routes - let React Router handle navigation
+      window.location.href = href;
     }
     setIsMenuOpen(false);
   };
@@ -57,7 +63,7 @@ const Header: React.FC = () => {
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
-                onClick={() => scrollToSection(item.href)}
+                onClick={() => handleNavClick(item.href)}
                 className="relative text-text-muted hover:text-brand-blue transition-colors duration-200 font-medium py-2"
                 whileHover="hover"
                 initial="initial"
@@ -102,7 +108,7 @@ const Header: React.FC = () => {
                   Login
                 </Link>
                 <Button
-                  onClick={() => scrollToSection('#contact')}
+                  onClick={() => handleNavClick('/contact')}
                   variant="primary"
                   size="md"
                   className="bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-6 py-2.5 rounded-xl"
@@ -142,7 +148,7 @@ const Header: React.FC = () => {
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.label}
-                    onClick={() => scrollToSection(item.href)}
+                    onClick={() => handleNavClick(item.href)}
                     className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -214,7 +220,7 @@ const Header: React.FC = () => {
                       >
                         <Button
                           onClick={() => {
-                            scrollToSection('#contact');
+                            handleNavClick('/contact');
                             setIsMenuOpen(false);
                           }}
                           variant="primary"

@@ -123,12 +123,20 @@ const PricingSection: React.FC = () => {
             </span>
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className="relative w-16 h-8 bg-gray-200 rounded-full transition-all duration-300 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className={`relative w-16 h-8 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-blue ${
+                isAnnual ? 'bg-brand-blue' : 'bg-gray-200 hover:bg-gray-300'
+              }`}
             >
               <motion.div
-                className="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md"
-                animate={{ x: isAnnual ? 32 : 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="absolute top-1 w-6 h-6 bg-white rounded-full shadow-lg"
+                animate={{ x: isAnnual ? 32 : 2 }}
+                transition={{ 
+                  duration: 0.4, 
+                  ease: [0.4, 0, 0.2, 1],
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30
+                }}
               />
             </button>
             <span className={`text-lg font-medium transition-colors duration-300 ${isAnnual ? 'text-gray-900' : 'text-gray-500'}`}>
@@ -136,7 +144,7 @@ const PricingSection: React.FC = () => {
             </span>
             {isAnnual && (
               <Badge className="bg-green-100 text-green-800 px-3 py-1">
-                Save 17%
+                3 months free
               </Badge>
             )}
           </motion.div>
@@ -215,7 +223,7 @@ const PricingSection: React.FC = () => {
                   </span>
                 </div>
                 {isAnnual && (
-                  <p className="text-green-600 text-sm mt-1">Save 17% annually</p>
+                  <p className="text-green-600 text-sm mt-1">3 months free</p>
                 )}
               </div>
 

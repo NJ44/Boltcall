@@ -79,7 +79,7 @@ const DashboardHeader: React.FC = () => {
                     <button
                       key={range.value}
                       onClick={() => {
-                        applyQuickDateRange(range.value as any);
+                        applyQuickDateRange(range.value as 'today' | '7d' | '30d' | 'custom');
                         setShowDatePicker(false);
                       }}
                       className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 rounded-lg transition-colors"

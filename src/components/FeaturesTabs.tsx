@@ -1,60 +1,9 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Clock, MessageCircle, User } from 'lucide-react';
-import Card from './ui/Card';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Section from './ui/Section';
-import Icon from './ui/Icon';
 
 const FeaturesTabs: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const features = [
-    {
-      icon: Zap,
-      title: 'Speed-to-Lead',
-      description: 'Lightning-fast response times that capture leads before they go cold',
-      details: [
-        '30-second average response time',
-        'Multi-channel support (SMS, WhatsApp, Web)',
-        'Intelligent lead scoring and prioritization',
-        'Automated follow-up sequences'
-      ]
-    },
-    {
-      icon: Clock,
-      title: '24/7 Booking',
-      description: 'Never miss an opportunity with round-the-clock availability',
-      details: [
-        '24/7 calendar integration',
-        'Smart scheduling based on availability',
-        'Automatic timezone handling',
-        'Rescheduling and cancellation management'
-      ]
-    },
-    {
-      icon: MessageCircle,
-      title: 'DM Bot',
-      description: 'Engage prospects across all social media platforms',
-      details: [
-        'Instagram, Facebook, LinkedIn integration',
-        'Natural conversation flow',
-        'Lead qualification in real-time',
-        'Seamless handoff to human agents'
-      ]
-    },
-    {
-      icon: User,
-      title: 'AI Receptionist',
-      description: 'Professional virtual receptionist for all your communication needs',
-      details: [
-        'Phone call handling and routing',
-        'Email management and responses',
-        'Appointment scheduling and confirmation',
-        'Customer service automation'
-      ]
-    }
-  ];
-
   return (
     <Section id="features" background="brand">
       <div className="text-center mb-16">
@@ -69,97 +18,90 @@ const FeaturesTabs: React.FC = () => {
         </motion.h2>
       </div>
 
-      <div className="max-w-6xl mx-auto">
-        {/* Tab Navigation */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {features.map((feature, index) => (
-            <button
-              key={feature.title}
-              onClick={() => setActiveTab(index)}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-                activeTab === index
-                  ? 'bg-brand-blue text-white shadow-lg'
-                  : 'bg-white text-text-muted hover:text-brand-blue hover:bg-white/80'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Icon
-                  icon={feature.icon}
-                  size="sm"
-                  color={activeTab === index ? 'white' : 'muted'}
-                />
-                <span>{feature.title}</span>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Tab Content */}
-        <AnimatePresence mode="wait">
+      <div className="max-w-7xl mx-auto">
+        <div className="relative">
+          {/* Main Animation - 10% smaller */}
           <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="flex justify-center items-center"
           >
-            <Card className="overflow-hidden">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                {/* Content */}
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center">
-                      <Icon
-                        icon={features[activeTab].icon}
-                        size="lg"
-                        color="brand"
-                      />
-                    </div>
-                    <h3 className="text-2xl font-bold text-text-main">
-                      {features[activeTab].title}
-                    </h3>
-                  </div>
-                  
-                  <p className="text-lg text-text-muted mb-6 leading-relaxed">
-                    {features[activeTab].description}
-                  </p>
-
-                  <ul className="space-y-3">
-                    {features[activeTab].details.map((detail, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-brand-blue rounded-full mt-2 flex-shrink-0" />
-                        <span className="text-text-muted">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Visual */}
-                <div className="bg-gradient-to-br from-brand-blue/10 to-brand-sky/20 rounded-xl p-8">
-                  <div className="bg-white rounded-lg p-6 shadow-sm">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-brand-blue/10 rounded-full flex items-center justify-center">
-                          <Icon
-                            icon={features[activeTab].icon}
-                            size="sm"
-                            color="brand"
-                          />
-                        </div>
-                        <div className="h-4 bg-gray-200 rounded w-24"></div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-3 bg-gray-200 rounded w-full"></div>
-                        <div className="h-3 bg-gray-200 rounded w-3/4"></div>
-                        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
+            <div className="w-[540px] h-[540px] md:w-[720px] md:h-[720px] lg:w-[900px] lg:h-[900px]">
+              <DotLottieReact
+                src="/Clean_tooth.lottie"
+                loop
+                autoplay
+                style={{
+                  width: '100%',
+                  height: '100%'
+                }}
+              />
+            </div>
           </motion.div>
-        </AnimatePresence>
+
+          {/* 4 Small Cards around the animation */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative w-full h-full max-w-4xl max-h-4xl">
+              {/* Top Card */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4"
+              >
+                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">Speed to Lead</h3>
+                  <p className="text-sm text-gray-600">30-second response time</p>
+                </div>
+              </motion.div>
+
+              {/* Right Card */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4"
+              >
+                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">24/7 Booking</h3>
+                  <p className="text-sm text-gray-600">Never miss an opportunity</p>
+                </div>
+              </motion.div>
+
+              {/* Bottom Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-4"
+              >
+                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">AI Receptionist</h3>
+                  <p className="text-sm text-gray-600">Professional virtual assistant</p>
+                </div>
+              </motion.div>
+
+              {/* Left Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                viewport={{ once: true }}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4"
+              >
+                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">Dashboard Analytics</h3>
+                  <p className="text-sm text-gray-600">Real-time insights</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
     </Section>
   );

@@ -135,7 +135,7 @@ const defaultData: SetupData = {
   calendar: {
     isConnected: false,
     selectedCalendar: '',
-    calendarConnected: 'none' as 'none',
+    calendarConnected: 'none' as const,
     appointmentTypes: [],
   },
   phone: {
@@ -197,7 +197,9 @@ const defaultData: SetupData = {
 interface SetupStore extends SetupData {
   currentStep: number;
   isCompleted: boolean;
+  completedSteps: number[]; // Track which steps have been explicitly completed
   updateStep: (step: number) => void;
+  markStepCompleted: (step: number) => void;
   updateAccount: (data: Partial<SetupData['account']>) => void;
   updateBusinessProfile: (data: Partial<SetupData['businessProfile']>) => void;
   updateCalendar: (data: Partial<SetupData['calendar']>) => void;
@@ -215,8 +217,13 @@ export const useSetupStore = create<SetupStore>()(
       ...defaultData,
       currentStep: 1,
       isCompleted: false,
+      completedSteps: [],
       
       updateStep: (step: number) => set({ currentStep: step }),
+      
+      markStepCompleted: (step: number) => set((state) => ({
+        completedSteps: [...state.completedSteps.filter(s => s !== step), step]
+      })),
       
       updateAccount: (data) => set((state) => ({
         account: { ...state.account, ...data }
@@ -246,7 +253,7 @@ export const useSetupStore = create<SetupStore>()(
         review: { ...state.review, ...data }
       })),
       
-      reset: () => set({ ...defaultData, currentStep: 1, isCompleted: false }),
+      reset: () => set({ ...defaultData, currentStep: 1, isCompleted: false, completedSteps: [] }),
       
       complete: () => set({ isCompleted: true }),
     }),

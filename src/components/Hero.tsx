@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
       <div className="relative z-10 text-center">
         {/* Main Headline */}
         <motion.h1
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-text-main mb-6 pt-8"
+          className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          We answer in 30 seconds, 24/7, and book the slot. If you don't get 15 qualified leads in 30 days, we work free until you do.
+          The AI booking + receptionist cosmetic dentists need
         </motion.p>
 
 

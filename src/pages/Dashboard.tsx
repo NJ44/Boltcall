@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useDashboardStore } from '../stores/dashboardStore';
+import type { Lead } from '../types/dashboard';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import SidebarFilters from '../components/dashboard/SidebarFilters';
 import KpiTile from '../components/dashboard/KpiTile';
@@ -28,7 +29,7 @@ const Dashboard: React.FC = () => {
   } = useDashboardStore();
 
 
-  const handleLeadClick = (lead: any) => {
+  const handleLeadClick = (lead: Lead) => {
     setSelectedLead(lead);
   };
 

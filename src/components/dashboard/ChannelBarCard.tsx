@@ -17,7 +17,7 @@ interface ChannelBarCardProps {
   className?: string;
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { name: string; value: number; color: string }[]; label?: string }) => {
   if (active && payload && payload.length) {
     const qualified = payload[0]?.value || 0;
     const booked = payload[1]?.value || 0;

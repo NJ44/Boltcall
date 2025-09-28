@@ -31,9 +31,9 @@ const FAQ: React.FC = () => {
 
   return (
     <Section id="faq" background="gray">
-      <div className="text-center mb-16">
+      <div className="text-center mb-10">
         <motion.h2
-          className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-main mb-4"
+          className="text-3xl md:text-4xl font-bold text-text-main mb-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -43,7 +43,7 @@ const FAQ: React.FC = () => {
         </motion.h2>
       </div>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="space-y-6">
           {faqs.map((faq, index) => (
             <motion.div
@@ -53,18 +53,18 @@ const FAQ: React.FC = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="group bg-white rounded-2xl border border-gray-200/50 overflow-hidden shadow-lg transition-all duration-300">
+              <div className="group bg-white rounded-xl border border-gray-200/50 overflow-hidden shadow-sm transition-all duration-300">
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-white transition-all duration-300 focus:outline-none rounded-t-2xl"
+                  className="w-full px-7 py-5 text-left flex items-center justify-between hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-white transition-all duration-300 focus:outline-none rounded-t-xl"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="text-xl font-bold text-gray-900 pr-6 group-hover:text-brand-blue transition-colors duration-300">
+                  <span className="text-xl font-semibold text-gray-900 pr-5 group-hover:text-brand-blue transition-colors duration-300">
                     {faq.question}
                   </span>
                   <motion.div 
-                    className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky flex items-center justify-center shadow-md transition-shadow duration-300"
+                    className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky flex items-center justify-center shadow-sm transition-shadow duration-300"
                   >
                     {openIndex === index ? (
                       <Minus className="w-5 h-5 text-white" />
@@ -88,7 +88,7 @@ const FAQ: React.FC = () => {
                       }}
                       className="overflow-hidden"
                     >
-                      <div className="px-8 pb-6 bg-gradient-to-b from-white to-gray-50/30">
+                      <div className="px-7 pb-5 bg-gradient-to-b from-white to-gray-50/30">
                         <p className="text-gray-700 leading-relaxed text-lg">
                           {faq.answer}
                         </p>

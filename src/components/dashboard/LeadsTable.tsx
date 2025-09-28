@@ -41,7 +41,7 @@ const formatDate = (dateString: string) => {
 
 const LeadsTable: React.FC<LeadsTableProps> = ({ data, onRowClick, className = '' }) => {
   const [globalFilter, setGlobalFilter] = useState('');
-  const [columnFilters, setColumnFilters] = useState<any[]>([]);
+  const [columnFilters, setColumnFilters] = useState<{ id: string; value: unknown }[]>([]);
   
   const columnHelper = createColumnHelper<Lead>();
   
