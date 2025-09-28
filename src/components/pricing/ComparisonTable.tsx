@@ -118,3 +118,4 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ data }) => {
 export default ComparisonTable;
 
 
+

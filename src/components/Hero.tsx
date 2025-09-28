@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Close Leads On Autopilot
+          NEVER MISS A LEAD AGAIN.
         </motion.h1>
 
         {/* Subheadline */}
