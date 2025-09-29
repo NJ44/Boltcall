@@ -6,15 +6,15 @@ import Section from './ui/Section';
 const FeaturesTabs: React.FC = () => {
   return (
     <Section id="features" background="brand">
-      <div className="text-center mb-16">
+      <div className="text-center mb-8">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-text-main mb-4"
+          className="text-4xl md:text-6xl font-bold text-text-main mb-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          Features
+          KEEPING YOU CLEAN AND SHINY
         </motion.h2>
       </div>
 
@@ -41,10 +41,10 @@ const FeaturesTabs: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* 4 Small Cards around the animation */}
+          {/* 4 Professional Cards around the animation */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative w-full h-full max-w-4xl max-h-4xl">
-              {/* Top Card */}
+              {/* Top Card - Track all your metrics */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -52,13 +52,23 @@ const FeaturesTabs: React.FC = () => {
                 viewport={{ once: true }}
                 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4"
               >
-                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
-                  <h3 className="font-semibold text-gray-900 mb-2">Speed to Lead</h3>
-                  <p className="text-sm text-gray-600">30-second response time</p>
+                <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
+                  <div className="w-20 h-20 mx-auto mb-4">
+                    <DotLottieReact
+                      src="/statistics_on_tab.lottie"
+                      loop
+                      autoplay
+                      style={{
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Track all your metrics</h3>
                 </div>
               </motion.div>
 
-              {/* Right Card */}
+              {/* Right Card - AI Receptionist */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -66,13 +76,23 @@ const FeaturesTabs: React.FC = () => {
                 viewport={{ once: true }}
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4"
               >
-                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
-                  <h3 className="font-semibold text-gray-900 mb-2">24/7 Booking</h3>
-                  <p className="text-sm text-gray-600">Never miss an opportunity</p>
+                <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
+                  <div className="w-20 h-20 mx-auto mb-4">
+                    <DotLottieReact
+                      src="/Dentist_Checking_Teeth.lottie"
+                      loop
+                      autoplay
+                      style={{
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">AI receptionist that answer calls 24/7</h3>
                 </div>
               </motion.div>
 
-              {/* Bottom Card */}
+              {/* Bottom Card - Dashboard Interface */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -80,13 +100,23 @@ const FeaturesTabs: React.FC = () => {
                 viewport={{ once: true }}
                 className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-4"
               >
-                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
-                  <h3 className="font-semibold text-gray-900 mb-2">AI Receptionist</h3>
-                  <p className="text-sm text-gray-600">Professional virtual assistant</p>
+                <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
+                  <div className="w-20 h-20 mx-auto mb-4">
+                    <DotLottieReact
+                      src="/Dental_Care_anim.lottie"
+                      loop
+                      autoplay
+                      style={{
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Easy and simple dashboard interface to manage all features</h3>
                 </div>
               </motion.div>
 
-              {/* Left Card */}
+              {/* Left Card - Auto-texts/calls */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -94,9 +124,19 @@ const FeaturesTabs: React.FC = () => {
                 viewport={{ once: true }}
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4"
               >
-                <div className="bg-white rounded-xl shadow-lg p-4 w-48 text-center border border-gray-200">
-                  <h3 className="font-semibold text-gray-900 mb-2">Dashboard Analytics</h3>
-                  <p className="text-sm text-gray-600">Real-time insights</p>
+                <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
+                  <div className="w-20 h-20 mx-auto mb-4">
+                    <DotLottieReact
+                      src="/Dentist_Surgery.lottie"
+                      loop
+                      autoplay
+                      style={{
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Auto-texts/calls new leads within seconds, qualifies them, and books them straight to your calendar</h3>
                 </div>
               </motion.div>
             </div>

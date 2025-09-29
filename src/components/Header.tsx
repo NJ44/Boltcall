@@ -111,9 +111,17 @@ const Header: React.FC = () => {
                   onClick={() => handleNavClick('/contact')}
                   variant="primary"
                   size="md"
-                  className="bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-6 py-2.5 rounded-xl"
+                  className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 shadow-2xl hover:shadow-3xl transition-all duration-300 font-bold px-8 py-3 rounded-2xl text-white border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
                 >
-                  Start now
+                  <span className="flex items-center gap-2">
+                    <span>Start now</span>
+                    <motion.div
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      →
+                    </motion.div>
+                  </span>
                 </Button>
               </>
             )}
@@ -225,9 +233,17 @@ const Header: React.FC = () => {
                           }}
                           variant="primary"
                           size="md"
-                          className="w-full py-3 bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium text-lg"
+                          className="w-full py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 shadow-2xl hover:shadow-3xl transition-all duration-300 font-bold text-lg rounded-2xl text-white border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
                         >
-                          Start now
+                          <span className="flex items-center justify-center gap-2">
+                            <span>Start now</span>
+                            <motion.div
+                              animate={{ x: [0, 4, 0] }}
+                              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            >
+                              →
+                            </motion.div>
+                          </span>
                         </Button>
                       </motion.div>
                     </>

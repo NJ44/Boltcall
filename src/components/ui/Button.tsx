@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -11,40 +11,130 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
+const StyledWrapper = styled.div`
+  .button2 {
+    display: inline-block;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: #090909;
+    padding: 0.7em 1.7em;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    font-weight: 500;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .button2:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+  }
+
+  .button2:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+
+  .button2:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #009087;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+  }
+
+  .button2:hover {
+    color: #ffffff;
+    border: 1px solid #009087;
+  }
+
+  .button2:hover:before {
+    top: -35%;
+    background-color: #009087;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+
+  .button2:hover:after {
+    top: -45%;
+    background-color: #009087;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  }
+
+  .button2:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .button2:disabled:hover {
+    color: #090909;
+    border: 1px solid #e8e8e8;
+  }
+
+  .button2:disabled:hover:before,
+  .button2:disabled:hover:after {
+    background-color: rgba(0, 0, 0, 0.05);
+    top: 100%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+  }
+
+  /* Size variants */
+  .button-sm {
+    padding: 0.5em 1.2em;
+    font-size: 14px;
+    min-width: 100px;
+  }
+
+  .button-lg {
+    padding: 0.9em 2em;
+    font-size: 20px;
+    min-width: 140px;
+  }
+`;
+
 const Button: React.FC<ButtonProps> = ({
   children,
-  variant = 'primary',
   size = 'md',
   className = '',
   onClick,
   type = 'button',
   disabled = false,
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  const sizeClass = size === 'sm' ? 'button-sm' : size === 'lg' ? 'button-lg' : '';
   
-  const variantClasses = {
-    primary: 'bg-brand-blue text-white hover:bg-brand-blue/90 hover:shadow-lg hover:shadow-brand-blue/25 focus:ring-brand-blue transform hover:-translate-y-0.5',
-    secondary: 'bg-gray-100 text-text-main hover:bg-gray-200 hover:shadow-md focus:ring-gray-500 transform hover:-translate-y-0.5',
-    outline: 'border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white hover:shadow-lg hover:shadow-brand-blue/25 focus:ring-brand-blue transform hover:-translate-y-0.5'
-  };
-  
-  const sizeClasses = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg'
-  };
-
   return (
-    <motion.button
-      type={type}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
-      onClick={onClick}
-      disabled={disabled}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      {children}
-    </motion.button>
+    <StyledWrapper>
+      <button 
+        type={type}
+        className={`button2 ${sizeClass} ${className}`}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        {children}
+      </button>
+    </StyledWrapper>
   );
 };
 

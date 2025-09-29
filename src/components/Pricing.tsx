@@ -24,7 +24,7 @@ const Pricing: React.FC = () => {
       popular: false,
       bgColor: 'bg-white',
       textColor: 'text-gray-900',
-      buttonColor: 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+      buttonColor: 'bg-gray-900 text-white hover:bg-gray-800'
     },
     {
       name: 'PRO',
@@ -57,7 +57,7 @@ const Pricing: React.FC = () => {
       popular: false,
       bgColor: 'bg-gray-900',
       textColor: 'text-white',
-      buttonColor: 'bg-gray-900 text-white hover:bg-gray-800'
+      buttonColor: 'bg-gray-100 text-gray-900 hover:bg-gray-200'
     }
   ];
 

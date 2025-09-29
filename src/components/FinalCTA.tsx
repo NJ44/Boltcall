@@ -25,7 +25,8 @@ const FinalCTA: React.FC = () => {
             className="text-center lg:text-left"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-text-main mb-6">
-              Ready to join the AI Revolution?
+              Don't get left behind. 
+              Get The Advantage.
             </h2>
             <Button
               onClick={scrollToPricing}
