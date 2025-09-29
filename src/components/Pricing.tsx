@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Card from './ui/Card';
 import Section from './ui/Section';
 import Button from './ui/Button';
@@ -8,6 +9,7 @@ import Badge from './ui/Badge';
 
 const Pricing: React.FC = () => {
   const [isAnnual, setIsAnnual] = useState(true);
+  const navigate = useNavigate();
 
   const plans = [
     {
@@ -53,7 +55,7 @@ const Pricing: React.FC = () => {
         'Whitelabeling',
         'Dedicated support'
       ],
-      cta: 'Get started with ENTERPRISE',
+      cta: 'Get started',
       popular: false,
       bgColor: 'bg-gray-900',
       textColor: 'text-white',
@@ -180,6 +182,7 @@ const Pricing: React.FC = () => {
                 </div>
 
                   <Button
+                  onClick={() => navigate('/setup')}
                   className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 ease-in-out ${plan.buttonColor}`}
                   >
                   {plan.cta}

@@ -59,7 +59,7 @@ const StyledWrapper = styled.div`
     top: 180%;
     width: 160%;
     height: 190%;
-    background-color: #009087;
+    background-color: #3b82f6;
     border-radius: 50%;
     display: block;
     transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
@@ -68,18 +68,18 @@ const StyledWrapper = styled.div`
 
   .button2:hover {
     color: #ffffff;
-    border: 1px solid #009087;
+    border: 1px solid #3b82f6;
   }
 
   .button2:hover:before {
     top: -35%;
-    background-color: #009087;
+    background-color: #3b82f6;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
   }
 
   .button2:hover:after {
     top: -45%;
-    background-color: #009087;
+    background-color: #3b82f6;
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
   }
 

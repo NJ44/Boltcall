@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import type { User, AuthState, LoginCredentials, SignupCredentials } from '../lib/auth';
-import { login as supabaseLogin, signup as supabaseSignup, logout as supabaseLogout, getCurrentUser, onAuthStateChange } from '../lib/auth';
+import { login as supabaseLogin, signup as supabaseSignup, logout as supabaseLogout, getCurrentUser, onAuthStateChange, signInWithGoogle, signInWithMicrosoft } from '../lib/auth';
 
 interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>;
   signup: (credentials: SignupCredentials) => Promise<void>;
   logout: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithMicrosoft: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -111,11 +113,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      dispatch({ type: 'LOGIN_START' });
+      await signInWithGoogle();
+    } catch (error) {
+      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
+        // This is expected for OAuth redirects
+        return;
+      }
+      dispatch({ type: 'LOGIN_ERROR' });
+      throw error;
+    }
+  };
+
+  const handleMicrosoftLogin = async () => {
+    try {
+      dispatch({ type: 'LOGIN_START' });
+      await signInWithMicrosoft();
+    } catch (error) {
+      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
+        // This is expected for OAuth redirects
+        return;
+      }
+      dispatch({ type: 'LOGIN_ERROR' });
+      throw error;
+    }
+  };
+
   const value: AuthContextType = {
     ...state,
     login,
     signup,
-    logout
+    logout,
+    signInWithGoogle: handleGoogleLogin,
+    signInWithMicrosoft: handleMicrosoftLogin
   };
 
   return (

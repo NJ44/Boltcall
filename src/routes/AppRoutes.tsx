@@ -15,10 +15,12 @@ import BusinessPage from '../pages/dashboard/BusinessPage';
 import SmsPage from '../pages/dashboard/SmsPage';
 import WhatsappPage from '../pages/dashboard/WhatsappPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
+import AssistantPage from '../pages/dashboard/AssistantPage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import Setup from '../pages/Setup';
+import AuthCallback from '../pages/AuthCallback';
 
 const NavigationWrapper: React.FC = () => {
   const [isNavigating, setIsNavigating] = useState(false);
@@ -65,11 +67,13 @@ const NavigationWrapper: React.FC = () => {
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
           <Route path="business" element={<BusinessPage />} />
+          <Route path="assistant" element={<AssistantPage />} />
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="settings" element={<SettingsPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

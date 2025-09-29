@@ -146,3 +146,29 @@ export const onAuthStateChange = (callback: (user: User | null) => void) => {
     }
   });
 };
+
+export const signInWithGoogle = async (): Promise<User> => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/dashboard`,
+      scopes: 'openid email profile',
+      queryParams: { access_type: 'offline', prompt: 'consent' }
+    }
+  });
+  if (error) throw new Error(error.message);
+  throw new Error('OAuth redirect initiated');
+};
+
+export const signInWithMicrosoft = async (): Promise<User> => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'azure',
+    options: {
+      redirectTo: `${window.location.origin}/dashboard`,
+      scopes: 'openid email profile',
+      queryParams: { access_type: 'offline', prompt: 'consent' }
+    }
+  });
+  if (error) throw new Error(error.message);
+  throw new Error('OAuth redirect initiated');
+};

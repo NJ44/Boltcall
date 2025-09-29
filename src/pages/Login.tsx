@@ -20,7 +20,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login, signInWithGoogle, signInWithMicrosoft } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -52,12 +52,12 @@ const Login: React.FC = () => {
     try {
       setIsLoading(true);
       setError('');
-      // TODO: Implement Google OAuth
-      console.log('Google login clicked');
-      // Simulate login for now
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate(redirectTo);
-    } catch {
+      await signInWithGoogle();
+    } catch (error) {
+      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
+        // This is expected for OAuth redirects
+        return;
+      }
       setError('Google login failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -68,12 +68,12 @@ const Login: React.FC = () => {
     try {
       setIsLoading(true);
       setError('');
-      // TODO: Implement Microsoft OAuth
-      console.log('Microsoft login clicked');
-      // Simulate login for now
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate(redirectTo);
-    } catch {
+      await signInWithMicrosoft();
+    } catch (error) {
+      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
+        // This is expected for OAuth redirects
+        return;
+      }
       setError('Microsoft login failed. Please try again.');
     } finally {
       setIsLoading(false);

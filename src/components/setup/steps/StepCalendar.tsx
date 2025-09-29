@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Clock } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
+import { supabase } from '../../../lib/supabase';
 import Button from '../../ui/Button';
 
 const StepCalendar: React.FC = () => {
@@ -10,18 +11,30 @@ const StepCalendar: React.FC = () => {
   const handleGoogleConnect = async () => {
     setIsConnecting(true);
     try {
-      // TODO: Implement Google OAuth
       console.log('Connecting to Google Calendar...');
       
-      // Mock connection
-      setTimeout(() => {
-        updateCalendar({
-          isConnected: true,
-          selectedCalendar: 'Google Calendar',
-          calendarConnected: 'google',
-        });
-        setIsConnecting(false);
-      }, 2000);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          scopes: [
+            'openid',
+            'email',
+            'profile',
+            'https://www.googleapis.com/auth/calendar.readonly',
+            'https://www.googleapis.com/auth/calendar.events'
+          ].join(' '),
+          // helps ensure a refresh token on first consent:
+          queryParams: { access_type: 'offline', prompt: 'consent' }
+        }
+      });
+      
+      if (error) {
+        console.error('Google Calendar OAuth error:', error);
+        throw error;
+      }
+      
+      console.log('Google Calendar OAuth initiated');
     } catch (error) {
       console.error('Error connecting to Google Calendar:', error);
       setIsConnecting(false);
@@ -31,18 +44,29 @@ const StepCalendar: React.FC = () => {
   const handleMicrosoftConnect = async () => {
     setIsConnecting(true);
     try {
-      // TODO: Implement Microsoft OAuth
       console.log('Connecting to Microsoft Calendar...');
       
-      // Mock connection
-      setTimeout(() => {
-        updateCalendar({
-          isConnected: true,
-          selectedCalendar: 'Microsoft Calendar',
-          calendarConnected: 'microsoft',
-        });
-        setIsConnecting(false);
-      }, 2000);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'azure',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          scopes: [
+            'openid',
+            'email',
+            'profile',
+            'https://graph.microsoft.com/calendars.readwrite'
+          ].join(' '),
+          // helps ensure a refresh token on first consent:
+          queryParams: { access_type: 'offline', prompt: 'consent' }
+        }
+      });
+      
+      if (error) {
+        console.error('Microsoft Calendar OAuth error:', error);
+        throw error;
+      }
+      
+      console.log('Microsoft Calendar OAuth initiated');
     } catch (error) {
       console.error('Error connecting to Microsoft Calendar:', error);
       setIsConnecting(false);

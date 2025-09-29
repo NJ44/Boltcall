@@ -9,7 +9,8 @@ import {
   Menu,
   X,
   MessageSquare,
-  MessageCircle
+  MessageCircle,
+  Bot
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import CharacterSelectionPopup from './CharacterSelectionPopup';
@@ -50,6 +51,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-5 h-5" /> },
     { to: '/dashboard/business', label: 'Business Details', icon: <Building2 className="w-5 h-5" /> },
+    { to: '/dashboard/assistant', label: 'Personal Assistant', icon: <Bot className="w-5 h-5" /> },
     { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-5 h-5" /> },
     { to: '/dashboard/whatsapp', label: 'WhatsApp (Beta)', icon: <MessageCircle className="w-5 h-5" /> },
     { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
@@ -104,7 +106,7 @@ const DashboardLayout: React.FC = () => {
         <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out flex-shrink-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
           <div className="flex flex-col h-full">
             {/* Navigation */}
-            <nav className="flex-1 p-6 space-y-2" aria-label="Main navigation">
+            <nav className="flex-1 p-4 space-y-2" aria-label="Main navigation">
               <div className="space-y-1">
                 {navItems.map((item) => {
                   const isActive = location.pathname === item.to;
@@ -113,19 +115,26 @@ const DashboardLayout: React.FC = () => {
                       key={item.to}
                       to={item.to}
                       onClick={closeSidebar}
-                      className={`relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-500 group ${
+                      className={`relative flex items-center gap-3 px-2 py-2 rounded-lg text-sm font-medium transition-all duration-700 group ${
                         isActive
                           ? 'bg-blue-50 text-blue-700'
                           : 'text-gray-700 hover:text-gray-900'
                       }`}
                     >
                       {item.icon}
-                      <span className="relative">
+                      <span className="relative pb-1">
                         {item.label}
-                        {/* Hover effect line - positioned relative to text */}
-                        <div className={`absolute bottom-0 left-0 h-0.5 bg-blue-600 transition-all duration-500 ease-in-out ${
-                          isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                        }`} />
+                        {/* Hover effect line - positioned relative to text with more space */}
+                        <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
+                          isActive 
+                            ? 'w-full' 
+                            : 'w-0 group-hover:w-full'
+                        }`} 
+                        style={{
+                          transition: isActive 
+                            ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'  // Slower shrinking that starts slow and gains speed
+                            : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'  // Slower expanding with smooth cubic-bezier
+                        }} />
                       </span>
                     </Link>
                   );
@@ -151,7 +160,7 @@ const DashboardLayout: React.FC = () => {
 
         {/* Right Panel - Main Content (Scrollable) */}
         <main className="flex-1 lg:ml-64 overflow-y-auto">
-          <div className="p-6">
+          <div className="p-2">
             <Outlet />
           </div>
         </main>
