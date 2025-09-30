@@ -181,19 +181,12 @@ const Pricing: React.FC = () => {
                   </div>
                 </div>
 
-                  <Button
-                  onClick={() => navigate('/setup')}
-                  className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 ease-in-out ${plan.buttonColor}`}
-                  >
-                  {plan.cta}
-                  </Button>
-
-                <div className="mt-6">
+                <div className="mb-6">
                   <p className="text-sm text-gray-600 mb-4">{plan.description}</p>
                 
                   <div className="space-y-2">
                     <h4 className="font-semibold text-sm">Included:</h4>
-                {plan.features.map((feature, featureIndex) => (
+                    {plan.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                         <span className="text-sm">{feature}</span>
@@ -201,6 +194,13 @@ const Pricing: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
+                <Button
+                  onClick={() => navigate('/setup')}
+                  className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 ease-in-out ${plan.buttonColor}`}
+                >
+                  {plan.cta}
+                </Button>
               </div>
             </Card>
           </motion.div>

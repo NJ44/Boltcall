@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { Send } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Card from '../components/ui/Card';
+import StyledInput from '../components/ui/StyledInput';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -116,14 +117,11 @@ const Contact: React.FC = () => {
                   {/* Name and Email Row */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-zinc-700 mb-1">
-                        Full Name *
-                      </label>
-                      <input
+                      <StyledInput
                         {...register('name')}
-                        type="text"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-                        placeholder="John Doe"
+                        placeholder="Full Name"
+                        name="name"
+                        required
                       />
                       {errors.name && (
                         <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
@@ -131,14 +129,12 @@ const Contact: React.FC = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-zinc-700 mb-1">
-                        Email Address *
-                      </label>
-                      <input
+                      <StyledInput
                         {...register('email')}
                         type="email"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-                        placeholder="john@example.com"
+                        placeholder="Email Address"
+                        name="email"
+                        required
                       />
                       {errors.email && (
                         <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
@@ -149,14 +145,11 @@ const Contact: React.FC = () => {
 
                   {/* Subject */}
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-zinc-700 mb-1">
-                      Subject *
-                    </label>
-                    <input
+                    <StyledInput
                       {...register('subject')}
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-                      placeholder="How can we help you?"
+                      placeholder="Subject"
+                      name="subject"
+                      required
                     />
                     {errors.subject && (
                       <p className="mt-1 text-sm text-red-600">{errors.subject.message}</p>

@@ -21,6 +21,7 @@ import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
+import StyledInputDemo from '../pages/StyledInputDemo';
 
 const NavigationWrapper: React.FC = () => {
   const [isNavigating, setIsNavigating] = useState(false);
@@ -75,6 +76,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/setup" element={<Setup />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/styled-input-demo" element={<StyledInputDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>
