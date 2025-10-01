@@ -8,6 +8,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Card from '../components/ui/Card';
 import StyledInput from '../components/ui/StyledInput';
+import Button from '../components/ui/Button';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const signupSchema = z.object({
@@ -233,10 +234,10 @@ const Signup: React.FC = () => {
               )}
 
               {/* Submit Button */}
-              <button
+              <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-sm rounded-md hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="w-full"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">
@@ -246,7 +247,7 @@ const Signup: React.FC = () => {
                 ) : (
                   'Create Account'
                 )}
-              </button>
+              </Button>
             </form>
 
             {/* Social Login Buttons */}

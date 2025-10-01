@@ -2,6 +2,7 @@ import React from 'react';
 import { MessageSquare } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
+import StyledInput from '../../ui/StyledInput';
 
 const StepCallFlow: React.FC = () => {
   const { callFlow, updateCallFlow } = useSetupStore();
@@ -117,13 +118,15 @@ const StepCallFlow: React.FC = () => {
             {callFlow.qualifyingQuestions.map((question, index) => (
               <div key={index} className="flex items-center space-x-3">
                 <span className="text-sm text-gray-500 w-6">{index + 1}.</span>
-                <input
-                  type="text"
-                  value={question}
-                  onChange={(e) => handleUpdateQualifyingQuestion(index, e.target.value)}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                  placeholder="What brings you in today?"
-                />
+                <div className="flex-1">
+                  <StyledInput
+                    type="text"
+                    value={question}
+                    onChange={(e) => handleUpdateQualifyingQuestion(index, e.target.value)}
+                    placeholder="What brings you in today?"
+                    name={`question-${index}`}
+                  />
+                </div>
                 <button
                   onClick={() => handleRemoveQualifyingQuestion(index)}
                   className="p-1 text-gray-400 hover:text-red-500 transition-colors"

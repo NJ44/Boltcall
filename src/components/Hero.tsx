@@ -19,8 +19,8 @@ const Hero: React.FC = () => {
           loop
           autoplay
           style={{ 
-            width: '84%', 
-            height: '84%',
+            width: '88%', 
+            height: '88%',
             opacity: 0.3
           }}
         />
@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
             onClick={() => setIsVideoOpen(true)}
             variant="outline"
             size="lg"
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-8 py-3"
           >
             <Play className="w-5 h-5 mr-2" />
             See 60-sec demo

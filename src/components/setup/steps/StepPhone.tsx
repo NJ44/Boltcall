@@ -2,6 +2,7 @@ import React from 'react';
 import { Phone, ArrowRight, Voicemail, Calendar } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
+import StyledInput from '../../ui/StyledInput';
 
 const StepPhone: React.FC = () => {
   const { phone, updatePhone } = useSetupStore();
@@ -71,19 +72,13 @@ const StepPhone: React.FC = () => {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Your Business Number
-                </label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="tel"
-                    value={phone.existingNumber}
-                    onChange={(e) => updatePhone({ existingNumber: e.target.value })}
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                    placeholder="+1 (555) 123-4567"
-                  />
-                </div>
+                <StyledInput
+                  type="tel"
+                  value={phone.existingNumber}
+                  onChange={(e) => updatePhone({ existingNumber: e.target.value })}
+                  placeholder="Your Business Number"
+                  name="existingNumber"
+                />
               </div>
 
               <div>
@@ -142,17 +137,14 @@ const StepPhone: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Area Code
-                  </label>
-                  <input
+                  <StyledInput
                     type="text"
                     value={phone.newNumber.areaCode}
                     onChange={(e) => updatePhone({ 
                       newNumber: { ...phone.newNumber, areaCode: e.target.value }
                     })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                    placeholder="555"
+                    placeholder="Area Code"
+                    name="areaCode"
                     maxLength={3}
                   />
                 </div>
@@ -198,24 +190,18 @@ const StepPhone: React.FC = () => {
           
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Business Hours Numbers
-              </label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="tel"
-                  value={phone.routing.businessHoursNumbers.join(', ')}
-                  onChange={(e) => updatePhone({
-                    routing: {
-                      ...phone.routing,
-                      businessHoursNumbers: e.target.value.split(',').map(n => n.trim()).filter(Boolean)
-                    }
-                  })}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                  placeholder="+1 (555) 123-4567, +1 (555) 987-6543"
-                />
-              </div>
+              <StyledInput
+                type="tel"
+                value={phone.routing.businessHoursNumbers.join(', ')}
+                onChange={(e) => updatePhone({
+                  routing: {
+                    ...phone.routing,
+                    businessHoursNumbers: e.target.value.split(',').map(n => n.trim()).filter(Boolean)
+                  }
+                })}
+                placeholder="Business Hours Numbers"
+                name="businessHoursNumbers"
+              />
               <p className="mt-1 text-sm text-gray-500">
                 Numbers to ring during business hours (separate with commas)
               </p>

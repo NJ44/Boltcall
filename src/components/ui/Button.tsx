@@ -23,7 +23,7 @@ const StyledWrapper = styled.div`
     cursor: pointer;
     font-size: 18px;
     border-radius: 0.5em;
-    background: #e8e8e8;
+    background: transparent;
     border: 1px solid #e8e8e8;
     box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
     font-weight: 500;
@@ -91,6 +91,7 @@ const StyledWrapper = styled.div`
   .button2:disabled:hover {
     color: #090909;
     border: 1px solid #e8e8e8;
+    background: transparent;
   }
 
   .button2:disabled:hover:before,

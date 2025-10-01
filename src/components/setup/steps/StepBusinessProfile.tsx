@@ -3,6 +3,7 @@ import { Globe, MapPin, ArrowDown } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import MultiSelect from '../forms/MultiSelect';
 import HoursEditor from '../forms/HoursEditor';
+import StyledInput from '../../ui/StyledInput';
 
 const StepBusinessProfile: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
@@ -47,21 +48,13 @@ const StepBusinessProfile: React.FC = () => {
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Website URL (Optional)
-              </label>
-              <div className="relative">
-                <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="url"
-                  value={businessProfile.websiteUrl}
-                  onChange={(e) => updateBusinessProfile({ websiteUrl: e.target.value })}
-                  className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 ${
-                    errors.websiteUrl ? 'border-red-300 focus:border-red-500' : 'border-gray-300 focus:border-brand-blue'
-                  }`}
-                  placeholder="https://www.yourbusiness.com"
-                />
-              </div>
+              <StyledInput
+                type="url"
+                value={businessProfile.websiteUrl}
+                onChange={(e) => updateBusinessProfile({ websiteUrl: e.target.value })}
+                placeholder="Website URL (Optional)"
+                name="websiteUrl"
+              />
               {errors.websiteUrl && (
                 <p className="mt-1 text-sm text-red-600">{errors.websiteUrl}</p>
               )}
