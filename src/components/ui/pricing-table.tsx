@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { ShadcnButton } from "./ShadcnButton"
 import { cn } from "../../lib/utils"
-import { CheckIcon, ArrowRightIcon } from "@radix-ui/react-icons"
+import { CheckIcon } from "@radix-ui/react-icons"
 import NumberFlow from "@number-flow/react"
 
 export type PlanLevel = "starter" | "pro" | "all" | string
@@ -117,7 +116,6 @@ export function PricingTable({
                   format={{
                     style: "currency",
                     currency: "USD",
-                    trailingZeroDisplay: "stripIfInteger",
                   }}
                   value={isYearly ? plan.price.yearly : plan.price.monthly}
                   className="text-2xl font-bold"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, ArrowRight, Voicemail, Calendar } from 'lucide-react';
+import { ArrowRight, Voicemail, Calendar } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import StyledInput from '../../ui/StyledInput';

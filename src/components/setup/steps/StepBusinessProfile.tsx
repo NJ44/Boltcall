@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Globe, MapPin, ArrowDown } from 'lucide-react';
+import { MapPin, ArrowDown } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import MultiSelect from '../forms/MultiSelect';
 import HoursEditor from '../forms/HoursEditor';
