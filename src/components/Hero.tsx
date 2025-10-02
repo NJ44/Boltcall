@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
 
 
   return (
-    <Section id="hero" background="gray" className="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
+    <Section id="hero" background="gray" className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 z-0 flex items-center justify-center">
         <DotLottieReact
