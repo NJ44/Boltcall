@@ -234,19 +234,19 @@ const Pricing: React.FC = () => {
                 <div className="mb-6">
                   <div className="text-3xl font-bold">
                     {plan.price}
-                    {plan.period && <span className="text-lg font-normal text-gray-500">/{plan.period}</span>}
+                    {plan.period && <span className={`text-lg font-normal ${plan.name === 'ENTERPRISE' ? 'text-gray-400' : 'text-gray-500'}`}>/{plan.period}</span>}
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <p className="text-sm text-gray-600 mb-4">{plan.description}</p>
+                  <p className={`text-sm mb-4 ${plan.name === 'ENTERPRISE' ? 'text-gray-300' : 'text-gray-600'}`}>{plan.description}</p>
                 
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-sm">Included:</h4>
+                    <h4 className={`font-semibold text-sm ${plan.textColor}`}>Included:</h4>
                     {plan.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
+                        <span className={`text-sm ${plan.textColor}`}>{feature}</span>
                       </div>
                     ))}
                   </div>

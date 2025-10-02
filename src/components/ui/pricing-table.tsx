@@ -186,17 +186,6 @@ export function PricingTable({
           </div>
         </div>
 
-        <div className="mt-8 text-center">
-          <ShadcnButton
-            className={cn(
-              "w-full sm:w-auto bg-blue-500 hover:bg-blue-600 px-8 py-2 rounded-xl",
-              buttonClassName,
-            )}
-          >
-            Get started with {plans.find((p) => p.level === selectedPlan)?.name}
-            <ArrowRightIcon className="w-4 h-4 ml-2" />
-          </ShadcnButton>
-        </div>
       </div>
     </section>
   )

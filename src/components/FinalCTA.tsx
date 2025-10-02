@@ -24,9 +24,9 @@ const FinalCTA: React.FC = () => {
             viewport={{ once: true }}
             className="text-center lg:text-left"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-text-main mb-6">
-              Don't get left behind. 
-              Get The Advantage.
+            <h2 className="text-4xl md:text-5xl font-bold text-text-main mb-6 leading-tight">
+              <div className="whitespace-nowrap">Don't get left behind.</div>
+              <div className="whitespace-nowrap">Get The Advantage.</div>
             </h2>
             <Button
               onClick={scrollToPricing}
