@@ -10,4 +10,13 @@
   body {
     @apply bg-white text-text-main;
   }
+  
+  /* Panel open state for navbar styling */
+  body.panel-open header {
+    @apply bg-gray-100;
+  }
+  
+  body.panel-open.dark header {
+    @apply bg-gray-800;
+  }
 }

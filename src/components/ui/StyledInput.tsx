@@ -33,7 +33,7 @@ const StyledWrapper = styled.div`
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
     font-size: 17px;
-    color: #fff;
+    color: #000;
     padding: 7px 0;
     background: transparent;
     transition: border-color 0.2s;
@@ -104,6 +104,7 @@ const StyledInput: React.FC<StyledInputProps> = ({
   minLength,
   pattern,
   autoComplete,
+  ...rest
 }) => {
   const inputId = id || name || 'input';
   const labelText = placeholder;
@@ -127,6 +128,7 @@ const StyledInput: React.FC<StyledInputProps> = ({
           minLength={minLength}
           pattern={pattern}
           autoComplete={autoComplete}
+          {...rest}
         />
         <label htmlFor={inputId} className="form__label">
           {labelText}

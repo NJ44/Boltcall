@@ -108,7 +108,7 @@ const Header: React.FC = () => {
                   Login
                 </Link>
                 <Button
-                  onClick={() => handleNavClick('/contact')}
+                  onClick={() => handleNavClick('/setup')}
                   variant="primary"
                   size="sm"
                   className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 shadow-2xl hover:shadow-3xl transition-all duration-300 font-bold px-6 py-2 rounded-2xl text-white border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
@@ -220,7 +220,7 @@ const Header: React.FC = () => {
                       >
                         <Button
                           onClick={() => {
-                            handleNavClick('/contact');
+                            handleNavClick('/setup');
                             setIsMenuOpen(false);
                           }}
                           variant="primary"

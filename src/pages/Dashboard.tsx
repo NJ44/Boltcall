@@ -1,164 +1,168 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useDashboardStore } from '../stores/dashboardStore';
-import type { Lead } from '../types/dashboard';
-import DashboardHeader from '../components/dashboard/DashboardHeader';
-import SidebarFilters from '../components/dashboard/SidebarFilters';
-import KpiTile from '../components/dashboard/KpiTile';
-import TimeSeriesCard from '../components/dashboard/TimeSeriesCard';
-import ChannelBarCard from '../components/dashboard/ChannelBarCard';
-import FunnelStrip from '../components/dashboard/FunnelStrip';
-import LeadsTable from '../components/dashboard/LeadsTable';
-import LeadDrawer from '../components/dashboard/LeadDrawer';
-import TopFaqs from '../components/dashboard/TopFaqs';
-import RecentTranscripts from '../components/dashboard/RecentTranscripts';
-import Alerts from '../components/dashboard/Alerts';
+import { CheckCircle, Circle, Phone, Building2, Users, MessageSquare, Bot, Plug } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
-  const { 
-    kpis, 
-    timeSeries, 
-    channelPerf, 
-    leads, 
-    faqs, 
-    transcripts, 
-    alerts, 
-    funnelSteps,
-    selectedLead,
-    setSelectedLead 
-  } = useDashboardStore();
-
-
-  const handleLeadClick = (lead: Lead) => {
-    setSelectedLead(lead);
-  };
-
-  const handleCloseDrawer = () => {
-    setSelectedLead(null);
-  };
-
-  // Generate sparkline data for KPIs
-  const generateSparkline = (baseValue: number, variance: number = 0.2) => {
-    return Array.from({ length: 7 }, () => {
-      const variation = (Math.random() - 0.5) * variance;
-      return Math.max(0, baseValue * (1 + variation));
-    });
-  };
+  // Mock setup steps - in real app this would come from API
+  const setupSteps = [
+    {
+      id: 1,
+      title: 'Add Phone Number',
+      description: 'Get a phone number for your AI receptionist',
+      icon: <Phone className="w-5 h-5" />,
+      completed: false,
+      link: '/dashboard/phone'
+    },
+    {
+      id: 2,
+      title: 'Create Knowledge Base',
+      description: 'Add information about your business and services',
+      icon: <Building2 className="w-5 h-5" />,
+      completed: false,
+      link: '/dashboard/knowledge'
+    },
+    {
+      id: 3,
+      title: 'Set Up Agents',
+      description: 'Configure your AI receptionist agents',
+      icon: <Users className="w-5 h-5" />,
+      completed: false,
+      link: '/dashboard/agents'
+    },
+    {
+      id: 4,
+      title: 'Configure SMS',
+      description: 'Enable SMS messaging for your customers',
+      icon: <MessageSquare className="w-5 h-5" />,
+      completed: false,
+      link: '/dashboard/sms'
+    },
+    {
+      id: 5,
+      title: 'Set Up Personal Assistant',
+      description: 'Configure your AI personal assistant',
+      icon: <Bot className="w-5 h-5" />,
+      completed: false,
+      link: '/dashboard/assistant'
+    },
+    {
+      id: 6,
+      title: 'Connect Integrations',
+      description: 'Link your favorite tools and services',
+      icon: <Plug className="w-5 h-5" />,
+      completed: false,
+      link: '/dashboard/integrations'
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <SidebarFilters />
-      
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <DashboardHeader />
+    <div className="space-y-6">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center justify-between"
+      >
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600 mt-1">Complete your setup to get started with Boltcall</p>
+        </div>
+      </motion.div>
+
+      {/* Setup Steps */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="bg-white rounded-lg border border-gray-200 p-6"
+      >
+        <h2 className="text-xl font-semibold text-gray-900 mb-6">Setup Checklist</h2>
         
-        {/* Content */}
-        <main className="flex-1 p-6">
-          {/* KPI Tiles */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8"
-          >
-            <KpiTile
-              title="Leads"
-              value={kpis.leads}
-              delta={kpis.deltas.leads}
-              sparkline={generateSparkline(kpis.leads, 0.3)}
-              format="number"
-            />
-            <KpiTile
-              title="Qualified"
-              value={kpis.qualifiedPct}
-              delta={kpis.deltas.qualifiedPct}
-              sparkline={generateSparkline(kpis.qualifiedPct, 0.1)}
-              format="percentage"
-            />
-            <KpiTile
-              title="Bookings"
-              value={kpis.bookings}
-              delta={kpis.deltas.bookings}
-              sparkline={generateSparkline(kpis.bookings, 0.4)}
-              format="number"
-            />
-            <KpiTile
-              title="Speed to Reply"
-              value={kpis.speedToFirstReplyMedianSec}
-              delta={kpis.deltas.speedToFirstReplyMedianSec}
-              sparkline={generateSparkline(kpis.speedToFirstReplyMedianSec, 0.2)}
-              format="time"
-            />
-            <KpiTile
-              title="Show Rate"
-              value={kpis.showRatePct}
-              delta={kpis.deltas.showRatePct}
-              sparkline={generateSparkline(kpis.showRatePct, 0.1)}
-              format="percentage"
-            />
-            <KpiTile
-              title="Est. Revenue"
-              value={kpis.estRevenue}
-              delta={kpis.deltas.estRevenue}
-              sparkline={generateSparkline(kpis.estRevenue, 0.3)}
-              format="currency"
-            />
-          </motion.div>
+        <div className="space-y-4">
+          {setupSteps.map((step, index) => (
+            <motion.div
+              key={step.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+              className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <div className="flex-shrink-0">
+                {step.completed ? (
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                    <Circle className="w-5 h-5 text-gray-400" />
+                  </div>
+                )}
+              </div>
+              
+              <div className="flex-1">
+                <h3 className="font-medium text-gray-900">{step.title}</h3>
+                <p className="text-sm text-gray-600">{step.description}</p>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-gray-100 rounded-lg">
+                  <div className="text-gray-600">
+                    {step.icon}
+                  </div>
+                </div>
+                <button className="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                  {step.completed ? 'Completed' : 'Set Up'}
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
 
-          {/* Charts */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
-          >
-            <TimeSeriesCard data={timeSeries} />
-            <ChannelBarCard data={channelPerf} />
-          </motion.div>
-
-          {/* Funnel */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
-            className="mb-8"
-          >
-            <FunnelStrip steps={funnelSteps} />
-          </motion.div>
-
-          {/* Leads Table */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.3 }}
-            className="mb-8"
-          >
-            <LeadsTable data={leads} onRowClick={handleLeadClick} />
-          </motion.div>
-
-          {/* Bottom Row */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6"
-          >
-            <TopFaqs faqs={faqs} />
-            <RecentTranscripts transcripts={transcripts} />
-            <Alerts alerts={alerts} />
-          </motion.div>
-        </main>
-      </div>
-
-      {/* Lead Drawer */}
-      <LeadDrawer 
-        lead={selectedLead} 
-        isOpen={!!selectedLead} 
-        onClose={handleCloseDrawer} 
-      />
+      {/* Quick Stats */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+      >
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Phone className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Phone Numbers</p>
+              <p className="text-2xl font-bold text-gray-900">0</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Users className="w-5 h-5 text-green-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Active Agents</p>
+              <p className="text-2xl font-bold text-gray-900">0</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Building2 className="w-5 h-5 text-purple-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Knowledge Articles</p>
+              <p className="text-2xl font-bold text-gray-900">0</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 };

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useLenis } from '../hooks/useLenis';
 import { AuthProvider } from '../contexts/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
-import PageLoader from '../components/PageLoader';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
@@ -11,11 +11,14 @@ import DashboardLayout from '../components/dashboard/DashboardLayout';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
 import AgentsPage from '../pages/dashboard/AgentsPage';
-import BusinessPage from '../pages/dashboard/BusinessPage';
 import SmsPage from '../pages/dashboard/SmsPage';
 import WhatsappPage from '../pages/dashboard/WhatsappPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
+import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
 import AssistantPage from '../pages/dashboard/AssistantPage';
+import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
+import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
+import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
@@ -23,28 +26,16 @@ import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
 import StyledInputDemo from '../pages/StyledInputDemo';
 import PricingTableDemo from '../pages/PricingTableDemo';
+import ToastDemoPage from '../pages/ToastDemoPage';
+import PaymentPro from '../pages/PaymentPro';
+import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 
 const NavigationWrapper: React.FC = () => {
-  const [isNavigating, setIsNavigating] = useState(false);
-  const location = useLocation();
-
-  React.useEffect(() => {
-    // Only show loading animation when navigating TO dashboard (not FROM dashboard)
-    if (location.pathname === '/dashboard') {
-      setIsNavigating(true);
-      const timer = setTimeout(() => {
-        setIsNavigating(false);
-      }, 2000); // Show loader for 2000ms (2 seconds)
-
-      return () => clearTimeout(timer);
-    } else {
-      setIsNavigating(false);
-    }
-  }, [location.pathname]);
-
+  // Initialize Lenis smooth scrolling
+  useLenis();
+  
   return (
     <>
-      <PageLoader isLoading={isNavigating} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -68,8 +59,11 @@ const NavigationWrapper: React.FC = () => {
           <Route index element={<DashboardPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
-          <Route path="business" element={<BusinessPage />} />
+          <Route path="knowledge" element={<KnowledgeBasePage />} />
+          <Route path="phone" element={<PhoneNumbersPage />} />
           <Route path="assistant" element={<AssistantPage />} />
+          <Route path="integrations" element={<IntegrationsPage />} />
+          <Route path="instant-lead-reply" element={<InstantLeadReplyPage />} />
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="settings" element={<SettingsPage />} />
@@ -79,6 +73,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/styled-input-demo" element={<StyledInputDemo />} />
         <Route path="/pricing-table-demo" element={<PricingTableDemo />} />
+        <Route path="/toast-demo" element={<ToastDemoPage />} />
+        <Route path="/payment/pro" element={<PaymentPro />} />
+        <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

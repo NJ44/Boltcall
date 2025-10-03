@@ -84,6 +84,17 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-zinc-50">
+      {/* Logo in top left corner */}
+      <div className="absolute top-0 left-0 z-10 p-2">
+        <Link to="/">
+          <img 
+            src="/boltcall_full_logo.png" 
+            alt="Boltcall" 
+            className="h-12 w-auto"
+          />
+        </Link>
+      </div>
+      
       <div className="max-w-7xl mx-auto">
         <div className="min-h-screen flex">
           {/* Left Panel - White Background with Title and Animation */}

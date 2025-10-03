@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { PricingTable } from './ui/pricing-table';
 
 const Pricing: React.FC = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
   const navigate = useNavigate();
 
   // PricingTable data
@@ -65,60 +64,21 @@ const Pricing: React.FC = () => {
   ];
 
 
-  const toggleBilling = () => {
-    setIsAnnual(!isAnnual);
-  };
 
   return (
     <Section id="pricing" background="white">
-      <div className="text-center mb-16">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+      {/* Pricing Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           Pricing
-        </motion.h2>
-
-        {/* Billing Toggle */}
-        <motion.div
-          className="flex items-center justify-center gap-4 mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          <span className={`text-lg font-medium ${!isAnnual ? 'text-gray-900' : 'text-gray-500'}`}>
-            Monthly
-          </span>
-          <button
-            onClick={toggleBilling}
-            className={`relative w-16 h-8 rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              isAnnual ? 'bg-blue-500' : 'bg-gray-200'
-            }`}
-          >
-            <motion.div
-              className="absolute top-1 w-6 h-6 bg-white rounded-full shadow-lg"
-              animate={{ x: isAnnual ? 32 : 2 }}
-              transition={{ 
-                duration: 0.4, 
-                ease: [0.4, 0, 0.2, 1],
-                type: "spring",
-                stiffness: 300,
-                damping: 30
-              }}
-            />
-          </button>
-          <span className={`text-lg font-medium ${isAnnual ? 'text-gray-900' : 'text-gray-500'}`}>
-            Annually 3 month free
-          </span>
-        </motion.div>
-      </div>
-
-
-
+        </h2>
+      </motion.div>
 
       {/* New PricingTable Component */}
       <motion.div
@@ -134,7 +94,13 @@ const Pricing: React.FC = () => {
           defaultInterval="monthly"
           onPlanSelect={(plan) => {
             console.log("Selected plan:", plan);
-            navigate('/setup');
+            if (plan === 'starter') {
+              navigate('/payment/elite-starter');
+            } else if (plan === 'pro') {
+              navigate('/payment/pro');
+            } else {
+              navigate('/contact'); // For enterprise, redirect to contact
+            }
           }}
           containerClassName="py-12"
           buttonClassName="bg-blue-600 hover:bg-blue-700"

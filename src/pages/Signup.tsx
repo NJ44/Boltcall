@@ -38,19 +38,30 @@ const Signup: React.FC = () => {
     resolver: zodResolver(signupSchema)
   });
 
+  // Debug form errors
+  React.useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      console.log('Form validation errors:', errors);
+    }
+  }, [errors]);
+
   const onSubmit = async (data: SignupFormData) => {
+    console.log('Form submitted with data:', data);
     try {
       setIsLoading(true);
       setError('');
+      console.log('Attempting to signup...');
       await signup({
         name: data.name,
         email: data.email,
         password: data.password,
         company: '' // Default empty company
       });
+      console.log('Signup successful, navigating to:', redirectTo);
       navigate(redirectTo);
-    } catch {
-      setError('Failed to create account. Please try again.');
+    } catch (error) {
+      console.error('Signup error:', error);
+      setError(error instanceof Error ? error.message : 'Failed to create account. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -90,6 +101,17 @@ const Signup: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-zinc-50">
+      {/* Logo in top left corner */}
+      <div className="absolute top-0 left-0 z-10 p-2">
+        <Link to="/">
+          <img 
+            src="/boltcall_full_logo.png" 
+            alt="Boltcall" 
+            className="h-12 w-auto"
+          />
+        </Link>
+      </div>
+      
       <div className="max-w-7xl mx-auto">
         <div className="min-h-screen flex">
           {/* Left Panel - White Background with Title and Animation */}
@@ -131,9 +153,14 @@ const Signup: React.FC = () => {
                   transition={{ duration: 0.5 }}
                   className="text-center mb-6"
                 >
-                  <h2 className="text-xl font-bold text-zinc-900">SIGN UP</h2>
+                  <h2 className="text-2xl font-bold text-zinc-900">SIGN UP</h2>
                 </motion.div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+            <form 
+              onSubmit={handleSubmit(onSubmit, (errors) => {
+                console.log('Form validation failed:', errors);
+              })} 
+              className="space-y-3"
+            >
               {/* Name */}
               <div>
                 <StyledInput
@@ -197,6 +224,9 @@ const Signup: React.FC = () => {
                 type="submit"
                 disabled={isLoading}
                 className="w-full"
+                onClick={() => {
+                  console.log('Button clicked!');
+                }}
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">

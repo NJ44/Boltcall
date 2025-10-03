@@ -34,72 +34,74 @@ export function HeroScrollDemo() {
   );
 
   return (
-    <div className="flex flex-col overflow-hidden pb-[100px] -mt-[560px]">
+    <div className="flex flex-col overflow-hidden pb-[100px] -mt-[200px]">
       <ContainerScroll
         titleComponent={null}
       >
-        <div className="flex flex-col items-center justify-center h-full text-center">
-          {/* Buttons inside the screen */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="flex flex-col h-full text-center">
+          {/* Professional Modern Buttons at the very top */}
+          <div className="flex flex-wrap justify-center gap-3 mb-6 pt-2">
             <button
               onClick={() => setActiveTab('ai-assistant')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
                 activeTab === 'ai-assistant'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md'
+                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
               }`}
             >
               AI Assistant
             </button>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
                 activeTab === 'analytics'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md'
+                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
               }`}
             >
               Analytics
             </button>
             <button
               onClick={() => setActiveTab('automation')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
                 activeTab === 'automation'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md'
+                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
               }`}
             >
               Automation
             </button>
             <button
               onClick={() => setActiveTab('receptionist')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
                 activeTab === 'receptionist'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md'
+                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
               }`}
             >
               Receptionist
             </button>
           </div>
 
-          <div className="mb-8">
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <div className="mb-6">
             <DotLottieReact
               src={currentContent.animation}
               loop
               autoplay
               style={{ 
-                width: '300px', 
-                height: '300px'
+                width: '200px', 
+                height: '200px'
               }}
             />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
             {currentContent.title}
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto">
             {currentContent.description}
           </p>
+          </div>
         </div>
       </ContainerScroll>
     </div>

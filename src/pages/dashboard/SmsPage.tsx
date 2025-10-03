@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, Smartphone, Zap, Shield, Clock } from 'lucide-react';
+import { MessageSquare, Smartphone, Zap, Shield } from 'lucide-react';
 
 const SmsPage: React.FC = () => {
   const integrations = [
@@ -35,46 +35,17 @@ const SmsPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-xl shadow-sm border border-gray-200 p-8"
+        className="flex items-center justify-between"
       >
-        <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-blue-50 rounded-lg">
-            <MessageSquare className="w-8 h-8 text-blue-600" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">SMS Integrations</h1>
-            <p className="text-gray-600 mt-2">Connect your SMS service to automate patient communication</p>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-            <Clock className="w-5 h-5 text-gray-600" />
-            <div>
-              <div className="font-medium text-gray-900">Real-time</div>
-              <div className="text-sm text-gray-600">Instant delivery</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-            <Shield className="w-5 h-5 text-gray-600" />
-            <div>
-              <div className="font-medium text-gray-900">Secure</div>
-              <div className="text-sm text-gray-600">HIPAA compliant</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-            <Zap className="w-5 h-5 text-gray-600" />
-            <div>
-              <div className="font-medium text-gray-900">Automated</div>
-              <div className="text-sm text-gray-600">Smart responses</div>
-            </div>
-          </div>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">SMS Integrations</h1>
+          <p className="text-gray-600 mt-1">Connect your SMS service to automate patient communication</p>
         </div>
       </motion.div>
 
@@ -82,15 +53,12 @@ const SmsPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
-        {integrations.map((integration, index) => (
-          <motion.div
+        {integrations.map((integration) => (
+          <div
             key={integration.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
             className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-300"
           >
             <div className="flex items-start justify-between mb-4">
@@ -121,7 +89,7 @@ const SmsPage: React.FC = () => {
             <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
               Connect {integration.name}
             </button>
-          </motion.div>
+          </div>
         ))}
       </motion.div>
     </div>

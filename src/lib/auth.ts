@@ -30,50 +30,17 @@ export interface SignupCredentials {
 
 // Helper function to transform Supabase user to our User interface
 const transformSupabaseUser = async (supabaseUser: SupabaseUser): Promise<User> => {
-  // Get additional user data from our users table
-  const { data: userData, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', supabaseUser.id)
-    .single();
-
-  if (error || !userData) {
-    // If user doesn't exist in our users table, create a basic profile
-    const newUser = {
-      id: supabaseUser.id,
-      email: supabaseUser.email!,
-      name: supabaseUser.user_metadata?.name || supabaseUser.email!.split('@')[0],
-      company: supabaseUser.user_metadata?.company || '',
-      role: 'user' as const,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-
-    const { error: insertError } = await supabase
-      .from('users')
-      .insert(newUser);
-
-    if (insertError) {
-      console.error('Error creating user profile:', insertError);
-    }
-
-    return {
-      id: newUser.id,
-      email: newUser.email,
-      name: newUser.name,
-      company: newUser.company,
-      role: newUser.role,
-      createdAt: newUser.created_at
-    };
-  }
-
+  console.log('Transforming Supabase user:', supabaseUser);
+  
+  // For now, just use the Supabase user data directly without custom users table
+  // This avoids the hanging issue with missing users table
   return {
-    id: userData.id,
-    email: userData.email,
-    name: userData.name,
-    company: userData.company,
-    role: userData.role,
-    createdAt: userData.created_at
+    id: supabaseUser.id,
+    email: supabaseUser.email!,
+    name: supabaseUser.user_metadata?.name || supabaseUser.email!.split('@')[0],
+    company: supabaseUser.user_metadata?.company || '',
+    role: 'user' as const,
+    createdAt: supabaseUser.created_at || new Date().toISOString()
   };
 };
 
@@ -96,26 +63,41 @@ export const login = async (credentials: LoginCredentials): Promise<User> => {
 };
 
 export const signup = async (credentials: SignupCredentials): Promise<User> => {
-  const { data, error } = await supabase.auth.signUp({
-    email: credentials.email,
-    password: credentials.password,
-    options: {
-      data: {
-        name: credentials.name,
-        company: credentials.company,
+  console.log('Starting signup process with credentials:', { ...credentials, password: '[HIDDEN]' });
+  
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: credentials.email,
+      password: credentials.password,
+      options: {
+        data: {
+          name: credentials.name,
+          company: credentials.company,
+        }
       }
+    });
+
+    console.log('Supabase signup response:', { data, error });
+
+    if (error) {
+      console.error('Supabase signup error:', error);
+      throw new Error(error.message);
     }
-  });
 
-  if (error) {
-    throw new Error(error.message);
+    if (!data.user) {
+      console.error('No user returned from Supabase signup');
+      throw new Error('Signup failed - no user returned');
+    }
+
+    console.log('Supabase user created, transforming...');
+    const transformedUser = await transformSupabaseUser(data.user);
+    console.log('User transformation complete:', transformedUser);
+    
+    return transformedUser;
+  } catch (error) {
+    console.error('Signup function error:', error);
+    throw error;
   }
-
-  if (!data.user) {
-    throw new Error('Signup failed');
-  }
-
-  return await transformSupabaseUser(data.user);
 };
 
 export const logout = async (): Promise<void> => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Smartphone, Zap, Shield, Clock, AlertCircle } from 'lucide-react';
+import { MessageCircle, Smartphone, Zap, Shield } from 'lucide-react';
 
 const WhatsappPage: React.FC = () => {
   const integrations = [
@@ -39,63 +39,22 @@ const WhatsappPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-xl shadow-sm border border-gray-200 p-8"
+        className="flex items-center justify-between"
       >
-        <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-green-50 rounded-lg">
-            <MessageCircle className="w-8 h-8 text-green-600" />
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-bold text-gray-900">WhatsApp Integrations</h1>
+            <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-full">
+              BETA
+            </span>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-bold text-gray-900">WhatsApp Integrations</h1>
-              <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-full">
-                BETA
-              </span>
-            </div>
-            <p className="text-gray-600 mt-2">Connect WhatsApp Business for patient communication</p>
-          </div>
-        </div>
-        
-        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <h3 className="font-medium text-orange-900">Beta Notice</h3>
-              <p className="text-orange-800 text-sm mt-1">
-                WhatsApp integrations are currently in beta. Some features may be limited or require additional setup.
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-            <Clock className="w-5 h-5 text-gray-600" />
-            <div>
-              <div className="font-medium text-gray-900">Real-time</div>
-              <div className="text-sm text-gray-600">Instant messaging</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-            <Shield className="w-5 h-5 text-gray-600" />
-            <div>
-              <div className="font-medium text-gray-900">Secure</div>
-              <div className="text-sm text-gray-600">End-to-end encryption</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-            <Zap className="w-5 h-5 text-gray-600" />
-            <div>
-              <div className="font-medium text-gray-900">Rich Media</div>
-              <div className="text-sm text-gray-600">Images, videos, documents</div>
-            </div>
-          </div>
+          <p className="text-gray-600 mt-1">Connect WhatsApp Business for patient communication</p>
         </div>
       </motion.div>
 
@@ -103,15 +62,12 @@ const WhatsappPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
-        {integrations.map((integration, index) => (
-          <motion.div
+        {integrations.map((integration) => (
+          <div
             key={integration.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
             className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-300"
           >
             <div className="flex items-start justify-between mb-4">
@@ -142,7 +98,7 @@ const WhatsappPage: React.FC = () => {
             <button className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium">
               Connect {integration.name}
             </button>
-          </motion.div>
+          </div>
         ))}
       </motion.div>
     </div>

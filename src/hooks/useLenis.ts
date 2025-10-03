@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 
 // Extend Window interface to include lenis
@@ -10,8 +11,14 @@ declare global {
 
 export const useLenis = () => {
   const lenisRef = useRef<Lenis | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
+    // Don't initialize Lenis on dashboard pages to avoid conflicts
+    if (location.pathname.startsWith('/dashboard')) {
+      return;
+    }
+
     // Custom easing function as specified
     const customEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
@@ -46,7 +53,7 @@ export const useLenis = () => {
         delete window.lenis;
       }
     };
-  }, []);
+  }, [location.pathname]);
 
   return lenisRef.current;
 };

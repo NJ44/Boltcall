@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Button from './ui/Button';
 import Section from './ui/Section';
@@ -13,7 +12,7 @@ const Hero: React.FC = () => {
   return (
     <Section id="hero" background="gray" className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
       {/* Background Animation */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
+      <div className="absolute inset-0 z-0 flex items-center justify-center -mt-16">
         <DotLottieReact
           src="/Hero_spiral_animation.lottie"
           loop
@@ -56,12 +55,12 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <Button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => window.location.href = '/setup'}
             variant="primary"
             size="lg"
             className="w-full sm:w-auto"
           >
-            Start now
+            Get started free
           </Button>
           <Button
             onClick={() => setIsVideoOpen(true)}
@@ -69,8 +68,7 @@ const Hero: React.FC = () => {
             size="lg"
             className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-8 py-3"
           >
-            <Play className="w-5 h-5 mr-2" />
-            See 60-sec demo
+            See features
           </Button>
         </motion.div>
 

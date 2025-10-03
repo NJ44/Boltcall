@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -13,23 +13,21 @@ import {
   Bot,
   LogOut,
   User,
+  Moon,
   Sun,
-  Moon
+  Plug
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import CharacterSelectionPopup from './CharacterSelectionPopup';
-import CharacterDisplay from './CharacterDisplay';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showCharacterPopup, setShowCharacterPopup] = useState(false);
-  const [selectedCharacter, setSelectedCharacter] = useState<string | null>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
+  const mainContentRef = useRef<HTMLElement>(null);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -39,21 +37,6 @@ const DashboardLayout: React.FC = () => {
     setSidebarOpen(false);
   };
 
-  // Check if user has selected a character on first visit
-  useEffect(() => {
-    const hasSelectedCharacter = localStorage.getItem('selectedCharacter');
-    if (!hasSelectedCharacter) {
-      setShowCharacterPopup(true);
-    } else {
-      setSelectedCharacter(hasSelectedCharacter);
-    }
-  }, []);
-
-  const handleCharacterSelect = (character: string) => {
-    setSelectedCharacter(character);
-    localStorage.setItem('selectedCharacter', character);
-    setShowCharacterPopup(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -97,14 +80,23 @@ const DashboardLayout: React.FC = () => {
     }
   }, []);
 
+  // Focus main content area to ensure mouse wheel events work
+  useEffect(() => {
+    if (mainContentRef.current) {
+      mainContentRef.current.focus();
+    }
+  }, []);
+
   const navItems = [
     { to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
     { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
-    { to: '/dashboard/agents', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },
-    { to: '/dashboard/business', label: 'Business Details', icon: <Building2 className="w-5 h-5" /> },
+    { to: '/dashboard/instant-lead-reply', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },
+    { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-5 h-5" /> },
+    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-5 h-5" /> },
     { to: '/dashboard/assistant', label: 'Personal Assistant', icon: <Bot className="w-5 h-5" /> },
     { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-5 h-5" /> },
     { to: '/dashboard/whatsapp', label: 'WhatsApp (Beta)', icon: <MessageCircle className="w-5 h-5" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-5 h-5" /> },
   ];
 
   return (
@@ -148,6 +140,15 @@ const DashboardLayout: React.FC = () => {
           
            {/* Right side - Settings, Dark mode, and User info */}
            <div className="flex items-center gap-3">
+             {/* Free Trial Indicator */}
+             <div className={`px-3 py-1 rounded-full text-sm font-medium ${
+               isDarkMode 
+                 ? 'bg-orange-900 text-orange-300' 
+                 : 'bg-orange-100 text-orange-700'
+             }`}>
+               Free Trial
+             </div>
+             
              {/* Settings Icon */}
              <div className="relative" data-settings-menu>
                <button
@@ -228,45 +229,25 @@ const DashboardLayout: React.FC = () => {
                
                {/* User dropdown menu */}
                {showUserMenu && (
-                 <div className={`absolute right-0 top-full mt-2 w-64 rounded-lg shadow-lg border py-2 z-50 ${
-                   isDarkMode 
-                     ? 'bg-gray-800 border-gray-700' 
-                     : 'bg-white border-gray-200'
-                 }`}>
-                   <div className={`px-4 py-3 border-b ${
-                     isDarkMode ? 'border-gray-700' : 'border-gray-100'
-                   }`}>
-                     <div className={`text-sm font-medium ${
-                       isDarkMode ? 'text-white' : 'text-gray-900'
-                     }`}>
+                 <div className="absolute right-0 top-full mt-2 w-64 rounded-lg shadow-lg border py-2 z-50 bg-white border-gray-200">
+                   <div className="px-4 py-3 border-b border-gray-100">
+                     <div className="text-sm font-medium text-gray-900">
                        {user?.name || 'User'}
                      </div>
-                     <div className={`text-xs ${
-                       isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                     }`}>
+                     <div className="text-xs text-gray-500">
                        {user?.email}
                      </div>
                    </div>
                    <div className="px-4 py-2">
-                     <div className={`text-xs mb-1 ${
-                       isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                     }`}>Current Plan</div>
-                     <div className={`text-sm font-medium ${
-                       isDarkMode ? 'text-white' : 'text-gray-900'
-                     }`}>
+                     <div className="text-xs mb-1 text-gray-500">Current Plan</div>
+                     <div className="text-sm font-medium text-gray-900">
                        {user?.role === 'admin' ? 'Admin Plan' : 'Pro Plan'}
                      </div>
                    </div>
-                   <div className={`border-t ${
-                     isDarkMode ? 'border-gray-700' : 'border-gray-100'
-                   }`}>
+                   <div className="border-t border-gray-100">
                      <button
                        onClick={handleLogout}
-                       className={`w-full flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
-                         isDarkMode 
-                           ? 'text-gray-300 hover:bg-gray-700' 
-                           : 'text-gray-700 hover:bg-gray-50'
-                       }`}
+                       className="w-full flex items-center gap-2 px-4 py-2 text-sm transition-colors text-gray-700 hover:bg-gray-50"
                      >
                        <LogOut className="w-4 h-4" />
                        Sign out
@@ -328,10 +309,6 @@ const DashboardLayout: React.FC = () => {
               </div>
             </nav>
             
-            {/* Character Display at bottom */}
-            <div className="p-6 flex justify-center">
-              <CharacterDisplay selectedCharacter={selectedCharacter} />
-            </div>
           </div>
         </aside>
 
@@ -344,26 +321,41 @@ const DashboardLayout: React.FC = () => {
           />
         )}
 
-         {/* Right Panel - Main Content (Scrollable) */}
-         <main className={`flex-1 lg:ml-64 overflow-y-auto transition-colors duration-300 ${
-           isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
-         }`}>
-           <div className="min-h-full p-6">
-             <div className={`rounded-lg transition-colors duration-300 ${
-               isDarkMode ? 'bg-gray-800/50' : 'bg-white'
-             } shadow-sm p-6`}>
-               <Outlet />
-             </div>
+         {/* Main Content - Full Width with Padding */}
+         <main 
+           ref={mainContentRef}
+           className={`flex-1 overflow-y-auto transition-colors duration-300 ${
+             isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
+           }`}
+           style={{
+             scrollBehavior: 'smooth',
+             WebkitOverflowScrolling: 'touch',
+             overscrollBehavior: 'contain'
+           }}
+           onWheel={(e) => {
+             // Ensure mouse wheel events are properly handled
+             if (mainContentRef.current) {
+               const element = mainContentRef.current;
+               const { scrollTop, scrollHeight, clientHeight } = element;
+               
+               // Check if we can scroll in the direction of the wheel
+               const canScrollUp = scrollTop > 0;
+               const canScrollDown = scrollTop < scrollHeight - clientHeight;
+               
+               if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
+                 e.preventDefault();
+                 element.scrollTop += e.deltaY;
+               }
+             }
+           }}
+           tabIndex={0}
+         >
+           <div className="p-6">
+             <Outlet />
            </div>
          </main>
       </div>
 
-      {/* Character Selection Popup */}
-      <CharacterSelectionPopup
-        isOpen={showCharacterPopup}
-        onClose={() => setShowCharacterPopup(false)}
-        onSelectCharacter={handleCharacterSelect}
-      />
     </div>
   );
 };

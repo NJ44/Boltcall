@@ -16,4 +16,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   }
 });
 
+// Test Supabase connection
+console.log('Supabase client created with URL:', supabaseUrl);
+console.log('Supabase client created with key:', supabaseAnonKey ? 'Present' : 'Missing');
+
 export default supabase;

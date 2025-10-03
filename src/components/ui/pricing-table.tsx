@@ -117,11 +117,11 @@ export function PricingTable({
                     style: "currency",
                     currency: "USD",
                   }}
-                  value={isYearly ? plan.price.yearly : plan.price.monthly}
+                  value={isYearly ? plan.price.yearly / 12 : plan.price.monthly}
                   className="text-2xl font-bold"
                 />
                 <span className="text-sm font-normal text-zinc-500">
-                  /{isYearly ? "year" : "month"}
+                  /month
                 </span>
               </div>
               {plan.description && (

@@ -1,6 +1,7 @@
 import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
@@ -85,14 +86,29 @@ const WizardShell: React.FC = () => {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center h-16">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link to="/">
+                <img 
+                  src="/boltcall_full_logo.png" 
+                  alt="Boltcall" 
+                  className="h-10 w-auto"
+                />
+              </Link>
+            </div>
+            
+            {/* Title */}
             <div className="flex items-center space-x-4">
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">
-                  Voice Receptionist Setup
+                  Account Setup
                 </h1>
               </div>
             </div>
+            
+            {/* Spacer for centering */}
+            <div className="w-32"></div>
           </div>
         </div>
 

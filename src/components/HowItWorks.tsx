@@ -47,7 +47,7 @@ const HowItWorks: React.FC = () => {
     <section 
       ref={containerRef}
       id="how-it-works" 
-      className="relative py-24 overflow-hidden bg-gradient-to-b from-light-blue to-white"
+      className="relative py-16 overflow-hidden bg-transparent -mt-16"
     >
       {/* Lightning bolt that follows scroll */}
       <motion.div
