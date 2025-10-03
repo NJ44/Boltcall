@@ -19,8 +19,11 @@ export const useLenis = () => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: customEasing,
-      touchMultiplier: 2,
       infinite: false,
+      // Performance optimizations
+      lerp: 0.1, // Smoother interpolation
+      wheelMultiplier: 1, // Reduce wheel sensitivity
+      touchMultiplier: 1.5, // Reduce touch sensitivity
     });
 
     // Store the instance globally

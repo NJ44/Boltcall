@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
@@ -28,7 +28,10 @@ export function HeroScrollDemo() {
     }
   };
 
-  const currentContent = contentData[activeTab as keyof typeof contentData];
+  const currentContent = useMemo(() => 
+    contentData[activeTab as keyof typeof contentData], 
+    [activeTab]
+  );
 
   return (
     <div className="flex flex-col overflow-hidden pb-[100px] -mt-[560px]">

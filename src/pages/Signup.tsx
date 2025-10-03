@@ -14,19 +14,13 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 const signupSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string(),
-  company: z.string().min(2, 'Company name must be at least 2 characters')
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
+  password: z.string().min(6, 'Password must be at least 6 characters')
 });
 
 type SignupFormData = z.infer<typeof signupSchema>;
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
@@ -52,7 +46,7 @@ const Signup: React.FC = () => {
         name: data.name,
         email: data.email,
         password: data.password,
-        company: data.company
+        company: '' // Default empty company
       });
       navigate(redirectTo);
     } catch {
@@ -104,12 +98,12 @@ const Signup: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center"
+              className="text-center flex flex-col items-center justify-center"
             >
-              <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET STARTED</h1>
-              <div className="w-96 h-96">
+              <h1 className="text-5xl font-bold text-zinc-900 mb-24">GET STARTED</h1>
+              <div className="w-80 h-80 flex items-center justify-center">
                 <DotLottieReact
-                  src="/dental-clinic.lottie"
+                  src="/signin.lottie"
                   loop
                   autoplay
                   style={{
@@ -144,7 +138,7 @@ const Signup: React.FC = () => {
               <div>
                 <StyledInput
                   {...register('name')}
-                  placeholder="Full Name"
+                  placeholder="Name"
                   name="name"
                   required
                 />
@@ -164,19 +158,6 @@ const Signup: React.FC = () => {
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                )}
-              </div>
-
-              {/* Company */}
-              <div>
-                <StyledInput
-                  {...register('company')}
-                  placeholder="Company Name"
-                  name="company"
-                  required
-                />
-                {errors.company && (
-                  <p className="mt-1 text-sm text-red-600">{errors.company.message}</p>
                 )}
               </div>
 
@@ -203,28 +184,6 @@ const Signup: React.FC = () => {
                 )}
               </div>
 
-              {/* Confirm Password */}
-              <div>
-                <div className="relative">
-                  <StyledInput
-                    {...register('confirmPassword')}
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="Confirm Password"
-                    name="confirmPassword"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 rounded-md hover:bg-gray-100 z-10"
-                  >
-                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-                {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
-                )}
-              </div>
 
               {/* Error Message */}
               {error && (

@@ -92,12 +92,12 @@ const Login: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center"
+              className="text-center flex flex-col items-center justify-center"
             >
-              <h1 className="text-5xl font-bold text-zinc-900 mb-8">WELCOME BACK</h1>
-              <div className="w-96 h-96">
+              <h1 className="text-5xl font-bold text-zinc-900 mb-24">WELCOME BACK</h1>
+              <div className="w-80 h-80 flex items-center justify-center">
                 <DotLottieReact
-                  src="/dental-clinic.lottie"
+                  src="/signin.lottie"
                   loop
                   autoplay
                   style={{
