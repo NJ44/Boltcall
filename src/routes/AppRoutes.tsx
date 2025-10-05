@@ -30,6 +30,7 @@ import PricingTableDemo from '../pages/PricingTableDemo';
 import ToastDemoPage from '../pages/ToastDemoPage';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
+import HeroOdysseyDemo from '../pages/HeroOdysseyDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -78,6 +79,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/toast-demo" element={<ToastDemoPage />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
+        <Route path="/hero-odyssey-demo" element={<HeroOdysseyDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

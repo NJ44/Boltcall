@@ -22,7 +22,6 @@ const PhoneNumbersPage: React.FC = () => {
       >
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Phone Numbers</h1>
-          <p className="text-gray-600 mt-1">Manage your AI receptionist phone numbers</p>
         </div>
       </motion.div>
 
@@ -32,7 +31,7 @@ const PhoneNumbersPage: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-white rounded-lg border border-gray-200 p-12 text-center"
+          className="p-12 text-center"
         >
           <div className="max-w-md mx-auto">
             {/* Icon */}
