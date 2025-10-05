@@ -14,8 +14,12 @@ export const useLenis = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Don't initialize Lenis on dashboard pages to avoid conflicts
-    if (location.pathname.startsWith('/dashboard')) {
+    // Only initialize Lenis on homepage and marketing pages
+    // Disable on dashboard, login, signup, and other app pages
+    const isDashboardPage = location.pathname.startsWith('/dashboard');
+    const isAppPage = ['/login', '/signup', '/setup'].includes(location.pathname);
+    
+    if (isDashboardPage || isAppPage) {
       return;
     }
 

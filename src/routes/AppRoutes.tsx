@@ -19,6 +19,7 @@ import AssistantPage from '../pages/dashboard/AssistantPage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
 import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
+import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
@@ -59,6 +60,7 @@ const NavigationWrapper: React.FC = () => {
           <Route index element={<DashboardPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
+          <Route path="voice-library" element={<VoiceLibraryPage />} />
           <Route path="knowledge" element={<KnowledgeBasePage />} />
           <Route path="phone" element={<PhoneNumbersPage />} />
           <Route path="assistant" element={<AssistantPage />} />

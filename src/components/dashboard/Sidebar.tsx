@@ -4,7 +4,8 @@ import {
   BarChart3, 
   Users, 
   Building2, 
-  Settings 
+  Settings,
+  Volume2
 } from 'lucide-react';
 import NavItem from './NavItem';
 
@@ -18,6 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     { to: '/', label: 'Dashboard', icon: <LayoutDashboard /> },
     { to: '/analytics', label: 'Analytics', icon: <BarChart3 /> },
     { to: '/agents', label: 'Agents', icon: <Users /> },
+    { to: '/voice-library', label: 'Voice Library', icon: <Volume2 /> },
     { to: '/business', label: 'Business Details', icon: <Building2 /> },
     { to: '/settings', label: 'Settings', icon: <Settings /> },
   ];

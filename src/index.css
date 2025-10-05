@@ -4,11 +4,25 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Smooth scrolling will be handled by Lenis on specific pages */
   }
   
   body {
     @apply bg-white text-text-main;
+  }
+  
+  /* Ensure dashboard pages have normal scrolling */
+  body.dashboard-page {
+    scroll-behavior: auto;
+  }
+  
+  body.dashboard-page * {
+    scroll-behavior: auto;
+  }
+  
+  /* Enable smooth scrolling for homepage */
+  body.smooth-scroll {
+    scroll-behavior: smooth;
   }
   
   /* Panel open state for navbar styling */

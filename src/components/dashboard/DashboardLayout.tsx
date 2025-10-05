@@ -29,6 +29,14 @@ const DashboardLayout: React.FC = () => {
   const { user, logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
 
+  // Add dashboard-page class to body for normal scrolling
+  useEffect(() => {
+    document.body.classList.add('dashboard-page');
+    return () => {
+      document.body.classList.remove('dashboard-page');
+    };
+  }, []);
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -328,25 +336,9 @@ const DashboardLayout: React.FC = () => {
              isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
            }`}
            style={{
-             scrollBehavior: 'smooth',
+             scrollBehavior: 'auto', // Normal scrolling for dashboard
              WebkitOverflowScrolling: 'touch',
              overscrollBehavior: 'contain'
-           }}
-           onWheel={(e) => {
-             // Ensure mouse wheel events are properly handled
-             if (mainContentRef.current) {
-               const element = mainContentRef.current;
-               const { scrollTop, scrollHeight, clientHeight } = element;
-               
-               // Check if we can scroll in the direction of the wheel
-               const canScrollUp = scrollTop > 0;
-               const canScrollDown = scrollTop < scrollHeight - clientHeight;
-               
-               if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
-                 e.preventDefault();
-                 element.scrollTop += e.deltaY;
-               }
-             }
            }}
            tabIndex={0}
          >
