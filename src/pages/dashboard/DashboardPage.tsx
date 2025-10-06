@@ -5,7 +5,6 @@ import {
   Trash2, 
   Edit3,
   Calendar, 
-  Clock, 
   Star,
   X
 } from 'lucide-react';

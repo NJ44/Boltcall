@@ -1,26 +1,27 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.VITE_SUPABASE_URL!,
+  process.env.VITE_SUPABASE_ANON_KEY!
 );
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: Request) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   }
 
   try {
-    const { code, error, state } = req.query;
-    const appUrl = process.env.APP_URL || 'http://localhost:3000';
+    const url = new URL(req.url);
+    const code = url.searchParams.get('code');
+    const error = url.searchParams.get('error');
+    const appUrl = process.env.VITE_APP_URL || 'http://localhost:5173';
 
     if (error) {
-      return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=error`);
+      return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=error`);
     }
 
     if (!code) {
-      return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=missing_code`);
+      return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=missing_code`);
     }
 
     // 1) Exchange code for short-lived user access token
@@ -35,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const tokenData = await tokenRes.json();
     if (!tokenRes.ok) {
       console.error('Token exchange failed:', tokenData);
-      return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=token_fail`);
+      return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=token_fail`);
     }
 
     const userAccessToken = tokenData.access_token as string;
@@ -47,14 +48,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const pagesData = await pagesRes.json();
     if (!pagesRes.ok) {
       console.error('Pages fetch failed:', pagesData);
-      return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=pages_fail`);
+      return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=pages_fail`);
     }
 
     // pagesData.data is an array: [{id, name, access_token, ...}]
     // Let the user choose pages in your UI, OR auto-connect the first one for a quick POC.
     const firstPage = pagesData.data?.[0];
     if (!firstPage) {
-      return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=no_pages`);
+      return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=no_pages`);
     }
 
     const pageId = firstPage.id;
@@ -79,13 +80,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const subData = await subRes.json();
     if (!subRes.ok) {
       console.error("Subscribe error:", subData);
-      return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=subscribe_fail`);
+      return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=subscribe_fail`);
     }
 
     // Done — redirect back to your Instant Lead Reply page
-    return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=success`);
+    return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=success`);
   } catch (error) {
     console.error('Facebook OAuth callback error:', error);
-    return res.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=error`);
+    const appUrl = process.env.VITE_APP_URL || 'http://localhost:5173';
+    return Response.redirect(`${appUrl}/dashboard/instant-lead-reply?fb=error`);
   }
 }

@@ -1,22 +1,23 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+const VERIFY_TOKEN = process.env.VITE_FB_WEBHOOK_VERIFY_TOKEN!;
 
-const VERIFY_TOKEN = process.env.FB_WEBHOOK_VERIFY_TOKEN!;
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: Request) {
   if (req.method === 'GET') {
     // Webhook verification
-    const { 'hub.mode': mode, 'hub.verify_token': token, 'hub.challenge': challenge } = req.query;
+    const url = new URL(req.url);
+    const mode = url.searchParams.get('hub.mode');
+    const token = url.searchParams.get('hub.verify_token');
+    const challenge = url.searchParams.get('hub.challenge');
 
     if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-      return res.status(200).send(challenge);
+      return new Response(challenge, { status: 200 });
     }
-    return res.status(403).send('Forbidden');
+    return new Response('Forbidden', { status: 403 });
   }
 
   if (req.method === 'POST') {
     // Webhook event handling
     try {
-      const body = req.body;
+      const body = await req.json();
 
       // Example shape:
       // { entry: [{ changes: [{ field: "leadgen", value: { leadgen_id, form_id, page_id } }]}]}
@@ -25,20 +26,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log('Facebook webhook received:', JSON.stringify(body, null, 2));
 
       // Here: forward to n8n (recommended) OR fetch lead fields right here.
-      if (process.env.N8N_WEBHOOK_URL) {
-        await fetch(process.env.N8N_WEBHOOK_URL, {
+      if (process.env.VITE_N8N_WEBHOOK_URL) {
+        await fetch(process.env.VITE_N8N_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         });
       }
 
-      return res.status(200).json({ received: true });
+      return new Response(JSON.stringify({ received: true }), { status: 200 });
     } catch (error) {
       console.error('Webhook processing error:', error);
-      return res.status(500).json({ error: 'Webhook processing failed' });
+      return new Response(JSON.stringify({ error: 'Webhook processing failed' }), { status: 500 });
     }
   }
 
-  return res.status(405).json({ error: 'Method not allowed' });
+  return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
 }
