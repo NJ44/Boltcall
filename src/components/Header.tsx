@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, User, LogOut } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -96,9 +96,7 @@ const Header: React.FC = () => {
                   onClick={handleLogout}
                   variant="outline"
                   size="sm"
-                  className="flex items-center gap-2"
                 >
-                  <LogOut className="w-4 h-4" />
                   Logout
                 </Button>
               </>

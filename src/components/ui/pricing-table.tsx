@@ -132,11 +132,27 @@ export function PricingTable({
               <button
                 onClick={() => onPlanSelect?.(plan.level)}
                 className={cn(
-                  "w-full mt-4 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-                  "bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 border border-gray-300",
-                  "hover:shadow-md transform hover:-translate-y-0.5",
+                  "w-full mt-4 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
+                  "bg-white text-gray-900 border border-gray-200",
+                  "shadow-lg hover:shadow-xl transform hover:-translate-y-1",
+                  "hover:bg-gray-50 active:shadow-inner",
                   buttonClassName
                 )}
+                style={{
+                  boxShadow: '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '8px 8px 16px #c5c5c5, -8px -8px 16px #ffffff';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff';
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.boxShadow = 'inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.boxShadow = '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff';
+                }}
               >
                 Get Started for Free
               </button>

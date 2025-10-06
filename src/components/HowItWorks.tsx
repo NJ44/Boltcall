@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Zap, MessageCircle, Bot, Calendar, ArrowRight, Sparkles } from 'lucide-react';
+import { Zap, MessageCircle, Bot, Calendar, ArrowRight } from 'lucide-react';
 import Card from './ui/Card';
 
 const HowItWorks: React.FC = () => {
@@ -14,9 +14,10 @@ const HowItWorks: React.FC = () => {
       description: 'When a potential customer reaches out – any channel, any time. Our powerful AI instantly recognizes and captures the lead.',
       step: '01',
       color: 'blue',
-      bgColor: 'from-blue-50 to-blue-100/50',
-      iconColor: 'blue-600',
-      gradient: 'from-blue-500 to-blue-600'
+      bgColor: 'bg-blue-50',
+      iconColor: 'text-blue-600',
+      iconBg: 'bg-blue-100',
+      stepBg: 'bg-blue-600'
     },
     {
       icon: Bot,
@@ -24,9 +25,10 @@ const HowItWorks: React.FC = () => {
       description: 'Our advanced AI immediately responds with personalized, contextual information – understanding context and intent in real-time.',
       step: '02',
       color: 'purple',
-      bgColor: 'from-purple-50 to-purple-100/50',
-      iconColor: 'purple-600',
-      gradient: 'from-purple-500 to-purple-600'
+      bgColor: 'bg-purple-50',
+      iconColor: 'text-purple-600',
+      iconBg: 'bg-purple-100',
+      stepBg: 'bg-purple-600'
     },
     {
       icon: Calendar,
@@ -34,9 +36,10 @@ const HowItWorks: React.FC = () => {
       description: 'Seamlessly books qualified appointments into your calendar while providing detailed insights and conversion analytics.',
       step: '03',
       color: 'green',
-      bgColor: 'from-green-50 to-green-100/50',
-      iconColor: 'green-600',
-      gradient: 'from-green-500 to-green-600'
+      bgColor: 'bg-green-50',
+      iconColor: 'text-green-600',
+      iconBg: 'bg-green-100',
+      stepBg: 'bg-green-600'
     }
   ];
 
@@ -87,26 +90,6 @@ const HowItWorks: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Sparkling background elements */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-yellow-400 rounded-full opacity-60"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            opacity: [0.3, 1, 0.3],
-            scale: [0.5, 1, 0.5]
-          }}
-          transition={{
-            duration: Math.random() * 3 + 2,
-            repeat: Infinity,
-            delay: Math.random() * 2
-          }}
-        />
-      ))}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}
@@ -117,30 +100,17 @@ const HowItWorks: React.FC = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-yellow-100 to-amber-100 px-6 py-2 rounded-full mb-6">
-            <Sparkles className="w-5 h-5 text-amber-600" />
-            <span className="text-sm font-semibold text-amber-800">Powerful Automation</span>
-          </div>
           
           <motion.h2
-            className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-6"
+            className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
           viewport={{ once: true }}
         >
-          How It Works
+          Closing leads in lightning speed
         </motion.h2>
           
-        <motion.p
-            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-            Three lightning-fast steps to transform your lead management with AI-powered precision and automation
-        </motion.p>
         </motion.div>
 
         {/* Steps Grid */}
@@ -155,23 +125,23 @@ const HowItWorks: React.FC = () => {
               viewport={{ once: true }}
             >
               {/* Card */}
-              <Card className={`relative overflow-hidden bg-gradient-to-br ${step.bgColor} border-0 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-rotate-1 h-full`}>
+              <Card className={`relative overflow-hidden ${step.bgColor} border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 h-full`}>
                 {/* Step number background */}
-                <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${step.gradient} opacity-10 blur-xl`} />
+                <div className={`absolute top-0 right-0 w-20 h-20 ${step.stepBg} opacity-5 blur-xl`} />
                 
                 {/* Step number */}
-                <div className={`absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br ${step.gradient} rounded-full flex items-center justify-center shadow-lg z-20`}>
+                <div className={`absolute -top-4 -right-4 w-16 h-16 ${step.stepBg} rounded-full flex items-center justify-center shadow-xl z-20`}>
                   <span className="text-sm font-bold text-white">{step.step}</span>
                     </div>
 
                     <div className="p-8 pt-12">
                   {/* Icon area */}
                       <motion.div
-                    className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300`}
-                    whileHover={{ rotate: 180 }}
+                    className={`w-20 h-20 mx-auto rounded-2xl ${step.iconBg} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-all duration-300`}
+                    whileHover={{ rotate: 180, scale: 1.1 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <step.icon className={`w-10 h-10 text-white drop-shadow-lg`} />
+                    <step.icon className={`w-10 h-10 ${step.iconColor} drop-shadow-sm`} />
                       </motion.div>
 
                   {/* Content */}
@@ -195,15 +165,15 @@ const HowItWorks: React.FC = () => {
                         ease: 'easeInOut'
                       }}
                   >
-                    <div className={`w-12 h-12 bg-gradient-to-r ${step.gradient} rounded-full flex items-center justify-center shadow-lg`}>
+                    <div className={`w-12 h-12 ${step.stepBg} rounded-full flex items-center justify-center shadow-xl`}>
                       <ArrowRight className="w-6 h-6 text-white" />
                   </div>
                 </motion.div>
                 )}
 
-                {/* Glow effect on hover */}
+                {/* Subtle hover effect */}
                 <motion.div
-                  className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-xl`}
+                  className={`absolute inset-0 ${step.stepBg} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-xl`}
                 />
               </Card>
             </motion.div>

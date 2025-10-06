@@ -11,7 +11,6 @@ import {
   MessageSquare,
   MessageCircle,
   Bot,
-  LogOut,
   User,
   Moon,
   Sun,
@@ -255,9 +254,8 @@ const DashboardLayout: React.FC = () => {
                    <div className="border-t border-gray-100">
                      <button
                        onClick={handleLogout}
-                       className="w-full flex items-center gap-2 px-4 py-2 text-sm transition-colors text-gray-700 hover:bg-gray-50"
+                       className="w-full flex items-center px-4 py-2 text-sm transition-colors text-gray-700 hover:bg-gray-50"
                      >
-                       <LogOut className="w-4 h-4" />
                        Sign out
                      </button>
                    </div>
