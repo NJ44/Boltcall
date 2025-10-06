@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Plus, X, Phone, Globe, Clock, BookOpen, Settings } from 'lucide-react';
+import { Users, Plus, X } from 'lucide-react';
 
 interface Agent {
   id: number;
