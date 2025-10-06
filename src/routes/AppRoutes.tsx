@@ -32,7 +32,6 @@ import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import HeroOdysseyDemo from '../pages/HeroOdysseyDemo';
 import AgentPlanDemo from '../pages/AgentPlanDemo';
-import StickyScrollDemo from '../pages/StickyScrollDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -83,7 +82,6 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/hero-odyssey-demo" element={<HeroOdysseyDemo />} />
         <Route path="/agent-plan-demo" element={<AgentPlanDemo />} />
-        <Route path="/sticky-scroll-demo" element={<StickyScrollDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

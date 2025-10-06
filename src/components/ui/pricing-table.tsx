@@ -129,6 +129,17 @@ export function PricingTable({
                   {plan.description}
                 </p>
               )}
+              <button
+                onClick={() => onPlanSelect?.(plan.level)}
+                className={cn(
+                  "w-full mt-4 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
+                  "bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 border border-gray-300",
+                  "hover:shadow-md transform hover:-translate-y-0.5",
+                  buttonClassName
+                )}
+              >
+                Get Started for Free
+              </button>
             </button>
           ))}
         </div>
@@ -137,12 +148,12 @@ export function PricingTable({
           <div className="overflow-x-auto">
             <div className="min-w-[640px] divide-y divide-zinc-200 dark:divide-zinc-800">
               <div className="flex items-center p-4 bg-zinc-50 dark:bg-zinc-900">
-                <div className="flex-1 text-sm font-medium">Features</div>
+                <div className="flex-1 text-sm font-medium text-gray-600">Features</div>
                 <div className="flex items-center gap-8 text-sm">
                   {plans.map((plan) => (
                     <div
                       key={plan.level}
-                      className="w-16 text-center font-medium"
+                      className="w-16 text-center font-medium text-gray-600"
                     >
                       {plan.name}
                     </div>

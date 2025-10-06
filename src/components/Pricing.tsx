@@ -73,9 +73,9 @@ const Pricing: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-center mb-16"
+        className="text-center -mb-16"
       >
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 -mb-14">
           Pricing
         </h2>
       </motion.div>
@@ -102,7 +102,7 @@ const Pricing: React.FC = () => {
               navigate('/contact'); // For enterprise, redirect to contact
             }
           }}
-          containerClassName="py-12"
+          containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"
         />
       </motion.div>
