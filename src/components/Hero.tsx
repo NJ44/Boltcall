@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
 
 
   return (
-    <Section id="hero" background="gray" className="relative pt-20 pb-32 lg:pt-32 lg:pb-40 overflow-hidden">
+    <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-hidden">
       {/* Aurora Background Effect */}
       <div className="absolute inset-0 overflow-hidden">
         <div

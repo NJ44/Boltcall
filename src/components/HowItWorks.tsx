@@ -1,12 +1,9 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Zap, MessageCircle, Bot, Calendar, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { MessageCircle, Bot, Calendar, ArrowRight } from 'lucide-react';
 import Card from './ui/Card';
 
 const HowItWorks: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
-
   const steps = [
     {
       icon: MessageCircle,
@@ -43,52 +40,11 @@ const HowItWorks: React.FC = () => {
     }
   ];
 
-  // Lightning bolt position based on scroll
-  const lightningY = useTransform(scrollYProgress, [0, 1], ['10%', '85%']);
-
   return (
     <section 
-      ref={containerRef}
       id="how-it-works" 
       className="relative py-16 overflow-hidden bg-transparent -mt-16"
     >
-      {/* Lightning bolt that follows scroll */}
-      <motion.div
-        className="absolute left-1/2 transform -translate-x-1/2 z-10"
-        style={{ 
-          y: lightningY,
-          left: '50%'
-        }}
-      >
-        <motion.div
-          animate={{ 
-            opacity: [0.4, 0.8, 0.4],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ 
-            duration: 2,
-            repeat: Infinity,
-            ease: 'easeInOut'
-          }}
-          className="relative"
-        >
-          <Zap 
-            size={32} 
-            className="text-amber-500 drop-shadow-lg" 
-            style={{ filter: 'drop-shadow(0 0 20px rgba(251, 191, 36, 0.5))' }}
-          />
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ 
-              duration: 1.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 0.5
-            }}
-            className="absolute inset-0 bg-yellow-400 blur-md opacity-60 rounded-full"
-          />
-        </motion.div>
-      </motion.div>
 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">

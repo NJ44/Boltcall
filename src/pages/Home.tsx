@@ -21,9 +21,9 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="min-h-screen bg-white-smoke relative">
       {/* Lightning Background */}
-      <div className="fixed inset-0 z-0 opacity-30">
+      <div className="fixed inset-0 z-0 bg-black">
         <HomeLightning className="w-full h-full" />
       </div>
       
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
           </motion.div>
           
           <motion.div 
-            className="relative -top-[200px]"
+            className="relative -top-[205px]"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -50,6 +50,7 @@ const Home: React.FC = () => {
           </motion.div>
           
           <motion.div
+            className="relative -top-[255px]"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
