@@ -40,43 +40,43 @@ export function HeroScrollDemo() {
       >
         <div className="flex flex-col h-full text-center">
           {/* Professional Modern Buttons at the very top */}
-          <div className="flex flex-wrap justify-center gap-3 mb-6 pt-2">
+          <div className="flex flex-wrap justify-center gap-4 mb-6 -mt-5">
             <button
               onClick={() => setActiveTab('ai-assistant')}
-              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
+              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'ai-assistant'
-                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
+                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
               AI Assistant
             </button>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
+              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'analytics'
-                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
+                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
               Analytics
             </button>
             <button
               onClick={() => setActiveTab('automation')}
-              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
+              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'automation'
-                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
+                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
               Automation
             </button>
             <button
               onClick={() => setActiveTab('receptionist')}
-              className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 ${
+              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'receptionist'
-                  ? 'bg-white text-gray-900 shadow-md border border-gray-200'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
+                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
               Receptionist

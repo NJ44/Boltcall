@@ -60,7 +60,7 @@ export function PricingTable({
         className={cn("w-full max-w-3xl mx-auto px-4", containerClassName)}
         {...props}
       >
-        <div className="flex justify-end mb-4 sm:mb-8">
+        <div className="flex justify-center mb-4 sm:mb-8">
           <div className="inline-flex items-center bg-gray-100 rounded-lg p-1">
             <button
               type="button"
@@ -78,13 +78,14 @@ export function PricingTable({
               type="button"
               onClick={() => setIsYearly(true)}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2",
                 isYearly 
                   ? "bg-white text-gray-900 shadow-sm" 
                   : "text-gray-600 hover:text-gray-900"
               )}
             >
               Yearly
+              <span className="text-xs font-semibold text-green-600">3 months free</span>
             </button>
           </div>
         </div>
@@ -94,7 +95,7 @@ export function PricingTable({
             <div
               key={plan.name}
               className={cn(
-                "flex-1 p-4 rounded-xl text-left transition-all",
+                "flex-1 p-4 rounded-xl text-left transition-all bg-white",
                 "border border-zinc-200 dark:border-zinc-800",
               )}
             >

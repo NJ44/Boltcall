@@ -31,69 +31,23 @@ const Home: React.FC = () => {
       <div className="relative z-10">
         <Header />
         <main>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Hero />
-          </motion.div>
+          <Hero />
           
-          <motion.div 
-            className="relative -top-[205px]"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
+          <div className="relative -top-[435px]">
             <HeroScrollDemo />
-          </motion.div>
+          </div>
           
-          <motion.div
-            className="relative -top-[255px]"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
+          <div className="relative -top-[555px]">
             <HowItWorks />
-          </motion.div>
+          </div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <StickyScrollSection />
-          </motion.div>
+          <StickyScrollSection />
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <Pricing />
-          </motion.div>
+          <Pricing />
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <FAQ />
-          </motion.div>
+          <FAQ />
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <FinalCTA />
-          </motion.div>
+          <FinalCTA />
         </main>
         <Footer />
       </div>
