@@ -9,7 +9,6 @@ import Button from '../ui/Button';
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepAccount = React.lazy(() => import('./steps/StepAccount'));
 const StepBusinessProfile = React.lazy(() => import('./steps/StepBusinessProfile'));
-const StepCalendar = React.lazy(() => import('./steps/StepCalendar'));
 const StepPhone = React.lazy(() => import('./steps/StepPhone'));
 const StepKnowledge = React.lazy(() => import('./steps/StepKnowledge'));
 const StepReview = React.lazy(() => import('./steps/StepReview'));
