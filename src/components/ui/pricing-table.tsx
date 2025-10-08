@@ -46,12 +46,7 @@ export function PricingTable({
   ...props
 }: PricingTableProps) {
   const [isYearly, setIsYearly] = React.useState(defaultInterval === "yearly")
-  const [selectedPlan, setSelectedPlan] = React.useState<PlanLevel>(defaultPlan)
 
-  const handlePlanSelect = (plan: PlanLevel) => {
-    setSelectedPlan(plan)
-    onPlanSelect?.(plan)
-  }
 
   return (
     <section
@@ -66,13 +61,15 @@ export function PricingTable({
         {...props}
       >
         <div className="flex justify-end mb-4 sm:mb-8">
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm">
+          <div className="inline-flex items-center bg-gray-100 rounded-lg p-1">
             <button
               type="button"
               onClick={() => setIsYearly(false)}
               className={cn(
-                "px-3 py-1 rounded-md transition-colors",
-                !isYearly ? "bg-zinc-100 dark:bg-zinc-800" : "text-zinc-500",
+                "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                !isYearly 
+                  ? "bg-white text-gray-900 shadow-sm" 
+                  : "text-gray-600 hover:text-gray-900"
               )}
             >
               Monthly
@@ -81,8 +78,10 @@ export function PricingTable({
               type="button"
               onClick={() => setIsYearly(true)}
               className={cn(
-                "px-3 py-1 rounded-md transition-colors",
-                isYearly ? "bg-zinc-100 dark:bg-zinc-800" : "text-zinc-500",
+                "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                isYearly 
+                  ? "bg-white text-gray-900 shadow-sm" 
+                  : "text-gray-600 hover:text-gray-900"
               )}
             >
               Yearly
@@ -92,15 +91,11 @@ export function PricingTable({
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           {plans.map((plan) => (
-            <button
+            <div
               key={plan.name}
-              type="button"
-              onClick={() => handlePlanSelect(plan.level)}
               className={cn(
                 "flex-1 p-4 rounded-xl text-left transition-all",
                 "border border-zinc-200 dark:border-zinc-800",
-                selectedPlan === plan.level &&
-                  "ring-2 ring-blue-500 dark:ring-blue-400",
               )}
             >
               <div className="flex items-center justify-between mb-2">
@@ -129,6 +124,77 @@ export function PricingTable({
                   {plan.description}
                 </p>
               )}
+              
+              {/* Feature List */}
+              <div className="mt-4 space-y-2">
+                {plan.level === 'starter' && (
+                  <>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      AI Receptionist
+                    </div>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      SMS & Call Management
+                    </div>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Calendar Integration
+                    </div>
+                  </>
+                )}
+                {plan.level === 'pro' && (
+                  <>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Everything in Starter
+                    </div>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Advanced Analytics
+                    </div>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Call Transcripts
+                    </div>
+                  </>
+                )}
+                {plan.level === 'all' && (
+                  <>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Everything in Pro
+                    </div>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      White-glove Onboarding
+                    </div>
+                    <div className="flex items-center text-xs text-zinc-600">
+                      <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      VIP Support
+                    </div>
+                  </>
+                )}
+              </div>
+              
               <button
                 onClick={() => onPlanSelect?.(plan.level)}
                 className={cn(
@@ -156,7 +222,7 @@ export function PricingTable({
               >
                 Get Started for Free
               </button>
-            </button>
+            </div>
           ))}
         </div>
 
@@ -179,21 +245,14 @@ export function PricingTable({
               {features.map((feature) => (
                 <div
                   key={feature.name}
-                  className={cn(
-                    "flex items-center p-4 transition-colors",
-                    feature.included === selectedPlan &&
-                      "bg-blue-50/50 dark:bg-blue-900/20",
-                  )}
+                  className="flex items-center p-4 transition-colors"
                 >
                   <div className="flex-1 text-sm">{feature.name}</div>
                   <div className="flex items-center gap-8 text-sm">
                     {plans.map((plan) => (
                       <div
                         key={plan.level}
-                        className={cn(
-                          "w-16 flex justify-center",
-                          plan.level === selectedPlan && "font-medium",
-                        )}
+                        className="w-16 flex justify-center"
                       >
                         {shouldShowCheck(feature.included, plan.level) ? (
                           <CheckIcon className="w-5 h-5 text-blue-500" />

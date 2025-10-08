@@ -15,8 +15,10 @@ export interface SetupData {
   
   // Step 2: Business Profile
   businessProfile: {
+    businessName: string;
     websiteUrl: string;
     mainCategory: string;
+    country: string;
     serviceAreas: string[];
     openingHours: Record<string, { open: string; close: string; closed: boolean }>;
     languages: string[];
@@ -118,8 +120,10 @@ const defaultData: SetupData = {
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   },
   businessProfile: {
+    businessName: '',
     websiteUrl: '',
     mainCategory: '',
+    country: '',
     serviceAreas: [],
     openingHours: {
       monday: { open: '09:00', close: '17:00', closed: false },
@@ -275,8 +279,7 @@ export const useSetupStore = create<SetupStore>()(
 export const setupSteps = [
   { id: 1, title: 'Account', description: 'Basic account setup' },
   { id: 2, title: 'Business Profile', description: 'Company information' },
-  { id: 3, title: 'Calendar', description: 'Connect your calendar' },
-  { id: 4, title: 'Phone', description: 'Phone number setup' },
-  { id: 5, title: 'Knowledge Base', description: 'Services and FAQs' },
-  { id: 6, title: 'Review & Launch', description: 'Final review and go live' },
+  { id: 3, title: 'Phone', description: 'Phone number setup' },
+  { id: 4, title: 'Knowledge Base', description: 'Services and FAQs' },
+  { id: 5, title: 'Review & Launch', description: 'Final review and go live' },
 ];

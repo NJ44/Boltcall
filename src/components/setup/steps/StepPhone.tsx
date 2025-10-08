@@ -1,272 +1,34 @@
 import React from 'react';
-import { ArrowRight, Voicemail, Calendar } from 'lucide-react';
-import { useSetupStore } from '../../../stores/setupStore';
+import { Phone } from 'lucide-react';
 import Button from '../../ui/Button';
-import StyledInput from '../../ui/StyledInput';
 
 const StepPhone: React.FC = () => {
-  const { phone, updatePhone } = useSetupStore();
-
-  const mockNumbers = [
-    { number: '+1 (555) 123-4567', location: 'New York, NY' },
-    { number: '+1 (555) 234-5678', location: 'Los Angeles, CA' },
-    { number: '+1 (555) 345-6789', location: 'Chicago, IL' },
-    { number: '+1 (555) 456-7890', location: 'Houston, TX' },
-  ];
-
-  const carriers = [
-    { name: 'Verizon', instructions: 'Call *72 + your new number' },
-    { name: 'AT&T', instructions: 'Call *72 + your new number' },
-    { name: 'T-Mobile', instructions: 'Call *72 + your new number' },
-    { name: 'Sprint', instructions: 'Call *72 + your new number' },
-  ];
-
-
+  const handleGetNumber = () => {
+    // This will be handled when the user completes the setup
+    console.log('Get a new number requested');
+  };
 
   return (
     <div className="space-y-8">
-      {/* Phone Number Setup */}
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Phone Number Setup</h3>
-          
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <label className="flex items-center space-x-3">
-                <input
-                  type="radio"
-                  name="phoneOption"
-                  checked={phone.useExistingNumber}
-                  onChange={() => updatePhone({ useExistingNumber: true })}
-                  className="text-brand-blue focus:ring-brand-blue"
-                />
-                <div>
-                  <span className="text-sm font-medium text-gray-900">Use existing number</span>
-                  <p className="text-sm text-gray-500">Forward calls from your current business number</p>
-                </div>
-              </label>
-
-              <label className="flex items-center space-x-3">
-                <input
-                  type="radio"
-                  name="phoneOption"
-                  checked={!phone.useExistingNumber}
-                  onChange={() => updatePhone({ useExistingNumber: false })}
-                  className="text-brand-blue focus:ring-brand-blue"
-                />
-                <div>
-                  <span className="text-sm font-medium text-gray-900">Buy a new number</span>
-                  <p className="text-sm text-gray-500">Get a dedicated number for your AI receptionist</p>
-                </div>
-              </label>
-            </div>
-          </div>
+      <div className="text-center py-12">
+        <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+          <Phone className="w-8 h-8 text-blue-600" />
         </div>
+        
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Get Your Phone Number</h3>
+        <p className="text-gray-600 mb-8 max-w-md mx-auto">
+          We'll provision a dedicated phone number for your AI receptionist. You can customize it after setup.
+        </p>
+        
+        <Button
+          onClick={handleGetNumber}
+          variant="primary"
+          size="lg"
+          className="mx-auto"
+        >
+          Get a New Number
+        </Button>
       </div>
-
-      {/* Existing Number Setup */}
-      {phone.useExistingNumber && (
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Existing Number Configuration</h3>
-            
-            <div className="space-y-4">
-              <div>
-                <StyledInput
-                  type="tel"
-                  value={phone.existingNumber}
-                  onChange={(e) => updatePhone({ existingNumber: e.target.value })}
-                  placeholder="Your Business Number"
-                  name="existingNumber"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Forwarding Instructions
-                </label>
-                <textarea
-                  value={phone.forwardingInstructions}
-                  onChange={(e) => updatePhone({ forwardingInstructions: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                  rows={4}
-                  placeholder="Instructions for setting up call forwarding..."
-                />
-              </div>
-
-              {/* Carrier Instructions */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-blue-900 mb-3">Quick Setup by Carrier</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {carriers.map((carrier, index) => (
-                    <div key={index} className="bg-white rounded-lg p-3">
-                      <p className="text-sm font-medium text-gray-900">{carrier.name}</p>
-                      <p className="text-xs text-gray-600 mt-1">{carrier.instructions}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* New Number Setup */}
-      {!phone.useExistingNumber && (
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">New Number Configuration</h3>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Country
-                  </label>
-                  <select
-                    value={phone.newNumber.country}
-                    onChange={(e) => updatePhone({ 
-                      newNumber: { ...phone.newNumber, country: e.target.value }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue"
-                  >
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="UK">United Kingdom</option>
-                  </select>
-                </div>
-
-                <div>
-                  <StyledInput
-                    type="text"
-                    value={phone.newNumber.areaCode}
-                    onChange={(e) => updatePhone({ 
-                      newNumber: { ...phone.newNumber, areaCode: e.target.value }
-                    })}
-                    placeholder="Area Code"
-                    name="areaCode"
-                    maxLength={3}
-                  />
-                </div>
-              </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-blue-900 mb-2">Phone Number Selection</h4>
-                <p className="text-blue-700 text-sm mb-3">
-                  We'll automatically assign you a local phone number in your selected area code.
-                </p>
-                <div className="space-y-2">
-                  {mockNumbers.slice(0, 2).map((number, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-200"
-                    >
-                      <div>
-                        <p className="font-medium text-gray-900">{number.number}</p>
-                        <p className="text-sm text-gray-500">{number.location}</p>
-                      </div>
-                      <Button
-                        onClick={() => updatePhone({ 
-                          newNumber: { ...phone.newNumber, number: number.number }
-                        })}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Select
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Call Routing Configuration */}
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Call Routing</h3>
-          
-          <div className="space-y-6">
-            <div>
-              <StyledInput
-                type="tel"
-                value={phone.routing.businessHoursNumbers.join(', ')}
-                onChange={(e) => updatePhone({
-                  routing: {
-                    ...phone.routing,
-                    businessHoursNumbers: e.target.value.split(',').map(n => n.trim()).filter(Boolean)
-                  }
-                })}
-                placeholder="Business Hours Numbers"
-                name="businessHoursNumbers"
-              />
-              <p className="mt-1 text-sm text-gray-500">
-                Numbers to ring during business hours (separate with commas)
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                After Hours Action
-              </label>
-              <div className="space-y-3">
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="afterHours"
-                    checked={phone.routing.afterHoursAction === 'transfer'}
-                    onChange={() => updatePhone({
-                      routing: { ...phone.routing, afterHoursAction: 'transfer' }
-                    })}
-                    className="text-brand-blue focus:ring-brand-blue"
-                  />
-                  <div className="flex items-center space-x-2">
-                    <ArrowRight className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-900">Transfer to number</span>
-                  </div>
-                </label>
-
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="afterHours"
-                    checked={phone.routing.afterHoursAction === 'voicemail'}
-                    onChange={() => updatePhone({
-                      routing: { ...phone.routing, afterHoursAction: 'voicemail' }
-                    })}
-                    className="text-brand-blue focus:ring-brand-blue"
-                  />
-                  <div className="flex items-center space-x-2">
-                    <Voicemail className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-900">Take voicemail</span>
-                  </div>
-                </label>
-
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="afterHours"
-                    checked={phone.routing.afterHoursAction === 'book'}
-                    onChange={() => updatePhone({
-                      routing: { ...phone.routing, afterHoursAction: 'book' }
-                    })}
-                    className="text-brand-blue focus:ring-brand-blue"
-                  />
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-900">Allow AI to book appointments</span>
-                  </div>
-                </label>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
     </div>
   );
 };

@@ -17,10 +17,9 @@ const StepReview = React.lazy(() => import('./steps/StepReview'));
 const stepComponents = {
   1: StepAccount,
   2: StepBusinessProfile,
-  3: StepCalendar,
-  4: StepPhone,
-  5: StepKnowledge,
-  6: StepReview,
+  3: StepPhone,
+  4: StepKnowledge,
+  5: StepReview,
 };
 
 const WizardShell: React.FC = () => {
@@ -85,9 +84,9 @@ const WizardShell: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Logo - Far Left */}
             <div className="flex items-center">
               <Link to="/">
                 <img 
@@ -98,16 +97,14 @@ const WizardShell: React.FC = () => {
               </Link>
             </div>
             
-            {/* Title */}
-            <div className="flex items-center space-x-4">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  Account Setup
-                </h1>
-              </div>
+            {/* Title - Center */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <h1 className="text-2xl font-bold text-gray-900">
+                Account Setup
+              </h1>
             </div>
             
-            {/* Spacer for centering */}
+            {/* Spacer for balance */}
             <div className="w-32"></div>
           </div>
         </div>

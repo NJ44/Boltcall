@@ -46,7 +46,7 @@ const Pricing: React.FC = () => {
       name: "STARTER",
       level: "starter",
       price: { monthly: 197, yearly: 1970 },
-      description: "Perfect for small dental practices getting started with AI receptionist.",
+      description: "Good for testing things out, something like that.",
     },
     {
       name: "PRO",
