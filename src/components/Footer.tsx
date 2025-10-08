@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
 import Button from './ui/Button';
 
 const Footer: React.FC = () => {
@@ -157,7 +156,6 @@ const Footer: React.FC = () => {
                 size="sm"
                 className="text-gray-700 border-gray-400 hover:bg-gray-100"
               >
-                <ArrowUp className="w-4 h-4 mr-2" />
                 Back to Top
               </Button>
             </motion.div>

@@ -9,6 +9,7 @@ import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
 import { HomeLightning } from '../components/HomeLightning';
 import StickyScrollSection from '../components/StickyScrollSection';
+import { Features } from '../components/ui/features-5';
 
 const Home: React.FC = () => {
   // Add smooth-scroll class to body for homepage
@@ -40,13 +41,21 @@ const Home: React.FC = () => {
             <HowItWorks />
           </div>
           
+          <Features />
+          
           <StickyScrollSection />
           
-          <Pricing />
+          <div className="relative -top-[160px]">
+            <Pricing />
+          </div>
           
-          <FAQ />
+          <div className="relative -top-[160px]">
+            <FAQ />
+          </div>
           
-          <FinalCTA />
+          <div className="relative -top-[160px]">
+            <FinalCTA />
+          </div>
         </main>
         <Footer />
       </div>
