@@ -1,6 +1,7 @@
 import React from 'react';
 import Section from './ui/Section';
 import Button from './ui/Button';
+import WhisperText from './ui/whisper-text';
 
 const FinalCTA: React.FC = () => {
   const scrollToPricing = () => {
@@ -15,8 +16,15 @@ const FinalCTA: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-text-main mb-6 leading-tight">
-            <div className="whitespace-nowrap">Don't get left behind.</div>
-            <div className="whitespace-nowrap">Get The Advantage.</div>
+            <WhisperText
+              text="Don't get left behind. Get The Advantage."
+              className="text-4xl md:text-5xl font-bold text-text-main"
+              delay={125}
+              duration={0.625}
+              x={-20}
+              y={0}
+              triggerStart="top 85%"
+            />
           </h2>
           <Button
             onClick={scrollToPricing}

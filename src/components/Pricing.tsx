@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { PricingTable } from './ui/pricing-table';
+import WhisperText from './ui/whisper-text';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
@@ -76,7 +77,15 @@ const Pricing: React.FC = () => {
         className="text-center -mb-16"
       >
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 -mb-14">
-          Pricing
+          <WhisperText
+            text="Pricing"
+            className="text-4xl md:text-5xl font-bold text-gray-900"
+            delay={187}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 85%"
+          />
         </h2>
       </motion.div>
 

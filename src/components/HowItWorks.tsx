@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle, Bot, Calendar, ArrowRight } from 'lucide-react';
 import Card from './ui/Card';
+import WhisperText from './ui/whisper-text';
 
 const HowItWorks: React.FC = () => {
   const steps = [
@@ -57,15 +58,17 @@ const HowItWorks: React.FC = () => {
           viewport={{ once: true }}
         >
           
-          <motion.h2
-            className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          viewport={{ once: true }}
-        >
-          Closing leads in lightning speed
-        </motion.h2>
+          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <WhisperText
+              text="Closing leads in lightning speed"
+              className="text-4xl md:text-6xl font-bold text-gray-900"
+              delay={125}
+              duration={0.625}
+              x={-20}
+              y={0}
+              triggerStart="top 85%"
+            />
+          </h2>
           
         </motion.div>
 

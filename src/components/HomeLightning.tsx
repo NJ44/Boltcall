@@ -199,7 +199,7 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
       gl.uniform1f(iTimeLocation, (currentTime - startTime) / 1000.0);
       gl.uniform1f(uHueLocation, 220); // Blue hue
       gl.uniform1f(uXOffsetLocation, 0);
-      gl.uniform1f(uSpeedLocation, 1.6);
+      gl.uniform1f(uSpeedLocation, 0.072);
       gl.uniform1f(uIntensityLocation, 0.6);
       gl.uniform1f(uSizeLocation, 2);
 

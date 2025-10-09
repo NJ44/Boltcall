@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Button from './ui/Button';
 import Section from './ui/Section';
 import ModalVideo from './ModalVideo';
+import WhisperText from './ui/whisper-text';
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -35,14 +36,17 @@ const Hero: React.FC = () => {
       
       <div className="relative z-10 text-center">
         {/* Main Headline */}
-        <motion.h1
-          className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          NEVER MISS A LEAD AGAIN.
-        </motion.h1>
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8">
+          <WhisperText
+            text="NEVER MISS A LEAD AGAIN."
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main"
+            delay={125}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 80%"
+          />
+        </h1>
 
         {/* Subheadline */}
         <motion.p

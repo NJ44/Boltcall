@@ -35,6 +35,7 @@ import AgentPlanDemo from '../pages/AgentPlanDemo';
 import AuroraBackgroundDemo from '../pages/AuroraBackgroundDemo';
 import SplineSceneDemo from '../pages/SplineSceneDemo';
 import Features5Demo from '../pages/Features5Demo';
+import WhisperTextDemo from '../pages/WhisperTextDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -88,6 +89,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/aurora-background-demo" element={<AuroraBackgroundDemo />} />
         <Route path="/spline-scene-demo" element={<SplineSceneDemo />} />
         <Route path="/features-5-demo" element={<Features5Demo />} />
+        <Route path="/whisper-text-demo" element={<WhisperTextDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

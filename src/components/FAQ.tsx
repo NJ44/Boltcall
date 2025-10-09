@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import Section from './ui/Section';
+import WhisperText from './ui/whisper-text';
 
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -32,15 +33,17 @@ const FAQ: React.FC = () => {
   return (
     <Section id="faq" background="gray">
       <div className="text-center mb-10">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-text-main mb-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          Frequently Asked Questions
-        </motion.h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-6">
+          <WhisperText
+            text="Frequently Asked Questions"
+            className="text-3xl md:text-4xl font-bold text-text-main"
+            delay={125}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 85%"
+          />
+        </h2>
       </div>
 
       <div className="max-w-5xl mx-auto">

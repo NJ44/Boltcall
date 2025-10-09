@@ -1,6 +1,7 @@
 import React from 'react';
 import { StickyScroll } from './ui/sticky-scroll-reveal';
 import { SplineScene } from './ui/splite';
+import WhisperText from './ui/whisper-text';
 
 const content = [
   {
@@ -50,7 +51,15 @@ export const StickyScrollSection: React.FC = () => {
     <div className="py-20">
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-          Why choose Boltcall
+          <WhisperText
+            text="Why choose Boltcall"
+            className="text-4xl md:text-5xl font-bold text-white"
+            delay={150}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 85%"
+          />
         </h2>
       </div>
       <StickyScroll content={content} />

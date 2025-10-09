@@ -9,7 +9,6 @@ import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
 import { HomeLightning } from '../components/HomeLightning';
 import StickyScrollSection from '../components/StickyScrollSection';
-import { Features } from '../components/ui/features-5';
 
 const Home: React.FC = () => {
   // Add smooth-scroll class to body for homepage
@@ -23,7 +22,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-white-smoke relative">
       {/* Lightning Background */}
-      <div className="fixed inset-0 z-0 bg-black">
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-white via-gray-400 to-black">
         <HomeLightning className="w-full h-full" />
       </div>
       
@@ -40,8 +39,6 @@ const Home: React.FC = () => {
           <div className="relative -top-[555px]">
             <HowItWorks />
           </div>
-          
-          <Features />
           
           <StickyScrollSection />
           

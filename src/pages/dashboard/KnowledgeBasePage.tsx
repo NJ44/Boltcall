@@ -194,7 +194,7 @@ const KnowledgeBasePage: React.FC = () => {
             />
             
             {/* Popup */}
-            <motion.div
+      <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -222,7 +222,7 @@ const KnowledgeBasePage: React.FC = () => {
                     >
                       <X className="w-5 h-5 text-gray-500" />
                     </button>
-                  </div>
+            </div>
 
                   {/* Content */}
                   {popupType === 'url' && (
@@ -238,7 +238,7 @@ const KnowledgeBasePage: React.FC = () => {
                           placeholder="https://example.com"
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
-                      </div>
+            </div>
                       <p className="text-sm text-gray-600">
                         Enter the URL of the website you want to import content from.
                       </p>
@@ -256,8 +256,8 @@ const KnowledgeBasePage: React.FC = () => {
                         >
                           Import
                         </button>
-                      </div>
-                    </div>
+          </div>
+        </div>
                   )}
 
                   {popupType === 'file' && (
@@ -292,7 +292,7 @@ const KnowledgeBasePage: React.FC = () => {
                             <p className="text-sm text-gray-700">Selected: {fileInput.name}</p>
                           </div>
                         )}
-                      </div>
+            </div>
                       <div className="flex gap-3 pt-4">
                         <button
                           onClick={handleClosePopup}
@@ -307,8 +307,8 @@ const KnowledgeBasePage: React.FC = () => {
                         >
                           Upload
                         </button>
-                      </div>
-                    </div>
+            </div>
+          </div>
                   )}
 
                   {popupType === 'blank' && (
@@ -324,7 +324,7 @@ const KnowledgeBasePage: React.FC = () => {
                           placeholder="Enter page title..."
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
-                      </div>
+            </div>
                       <p className="text-sm text-gray-600">
                         Create a new knowledge base page that you can edit manually.
                       </p>
@@ -342,12 +342,12 @@ const KnowledgeBasePage: React.FC = () => {
                         >
                           Create
                         </button>
-                      </div>
+            </div>
                     </div>
                   )}
-                </div>
-              </div>
-            </motion.div>
+          </div>
+        </div>
+      </motion.div>
           </>
         )}
       </AnimatePresence>
