@@ -15,10 +15,9 @@ const PaymentEliteStarter: React.FC = () => {
     // Initialize PayPal button when script loads
     script.onload = () => {
       if (window.paypal) {
-        // Replace 'ELITE_STARTER_BUTTON_ID' with the actual Elite Starter button ID
         window.paypal.HostedButtons({
-          hostedButtonId: "ELITE_STARTER_BUTTON_ID" // TODO: Replace with actual button ID
-        }).render("#paypal-container-elite-starter");
+          hostedButtonId: "6QXWAZWNEVEV2"
+        }).render("#paypal-container-6QXWAZWNEVEV2");
       }
     };
 
@@ -41,8 +40,19 @@ const PaymentEliteStarter: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      {/* Logo - Absolute Top Left */}
+      <div className="absolute top-4 left-4 z-50">
+        <Link to="/">
+          <img 
+            src="/boltcall_full_logo.png" 
+            alt="Boltcall" 
+            className="h-16 w-auto"
+          />
+        </Link>
+      </div>
+      
+      <div className="max-w-4xl mx-auto px-4 py-8 pt-20">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -52,7 +62,7 @@ const PaymentEliteStarter: React.FC = () => {
         >
           <Link 
             to="/pricing" 
-            className="inline-flex items-center text-green-600 hover:text-green-700 mb-4 transition-colors"
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Pricing
@@ -70,11 +80,11 @@ const PaymentEliteStarter: React.FC = () => {
             className="bg-white rounded-2xl shadow-xl p-8"
           >
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                <Check className="w-8 h-8 text-green-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                <Check className="w-8 h-8 text-blue-600" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Elite Starter</h2>
-              <div className="text-4xl font-bold text-green-600 mb-2">$197<span className="text-lg text-gray-500">/month</span></div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">$197<span className="text-lg text-gray-500">/month</span></div>
               <p className="text-gray-600">Everything you need to get started</p>
             </div>
 
@@ -87,15 +97,15 @@ const PaymentEliteStarter: React.FC = () => {
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                   className="flex items-center"
                 >
-                  <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                  <Check className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0" />
                   <span className="text-gray-700">{feature}</span>
                 </motion.div>
               ))}
             </div>
 
-            <div className="bg-green-50 rounded-lg p-4 mb-6">
-              <h3 className="font-semibold text-green-900 mb-2">What's Included:</h3>
-              <ul className="text-sm text-green-800 space-y-1">
+            <div className="bg-blue-50 rounded-lg p-4 mb-6">
+              <h3 className="font-semibold text-blue-900 mb-2">What's Included:</h3>
+              <ul className="text-sm text-blue-800 space-y-1">
                 <li>• Up to 200 leads per month</li>
                 <li>• Standard AI conversation flows</li>
                 <li>• Basic integrations</li>
@@ -119,7 +129,7 @@ const PaymentEliteStarter: React.FC = () => {
 
             {/* PayPal Button Container */}
             <div className="mb-6">
-              <div id="paypal-container-elite-starter" className="flex justify-center"></div>
+              <div id="paypal-container-6QXWAZWNEVEV2" style={{ minHeight: '150px', display: 'block', width: '100%' }}></div>
             </div>
 
             <div className="text-center text-sm text-gray-500 mb-6">
@@ -161,15 +171,15 @@ const PaymentEliteStarter: React.FC = () => {
         >
           <div className="flex flex-wrap justify-center items-center gap-8 text-gray-500">
             <div className="flex items-center">
-              <Check className="w-5 h-5 text-green-500 mr-2" />
+              <Check className="w-5 h-5 text-blue-500 mr-2" />
               <span>30-Day Money Back Guarantee</span>
             </div>
             <div className="flex items-center">
-              <Check className="w-5 h-5 text-green-500 mr-2" />
+              <Check className="w-5 h-5 text-blue-500 mr-2" />
               <span>Cancel Anytime</span>
             </div>
             <div className="flex items-center">
-              <Check className="w-5 h-5 text-green-500 mr-2" />
+              <Check className="w-5 h-5 text-blue-500 mr-2" />
               <span>Email Support</span>
             </div>
           </div>

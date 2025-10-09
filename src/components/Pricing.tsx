@@ -67,7 +67,7 @@ const Pricing: React.FC = () => {
 
 
   return (
-    <Section id="pricing" background="white">
+    <Section id="pricing" background="white" roundedTop={true}>
       {/* Pricing Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -103,13 +103,7 @@ const Pricing: React.FC = () => {
           defaultInterval="monthly"
           onPlanSelect={(plan) => {
             console.log("Selected plan:", plan);
-            if (plan === 'starter') {
-              navigate('/payment/elite-starter');
-            } else if (plan === 'pro') {
-              navigate('/payment/pro');
-            } else {
-              navigate('/contact'); // For enterprise, redirect to contact
-            }
+            navigate('/setup');
           }}
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"

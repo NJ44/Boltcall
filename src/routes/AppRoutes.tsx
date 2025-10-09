@@ -15,6 +15,10 @@ import SmsPage from '../pages/dashboard/SmsPage';
 import WhatsappPage from '../pages/dashboard/WhatsappPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
 import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
+import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
+import MembersPage from '../pages/dashboard/settings/MembersPage';
+import BillingPage from '../pages/dashboard/settings/BillingPage';
+import NotificationsPage from '../pages/dashboard/settings/NotificationsPage';
 import AssistantPage from '../pages/dashboard/AssistantPage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
@@ -75,6 +79,10 @@ const NavigationWrapper: React.FC = () => {
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="settings" element={<SettingsPage />} />
+          <Route path="settings/preferences" element={<PreferencesPage />} />
+          <Route path="settings/members" element={<MembersPage />} />
+          <Route path="settings/billing" element={<BillingPage />} />
+          <Route path="settings/notifications" element={<NotificationsPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
         <Route path="/auth/callback" element={<AuthCallback />} />

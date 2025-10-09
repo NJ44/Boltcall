@@ -59,7 +59,49 @@ const WizardShell: React.FC = () => {
     }
   };
 
-  const handleContinue = () => {
+  // Validation function for Business Profile step
+  const isBusinessProfileValid = () => {
+    const { businessProfile } = useSetupStore.getState();
+    return !!(
+      businessProfile.businessName &&
+      businessProfile.mainCategory &&
+      businessProfile.country &&
+      businessProfile.languages.length > 0
+    );
+  };
+
+  // Check if current step is valid
+  const isCurrentStepValid = () => {
+    if (currentStep === 2) {
+      return isBusinessProfileValid();
+    }
+    return true; // Other steps don't have validation yet
+  };
+
+  const handleContinue = async () => {
+    // If on Business Profile step (step 2), send webhook
+    if (currentStep === 2) {
+      const { businessProfile } = useSetupStore.getState();
+      
+      try {
+        await fetch('https://n8n.srv974118.hstgr.cloud/webhook/b63c0e91-9df2-40b2-b0a1-0955ffd740c1', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            businessName: businessProfile.businessName,
+            mainCategory: businessProfile.mainCategory,
+            country: businessProfile.country,
+            languages: businessProfile.languages,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (error) {
+        console.error('Error sending webhook:', error);
+      }
+    }
+    
     // Mark current step as completed
     markStepCompleted(currentStep);
     
@@ -86,19 +128,19 @@ const WizardShell: React.FC = () => {
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo - Far Left */}
-            <div className="flex items-center">
+            <div className="flex items-center -ml-4">
               <Link to="/">
                 <img 
                   src="/boltcall_full_logo.png" 
                   alt="Boltcall" 
-                  className="h-10 w-auto"
+                  className="h-16 w-auto"
                 />
               </Link>
             </div>
             
             {/* Title - Center */}
             <div className="absolute left-1/2 transform -translate-x-1/2">
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-4xl font-bold text-gray-900">
                 Account Setup
               </h1>
             </div>
@@ -212,7 +254,8 @@ const WizardShell: React.FC = () => {
                             <div className="flex justify-end">
                               <Button
                                 onClick={handleContinue}
-                                className="px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors duration-200"
+                                disabled={!isCurrentStepValid()}
+                                className="px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                               >
                                 Continue
                               </Button>

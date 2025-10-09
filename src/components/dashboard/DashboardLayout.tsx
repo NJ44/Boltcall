@@ -97,6 +97,7 @@ const DashboardLayout: React.FC = () => {
   const navItems = [
     { to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
     { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
+    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-5 h-5" /> },
     { to: '/dashboard/instant-lead-reply', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },
     { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-5 h-5" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-5 h-5" /> },
@@ -172,13 +173,13 @@ const DashboardLayout: React.FC = () => {
                
                {/* Settings dropdown menu */}
                {showSettingsMenu && (
-                 <div className={`absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg border py-2 z-50 ${
+                 <div className={`absolute right-0 top-full mt-2 w-56 rounded-lg shadow-lg border py-2 z-50 ${
                    isDarkMode 
                      ? 'bg-gray-800 border-gray-700' 
                      : 'bg-white border-gray-200'
                  }`}>
                    <Link
-                     to="/dashboard/settings"
+                     to="/dashboard/settings/preferences"
                      onClick={() => setShowSettingsMenu(false)}
                      className={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
                        isDarkMode 
@@ -187,7 +188,48 @@ const DashboardLayout: React.FC = () => {
                      }`}
                    >
                      <Settings className="w-4 h-4" />
-                     Settings
+                     Preferences
+                   </Link>
+                   <Link
+                     to="/dashboard/settings/members"
+                     onClick={() => setShowSettingsMenu(false)}
+                     className={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
+                       isDarkMode 
+                         ? 'text-gray-300 hover:bg-gray-700' 
+                         : 'text-gray-700 hover:bg-gray-50'
+                     }`}
+                   >
+                     <User className="w-4 h-4" />
+                     Members
+                   </Link>
+                   <Link
+                     to="/dashboard/settings/billing"
+                     onClick={() => setShowSettingsMenu(false)}
+                     className={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
+                       isDarkMode 
+                         ? 'text-gray-300 hover:bg-gray-700' 
+                         : 'text-gray-700 hover:bg-gray-50'
+                     }`}
+                   >
+                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                       <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
+                       <path fillRule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clipRule="evenodd" />
+                     </svg>
+                     Plan & Billing
+                   </Link>
+                   <Link
+                     to="/dashboard/settings/notifications"
+                     onClick={() => setShowSettingsMenu(false)}
+                     className={`flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
+                       isDarkMode 
+                         ? 'text-gray-300 hover:bg-gray-700' 
+                         : 'text-gray-700 hover:bg-gray-50'
+                     }`}
+                   >
+                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                       <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                     </svg>
+                     Notifications
                    </Link>
                  </div>
                )}

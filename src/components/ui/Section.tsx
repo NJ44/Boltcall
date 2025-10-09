@@ -5,13 +5,15 @@ interface SectionProps {
   className?: string;
   id?: string;
   background?: 'white' | 'gray' | 'brand';
+  roundedTop?: boolean;
 }
 
 const Section: React.FC<SectionProps> = ({
   children,
   className = '',
   id,
-  background = 'white'
+  background = 'white',
+  roundedTop = false
 }) => {
   const backgroundClasses = {
     white: 'bg-gradient-to-b from-light-blue to-white',
@@ -22,7 +24,7 @@ const Section: React.FC<SectionProps> = ({
   return (
     <section
       id={id}
-      className={`py-16 lg:py-24 ${backgroundClasses[background]} ${className}`}
+      className={`py-16 lg:py-24 ${backgroundClasses[background]} ${roundedTop ? 'rounded-t-[80px]' : ''} ${className}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {children}

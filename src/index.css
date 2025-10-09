@@ -55,3 +55,13 @@
     transform: rotate(360deg);
   }
 }
+
+/* Fix PayPal button vertical text issue */
+#paypal-container-6QXWAZWNEVEV2 * {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+}
+
+#paypal-container-6QXWAZWNEVEV2 iframe {
+  min-width: 300px !important;
+}
