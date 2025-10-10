@@ -44,7 +44,7 @@ export function HeroScrollDemo() {
       >
         <div className="flex flex-col h-full text-center">
           {/* Professional Modern Buttons at the very top */}
-          <div className="flex flex-wrap justify-center gap-6 mb-6 -mt-[16px] relative z-50">
+          <div className="flex flex-wrap justify-center gap-6 mb-6 -mt-[15px] relative z-50">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
               className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
