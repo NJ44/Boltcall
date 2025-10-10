@@ -26,23 +26,13 @@ const StepAccount: React.FC = () => {
     );
   }
 
-  // If user is authenticated, show continue button
+  // If user is authenticated, show ready message
   return (
     <div className="space-y-8">
       <div className="text-center">
         <p className="text-gray-600 mb-6">
           You are logged in as {user?.name}. Ready to continue with the setup.
         </p>
-        <Button
-          onClick={() => {
-            // The continue button functionality is handled by the parent WizardShell component
-            // This is just a placeholder - the actual continue logic is in WizardShell
-          }}
-          variant="primary"
-          className="px-8 py-3 text-lg font-semibold"
-        >
-          Continue
-        </Button>
       </div>
     </div>
   );

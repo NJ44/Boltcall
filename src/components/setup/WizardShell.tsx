@@ -171,7 +171,7 @@ const WizardShell: React.FC = () => {
               <motion.button
                 onClick={() => handleStepClick(step.id)}
                 disabled={!isStepAccessible(step.id)}
-                className={`w-full text-left p-8 mb-0 transition-all duration-200 ${
+                className={`w-full text-left p-10 mb-0 transition-all duration-200 ${
                   isStepAccessible(step.id)
                     ? 'cursor-pointer'
                     : 'opacity-50 cursor-not-allowed'

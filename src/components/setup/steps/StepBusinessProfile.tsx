@@ -173,9 +173,6 @@ const StepBusinessProfile: React.FC = () => {
               placeholder="Select languages your AI can speak"
               label="Supported Languages"
             />
-            <p className="mt-1 text-sm text-gray-500">
-              Your AI receptionist will automatically detect the caller's language
-            </p>
           </div>
         </div>
       </div>

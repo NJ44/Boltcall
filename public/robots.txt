@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /payment/
+Disallow: /*-demo
+
+Sitemap: https://boltcall.com/sitemap.xml
+
