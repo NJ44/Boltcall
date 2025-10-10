@@ -38,13 +38,13 @@ export function HeroScrollDemo() {
   );
 
   return (
-    <div className="flex flex-col overflow-hidden pb-[100px] -mt-[200px]">
+    <div className="flex flex-col overflow-hidden pb-[100px] -mt-[271px]">
       <ContainerScroll
         titleComponent={null}
       >
         <div className="flex flex-col h-full text-center">
           {/* Professional Modern Buttons at the very top */}
-          <div className="flex flex-wrap justify-center gap-6 mb-6 mt-0 relative z-50">
+          <div className="flex flex-wrap justify-center gap-6 mb-6 -mt-[16px] relative z-50">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
               className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
@@ -63,7 +63,7 @@ export function HeroScrollDemo() {
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
-              Speed to Lead
+              Instant Ads/forms replay
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}

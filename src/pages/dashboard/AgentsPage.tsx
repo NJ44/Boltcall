@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Plus, X } from 'lucide-react';
+import { Users, Plus, X, Sparkles, FileText } from 'lucide-react';
 
 interface Agent {
   id: number;
@@ -59,35 +59,8 @@ const AgentsPage: React.FC = () => {
     setShowCreateModal(false);
   };
 
-  const agents: Agent[] = [
-    {
-      id: 1,
-      name: 'Sarah Johnson',
-      status: 'active',
-      callsToday: 24,
-      avgResponseTime: '28s',
-      successRate: '94%',
-      lastActive: '2 min ago'
-    },
-    {
-      id: 2,
-      name: 'Mike Chen',
-      status: 'active',
-      callsToday: 18,
-      avgResponseTime: '32s',
-      successRate: '89%',
-      lastActive: '5 min ago'
-    },
-    {
-      id: 3,
-      name: 'Emily Davis',
-      status: 'idle',
-      callsToday: 12,
-      avgResponseTime: '35s',
-      successRate: '91%',
-      lastActive: '15 min ago'
-    }
-  ];
+  // Empty array to show no agents state, or populate with agents
+  const agents: Agent[] = [];
 
   return (
     <div className="space-y-8">
@@ -97,90 +70,129 @@ const AgentsPage: React.FC = () => {
         <p className="text-zinc-600 mt-1">Manage your AI receptionist agents and their performance</p>
       </div>
 
-      {/* Add Agent Button */}
-      <div className="flex justify-end">
-        <button 
-          onClick={() => setShowCreateModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          Create New Agent
-        </button>
-      </div>
+      {agents.length === 0 ? (
+        /* No agents - Show create options */
+        <div className="bg-white rounded-lg border border-gray-200 p-12">
+          <div className="max-w-3xl mx-auto text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">Create New Agent</h2>
+            <p className="text-lg text-gray-600">Choose how you want to start working with the agent</p>
+          </div>
 
-      {/* Agents table */}
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-zinc-200">
-          <h2 className="text-lg font-semibold text-zinc-900">Active Agents</h2>
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+            {/* Start from Scratch */}
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-blue-500 hover:shadow-lg transition-all"
+            >
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 transition-colors">
+                <Sparkles className="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Start from Scratch</h3>
+              <p className="text-gray-600">Build your AI Agent from the ground up</p>
+            </button>
+
+            {/* Browse Templates */}
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-blue-500 hover:shadow-lg transition-all"
+            >
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500 transition-colors">
+                <FileText className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Browse our Templates</h3>
+              <p className="text-gray-600">Get inspired by our templates to get started</p>
+            </button>
+          </div>
         </div>
-        
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-zinc-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  Agent
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  Calls Today
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  Avg Response
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  Success Rate
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  Last Active
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-200">
-              {agents.map((agent) => (
-                <tr key={agent.id} className="hover:bg-zinc-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
-                        <Users className="w-4 h-4 text-zinc-600" />
-                      </div>
-                      <div className="ml-3">
-                        <div className="text-sm font-medium text-zinc-900">{agent.name}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                      agent.status === 'active' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                        agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
-                      }`}></div>
-                      {agent.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
-                    {agent.callsToday}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
-                    {agent.avgResponseTime}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
-                    {agent.successRate}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-                    {agent.lastActive}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      ) : (
+        /* Has agents - Show table and add button */
+        <>
+          {/* Add Agent Button */}
+          <div className="flex justify-end">
+            <button 
+              onClick={() => setShowCreateModal(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              Add Agent
+            </button>
+          </div>
+
+          {/* Agents table */}
+          <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-zinc-200">
+              <h2 className="text-lg font-semibold text-zinc-900">Active Agents</h2>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-zinc-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                      Agent
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                      Calls Today
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                      Avg Response
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                      Success Rate
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                      Last Active
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200">
+                  {agents.map((agent) => (
+                    <tr key={agent.id} className="hover:bg-zinc-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
+                            <Users className="w-4 h-4 text-zinc-600" />
+                          </div>
+                          <div className="ml-3">
+                            <div className="text-sm font-medium text-zinc-900">{agent.name}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          agent.status === 'active' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                            agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
+                          }`}></div>
+                          {agent.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
+                        {agent.callsToday}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
+                        {agent.avgResponseTime}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
+                        {agent.successRate}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
+                        {agent.lastActive}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Create Agent Modal */}
       {showCreateModal && (

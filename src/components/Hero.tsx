@@ -50,12 +50,12 @@ const Hero: React.FC = () => {
 
         {/* Subheadline */}
         <motion.p
-          className="text-xl md:text-2xl text-text-muted mb-8 max-w-4xl mx-auto leading-relaxed"
+          className="text-xl md:text-2xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 1.7 }}
         >
-          The AI booking + receptionist cosmetic dentists need
+          24/7 lead capture via calls, forms, and chat. Instant SMS/call follow-up and auto-booking.
         </motion.p>
 
 
@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 2.1 }}
         >
           <Button
             onClick={() => window.location.href = '/setup'}
@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
             size="lg"
             className="w-full sm:w-auto"
           >
-            Get started free
+            Learn more
           </Button>
           <Button
             onClick={() => setIsVideoOpen(true)}
@@ -80,7 +80,7 @@ const Hero: React.FC = () => {
             size="lg"
             className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-8 py-3"
           >
-            See features
+            5-Min Free Setup
           </Button>
         </motion.div>
 

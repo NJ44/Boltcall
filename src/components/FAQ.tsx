@@ -59,15 +59,15 @@ const FAQ: React.FC = () => {
               <div className="group bg-white rounded-xl border border-gray-200/50 overflow-hidden shadow-sm transition-all duration-300">
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-7 py-5 text-left flex items-center justify-between hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-white transition-all duration-300 focus:outline-none rounded-t-xl"
+                  className="w-full px-7 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-all duration-300 focus:outline-none rounded-t-xl"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="text-xl font-semibold text-gray-900 pr-5 group-hover:text-brand-blue transition-colors duration-300">
+                  <span className="text-xl font-semibold text-gray-900 pr-5 group-hover:text-blue-600 transition-colors duration-300">
                     {faq.question}
                   </span>
                   <motion.div 
-                    className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky flex items-center justify-center shadow-sm transition-shadow duration-300"
+                    className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center shadow-sm transition-shadow duration-300"
                   >
                     {openIndex === index ? (
                       <Minus className="w-5 h-5 text-white" />
@@ -91,7 +91,7 @@ const FAQ: React.FC = () => {
                       }}
                       className="overflow-hidden"
                     >
-                      <div className="px-7 pb-5 bg-gradient-to-b from-white to-gray-50/30">
+                      <div className="px-7 pb-5 bg-white">
                         <p className="text-gray-700 leading-relaxed text-lg">
                           {faq.answer}
                         </p>

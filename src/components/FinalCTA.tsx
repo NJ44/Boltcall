@@ -14,7 +14,7 @@ const FinalCTA: React.FC = () => {
   return (
     <Section id="contact" background="white">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center">
+        <div className="flex flex-col items-center justify-center text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-text-main mb-6 leading-tight">
             <WhisperText
               text="Don't get left behind. Get The Advantage."
@@ -30,7 +30,7 @@ const FinalCTA: React.FC = () => {
             onClick={scrollToPricing}
             variant="primary"
             size="lg"
-            className="bg-gradient-to-r from-brand-blue to-brand-sky hover:from-brand-blue/90 hover:to-brand-sky/90 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-8 py-3 text-lg"
+            className="bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 font-medium px-8 py-3 text-lg"
           >
             Get started for free
           </Button>

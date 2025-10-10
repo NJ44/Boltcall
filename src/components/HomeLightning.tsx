@@ -110,9 +110,9 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
         // Compute base color using hue.
         vec3 baseColor = hsv2rgb(vec3(uHue / 360.0, 0.7, 0.8));
 
-        // Compute color with intensity and speed affecting time.
-        vec3 col = baseColor * pow(mix(0.0, 0.07, hash11(iTime * uSpeed)) / dist, 1.0) * uIntensity;
-        col = pow(col, vec3(1.0));
+        // Compute color with intensity and speed affecting time - ENHANCED!
+        vec3 col = baseColor * pow(mix(0.0, 0.12, hash11(iTime * uSpeed)) / dist, 0.95) * uIntensity;
+        col = pow(col, vec3(0.85)); // More vibrant glow
 
         fragColor = vec4(col, 1.0);
       }
@@ -189,6 +189,13 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
     const uSizeLocation = gl.getUniformLocation(program, "uSize");
 
     const startTime = performance.now();
+    let nextBurstTime = Math.random() * 5000 + 3000; // First burst in 3-8 seconds
+    let isBursting = false;
+    let burstStartTime = 0;
+    let burstDuration = 0;
+    let isDoubleBurst = false;
+    let waitingForSecondBurst = false;
+    let secondBurstDelay = 0;
 
     const render = () => {
       resizeCanvas();
@@ -196,12 +203,61 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
       gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
 
       const currentTime = performance.now();
-      gl.uniform1f(iTimeLocation, (currentTime - startTime) / 1000.0);
+      const elapsedTime = (currentTime - startTime) / 1000.0;
+      const timeSinceStart = currentTime - startTime;
+      
+      // Lightning burst logic - more random intervals between 3-8 seconds
+      if (!isBursting && !waitingForSecondBurst && timeSinceStart > nextBurstTime) {
+        isBursting = true;
+        burstStartTime = currentTime;
+        burstDuration = Math.random() * 150 + 80; // Burst lasts 80-230ms
+        
+        // 40% chance of double burst
+        isDoubleBurst = Math.random() < 0.4;
+        
+        if (!isDoubleBurst) {
+          nextBurstTime = timeSinceStart + Math.random() * 5000 + 3000; // Next burst in 3-8 seconds
+        }
+      }
+
+      // Calculate smooth fade in/out during burst
+      let burstIntensity = 0.0;
+      if (isBursting) {
+        const burstProgress = (currentTime - burstStartTime) / burstDuration;
+        
+        if (burstProgress < 1.0) {
+          // Smoother fade with cubic easing
+          const easeInOut = burstProgress < 0.5 
+            ? 4 * burstProgress * burstProgress * burstProgress 
+            : 1 - Math.pow(-2 * burstProgress + 2, 3) / 2;
+          burstIntensity = easeInOut * 1.2; // MASSIVE glow - 3x stronger!
+        } else {
+          isBursting = false;
+          
+          // Handle double burst
+          if (isDoubleBurst && !waitingForSecondBurst) {
+            waitingForSecondBurst = true;
+            secondBurstDelay = currentTime + (Math.random() * 150 + 100); // 100-250ms delay
+          }
+        }
+      }
+      
+      // Trigger second burst if needed
+      if (waitingForSecondBurst && currentTime > secondBurstDelay) {
+        waitingForSecondBurst = false;
+        isBursting = true;
+        burstStartTime = currentTime;
+        burstDuration = Math.random() * 150 + 80;
+        isDoubleBurst = false;
+        nextBurstTime = timeSinceStart + Math.random() * 5000 + 3000; // Next burst in 3-8 seconds
+      }
+
+      gl.uniform1f(iTimeLocation, elapsedTime);
       gl.uniform1f(uHueLocation, 220); // Blue hue
       gl.uniform1f(uXOffsetLocation, 0);
       gl.uniform1f(uSpeedLocation, 0.072);
-      gl.uniform1f(uIntensityLocation, 0.6);
-      gl.uniform1f(uSizeLocation, 2);
+      gl.uniform1f(uIntensityLocation, burstIntensity);
+      gl.uniform1f(uSizeLocation, 1.5); // Bigger lightning (was 2)
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       requestAnimationFrame(render);

@@ -1,42 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Bot, Calendar, ArrowRight } from 'lucide-react';
 import Card from './ui/Card';
 import WhisperText from './ui/whisper-text';
 
 const HowItWorks: React.FC = () => {
   const steps = [
     {
-      icon: MessageCircle,
       title: 'Lead Arrives',
       description: 'When a potential customer reaches out – any channel, any time. Our powerful AI instantly recognizes and captures the lead.',
       step: '01',
-      color: 'blue',
-      bgColor: 'bg-blue-50',
-      iconColor: 'text-blue-600',
-      iconBg: 'bg-blue-100',
       stepBg: 'bg-blue-600'
     },
     {
-      icon: Bot,
       title: 'AI Responds',
       description: 'Our advanced AI immediately responds with personalized, contextual information – understanding context and intent in real-time.',
       step: '02',
-      color: 'purple',
-      bgColor: 'bg-purple-50',
-      iconColor: 'text-purple-600',
-      iconBg: 'bg-purple-100',
       stepBg: 'bg-purple-600'
     },
     {
-      icon: Calendar,
       title: 'Intelligent Booking',
       description: 'Seamlessly books qualified appointments into your calendar while providing detailed insights and conversion analytics.',
       step: '03',
-      color: 'green',
-      bgColor: 'bg-green-50',
-      iconColor: 'text-green-600',
-      iconBg: 'bg-green-100',
       stepBg: 'bg-green-600'
     }
   ];
@@ -44,7 +28,7 @@ const HowItWorks: React.FC = () => {
   return (
     <section 
       id="how-it-works" 
-      className="relative py-16 overflow-hidden bg-transparent -mt-16"
+      className="relative py-16 overflow-hidden bg-transparent -mt-32"
     >
 
 
@@ -58,10 +42,10 @@ const HowItWorks: React.FC = () => {
           viewport={{ once: true }}
         >
           
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
             <WhisperText
               text="Closing leads in lightning speed"
-              className="text-4xl md:text-6xl font-bold text-gray-900"
+              className="text-4xl md:text-6xl font-bold text-white"
               delay={125}
               duration={0.625}
               x={-20}
@@ -84,55 +68,29 @@ const HowItWorks: React.FC = () => {
               viewport={{ once: true }}
             >
               {/* Card */}
-              <Card className={`relative overflow-hidden ${step.bgColor} border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 h-full`}>
-                {/* Step number background */}
-                <div className={`absolute top-0 right-0 w-20 h-20 ${step.stepBg} opacity-5 blur-xl`} />
+              <Card className={`relative overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border-none shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_50px_rgba(59,130,246,0.5)] transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 h-full`}>
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 pointer-events-none" />
                 
-                {/* Step number */}
-                <div className={`absolute -top-4 -right-4 w-16 h-16 ${step.stepBg} rounded-full flex items-center justify-center shadow-xl z-20`}>
-                  <span className="text-sm font-bold text-white">{step.step}</span>
-                    </div>
-
-                    <div className="p-8 pt-12">
-                  {/* Icon area */}
-                      <motion.div
-                    className={`w-20 h-20 mx-auto rounded-2xl ${step.iconBg} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-all duration-300`}
-                    whileHover={{ rotate: 180, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <step.icon className={`w-10 h-10 ${step.iconColor} drop-shadow-sm`} />
-                      </motion.div>
+                <div className="p-8 pt-4 relative z-10">
+                  {/* Step number - smaller at top left */}
+                  <div className="mb-8 -ml-2 -mt-2">
+                    <span className="text-3xl font-bold text-white/20">STEP {step.step}</span>
+                  </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
-                        {step.title}
-                      </h3>
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    {step.title}
+                  </h3>
                   
-                  <p className="text-gray-600 text-center leading-relaxed mb-6">
-                        {step.description}
-                      </p>
-                    </div>
+                  <p className="text-gray-300 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
 
-                {/* Connector Arrow */}
-                {index < steps.length - 1 && (
+                {/* Gradient glow effect on hover */}
                 <motion.div
-                    className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2 z-30"
-                    animate={{ x: [0, 5, 0] }}
-                        transition={{ 
-                          duration: 2,
-                        repeat: Infinity,
-                        ease: 'easeInOut'
-                      }}
-                  >
-                    <div className={`w-12 h-12 ${step.stepBg} rounded-full flex items-center justify-center shadow-xl`}>
-                      <ArrowRight className="w-6 h-6 text-white" />
-                  </div>
-                </motion.div>
-                )}
-
-                {/* Subtle hover effect */}
-                <motion.div
-                  className={`absolute inset-0 ${step.stepBg} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-xl`}
+                  className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none"
                 />
               </Card>
             </motion.div>

@@ -105,14 +105,35 @@ const Header: React.FC = () => {
                 <Link to="/login" className="text-text-muted hover:text-brand-blue transition-colors font-medium">
                   Login
                 </Link>
-                <Button
-                  onClick={() => handleNavClick('/setup')}
-                  variant="primary"
-                  size="sm"
-                  className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-300 font-bold px-6 py-2 rounded-2xl text-white border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
-                >
-                  Start now
-                </Button>
+                <div style={{ 
+                  display: 'inline-block',
+                  color: '#6b7280 !important'
+                } as React.CSSProperties}>
+                  <style>
+                    {`
+                      .start-now-button .button2 {
+                        color: #6b7280 !important;
+                        box-shadow: none !important;
+                      }
+                      .start-now-button .button2:hover {
+                        color: #6b7280 !important;
+                      }
+                      .start-now-button .button2:active {
+                        color: #6b7280 !important;
+                      }
+                    `}
+                  </style>
+                  <div className="start-now-button">
+                    <Button
+                      onClick={() => handleNavClick('/setup')}
+                      variant="primary"
+                      size="sm"
+                      className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-300 font-bold px-6 py-2 rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
+                    >
+                      Start now
+                    </Button>
+                  </div>
+                </div>
               </>
             )}
           </div>
@@ -216,17 +237,33 @@ const Header: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <Button
-                          onClick={() => {
-                            handleNavClick('/setup');
-                            setIsMenuOpen(false);
-                          }}
-                          variant="primary"
-                          size="sm"
-                          className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 shadow-2xl hover:shadow-3xl transition-all duration-300 font-bold text-base rounded-2xl text-white border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
-                        >
-                          Start now
-                        </Button>
+                        <div className="start-now-button-mobile">
+                          <style>
+                            {`
+                              .start-now-button-mobile .button2 {
+                                color: #6b7280 !important;
+                                box-shadow: none !important;
+                              }
+                              .start-now-button-mobile .button2:hover {
+                                color: #6b7280 !important;
+                              }
+                              .start-now-button-mobile .button2:active {
+                                color: #6b7280 !important;
+                              }
+                            `}
+                          </style>
+                          <Button
+                            onClick={() => {
+                              handleNavClick('/setup');
+                              setIsMenuOpen(false);
+                            }}
+                            variant="primary"
+                            size="sm"
+                            className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-300 font-bold text-base rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
+                          >
+                            Start now
+                          </Button>
+                        </div>
                       </motion.div>
                     </>
                   )}

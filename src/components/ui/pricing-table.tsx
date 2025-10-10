@@ -95,7 +95,7 @@ export function PricingTable({
             <div
               key={plan.name}
               className={cn(
-                "flex-1 p-4 rounded-xl text-left transition-all bg-white",
+                "flex-1 p-4 rounded-xl text-left transition-all bg-white flex flex-col min-h-[480px]",
                 "border border-zinc-200 dark:border-zinc-800",
               )}
             >
@@ -199,27 +199,11 @@ export function PricingTable({
               <button
                 onClick={() => onPlanSelect?.(plan.level)}
                 className={cn(
-                  "w-full mt-4 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
-                  "bg-white text-gray-900 border border-gray-200",
-                  "shadow-lg hover:shadow-xl transform hover:-translate-y-1",
-                  "hover:bg-gray-50 active:shadow-inner",
+                  "w-full mt-auto pt-4 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
+                  "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90",
+                  "text-white shadow-lg hover:shadow-xl",
                   buttonClassName
                 )}
-                style={{
-                  boxShadow: '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '8px 8px 16px #c5c5c5, -8px -8px 16px #ffffff';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff';
-                }}
-                onMouseDown={(e) => {
-                  e.currentTarget.style.boxShadow = 'inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff';
-                }}
-                onMouseUp={(e) => {
-                  e.currentTarget.style.boxShadow = '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff';
-                }}
               >
                 Get Started for Free
               </button>
@@ -227,10 +211,10 @@ export function PricingTable({
           ))}
         </div>
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-[#F5F5F5]">
           <div className="overflow-x-auto">
             <div className="min-w-[640px] divide-y divide-zinc-200 dark:divide-zinc-800">
-              <div className="flex items-center p-4 bg-zinc-50 dark:bg-zinc-900">
+              <div className="flex items-center p-4 bg-[#F5F5F5] dark:bg-zinc-900">
                 <div className="flex-1 text-sm font-medium text-gray-600">Features</div>
                 <div className="flex items-center gap-8 text-sm">
                   {plans.map((plan) => (
