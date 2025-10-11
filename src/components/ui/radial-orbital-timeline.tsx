@@ -231,7 +231,7 @@ export default function RadialOrbitalTimeline({
                   absolute top-16 left-1/2 -translate-x-1/2 whitespace-nowrap
                   text-xs font-semibold tracking-wider
                   transition-all duration-300
-                  ${isExpanded ? "text-white scale-125" : "text-white/70"}
+                  ${isExpanded ? "opacity-0 invisible" : "text-white/70 opacity-100 visible"}
                 `}
                 >
                   {item.title}

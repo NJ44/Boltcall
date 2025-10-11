@@ -111,19 +111,17 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <ToastProvider>
-      <div className={`h-screen flex transition-colors duration-300 p-4 gap-4 ${
-      isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
+      <div className={`h-screen flex transition-colors duration-300 gap-4 ${
+      isDarkMode ? 'bg-gray-800' : 'bg-gray-200'
     }`}>
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
-         <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 transform transition-all duration-300 ease-in-out flex-shrink-0 rounded-2xl ${
-           isDarkMode 
-             ? 'bg-gray-900' 
-             : 'bg-gray-100'
-         } ${sidebarOpen ? 'translate-x-0 m-4' : '-translate-x-full lg:translate-x-0'}`}>
-          <div className="flex flex-col h-full p-4">
+         <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 transform transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto ${
+           sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+         }`}>
+          <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
-            <div className="mb-4 px-2">
+            <div className="mb-3 px-2">
               <Link 
                 to="/dashboard" 
                 className="flex items-center"
@@ -137,14 +135,14 @@ const DashboardLayout: React.FC = () => {
             </div>
 
             {/* User Profile - Below Logo */}
-            <div className="mb-6 px-2">
+            <div className="mb-4 px-2">
               <div className="relative" data-user-menu>
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
                   className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
         isDarkMode 
-                      ? 'hover:bg-gray-800' 
-                      : 'hover:bg-gray-200'
+                      ? 'hover:bg-gray-700/50' 
+                      : 'hover:bg-gray-300/50'
                   }`}
                 >
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -199,23 +197,23 @@ const DashboardLayout: React.FC = () => {
             </div>
 
             {/* Mobile menu button */}
-            <button
-              onClick={toggleSidebar}
-              className={`lg:hidden absolute top-4 right-4 p-2 rounded-md transition-colors ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-              }`}
-              aria-label="Toggle navigation menu"
-            >
-              <X className="w-5 h-5" />
-            </button>
+              <button
+                onClick={toggleSidebar}
+                className={`lg:hidden absolute top-2 right-2 p-2 rounded-md transition-colors ${
+                  isDarkMode 
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
+                }`}
+                aria-label="Toggle navigation menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
             
             {/* Navigation */}
             <nav className="flex-1 flex flex-col" aria-label="Main navigation">
               <div className="flex-1">
                 {/* Group 1 */}
-                <div className="space-y-1 mb-6">
+                <div className="space-y-1 mb-4">
                   {navItemsGroup1.map((item) => {
                     const isActive = location.pathname === item.to;
                     return (
@@ -230,7 +228,7 @@ const DashboardLayout: React.FC = () => {
                                : 'bg-blue-50 text-blue-700'
                              : isDarkMode 
                                ? 'text-white hover:bg-gray-800' 
-                               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                          }`}
                        >
                         {item.icon}
@@ -251,7 +249,7 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Group 2 */}
-                <div className="space-y-1 mb-6">
+                <div className="space-y-1 mb-4">
                   {navItemsGroup2.map((item) => {
                     const isActive = location.pathname === item.to;
                     return (
@@ -266,7 +264,7 @@ const DashboardLayout: React.FC = () => {
                                : 'bg-blue-50 text-blue-700'
                              : isDarkMode 
                                ? 'text-white hover:bg-gray-800' 
-                               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                          }`}
                        >
                         {item.icon}
@@ -287,7 +285,7 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Group 3 */}
-                <div className="space-y-1 mb-6">
+                <div className="space-y-1 mb-4">
                   {navItemsGroup3.map((item) => {
                     const isActive = location.pathname === item.to;
                     return (
@@ -302,7 +300,7 @@ const DashboardLayout: React.FC = () => {
                                : 'bg-blue-50 text-blue-700'
                              : isDarkMode 
                                ? 'text-white hover:bg-gray-800' 
-                               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                          }`}
                        >
                         {item.icon}
@@ -339,7 +337,7 @@ const DashboardLayout: React.FC = () => {
                              : 'bg-blue-50 text-blue-700'
                            : isDarkMode 
                              ? 'text-white hover:bg-gray-800' 
-                             : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                        }`}
                      >
                       {item.icon}
@@ -398,7 +396,7 @@ const DashboardLayout: React.FC = () => {
                  className={`lg:hidden p-2 rounded-md transition-colors ${
                    isDarkMode 
                      ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
                  }`}
                  aria-label="Toggle navigation menu"
                >
@@ -422,7 +420,7 @@ const DashboardLayout: React.FC = () => {
                    className={`p-2 rounded-lg transition-colors ${
                      isDarkMode 
                        ? 'text-yellow-400 hover:text-yellow-300 hover:bg-gray-700' 
-                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
                    }`}
                    aria-label="Toggle dark mode"
                  >
