@@ -107,19 +107,19 @@ const Header: React.FC = () => {
                 </Link>
                 <div style={{ 
                   display: 'inline-block',
-                  color: '#6b7280 !important'
+                  color: '#475569 !important'
                 } as React.CSSProperties}>
                   <style>
                     {`
                       .start-now-button .button2 {
-                        color: #6b7280 !important;
+                        color: #475569 !important;
                         box-shadow: none !important;
                       }
                       .start-now-button .button2:hover {
-                        color: #6b7280 !important;
+                        color: #475569 !important;
                       }
                       .start-now-button .button2:active {
-                        color: #6b7280 !important;
+                        color: #475569 !important;
                       }
                     `}
                   </style>

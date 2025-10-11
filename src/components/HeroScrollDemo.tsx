@@ -50,10 +50,10 @@ export function HeroScrollDemo() {
       >
         <div className="flex flex-col h-full text-center">
           {/* Professional Modern Buttons at the very top */}
-          <div className="flex flex-wrap justify-center gap-4 mb-6 -mt-[15px] relative z-50">
+          <div className="flex flex-wrap justify-center gap-3 mb-6 -mt-[15px] relative z-50 w-full max-w-[1920px] mx-auto px-4">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'ai-receptionist'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -63,17 +63,17 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('speed-to-lead')}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'speed-to-lead'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
-              Instant Ads/forms
+              Instant Ads/forms replies
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'sms-whatsapp'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -83,7 +83,7 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('personal-assistant')}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'personal-assistant'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -93,7 +93,7 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'dashboard-analytics'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -103,8 +103,10 @@ export function HeroScrollDemo() {
             </button>
           </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center px-6">
-            {currentContent.layout === 'split' ? (
+          {/* Semi-transparent container for flipping screen content */}
+          <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-3xl p-10 mx-6 mt-4 mb-6">
+            <div className="h-full flex flex-col items-center justify-center px-6">
+              {currentContent.layout === 'split' ? (
               // AI Receptionist - Split Layout
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-center">
                 <div className="text-left">
@@ -195,6 +197,7 @@ export function HeroScrollDemo() {
           </p>
               </>
             )}
+            </div>
           </div>
         </div>
       </ContainerScroll>
