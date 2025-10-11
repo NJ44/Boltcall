@@ -23,7 +23,6 @@ import { ToastProvider } from '../../contexts/ToastContext';
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -59,11 +58,6 @@ const DashboardLayout: React.FC = () => {
     localStorage.setItem('darkMode', (!isDarkMode).toString());
   };
 
-  const handleSettingsClick = () => {
-    setShowSettingsMenu(!showSettingsMenu);
-    setShowUserMenu(false);
-  };
-
   // Handle click outside to close menus
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -71,14 +65,11 @@ const DashboardLayout: React.FC = () => {
       if (showUserMenu && !target.closest('[data-user-menu]')) {
         setShowUserMenu(false);
       }
-      if (showSettingsMenu && !target.closest('[data-settings-menu]')) {
-        setShowSettingsMenu(false);
-      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showUserMenu, showSettingsMenu]);
+  }, [showUserMenu]);
 
   // Load dark mode preference on mount
   useEffect(() => {
