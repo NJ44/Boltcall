@@ -28,13 +28,14 @@ export const useLenis = () => {
 
     // Initialize Lenis with the specified configuration
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.5,
       easing: customEasing,
       infinite: false,
-      // Performance optimizations
-      lerp: 0.1, // Smoother interpolation
-      wheelMultiplier: 1, // Reduce wheel sensitivity
-      touchMultiplier: 1.5, // Reduce touch sensitivity
+      // Performance optimizations for smoother scrolling
+      lerp: 0.15, // Smoother interpolation (higher = smoother)
+      wheelMultiplier: 0.8, // Lower wheel sensitivity
+      touchMultiplier: 1.2, // Lower touch sensitivity
+      smoothWheel: true, // Enable smooth wheel scrolling
     });
 
     // Store the instance globally

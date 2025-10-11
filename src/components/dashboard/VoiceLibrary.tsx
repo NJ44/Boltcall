@@ -3,7 +3,7 @@ import { Loader2, Play, Pause, Volume2, Check, Search, Library, Headphones } fro
 import Button from "../ui/Button";
 import { Input } from "../ui/input";
 import Card from "../ui/Card";
-import Badge from "../ui/Badge";
+import Badge from "../ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Slider } from "../ui/slider";
 

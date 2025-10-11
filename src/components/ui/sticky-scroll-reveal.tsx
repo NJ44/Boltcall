@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { TrendingUp, Clock, Target, Heart } from "lucide-react";
 
 export const StickyScroll = ({ content, contentClassName }: { content: { title: string; description: string; content?: React.ReactNode | any; }[]; contentClassName?: string; }) => {
   const [activeCard, setActiveCard] = React.useState(0);
@@ -37,32 +38,34 @@ export const StickyScroll = ({ content, contentClassName }: { content: { title: 
     >
       <div className="div relative flex items-start px-4">
         <div className="max-w-2xl">
-          {content.map((item, index) => (
-            <div key={item.title + index} className="my-12 min-h-[48vh] flex flex-col justify-center">
-              <motion.h2
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: activeCard === index ? 1 : 0.1,
-                }}
-                className="text-4xl md:text-5xl font-bold text-white"
-              >
-                {item.title}
-              </motion.h2>
-              <motion.p
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: activeCard === index ? 1 : 0.1,
-                }}
-                className="text-lg text-white max-w-sm mt-4"
-              >
-                {item.description}
-              </motion.p>
-            </div>
-          ))}
+          {content.map((item, index) => {
+            const icons = [TrendingUp, Clock, Target, Heart];
+            const Icon = icons[index];
+            
+            return (
+              <div key={item.title + index} className="my-12 min-h-[48vh] flex flex-col justify-center">
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                  }}
+                  animate={{
+                    opacity: activeCard === index ? 1 : 0.3,
+                  }}
+                  className="p-8 rounded-2xl shadow-2xl transition-all duration-500 bg-gradient-to-br from-black/90 via-gray-900/90 to-gray-800/90 backdrop-blur-sm"
+                >
+                  <div className="mb-4">
+                    <Icon className="w-10 h-10 text-white/80" strokeWidth={1.5} />
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    {item.title}
+                  </h2>
+                  <p className="text-lg text-white/90 leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              </div>
+            );
+          })}
           {/* Extra space to allow last section to reach center */}
           <div className="h-[50vh]" />
         </div>

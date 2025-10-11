@@ -67,7 +67,8 @@ const Pricing: React.FC = () => {
 
 
   return (
-    <Section id="pricing" background="white" roundedTop={true}>
+    <>
+      <Section id="pricing" background="white" roundedTop={false} style={{ clipPath: 'polygon(0 8%, 100% 0, 100% 100%, 0 100%)' }}>
       {/* Pricing Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -109,7 +110,8 @@ const Pricing: React.FC = () => {
           buttonClassName="bg-blue-600 hover:bg-blue-700"
         />
       </motion.div>
-    </Section>
+      </Section>
+    </>
   );
 };
 

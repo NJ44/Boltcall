@@ -10,9 +10,10 @@ const Hero: React.FC = () => {
 
 
   return (
-    <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-hidden">
-      
-      <div className="relative z-10 text-center">
+    <>
+      <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-hidden" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
+        
+        <div className="relative z-10 text-center">
         {/* Main Headline */}
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8">
           <WhisperText
@@ -49,7 +50,7 @@ const Hero: React.FC = () => {
             onClick={() => window.location.href = '/setup'}
             variant="primary"
             size="md"
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white transition-all duration-75"
           >
             Learn more
           </Button>
@@ -57,20 +58,21 @@ const Hero: React.FC = () => {
             onClick={() => setIsVideoOpen(true)}
             variant="outline"
             size="md"
-            className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-6 py-2 transition-all duration-150"
+            className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-6 py-2 transition-all duration-75"
           >
             5-Min Free Setup
           </Button>
         </motion.div>
 
-      </div>
+        </div>
 
-      {/* Video Modal */}
-      <ModalVideo
-        isOpen={isVideoOpen}
-        onClose={() => setIsVideoOpen(false)}
-      />
-    </Section>
+        {/* Video Modal */}
+        <ModalVideo
+          isOpen={isVideoOpen}
+          onClose={() => setIsVideoOpen(false)}
+        />
+      </Section>
+    </>
   );
 };
 

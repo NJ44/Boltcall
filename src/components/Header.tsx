@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,23 @@ import Button from './ui/Button';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOverDarkSection, setIsOverDarkSection] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
+
+  // Detect if navbar is over dark sections
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // Adjust these values based on where your dark sections are
+      // Typically dark sections start after hero (~800px) and continue through the features
+      const isDark = scrollY > 600; // Adjust this threshold as needed
+      setIsOverDarkSection(isDark);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { label: 'Features', href: '#features' },
@@ -53,7 +69,7 @@ const Header: React.FC = () => {
               <img 
                 src="/boltcall_full_logo.png" 
                 alt="Boltcall" 
-                className="h-16 w-auto"
+                className="h-16 w-auto -translate-y-[3.1px]"
               />
             </motion.div>
           </Link>
@@ -64,13 +80,19 @@ const Header: React.FC = () => {
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="relative text-text-muted hover:text-brand-blue transition-colors duration-200 font-medium py-2"
+                className={`relative transition-colors duration-200 font-medium py-2 ${
+                  isOverDarkSection 
+                    ? 'text-white hover:text-blue-300' 
+                    : 'text-text-muted hover:text-brand-blue'
+                }`}
                 whileHover="hover"
                 initial="initial"
               >
                 {item.label}
                 <motion.div
-                  className="absolute bottom-0 left-0 h-0.5 bg-brand-blue"
+                  className={`absolute bottom-0 left-0 h-0.5 ${
+                    isOverDarkSection ? 'bg-blue-300' : 'bg-brand-blue'
+                  }`}
                   variants={{
                     initial: { width: 0, opacity: 0 },
                     hover: { width: "100%", opacity: 1 }
@@ -85,7 +107,11 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4 ml-auto">
             {isAuthenticated ? (
               <>
-                <Link to="/dashboard" className="text-text-muted hover:text-brand-blue transition-colors">
+                <Link to="/dashboard" className={`transition-colors ${
+                  isOverDarkSection 
+                    ? 'text-white hover:text-blue-300' 
+                    : 'text-text-muted hover:text-brand-blue'
+                }`}>
                   Dashboard
                 </Link>
                 <div className="flex items-center gap-2">
@@ -102,7 +128,11 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="text-text-muted hover:text-brand-blue transition-colors font-medium">
+                <Link to="/login" className={`transition-colors font-medium ${
+                  isOverDarkSection 
+                    ? 'text-white hover:text-blue-300' 
+                    : 'text-text-muted hover:text-brand-blue'
+                }`}>
                   Login
                 </Link>
                 <div style={{ 
@@ -128,7 +158,7 @@ const Header: React.FC = () => {
                       onClick={() => handleNavClick('/setup')}
                       variant="primary"
                       size="sm"
-                      className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-300 font-bold px-6 py-2 rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
+                      className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-75 font-bold px-6 py-2 rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40"
                     >
                       Start now
                     </Button>

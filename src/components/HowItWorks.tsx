@@ -44,7 +44,7 @@ const HowItWorks: React.FC = () => {
           
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
             <WhisperText
-              text="Closing leads in lightning speed"
+              text="Close leads in lightning speed"
               className="text-4xl md:text-6xl font-bold text-white"
               delay={125}
               duration={0.625}

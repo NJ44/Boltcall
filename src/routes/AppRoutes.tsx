@@ -29,18 +29,9 @@ import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
-import StyledInputDemo from '../pages/StyledInputDemo';
-import PricingTableDemo from '../pages/PricingTableDemo';
-import ToastDemoPage from '../pages/ToastDemoPage';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
-import HeroOdysseyDemo from '../pages/HeroOdysseyDemo';
-import AgentPlanDemo from '../pages/AgentPlanDemo';
-import AuroraBackgroundDemo from '../pages/AuroraBackgroundDemo';
-import SplineSceneDemo from '../pages/SplineSceneDemo';
-import Features5Demo from '../pages/Features5Demo';
-import WhisperTextDemo from '../pages/WhisperTextDemo';
-import ChatKitDemo from '../pages/ChatKitDemo';
+import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -88,18 +79,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/setup" element={<Setup />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/styled-input-demo" element={<StyledInputDemo />} />
-        <Route path="/pricing-table-demo" element={<PricingTableDemo />} />
-        <Route path="/toast-demo" element={<ToastDemoPage />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
-        <Route path="/hero-odyssey-demo" element={<HeroOdysseyDemo />} />
-        <Route path="/agent-plan-demo" element={<AgentPlanDemo />} />
-        <Route path="/aurora-background-demo" element={<AuroraBackgroundDemo />} />
-        <Route path="/spline-scene-demo" element={<SplineSceneDemo />} />
-        <Route path="/features-5-demo" element={<Features5Demo />} />
-        <Route path="/whisper-text-demo" element={<WhisperTextDemo />} />
-        <Route path="/chatkit-demo" element={<ChatKitDemo />} />
+        <Route path="/radial-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

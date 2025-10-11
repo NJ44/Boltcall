@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Check, Star } from 'lucide-react';
 import Button from '../ui/Button';
-import Badge from '../ui/Badge';
+import Badge from '../ui/badge';
 
 interface PlanCardProps {
   title: string;
