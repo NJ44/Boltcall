@@ -96,7 +96,7 @@ const DashboardLayout: React.FC = () => {
   }, []);
 
   const navItems = [
-    { to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
+    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-5 h-5" /> },
     { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-5 h-5" /> },
     { to: '/dashboard/instant-lead-reply', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },
@@ -117,12 +117,12 @@ const DashboardLayout: React.FC = () => {
          {/* Left Panel - Navigation with Logo at Top */}
          <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 transform transition-all duration-300 ease-in-out flex-shrink-0 rounded-2xl ${
            isDarkMode 
-             ? 'bg-gray-800 border-gray-700' 
-             : 'bg-white border-gray-200'
+             ? 'bg-gray-900' 
+             : 'bg-gray-50'
          } ${sidebarOpen ? 'translate-x-0 m-4' : '-translate-x-full lg:translate-x-0'}`}>
-          <div className="flex flex-col h-full p-4">
-            {/* Logo at Top of Left Panel */}
-            <div className="mb-6 pb-4 border-b border-gray-200">
+          <div className="flex flex-col h-full p-6">
+            {/* Logo at Top of Left Panel - Bigger, No Divider */}
+            <div className="mb-8">
               <Link 
                 to="/dashboard" 
                 className="flex items-center justify-center"
@@ -130,7 +130,7 @@ const DashboardLayout: React.FC = () => {
                 <img 
                   src="/boltcall_full_logo.png" 
                   alt="Boltcall" 
-                  className="h-12 w-auto"
+                  className="h-16 w-auto"
                 />
               </Link>
             </div>
@@ -158,14 +158,14 @@ const DashboardLayout: React.FC = () => {
                        key={item.to}
                        to={item.to}
                        onClick={closeSidebar}
-                       className={`relative flex items-center gap-3 px-2 py-2 rounded-lg text-sm font-medium transition-all duration-700 group ${
+                       className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
                          isActive
                            ? isDarkMode 
-                             ? 'bg-blue-900 text-blue-300' 
+                             ? 'bg-gray-800 text-white' 
                              : 'bg-blue-50 text-blue-700'
                            : isDarkMode 
-                             ? 'text-gray-300 hover:text-white' 
-                             : 'text-gray-700 hover:text-gray-900'
+                             ? 'text-white hover:bg-gray-800' 
+                             : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                        }`}
                      >
                       {item.icon}
@@ -205,7 +205,7 @@ const DashboardLayout: React.FC = () => {
          <main 
            ref={mainContentRef}
            className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl ${
-             isDarkMode ? 'bg-gray-800' : 'bg-white'
+             isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'
            }`}
            style={{
              scrollBehavior: 'auto',
@@ -215,10 +215,10 @@ const DashboardLayout: React.FC = () => {
            tabIndex={0}
          >
            {/* Top Bar - Moved from Navbar */}
-           <div className={`sticky top-0 z-10 border-b flex-shrink-0 transition-colors duration-300 bg-white/80 backdrop-blur-sm ${
+           <div className={`sticky top-0 z-10 border-b flex-shrink-0 transition-colors duration-300 ${
              isDarkMode 
-               ? 'border-gray-700' 
-               : 'border-gray-200'
+               ? 'bg-gray-800/80 backdrop-blur-sm border-gray-700' 
+               : 'bg-white/80 backdrop-blur-sm border-gray-200'
            }`}>
              <div className="flex items-center justify-between h-16 px-6">
                {/* Mobile menu button for right panel */}

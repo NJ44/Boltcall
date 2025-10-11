@@ -22,7 +22,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-white-smoke relative">
       {/* Lightning Background */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-white via-gray-400 to-black">
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-pink-50 via-pink-200 to-pink-900">
         <HomeLightning className="w-full h-full" />
       </div>
       

@@ -39,12 +39,12 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Agent Plan Component */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <Plan />
       </div>
 
       {/* Danger Zone */}
-      <div className="bg-white rounded-lg border border-red-200 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-red-200 dark:border-red-900 overflow-hidden">
         <div className="bg-red-50 border-b border-red-200 p-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-red-100 rounded-lg">
