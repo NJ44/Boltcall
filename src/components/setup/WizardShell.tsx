@@ -79,28 +79,7 @@ const WizardShell: React.FC = () => {
   };
 
   const handleContinue = async () => {
-    // If on Business Profile step (step 2), send webhook
-    if (currentStep === 2) {
-      const { businessProfile } = useSetupStore.getState();
-      
-      try {
-        await fetch('https://n8n.srv974118.hstgr.cloud/webhook/b63c0e91-9df2-40b2-b0a1-0955ffd740c1', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            businessName: businessProfile.businessName,
-            mainCategory: businessProfile.mainCategory,
-            country: businessProfile.country,
-            languages: businessProfile.languages,
-            timestamp: new Date().toISOString(),
-          }),
-        });
-      } catch (error) {
-        console.error('Error sending webhook:', error);
-      }
-    }
+    // Webhook disabled - no longer sending data to external services
     
     // Mark current step as completed
     markStepCompleted(currentStep);

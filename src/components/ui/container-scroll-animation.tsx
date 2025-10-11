@@ -46,6 +46,7 @@ export const ContainerScroll = ({
         className="py-10 md:py-40 w-full relative"
         style={{
           perspective: "1000px",
+          willChange: "transform",
         }}
       >
         <Header translate={translate} titleComponent={titleComponent} />
@@ -85,6 +86,7 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
+        willChange: "transform",
         boxShadow:
           "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003, 0 60px 120px -40px rgba(59, 130, 246, 0.6)",
       }}

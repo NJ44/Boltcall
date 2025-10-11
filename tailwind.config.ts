@@ -29,7 +29,7 @@ const config: Config = {
         border: "#E5E7EB",
       },
       animation: {
-        aurora: "aurora 60s linear infinite",
+        aurora: "aurora 36s linear infinite",
         spotlight: "spotlight 2s ease .75s 1 forwards",
       },
       keyframes: {

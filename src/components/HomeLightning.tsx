@@ -14,8 +14,9 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
     if (!canvas) return;
 
     const resizeCanvas = () => {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
+      // Reduce resolution by 50% for better performance
+      canvas.width = canvas.clientWidth * 0.5;
+      canvas.height = canvas.clientHeight * 0.5;
     };
 
     resizeCanvas();
@@ -260,7 +261,9 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
       gl.uniform1f(uSizeLocation, 1.5); // Bigger lightning (was 2)
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(render);
+      
+      // Throttle to 30fps instead of 60fps for better performance
+      setTimeout(() => requestAnimationFrame(render), 1000 / 30);
     };
 
     requestAnimationFrame(render);
