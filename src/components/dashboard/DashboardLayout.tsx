@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { ToastProvider } from '../../contexts/ToastContext';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -108,9 +109,10 @@ const DashboardLayout: React.FC = () => {
   ];
 
   return (
-    <div className={`h-screen flex transition-colors duration-300 p-4 gap-4 ${
-      isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
-    }`}>
+    <ToastProvider>
+      <div className={`h-screen flex transition-colors duration-300 p-4 gap-4 ${
+        isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
+      }`}>
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
          <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 transform transition-all duration-300 ease-in-out flex-shrink-0 rounded-2xl ${
@@ -471,8 +473,8 @@ const DashboardLayout: React.FC = () => {
            </div>
          </main>
       </div>
-
     </div>
+    </ToastProvider>
   );
 };
 

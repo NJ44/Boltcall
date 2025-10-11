@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Link, FileText, PenTool, X, Upload, Globe } from 'lucide-react';
+import { PenTool, X, Upload, Globe } from 'lucide-react';
 
 const KnowledgeBasePage: React.FC = () => {
-  const [showAddOptions, setShowAddOptions] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState<'url' | 'file' | 'blank' | null>(null);
   const [urlInput, setUrlInput] = useState('');
@@ -17,19 +16,16 @@ const KnowledgeBasePage: React.FC = () => {
   const handleAddFromUrl = () => {
     setPopupType('url');
     setShowPopup(true);
-    setShowAddOptions(false);
   };
 
   const handleAddFromFile = () => {
     setPopupType('file');
     setShowPopup(true);
-    setShowAddOptions(false);
   };
 
   const handleAddBlankPage = () => {
     setPopupType('blank');
     setShowPopup(true);
-    setShowAddOptions(false);
   };
 
   const handleClosePopup = () => {
@@ -67,18 +63,6 @@ const KnowledgeBasePage: React.FC = () => {
     handleClosePopup();
   };
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (showAddOptions && !target.closest('[data-add-dropdown]')) {
-        setShowAddOptions(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showAddOptions]);
 
   return (
     <div className="space-y-6">
