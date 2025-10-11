@@ -40,19 +40,19 @@ const Home: React.FC = () => {
             <HowItWorks />
           </div>
           
-          <div className="relative -top-[400px]">
+          <div className="relative -top-[555px]">
             <StickyScrollSection />
           </div>
           
-          <div className="relative -top-[160px]">
+          <div className="relative -top-[555px]">
             <Pricing />
           </div>
           
-          <div className="relative -top-[160px] bg-white">
+          <div className="relative -top-[555px] bg-white">
             <FAQ />
           </div>
           
-          <div className="relative -top-[160px] bg-white pb-16">
+          <div className="relative -top-[555px] bg-white pb-16">
             <FinalCTA />
           </div>
         </main>

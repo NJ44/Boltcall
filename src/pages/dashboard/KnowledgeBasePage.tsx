@@ -9,6 +9,9 @@ const KnowledgeBasePage: React.FC = () => {
   const [urlInput, setUrlInput] = useState('');
   const [fileInput, setFileInput] = useState<File | null>(null);
   const [blankPageTitle, setBlankPageTitle] = useState('');
+  
+  // Knowledge bases array - empty means no knowledge bases
+  const knowledgeBases: any[] = [];
 
 
   const handleAddFromUrl = () => {
@@ -88,97 +91,99 @@ const KnowledgeBasePage: React.FC = () => {
       >
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Knowledge Base</h1>
-          <p className="text-gray-600 mt-1">Manage your AI assistant's knowledge and responses</p>
         </div>
-        <div className="relative" data-add-dropdown>
-          <button 
-            onClick={() => setShowAddOptions(!showAddOptions)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            Add Knowledge
-          </button>
-          
-          {/* Add Options Dropdown */}
-          {showAddOptions && (
-            <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-              <div className="p-2">
-                <button
-                  onClick={handleAddFromUrl}
-                  className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-gray-50 rounded-md transition-colors"
-                >
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Link className="w-4 h-4 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">From URL</div>
-                    <div className="text-xs text-gray-500">Import content from a website</div>
-                  </div>
-                </button>
-                
-                <button
-                  onClick={handleAddFromFile}
-                  className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-gray-50 rounded-md transition-colors"
-                >
-                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                    <FileText className="w-4 h-4 text-green-600" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">From File</div>
-                    <div className="text-xs text-gray-500">Upload PDF, DOC, or text files</div>
-                  </div>
-                </button>
-                
-                <button
-                  onClick={handleAddBlankPage}
-                  className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-gray-50 rounded-md transition-colors"
-                >
-                  <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <PenTool className="w-4 h-4 text-purple-600" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">Blank Page</div>
-                    <div className="text-xs text-gray-500">Create and type manually</div>
-                  </div>
-                </button>
+      </motion.div>
+
+      {knowledgeBases.length === 0 ? (
+        /* No knowledge bases - Show add options in center */
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="max-w-3xl mx-auto text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Add a New Document</h2>
+            <p className="text-gray-600">You can upload PDFs, create documents, or link web pages.</p>
+          </div>
+
+          <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
+            {/* Upload PDF File */}
+            <button
+              onClick={handleAddFromFile}
+              className="group border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all bg-transparent"
+            >
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
+                <Upload className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
               </div>
-            </div>
-          )}
-        </div>
-      </motion.div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Upload PDF File</h3>
+              <p className="text-sm text-gray-600">Directly upload your file with...</p>
+            </button>
 
+            {/* Blank Document */}
+            <button
+              onClick={handleAddBlankPage}
+              className="group border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all bg-transparent"
+            >
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
+                <PenTool className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Blank Document</h3>
+              <p className="text-sm text-gray-600">Manually add the information to a...</p>
+            </button>
 
-      {/* Knowledge Items */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Knowledge Base
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Last Updated
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {/* Empty table - no rows */}
-            </tbody>
-          </table>
-        </div>
-      </motion.div>
+            {/* Paste from URL */}
+            <button
+              onClick={handleAddFromUrl}
+              className="group border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all bg-transparent"
+            >
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
+                <Globe className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Paste from URL</h3>
+              <p className="text-sm text-gray-600">Scan information from URL link to...</p>
+            </button>
+          </div>
+        </motion.div>
+      ) : (
+        /* Has knowledge bases - Show table */
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Knowledge Base
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Last Updated
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {knowledgeBases.map((kb: any) => (
+                  <tr key={kb.id}>
+                    <td className="px-6 py-4">{kb.name}</td>
+                    <td className="px-6 py-4">{kb.status}</td>
+                    <td className="px-6 py-4">{kb.lastUpdated}</td>
+                    <td className="px-6 py-4">Actions</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+      )}
 
       {/* Popup Modal */}
       <AnimatePresence>

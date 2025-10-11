@@ -189,7 +189,7 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
     const uSizeLocation = gl.getUniformLocation(program, "uSize");
 
     const startTime = performance.now();
-    let nextBurstTime = Math.random() * 5000 + 3000; // First burst in 3-8 seconds
+    let nextBurstTime = Math.random() * 8000 + 5000; // First burst in 5-13 seconds (less frequent)
     let isBursting = false;
     let burstStartTime = 0;
     let burstDuration = 0;
@@ -210,13 +210,13 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
       if (!isBursting && !waitingForSecondBurst && timeSinceStart > nextBurstTime) {
         isBursting = true;
         burstStartTime = currentTime;
-        burstDuration = Math.random() * 150 + 80; // Burst lasts 80-230ms
+        burstDuration = Math.random() * 150 + 880; // Burst lasts 880-1030ms (0.8s longer)
         
         // 40% chance of double burst
         isDoubleBurst = Math.random() < 0.4;
         
         if (!isDoubleBurst) {
-          nextBurstTime = timeSinceStart + Math.random() * 5000 + 3000; // Next burst in 3-8 seconds
+          nextBurstTime = timeSinceStart + Math.random() * 8000 + 5000; // Next burst in 5-13 seconds (less frequent)
         }
       }
 
@@ -247,9 +247,9 @@ export const HomeLightning: React.FC<HomeLightningProps> = ({
         waitingForSecondBurst = false;
         isBursting = true;
         burstStartTime = currentTime;
-        burstDuration = Math.random() * 150 + 80;
+        burstDuration = Math.random() * 150 + 880; // Burst lasts 880-1030ms (0.8s longer)
         isDoubleBurst = false;
-        nextBurstTime = timeSinceStart + Math.random() * 5000 + 3000; // Next burst in 3-8 seconds
+        nextBurstTime = timeSinceStart + Math.random() * 8000 + 5000; // Next burst in 5-13 seconds (less frequent)
       }
 
       gl.uniform1f(iTimeLocation, elapsedTime);

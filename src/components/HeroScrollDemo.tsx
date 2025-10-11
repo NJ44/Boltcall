@@ -14,15 +14,21 @@ export function HeroScrollDemo() {
     },
     'speed-to-lead': {
       animation: '/Dentist_Surgery.lottie',
-      title: 'Speed to Lead',
+      title: 'Instant Ads/Forms Replay',
       description: 'Auto-texts and calls new leads within seconds, qualifies them, and books them straight to your calendar without any manual intervention.',
       layout: 'default'
     },
     'sms-whatsapp': {
-      animation: '/Dentist_Checking_Teeth.lottie',
+      animation: '/Email.lottie',
       title: 'SMS/WhatsApp Agent',
       description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow.',
-      layout: 'default'
+      layout: 'split'
+    },
+    'personal-assistant': {
+      animation: '/AI_assistant.lottie',
+      title: 'Personal Assistant',
+      description: 'Your AI-powered personal assistant for managing tasks, communications, and automating your workflow efficiently.',
+      layout: 'split'
     },
     'dashboard-analytics': {
       animation: '/statistics_on_tab.lottie',
@@ -44,10 +50,10 @@ export function HeroScrollDemo() {
       >
         <div className="flex flex-col h-full text-center">
           {/* Professional Modern Buttons at the very top */}
-          <div className="flex flex-wrap justify-center gap-6 mb-6 -mt-[15px] relative z-50">
+          <div className="flex flex-wrap justify-center gap-4 mb-6 -mt-[15px] relative z-50">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'ai-receptionist'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -57,27 +63,37 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('speed-to-lead')}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'speed-to-lead'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
-              Instant Ads/forms replay
+              Instant Ads/forms
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'sms-whatsapp'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
             >
-              SMS/WhatsApp Agent
+              SMS/WhatsApp
+            </button>
+            <button
+              onClick={() => setActiveTab('personal-assistant')}
+              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                activeTab === 'personal-assistant'
+                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              Personal Assistant
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
                 activeTab === 'dashboard-analytics'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
                   : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'

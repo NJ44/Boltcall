@@ -47,7 +47,6 @@ const InstantLeadReplyPage: React.FC = () => {
       >
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Instant Lead Reply</h1>
-          <p className="text-gray-600 mt-1">Connect your lead sources to automate instant responses</p>
         </div>
       </motion.div>
 

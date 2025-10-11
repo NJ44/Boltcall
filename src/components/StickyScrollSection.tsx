@@ -52,7 +52,7 @@ export const StickyScrollSection: React.FC = () => {
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
           <WhisperText
-            text="Why choose Boltcall"
+            text="Why Businesses choosing Boltcall"
             className="text-4xl md:text-5xl font-bold text-white"
             delay={150}
             duration={0.625}

@@ -67,12 +67,11 @@ const AgentsPage: React.FC = () => {
       {/* Page header */}
       <div>
         <h1 className="text-2xl font-bold text-zinc-900">Agents</h1>
-        <p className="text-zinc-600 mt-1">Manage your AI receptionist agents and their performance</p>
       </div>
 
       {agents.length === 0 ? (
         /* No agents - Show create options */
-        <div className="bg-white rounded-lg border border-gray-200 p-12">
+        <div>
           <div className="max-w-3xl mx-auto text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Create New Agent</h2>
             <p className="text-lg text-gray-600">Choose how you want to start working with the agent</p>
@@ -82,10 +81,10 @@ const AgentsPage: React.FC = () => {
             {/* Start from Scratch */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-blue-500 hover:shadow-lg transition-all"
+              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all"
             >
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 transition-colors">
-                <Sparkles className="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" />
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
+                <Sparkles className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Start from Scratch</h3>
               <p className="text-gray-600">Build your AI Agent from the ground up</p>
@@ -94,10 +93,10 @@ const AgentsPage: React.FC = () => {
             {/* Browse Templates */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-blue-500 hover:shadow-lg transition-all"
+              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all"
             >
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500 transition-colors">
-                <FileText className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors" />
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
+                <FileText className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Browse our Templates</h3>
               <p className="text-gray-600">Get inspired by our templates to get started</p>
