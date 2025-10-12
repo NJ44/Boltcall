@@ -11,7 +11,7 @@ export const StickyScroll = ({ content, contentClassName }: { content: { title: 
   const ref = useRef<any>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.6", "end 0.4"],
+    offset: ["start start", "end end"],
   });
   const cardLength = content.length;
 

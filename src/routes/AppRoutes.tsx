@@ -33,6 +33,7 @@ import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import Features10Demo from '../pages/Features10Demo';
+import LightningDemo from '../pages/LightningDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -84,6 +85,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/radial-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/features-10-demo" element={<Features10Demo />} />
+        <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

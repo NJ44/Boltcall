@@ -51,7 +51,7 @@ export function PricingTable({
   return (
     <section
       className={cn(
-        "bg-background text-foreground",
+        "bg-transparent text-foreground",
         "py-12 sm:py-24 md:py-32 px-4",
         "fade-bottom overflow-hidden pb-0",
       )}
@@ -95,7 +95,7 @@ export function PricingTable({
             <div
               key={plan.name}
               className={cn(
-                "flex-1 p-4 rounded-xl text-left transition-all bg-white flex flex-col min-h-[480px]",
+                "flex-1 p-4 rounded-xl text-left transition-all bg-transparent flex flex-col min-h-[480px]",
                 "border border-zinc-200 dark:border-zinc-800",
               )}
             >

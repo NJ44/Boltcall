@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import Button from './ui/Button';
 import Section from './ui/Section';
 import ModalVideo from './ModalVideo';
@@ -7,15 +8,15 @@ import WhisperText from './ui/whisper-text';
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-
+  const navigate = useNavigate();
 
   return (
     <>
-      <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-hidden" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
+      <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
         
-        <div className="relative z-10 text-center">
+        <div className="relative z-[10000] text-center">
         {/* Main Headline */}
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]">
           <WhisperText
             text="NEVER MISS A LEAD AGAIN."
             className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main"
@@ -29,7 +30,7 @@ const Hero: React.FC = () => {
 
         {/* Subheadline */}
         <motion.p
-          className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-[9999]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.7 }}
@@ -41,13 +42,13 @@ const Hero: React.FC = () => {
 
         {/* CTA Buttons */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-[9999]"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0 }}
         >
           <Button
-            onClick={() => window.location.href = '/setup'}
+            onClick={() => navigate('/setup')}
             variant="primary"
             size="md"
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white transition-all duration-75"

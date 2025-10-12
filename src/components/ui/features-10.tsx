@@ -1,8 +1,68 @@
-import { Card, CardContent, CardHeader } from './card-shadcn'
+import { Card, CardHeader } from './card-shadcn'
 import { cn } from '../../lib/utils'
-import { Calendar, MapIcon } from 'lucide-react'
+import { MapIcon } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import RadialOrbitalTimeline from './radial-orbital-timeline'
+import { Megaphone, MessageSquare, Phone, FileText, MessageCircle } from 'lucide-react'
+
+const timelineData = [
+  {
+    id: 1,
+    title: "Ads",
+    date: "Lead Source",
+    content: "Capture leads from Google Ads, Facebook Ads, and other paid advertising campaigns. Our AI instantly responds to ad inquiries and qualifies prospects in real-time.",
+    category: "Lead Capture",
+    icon: Megaphone,
+    relatedIds: [2, 3],
+    status: "completed" as const,
+    energy: 95,
+  },
+  {
+    id: 2,
+    title: "SMS",
+    date: "Lead Source",
+    content: "Engage leads through SMS messaging with automated responses. Schedule appointments, answer questions, and nurture leads via text messages 24/7.",
+    category: "Lead Capture",
+    icon: MessageSquare,
+    relatedIds: [1, 4],
+    status: "completed" as const,
+    energy: 90,
+  },
+  {
+    id: 3,
+    title: "Phone",
+    date: "Lead Source",
+    content: "Never miss a call with our AI receptionist that answers 24/7. Handle incoming calls, schedule appointments, and provide instant support to callers automatically.",
+    category: "Lead Capture",
+    icon: Phone,
+    relatedIds: [1, 5],
+    status: "completed" as const,
+    energy: 100,
+  },
+  {
+    id: 4,
+    title: "Form",
+    date: "Lead Source",
+    content: "Connect your web forms and landing pages to capture lead information instantly. Auto-respond to form submissions and book qualified leads on your calendar.",
+    category: "Lead Capture",
+    icon: FileText,
+    relatedIds: [2, 5],
+    status: "completed" as const,
+    energy: 85,
+  },
+  {
+    id: 5,
+    title: "Widget",
+    date: "Lead Source",
+    content: "Embed our AI chat widget on your website to engage visitors in real-time. Answer questions, qualify leads, and convert website traffic into booked appointments.",
+    category: "Lead Capture",
+    icon: MessageCircle,
+    relatedIds: [3, 4],
+    status: "completed" as const,
+    energy: 88,
+  },
+];
 
 export function Features() {
     return (
@@ -36,51 +96,42 @@ export function Features() {
                     </FeatureCard>
 
                     <FeatureCard>
-                        <CardHeader className="pb-3">
-                            <CardHeading
-                                icon={MapIcon}
-                                title="Real time location tracking"
-                                description="Advanced tracking system, Instantly locate all your assets."
-                            />
-                        </CardHeader>
-
-                        <div className="relative mb-6 border-t border-dashed sm:mb-0">
-                            <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_40%,hsl(var(--muted)),white_125%)]"></div>
-                            <div className="aspect-[76/59] p-1 px-6">
-                                <DualModeImage
-                                    darkSrc="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=900&fit=crop"
-                                    lightSrc="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=900&fit=crop"
-                                    alt="payments illustration"
-                                    width={1207}
-                                    height={929}
-                                />
-                            </div>
+                        <div className="relative mb-6 sm:mb-0 h-[400px] bg-transparent">
+                            <RadialOrbitalTimeline timelineData={timelineData} />
                         </div>
                     </FeatureCard>
 
-                    <FeatureCard>
-                        <CardHeader className="pb-3">
-                            <CardHeading
-                                icon={Calendar}
-                                title="Advanced Scheduling"
-                                description="Scheduling system, Instantly locate all your assets."
-                            />
-                        </CardHeader>
+                    <FeatureCard className="p-6">
+                        <p className="mx-auto my-6 max-w-md text-balance text-center text-2xl font-semibold">Connect all your lead sources seamlessly</p>
 
-                        <CardContent>
-                            <div className="relative mb-6 sm:mb-0">
-                                <div className="absolute -inset-6 [background:radial-gradient(50%_50%_at_75%_50%,transparent,hsl(var(--background))_100%)]"></div>
-                                <div className="aspect-[76/59] border">
-                                    <DualModeImage
-                                        darkSrc="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&h=900&fit=crop"
-                                        lightSrc="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&h=900&fit=crop"
-                                        alt="calendar illustration"
-                                        width={1207}
-                                        height={929}
-                                    />
-                                </div>
-                            </div>
-                        </CardContent>
+                        <div className="flex justify-center gap-6 overflow-hidden">
+                            <CircularUI
+                                label="Ads"
+                                circles={[{ pattern: 'border' }, { pattern: 'border' }]}
+                            />
+
+                            <CircularUI
+                                label="SMS"
+                                circles={[{ pattern: 'none' }, { pattern: 'primary' }]}
+                            />
+
+                            <CircularUI
+                                label="Phone"
+                                circles={[{ pattern: 'blue' }, { pattern: 'none' }]}
+                            />
+
+                            <CircularUI
+                                label="Forms"
+                                circles={[{ pattern: 'primary' }, { pattern: 'none' }]}
+                                className="hidden sm:block"
+                            />
+                            
+                            <CircularUI
+                                label="Widget"
+                                circles={[{ pattern: 'border' }, { pattern: 'primary' }]}
+                                className="hidden sm:block"
+                            />
+                        </div>
                     </FeatureCard>
             </div>
         </div>

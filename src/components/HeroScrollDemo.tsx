@@ -37,11 +37,11 @@ export function HeroScrollDemo() {
   );
 
   return (
-    <div className="flex flex-col overflow-hidden pb-[100px] -mt-[271px]">
+    <div className="flex flex-col overflow-hidden pb-[100px] -mt-[271px] pointer-events-none">
       <ContainerScroll
         titleComponent={null}
       >
-        <div className="flex flex-col h-full text-center">
+        <div className="flex flex-col h-full text-center pointer-events-auto">
           {/* Professional Modern Buttons at the very top */}
           <div className="flex flex-wrap justify-center gap-5 mb-3 -mt-[15px] relative z-50 w-full max-w-[1920px] mx-auto px-4">
             <button

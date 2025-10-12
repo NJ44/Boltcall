@@ -122,85 +122,85 @@ const DashboardLayout: React.FC = () => {
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
-              <Link 
-                to="/dashboard" 
-                className="flex items-center"
-              >
-                <img 
-                  src="/boltcall_full_logo.png" 
-                  alt="Boltcall" 
+            <Link 
+              to="/dashboard" 
+              className="flex items-center"
+            >
+              <img 
+                src="/boltcall_full_logo.png" 
+                alt="Boltcall" 
                   className="h-14 w-auto"
-                />
-              </Link>
-            </div>
-
+              />
+            </Link>
+          </div>
+          
             {/* User Profile - Below Logo */}
             <div className="mb-4 px-2">
-              <div className="relative" data-user-menu>
-                <button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
+             <div className="relative" data-user-menu>
+               <button
+                 onClick={() => setShowUserMenu(!showUserMenu)}
                   className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
-        isDarkMode 
+                   isDarkMode 
                       ? 'hover:bg-gray-700/50' 
                       : 'hover:bg-gray-300/50'
-                  }`}
-                >
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-blue-600" />
-                  </div>
+                 }`}
+               >
+                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                   <User className="w-4 h-4 text-blue-600" />
+                 </div>
                   <div className="flex-1 text-left">
-                    <div className={`text-sm font-medium ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>
-                      {user?.name || 'User'}
-                    </div>
-                    <div className={`text-xs ${
-                      isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                    }`}>
-                      {user?.email}
-                    </div>
-                  </div>
-                </button>
-                
-                {/* User dropdown menu */}
-                {showUserMenu && (
+                   <div className={`text-sm font-medium ${
+                     isDarkMode ? 'text-white' : 'text-gray-900'
+                   }`}>
+                     {user?.name || 'User'}
+                   </div>
+                   <div className={`text-xs ${
+                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
+                   }`}>
+                     {user?.email}
+                   </div>
+                 </div>
+               </button>
+               
+               {/* User dropdown menu */}
+               {showUserMenu && (
                   <div className={`absolute left-0 top-full mt-2 w-full rounded-lg shadow-lg border py-2 z-50 ${
                     isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
                   }`}>
                     <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                       <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {user?.name || 'User'}
-                      </div>
+                       {user?.name || 'User'}
+                     </div>
                       <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                        {user?.email}
-                      </div>
-                    </div>
-                    <div className="px-4 py-2">
+                       {user?.email}
+                     </div>
+                   </div>
+                   <div className="px-4 py-2">
                       <div className={`text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Current Plan</div>
                       <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {user?.role === 'admin' ? 'Admin Plan' : 'Pro Plan'}
-                      </div>
-                    </div>
+                       {user?.role === 'admin' ? 'Admin Plan' : 'Pro Plan'}
+                     </div>
+                   </div>
                     <div className="border-t border-gray-100 dark:border-gray-700">
-                      <button
-                        onClick={handleLogout}
+                     <button
+                       onClick={handleLogout}
                         className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
                           isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
                         }`}
-                      >
-                        Sign out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+                     >
+                       Sign out
+                     </button>
+                   </div>
+                 </div>
+               )}
+             </div>
+           </div>
 
             {/* Mobile menu button */}
               <button
                 onClick={toggleSidebar}
                 className={`lg:hidden absolute top-2 right-2 p-2 rounded-md transition-colors ${
-                  isDarkMode 
+           isDarkMode 
                     ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
                 }`}
@@ -287,7 +287,7 @@ const DashboardLayout: React.FC = () => {
                 {/* Group 3 */}
                 <div className="space-y-1 mb-4">
                   {navItemsGroup3.map((item) => {
-                    const isActive = location.pathname === item.to;
+                  const isActive = location.pathname === item.to;
                     return (
                        <Link
                          key={item.to}
@@ -326,7 +326,7 @@ const DashboardLayout: React.FC = () => {
                 {navItemsBottom.map((item) => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return (
-            <Link 
+                     <Link
                        key={item.to}
                        to={item.to}
                        onClick={closeSidebar}
@@ -352,7 +352,7 @@ const DashboardLayout: React.FC = () => {
                             : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
                         }} />
                       </span>
-            </Link>
+                    </Link>
                   );
                 })}
               </div>
@@ -441,4 +441,4 @@ const DashboardLayout: React.FC = () => {
   );
 };
 
-export default DashboardLayout; 
+export default DashboardLayout;

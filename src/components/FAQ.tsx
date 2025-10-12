@@ -31,7 +31,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <Section id="faq" background="gray">
+    <Section id="faq" background="white">
       <div className="text-center mb-10">
         <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-6">
           <WhisperText

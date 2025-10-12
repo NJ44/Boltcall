@@ -7,7 +7,6 @@ import Pricing from '../components/Pricing';
 import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
-import { HomeLightning } from '../components/HomeLightning';
 import StickyScrollSection from '../components/StickyScrollSection';
 
 const Home: React.FC = () => {
@@ -20,19 +19,14 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white-smoke relative">
-      {/* Lightning Background - Optimized */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-pink-50 via-pink-200 to-pink-900" style={{ willChange: 'auto' }}>
-        <HomeLightning className="w-full h-full" />
-      </div>
-      
+    <div className="bg-blue-600 relative overflow-hidden">
       {/* Content */}
       <div className="relative z-10">
         <Header />
-        <main>
+        <main className="pb-0">
           <Hero />
           
-          <div className="relative -top-[435px]">
+          <div className="relative -top-[435px] z-[100] pointer-events-none">
             <HeroScrollDemo />
           </div>
           
@@ -48,17 +42,19 @@ const Home: React.FC = () => {
             <Pricing />
           </div>
           
-          <div className="relative -top-[555px] bg-white">
+          <div className="relative -top-[555px] bg-blue-600 -mb-16">
             <FAQ />
           </div>
           
-          <div className="relative -top-[555px] bg-white pb-16">
+          <div className="relative -top-[555px] bg-blue-600">
             <FinalCTA />
           </div>
+          
+          <div className="relative -top-[555px] bg-blue-600">
+            <Footer />
+          </div>
         </main>
-        <div className="bg-white">
-          <Footer />
-        </div>
+        <div className="-mt-[555px]"></div>
       </div>
     </div>
   );

@@ -11,17 +11,21 @@ const HowItWorks: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+        <div className="text-left mb-20">
+          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
             <WhisperText
-              text="Close leads in lightning speed"
-              className="text-4xl md:text-6xl font-bold text-white"
+              text="Close leads in"
+              className="text-5xl md:text-7xl font-bold text-white inline-block"
+              delay={125}
+              duration={0.625}
+              x={-20}
+              y={0}
+              triggerStart="top 85%"
+            />
+            <br />
+            <WhisperText
+              text="lightning speed."
+              className="text-5xl md:text-7xl font-bold text-blue-500 inline-block"
               delay={125}
               duration={0.625}
               x={-20}
@@ -29,7 +33,7 @@ const HowItWorks: React.FC = () => {
               triggerStart="top 85%"
             />
           </h2>
-        </motion.div>
+        </div>
 
         {/* Features Component */}
         <Features />
