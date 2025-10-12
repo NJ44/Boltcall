@@ -42,11 +42,11 @@ const Home: React.FC = () => {
             <Pricing />
           </div>
           
-          <div className="relative -top-[555px] bg-blue-600 -mb-16">
+          <div className="relative -top-[555px] bg-white -mb-16">
             <FAQ />
           </div>
           
-          <div className="relative -top-[555px] bg-blue-600">
+          <div className="relative -top-[555px] bg-white">
             <FinalCTA />
           </div>
           

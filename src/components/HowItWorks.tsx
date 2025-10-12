@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { Features } from './ui/features-10';
 

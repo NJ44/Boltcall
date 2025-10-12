@@ -1,7 +1,5 @@
-import { Card, CardHeader } from './card-shadcn'
+import { Card } from './card-shadcn'
 import { cn } from '../../lib/utils'
-import { MapIcon } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import RadialOrbitalTimeline from './radial-orbital-timeline'
 import { Megaphone, MessageSquare, Phone, FileText, MessageCircle } from 'lucide-react'
@@ -156,50 +154,6 @@ const CardDecorator = () => (
         <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2"></span>
         <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2"></span>
         <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2"></span>
-    </>
-)
-
-interface CardHeadingProps {
-    icon: LucideIcon
-    title: string
-    description: string
-}
-
-const CardHeading = ({ icon: Icon, title, description }: CardHeadingProps) => (
-    <div className="p-6">
-        <span className="text-muted-foreground flex items-center gap-2">
-            <Icon className="size-4" />
-            {title}
-        </span>
-        <p className="mt-8 text-2xl font-semibold">{description}</p>
-    </div>
-)
-
-interface DualModeImageProps {
-    darkSrc: string
-    lightSrc: string
-    alt: string
-    width: number
-    height: number
-    className?: string
-}
-
-const DualModeImage = ({ darkSrc, lightSrc, alt, width, height, className }: DualModeImageProps) => (
-    <>
-        <img
-            src={darkSrc}
-            className={cn('hidden dark:block', className)}
-            alt={`${alt} dark`}
-            width={width}
-            height={height}
-        />
-        <img
-            src={lightSrc}
-            className={cn('shadow dark:hidden', className)}
-            alt={`${alt} light`}
-            width={width}
-            height={height}
-        />
     </>
 )
 

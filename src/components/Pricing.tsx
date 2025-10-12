@@ -68,15 +68,9 @@ const Pricing: React.FC = () => {
 
   return (
     <>
-      <Section id="pricing" background="white" roundedTop={true}>
+      <Section id="pricing" background="white" roundedTop={true} className="shadow-[inset_0_10px_20px_-10px_rgba(0,0,0,0.1)]">
       {/* Pricing Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-center -mb-16"
-      >
+      <div className="text-center -mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 -mb-14">
           <WhisperText
             text="Pricing"
@@ -88,7 +82,7 @@ const Pricing: React.FC = () => {
             triggerStart="top 85%"
           />
         </h2>
-      </motion.div>
+      </div>
 
       {/* New PricingTable Component */}
       <motion.div

@@ -95,8 +95,8 @@ export function PricingTable({
             <div
               key={plan.name}
               className={cn(
-                "flex-1 p-4 rounded-xl text-left transition-all bg-transparent flex flex-col min-h-[480px]",
-                "border border-zinc-200 dark:border-zinc-800",
+                "flex-1 p-4 rounded-xl text-left transition-all bg-white flex flex-col min-h-[360px]",
+                "border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl",
               )}
             >
               <div className="flex items-center justify-between mb-2">
@@ -211,7 +211,7 @@ export function PricingTable({
           ))}
         </div>
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-[#F5F5F5]">
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-[#F5F5F5] mt-8">
           <div className="overflow-x-auto">
             <div className="min-w-[640px] divide-y divide-zinc-200 dark:divide-zinc-800">
               <div className="flex items-center p-4 bg-[#F5F5F5] dark:bg-zinc-900">
