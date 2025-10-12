@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Check, Star } from 'lucide-react';
 import Button from '../ui/Button';
-import Badge from '../ui/Badge';
 
 interface PlanCardProps {
   title: string;
@@ -66,13 +65,13 @@ const PlanCard: React.FC<PlanCardProps> = ({
       {/* Most Popular Badge */}
       {popular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <Badge 
-            className="bg-gradient-to-r from-brand-blue to-brand-sky text-white px-4 py-1 text-sm font-medium"
+          <span 
+            className="inline-flex items-center bg-gradient-to-r from-brand-blue to-brand-sky text-white px-4 py-1 text-sm font-medium rounded-full"
             aria-hidden="true"
           >
             <Star className="w-3 h-3 mr-1 fill-current" />
             Most Popular
-          </Badge>
+          </span>
         </div>
       )}
 

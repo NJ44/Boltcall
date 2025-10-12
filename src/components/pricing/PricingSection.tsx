@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
-import Badge from '../ui/Badge';
 import FAQ from '../FAQ';
 
 const PricingSection: React.FC = () => {
@@ -143,9 +142,9 @@ const PricingSection: React.FC = () => {
               Annual
             </span>
             {isAnnual && (
-              <Badge className="bg-green-100 text-green-800 px-3 py-1">
+              <span className="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium border border-green-200">
                 3 months free
-              </Badge>
+              </span>
             )}
           </motion.div>
 
@@ -203,9 +202,9 @@ const PricingSection: React.FC = () => {
             >
               {plan.popular && (
                 <div className="mb-4">
-                  <Badge className="bg-gradient-to-r from-brand-blue to-brand-sky text-white px-4 py-1">
+                  <span className="inline-flex items-center bg-gradient-to-r from-brand-blue to-brand-sky text-white px-4 py-1 rounded-full text-xs font-medium">
                     Most Popular
-                  </Badge>
+                  </span>
                 </div>
               )}
               
@@ -258,9 +257,9 @@ const PricingSection: React.FC = () => {
               <div className="text-center">
                 <h4 className="text-lg font-semibold text-gray-900">Pro</h4>
                 {plans[1].popular && (
-                  <Badge className="bg-gradient-to-r from-brand-blue to-brand-sky text-white text-xs mt-1">
+                  <span className="inline-flex items-center bg-gradient-to-r from-brand-blue to-brand-sky text-white text-xs mt-1 px-3 py-1 rounded-full font-medium">
                     Most Popular
-                  </Badge>
+                  </span>
                 )}
               </div>
               <div className="text-center">

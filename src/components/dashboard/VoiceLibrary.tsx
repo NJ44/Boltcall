@@ -3,7 +3,6 @@ import { Loader2, Play, Pause, Volume2, Check, Search, Library, Headphones } fro
 import Button from "../ui/Button";
 import { Input } from "../ui/input";
 import Card from "../ui/Card";
-import Badge from "../ui/Badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Slider } from "../ui/slider";
 
@@ -329,20 +328,20 @@ const VoiceLibrary: React.FC<VoiceLibraryProps> = ({ agentId }) => {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    {voice.supports_realtime && <Badge variant="info">Realtime</Badge>}
+                    {voice.supports_realtime && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-blue-100 text-blue-800 border-blue-200">Realtime</span>}
                     {voice.sample_rate_hz <= 8000 ? (
-                      <Badge variant="warning">Phone 8k</Badge>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-yellow-100 text-yellow-800 border-yellow-200">Phone 8k</span>
                     ) : (
-                      <Badge variant="success">Web 16k+</Badge>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-green-100 text-green-800 border-green-200">Web 16k+</span>
                     )}
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   {(voice.style_tags || []).slice(0, 5).map((tag: string) => (
-                    <Badge key={tag} variant="brand" className="capitalize">
+                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border bg-indigo-100 text-indigo-800 border-indigo-200 capitalize">
                       {tag}
-                    </Badge>
+                    </span>
                   ))}
                 </div>
 
