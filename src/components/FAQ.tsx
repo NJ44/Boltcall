@@ -33,10 +33,19 @@ const FAQ: React.FC = () => {
   return (
     <Section id="faq" background="white">
       <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-text-main mb-6">
           <WhisperText
-            text="Frequently Asked Questions"
-            className="text-3xl md:text-4xl font-bold text-text-main"
+            text="Frequently Asked"
+            className="text-3xl md:text-5xl font-bold text-text-main inline-block"
+            delay={125}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 85%"
+          />{' '}
+          <WhisperText
+            text="Questions"
+            className="text-3xl md:text-5xl font-bold text-blue-500 inline-block"
             delay={125}
             duration={0.625}
             x={-20}

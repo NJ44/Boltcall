@@ -18,8 +18,26 @@ const Hero: React.FC = () => {
         {/* Main Headline */}
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]">
           <WhisperText
-            text="NEVER MISS A LEAD AGAIN."
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main"
+            text="NEVER MISS A"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
+            delay={125}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 80%"
+          />{' '}
+          <WhisperText
+            text="LEAD"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
+            delay={125}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 80%"
+          />{' '}
+          <WhisperText
+            text="AGAIN."
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
             delay={125}
             duration={0.625}
             x={-20}

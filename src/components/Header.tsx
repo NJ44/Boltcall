@@ -53,7 +53,7 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-[10001] bg-transparent backdrop-blur-md"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}

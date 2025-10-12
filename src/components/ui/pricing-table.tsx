@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils"
 import { CheckIcon } from "@radix-ui/react-icons"
 import NumberFlow from "@number-flow/react"
 
-export type PlanLevel = "starter" | "pro" | "all" | string
+export type PlanLevel = "starter" | "pro" | "all" | "custom" | string
 
 export interface PricingFeature {
   name: string
@@ -21,6 +21,7 @@ export interface PricingPlan {
   }
   popular?: boolean
   description?: string
+  isCustom?: boolean
 }
 
 export interface PricingTableProps
@@ -57,7 +58,7 @@ export function PricingTable({
       )}
     >
       <div
-        className={cn("w-full max-w-3xl mx-auto px-4", containerClassName)}
+        className={cn("w-full max-w-6xl mx-auto px-4", containerClassName)}
         {...props}
       >
         <div className="flex justify-center mb-4 sm:mb-8">
@@ -95,12 +96,16 @@ export function PricingTable({
             <div
               key={plan.name}
               className={cn(
-                "flex-1 p-4 rounded-xl text-left transition-all bg-white flex flex-col min-h-[360px]",
-                "border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl",
+                "flex-1 p-4 rounded-xl text-left flex flex-col min-h-[360px]",
+                plan.isCustom 
+                  ? "bg-gray-900 text-white border border-gray-700 shadow-2xl"
+                  : "bg-white border border-zinc-200 dark:border-zinc-800 shadow-lg",
               )}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">{plan.name}</span>
+                <span className={cn("text-sm font-medium", plan.isCustom && "text-white")}>
+                  {plan.name}
+                </span>
                 {plan.popular && (
                   <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 px-2 py-0.5 rounded-full">
                     Popular
@@ -108,20 +113,26 @@ export function PricingTable({
                 )}
               </div>
               <div className="flex items-baseline gap-1">
-                <NumberFlow
-                  format={{
-                    style: "currency",
-                    currency: "USD",
-                  }}
-                  value={isYearly ? plan.price.yearly / 12 : plan.price.monthly}
-                  className="text-2xl font-bold"
-                />
-                <span className="text-sm font-normal text-zinc-500">
-                  /month
-                </span>
+                {plan.isCustom ? (
+                  <span className="text-2xl font-bold text-white">Custom</span>
+                ) : (
+                  <>
+                    <NumberFlow
+                      format={{
+                        style: "currency",
+                        currency: "USD",
+                      }}
+                      value={isYearly ? plan.price.yearly / 12 : plan.price.monthly}
+                      className="text-2xl font-bold"
+                    />
+                    <span className="text-sm font-normal text-zinc-500">
+                      /month
+                    </span>
+                  </>
+                )}
               </div>
               {plan.description && (
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
+                <p className={cn("text-xs mt-2", plan.isCustom ? "text-gray-300" : "text-zinc-600 dark:text-zinc-400")}>
                   {plan.description}
                 </p>
               )}
@@ -194,33 +205,59 @@ export function PricingTable({
                     </div>
                   </>
                 )}
+                {plan.level === 'custom' && (
+                  <>
+                    <div className="flex items-center text-xs text-white">
+                      <svg className="w-3 h-3 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Everything in Enterprise
+                    </div>
+                    <div className="flex items-center text-xs text-white">
+                      <svg className="w-3 h-3 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Dedicated Account Manager
+                    </div>
+                    <div className="flex items-center text-xs text-white">
+                      <svg className="w-3 h-3 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      Custom Integration
+                    </div>
+                  </>
+                )}
               </div>
               
               <button
-                onClick={() => onPlanSelect?.(plan.level)}
+                onClick={() => plan.isCustom ? window.location.href = '/contact' : onPlanSelect?.(plan.level)}
                 className={cn(
-                  "w-full mt-auto pt-4 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300",
-                  "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90",
-                  "text-white shadow-lg hover:shadow-xl",
-                  buttonClassName
+                  "w-full mt-auto pt-4 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl",
+                  plan.isCustom
+                    ? "bg-white text-gray-900 hover:bg-gray-100 border-2 border-white"
+                    : "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",
+                  !plan.isCustom && buttonClassName
                 )}
               >
-                Get Started for Free
+                {plan.isCustom ? "Contact Us" : "Get Started for Free"}
               </button>
             </div>
           ))}
         </div>
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-[#F5F5F5] mt-8">
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white mt-8 shadow-lg">
           <div className="overflow-x-auto">
-            <div className="min-w-[640px] divide-y divide-zinc-200 dark:divide-zinc-800">
-              <div className="flex items-center p-4 bg-[#F5F5F5] dark:bg-zinc-900">
-                <div className="flex-1 text-sm font-medium text-gray-600">Features</div>
-                <div className="flex items-center gap-8 text-sm">
+            <div className="min-w-[640px]">
+              <div className="flex items-center p-4 bg-white sticky top-0 z-10 border-b border-gray-200">
+                <div className="flex-1 text-sm font-medium text-gray-600 pl-0">Features</div>
+                <div className="flex items-center text-sm" style={{ gap: '64px' }}>
                   {plans.map((plan) => (
                     <div
                       key={plan.level}
-                      className="w-16 text-center font-medium text-gray-600"
+                      className={cn(
+                        "w-16 text-center font-medium py-2",
+                        plan.isCustom ? "text-white bg-gray-900 px-2 rounded" : "text-gray-600"
+                      )}
                     >
                       {plan.name}
                     </div>
@@ -230,19 +267,22 @@ export function PricingTable({
               {features.map((feature) => (
                 <div
                   key={feature.name}
-                  className="flex items-center p-4 transition-colors"
+                  className="flex items-center p-0 transition-all duration-300 hover:bg-gray-50"
                 >
-                  <div className="flex-1 text-sm">{feature.name}</div>
-                  <div className="flex items-center gap-8 text-sm">
+                  <div className="flex-1 text-sm p-4 pl-4">{feature.name}</div>
+                  <div className="flex items-center text-sm" style={{ gap: '64px' }}>
                     {plans.map((plan) => (
                       <div
                         key={plan.level}
-                        className="w-16 flex justify-center"
+                        className={cn(
+                          "w-16 flex justify-center py-6",
+                          plan.isCustom && "bg-gray-900"
+                        )}
                       >
                         {shouldShowCheck(feature.included, plan.level) ? (
-                          <CheckIcon className="w-5 h-5 text-blue-500" />
+                          <CheckIcon className={cn("w-5 h-5", plan.isCustom ? "text-blue-400" : "text-blue-500")} />
                         ) : (
-                          <span className="text-zinc-300 dark:text-zinc-700">
+                          <span className={cn(plan.isCustom ? "text-gray-600" : "text-zinc-300 dark:text-zinc-700")}>
                             -
                           </span>
                         )}
@@ -265,6 +305,8 @@ function shouldShowCheck(
   level: string,
 ): boolean {
   if (included === "all") return true
+  if (included === "custom" && level === "custom") return true
+  if (level === "custom") return true
   if (included === "pro" && (level === "pro" || level === "all")) return true
   if (
     included === "starter" &&

@@ -8,6 +8,7 @@ import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
 import StickyScrollSection from '../components/StickyScrollSection';
+import GuaranteeSection from '../components/GuaranteeSection';
 
 const Home: React.FC = () => {
   // Add smooth-scroll class to body for homepage
@@ -36,6 +37,10 @@ const Home: React.FC = () => {
           
           <div className="relative -top-[555px]">
             <StickyScrollSection />
+          </div>
+          
+          <div className="relative -top-[555px]">
+            <GuaranteeSection />
           </div>
           
           <div className="relative -top-[555px]">

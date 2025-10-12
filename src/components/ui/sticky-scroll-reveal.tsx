@@ -11,7 +11,7 @@ export const StickyScroll = ({ content, contentClassName }: { content: { title: 
   const ref = useRef<any>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"],
+    offset: ["start 0.3", "end 0.5"],
   });
   const cardLength = content.length;
 
@@ -33,11 +33,11 @@ export const StickyScroll = ({ content, contentClassName }: { content: { title: 
 
   return (
     <motion.div
-      className="min-h-screen flex justify-center relative space-x-10 rounded-md p-10"
+      className="h-[200vh] flex justify-center relative space-x-10 rounded-md p-10"
       ref={ref}
     >
-      <div className="div relative flex items-start px-4">
-        <div className="max-w-2xl">
+      <div className="div relative flex items-start px-4 w-1/2">
+        <div className="max-w-2xl w-full">
           {content.map((item, index) => {
             const icons = [TrendingUp, Clock, Target, Heart];
             const Icon = icons[index];
@@ -70,13 +70,15 @@ export const StickyScroll = ({ content, contentClassName }: { content: { title: 
           <div className="h-[50vh]" />
         </div>
       </div>
-      <div
-        className={cn(
-          "hidden lg:block h-[488px] w-[488px] sticky top-1/2 -translate-y-1/2 mt-52",
-          contentClassName
-        )}
-      >
-        {content[activeCard].content ?? null}
+      <div className="w-1/2 relative h-full">
+        <div
+          className={cn(
+            "hidden lg:block h-[488px] w-[488px] sticky top-[20vh] left-0",
+            contentClassName
+          )}
+        >
+          {content[activeCard].content ?? null}
+        </div>
       </div>
     </motion.div>
   );

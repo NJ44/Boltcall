@@ -5,16 +5,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Send } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { Link } from 'react-router-dom';
 import Card from '../components/ui/Card';
 import StyledInput from '../components/ui/StyledInput';
 
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  company: z.string().optional(),
-  phone: z.string().optional(),
-  subject: z.string().min(5, 'Subject must be at least 5 characters'),
-  message: z.string().min(10, 'Message must be at least 10 characters')
+  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
+  workEmail: z.string().email('Please enter a valid work email address'),
+  companyWebsite: z.string().url('Please enter a valid URL').optional().or(z.literal('')),
+  interests: z.array(z.string()).min(1, 'Please select at least one option'),
+  phoneNumber: z.string().min(10, 'Please enter a valid phone number')
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -22,15 +22,33 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const Contact: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    setValue
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema)
   });
+
+  const interestOptions = [
+    'Lead generation',
+    'Ads campaigns',
+    'Speed to lead',
+    'AI receptionist',
+    'Agents'
+  ];
+
+  const toggleInterest = (interest: string) => {
+    const newInterests = selectedInterests.includes(interest)
+      ? selectedInterests.filter(i => i !== interest)
+      : [...selectedInterests, interest];
+    setSelectedInterests(newInterests);
+    setValue('interests', newInterests);
+  };
 
   const onSubmit = async (data: ContactFormData) => {
     try {
@@ -42,6 +60,7 @@ const Contact: React.FC = () => {
       console.log('Contact form submitted:', data);
       setIsSubmitted(true);
       reset();
+      setSelectedInterests([]);
       
       // Reset success message after 3 seconds
       setTimeout(() => setIsSubmitted(false), 3000);
@@ -54,6 +73,17 @@ const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-zinc-50">
+      {/* Logo in top left corner */}
+      <div className="absolute top-0 left-0 z-10 p-2">
+        <Link to="/">
+          <img 
+            src="/boltcall_full_logo.png" 
+            alt="Boltcall" 
+            className="h-12 w-auto"
+          />
+        </Link>
+      </div>
+      
       <div className="max-w-7xl mx-auto">
         <div className="min-h-screen flex">
           {/* Left Panel - White Background with Title and Animation */}
@@ -114,61 +144,83 @@ const Contact: React.FC = () => {
                 )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                  {/* Name and Email Row */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <StyledInput
-                        {...register('name')}
-                        placeholder="Full Name"
-                        name="name"
-                        required
-                      />
-                      {errors.name && (
-                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <StyledInput
-                        {...register('email')}
-                        type="email"
-                        placeholder="Email Address"
-                        name="email"
-                        required
-                      />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                      )}
-                    </div>
-                  </div>
-
-
-                  {/* Subject */}
+                  {/* Full Name */}
                   <div>
                     <StyledInput
-                      {...register('subject')}
-                      placeholder="Subject"
-                      name="subject"
+                      {...register('fullName')}
+                      placeholder="Full Name"
+                      name="fullName"
                       required
                     />
-                    {errors.subject && (
-                      <p className="mt-1 text-sm text-red-600">{errors.subject.message}</p>
+                    {errors.fullName && (
+                      <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
                     )}
                   </div>
 
-                  {/* Message */}
+                  {/* Work Email */}
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-zinc-700 mb-1">
-                      Message *
-                    </label>
-                    <textarea
-                      {...register('message')}
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none"
-                      placeholder="Tell us more about your inquiry..."
+                    <StyledInput
+                      {...register('workEmail')}
+                      type="email"
+                      placeholder="Work Email"
+                      name="workEmail"
+                      required
                     />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
+                    {errors.workEmail && (
+                      <p className="mt-1 text-sm text-red-600">{errors.workEmail.message}</p>
+                    )}
+                  </div>
+
+                  {/* Company Website */}
+                  <div>
+                    <StyledInput
+                      {...register('companyWebsite')}
+                      type="url"
+                      placeholder="Company Website (optional)"
+                      name="companyWebsite"
+                    />
+                    {errors.companyWebsite && (
+                      <p className="mt-1 text-sm text-red-600">{errors.companyWebsite.message}</p>
+                    )}
+                  </div>
+
+                  {/* Interests Multi-select */}
+                  <div>
+                    <label className="block text-sm font-medium text-zinc-700 mb-2">
+                      What are you interested in? *
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {interestOptions.map((option) => (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => toggleInterest(option)}
+                          className={`px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all duration-200 ${
+                            selectedInterests.includes(option)
+                              ? 'bg-blue-600 text-white border-blue-600'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                    {errors.interests && (
+                      <p className="mt-1 text-sm text-red-600">{errors.interests.message}</p>
+                    )}
+                  </div>
+
+                  {/* Phone Number */}
+                  <div>
+                    <StyledInput
+                      {...register('phoneNumber')}
+                      type="tel"
+                      placeholder="Phone Number"
+                      name="phoneNumber"
+                      required
+                    />
+                    {errors.phoneNumber && (
+                      <p className="mt-1 text-sm text-red-600">{errors.phoneNumber.message}</p>
                     )}
                   </div>
 

@@ -14,7 +14,9 @@ import {
   User,
   Moon,
   Sun,
-  Plug
+  Plug,
+  UserPlus,
+  HelpCircle
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -23,6 +25,7 @@ import { ToastProvider } from '../../contexts/ToastContext';
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -108,6 +111,23 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-5 h-5" /> },
     { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
   ];
+
+  // Get current page name from route
+  const getPageName = () => {
+    const path = location.pathname;
+    if (path === '/dashboard') return 'Overview';
+    if (path === '/dashboard/analytics') return 'Analytics';
+    if (path === '/dashboard/agents') return 'Agents';
+    if (path === '/dashboard/knowledge') return 'Knowledge Base';
+    if (path === '/dashboard/phone') return 'Phone Numbers';
+    if (path === '/dashboard/instant-lead-reply') return 'Instant Lead Reply';
+    if (path === '/dashboard/sms') return 'SMS';
+    if (path === '/dashboard/whatsapp') return 'WhatsApp';
+    if (path === '/dashboard/assistant') return 'Personal Assistant';
+    if (path === '/dashboard/integrations') return 'Integrations';
+    if (path.startsWith('/dashboard/settings')) return 'Settings';
+    return 'Dashboard';
+  };
 
   return (
     <ToastProvider>
@@ -383,37 +403,55 @@ const DashboardLayout: React.FC = () => {
            }}
            tabIndex={0}
          >
-           {/* Top Bar - Moved from Navbar */}
-           <div className={`sticky top-0 z-10 border-b flex-shrink-0 transition-colors duration-300 ${
+           {/* Top Bar - Page Header */}
+           <div className={`sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 ${
              isDarkMode 
-               ? 'bg-gray-800/80 backdrop-blur-sm border-gray-700' 
-               : 'bg-white/80 backdrop-blur-sm border-gray-200'
+               ? 'bg-gray-800/80 backdrop-blur-sm' 
+               : 'bg-white/80 backdrop-blur-sm'
            }`}>
              <div className="flex items-center justify-between h-16 px-6">
-               {/* Mobile menu button for right panel */}
-               <button
-                 onClick={toggleSidebar}
-                 className={`lg:hidden p-2 rounded-md transition-colors ${
-                   isDarkMode 
-                     ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
-                 }`}
-                 aria-label="Toggle navigation menu"
-               >
-                 <Menu className="w-5 h-5" />
-               </button>
+               {/* Page Name Header */}
+               <div className="flex items-center gap-3">
+                 <button
+                   onClick={toggleSidebar}
+                   className={`lg:hidden p-2 rounded-md transition-colors ${
+                     isDarkMode 
+                       ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
+                   }`}
+                   aria-label="Toggle navigation menu"
+                 >
+                   <Menu className="w-5 h-5" />
+                 </button>
+                 <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                   {getPageName()}
+                 </h1>
+               </div>
           
-               {/* Right side - Free Trial and Dark Mode */}
-               <div className="flex items-center gap-3 ml-auto">
-             {/* Free Trial Indicator */}
-             <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-               isDarkMode 
-                 ? 'bg-orange-900 text-orange-300' 
-                 : 'bg-orange-100 text-orange-700'
-             }`}>
-               Free Trial
-             </div>
-             
+               {/* Right side - Free Trial, Add Member, and Dark Mode */}
+               <div className="flex items-center gap-3">
+                 {/* Free Trial Indicator */}
+                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${
+                   isDarkMode 
+                     ? 'bg-orange-900 text-orange-300' 
+                     : 'bg-orange-100 text-orange-700'
+                 }`}>
+                   Free Trial
+                 </div>
+                 
+                 {/* Add Team Member Button */}
+                 <button
+                   onClick={() => setShowAddMemberModal(true)}
+                   className={`p-2 rounded-lg transition-colors ${
+                     isDarkMode 
+                       ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
+                   }`}
+                   aria-label="Add team member"
+                 >
+                   <UserPlus className="w-5 h-5" />
+                 </button>
+                 
                  {/* Dark Mode Toggle */}
                  <button
                    onClick={toggleDarkMode}
@@ -426,17 +464,92 @@ const DashboardLayout: React.FC = () => {
                  >
                    {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                  </button>
+               </div>
              </div>
            </div>
-         </div>
            
            {/* Page Content */}
            <div className="p-6">
              <Outlet />
            </div>
+
+           {/* Help Button - Bottom Right */}
+           <button
+             className={`fixed bottom-6 right-6 px-4 py-2 rounded-lg shadow-lg transition-all duration-300 flex items-center gap-2 text-sm font-medium ${
+               isDarkMode
+                 ? 'bg-blue-600 text-white hover:bg-blue-700'
+                 : 'bg-blue-600 text-white hover:bg-blue-700'
+             }`}
+             onClick={() => window.location.href = '/contact'}
+           >
+             <HelpCircle className="w-4 h-4" />
+             Help
+           </button>
          </main>
       </div>
     </div>
+
+    {/* Add Team Member Modal */}
+    {showAddMemberModal && (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowAddMemberModal(false)}>
+        <div 
+          className={`rounded-2xl p-6 max-w-md w-full mx-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Add Team Member
+            </h2>
+            <button
+              onClick={() => setShowAddMemberModal(false)}
+              className={`p-1 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <div className="space-y-4">
+            <div>
+              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                Gmail Address
+              </label>
+              <input
+                type="email"
+                placeholder="colleague@gmail.com"
+                className={`w-full px-4 py-2 rounded-lg border transition-colors ${
+                  isDarkMode
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                }`}
+              />
+            </div>
+            
+            <div>
+              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                Role
+              </label>
+              <select
+                className={`w-full px-4 py-2 rounded-lg border transition-colors ${
+                  isDarkMode
+                    ? 'bg-gray-700 border-gray-600 text-white'
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
+              >
+                <option>Member</option>
+                <option>Admin</option>
+              </select>
+            </div>
+            
+            <button
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              onClick={() => setShowAddMemberModal(false)}
+            >
+              Send Invitation
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
     </ToastProvider>
   );
 };

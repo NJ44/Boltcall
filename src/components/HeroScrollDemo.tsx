@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { ContainerScroll } from "./ui/container-scroll-animation";
+import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
 
 export function HeroScrollDemo() {
   const [activeTab, setActiveTab] = useState('ai-receptionist');
@@ -46,42 +47,50 @@ export function HeroScrollDemo() {
           <div className="flex flex-wrap justify-center gap-5 mb-3 -mt-[15px] relative z-50 w-full max-w-[1920px] mx-auto px-4">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
-              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-75 ${
+              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'ai-receptionist'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
+              style={{ transform: activeTab === 'ai-receptionist' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
             >
+              <Phone className="w-4 h-4" />
               AI Receptionist
             </button>
             <button
               onClick={() => setActiveTab('speed-to-lead')}
-              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-75 ${
+              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'speed-to-lead'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
+              style={{ transform: activeTab === 'speed-to-lead' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
             >
-              Instant Ads/forms replies
+              <Megaphone className="w-4 h-4" />
+              Instant Ads replies
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
-              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-75 ${
+              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'sms-whatsapp'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
+              style={{ transform: activeTab === 'sms-whatsapp' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
             >
-              SMS/Whatsapp Booking Agent
+              <MessageSquare className="w-4 h-4" />
+              SMS/Whatsapp Booking
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
-              className={`px-[18px] py-[9px] rounded-xl font-semibold text-sm transition-all duration-75 ${
+              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'dashboard-analytics'
                   ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
+              style={{ transform: activeTab === 'dashboard-analytics' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
             >
+              <BarChart3 className="w-4 h-4" />
               Dashboard Analytics
             </button>
           </div>

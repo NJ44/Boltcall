@@ -40,6 +40,9 @@ const Pricing: React.FC = () => {
     { name: "Quarterly strategy review (scripts, funnels, offers)", included: "all" },
     { name: "Branded voice (custom greeting voice + name)", included: "all" },
     { name: "Compliance pack (recording notice & retention presets)", included: "all" },
+    { name: "Dedicated account manager", included: "custom" },
+    { name: "Custom integrations", included: "custom" },
+    { name: "SLA guarantee", included: "custom" },
   ];
 
   const pricingPlans = [
@@ -57,10 +60,17 @@ const Pricing: React.FC = () => {
       description: "Everything on Starter plus:",
     },
     {
-      name: "ENTERPRISE",
+      name: "AGENCY",
       level: "all",
       price: { monthly: 1497, yearly: 14970 },
       description: "Everything on PRO plus:",
+    },
+    {
+      name: "ENTERPRISE",
+      level: "custom",
+      price: { monthly: 0, yearly: 0 },
+      description: "Tailored solutions for your business:",
+      isCustom: true,
     },
   ];
 
@@ -73,8 +83,26 @@ const Pricing: React.FC = () => {
       <div className="text-center -mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 -mb-14">
           <WhisperText
-            text="Pricing"
-            className="text-4xl md:text-5xl font-bold text-gray-900"
+            text="Pricing That"
+            className="text-4xl md:text-5xl font-bold text-gray-900 inline-block"
+            delay={187}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 85%"
+          />{' '}
+          <WhisperText
+            text="Scales"
+            className="text-4xl md:text-5xl font-bold text-blue-500 inline-block"
+            delay={187}
+            duration={0.625}
+            x={-20}
+            y={0}
+            triggerStart="top 85%"
+          />{' '}
+          <WhisperText
+            text="With You"
+            className="text-4xl md:text-5xl font-bold text-gray-900 inline-block"
             delay={187}
             duration={0.625}
             x={-20}
