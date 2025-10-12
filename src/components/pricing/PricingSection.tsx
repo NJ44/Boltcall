@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
-import Badge from '../ui/badge';
+import Badge from '../ui/Badge';
 import FAQ from '../FAQ';
 
 const PricingSection: React.FC = () => {
