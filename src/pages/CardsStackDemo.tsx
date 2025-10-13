@@ -95,25 +95,27 @@ const Process = () => {
               key={phase.id}
               index={index + 2}
               incrementY={15}
-              className="rounded-3xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
+              className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-lg"
             >
-              <div className="relative h-64 md:h-80 overflow-hidden">
+              <div className="p-6 md:p-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
+                    {phase.title}
+                  </h2>
+                  <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xl font-bold">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-6">{phase.description}</p>
+              </div>
+              <div className="relative h-48 md:h-56 overflow-hidden">
                 <img 
                   src={phase.imageUrl} 
                   alt={phase.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-6 right-6 bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center">
-                  <span className="text-3xl font-bold">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-              </div>
-              <div className="p-10 md:p-12">
-                <h2 className="mb-6 text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
-                  {phase.title}
-                </h2>
-                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">{phase.description}</p>
               </div>
             </CardSticky>
           ))}

@@ -249,14 +249,14 @@ export function PricingTable({
           <div>
             <div>
               <div className="flex items-center p-4 bg-white sticky top-16 z-10 border-b border-gray-200">
-                <div className="flex-1 text-sm font-medium text-gray-600 pl-0">Features</div>
-                <div className="flex items-center text-sm" style={{ gap: '80px', paddingRight: '16px' }}>
+                <div className="flex-1 text-base font-semibold text-gray-600 pl-0">Features</div>
+                <div className="flex items-center text-base" style={{ gap: '80px', paddingRight: '16px' }}>
                   {plans.map((plan) => (
                     <div
                       key={plan.level}
                       className={cn(
-                        "w-20 flex justify-center items-center font-semibold py-2 text-base",
-                        plan.isCustom ? "text-white bg-gray-900 px-2 rounded" : "text-gray-600"
+                        "w-20 flex justify-center items-center font-bold py-2 text-lg",
+                        plan.isCustom ? "text-white bg-gray-900 rounded" : "text-gray-600"
                       )}
                     >
                       {plan.name}
