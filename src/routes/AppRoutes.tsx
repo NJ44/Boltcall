@@ -35,6 +35,11 @@ import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import Features10Demo from '../pages/Features10Demo';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
+import TiltDemo from '../pages/TiltDemo';
+import AnimatedCardChartDemo from '../pages/AnimatedCardChartDemo';
+import CardsStackDemo from '../pages/CardsStackDemo';
+import FeatureSectionDemo from '../pages/FeatureSectionDemo';
+import MultipleSelectDemo from '../pages/MultipleSelectDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -88,6 +93,11 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features-10-demo" element={<Features10Demo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
+        <Route path="/tilt-demo" element={<TiltDemo />} />
+        <Route path="/animated-card-chart-demo" element={<AnimatedCardChartDemo />} />
+        <Route path="/cards-stack-demo" element={<CardsStackDemo />} />
+        <Route path="/feature-section-demo" element={<FeatureSectionDemo />} />
+        <Route path="/multiple-select-demo" element={<MultipleSelectDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>

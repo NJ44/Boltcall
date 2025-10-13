@@ -54,7 +54,7 @@ export function PricingTable({
       className={cn(
         "bg-transparent text-foreground",
         "py-12 sm:py-24 md:py-32 px-4",
-        "fade-bottom overflow-hidden pb-0",
+        "fade-bottom pb-0",
       )}
     >
       <div
@@ -232,7 +232,7 @@ export function PricingTable({
               <button
                 onClick={() => plan.isCustom ? window.location.href = '/contact' : onPlanSelect?.(plan.level)}
                 className={cn(
-                  "w-full mt-auto pt-4 px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl",
+                  "w-full mt-auto px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg",
                   plan.isCustom
                     ? "bg-white text-gray-900 hover:bg-gray-100 border-2 border-white"
                     : "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",
@@ -245,17 +245,17 @@ export function PricingTable({
           ))}
         </div>
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white mt-8 shadow-lg">
-          <div className="overflow-x-auto">
-            <div className="min-w-[640px]">
-              <div className="flex items-center p-4 bg-white sticky top-0 z-10 border-b border-gray-200">
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white mt-8 shadow-lg">
+          <div>
+            <div>
+              <div className="flex items-center p-4 bg-white sticky top-16 z-10 border-b border-gray-200">
                 <div className="flex-1 text-sm font-medium text-gray-600 pl-0">Features</div>
-                <div className="flex items-center text-sm" style={{ gap: '64px' }}>
+                <div className="flex items-center text-sm" style={{ gap: '80px', paddingRight: '16px' }}>
                   {plans.map((plan) => (
                     <div
                       key={plan.level}
                       className={cn(
-                        "w-16 text-center font-medium py-2",
+                        "w-20 flex justify-center items-center font-semibold py-2 text-base",
                         plan.isCustom ? "text-white bg-gray-900 px-2 rounded" : "text-gray-600"
                       )}
                     >
@@ -270,17 +270,17 @@ export function PricingTable({
                   className="flex items-center p-0 transition-all duration-300 hover:bg-gray-50"
                 >
                   <div className="flex-1 text-sm p-4 pl-4">{feature.name}</div>
-                  <div className="flex items-center text-sm" style={{ gap: '64px' }}>
+                  <div className="flex items-center text-sm" style={{ gap: '80px', paddingRight: '16px' }}>
                     {plans.map((plan) => (
                       <div
                         key={plan.level}
                         className={cn(
-                          "w-16 flex justify-center py-6",
+                          "w-20 flex justify-center items-center py-6",
                           plan.isCustom && "bg-gray-900"
                         )}
                       >
                         {shouldShowCheck(feature.included, plan.level) ? (
-                          <CheckIcon className={cn("w-5 h-5", plan.isCustom ? "text-blue-400" : "text-blue-500")} />
+                          <CheckIcon className={cn("w-5 h-5 -ml-0.5", plan.isCustom ? "text-blue-400" : "text-blue-500")} />
                         ) : (
                           <span className={cn(plan.isCustom ? "text-gray-600" : "text-zinc-300 dark:text-zinc-700")}>
                             -

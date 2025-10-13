@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,23 +7,7 @@ import Button from './ui/Button';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isOverDarkSection, setIsOverDarkSection] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
-
-  // Detect if navbar is over dark sections
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      // Adjust these values based on where your dark sections are
-      // Typically dark sections start after hero (~800px) and continue through the features
-      const isDark = scrollY > 600; // Adjust this threshold as needed
-      setIsOverDarkSection(isDark);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { label: 'Features', href: '#features' },
@@ -80,19 +64,13 @@ const Header: React.FC = () => {
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className={`relative transition-colors duration-200 font-medium py-2 ${
-                  isOverDarkSection 
-                    ? 'text-white hover:text-blue-300' 
-                    : 'text-text-muted hover:text-brand-blue'
-                }`}
+                className="relative font-medium py-2 text-text-muted"
                 whileHover="hover"
                 initial="initial"
               >
                 {item.label}
                 <motion.div
-                  className={`absolute bottom-0 left-0 h-0.5 ${
-                    isOverDarkSection ? 'bg-blue-300' : 'bg-brand-blue'
-                  }`}
+                  className="absolute bottom-0 left-0 h-0.5 bg-brand-blue"
                   variants={{
                     initial: { width: 0, opacity: 0 },
                     hover: { width: "100%", opacity: 1 }
@@ -107,11 +85,7 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4 ml-auto">
             {isAuthenticated ? (
               <>
-                <Link to="/dashboard" className={`transition-colors ${
-                  isOverDarkSection 
-                    ? 'text-white hover:text-blue-300' 
-                    : 'text-text-muted hover:text-brand-blue'
-                }`}>
+                <Link to="/dashboard" className="transition-colors text-text-muted hover:text-brand-blue">
                   Dashboard
                 </Link>
                 <div className="flex items-center gap-2">
@@ -128,11 +102,7 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className={`transition-colors font-medium ${
-                  isOverDarkSection 
-                    ? 'text-white hover:text-blue-300' 
-                    : 'text-text-muted hover:text-brand-blue'
-                }`}>
+                <Link to="/login" className="transition-colors font-medium text-text-muted hover:text-brand-blue">
                   Login
                 </Link>
                 <div style={{ 

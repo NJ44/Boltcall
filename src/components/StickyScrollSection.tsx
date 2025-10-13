@@ -1,5 +1,6 @@
 import React from 'react';
 import WhisperText from './ui/whisper-text';
+import { Feature } from './ui/feature-section-with-bento-grid';
 
 export const StickyScrollSection: React.FC = () => {
   return (
@@ -16,6 +17,9 @@ export const StickyScrollSection: React.FC = () => {
             triggerStart="top 85%"
           />
         </h2>
+      </div>
+      <div className="bg-white rounded-t-[80px] -mx-4">
+        <Feature />
       </div>
     </div>
   );

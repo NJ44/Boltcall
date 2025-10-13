@@ -8,12 +8,14 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Link } from 'react-router-dom';
 import Card from '../components/ui/Card';
 import StyledInput from '../components/ui/StyledInput';
+import { MultipleSelect } from '../components/ui/multiple-select';
+import type { TTag } from '../components/ui/multiple-select';
 
 const contactSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   workEmail: z.string().email('Please enter a valid work email address'),
   companyWebsite: z.string().url('Please enter a valid URL').optional().or(z.literal('')),
-  interests: z.array(z.string()).min(1, 'Please select at least one option'),
+  interests: z.array(z.any()).min(1, 'Please select at least one option'),
   phoneNumber: z.string().min(10, 'Please enter a valid phone number')
 });
 
@@ -22,7 +24,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 const Contact: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<TTag[]>([]);
 
   const {
     register,
@@ -34,21 +36,13 @@ const Contact: React.FC = () => {
     resolver: zodResolver(contactSchema)
   });
 
-  const interestOptions = [
-    'Lead generation',
-    'Ads campaigns',
-    'Speed to lead',
-    'AI receptionist',
-    'Agents'
+  const interestOptions: TTag[] = [
+    { key: 'lead-generation', name: 'Lead Generation' },
+    { key: 'ads-campaigns', name: 'Ads Campaigns' },
+    { key: 'speed-to-lead', name: 'Speed to Lead' },
+    { key: 'ai-receptionist', name: 'AI Receptionist' },
+    { key: 'agents', name: 'Agents' },
   ];
-
-  const toggleInterest = (interest: string) => {
-    const newInterests = selectedInterests.includes(interest)
-      ? selectedInterests.filter(i => i !== interest)
-      : [...selectedInterests, interest];
-    setSelectedInterests(newInterests);
-    setValue('interests', newInterests);
-  };
 
   const onSubmit = async (data: ContactFormData) => {
     try {
@@ -74,12 +68,12 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-50">
       {/* Logo in top left corner */}
-      <div className="absolute top-0 left-0 z-10 p-2">
+      <div className="absolute top-0 left-0 z-10 p-4">
         <Link to="/">
           <img 
             src="/boltcall_full_logo.png" 
             alt="Boltcall" 
-            className="h-12 w-auto"
+            className="h-16 w-auto"
           />
         </Link>
       </div>
@@ -92,7 +86,7 @@ const Contact: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center"
+              className="text-center mt-32"
             >
               <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET IN TOUCH</h1>
               <div className="w-96 h-96">
@@ -117,7 +111,7 @@ const Contact: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="w-full max-w-lg"
             >
-              <Card className="p-8 bg-white shadow-2xl border-0">
+              <Card className="p-6 bg-white shadow-2xl border-0">
                 {/* Header */}
 
                 {/* Success Message */}
@@ -143,7 +137,7 @@ const Contact: React.FC = () => {
                   </motion.div>
                 )}
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                   {/* Full Name */}
                   <div>
                     <StyledInput
@@ -186,25 +180,14 @@ const Contact: React.FC = () => {
 
                   {/* Interests Multi-select */}
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-2">
-                      What are you interested in? *
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {interestOptions.map((option) => (
-                        <button
-                          key={option}
-                          type="button"
-                          onClick={() => toggleInterest(option)}
-                          className={`px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all duration-200 ${
-                            selectedInterests.includes(option)
-                              ? 'bg-blue-600 text-white border-blue-600'
-                              : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
+                    <MultipleSelect
+                      tags={interestOptions}
+                      defaultValue={selectedInterests}
+                      onChange={(items) => {
+                        setSelectedInterests(items);
+                        setValue('interests', items);
+                      }}
+                    />
                     {errors.interests && (
                       <p className="mt-1 text-sm text-red-600">{errors.interests.message}</p>
                     )}
@@ -225,23 +208,25 @@ const Contact: React.FC = () => {
                   </div>
 
                   {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-                  >
-                    {isLoading ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Send Message
-                      </>
-                    )}
-                  </button>
+                  <div className="flex justify-start">
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center gap-2"
+                    >
+                      {isLoading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          Send Message
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </form>
 
               </Card>
