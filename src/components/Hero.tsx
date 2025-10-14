@@ -70,6 +70,7 @@ const Hero: React.FC = () => {
             variant="primary"
             size="md"
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white transition-all duration-75"
+            style={{ backgroundColor: '#3b82f6', color: 'white' }}
           >
             Learn more
           </Button>

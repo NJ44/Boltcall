@@ -258,6 +258,7 @@ export function PricingTable({
                         "w-20 flex justify-center items-center font-bold py-2 text-lg",
                         plan.isCustom ? "text-white bg-gray-900 rounded" : "text-gray-600"
                       )}
+                      style={{ marginLeft: '6px' }}
                     >
                       {plan.name}
                     </div>
@@ -278,6 +279,7 @@ export function PricingTable({
                           "w-20 flex justify-center items-center py-6",
                           plan.isCustom && "bg-gray-900"
                         )}
+                        style={{ marginLeft: '6px' }}
                       >
                         {shouldShowCheck(feature.included, plan.level) ? (
                           <CheckIcon className={cn("w-5 h-5 -ml-0.5", plan.isCustom ? "text-blue-400" : "text-blue-500")} />

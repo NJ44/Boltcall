@@ -44,68 +44,88 @@ export function HeroScrollDemo() {
       >
         <div className="flex flex-col h-full text-center pointer-events-auto">
           {/* Professional Modern Buttons at the very top */}
-          <div className="flex flex-wrap justify-center gap-5 mb-3 -mt-[15px] relative z-50 w-full max-w-[1920px] mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-5 mb-3 -mt-[15px] relative z-50 w-full max-w-[2200px] mx-auto px-2">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
               className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'ai-receptionist'
-                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
-              style={{ transform: activeTab === 'ai-receptionist' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
+              style={{ 
+                transform: activeTab === 'ai-receptionist' ? 'scale(1.05)' : 'scale(1)', 
+                backfaceVisibility: 'hidden', 
+                WebkitFontSmoothing: 'antialiased',
+                opacity: activeTab === 'ai-receptionist' ? 1 : 0.85
+              }}
             >
-              <Phone className="w-4 h-4" />
+              <Phone className={`w-4 h-4 ${activeTab === 'ai-receptionist' ? 'text-blue-500' : 'text-gray-700'}`} />
               AI Receptionist
             </button>
             <button
               onClick={() => setActiveTab('speed-to-lead')}
               className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'speed-to-lead'
-                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
-              style={{ transform: activeTab === 'speed-to-lead' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
+              style={{ 
+                transform: activeTab === 'speed-to-lead' ? 'scale(1.05)' : 'scale(1)', 
+                backfaceVisibility: 'hidden', 
+                WebkitFontSmoothing: 'antialiased',
+                opacity: activeTab === 'speed-to-lead' ? 1 : 0.85
+              }}
             >
-              <Megaphone className="w-4 h-4" />
+              <Megaphone className={`w-4 h-4 ${activeTab === 'speed-to-lead' ? 'text-blue-500' : 'text-gray-700'}`} />
               Instant Ads replies
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
               className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'sms-whatsapp'
-                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
-              style={{ transform: activeTab === 'sms-whatsapp' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
+              style={{ 
+                transform: activeTab === 'sms-whatsapp' ? 'scale(1.05)' : 'scale(1)', 
+                backfaceVisibility: 'hidden', 
+                WebkitFontSmoothing: 'antialiased',
+                opacity: activeTab === 'sms-whatsapp' ? 1 : 0.85
+              }}
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className={`w-4 h-4 ${activeTab === 'sms-whatsapp' ? 'text-blue-500' : 'text-gray-700'}`} />
               SMS/Whatsapp Booking
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
               className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'dashboard-analytics'
-                  ? 'bg-white text-gray-900 shadow-lg border-2 border-blue-500 scale-105'
+                  ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
               }`}
-              style={{ transform: activeTab === 'dashboard-analytics' ? 'scale(1.05)' : 'scale(1)', backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
+              style={{ 
+                transform: activeTab === 'dashboard-analytics' ? 'scale(1.05)' : 'scale(1)', 
+                backfaceVisibility: 'hidden', 
+                WebkitFontSmoothing: 'antialiased',
+                opacity: activeTab === 'dashboard-analytics' ? 1 : 0.85
+              }}
             >
-              <BarChart3 className="w-4 h-4" />
+              <BarChart3 className={`w-4 h-4 ${activeTab === 'dashboard-analytics' ? 'text-blue-500' : 'text-gray-700'}`} />
               Dashboard Analytics
             </button>
           </div>
 
           {/* Semi-transparent container for flipping screen content */}
-          <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-3xl p-10 mx-6 mt-4 mb-6">
-            <div className="h-full flex flex-col items-center justify-center px-6">
+          <div className="flex-1 bg-white/87 backdrop-blur-sm rounded-3xl p-10 mx-2 mt-4 mb-6">
+            <div className="h-full flex flex-col items-center justify-center px-4">
               {currentContent.layout === 'split' ? (
               // AI Receptionist - Split Layout
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-center">
                 <div className="text-left">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                     {currentContent.title}
                   </h2>
-                  <p className="text-base md:text-lg text-gray-600">
+                  <p className="text-base md:text-lg text-white">
                     {currentContent.description}
                   </p>
                 </div>
@@ -121,34 +141,34 @@ export function HeroScrollDemo() {
               // Dashboard Analytics - Features Layout with Image
               <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div className="text-left">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
                     {currentContent.title}
                   </h2>
-                  <p className="text-base text-gray-600 mb-6">
+                  <p className="text-sm text-white mb-4">
                     {currentContent.description}
                   </p>
-                  <ul className="space-y-3 border-y border-gray-200 py-4">
-                    <li className="flex items-center gap-3 text-gray-700">
-                      <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <ul className="space-y-0 py-4">
+                    <li className="flex items-center gap-3 text-white py-3 border-b border-white/20">
+                      <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                       </svg>
                       Real-time notifications
                     </li>
-                    <li className="flex items-center gap-3 text-gray-700">
-                      <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <li className="flex items-center gap-3 text-white py-3 border-b border-white/20">
+                      <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                       </svg>
                       Instant insights
                     </li>
-                    <li className="flex items-center gap-3 text-gray-700">
-                      <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <li className="flex items-center gap-3 text-white py-3 border-b border-white/20">
+                      <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                       </svg>
                       Performance tracking
                     </li>
-                    <li className="flex items-center gap-3 text-gray-700">
-                      <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <li className="flex items-center gap-3 text-white py-3">
+                      <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                       Custom reports
@@ -173,10 +193,10 @@ export function HeroScrollDemo() {
               className="w-[200px] h-[200px] rounded-lg shadow-lg object-cover mx-auto"
             />
           </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             {currentContent.title}
           </h2>
-                <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto">
+                <p className="text-base md:text-lg text-white max-w-xl mx-auto">
             {currentContent.description}
           </p>
               </>

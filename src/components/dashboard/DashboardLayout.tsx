@@ -16,7 +16,8 @@ import {
   Sun,
   Plug,
   UserPlus,
-  HelpCircle
+  HelpCircle,
+  Clock
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -105,6 +106,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-5 h-5" /> },
     { to: '/dashboard/whatsapp', label: 'WhatsApp (Beta)', icon: <MessageCircle className="w-5 h-5" /> },
     { to: '/dashboard/assistant', label: 'Personal Assistant', icon: <Bot className="w-5 h-5" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Clock className="w-5 h-5" /> },
   ];
 
   const navItemsBottom = [
@@ -124,6 +126,7 @@ const DashboardLayout: React.FC = () => {
     if (path === '/dashboard/sms') return 'SMS';
     if (path === '/dashboard/whatsapp') return 'WhatsApp';
     if (path === '/dashboard/assistant') return 'Personal Assistant';
+    if (path === '/dashboard/reminders') return 'Reminders';
     if (path === '/dashboard/integrations') return 'Integrations';
     if (path.startsWith('/dashboard/settings')) return 'Settings';
     return 'Dashboard';

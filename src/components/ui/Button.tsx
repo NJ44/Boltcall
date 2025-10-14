@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 const StyledWrapper = styled.div`
@@ -122,6 +123,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   type = 'button',
   disabled = false,
+  style,
 }) => {
   const sizeClass = size === 'sm' ? 'button-sm' : size === 'lg' ? 'button-lg' : '';
   
@@ -132,6 +134,7 @@ const Button: React.FC<ButtonProps> = ({
         className={`button2 ${sizeClass} ${className}`}
         onClick={onClick}
         disabled={disabled}
+        style={style}
       >
         {children}
       </button>

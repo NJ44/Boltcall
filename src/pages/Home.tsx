@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import { HeroScrollDemo } from '../components/HeroScrollDemo';
 import HowItWorks from '../components/HowItWorks';
+import FreeSetup from '../components/FreeSetup';
 import Pricing from '../components/Pricing';
 import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
@@ -26,7 +27,7 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
           
-          <div className="relative -top-[435px] z-[100] pointer-events-none">
+          <div className="relative -top-[500px] z-[100] pointer-events-none">
             <HeroScrollDemo />
           </div>
           
@@ -36,6 +37,10 @@ const Home: React.FC = () => {
           
           <div className="relative -top-[555px]">
             <StickyScrollSection />
+          </div>
+          
+          <div className="relative -top-[555px] bg-white">
+            <FreeSetup />
           </div>
           
           <div className="relative -top-[555px]">
@@ -50,7 +55,7 @@ const Home: React.FC = () => {
             <FinalCTA />
           </div>
           
-          <div className="relative -top-[555px] bg-blue-600">
+          <div className="relative -top-[555px]">
             <Footer />
           </div>
         </main>

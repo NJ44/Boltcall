@@ -5,8 +5,8 @@ import { Feature } from './ui/feature-section-with-bento-grid';
 export const StickyScrollSection: React.FC = () => {
   return (
     <div className="py-20">
-      <div className="text-left mb-16 max-w-7xl mx-auto px-4">
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold">
+      <div className="text-left mb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold ml-5" style={{ fontSize: '0.90em' }}>
           <div>
             <WhisperText
               text="Why Businesses"

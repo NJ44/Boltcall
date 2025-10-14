@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
 
@@ -35,11 +36,12 @@ const HowItWorks: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
-          <div className="left-0 md:sticky md:py-12" style={{ top: '128px', height: 'fit-content' }}>
-            <h2 className="text-5xl md:text-7xl font-bold mb-6">
+          <div className="left-0 md:sticky ml-4 pt-8" style={{ top: '64px', height: 'fit-content' }}>
+            <h5 className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5">How It Works</h5>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.90em' }}>
               <WhisperText
                 text="Close leads in"
-                className="text-5xl md:text-7xl font-bold text-white inline-block"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold text-white inline-block"
                 delay={125}
                 duration={0.625}
                 x={-20}
@@ -49,7 +51,7 @@ const HowItWorks: React.FC = () => {
               <br />
               <WhisperText
                 text="lightning speed."
-                className="text-5xl md:text-7xl font-bold text-blue-500 inline-block"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold text-blue-500 inline-block"
                 delay={125}
                 duration={0.625}
                 x={-20}
@@ -57,9 +59,15 @@ const HowItWorks: React.FC = () => {
                 triggerStart="top 85%"
               />
             </h2>
-            <p className="max-w-prose text-lg md:text-xl leading-relaxed text-white/80 mt-6">
+            <motion.p 
+              className="max-w-prose text-base md:text-lg leading-relaxed text-white/80 mt-5 ml-5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
               BoltCall transforms how you capture and convert leads. Our AI-powered system works 24/7 to ensure you never miss an opportunity, responding instantly to every inquiry and booking qualified appointments automatically.
-            </p>
+            </motion.p>
           </div>
 
           {/* Sticky Cards */}
