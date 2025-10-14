@@ -85,7 +85,7 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-50">
       {/* Logo in top left corner */}
-      <div className="absolute top-0 left-0 z-10 p-2">
+      <div className="absolute top-0 left-0 z-10 p-2" style={{ transform: 'translate(-6px, -10px)' }}>
         <Link to="/">
           <img 
             src="/boltcall_full_logo.png" 

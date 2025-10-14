@@ -1,6 +1,104 @@
 import type { LeadFormData } from '../lib/validators';
 import { supabase } from '../lib/supabase';
 
+// Mock voices data (replace with actual Retell API integration)
+const mockVoices = [
+  {
+    voice_id: 'sarah',
+    name: 'Sarah',
+    accent: 'American',
+    gender: 'Female',
+    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
+  },
+  {
+    voice_id: 'mike',
+    name: 'Mike',
+    accent: 'American',
+    gender: 'Male',
+    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
+  },
+  {
+    voice_id: 'emily',
+    name: 'Emily',
+    accent: 'British',
+    gender: 'Female',
+    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
+  },
+  {
+    voice_id: 'david',
+    name: 'David',
+    accent: 'Australian',
+    gender: 'Male',
+    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
+  },
+  {
+    voice_id: 'anna',
+    name: 'Anna',
+    accent: 'Canadian',
+    gender: 'Female',
+    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
+  },
+  {
+    voice_id: 'james',
+    name: 'James',
+    accent: 'Irish',
+    gender: 'Male',
+    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
+  }
+];
+
+export async function getVoices(): Promise<any[]> {
+  try {
+    // Use Vite environment variable
+    const apiKey = import.meta.env.VITE_RETELL_API_KEY;
+    
+    if (!apiKey) {
+      console.warn('VITE_RETELL_API_KEY not found, using mock data');
+      return mockVoices.map(voice => ({
+        id: voice.voice_id,
+        name: voice.name,
+        accent: voice.accent,
+        gender: voice.gender,
+        preview: voice.preview_audio_url,
+      }));
+    }
+
+    // Real Retell API call
+    const response = await fetch('https://api.retellai.com/v2/voices', {
+      headers: { 
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    return data.items.map((voice: any) => ({
+      id: voice.voice_id,
+      name: voice.name,
+      accent: voice.accent,
+      gender: voice.gender,
+      preview: voice.preview_audio_url,
+    }));
+  } catch (error) {
+    console.error('Error fetching voices:', error);
+    console.log('Falling back to mock data...');
+    
+    // Fallback to mock data if API call fails
+    return mockVoices.map(voice => ({
+      id: voice.voice_id,
+      name: voice.name,
+      accent: voice.accent,
+      gender: voice.gender,
+      preview: voice.preview_audio_url,
+    }));
+  }
+}
+
 export async function handleLeadSubmission(data: LeadFormData): Promise<{ success: boolean; message: string }> {
   try {
     const { error } = await supabase

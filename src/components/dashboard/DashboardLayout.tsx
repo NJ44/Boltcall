@@ -17,7 +17,15 @@ import {
   Plug,
   UserPlus,
   HelpCircle,
-  Clock
+  Clock,
+  ChevronDown,
+  ChevronRight,
+  Phone,
+  PhoneMissed,
+  Layout,
+  MessageSquareText,
+  ChevronLeft,
+  ChevronRight as ChevronRightIcon
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -28,6 +36,9 @@ const DashboardLayout: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
+  const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
@@ -46,6 +57,10 @@ const DashboardLayout: React.FC = () => {
 
   const closeSidebar = () => {
     setSidebarOpen(false);
+  };
+
+  const toggleSidebarCollapse = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
   };
 
 
@@ -101,17 +116,30 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-5 h-5" /> },
   ];
 
+  const messagingItems = [
+    { to: '/dashboard/widgets', label: 'Widgets', icon: <Layout className="w-5 h-5" /> },
+    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquareText className="w-5 h-5" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Clock className="w-5 h-5" /> },
+  ];
+
+  const callsItems = [
+    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Bot className="w-5 h-5" /> },
+    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <PhoneMissed className="w-5 h-5" /> },
+  ];
+
   const navItemsGroup3 = [
     { to: '/dashboard/instant-lead-reply', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },
     { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-5 h-5" /> },
     { to: '/dashboard/whatsapp', label: 'WhatsApp (Beta)', icon: <MessageCircle className="w-5 h-5" /> },
-    { to: '/dashboard/assistant', label: 'Personal Assistant', icon: <Bot className="w-5 h-5" /> },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Clock className="w-5 h-5" /> },
   ];
 
   const navItemsBottom = [
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-5 h-5" /> },
+  ];
+
+  const navItemsFooter = [
     { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
+    { to: '/help-center', label: 'Help Center', icon: <HelpCircle className="w-5 h-5" /> },
   ];
 
   // Get current page name from route
@@ -122,14 +150,78 @@ const DashboardLayout: React.FC = () => {
     if (path === '/dashboard/agents') return 'Agents';
     if (path === '/dashboard/knowledge') return 'Knowledge Base';
     if (path === '/dashboard/phone') return 'Phone Numbers';
+    if (path === '/dashboard/widgets') return 'Widgets';
+    if (path === '/dashboard/sms-booking') return 'SMS Booking';
+    if (path === '/dashboard/reminders') return 'Reminders';
+    if (path === '/dashboard/assistant') return 'AI Receptionist';
+    if (path === '/dashboard/missed-calls') return 'Missed Calls';
     if (path === '/dashboard/instant-lead-reply') return 'Instant Lead Reply';
     if (path === '/dashboard/sms') return 'SMS';
     if (path === '/dashboard/whatsapp') return 'WhatsApp';
-    if (path === '/dashboard/assistant') return 'Personal Assistant';
-    if (path === '/dashboard/reminders') return 'Reminders';
     if (path === '/dashboard/integrations') return 'Integrations';
     if (path.startsWith('/dashboard/settings')) return 'Settings';
     return 'Dashboard';
+  };
+
+  // Helper function to render navigation items
+  const renderNavItem = (item: any, isActive: boolean) => {
+    if (sidebarCollapsed) {
+      return (
+        <Link
+          key={item.to}
+          to={item.to}
+          onClick={closeSidebar}
+          className={`relative flex items-center justify-center p-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
+            isActive
+              ? isDarkMode 
+                ? 'bg-gray-800 text-white' 
+                : 'bg-blue-50 text-blue-700'
+              : isDarkMode 
+                ? 'text-white hover:bg-gray-800' 
+                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+          }`}
+          title={item.label}
+        >
+          {item.icon}
+          {/* Tooltip */}
+          <div className={`absolute left-full ml-2 px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 ${
+            isDarkMode ? 'bg-gray-700' : 'bg-gray-900'
+          }`}>
+            {item.label}
+          </div>
+        </Link>
+      );
+    }
+
+    return (
+      <Link
+        key={item.to}
+        to={item.to}
+        onClick={closeSidebar}
+        className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
+          isActive
+            ? isDarkMode 
+              ? 'bg-gray-800 text-white' 
+              : 'bg-blue-50 text-blue-700'
+            : isDarkMode 
+              ? 'text-white hover:bg-gray-800' 
+              : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+        }`}
+      >
+        {item.icon}
+        <span className="relative pb-1">
+          {item.label}
+          <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
+            isActive ? 'w-full' : 'w-0 group-hover:w-full'
+          }`} 
+          style={{
+            transition: isActive 
+              ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+              : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+          }} />
+        </span>
+      </Link>
+    );
   };
 
   return (
@@ -139,51 +231,60 @@ const DashboardLayout: React.FC = () => {
     }`}>
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
-         <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 transform transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto ${
-           sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-         }`}>
+         <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto ${
+           sidebarCollapsed ? 'w-16' : 'w-64'
+         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
             <Link 
               to="/dashboard" 
-              className="flex items-center"
+              className="flex items-center justify-center"
             >
-              <img 
-                src="/boltcall_full_logo.png" 
-                alt="Boltcall" 
+              {sidebarCollapsed ? (
+                <img 
+                  src="/boltcall_icon.png" 
+                  alt="Boltcall" 
+                  className="h-8 w-8"
+                />
+              ) : (
+                <img 
+                  src="/boltcall_full_logo.png" 
+                  alt="Boltcall" 
                   className="h-14 w-auto"
-              />
+                />
+              )}
             </Link>
           </div>
           
             {/* User Profile - Below Logo */}
-            <div className="mb-4 px-2">
-             <div className="relative" data-user-menu>
-               <button
-                 onClick={() => setShowUserMenu(!showUserMenu)}
-                  className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
-                   isDarkMode 
-                      ? 'hover:bg-gray-700/50' 
-                      : 'hover:bg-gray-300/50'
-                 }`}
-               >
-                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                   <User className="w-4 h-4 text-blue-600" />
-                 </div>
-                  <div className="flex-1 text-left">
-                   <div className={`text-sm font-medium ${
-                     isDarkMode ? 'text-white' : 'text-gray-900'
-                   }`}>
-                     {user?.name || 'User'}
+            {!sidebarCollapsed && (
+              <div className="mb-4 px-2">
+               <div className="relative" data-user-menu>
+                 <button
+                   onClick={() => setShowUserMenu(!showUserMenu)}
+                    className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
+                     isDarkMode 
+                        ? 'hover:bg-gray-700/50' 
+                        : 'hover:bg-gray-300/50'
+                   }`}
+                 >
+                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                     <User className="w-4 h-4 text-blue-600" />
                    </div>
-                   <div className={`text-xs ${
-                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                   }`}>
-                     {user?.email}
+                    <div className="flex-1 text-left">
+                     <div className={`text-sm font-medium ${
+                       isDarkMode ? 'text-white' : 'text-gray-900'
+                     }`}>
+                       {user?.name || 'User'}
+                     </div>
+                     <div className={`text-xs ${
+                       isDarkMode ? 'text-gray-400' : 'text-gray-500'
+                     }`}>
+                       {user?.email}
+                     </div>
                    </div>
-                 </div>
-               </button>
+                 </button>
                
                {/* User dropdown menu */}
                {showUserMenu && (
@@ -218,6 +319,7 @@ const DashboardLayout: React.FC = () => {
                )}
              </div>
            </div>
+            )}
 
             {/* Mobile menu button */}
               <button
@@ -231,6 +333,25 @@ const DashboardLayout: React.FC = () => {
               >
                 <X className="w-5 h-5" />
               </button>
+
+            {/* Collapse/Expand button */}
+            <div className="px-2 mb-4">
+              <button
+                onClick={toggleSidebarCollapse}
+                className={`w-full flex items-center justify-center p-2 rounded-lg transition-colors ${
+                  isDarkMode 
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
+                }`}
+                aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              >
+                {sidebarCollapsed ? (
+                  <ChevronRightIcon className="w-5 h-5" />
+                ) : (
+                  <ChevronLeft className="w-5 h-5" />
+                )}
+              </button>
+            </div>
             
             {/* Navigation */}
             <nav className="flex-1 flex flex-col" aria-label="Main navigation">
@@ -239,35 +360,7 @@ const DashboardLayout: React.FC = () => {
                 <div className="space-y-1 mb-4">
                   {navItemsGroup1.map((item) => {
                     const isActive = location.pathname === item.to;
-                    return (
-                       <Link
-                         key={item.to}
-                         to={item.to}
-                         onClick={closeSidebar}
-                         className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
-                           isActive
-                             ? isDarkMode 
-                               ? 'bg-gray-800 text-white' 
-                               : 'bg-blue-50 text-blue-700'
-                             : isDarkMode 
-                               ? 'text-white hover:bg-gray-800' 
-                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                         }`}
-                       >
-                        {item.icon}
-                        <span className="relative pb-1">
-                          {item.label}
-                          <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
-                            isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                          }`} 
-                          style={{
-                            transition: isActive 
-                              ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                              : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-                          }} />
-                        </span>
-                      </Link>
-                    );
+                    return renderNavItem(item, isActive);
                   })}
                 </div>
 
@@ -275,71 +368,15 @@ const DashboardLayout: React.FC = () => {
                 <div className="space-y-1 mb-4">
                   {navItemsGroup2.map((item) => {
                     const isActive = location.pathname === item.to;
-                    return (
-                       <Link
-                         key={item.to}
-                         to={item.to}
-                         onClick={closeSidebar}
-                         className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
-                           isActive
-                             ? isDarkMode 
-                               ? 'bg-gray-800 text-white' 
-                               : 'bg-blue-50 text-blue-700'
-                             : isDarkMode 
-                               ? 'text-white hover:bg-gray-800' 
-                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                         }`}
-                       >
-                        {item.icon}
-                        <span className="relative pb-1">
-                          {item.label}
-                          <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
-                            isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                          }`} 
-                          style={{
-                            transition: isActive 
-                              ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                              : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-                          }} />
-                        </span>
-                      </Link>
-                    );
+                    return renderNavItem(item, isActive);
                   })}
                 </div>
 
                 {/* Group 3 */}
                 <div className="space-y-1 mb-4">
                   {navItemsGroup3.map((item) => {
-                  const isActive = location.pathname === item.to;
-                    return (
-                       <Link
-                         key={item.to}
-                         to={item.to}
-                         onClick={closeSidebar}
-                         className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
-                           isActive
-                             ? isDarkMode 
-                               ? 'bg-gray-800 text-white' 
-                               : 'bg-blue-50 text-blue-700'
-                             : isDarkMode 
-                               ? 'text-white hover:bg-gray-800' 
-                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                         }`}
-                       >
-                        {item.icon}
-                        <span className="relative pb-1">
-                          {item.label}
-                          <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
-                            isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                          }`} 
-                          style={{
-                            transition: isActive 
-                              ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                              : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-                          }} />
-                        </span>
-                      </Link>
-                    );
+                    const isActive = location.pathname === item.to;
+                    return renderNavItem(item, isActive);
                   })}
                 </div>
               </div>
@@ -348,35 +385,15 @@ const DashboardLayout: React.FC = () => {
               <div className="space-y-1 mt-auto">
                 {navItemsBottom.map((item) => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
-                  return (
-                     <Link
-                       key={item.to}
-                       to={item.to}
-                       onClick={closeSidebar}
-                       className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
-                         isActive
-                           ? isDarkMode 
-                             ? 'bg-gray-800 text-white' 
-                             : 'bg-blue-50 text-blue-700'
-                           : isDarkMode 
-                             ? 'text-white hover:bg-gray-800' 
-                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                       }`}
-                     >
-                      {item.icon}
-                      <span className="relative pb-1">
-                        {item.label}
-                        <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
-                          isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                        }`} 
-                        style={{
-                          transition: isActive 
-                            ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                            : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-                        }} />
-                      </span>
-                    </Link>
-                  );
+                  return renderNavItem(item, isActive);
+                })}
+              </div>
+
+              {/* Footer Group - Always at very bottom */}
+              <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                {navItemsFooter.map((item) => {
+                  const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
+                  return renderNavItem(item, isActive);
                 })}
               </div>
             </nav>
