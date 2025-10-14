@@ -10,20 +10,12 @@ import {
   X,
   MessageSquare,
   MessageCircle,
-  Bot,
   User,
   Moon,
   Sun,
   Plug,
   UserPlus,
   HelpCircle,
-  Clock,
-  ChevronDown,
-  ChevronRight,
-  Phone,
-  PhoneMissed,
-  Layout,
-  MessageSquareText,
   ChevronLeft,
   ChevronRight as ChevronRightIcon
 } from 'lucide-react';
@@ -36,8 +28,6 @@ const DashboardLayout: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
-  const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -116,16 +106,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-5 h-5" /> },
   ];
 
-  const messagingItems = [
-    { to: '/dashboard/widgets', label: 'Widgets', icon: <Layout className="w-5 h-5" /> },
-    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquareText className="w-5 h-5" /> },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Clock className="w-5 h-5" /> },
-  ];
-
-  const callsItems = [
-    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Bot className="w-5 h-5" /> },
-    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <PhoneMissed className="w-5 h-5" /> },
-  ];
 
   const navItemsGroup3 = [
     { to: '/dashboard/instant-lead-reply', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },

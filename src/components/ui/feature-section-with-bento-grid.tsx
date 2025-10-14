@@ -36,7 +36,7 @@ function Feature() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl ml-8">
             {/* Wide Card - Text on Left */}
             <motion.div 
-              ref={(el) => cardRefs.current[0] = el}
+              ref={(el) => { cardRefs.current[0] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 0)}
               onMouseLeave={() => handleMouseLeave(0)}
               className="bg-muted rounded-xl lg:col-span-2 p-8 flex items-center shadow-xl h-64 transition-transform duration-300 ease-out cursor-pointer"
@@ -57,7 +57,7 @@ function Feature() {
             
             {/* Box Card - Text on Top */}
             <motion.div 
-              ref={(el) => cardRefs.current[1] = el}
+              ref={(el) => { cardRefs.current[1] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 1)}
               onMouseLeave={() => handleMouseLeave(1)}
               className="bg-muted rounded-xl p-8 flex flex-col shadow-xl h-64 transition-transform duration-300 ease-out cursor-pointer"
@@ -78,7 +78,7 @@ function Feature() {
 
             {/* Box Card - Text on Top */}
             <motion.div 
-              ref={(el) => cardRefs.current[2] = el}
+              ref={(el) => { cardRefs.current[2] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 2)}
               onMouseLeave={() => handleMouseLeave(2)}
               className="bg-muted rounded-xl p-8 flex flex-col shadow-xl h-64 transition-transform duration-300 ease-out cursor-pointer"
@@ -99,7 +99,7 @@ function Feature() {
             
             {/* Wide Card - Text on Left */}
             <motion.div 
-              ref={(el) => cardRefs.current[3] = el}
+              ref={(el) => { cardRefs.current[3] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 3)}
               onMouseLeave={() => handleMouseLeave(3)}
               className="bg-muted rounded-xl lg:col-span-2 p-8 flex items-center shadow-xl h-64 transition-transform duration-300 ease-out cursor-pointer"

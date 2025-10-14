@@ -1,7 +1,7 @@
 // Example API route for fetching Retell voices
 // This would typically be in your backend (Express.js, Next.js API route, etc.)
 
-import fetch from "node-fetch";
+// import fetch from "node-fetch"; // Commented out for frontend usage
 
 export async function getVoices() {
   try {
@@ -46,7 +46,7 @@ export async function getVoices() {
 
 // Example Express.js route handler
 export function createVoicesRoute() {
-  return async (req: any, res: any) => {
+  return async (_req: any, res: any) => {
     try {
       const voices = await getVoices();
       

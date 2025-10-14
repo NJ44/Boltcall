@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Play, Pause, Volume2 } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Play, Pause } from 'lucide-react';
 
 interface Voice {
   id: string;

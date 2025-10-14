@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, Save, ToggleLeft, ToggleRight, MessageSquare, Bot } from 'lucide-react';
+import { Clock, Save, MessageSquare, Bot } from 'lucide-react';
 import Button from '../../components/ui/Button';
 
 const RemindersPage: React.FC = () => {

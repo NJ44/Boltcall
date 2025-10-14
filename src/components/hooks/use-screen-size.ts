@@ -17,7 +17,11 @@ const sizeOrder: Record<ScreenSize, number> = {
 } as const
 
 class ComparableScreenSize {
-  constructor(private value: ScreenSize) {}
+  private value: ScreenSize;
+  
+  constructor(value: ScreenSize) {
+    this.value = value;
+  }
 
   toString(): ScreenSize {
     return this.value
