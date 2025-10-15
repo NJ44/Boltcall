@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AlertTriangle, Power, PhoneOff, MessageSquareOff, BellOff, HelpCircle, X, Send } from 'lucide-react';
 import Plan from '../../components/ui/agent-plan';
+import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DashboardPage: React.FC = () => {
@@ -214,9 +215,17 @@ const DashboardPage: React.FC = () => {
               {/* Chat Messages */}
               <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50">
                 {chatHistory.length === 0 ? (
-                  <div className="text-center text-gray-500 mt-8">
-                    <HelpCircle className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                    <p className="text-sm">How can we help you today?</p>
+                  <div className="flex items-center justify-center h-full">
+                    <EmptyState
+                      title="How can we help you today?"
+                      description="Start a conversation by asking any questions about BoltCall or your account."
+                      icons={[HelpCircle]}
+                      action={{
+                        label: "View Help Center",
+                        onClick: () => console.log("Help center clicked")
+                      }}
+                      className="max-w-sm"
+                    />
                   </div>
                 ) : (
                   chatHistory.map((msg, index) => (

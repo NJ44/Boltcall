@@ -37,7 +37,15 @@ const HowItWorks: React.FC = () => {
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
           <div className="left-0 md:sticky ml-4 pt-8" style={{ top: '64px', height: 'fit-content' }}>
-            <h5 className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5">How It Works</h5>
+            <motion.h5 
+              className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              How It Works
+            </motion.h5>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.90em' }}>
               <WhisperText
                 text="Close leads in"

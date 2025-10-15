@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from 'recharts';
 import Card from '../ui/Card';
+import { CustomCheckbox } from '../ui/custom-checkbox';
 import type { ChannelPerf } from '../../types/dashboard';
 
 interface ChannelBarCardProps {
@@ -67,8 +68,7 @@ const ChannelBarCard: React.FC<ChannelBarCardProps> = ({ data, className = '' })
           <h3 className="text-xl font-semibold text-text-main">Channel Performance</h3>
           <div className="flex items-center space-x-4">
             <label className="flex items-center text-sm">
-              <input
-                type="checkbox"
+              <CustomCheckbox
                 checked={showQualified}
                 onChange={(e) => setShowQualified(e.target.checked)}
                 className="mr-2"
@@ -77,8 +77,7 @@ const ChannelBarCard: React.FC<ChannelBarCardProps> = ({ data, className = '' })
               Qualified
             </label>
             <label className="flex items-center text-sm">
-              <input
-                type="checkbox"
+              <CustomCheckbox
                 checked={showBooked}
                 onChange={(e) => setShowBooked(e.target.checked)}
                 className="mr-2"

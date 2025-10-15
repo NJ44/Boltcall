@@ -35,7 +35,7 @@ const Home: React.FC = () => {
             <HowItWorks />
           </div>
           
-          <div className="relative -top-[555px]">
+          <div className="relative -top-[400px]">
             <StickyScrollSection />
           </div>
           

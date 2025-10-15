@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import Button from '../ui/Button';
+import { CustomCheckbox } from '../ui/custom-checkbox';
 import { useDashboardStore } from '../../stores/dashboardStore';
 import type { Channel, Intent } from '../../types/dashboard';
 
@@ -121,8 +122,7 @@ const SidebarFilters: React.FC = () => {
           <div className="space-y-2">
             {channels.map((channel) => (
               <label key={channel} className="flex items-center">
-                <input
-                  type="checkbox"
+                <CustomCheckbox
                   checked={filters.channels.includes(channel)}
                   onChange={() => handleChannelToggle(channel)}
                   className="mr-2"
@@ -141,8 +141,7 @@ const SidebarFilters: React.FC = () => {
           <div className="space-y-2">
             {intents.map((intent) => (
               <label key={intent} className="flex items-center">
-                <input
-                  type="checkbox"
+                <CustomCheckbox
                   checked={filters.intents.includes(intent)}
                   onChange={() => handleIntentToggle(intent)}
                   className="mr-2"
@@ -161,8 +160,7 @@ const SidebarFilters: React.FC = () => {
           <div className="space-y-2">
             {sources.map((source) => (
               <label key={source} className="flex items-center">
-                <input
-                  type="checkbox"
+                <CustomCheckbox
                   checked={filters.sources.includes(source)}
                   onChange={() => handleSourceToggle(source)}
                   className="mr-2"
@@ -181,8 +179,7 @@ const SidebarFilters: React.FC = () => {
           <div className="space-y-2">
             {staff.map((staffMember) => (
               <label key={staffMember} className="flex items-center">
-                <input
-                  type="checkbox"
+                <CustomCheckbox
                   checked={filters.staff.includes(staffMember)}
                   onChange={() => handleStaffToggle(staffMember)}
                   className="mr-2"
@@ -199,8 +196,7 @@ const SidebarFilters: React.FC = () => {
           <div className="space-y-2">
             {tags.map((tag) => (
               <label key={tag} className="flex items-center">
-                <input
-                  type="checkbox"
+                <CustomCheckbox
                   checked={filters.tags.includes(tag)}
                   onChange={() => handleTagToggle(tag)}
                   className="mr-2"

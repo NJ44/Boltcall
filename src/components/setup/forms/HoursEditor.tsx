@@ -1,5 +1,6 @@
 import React from 'react';
 import { Clock } from 'lucide-react';
+import { CustomCheckbox } from '../../ui/custom-checkbox';
 
 interface HoursEditorProps {
   hours: Record<string, { open: string; close: string; closed: boolean }>;
@@ -56,11 +57,9 @@ const HoursEditor: React.FC<HoursEditorProps> = ({
 
             <div className="flex items-center space-x-3">
               <label className="flex items-center">
-                <input
-                  type="checkbox"
+                <CustomCheckbox
                   checked={hours[day.key]?.closed || false}
                   onChange={() => handleClosedToggle(day.key)}
-                  className="rounded border-gray-300 text-brand-blue focus:ring-brand-blue"
                 />
                 <span className="ml-2 text-sm text-gray-600">Closed</span>
               </label>

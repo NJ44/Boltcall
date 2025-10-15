@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart3, TrendingUp } from 'lucide-react';
+import { EmptyState } from '../../components/ui/empty-state';
 
 const AnalyticsPage: React.FC = () => {
   const chartPlaceholders = [
@@ -43,12 +44,17 @@ const AnalyticsPage: React.FC = () => {
             </div>
             
             {/* Chart placeholder */}
-            <div className="h-64 bg-zinc-50 rounded-lg border-2 border-dashed border-zinc-300 flex items-center justify-center">
-              <div className="text-center">
-                <BarChart3 className="w-12 h-12 text-zinc-400 mx-auto mb-2" />
-                <p className="text-zinc-500 font-medium">Chart coming soon</p>
-                <p className="text-sm text-zinc-400">Interactive charts will be available here</p>
-              </div>
+            <div className="h-64 flex items-center justify-center">
+              <EmptyState
+                title="Chart Coming Soon"
+                description="Interactive charts will be available here once you start receiving calls and leads."
+                icons={[BarChart3]}
+                action={{
+                  label: "Learn More",
+                  onClick: () => console.log("Learn more about analytics clicked")
+                }}
+                className="max-w-none p-8"
+              />
             </div>
           </div>
         ))}

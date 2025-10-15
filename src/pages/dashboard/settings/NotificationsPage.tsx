@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Bell, Mail, MessageSquare, Phone } from 'lucide-react';
+import { CustomCheckbox } from '../../../components/ui/custom-checkbox';
 
 const NotificationsPage: React.FC = () => {
   const [notifications, setNotifications] = useState({
@@ -43,11 +44,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">New leads</div>
               <div className="text-sm text-gray-600">Get notified when a new lead is captured</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.emailNewLead}
               onChange={() => handleToggle('emailNewLead')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -56,11 +55,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Missed calls</div>
               <div className="text-sm text-gray-600">Alert when a call is missed</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.emailMissedCall}
               onChange={() => handleToggle('emailMissedCall')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -69,11 +66,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Appointments</div>
               <div className="text-sm text-gray-600">Notifications for new appointments</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.emailAppointment}
               onChange={() => handleToggle('emailAppointment')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -82,11 +77,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Weekly reports</div>
               <div className="text-sm text-gray-600">Receive weekly performance summaries</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.emailWeeklyReport}
               onChange={() => handleToggle('emailWeeklyReport')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
         </div>
@@ -105,11 +98,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">New leads</div>
               <div className="text-sm text-gray-600">Instant SMS for new leads</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.smsNewLead}
               onChange={() => handleToggle('smsNewLead')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -118,11 +109,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Missed calls</div>
               <div className="text-sm text-gray-600">SMS alerts for missed calls</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.smsMissedCall}
               onChange={() => handleToggle('smsMissedCall')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -131,11 +120,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Appointments</div>
               <div className="text-sm text-gray-600">SMS for appointment confirmations</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.smsAppointment}
               onChange={() => handleToggle('smsAppointment')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
         </div>
@@ -154,11 +141,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">New leads</div>
               <div className="text-sm text-gray-600">Browser push for new leads</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.pushNewLead}
               onChange={() => handleToggle('pushNewLead')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -167,11 +152,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Missed calls</div>
               <div className="text-sm text-gray-600">Push alerts for missed calls</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.pushMissedCall}
               onChange={() => handleToggle('pushMissedCall')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
 
@@ -180,11 +163,9 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Appointments</div>
               <div className="text-sm text-gray-600">Push for new appointments</div>
             </div>
-            <input
-              type="checkbox"
+            <CustomCheckbox
               checked={notifications.pushAppointment}
               onChange={() => handleToggle('pushAppointment')}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
           </label>
         </div>

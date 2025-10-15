@@ -3,6 +3,7 @@ import { MessageSquare } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import StyledInput from '../../ui/StyledInput';
+import { CustomCheckbox } from '../../ui/custom-checkbox';
 
 const StepCallFlow: React.FC = () => {
   const { callFlow, updateCallFlow } = useSetupStore();
@@ -70,8 +71,7 @@ const StepCallFlow: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(callFlow.purposeDetection).map(([purpose, enabled]) => (
                 <label key={purpose} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <input
-                    type="checkbox"
+                  <CustomCheckbox
                     checked={enabled}
                     onChange={(e) => updateCallFlow({
                       purposeDetection: {
@@ -79,7 +79,6 @@ const StepCallFlow: React.FC = () => {
                         [purpose]: e.target.checked,
                       },
                     })}
-                    className="text-brand-blue focus:ring-brand-blue"
                   />
                   <div className="flex items-center space-x-2">
                     <MessageSquare className="w-4 h-4 text-gray-400" />
@@ -273,8 +272,7 @@ const StepCallFlow: React.FC = () => {
           
           <div className="space-y-4">
             <label className="flex items-start space-x-3">
-              <input
-                type="checkbox"
+              <CustomCheckbox
                 checked={callFlow.complianceDisclosure.enabled}
                 onChange={(e) => updateCallFlow({
                   complianceDisclosure: {
@@ -282,7 +280,6 @@ const StepCallFlow: React.FC = () => {
                     enabled: e.target.checked,
                   },
                 })}
-                className="text-brand-blue focus:ring-brand-blue mt-1"
               />
               <div>
                 <div className="text-sm font-medium text-gray-900">Enable compliance disclosure</div>

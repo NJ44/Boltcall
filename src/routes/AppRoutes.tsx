@@ -40,6 +40,9 @@ import AnimatedCardChartDemo from '../pages/AnimatedCardChartDemo';
 import CardsStackDemo from '../pages/CardsStackDemo';
 import FeatureSectionDemo from '../pages/FeatureSectionDemo';
 import MultipleSelectDemo from '../pages/MultipleSelectDemo';
+import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
+import EmptyStateDemo from '../pages/EmptyStateDemo';
+import DisplayCardsDemo from '../pages/DisplayCardsDemo';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -98,6 +101,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/cards-stack-demo" element={<CardsStackDemo />} />
         <Route path="/feature-section-demo" element={<FeatureSectionDemo />} />
         <Route path="/multiple-select-demo" element={<MultipleSelectDemo />} />
+        <Route path="/custom-checkbox-demo" element={<CustomCheckboxDemo />} />
+        <Route path="/empty-state-demo" element={<EmptyStateDemo />} />
+        <Route path="/display-cards-demo" element={<DisplayCardsDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
       </Routes>
