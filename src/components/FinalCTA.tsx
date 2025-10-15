@@ -4,13 +4,6 @@ import { EmptyState } from './ui/empty-state';
 import { Users, Phone, Calendar } from 'lucide-react';
 
 const FinalCTA: React.FC = () => {
-  const scrollToPricing = () => {
-    const element = document.getElementById('pricing');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <Section id="contact" background="white">
       <div className="max-w-4xl mx-auto py-20">
