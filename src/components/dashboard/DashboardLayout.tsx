@@ -21,7 +21,6 @@ import {
   Bell,
   Calendar,
   Phone,
-  MessageSquareText,
   AlertCircle
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';

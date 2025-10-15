@@ -1,6 +1,5 @@
 import React from 'react';
-import { CheckCircle, ArrowRight } from 'lucide-react';
-import Button from './ui/Button';
+import { CheckCircle } from 'lucide-react';
 
 const FreeSetup: React.FC = () => {
   return (
