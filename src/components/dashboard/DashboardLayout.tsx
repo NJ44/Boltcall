@@ -17,7 +17,12 @@ import {
   UserPlus,
   HelpCircle,
   ChevronLeft,
-  ChevronRight as ChevronRightIcon
+  ChevronRight as ChevronRightIcon,
+  Bell,
+  Calendar,
+  Phone,
+  MessageSquareText,
+  AlertCircle
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -27,8 +32,18 @@ const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  
+  // Notification toggles
+  const [notifications, setNotifications] = useState({
+    newLead: true,
+    appointmentBooked: true,
+    appointmentCancelled: true,
+    missedCall: true,
+    systemAlert: false
+  });
   const location = useLocation();
   const { user, logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
@@ -65,6 +80,13 @@ const DashboardLayout: React.FC = () => {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     localStorage.setItem('darkMode', (!isDarkMode).toString());
+  };
+
+  const toggleNotification = (key: keyof typeof notifications) => {
+    setNotifications(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
   };
 
   // Handle click outside to close menus
@@ -206,14 +228,12 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <ToastProvider>
-      <div className={`h-screen flex transition-colors duration-300 gap-4 ${
-      isDarkMode ? 'bg-gray-800' : 'bg-gray-200'
-    }`}>
+      <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100">
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
-         <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 overflow-y-auto ${
+         <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 ${
            sidebarCollapsed ? 'w-16' : 'w-64'
-         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white rounded-2xl shadow-lg m-2`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
@@ -393,9 +413,7 @@ const DashboardLayout: React.FC = () => {
          {/* Right Panel - Main Content with Top Bar */}
          <main 
            ref={mainContentRef}
-           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl ${
-             isDarkMode ? 'bg-gray-800 text-white' : 'bg-white'
-           }`}
+           className="flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-gray-50 shadow-lg m-2"
            style={{
              scrollBehavior: 'auto',
              WebkitOverflowScrolling: 'touch',
@@ -404,11 +422,7 @@ const DashboardLayout: React.FC = () => {
            tabIndex={0}
          >
            {/* Top Bar - Page Header */}
-           <div className={`sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 ${
-             isDarkMode 
-               ? 'bg-gray-800/80 backdrop-blur-sm' 
-               : 'bg-white/80 backdrop-blur-sm'
-           }`}>
+           <div className="sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 bg-gray-50/80 backdrop-blur-sm">
              <div className="flex items-center justify-between h-16 px-6">
                {/* Page Name Header */}
                <div className="flex items-center gap-3">
@@ -428,25 +442,28 @@ const DashboardLayout: React.FC = () => {
                  </h1>
                </div>
           
-               {/* Right side - Free Trial, Add Member, and Dark Mode */}
+               {/* Right side - Free Trial, Notifications, Add Member, and Dark Mode */}
                <div className="flex items-center gap-3">
                  {/* Free Trial Indicator */}
-                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                   isDarkMode 
-                     ? 'bg-orange-900 text-orange-300' 
-                     : 'bg-orange-100 text-orange-700'
-                 }`}>
+                 <div className="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
                    Free Trial
                  </div>
+                 
+                 {/* Notification Button */}
+                 <button
+                   onClick={() => setShowNotificationModal(true)}
+                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
+                   aria-label="Notification settings"
+                 >
+                   <Bell className="w-5 h-5" />
+                   {/* Notification indicator dot */}
+                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+                 </button>
                  
                  {/* Add Team Member Button */}
                  <button
                    onClick={() => setShowAddMemberModal(true)}
-                   className={`p-2 rounded-lg transition-colors ${
-                     isDarkMode 
-                       ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
-                   }`}
+                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
                    aria-label="Add team member"
                  >
                    <UserPlus className="w-5 h-5" />
@@ -455,11 +472,7 @@ const DashboardLayout: React.FC = () => {
                  {/* Dark Mode Toggle */}
                  <button
                    onClick={toggleDarkMode}
-                   className={`p-2 rounded-lg transition-colors ${
-                     isDarkMode 
-                       ? 'text-yellow-400 hover:text-yellow-300 hover:bg-gray-700' 
-                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
-                   }`}
+                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
                    aria-label="Toggle dark mode"
                  >
                    {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -546,6 +559,145 @@ const DashboardLayout: React.FC = () => {
             >
               Send Invitation
             </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Notification Settings Modal */}
+    {showNotificationModal && (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowNotificationModal(false)}>
+        <div 
+          className="rounded-2xl p-6 max-w-md w-full mx-4 bg-white"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-gray-900">
+              Notification Settings
+            </h2>
+            <button
+              onClick={() => setShowNotificationModal(false)}
+              className="p-1 rounded-lg hover:bg-gray-100"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          
+          <div className="space-y-4">
+            {/* New Lead Notification */}
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Users className="w-4 h-4 text-green-600" />
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">New Lead Arrives</div>
+                  <div className="text-sm text-gray-500">Get notified when a new lead is captured</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('newLead')}
+                className={`relative w-12 h-6 rounded-full transition-colors ${
+                  notifications.newLead ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                  notifications.newLead ? 'translate-x-7' : 'translate-x-1'
+                }`} />
+              </button>
+            </div>
+
+            {/* Appointment Booked Notification */}
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Calendar className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Appointment Booked</div>
+                  <div className="text-sm text-gray-500">Get notified when an appointment is scheduled</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('appointmentBooked')}
+                className={`relative w-12 h-6 rounded-full transition-colors ${
+                  notifications.appointmentBooked ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                  notifications.appointmentBooked ? 'translate-x-7' : 'translate-x-1'
+                }`} />
+              </button>
+            </div>
+
+            {/* Appointment Cancelled Notification */}
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-red-100 rounded-lg">
+                  <X className="w-4 h-4 text-red-600" />
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Appointment Cancelled</div>
+                  <div className="text-sm text-gray-500">Get notified when an appointment is cancelled</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('appointmentCancelled')}
+                className={`relative w-12 h-6 rounded-full transition-colors ${
+                  notifications.appointmentCancelled ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                  notifications.appointmentCancelled ? 'translate-x-7' : 'translate-x-1'
+                }`} />
+              </button>
+            </div>
+
+            {/* Missed Call Notification */}
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <Phone className="w-4 h-4 text-orange-600" />
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Missed Call</div>
+                  <div className="text-sm text-gray-500">Get notified when a call is missed</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('missedCall')}
+                className={`relative w-12 h-6 rounded-full transition-colors ${
+                  notifications.missedCall ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                  notifications.missedCall ? 'translate-x-7' : 'translate-x-1'
+                }`} />
+              </button>
+            </div>
+
+            {/* System Alert Notification */}
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <AlertCircle className="w-4 h-4 text-yellow-600" />
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">System Alerts</div>
+                  <div className="text-sm text-gray-500">Get notified about system updates and issues</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('systemAlert')}
+                className={`relative w-12 h-6 rounded-full transition-colors ${
+                  notifications.systemAlert ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                  notifications.systemAlert ? 'translate-x-7' : 'translate-x-1'
+                }`} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

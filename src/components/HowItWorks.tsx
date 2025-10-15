@@ -46,7 +46,7 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.90em' }}>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.82em' }}>
               <WhisperText
                 text="Close leads in"
                 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white inline-block"
@@ -79,7 +79,7 @@ const HowItWorks: React.FC = () => {
           </div>
 
           {/* Sticky Cards */}
-          <ContainerScroll className="space-y-11 py-11 ml-8" style={{ minHeight: 'calc(100vh + 800px)' }}>
+          <ContainerScroll className="space-y-11 py-11 ml-16" style={{ minHeight: 'calc(100vh + 800px)' }}>
             {PROCESS_PHASES.map((phase, index) => (
               <CardSticky
                 key={phase.id}

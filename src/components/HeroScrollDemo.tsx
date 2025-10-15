@@ -47,7 +47,7 @@ export function HeroScrollDemo() {
           <div className="flex flex-wrap justify-center gap-5 mb-3 -mt-[15px] relative z-50 w-full max-w-[2200px] mx-auto px-2">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
-              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'ai-receptionist'
                   ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -64,7 +64,7 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('speed-to-lead')}
-              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'speed-to-lead'
                   ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -81,7 +81,7 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
-              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'sms-whatsapp'
                   ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
@@ -98,7 +98,7 @@ export function HeroScrollDemo() {
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
-              className={`px-[18px] py-[9px] rounded-2xl font-semibold text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'dashboard-analytics'
                   ? 'bg-white text-gray-900 shadow-lg scale-105'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
