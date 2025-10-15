@@ -18,6 +18,7 @@ import {
   HelpCircle,
   ChevronLeft,
   ChevronRight as ChevronRightIcon,
+  ChevronDown,
   Bell,
   Calendar,
   Phone,
@@ -34,6 +35,8 @@ const DashboardLayout: React.FC = () => {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
+  const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   
   // Notification toggles
   const [notifications, setNotifications] = useState({
@@ -117,21 +120,25 @@ const DashboardLayout: React.FC = () => {
   }, []);
 
   const navItemsGroup1 = [
-    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-5 h-5" /> },
-    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
+    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
+    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
   ];
 
   const navItemsGroup2 = [
-    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-5 h-5" /> },
-    { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-5 h-5" /> },
-    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-5 h-5" /> },
+    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
+    { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
+    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-4 h-4" /> },
   ];
 
+  // Dropdown items
+  const callsItems = [
+    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-4 h-4" /> },
+    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-4 h-4" /> },
+  ];
 
-  const navItemsGroup3 = [
-    { to: '/dashboard/instant-lead-reply', label: 'Instant Lead Reply', icon: <Users className="w-5 h-5" /> },
-    { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-5 h-5" /> },
-    { to: '/dashboard/whatsapp', label: 'WhatsApp (Beta)', icon: <MessageCircle className="w-5 h-5" /> },
+  const messagingItems = [
+    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
   ];
 
   const navItemsBottom = [
@@ -172,7 +179,7 @@ const DashboardLayout: React.FC = () => {
           key={item.to}
           to={item.to}
           onClick={closeSidebar}
-          className={`relative flex items-center justify-center p-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
+          className={`relative flex items-center justify-center p-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
             isActive
               ? isDarkMode 
                 ? 'bg-gray-800 text-white' 
@@ -199,7 +206,7 @@ const DashboardLayout: React.FC = () => {
         key={item.to}
         to={item.to}
         onClick={closeSidebar}
-        className={`relative flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-700 group ${
+        className={`relative flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
           isActive
             ? isDarkMode 
               ? 'bg-gray-800 text-white' 
@@ -333,11 +340,11 @@ const DashboardLayout: React.FC = () => {
                 <X className="w-5 h-5" />
               </button>
 
-            {/* Collapse/Expand button */}
-            <div className="px-2 mb-4">
+            {/* Collapse/Expand button - Moved to right border */}
+            <div className="absolute top-4 -right-3 z-50">
               <button
                 onClick={toggleSidebarCollapse}
-                className={`w-full flex items-center justify-center p-2 rounded-lg transition-colors ${
+                className={`p-2 rounded-full bg-white shadow-lg border transition-colors ${
                   isDarkMode 
                     ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
@@ -345,9 +352,9 @@ const DashboardLayout: React.FC = () => {
                 aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
               >
                 {sidebarCollapsed ? (
-                  <ChevronRightIcon className="w-5 h-5" />
+                  <ChevronRightIcon className="w-4 h-4" />
                 ) : (
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-4 h-4" />
                 )}
               </button>
             </div>
@@ -371,12 +378,50 @@ const DashboardLayout: React.FC = () => {
                   })}
                 </div>
 
-                {/* Group 3 */}
+                {/* Calls Dropdown */}
                 <div className="space-y-1 mb-4">
-                  {navItemsGroup3.map((item) => {
-                    const isActive = location.pathname === item.to;
-                    return renderNavItem(item, isActive);
-                  })}
+                  <button
+                    onClick={() => setCallsDropdownOpen(!callsDropdownOpen)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      isDarkMode 
+                        ? 'text-white hover:bg-gray-700/50' 
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+                    }`}
+                  >
+                    <span>Calls</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${callsDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {callsDropdownOpen && (
+                    <div className="ml-4 space-y-1">
+                      {callsItems.map((item) => {
+                        const isActive = location.pathname === item.to;
+                        return renderNavItem(item, isActive);
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {/* Messaging Dropdown */}
+                <div className="space-y-1 mb-4">
+                  <button
+                    onClick={() => setMessagingDropdownOpen(!messagingDropdownOpen)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      isDarkMode 
+                        ? 'text-white hover:bg-gray-700/50' 
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+                    }`}
+                  >
+                    <span>Messaging</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {messagingDropdownOpen && (
+                    <div className="ml-4 space-y-1">
+                      {messagingItems.map((item) => {
+                        const isActive = location.pathname === item.to;
+                        return renderNavItem(item, isActive);
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
 

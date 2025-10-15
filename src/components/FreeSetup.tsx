@@ -11,7 +11,7 @@ const FreeSetup: React.FC = () => {
             <div className="mb-4">
               <span className="text-sm uppercase tracking-wider font-medium text-white">SETUP</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontSize: '1.155em' }}>
               Fast. Simple. Scalable.
             </h2>
             <p className="text-xl text-white mb-8">

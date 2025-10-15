@@ -81,7 +81,7 @@ const Process = () => {
       <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
         <div className="left-0 top-0 md:sticky md:h-svh md:py-12">
           <h5 className="text-base uppercase tracking-wide font-semibold text-blue-600">How it works</h5>
-          <h2 className="mb-8 mt-6 text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+          <h2 className="mb-8 mt-6 text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight" style={{ fontSize: '0.5em' }}>
             Close leads in{" "}
             <span className="text-blue-600">lightning speed</span>
           </h2>

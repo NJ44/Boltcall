@@ -43,6 +43,8 @@ import MultipleSelectDemo from '../pages/MultipleSelectDemo';
 import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
 import EmptyStateDemo from '../pages/EmptyStateDemo';
 import DisplayCardsDemo from '../pages/DisplayCardsDemo';
+import Documentation from '../pages/Documentation';
+import NotFound from '../pages/NotFound';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -104,8 +106,10 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/custom-checkbox-demo" element={<CustomCheckboxDemo />} />
         <Route path="/empty-state-demo" element={<EmptyStateDemo />} />
         <Route path="/display-cards-demo" element={<DisplayCardsDemo />} />
+        <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

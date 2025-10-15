@@ -36,7 +36,7 @@ const HowItWorks: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
-          <div className="left-0 md:sticky ml-4 pt-8" style={{ top: '64px', height: 'fit-content' }}>
+          <div className="left-0 md:sticky ml-4 pt-8 pr-8" style={{ top: '64px', height: 'fit-content' }}>
             <motion.h5 
               className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
               initial={{ opacity: 0, y: 20 }}
@@ -46,25 +46,27 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.82em' }}>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.6em' }}>
               <WhisperText
                 text="Close leads in"
-                className="text-4xl md:text-6xl lg:text-7xl font-bold text-white inline-block"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
                 delay={125}
                 duration={0.625}
                 x={-20}
                 y={0}
                 triggerStart="top 85%"
+                style={{ fontSize: '1.155em' }}
               />
               <br />
               <WhisperText
                 text="lightning speed."
-                className="text-4xl md:text-6xl lg:text-7xl font-bold text-blue-500 inline-block"
+                className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
                 delay={125}
                 duration={0.625}
                 x={-20}
                 y={0}
                 triggerStart="top 85%"
+                style={{ fontSize: '1.155em' }}
               />
             </h2>
             <motion.p 

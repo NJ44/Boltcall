@@ -16,36 +16,39 @@ export const StickyScrollSection: React.FC = () => {
         >
           <span className="text-sm uppercase tracking-wider font-medium text-white/70">PRODUCT</span>
         </motion.div>
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold ml-5" style={{ fontSize: '0.90em' }}>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold ml-5">
           <div>
             <WhisperText
               text="Why Businesses"
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white inline-block"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
               delay={150}
               duration={0.625}
               x={-20}
               y={0}
               triggerStart="top 85%"
+              style={{ fontSize: '1.155em' }}
             />
           </div>
           <div>
             <WhisperText
               text="Choose"
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white inline-block"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
               delay={150}
               duration={0.625}
               x={-20}
               y={0}
               triggerStart="top 85%"
+              style={{ fontSize: '1.155em' }}
             />{' '}
             <WhisperText
               text="BoltCall"
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-blue-500 inline-block"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
               delay={150}
               duration={0.625}
               x={-20}
               y={0}
               triggerStart="top 85%"
+              style={{ fontSize: '1.155em' }}
             />
           </div>
         </h2>
