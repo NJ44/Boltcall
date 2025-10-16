@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { CheckCircle } from 'lucide-react';
 import Button from './ui/Button';
 
 const Footer: React.FC = () => {
@@ -37,6 +38,47 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-gradient-to-b from-white to-light-blue text-text-main">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Feature Cards */}
+        <div className="py-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+          >
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-start space-x-4">
+                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">AI Assistant Configuration</h4>
+                  <p className="text-gray-600">Customize your AI to match your business needs</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-start space-x-4">
+                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Phone Number Setup</h4>
+                  <p className="text-gray-600">Get a dedicated business phone number</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-start space-x-4">
+                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Calendar Integration</h4>
+                  <p className="text-gray-600">Connect your existing calendar system</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
         {/* Main Footer Content */}
         <div className="py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

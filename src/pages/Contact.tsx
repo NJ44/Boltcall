@@ -68,7 +68,7 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen bg-zinc-50">
       {/* Logo in top left corner */}
-      <div className="absolute top-0 left-0 z-10 p-4">
+      <div className="absolute top-0 left-0 z-10 p-4" style={{ transform: 'translate(-10px, -20px)' }}>
         <Link to="/">
           <img 
             src="/boltcall_full_logo.png" 
@@ -86,10 +86,10 @@ const Contact: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mt-32"
+              className="text-center mt-16"
             >
               <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET IN TOUCH</h1>
-              <div className="w-96 h-96">
+              <div className="w-96 h-96 mt-16">
                 <DotLottieReact
                   src="/Email.lottie"
                   loop
@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
           </div>
 
           {/* Right Panel - Blue Background with Contact Form */}
-          <div className="w-full lg:w-1/2 bg-blue-600 flex items-center justify-center p-6">
+          <div className="w-full lg:w-1/2 bg-blue-600 flex items-start justify-center pt-8 p-6">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -194,7 +194,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   {/* Phone Number */}
-                  <div>
+                  <div className="mb-6">
                     <StyledInput
                       {...register('phoneNumber')}
                       type="tel"

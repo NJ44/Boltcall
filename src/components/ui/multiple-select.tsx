@@ -58,7 +58,7 @@ export const MultipleSelect = ({
 
   return (
     <AnimatePresence mode={'popLayout'}>
-      <div className={'flex w-full flex-col gap-2'}>
+      <div className={'flex w-full flex-col gap-1'}>
         <strong className="text-sm font-medium text-zinc-700">What are you interested in? *</strong>
         <motion.div
           layout
@@ -85,7 +85,7 @@ export const MultipleSelect = ({
           </motion.div>
         </motion.div>
         {tags?.length > selected?.length && (
-          <div className='flex w-full flex-wrap gap-2 rounded-md border border-solid border-gray-200 p-2'>
+          <div className='flex w-full flex-wrap gap-2 rounded-md p-2'>
             {tags
               ?.filter((item) => !selected?.some((i) => i.key === item.key))
               .map((item) => (
