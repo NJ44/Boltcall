@@ -12,6 +12,7 @@ interface WhisperTextProps {
   x?: number;   
   y?: number;  
   triggerStart?: string;
+  style?: React.CSSProperties;
 }
 
 const WhisperText: React.FC<WhisperTextProps> = ({
@@ -22,6 +23,7 @@ const WhisperText: React.FC<WhisperTextProps> = ({
   x = 0,
   y = 0,
   triggerStart = "top 90%",
+  style,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +68,7 @@ const WhisperText: React.FC<WhisperTextProps> = ({
     <div
       ref={containerRef}
       className={`relative inline-flex flex-wrap gap-x-2 ${className}`}
-      style={{ overflow: "visible" }}
+      style={{ overflow: "visible", ...style }}
     >
       {renderWords()}
     </div>

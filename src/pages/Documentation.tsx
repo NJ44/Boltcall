@@ -7,15 +7,8 @@ import {
   Phone, 
   Calendar, 
   BarChart3, 
-  Settings, 
-  Shield, 
-  Users, 
   Bot, 
-  Smartphone, 
-  Mail, 
-  Clock, 
-  CheckCircle, 
-  ArrowRight,
+  CheckCircle,
   ExternalLink,
   ChevronDown,
   ChevronRight,
@@ -23,6 +16,7 @@ import {
   FileText,
   Code,
   Database,
+  Bell,
   Globe
 } from 'lucide-react';
 

@@ -9,7 +9,6 @@ import {
   Menu,
   X,
   MessageSquare,
-  MessageCircle,
   User,
   Moon,
   Sun,
@@ -254,43 +253,43 @@ const DashboardLayout: React.FC = () => {
                   className="h-8 w-8"
                 />
               ) : (
-                <img 
-                  src="/boltcall_full_logo.png" 
-                  alt="Boltcall" 
+              <img 
+                src="/boltcall_full_logo.png" 
+                alt="Boltcall" 
                   className="h-14 w-auto"
-                />
+              />
               )}
             </Link>
           </div>
           
             {/* User Profile - Below Logo */}
             {!sidebarCollapsed && (
-              <div className="mb-4 px-2">
-               <div className="relative" data-user-menu>
-                 <button
-                   onClick={() => setShowUserMenu(!showUserMenu)}
-                    className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
-                     isDarkMode 
-                        ? 'hover:bg-gray-700/50' 
-                        : 'hover:bg-gray-300/50'
-                   }`}
-                 >
-                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                     <User className="w-4 h-4 text-blue-600" />
+            <div className="mb-4 px-2">
+             <div className="relative" data-user-menu>
+               <button
+                 onClick={() => setShowUserMenu(!showUserMenu)}
+                  className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
+                   isDarkMode 
+                      ? 'hover:bg-gray-700/50' 
+                      : 'hover:bg-gray-300/50'
+                 }`}
+               >
+                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                   <User className="w-4 h-4 text-blue-600" />
+                 </div>
+                  <div className="flex-1 text-left">
+                   <div className={`text-sm font-medium ${
+                     isDarkMode ? 'text-white' : 'text-gray-900'
+                   }`}>
+                     {user?.name || 'User'}
                    </div>
-                    <div className="flex-1 text-left">
-                     <div className={`text-sm font-medium ${
-                       isDarkMode ? 'text-white' : 'text-gray-900'
-                     }`}>
-                       {user?.name || 'User'}
-                     </div>
-                     <div className={`text-xs ${
-                       isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                     }`}>
-                       {user?.email}
-                     </div>
+                   <div className={`text-xs ${
+                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
+                   }`}>
+                     {user?.email}
                    </div>
-                 </button>
+                 </div>
+               </button>
                
                {/* User dropdown menu */}
                {showUserMenu && (
@@ -394,7 +393,7 @@ const DashboardLayout: React.FC = () => {
                   {callsDropdownOpen && (
                     <div className="ml-4 space-y-1">
                       {callsItems.map((item) => {
-                        const isActive = location.pathname === item.to;
+                  const isActive = location.pathname === item.to;
                         return renderNavItem(item, isActive);
                       })}
                     </div>
@@ -408,9 +407,9 @@ const DashboardLayout: React.FC = () => {
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isDarkMode 
                         ? 'text-white hover:bg-gray-700/50' 
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                    }`}
-                  >
+                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+                         }`}
+                       >
                     <span>Messaging</span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>

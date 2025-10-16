@@ -4,8 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./accordion";
-import { PlusIcon } from "lucide-react";
-import { cn } from "../../lib/utils"; 
 
 const items = [
   {
