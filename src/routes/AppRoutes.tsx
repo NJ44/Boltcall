@@ -43,6 +43,8 @@ import MultipleSelectDemo from '../pages/MultipleSelectDemo';
 import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
 import EmptyStateDemo from '../pages/EmptyStateDemo';
 import DisplayCardsDemo from '../pages/DisplayCardsDemo';
+import NewAccordionDemo from '../pages/NewAccordionDemo';
+import Accordion05Demo from '../pages/Accordion05Demo';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
 
@@ -94,7 +96,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
-        <Route path="/radial-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
+        <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/features-10-demo" element={<Features10Demo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
@@ -106,6 +108,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/custom-checkbox-demo" element={<CustomCheckboxDemo />} />
         <Route path="/empty-state-demo" element={<EmptyStateDemo />} />
         <Route path="/display-cards-demo" element={<DisplayCardsDemo />} />
+        <Route path="/new-accordion-demo" element={<NewAccordionDemo />} />
+        <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

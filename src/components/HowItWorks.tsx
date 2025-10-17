@@ -2,6 +2,41 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
+import DisplayCards from './ui/display-cards';
+import { User } from 'lucide-react';
+
+const SMART_QUALIFICATION_CARDS = [
+  {
+    icon: <User className="size-4 text-blue-300" />,
+    title: "Sarah booked",
+    description: "appointment booked to 10:30",
+    date: "Just now",
+    iconClassName: "text-blue-500",
+    titleClassName: "text-blue-500",
+    className:
+      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
+  },
+  {
+    icon: <User className="size-4 text-blue-300" />,
+    title: "Mike booked",
+    description: "appointment booked to 2:15",
+    date: "2 ago",
+    iconClassName: "text-blue-500",
+    titleClassName: "text-blue-500",
+    className:
+      "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
+  },
+  {
+    icon: <User className="size-4 text-blue-300" />,
+    title: "Emma booked",
+    description: "appointment booked to 4:00",
+    date: "Today",
+    iconClassName: "text-blue-500",
+    titleClassName: "text-blue-500",
+    className:
+      "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
+  },
+];
 
 const PROCESS_PHASES = [
   {
@@ -36,7 +71,7 @@ const HowItWorks: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
-          <div className="left-0 md:sticky ml-4 pt-24 pr-8" style={{ top: '64px', height: 'fit-content' }}>
+          <div className="left-0 md:sticky ml-4 pt-24 pr-2" style={{ top: '64px', height: 'fit-content' }}>
             <motion.h5 
               className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
               initial={{ opacity: 0, y: 20 }}
@@ -46,7 +81,7 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 ml-5" style={{ fontSize: '0.6em' }}>
+            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px' }}>
               <WhisperText
                 text="Close leads in"
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
@@ -87,7 +122,7 @@ const HowItWorks: React.FC = () => {
                 key={phase.id}
                 index={index + 2}
                 incrementY={14}
-                className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
+                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl ${phase.id === "process-3" ? "overflow-visible" : "overflow-hidden"}`}
                 style={{ maxWidth: '470px', top: '128px', bottom: 'auto' }}
               >
                 <div className="p-5 md:p-7">
@@ -103,13 +138,21 @@ const HowItWorks: React.FC = () => {
                   </div>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
                 </div>
-                <div className="relative h-44 md:h-52 overflow-hidden">
-                  <img 
-                    src={phase.imageUrl} 
-                    alt={phase.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                {phase.id === "process-3" ? (
+                  <div className="relative h-44 md:h-52 overflow-visible flex items-start justify-start">
+                    <div className="scale-80 md:scale-90 -ml-8 -mt-4">
+                      <DisplayCards cards={SMART_QUALIFICATION_CARDS} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="relative h-44 md:h-52 overflow-hidden">
+                    <img 
+                      src={phase.imageUrl} 
+                      alt={phase.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
               </CardSticky>
             ))}
           </ContainerScroll>

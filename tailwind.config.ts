@@ -59,15 +59,43 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // New accordion colors
+        'accordion-main': 'var(--accordion-main)',
+        'accordion-overlay': 'var(--accordion-overlay)',
+        'accordion-bg': 'var(--accordion-bg)',
+        'accordion-bw': 'var(--accordion-bw)',
+        'accordion-blank': 'var(--accordion-blank)',
+        'accordion-text': 'var(--accordion-text)',
+        'accordion-mtext': 'var(--accordion-mtext)',
+        'accordion-border': 'var(--accordion-border)',
+        'accordion-ring': 'var(--accordion-ring)',
+        'accordion-ring-offset': 'var(--accordion-ring-offset)',
+        secondaryBlack: '#212121',
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        base: '5px'
+      },
+      boxShadow: {
+        'accordion-shadow': 'var(--accordion-shadow)'
+      },
+      translate: {
+        boxShadowX: '4px',
+        boxShadowY: '4px',
+        reverseBoxShadowX: '-4px',
+        reverseBoxShadowY: '-4px',
+      },
+      fontWeight: {
+        base: '500',
+        heading: '700',
       },
       animation: {
         aurora: "aurora 36s linear infinite",
         spotlight: "spotlight 2s ease .75s 1 forwards",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
         aurora: {
@@ -87,6 +115,14 @@ const config: Config = {
             opacity: "1",
             transform: "translate(-50%,-40%) scale(1)",
           },
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
     }

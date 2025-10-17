@@ -3,7 +3,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion";
+} from "./accordion-standard";
+import { PlusIcon } from "lucide-react";
+import { cn } from "../../lib/utils"; 
 
 const items = [
   {
@@ -62,7 +64,7 @@ export function Accordion05() {
       <Accordion type="single" defaultValue="5" collapsible className="w-full">
         {items.map((item) => (
           <AccordionItem value={item.id} key={item.id} className="last:border-b">
-            <AccordionTrigger className="text-left pl-6 md:pl-14 overflow-hidden text-foreground/20 duration-200 hover:no-underline cursor-pointer -space-y-6 data-[state=open]:space-y-0 data-[state=open]:text-primary [&>svg]:hidden">
+            <AccordionTrigger className="text-left pl-6 md:pl-14 overflow-hidden text-foreground/20 duration-200 hover:no-underline cursor-pointer -space-y-6 data-[state=open]:space-y-0 data-[state=open]:text-primary [&>svg]:hidden relative z-0 -mb-8">
               <div className="flex flex-1 items-start gap-4">
                 <p className="text-xs">{item.id}</p>
                 <h1
@@ -73,7 +75,7 @@ export function Accordion05() {
               </div>
             </AccordionTrigger>
 
-            <AccordionContent className="text-muted-foreground pb-6 pl-6 md:px-20">
+            <AccordionContent className="text-muted-foreground pb-6 pl-6 md:px-20 relative z-10 bg-transparent">
               {item.content}
             </AccordionContent>
           </AccordionItem>

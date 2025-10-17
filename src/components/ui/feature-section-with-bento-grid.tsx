@@ -1,6 +1,15 @@
 
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
+import {
+  AnimatedCard,
+  CardBody,
+  CardDescription,
+  CardTitle,
+  CardVisual,
+  Visual3,
+} from './animated-card-chart';
+import { Tilt } from './tilt';
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -16,8 +25,8 @@ function Feature() {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Greatly reduce tilt for cards 0 (Instant Response) and 3 (Real-time Analytics)
-    const tiltDivisor = (index === 0 || index === 3) ? 50 : 10;
+    // Greatly reduce tilt for cards 0 (Instant Response) and 2 (Real-time Analytics)
+    const tiltDivisor = (index === 0 || index === 2) ? 50 : 10;
     const rotateX = (y - centerY) / tiltDivisor;
     const rotateY = (centerX - x) / tiltDivisor;
     
@@ -55,32 +64,43 @@ function Feature() {
               <div className="flex-1"></div>
             </motion.div>
             
+            {/* Animated Card Chart */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="flex justify-center"
+            >
+              <Tilt
+                rotationFactor={15}
+                isRevese
+                springOptions={{
+                  stiffness: 26.7,
+                  damping: 4.1,
+                  mass: 0.2,
+                }}
+                className="rounded-xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300"
+              >
+                <AnimatedCard className="shadow-xl">
+                  <CardVisual>
+                    <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
+                  </CardVisual>
+                  <CardBody>
+                    <CardTitle>Lead Analytics</CardTitle>
+                    <CardDescription>
+                      Monitor lead conversion rates and engagement metrics
+                    </CardDescription>
+                  </CardBody>
+                </AnimatedCard>
+              </Tilt>
+            </motion.div>
+
             {/* Box Card - Text on Top */}
             <motion.div 
               ref={(el) => { cardRefs.current[1] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 1)}
               onMouseLeave={() => handleMouseLeave(1)}
-              className="bg-muted rounded-xl p-6 flex flex-col shadow-xl h-48 transition-transform duration-300 ease-out cursor-pointer"
-              style={{ transformStyle: 'preserve-3d' }}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex flex-col text-left">
-                <h3 className="text-xl font-semibold tracking-tight mb-2">AI Receptionist</h3>
-                <p className="text-muted-foreground text-sm">
-                  24/7 voice AI that answers calls, qualifies leads, and books appointments automatically.
-                </p>
-              </div>
-              <div className="flex-1"></div>
-            </motion.div>
-
-            {/* Box Card - Text on Top */}
-            <motion.div 
-              ref={(el) => { cardRefs.current[2] = el; }}
-              onMouseMove={(e) => handleMouseMove(e, 2)}
-              onMouseLeave={() => handleMouseLeave(2)}
               className="bg-muted rounded-xl p-6 flex flex-col shadow-xl h-48 transition-transform duration-300 ease-out cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
@@ -99,9 +119,9 @@ function Feature() {
             
             {/* Wide Card - Text on Left */}
             <motion.div 
-              ref={(el) => { cardRefs.current[3] = el; }}
-              onMouseMove={(e) => handleMouseMove(e, 3)}
-              onMouseLeave={() => handleMouseLeave(3)}
+              ref={(el) => { cardRefs.current[2] = el; }}
+              onMouseMove={(e) => handleMouseMove(e, 2)}
+              onMouseLeave={() => handleMouseLeave(2)}
               className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-xl h-48 transition-transform duration-300 ease-out cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}

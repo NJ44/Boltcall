@@ -7,7 +7,7 @@ const defaultCards = [
   {
     icon: <User className="size-4 text-blue-300" />,
     title: "John booked",
-    description: "appointment booked to 12:30 tomorrow",
+    description: "appointment booked to 12:30",
     date: "Just now",
     iconClassName: "text-blue-500",
     titleClassName: "text-blue-500",
@@ -17,8 +17,8 @@ const defaultCards = [
   {
     icon: <User className="size-4 text-blue-300" />,
     title: "Mike booked",
-    description: "appointment booked to 2:15 this afternoon",
-    date: "2 days ago",
+    description: "appointment booked to 2:15",
+    date: "2 ago",
     iconClassName: "text-blue-500",
     titleClassName: "text-blue-500",
     className:
@@ -27,7 +27,7 @@ const defaultCards = [
   {
     icon: <User className="size-4 text-blue-300" />,
     title: "David booked",
-    description: "appointment booked to 9:00 AM today",
+    description: "appointment booked to 9:00 AM",
     date: "Today",
     iconClassName: "text-blue-500",
     titleClassName: "text-blue-500",
