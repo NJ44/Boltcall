@@ -287,8 +287,8 @@ const WizardShell: React.FC = () => {
                           </Suspense>
                         )}
                         
-                        {/* Continue Button */}
-                        {expandedStep === currentStep && (
+                        {/* Continue Button - Hide for review step (step 5) */}
+                        {expandedStep === currentStep && currentStep !== 5 && (
                           <div className="mt-6 pt-6 border-t border-gray-200">
                             <div className="flex justify-end">
                               <Button
