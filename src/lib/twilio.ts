@@ -50,84 +50,8 @@ export async function fetchAvailablePhoneNumbers(
     });
 
     if (!accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token') {
-      console.log('Twilio credentials not configured, using mock data');
-      
-      // Mock data fallback
-      const mockNumbers: TwilioPhoneNumber[] = [
-        {
-          friendlyName: '+1 (555) 123-4567',
-          phoneNumber: '+15551234567',
-          capabilities: {
-            voice: true,
-            sms: true,
-            mms: false,
-          },
-          locality: 'New York',
-          region: 'NY',
-          isoCountry: countryCode,
-        },
-        {
-          friendlyName: '+1 (555) 234-5678',
-          phoneNumber: '+15552345678',
-          capabilities: {
-            voice: true,
-            sms: true,
-            mms: true,
-          },
-          locality: 'Los Angeles',
-          region: 'CA',
-          isoCountry: countryCode,
-        },
-        {
-          friendlyName: '+1 (555) 345-6789',
-          phoneNumber: '+15553456789',
-          capabilities: {
-            voice: true,
-            sms: true,
-            mms: false,
-          },
-          locality: 'Chicago',
-          region: 'IL',
-          isoCountry: countryCode,
-        },
-        {
-          friendlyName: '+1 (555) 456-7890',
-          phoneNumber: '+15554567890',
-          capabilities: {
-            voice: true,
-            sms: true,
-            mms: true,
-          },
-          locality: 'Houston',
-          region: 'TX',
-          isoCountry: countryCode,
-        },
-        {
-          friendlyName: '+1 (555) 567-8901',
-          phoneNumber: '+15555678901',
-          capabilities: {
-            voice: true,
-            sms: true,
-            mms: false,
-          },
-          locality: 'Phoenix',
-          region: 'AZ',
-          isoCountry: countryCode,
-        },
-      ];
-
-      // Filter by area code if provided
-      if (areaCode) {
-        return mockNumbers.filter(num => 
-          num.phoneNumber.includes(areaCode) || 
-          num.locality?.toLowerCase().includes(areaCode.toLowerCase())
-        );
-      }
-
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      return mockNumbers;
+      console.log('Twilio credentials not configured, cannot fetch real numbers');
+      throw new Error('Twilio credentials not configured. Please set VITE_TWILIO_ACCOUNT_SID and VITE_TWILIO_AUTH_TOKEN in your .env file.');
     }
     
     // Make real Twilio API call
@@ -190,15 +114,10 @@ export async function purchasePhoneNumber(phoneNumber: string): Promise<{ succes
     });
 
     if (!accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token') {
-      console.log('Twilio credentials not configured, using mock purchase');
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Mock successful purchase
+      console.log('Twilio credentials not configured, cannot purchase real numbers');
       return {
-        success: true,
-        sid: `PN${Math.random().toString(36).substr(2, 34)}`, // Mock Twilio SID
+        success: false,
+        error: 'Twilio credentials not configured. Please set VITE_TWILIO_ACCOUNT_SID and VITE_TWILIO_AUTH_TOKEN in your .env file.',
       };
     }
     

@@ -39,7 +39,7 @@ const StepPhone: React.FC = () => {
       );
       setAvailableNumbers(numbers);
     } catch (error) {
-      setError('Failed to fetch available phone numbers. Please try again.');
+      setError(error instanceof Error ? error.message : 'Failed to fetch available phone numbers. Please try again.');
       console.error('Error fetching numbers:', error);
     } finally {
       setIsLoading(false);
