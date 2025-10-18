@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Search, Check, Loader2, MapPin } from 'lucide-react';
+import { Phone, Search, Check, Loader2, MapPin, CheckCircle } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { fetchAvailablePhoneNumbers, purchasePhoneNumber, formatPhoneNumber } from '../../../lib/twilio';
 import type { TwilioPhoneNumber } from '../../../lib/twilio';
@@ -13,6 +13,8 @@ const StepPhone: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string | null>(null);
   const [areaCode, setAreaCode] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
+  const [purchasedNumber, setPurchasedNumber] = useState<string | null>(null);
 
   // Fetch available numbers when component mounts or country changes
   useEffect(() => {
@@ -75,7 +77,19 @@ const StepPhone: React.FC = () => {
             number: selectedNumber,
           },
         });
+        
         console.log('Phone number purchased successfully:', result.sid);
+        
+        // Show success state
+        setPurchaseSuccess(true);
+        setPurchasedNumber(selectedNumber);
+        
+        // Auto-progress to next step after 2 seconds
+        setTimeout(() => {
+          // This will be handled by the parent component to move to next step
+          window.dispatchEvent(new CustomEvent('phone-purchased-success'));
+        }, 2000);
+        
       } else {
         setError(result.error || 'Failed to purchase phone number');
       }
@@ -86,6 +100,31 @@ const StepPhone: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  // Show success message if purchase was successful
+  if (purchaseSuccess) {
+    return (
+      <div className="space-y-8">
+        <div className="text-center py-12">
+          <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+            <CheckCircle className="w-8 h-8 text-green-600" />
+          </div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">Phone Number Purchased!</h3>
+          <p className="text-gray-600 mb-4">
+            Your phone number <span className="font-semibold text-blue-600">
+              {purchasedNumber ? formatPhoneNumber(purchasedNumber) : ''}
+            </span> has been successfully purchased.
+          </p>
+          <p className="text-sm text-gray-500 mb-8">
+            Moving to the next step automatically...
+          </p>
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

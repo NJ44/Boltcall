@@ -34,6 +34,26 @@ const WizardShell: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Listen for phone purchase success event
+  useEffect(() => {
+    const handlePhonePurchased = () => {
+      // Mark phone step as completed and move to next step
+      markStepCompleted(currentStep);
+      
+      if (currentStep < setupSteps.length) {
+        const nextStep = currentStep + 1;
+        updateStep(nextStep);
+        setExpandedStep(nextStep);
+      }
+    };
+
+    window.addEventListener('phone-purchased-success', handlePhonePurchased);
+    
+    return () => {
+      window.removeEventListener('phone-purchased-success', handlePhonePurchased);
+    };
+  }, [currentStep, markStepCompleted, updateStep]);
+
   const StepComponent = stepComponents[currentStep as keyof typeof stepComponents];
 
   // Check if step is completed (based on explicit completion, not form data)
