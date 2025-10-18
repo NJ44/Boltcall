@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Edit, Phone, Calendar, Globe, MessageSquare, Settings } from 'lucide-react';
-import { useSetupStore, setupSteps } from '../../../stores/setupStore';
+import { CheckCircle, Edit, Globe, Settings } from 'lucide-react';
+import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import PageLoader from '../../PageLoader';
 
@@ -11,10 +11,6 @@ const StepReview: React.FC = () => {
   const { 
     account, 
     businessProfile, 
-    calendar, 
-    phone, 
-    knowledgeBase, 
-    callFlow, 
     review,
     updateStep,
     updateReview,
@@ -57,15 +53,11 @@ const StepReview: React.FC = () => {
 
 
   const getCompletionStatus = () => {
-    const totalSteps = setupSteps.length - 1; // Exclude review step
+    const totalSteps = 2; // Only Account and Business Profile steps
     let completedSteps = 0;
 
     if (account.businessName) completedSteps++;
     if (businessProfile.mainCategory) completedSteps++;
-    if (calendar.isConnected) completedSteps++;
-    if (phone.useExistingNumber ? phone.existingNumber : phone.newNumber.number) completedSteps++;
-    if (knowledgeBase.services.length > 0 || knowledgeBase.faqs.length > 0) completedSteps++;
-    if (callFlow.greetingText) completedSteps++;
 
     return { completed: completedSteps, total: totalSteps };
   };
@@ -95,57 +87,6 @@ const StepReview: React.FC = () => {
         { label: 'Category', value: businessProfile.mainCategory || 'Not set' },
         { label: 'Service Areas', value: businessProfile.serviceAreas.join(', ') || 'Not set' },
         { label: 'Languages', value: businessProfile.languages.join(', ') || 'English' },
-      ],
-    },
-    {
-      id: 3,
-      title: 'Calendar',
-      icon: Calendar,
-      data: calendar,
-      fields: [
-        { label: 'Status', value: calendar.isConnected ? 'Connected' : 'Not connected' },
-        { label: 'Calendar', value: calendar.selectedCalendar || 'Not selected' },
-        { label: 'Appointment Types', value: `${calendar.appointmentTypes.length} configured` },
-      ],
-    },
-    {
-      id: 4,
-      title: 'Phone',
-      icon: Phone,
-      data: phone,
-      fields: [
-        { 
-          label: 'Number', 
-          value: phone.useExistingNumber 
-            ? phone.existingNumber 
-            : phone.newNumber.number || 'Not configured'
-        },
-        { label: 'Type', value: phone.useExistingNumber ? 'Existing' : 'New' },
-        { label: 'Routing', value: phone.routing.afterHoursAction },
-      ],
-    },
-    {
-      id: 5,
-      title: 'Knowledge Base',
-      icon: MessageSquare,
-      data: knowledgeBase,
-      fields: [
-        { label: 'Services', value: `${knowledgeBase.services.length} configured` },
-        { label: 'FAQs', value: `${knowledgeBase.faqs.length} configured` },
-        { label: 'Documents', value: `${knowledgeBase.uploadedFiles.length} uploaded` },
-        { label: 'Policies', value: Object.values(knowledgeBase.policies).some(Boolean) ? 'Configured' : 'Not set' },
-      ],
-    },
-    {
-      id: 6,
-      title: 'Call Flow',
-      icon: Settings,
-      data: callFlow,
-      fields: [
-        { label: 'Greeting', value: callFlow.greetingText ? 'Configured' : 'Not set' },
-        { label: 'Tone', value: callFlow.tone || 'Not set' },
-        { label: 'Purpose Detection', value: Object.values(callFlow.purposeDetection).filter(Boolean).length + ' enabled' },
-        { label: 'Qualifying Questions', value: `${callFlow.qualifyingQuestions.length} configured` },
       ],
     },
   ];
