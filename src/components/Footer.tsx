@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
 import Button from './ui/Button';
 
 const Footer: React.FC = () => {

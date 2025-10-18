@@ -4,7 +4,6 @@ import * as React from "react"
 import { cn } from "../../lib/utils"
 import { CheckIcon } from "@radix-ui/react-icons"
 import NumberFlow from "@number-flow/react"
-import { DotPattern } from "./dot-pattern"
 
 export type PlanLevel = "starter" | "pro" | "all" | "custom" | string
 
@@ -213,19 +212,19 @@ export function PricingTable({
                       <svg className="w-3 h-3 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      Everything in Enterprise
+                      Custom Integrations
                     </div>
                     <div className="flex items-center text-xs text-white">
                       <svg className="w-3 h-3 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      Dedicated Account Manager
+                      Custom automations tailored to your needs
                     </div>
                     <div className="flex items-center text-xs text-white">
                       <svg className="w-3 h-3 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      Custom Integration
+                      AI audits
                     </div>
                   </>
                 )}
@@ -240,7 +239,7 @@ export function PricingTable({
                   className={cn(
                     "w-full px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg",
                   plan.isCustom
-                    ? "bg-white text-gray-900 hover:bg-gray-100 border-2 border-white"
+                    ? "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white"
                     : "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",
                   !plan.isCustom && buttonClassName
                   )}

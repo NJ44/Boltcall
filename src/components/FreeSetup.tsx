@@ -6,7 +6,7 @@ const FreeSetup: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-left">
           {/* Content */}
-          <div className="bg-transparent">
+          <div className="bg-transparent max-w-2xl">
             <div className="mb-4">
               <span className="text-sm uppercase tracking-wider font-medium text-white">SETUP</span>
             </div>

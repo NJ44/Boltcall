@@ -21,8 +21,7 @@ import {
   Bell,
   Calendar,
   Phone,
-  AlertCircle,
-  Activity
+  AlertCircle
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -516,14 +515,6 @@ const DashboardLayout: React.FC = () => {
                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
                  </button>
                  
-                 {/* Services Button */}
-                 <button
-                   onClick={() => setShowServicesModal(true)}
-                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
-                   aria-label="Active services"
-                 >
-                   <Activity className="w-5 h-5" />
-                 </button>
                  
                  {/* Add Team Member Button */}
                  <button

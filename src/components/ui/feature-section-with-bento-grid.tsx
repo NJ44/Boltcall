@@ -10,6 +10,7 @@ import {
   Visual3,
 } from './animated-card-chart';
 import { Tilt } from './tilt';
+import '@lottiefiles/dotlottie-react';
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -48,7 +49,7 @@ function Feature() {
               ref={(el) => { cardRefs.current[0] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 0)}
               onMouseLeave={() => handleMouseLeave(0)}
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-xl h-48 transition-transform duration-300 ease-out cursor-pointer"
+              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-xl h-[180px] transition-transform duration-300 ease-out cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -129,13 +130,23 @@ function Feature() {
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <div className="flex flex-col text-left max-w-md">
+              <div className="flex flex-col text-left max-w-sm">
                 <h3 className="text-2xl font-semibold tracking-tight mb-2">Customer satisfaction</h3>
                 <p className="text-muted-foreground text-base">
                   Deliver exceptional customer experiences with instant responses and personalized interactions that build trust and loyalty.
                 </p>
               </div>
-              <div className="flex-1"></div>
+              <div className="flex-1 flex items-center justify-center">
+                <div className="w-32 h-32">
+                  <lottie-player
+                    src="/costumer_statisfication.lottie"
+                    background="transparent"
+                    speed="1"
+                    loop
+                    autoplay
+                  ></lottie-player>
+                </div>
+              </div>
             </motion.div>
       </div>
     </div>

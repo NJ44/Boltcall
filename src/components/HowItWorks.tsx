@@ -48,16 +48,16 @@ const PROCESS_PHASES = [
   },
   {
     id: "process-2",
-    title: "Instant Response",
+    title: "Nurture & qualify",
     description:
-      "Speed to lead is critical. Our AI receptionist responds within seconds, qualifying prospects and booking appointments while they're still hot.",
+      "Build relationships with prospects through personalized conversations and intelligent qualification to identify the most promising leads.",
     imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80"
   },
   {
     id: "process-3",
-    title: "Smart Qualification",
+    title: "Booking",
     description:
-      "The AI asks the right questions to qualify leads based on your criteria. Only serious, qualified prospects make it to your calendar.",
+      "Seamlessly schedule appointments with qualified prospects through automated calendar integration and smart booking management.",
     imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
   },
 ];
@@ -140,7 +140,7 @@ const HowItWorks: React.FC = () => {
                 </div>
                 {phase.id === "process-3" ? (
                   <div className="relative h-44 md:h-52 overflow-visible flex items-start justify-start">
-                    <div className="scale-80 md:scale-90 -ml-8 -mt-4">
+                    <div className="scale-80 md:scale-90 ml-4 -mt-4">
                       <DisplayCards cards={SMART_QUALIFICATION_CARDS} />
                     </div>
                   </div>
