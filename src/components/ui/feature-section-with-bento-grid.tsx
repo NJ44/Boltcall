@@ -56,9 +56,9 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left max-w-md">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2">Instant Response</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2">Increased revenue</h3>
                 <p className="text-muted-foreground text-base">
-                  Respond to leads within seconds with AI-powered automation. Speed to lead is critical for conversion.
+                  Convert more leads into paying customers with faster response times and better qualification processes.
                 </p>
               </div>
               <div className="flex-1"></div>
@@ -87,9 +87,9 @@ function Feature() {
                     <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
                   </CardVisual>
                   <CardBody>
-                    <CardTitle>Lead Analytics</CardTitle>
+                    <CardTitle>Higher closing rates</CardTitle>
                     <CardDescription>
-                      Monitor lead conversion rates and engagement metrics
+                      Achieve up to 391% higher conversion rates with instant lead response and AI-powered qualification.
                     </CardDescription>
                   </CardBody>
                 </AnimatedCard>
@@ -109,9 +109,9 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left">
-                <h3 className="text-xl font-semibold tracking-tight mb-2">SMS Automation</h3>
+                <h3 className="text-xl font-semibold tracking-tight mb-2">Saved time</h3>
                 <p className="text-muted-foreground text-sm">
-                  Automated SMS follow-ups and WhatsApp booking ensure you stay connected with leads.
+                  Automate repetitive tasks and focus on what matters most - closing deals and growing your business.
                 </p>
               </div>
               <div className="flex-1"></div>
@@ -130,9 +130,9 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left max-w-md">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2">Real-time Analytics</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2">Customer satisfaction</h3>
                 <p className="text-muted-foreground text-base">
-                  Track response times, booked jobs, missed leads, and call transcripts all in one powerful dashboard.
+                  Deliver exceptional customer experiences with instant responses and personalized interactions that build trust and loyalty.
                 </p>
               </div>
               <div className="flex-1"></div>

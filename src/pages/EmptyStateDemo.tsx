@@ -13,7 +13,7 @@ function EmptyStateLeads() {
       description="Your leads will appear here once customers start reaching out through your BoltCall system."
       icons={[Users, Phone, Calendar]}
       action={{
-        label: "View Setup Guide",
+        label: "Start the free setup",
         onClick: () => console.log("Setup guide clicked")
       }}
     />

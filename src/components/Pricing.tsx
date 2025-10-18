@@ -71,6 +71,7 @@ const Pricing: React.FC = () => {
       price: { monthly: 0, yearly: 0 },
       description: "Tailored solutions for your business:",
       isCustom: true,
+      excludeFromTable: true, // Add this flag to exclude from comparison table
     },
   ];
 

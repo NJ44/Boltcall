@@ -18,11 +18,6 @@ const AnalyticsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Page header */}
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900">Analytics</h1>
-        <p className="text-zinc-600 mt-1">Detailed insights into your AI receptionist performance</p>
-      </div>
 
       {/* Chart placeholders */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

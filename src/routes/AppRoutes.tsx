@@ -45,6 +45,7 @@ import EmptyStateDemo from '../pages/EmptyStateDemo';
 import DisplayCardsDemo from '../pages/DisplayCardsDemo';
 import NewAccordionDemo from '../pages/NewAccordionDemo';
 import Accordion05Demo from '../pages/Accordion05Demo';
+import DotPatternDemo from '../pages/DotPatternDemo';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
 
@@ -110,6 +111,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/display-cards-demo" element={<DisplayCardsDemo />} />
         <Route path="/new-accordion-demo" element={<NewAccordionDemo />} />
         <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
+        <Route path="/dot-pattern-demo" element={<DotPatternDemo />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

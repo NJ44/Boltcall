@@ -4,6 +4,7 @@ import * as React from "react"
 import { cn } from "../../lib/utils"
 import { CheckIcon } from "@radix-ui/react-icons"
 import NumberFlow from "@number-flow/react"
+import { DotPattern } from "./dot-pattern"
 
 export type PlanLevel = "starter" | "pro" | "all" | "custom" | string
 
@@ -22,6 +23,7 @@ export interface PricingPlan {
   popular?: boolean
   description?: string
   isCustom?: boolean
+  excludeFromTable?: boolean
 }
 
 export interface PricingTableProps
@@ -52,7 +54,7 @@ export function PricingTable({
   return (
     <section
       className={cn(
-        "bg-transparent text-foreground",
+        "bg-transparent text-foreground relative",
         "py-12 sm:py-24 md:py-32 px-4",
         "fade-bottom pb-0",
       )}
@@ -250,18 +252,19 @@ export function PricingTable({
           ))}
         </div>
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white mt-8 shadow-lg">
+
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white shadow-lg relative z-10">
           <div>
             <div>
               <div className="flex items-center p-4 bg-white sticky top-16 z-10 border-b border-gray-200">
                 <div className="flex-1 text-base font-semibold text-gray-600 pl-4">Features</div>
                 <div className="flex items-center text-base" style={{ gap: '80px', paddingRight: '16px' }}>
-                  {plans.map((plan) => (
+                  {plans.filter(plan => !plan.excludeFromTable).map((plan) => (
                     <div
                       key={plan.level}
                       className={cn(
                         "w-20 flex justify-center items-center font-bold py-2 text-lg",
-                        plan.isCustom || plan.name === "ENTERPRISE" ? "text-white bg-gray-900 rounded" : "text-gray-600"
+                        plan.isCustom ? "text-white bg-gray-900 rounded" : "text-gray-600"
                       )}
                       style={{ marginLeft: '0px' }}
                     >
@@ -277,19 +280,19 @@ export function PricingTable({
                 >
                   <div className="flex-1 text-sm pl-4">{feature.name}</div>
                   <div className="flex items-center text-sm" style={{ gap: '80px', paddingRight: '16px' }}>
-                    {plans.map((plan) => (
+                    {plans.filter(plan => !plan.excludeFromTable).map((plan) => (
                       <div
                         key={plan.level}
                         className={cn(
                           "w-20 flex justify-center items-center py-6",
-                          (plan.isCustom || plan.name === "ENTERPRISE") && "bg-gray-900"
+                          plan.isCustom && "bg-gray-900"
                         )}
                         style={{ marginLeft: '0px' }}
                       >
                         {shouldShowCheck(feature.included, plan.level) ? (
-                          <CheckIcon className={cn("w-5 h-5 -ml-0.5", (plan.isCustom || plan.name === "ENTERPRISE") ? "text-blue-400" : "text-blue-500")} />
+                          <CheckIcon className={cn("w-5 h-5 -ml-0.5", plan.isCustom ? "text-blue-400" : "text-blue-500")} />
                         ) : (
-                          <span className={cn((plan.isCustom || plan.name === "ENTERPRISE") ? "text-gray-600" : "text-zinc-300 dark:text-zinc-700")}>
+                          <span className={cn(plan.isCustom ? "text-gray-600" : "text-zinc-300 dark:text-zinc-700")}>
                             -
                           </span>
                         )}

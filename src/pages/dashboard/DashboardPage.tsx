@@ -163,15 +163,6 @@ const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Help Button - Bottom Right */}
-      <button
-        onClick={() => setShowHelpChat(!showHelpChat)}
-        className="fixed bottom-6 right-6 z-40 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
-        aria-label="Help"
-      >
-        <HelpCircle className="w-6 h-6" />
-      </button>
-
       {/* Help Chat Side Panel */}
       <AnimatePresence>
         {showHelpChat && (

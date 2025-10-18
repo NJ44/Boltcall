@@ -13,7 +13,7 @@ const FinalCTA: React.FC = () => {
             description="Create one ai agent free in 5 minutes, and assign to any of your business channels."
             icons={[Users, Phone, Calendar]}
             action={{
-              label: "View Setup Guide",
+              label: "Start the free setup",
               onClick: () => console.log("Setup guide clicked")
             }}
           />

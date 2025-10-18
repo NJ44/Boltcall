@@ -21,7 +21,8 @@ import {
   Bell,
   Calendar,
   Phone,
-  AlertCircle
+  AlertCircle,
+  Activity
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -108,8 +109,20 @@ const DashboardLayout: React.FC = () => {
     const savedDarkMode = localStorage.getItem('darkMode');
     if (savedDarkMode === 'true') {
       setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   }, []);
+
+  // Apply dark mode class when isDarkMode changes
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   // Focus main content area to ensure mouse wheel events work
   useEffect(() => {
@@ -233,12 +246,12 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <ToastProvider>
-      <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100">
+      <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100 dark:bg-gray-900">
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
          <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 ${
            sidebarCollapsed ? 'w-16' : 'w-64'
-         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white rounded-2xl shadow-lg m-2`}>
+         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-gray-800 rounded-2xl shadow-lg m-2`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
@@ -456,7 +469,7 @@ const DashboardLayout: React.FC = () => {
          {/* Right Panel - Main Content with Top Bar */}
          <main 
            ref={mainContentRef}
-           className="flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-gray-50 shadow-lg m-2"
+           className="flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-gray-50 dark:bg-gray-900 shadow-lg m-2"
            style={{
              scrollBehavior: 'auto',
              WebkitOverflowScrolling: 'touch',
@@ -501,6 +514,15 @@ const DashboardLayout: React.FC = () => {
                    <Bell className="w-5 h-5" />
                    {/* Notification indicator dot */}
                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+                 </button>
+                 
+                 {/* Services Button */}
+                 <button
+                   onClick={() => setShowServicesModal(true)}
+                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
+                   aria-label="Active services"
+                 >
+                   <Activity className="w-5 h-5" />
                  </button>
                  
                  {/* Add Team Member Button */}
