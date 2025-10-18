@@ -20,6 +20,9 @@ CREATE TABLE workspaces (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Add unique constraint for user_id + name combination to prevent duplicate business names per user
+ALTER TABLE workspaces ADD CONSTRAINT unique_user_business_name UNIQUE (user_id, name);
+
 -- Create business_profiles table
 CREATE TABLE business_profiles (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

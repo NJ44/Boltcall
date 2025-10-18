@@ -53,6 +53,16 @@ export async function createWorkspace(data: WorkspaceData): Promise<CreatedWorks
 
     if (error) {
       console.error('Error creating workspace:', error);
+      
+      // Handle specific error cases
+      if (error.code === '23505') { // Unique constraint violation
+        if (error.message.includes('workspaces_slug_key')) {
+          throw new Error('A workspace with this identifier already exists. Please try again.');
+        } else if (error.message.includes('unique_user_business_name')) {
+          throw new Error('You already have a business with this name. Please choose a different name.');
+        }
+      }
+      
       throw new Error(`Failed to create workspace: ${error.message}`);
     }
 
@@ -95,11 +105,15 @@ export async function createUserWorkspaceAndProfile(
   businessProfileData: Omit<BusinessProfileData, 'workspace_id' | 'user_id'>
 ): Promise<{ workspace: CreatedWorkspace; businessProfile: CreatedBusinessProfile }> {
   try {
-    // Generate workspace slug from business name
-    const workspaceSlug = businessProfileData.business_name
+    // Generate unique workspace slug using timestamp and random string to avoid duplicates
+    const timestamp = Date.now().toString(36);
+    const randomString = Math.random().toString(36).substr(2, 5);
+    const businessSlug = businessProfileData.business_name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/^-+|-+$/g, '')
+      .substring(0, 20); // Limit length
+    const workspaceSlug = `${businessSlug}-${timestamp}-${randomString}`;
 
     // Create workspace first
     const workspace = await createWorkspace({
