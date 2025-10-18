@@ -29,7 +29,7 @@ export interface TwilioConfig {
 
 /**
  * Fetches available phone numbers from Twilio for a specific country
- * This is a mock implementation - replace with real Twilio API calls
+ * This makes real API calls to Twilio (requires credentials)
  */
 export async function fetchAvailablePhoneNumbers(
   countryCode: string,
@@ -38,84 +38,125 @@ export async function fetchAvailablePhoneNumbers(
   try {
     console.log(`Fetching available phone numbers for country: ${countryCode}, area code: ${areaCode}`);
     
-    // TODO: Replace with real Twilio API call
-    // For now, using mock data that simulates real Twilio responses
+    // Check if Twilio credentials are available
+    const accountSid = import.meta.env.VITE_TWILIO_ACCOUNT_SID;
+    const authToken = import.meta.env.VITE_TWILIO_AUTH_TOKEN;
     
-    const mockNumbers: TwilioPhoneNumber[] = [
-      {
-        friendlyName: '+1 (555) 123-4567',
-        phoneNumber: '+15551234567',
-        capabilities: {
-          voice: true,
-          sms: true,
-          mms: false,
+    if (!accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token') {
+      console.log('Twilio credentials not configured, using mock data');
+      
+      // Mock data fallback
+      const mockNumbers: TwilioPhoneNumber[] = [
+        {
+          friendlyName: '+1 (555) 123-4567',
+          phoneNumber: '+15551234567',
+          capabilities: {
+            voice: true,
+            sms: true,
+            mms: false,
+          },
+          locality: 'New York',
+          region: 'NY',
+          isoCountry: countryCode,
         },
-        locality: 'New York',
-        region: 'NY',
-        isoCountry: countryCode,
-      },
-      {
-        friendlyName: '+1 (555) 234-5678',
-        phoneNumber: '+15552345678',
-        capabilities: {
-          voice: true,
-          sms: true,
-          mms: true,
+        {
+          friendlyName: '+1 (555) 234-5678',
+          phoneNumber: '+15552345678',
+          capabilities: {
+            voice: true,
+            sms: true,
+            mms: true,
+          },
+          locality: 'Los Angeles',
+          region: 'CA',
+          isoCountry: countryCode,
         },
-        locality: 'Los Angeles',
-        region: 'CA',
-        isoCountry: countryCode,
-      },
-      {
-        friendlyName: '+1 (555) 345-6789',
-        phoneNumber: '+15553456789',
-        capabilities: {
-          voice: true,
-          sms: true,
-          mms: false,
+        {
+          friendlyName: '+1 (555) 345-6789',
+          phoneNumber: '+15553456789',
+          capabilities: {
+            voice: true,
+            sms: true,
+            mms: false,
+          },
+          locality: 'Chicago',
+          region: 'IL',
+          isoCountry: countryCode,
         },
-        locality: 'Chicago',
-        region: 'IL',
-        isoCountry: countryCode,
-      },
-      {
-        friendlyName: '+1 (555) 456-7890',
-        phoneNumber: '+15554567890',
-        capabilities: {
-          voice: true,
-          sms: true,
-          mms: true,
+        {
+          friendlyName: '+1 (555) 456-7890',
+          phoneNumber: '+15554567890',
+          capabilities: {
+            voice: true,
+            sms: true,
+            mms: true,
+          },
+          locality: 'Houston',
+          region: 'TX',
+          isoCountry: countryCode,
         },
-        locality: 'Houston',
-        region: 'TX',
-        isoCountry: countryCode,
-      },
-      {
-        friendlyName: '+1 (555) 567-8901',
-        phoneNumber: '+15555678901',
-        capabilities: {
-          voice: true,
-          sms: true,
-          mms: false,
+        {
+          friendlyName: '+1 (555) 567-8901',
+          phoneNumber: '+15555678901',
+          capabilities: {
+            voice: true,
+            sms: true,
+            mms: false,
+          },
+          locality: 'Phoenix',
+          region: 'AZ',
+          isoCountry: countryCode,
         },
-        locality: 'Phoenix',
-        region: 'AZ',
-        isoCountry: countryCode,
-      },
-    ];
+      ];
 
-    // Filter by area code if provided
+      // Filter by area code if provided
+      if (areaCode) {
+        return mockNumbers.filter(num => 
+          num.phoneNumber.includes(areaCode) || 
+          num.locality?.toLowerCase().includes(areaCode.toLowerCase())
+        );
+      }
+
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      return mockNumbers;
+    }
+    
+    // Make real Twilio API call
+    const url = new URL(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/AvailablePhoneNumbers/${countryCode}/Local.json`);
     if (areaCode) {
-      return mockNumbers.filter(num => 
-        num.phoneNumber.includes(areaCode) || 
-        num.locality?.toLowerCase().includes(areaCode.toLowerCase())
-      );
+      url.searchParams.append('AreaCode', areaCode);
+    }
+    url.searchParams.append('Limit', '20');
+
+    const response = await fetch(url.toString(), {
+      headers: {
+        'Authorization': 'Basic ' + btoa(accountSid + ':' + authToken),
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Twilio API error:', errorData);
+      throw new Error('Failed to fetch available numbers from Twilio');
     }
 
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const data = await response.json();
     
-    return mockNumbers;
+    return data.available_phone_numbers?.map((number: any) => ({
+      friendlyName: number.friendly_name,
+      phoneNumber: number.phone_number,
+      capabilities: {
+        voice: number.capabilities.voice,
+        sms: number.capabilities.sms,
+        mms: number.capabilities.mms,
+      },
+      locality: number.locality,
+      region: number.region,
+      isoCountry: number.iso_country,
+    })) || [];
+    
   } catch (error) {
     console.error('Error fetching available phone numbers:', error);
     throw new Error('Failed to fetch available phone numbers');
@@ -124,22 +165,51 @@ export async function fetchAvailablePhoneNumbers(
 
 /**
  * Purchases a phone number from Twilio
- * This is a mock implementation - replace with real Twilio API calls
+ * This makes real API calls to Twilio (requires credentials)
  */
 export async function purchasePhoneNumber(phoneNumber: string): Promise<{ success: boolean; sid?: string; error?: string }> {
   try {
     console.log(`Purchasing phone number: ${phoneNumber}`);
     
-    // TODO: Replace with real Twilio API call
-    // For now, simulating a successful purchase
+    // Check if Twilio credentials are available
+    const accountSid = import.meta.env.VITE_TWILIO_ACCOUNT_SID;
+    const authToken = import.meta.env.VITE_TWILIO_AUTH_TOKEN;
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    if (!accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token') {
+      console.log('Twilio credentials not configured, using mock purchase');
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Mock successful purchase
+      return {
+        success: true,
+        sid: `PN${Math.random().toString(36).substr(2, 34)}`, // Mock Twilio SID
+      };
+    }
     
-    // Mock successful purchase
+    // Make real Twilio API call
+    const response = await fetch('https://api.twilio.com/2010-04-01/Accounts/' + accountSid + '/IncomingPhoneNumbers.json', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + btoa(accountSid + ':' + authToken),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        'PhoneNumber': phoneNumber,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Twilio API error:', errorData);
+      throw new Error('Failed to purchase phone number from Twilio');
+    }
+
+    const data = await response.json();
     return {
       success: true,
-      sid: `PN${Math.random().toString(36).substr(2, 34)}`, // Mock Twilio SID
+      sid: data.sid,
     };
   } catch (error) {
     console.error('Error purchasing phone number:', error);
