@@ -2,42 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
-import DisplayCards from './ui/display-cards';
-import { User, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-const SMART_QUALIFICATION_CARDS = [
-  {
-    icon: <User className="size-4 text-blue-300" />,
-    title: "Sarah booked",
-    description: "appointment booked to 10:30",
-    date: "Just now",
-    iconClassName: "text-blue-500",
-    titleClassName: "text-blue-500",
-    className:
-      "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
-  },
-  {
-    icon: <User className="size-4 text-blue-300" />,
-    title: "Mike booked",
-    description: "appointment booked to 2:15",
-    date: "2 ago",
-    iconClassName: "text-blue-500",
-    titleClassName: "text-blue-500",
-    className:
-      "[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
-  },
-  {
-    icon: <User className="size-4 text-blue-300" />,
-    title: "Emma booked",
-    description: "appointment booked to 4:00",
-    date: "Today",
-    iconClassName: "text-blue-500",
-    titleClassName: "text-blue-500",
-    className:
-      "[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
-  },
-];
 
 const PROCESS_PHASES = [
   {
