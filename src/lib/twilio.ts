@@ -42,6 +42,13 @@ export async function fetchAvailablePhoneNumbers(
     const accountSid = import.meta.env.VITE_TWILIO_ACCOUNT_SID;
     const authToken = import.meta.env.VITE_TWILIO_AUTH_TOKEN;
     
+    console.log('Twilio credentials check for fetch:', {
+      accountSid: accountSid ? 'Set' : 'Not set',
+      authToken: authToken ? 'Set' : 'Not set',
+      accountSidValue: accountSid,
+      usingMock: !accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token'
+    });
+
     if (!accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token') {
       console.log('Twilio credentials not configured, using mock data');
       
@@ -175,6 +182,13 @@ export async function purchasePhoneNumber(phoneNumber: string): Promise<{ succes
     const accountSid = import.meta.env.VITE_TWILIO_ACCOUNT_SID;
     const authToken = import.meta.env.VITE_TWILIO_AUTH_TOKEN;
     
+    console.log('Twilio credentials check:', {
+      accountSid: accountSid ? 'Set' : 'Not set',
+      authToken: authToken ? 'Set' : 'Not set',
+      accountSidValue: accountSid,
+      usingMock: !accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token'
+    });
+
     if (!accountSid || !authToken || accountSid === 'your_account_sid' || authToken === 'your_auth_token') {
       console.log('Twilio credentials not configured, using mock purchase');
       
