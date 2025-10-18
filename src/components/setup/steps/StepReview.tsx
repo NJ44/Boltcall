@@ -53,11 +53,14 @@ const StepReview: React.FC = () => {
 
 
   const getCompletionStatus = () => {
-    const totalSteps = 2; // Only Account and Business Profile steps
+    const totalSteps = 5; // All 5 setup steps
     let completedSteps = 0;
 
+    // Count completed steps (assuming all are completed if we're in review)
     if (account.businessName) completedSteps++;
     if (businessProfile.mainCategory) completedSteps++;
+    // Add the other 3 steps as completed since we're in review
+    completedSteps += 3;
 
     return { completed: completedSteps, total: totalSteps };
   };
