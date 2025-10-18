@@ -18,8 +18,8 @@ const StepReview = React.lazy(() => import('./steps/StepReview'));
 const stepComponents = {
   1: StepAccount,
   2: StepBusinessProfile,
-  3: StepPhone,
-  4: StepKnowledge,
+  3: StepKnowledge,
+  4: StepPhone,
   5: StepReview,
 };
 
@@ -44,7 +44,7 @@ const WizardShell: React.FC = () => {
   // Check if step is accessible (can be clicked)
   const isStepAccessible = (stepId: number) => {
     if (stepId === 1) return true;
-    if (stepId === 3) return unlockedSteps.includes(3); // Calendar step unlocked when reached
+    if (stepId === 3) return unlockedSteps.includes(3); // Knowledge step unlocked when reached
     if (stepId === 4) return currentStep >= 4; // Phone step only accessible when reached
     return completedSteps.includes(stepId - 1); // Previous step must be explicitly completed
   };
@@ -117,7 +117,7 @@ const WizardShell: React.FC = () => {
         updateStep(nextStep);
         setExpandedStep(nextStep);
         
-        // Unlock the calendar step when user reaches it
+        // Unlock the knowledge step when user reaches it
         if (nextStep === 3 && !unlockedSteps.includes(3)) {
           setUnlockedSteps(prev => [...prev, 3]);
         }

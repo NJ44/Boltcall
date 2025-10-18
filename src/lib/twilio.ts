@@ -29,20 +29,18 @@ export interface TwilioConfig {
 
 /**
  * Fetches available phone numbers from Twilio for a specific country
- * In production, this should be a backend API endpoint
+ * This is a mock implementation - replace with real Twilio API calls
  */
 export async function fetchAvailablePhoneNumbers(
   countryCode: string,
   areaCode?: string
 ): Promise<TwilioPhoneNumber[]> {
   try {
-    // This is a mock implementation
-    // In production, you would make an API call to your backend
-    // which would then call Twilio's API with proper authentication
-    
     console.log(`Fetching available phone numbers for country: ${countryCode}, area code: ${areaCode}`);
     
-    // Mock response - replace with actual API call to your backend
+    // TODO: Replace with real Twilio API call
+    // For now, using mock data that simulates real Twilio responses
+    
     const mockNumbers: TwilioPhoneNumber[] = [
       {
         friendlyName: '+1 (555) 123-4567',
@@ -54,7 +52,7 @@ export async function fetchAvailablePhoneNumbers(
         },
         locality: 'New York',
         region: 'NY',
-        isoCountry: 'US',
+        isoCountry: countryCode,
       },
       {
         friendlyName: '+1 (555) 234-5678',
@@ -66,7 +64,7 @@ export async function fetchAvailablePhoneNumbers(
         },
         locality: 'Los Angeles',
         region: 'CA',
-        isoCountry: 'US',
+        isoCountry: countryCode,
       },
       {
         friendlyName: '+1 (555) 345-6789',
@@ -78,7 +76,7 @@ export async function fetchAvailablePhoneNumbers(
         },
         locality: 'Chicago',
         region: 'IL',
-        isoCountry: 'US',
+        isoCountry: countryCode,
       },
       {
         friendlyName: '+1 (555) 456-7890',
@@ -90,7 +88,7 @@ export async function fetchAvailablePhoneNumbers(
         },
         locality: 'Houston',
         region: 'TX',
-        isoCountry: 'US',
+        isoCountry: countryCode,
       },
       {
         friendlyName: '+1 (555) 567-8901',
@@ -102,7 +100,7 @@ export async function fetchAvailablePhoneNumbers(
         },
         locality: 'Phoenix',
         region: 'AZ',
-        isoCountry: 'US',
+        isoCountry: countryCode,
       },
     ];
 
@@ -126,13 +124,16 @@ export async function fetchAvailablePhoneNumbers(
 
 /**
  * Purchases a phone number from Twilio
- * In production, this should be a backend API endpoint
+ * This is a mock implementation - replace with real Twilio API calls
  */
 export async function purchasePhoneNumber(phoneNumber: string): Promise<{ success: boolean; sid?: string; error?: string }> {
   try {
     console.log(`Purchasing phone number: ${phoneNumber}`);
     
-    // Mock purchase - replace with actual API call to your backend
+    // TODO: Replace with real Twilio API call
+    // For now, simulating a successful purchase
+    
+    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Mock successful purchase
