@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
+import { createUserWorkspaceAndProfile } from '../../lib/database';
+import { useAuth } from '../../contexts/AuthContext';
 
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepAccount = React.lazy(() => import('./steps/StepAccount'));
@@ -22,9 +24,10 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, markStepCompleted, completedSteps } = useSetupStore();
+  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account } = useSetupStore();
   const [expandedStep, setExpandedStep] = useState(0);
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
+  const { user } = useAuth();
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -79,20 +82,50 @@ const WizardShell: React.FC = () => {
   };
 
   const handleContinue = async () => {
-    // Webhook disabled - no longer sending data to external services
-    
-    // Mark current step as completed
-    markStepCompleted(currentStep);
-    
-    if (currentStep < setupSteps.length) {
-      const nextStep = currentStep + 1;
-      updateStep(nextStep);
-      setExpandedStep(nextStep);
-      
-      // Unlock the calendar step when user reaches it
-      if (nextStep === 3 && !unlockedSteps.includes(3)) {
-        setUnlockedSteps(prev => [...prev, 3]);
+    try {
+      // If completing business profile step (step 2), create workspace and business profile in database
+      if (currentStep === 2 && user?.id) {
+        console.log('Creating workspace and business profile for user:', user.id);
+        
+        const { workspace, businessProfile } = await createUserWorkspaceAndProfile(
+          user.id,
+          {
+            business_name: storeBusinessProfile.businessName,
+            website_url: storeBusinessProfile.websiteUrl,
+            main_category: storeBusinessProfile.mainCategory,
+            country: storeBusinessProfile.country,
+            service_areas: storeBusinessProfile.serviceAreas,
+            opening_hours: storeBusinessProfile.openingHours,
+            languages: storeBusinessProfile.languages,
+          }
+        );
+        
+        console.log('Successfully created workspace and business profile:', { workspace, businessProfile });
+        
+        // Update the account with workspace ID
+        if (account) {
+          // You might want to update the account store with the workspace ID
+          console.log('Workspace created with ID:', workspace.id);
+        }
       }
+      
+      // Mark current step as completed
+      markStepCompleted(currentStep);
+      
+      if (currentStep < setupSteps.length) {
+        const nextStep = currentStep + 1;
+        updateStep(nextStep);
+        setExpandedStep(nextStep);
+        
+        // Unlock the calendar step when user reaches it
+        if (nextStep === 3 && !unlockedSteps.includes(3)) {
+          setUnlockedSteps(prev => [...prev, 3]);
+        }
+      }
+    } catch (error) {
+      console.error('Error in handleContinue:', error);
+      // You might want to show an error message to the user here
+      alert('Failed to save your business profile. Please try again.');
     }
   };
 
