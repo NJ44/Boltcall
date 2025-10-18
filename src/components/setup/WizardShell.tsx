@@ -124,8 +124,15 @@ const WizardShell: React.FC = () => {
       }
     } catch (error) {
       console.error('Error in handleContinue:', error);
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        currentStep,
+        user: user?.id,
+        businessProfile: storeBusinessProfile
+      });
       // You might want to show an error message to the user here
-      alert('Failed to save your business profile. Please try again.');
+      alert(`Failed to save your business profile: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`);
     }
   };
 

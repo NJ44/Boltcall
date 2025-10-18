@@ -1,6 +1,15 @@
 -- Business Profiles and Workspaces Tables for BoltCall
 -- Run these SQL commands in your Supabase SQL Editor
 
+-- First, create the update_updated_at_column function if it doesn't exist
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
 -- Create workspaces table
 CREATE TABLE workspaces (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
