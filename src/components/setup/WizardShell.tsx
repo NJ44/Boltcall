@@ -34,9 +34,9 @@ const WizardShell: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Listen for phone purchase success event
+  // Listen for phone step completion event
   useEffect(() => {
-    const handlePhonePurchased = () => {
+    const handlePhoneStepCompleted = () => {
       // Mark phone step as completed and move to next step
       markStepCompleted(currentStep);
       
@@ -47,10 +47,10 @@ const WizardShell: React.FC = () => {
       }
     };
 
-    window.addEventListener('phone-purchased-success', handlePhonePurchased);
+    window.addEventListener('phone-step-completed', handlePhoneStepCompleted);
     
     return () => {
-      window.removeEventListener('phone-purchased-success', handlePhonePurchased);
+      window.removeEventListener('phone-step-completed', handlePhoneStepCompleted);
     };
   }, [currentStep, markStepCompleted, updateStep]);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, FileText } from 'lucide-react';
+import { FileText, BookOpen } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
 
@@ -8,20 +8,20 @@ const StepKnowledge: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Website URL */}
+      {/* Knowledge Base */}
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Website Information</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Knowledge Base Setup</h3>
           <p className="text-gray-600 mb-6">
-            Provide your website URL so our AI can learn about your business and services.
+            Set up your knowledge base so the AI can answer questions about your business and services.
           </p>
           
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4" />
-                  Website URL (Optional)
+                  <BookOpen className="w-4 h-4" />
+                  Business Information (Optional)
                 </div>
               </label>
               <StyledInput
