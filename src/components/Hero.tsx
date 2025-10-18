@@ -66,7 +66,12 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0 }}
         >
           <Button
-            onClick={() => navigate('/setup')}
+            onClick={() => {
+              const howItWorksSection = document.getElementById('how-it-works');
+              if (howItWorksSection) {
+                howItWorksSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
             variant="primary"
             size="md"
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white transition-all duration-75"
@@ -75,7 +80,7 @@ const Hero: React.FC = () => {
             Learn more
           </Button>
           <Button
-            onClick={() => setIsVideoOpen(true)}
+            onClick={() => navigate('/setup')}
             variant="outline"
             size="md"
             className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-6 py-2 transition-all duration-75"

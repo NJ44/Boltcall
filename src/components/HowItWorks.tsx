@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
 import DisplayCards from './ui/display-cards';
-import { User } from 'lucide-react';
+import { User, Check } from 'lucide-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const SMART_QUALIFICATION_CARDS = [
   {
@@ -41,24 +42,42 @@ const SMART_QUALIFICATION_CARDS = [
 const PROCESS_PHASES = [
   {
     id: "process-1",
-    title: "Lead Discovery",
+    title: "AI Receptionist",
     description:
-      "Our AI instantly identifies and engages with potential leads from multiple channels. Whether it's ads, forms, SMS, or phone calls, we ensure no opportunity is missed.",
-    imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+      "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
+    checklist: [
+      "24/7 call answering",
+      "Lead qualification",
+      "Appointment scheduling",
+      "Call transcription"
+    ],
+    animationUrl: "/AI_assistant.lottie"
   },
   {
     id: "process-2",
-    title: "Nurture & qualify",
+    title: "Instant Ads Replies",
     description:
-      "Build relationships with prospects through personalized conversations and intelligent qualification to identify the most promising leads.",
-    imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80"
+      "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
+    checklist: [
+      "Instant response to ads",
+      "Personalized messaging",
+      "Lead capture forms",
+      "Follow-up automation"
+    ],
+    animationUrl: "/statistics_on_tab.lottie"
   },
   {
     id: "process-3",
-    title: "Booking",
+    title: "SMS Booking",
     description:
-      "Seamlessly schedule appointments with qualified prospects through automated calendar integration and smart booking management.",
-    imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
+      "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
+    checklist: [
+      "SMS lead capture",
+      "Automated scheduling",
+      "Appointment reminders",
+      "Calendar integration"
+    ],
+    animationUrl: "/sms_agent.lottie"
   },
 ];
 
@@ -122,37 +141,45 @@ const HowItWorks: React.FC = () => {
                 key={phase.id}
                 index={index + 2}
                 incrementY={14}
-                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl ${phase.id === "process-3" ? "overflow-visible" : "overflow-hidden"}`}
-                style={{ maxWidth: '470px', top: '128px', bottom: 'auto' }}
+                className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
+                style={{ maxWidth: '600px', top: '128px', bottom: 'auto' }}
               >
-                <div className="p-5 md:p-7">
-                  <div className="flex items-center justify-between mb-3">
-                    <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
-                      {phase.title}
-                    </h2>
-                    <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg font-bold">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                <div className="p-5 md:p-7 h-full flex">
+                  {/* Left side - Header, text, and checklist */}
+                  <div className="flex-1 pr-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
+                        {phase.title}
+                      </h2>
+                      <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
+                        <span className="text-lg font-bold">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
+                    
+                    {/* Checklist */}
+                    <div className="space-y-2">
+                      {phase.checklist.map((item, itemIndex) => (
+                        <div key={itemIndex} className="flex items-center gap-2">
+                          <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                          <span className="text-sm text-gray-700">{item}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
-                </div>
-                {phase.id === "process-3" ? (
-                  <div className="relative h-44 md:h-52 overflow-visible flex items-start justify-start">
-                    <div className="scale-80 md:scale-90 ml-4 -mt-4">
-                      <DisplayCards cards={SMART_QUALIFICATION_CARDS} />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="relative h-44 md:h-52 overflow-hidden">
-                    <img 
-                      src={phase.imageUrl} 
-                      alt={phase.title}
-                      className="w-full h-full object-cover"
+                  
+                  {/* Right side - Animation */}
+                  <div className="flex-shrink-0 w-48 h-48">
+                    <DotLottieReact
+                      src={phase.animationUrl}
+                      loop
+                      autoplay
+                      className="w-full h-full"
                     />
                   </div>
-                )}
+                </div>
               </CardSticky>
             ))}
           </ContainerScroll>

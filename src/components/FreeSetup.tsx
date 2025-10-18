@@ -17,6 +17,9 @@ const FreeSetup: React.FC = () => {
             <p className="text-xl text-white mb-8">
               Get your AI assistant up and running in minutes with our completely free setup process. No hidden fees, no credit card required.
             </p>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-lg transition-colors duration-300">
+              Start Setup
+            </button>
           </div>
         </div>
       </div>

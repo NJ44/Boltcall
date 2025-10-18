@@ -10,7 +10,8 @@ import {
   Visual3,
 } from './animated-card-chart';
 import { Tilt } from './tilt';
-import '@lottiefiles/dotlottie-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { Clock } from 'lucide-react';
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -49,7 +50,7 @@ function Feature() {
               ref={(el) => { cardRefs.current[0] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 0)}
               onMouseLeave={() => handleMouseLeave(0)}
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-xl h-[180px] transition-transform duration-300 ease-out cursor-pointer"
+              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-xl h-64 transition-transform duration-300 ease-out cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -102,7 +103,7 @@ function Feature() {
               ref={(el) => { cardRefs.current[1] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 1)}
               onMouseLeave={() => handleMouseLeave(1)}
-              className="bg-muted rounded-xl p-6 flex flex-col shadow-xl h-48 transition-transform duration-300 ease-out cursor-pointer"
+              className="bg-muted rounded-xl p-6 flex flex-col shadow-xl h-56 transition-transform duration-300 ease-out cursor-pointer -mt-[31px]"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -110,12 +111,14 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left">
-                <h3 className="text-xl font-semibold tracking-tight mb-2">Saved time</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2">Saved time</h3>
                 <p className="text-muted-foreground text-sm">
                   Automate repetitive tasks and focus on what matters most - closing deals and growing your business.
                 </p>
               </div>
-              <div className="flex-1"></div>
+              <div className="flex-1 flex items-center justify-end">
+                <Clock className="w-12 h-12 text-blue-500" />
+              </div>
             </motion.div>
             
             {/* Wide Card - Text on Left */}
@@ -137,14 +140,12 @@ function Feature() {
                 </p>
               </div>
               <div className="flex-1 flex items-center justify-center">
-                <div className="w-32 h-32">
-                  <lottie-player
+                <div className="w-48 h-48">
+                  <DotLottieReact
                     src="/costumer_statisfication.lottie"
-                    background="transparent"
-                    speed="1"
                     loop
                     autoplay
-                  ></lottie-player>
+                  />
                 </div>
               </div>
             </motion.div>
