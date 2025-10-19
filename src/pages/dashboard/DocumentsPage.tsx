@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, FileText, Edit, Trash2, Save, X, FolderOpen } from 'lucide-react';
+import { Plus, FileText, Edit, Trash2, Save, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Document {
