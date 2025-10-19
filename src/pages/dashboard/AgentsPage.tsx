@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Plus, X, Sparkles, FileText } from 'lucide-react';
+import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 
 interface Agent {
@@ -23,8 +23,22 @@ interface CreateAgentForm {
   language: string;
 }
 
+interface IndustryTemplate {
+  id: string;
+  name: string;
+  industry: string;
+  icon: React.ReactNode;
+  description: string;
+  features: string[];
+  voice: string;
+  greeting: string;
+  sampleQuestions: string[];
+  color: string;
+}
+
 const AgentsPage: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showTemplatesModal, setShowTemplatesModal] = useState(false);
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
     name: '',
     voice: '',
@@ -35,6 +49,180 @@ const AgentsPage: React.FC = () => {
     direction: 'inbound',
     language: ''
   });
+
+  // Industry-specific agent templates
+  const industryTemplates: IndustryTemplate[] = [
+    {
+      id: 'hvac',
+      name: 'HVAC Service Agent',
+      industry: 'HVAC',
+      icon: <Wrench className="w-8 h-8" />,
+      description: 'Professional HVAC service agent for heating, cooling, and maintenance appointments',
+      features: ['Emergency service scheduling', 'Maintenance reminders', 'Service quotes', 'Warranty information'],
+      voice: 'Professional Male',
+      greeting: 'Hello! Thank you for calling our HVAC services. How can I help you today?',
+      sampleQuestions: [
+        'What type of HVAC service do you need?',
+        'Is this an emergency repair?',
+        'Would you like to schedule a maintenance appointment?',
+        'Do you need a service quote?'
+      ],
+      color: 'bg-blue-500'
+    },
+    {
+      id: 'dentist',
+      name: 'Dental Practice Agent',
+      industry: 'Dental',
+      icon: <Stethoscope className="w-8 h-8" />,
+      description: 'Friendly dental practice agent for appointment scheduling and patient care',
+      features: ['Appointment scheduling', 'Insurance verification', 'Treatment reminders', 'Emergency care'],
+      voice: 'Friendly Female',
+      greeting: 'Welcome to our dental practice! I\'m here to help you with your dental care needs.',
+      sampleQuestions: [
+        'What type of dental appointment do you need?',
+        'Do you have dental insurance?',
+        'Are you experiencing any dental pain?',
+        'Would you like to schedule a cleaning?'
+      ],
+      color: 'bg-green-500'
+    },
+    {
+      id: 'real-estate',
+      name: 'Real Estate Agent',
+      industry: 'Real Estate',
+      icon: <Home className="w-8 h-8" />,
+      description: 'Real estate agent for property inquiries and appointment scheduling',
+      features: ['Property inquiries', 'Showing appointments', 'Market information', 'Buyer consultations'],
+      voice: 'Professional Female',
+      greeting: 'Hello! Thank you for your interest in our real estate services. How can I assist you?',
+      sampleQuestions: [
+        'Are you looking to buy or sell?',
+        'What type of property are you interested in?',
+        'What is your budget range?',
+        'Would you like to schedule a showing?'
+      ],
+      color: 'bg-purple-500'
+    },
+    {
+      id: 'auto-repair',
+      name: 'Auto Repair Agent',
+      industry: 'Automotive',
+      icon: <Car className="w-8 h-8" />,
+      description: 'Automotive service agent for repair appointments and maintenance scheduling',
+      features: ['Service appointments', 'Diagnostic scheduling', 'Parts ordering', 'Warranty claims'],
+      voice: 'Professional Male',
+      greeting: 'Hello! Thank you for calling our auto repair shop. What can we help you with today?',
+      sampleQuestions: [
+        'What type of repair do you need?',
+        'What is the make and model of your vehicle?',
+        'Is your vehicle currently drivable?',
+        'Do you need a rental car?'
+      ],
+      color: 'bg-orange-500'
+    },
+    {
+      id: 'restaurant',
+      name: 'Restaurant Agent',
+      industry: 'Restaurant',
+      icon: <Utensils className="w-8 h-8" />,
+      description: 'Restaurant agent for reservations and customer service',
+      features: ['Reservation management', 'Menu inquiries', 'Special events', 'Customer feedback'],
+      voice: 'Friendly Female',
+      greeting: 'Welcome to our restaurant! I\'m here to help you with reservations and any questions.',
+      sampleQuestions: [
+        'How many people is the reservation for?',
+        'What date and time would you prefer?',
+        'Do you have any dietary restrictions?',
+        'Are you celebrating a special occasion?'
+      ],
+      color: 'bg-red-500'
+    },
+    {
+      id: 'education',
+      name: 'Education Agent',
+      industry: 'Education',
+      icon: <GraduationCap className="w-8 h-8" />,
+      description: 'Educational institution agent for enrollment and student services',
+      features: ['Enrollment inquiries', 'Course information', 'Student support', 'Event scheduling'],
+      voice: 'Professional Female',
+      greeting: 'Welcome to our educational institution! How can I help you with your educational journey?',
+      sampleQuestions: [
+        'Are you interested in enrolling?',
+        'What program are you considering?',
+        'Do you need financial aid information?',
+        'Would you like to schedule a campus tour?'
+      ],
+      color: 'bg-indigo-500'
+    },
+    {
+      id: 'legal',
+      name: 'Legal Services Agent',
+      industry: 'Legal',
+      icon: <Briefcase className="w-8 h-8" />,
+      description: 'Legal services agent for consultation scheduling and case inquiries',
+      features: ['Consultation scheduling', 'Case inquiries', 'Document services', 'Legal advice'],
+      voice: 'Professional Male',
+      greeting: 'Thank you for contacting our law firm. How can we assist you with your legal needs?',
+      sampleQuestions: [
+        'What type of legal service do you need?',
+        'Is this a new case or existing matter?',
+        'Do you need a consultation?',
+        'Are there any urgent deadlines?'
+      ],
+      color: 'bg-gray-700'
+    },
+    {
+      id: 'retail',
+      name: 'Retail Agent',
+      industry: 'Retail',
+      icon: <ShoppingCart className="w-8 h-8" />,
+      description: 'Retail agent for customer service and product inquiries',
+      features: ['Product inquiries', 'Order tracking', 'Returns processing', 'Customer support'],
+      voice: 'Friendly Female',
+      greeting: 'Hello! Welcome to our store. How can I help you find what you\'re looking for?',
+      sampleQuestions: [
+        'What product are you looking for?',
+        'Do you need help with sizing?',
+        'Would you like to check product availability?',
+        'Do you have any questions about our return policy?'
+      ],
+      color: 'bg-pink-500'
+    },
+    {
+      id: 'healthcare',
+      name: 'Healthcare Agent',
+      industry: 'Healthcare',
+      icon: <Heart className="w-8 h-8" />,
+      description: 'Healthcare agent for appointment scheduling and patient services',
+      features: ['Appointment scheduling', 'Insurance verification', 'Prescription refills', 'Test results'],
+      voice: 'Professional Female',
+      greeting: 'Hello! Thank you for calling our healthcare clinic. How can we help you today?',
+      sampleQuestions: [
+        'What type of appointment do you need?',
+        'Are you a new or returning patient?',
+        'Do you have insurance?',
+        'Is this an urgent medical concern?'
+      ],
+      color: 'bg-teal-500'
+    },
+    {
+      id: 'beauty',
+      name: 'Beauty Salon Agent',
+      industry: 'Beauty',
+      icon: <Scissors className="w-8 h-8" />,
+      description: 'Beauty salon agent for appointment scheduling and service inquiries',
+      features: ['Service booking', 'Stylist preferences', 'Package deals', 'Special events'],
+      voice: 'Friendly Female',
+      greeting: 'Welcome to our beauty salon! I\'m here to help you book your next appointment.',
+      sampleQuestions: [
+        'What service would you like to book?',
+        'Do you have a preferred stylist?',
+        'What date and time work for you?',
+        'Are you celebrating a special occasion?'
+      ],
+      color: 'bg-rose-500'
+    }
+  ];
 
   const handleInputChange = (field: keyof CreateAgentForm, value: string) => {
     setCreateForm(prev => ({
@@ -58,6 +246,22 @@ const AgentsPage: React.FC = () => {
       language: ''
     });
     setShowCreateModal(false);
+  };
+
+  const handleTemplateSelect = (template: IndustryTemplate) => {
+    // Pre-fill the form with template data
+    setCreateForm({
+      name: template.name,
+      voice: template.voice,
+      timezone: 'America/New_York',
+      knowledgeBase: template.description,
+      phoneNumber: '',
+      humanTransferPhone: '',
+      direction: 'inbound',
+      language: 'English'
+    });
+    setShowTemplatesModal(false);
+    setShowCreateModal(true);
   };
 
   // Empty array to show no agents state, or populate with agents
@@ -93,14 +297,14 @@ const AgentsPage: React.FC = () => {
 
             {/* Browse Templates */}
             <button
-              onClick={() => setShowCreateModal(true)}
+              onClick={() => setShowTemplatesModal(true)}
               className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all"
             >
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
                 <FileText className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Browse our Templates</h3>
-              <p className="text-gray-600">Get inspired by our templates to get started</p>
+              <p className="text-gray-600">Get inspired by our industry-specific templates to get started</p>
             </button>
           </div>
         </div>
@@ -375,6 +579,102 @@ const AgentsPage: React.FC = () => {
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Create Agent
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Templates Modal */}
+      {showTemplatesModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-zinc-900">Browse Industry Templates</h2>
+                <button 
+                  onClick={() => setShowTemplatesModal(false)}
+                  className="text-zinc-400 hover:text-zinc-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <p className="text-zinc-600 mb-6">
+                Choose from our pre-built AI agent templates designed for specific industries. 
+                Each template comes with industry-specific features, sample questions, and optimized settings.
+              </p>
+
+              {/* Templates Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {industryTemplates.map((template) => (
+                  <div
+                    key={template.id}
+                    className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all cursor-pointer group"
+                    onClick={() => handleTemplateSelect(template)}
+                  >
+                    {/* Template Header */}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 ${template.color} rounded-lg flex items-center justify-center text-white`}>
+                        {template.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                          {template.name}
+                        </h3>
+                        <p className="text-sm text-gray-500">{template.industry}</p>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-4">{template.description}</p>
+
+                    {/* Features */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-900 mb-2">Key Features:</h4>
+                      <ul className="text-xs text-gray-600 space-y-1">
+                        {template.features.slice(0, 3).map((feature, index) => (
+                          <li key={index} className="flex items-center gap-2">
+                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                            {feature}
+                          </li>
+                        ))}
+                        {template.features.length > 3 && (
+                          <li className="text-gray-500">+{template.features.length - 3} more</li>
+                        )}
+                      </ul>
+                    </div>
+
+                    {/* Sample Questions */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-900 mb-2">Sample Questions:</h4>
+                      <div className="text-xs text-gray-600 bg-gray-50 rounded-lg p-2">
+                        "{template.sampleQuestions[0]}"
+                      </div>
+                    </div>
+
+                    {/* Voice & Greeting */}
+                    <div className="text-xs text-gray-500 space-y-1">
+                      <div><strong>Voice:</strong> {template.voice}</div>
+                      <div className="truncate"><strong>Greeting:</strong> {template.greeting}</div>
+                    </div>
+
+                    {/* Use Template Button */}
+                    <button className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+                      Use This Template
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-zinc-200">
+                <button
+                  onClick={() => setShowTemplatesModal(false)}
+                  className="px-4 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
+                >
+                  Cancel
                 </button>
               </div>
             </div>
