@@ -122,6 +122,43 @@ const DashboardLayout: React.FC = () => {
     }));
   };
 
+  // Helper function to get service status
+  const getServiceStatus = (serviceKey: keyof typeof services) => {
+    if (!services[serviceKey]) return 'disabled';
+    // Mock status - in real app, this would come from API
+    const statuses = {
+      aiReceptionist: 'running',
+      phoneSystem: 'running',
+      sms: 'warning',
+      whatsapp: 'disabled',
+      email: 'running',
+      calendar: 'running',
+      analytics: 'running',
+      voiceLibrary: 'warning',
+      knowledgeBase: 'running',
+      websiteBubble: 'disabled'
+    };
+    return statuses[serviceKey];
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'running': return 'bg-green-500';
+      case 'warning': return 'bg-yellow-500';
+      case 'error': return 'bg-red-500';
+      default: return 'bg-gray-400';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'running': return 'Running Good';
+      case 'warning': return 'Minor Issues';
+      case 'error': return 'Needs Attention';
+      default: return 'Disabled';
+    }
+  };
+
   // Handle click outside to close menus
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -690,8 +727,8 @@ const DashboardLayout: React.FC = () => {
             {/* New Lead Notification */}
             <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <Users className="w-4 h-4 text-green-600" />
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Users className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
                   <div className="font-medium text-gray-900">New Lead Arrives</div>
@@ -736,8 +773,8 @@ const DashboardLayout: React.FC = () => {
             {/* Appointment Cancelled Notification */}
             <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-red-100 rounded-lg">
-                  <X className="w-4 h-4 text-red-600" />
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <X className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
                   <div className="font-medium text-gray-900">Appointment Cancelled</div>
@@ -759,8 +796,8 @@ const DashboardLayout: React.FC = () => {
             {/* Missed Call Notification */}
             <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <Phone className="w-4 h-4 text-orange-600" />
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Phone className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
                   <div className="font-medium text-gray-900">Missed Call</div>
@@ -782,8 +819,8 @@ const DashboardLayout: React.FC = () => {
             {/* System Alert Notification */}
             <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-yellow-100 rounded-lg">
-                  <AlertCircle className="w-4 h-4 text-yellow-600" />
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <AlertCircle className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
                   <div className="font-medium text-gray-900">System Alerts</div>
@@ -810,7 +847,7 @@ const DashboardLayout: React.FC = () => {
     {showServicesModal && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowServicesModal(false)}>
         <div 
-          className="bg-white rounded-2xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+          className="bg-white rounded-3xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between mb-6">
@@ -834,12 +871,18 @@ const DashboardLayout: React.FC = () => {
               <h3 className="text-sm font-medium text-gray-900 mb-3">Core Services</h3>
               <div className="space-y-3">
                 {/* AI Receptionist */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Users className="w-5 h-5 text-blue-600" />
                     <div>
                       <div className="font-medium text-gray-900">AI Receptionist</div>
                       <div className="text-sm text-gray-500">Automated call handling</div>
+                      {services.aiReceptionist && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('aiReceptionist'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('aiReceptionist'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -855,12 +898,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Phone System */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-green-600" />
                     <div>
                       <div className="font-medium text-gray-900">Phone System</div>
                       <div className="text-sm text-gray-500">Incoming and outgoing calls</div>
+                      {services.phoneSystem && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('phoneSystem'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('phoneSystem'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -876,12 +925,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* SMS */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <MessageSquare className="w-5 h-5 text-purple-600" />
                     <div>
                       <div className="font-medium text-gray-900">SMS</div>
                       <div className="text-sm text-gray-500">Text messaging service</div>
+                      {services.sms && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('sms'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('sms'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -897,12 +952,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Email */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-blue-600" />
                     <div>
                       <div className="font-medium text-gray-900">Email</div>
                       <div className="text-sm text-gray-500">Email notifications and alerts</div>
+                      {services.email && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('email'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('email'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -924,12 +985,18 @@ const DashboardLayout: React.FC = () => {
               <h3 className="text-sm font-medium text-gray-900 mb-3">Communication</h3>
               <div className="space-y-3">
                 {/* WhatsApp */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <MessageSquare className="w-5 h-5 text-green-500" />
                     <div>
                       <div className="font-medium text-gray-900">WhatsApp</div>
                       <div className="text-sm text-gray-500">WhatsApp Business integration</div>
+                      {services.whatsapp && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('whatsapp'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('whatsapp'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -945,12 +1012,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Website Bubble */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <MessageSquare className="w-5 h-5 text-blue-500" />
                     <div>
                       <div className="font-medium text-gray-900">Website Bubble</div>
                       <div className="text-sm text-gray-500">Live chat on your website</div>
+                      {services.websiteBubble && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('websiteBubble'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('websiteBubble'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -972,12 +1045,18 @@ const DashboardLayout: React.FC = () => {
               <h3 className="text-sm font-medium text-gray-900 mb-3">Management</h3>
               <div className="space-y-3">
                 {/* Calendar */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Calendar className="w-5 h-5 text-orange-600" />
                     <div>
                       <div className="font-medium text-gray-900">Calendar</div>
                       <div className="text-sm text-gray-500">Appointment scheduling</div>
+                      {services.calendar && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('calendar'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('calendar'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -993,12 +1072,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Analytics */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <BarChart3 className="w-5 h-5 text-purple-600" />
                     <div>
                       <div className="font-medium text-gray-900">Analytics</div>
                       <div className="text-sm text-gray-500">Performance tracking and reports</div>
+                      {services.analytics && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('analytics'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('analytics'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -1014,12 +1099,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Voice Library */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Server className="w-5 h-5 text-indigo-600" />
                     <div>
                       <div className="font-medium text-gray-900">Voice Library</div>
                       <div className="text-sm text-gray-500">AI voice management</div>
+                      {services.voiceLibrary && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('voiceLibrary'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('voiceLibrary'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -1035,12 +1126,18 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Knowledge Base */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Building2 className="w-5 h-5 text-teal-600" />
                     <div>
                       <div className="font-medium text-gray-900">Knowledge Base</div>
                       <div className="text-sm text-gray-500">Document and information management</div>
+                      {services.knowledgeBase && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('knowledgeBase'))}`}></div>
+                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('knowledgeBase'))}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button

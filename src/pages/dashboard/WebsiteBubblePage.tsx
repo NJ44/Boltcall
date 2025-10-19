@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Copy, EyeOff, Code, Settings } from 'lucide-react';
+import { Copy, X, Code, Settings } from 'lucide-react';
 
 interface ClientAgent {
   id: string;
@@ -15,12 +15,6 @@ interface ClientAgent {
 const WebsiteBubblePage: React.FC = () => {
   const [showIntegrationCode, setShowIntegrationCode] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string>('');
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newAgent, setNewAgent] = useState({
-    name: '',
-    color: '#3B82F6',
-    position: 'bottom-right' as const
-  });
 
   // Mock client agents data
   const [clientAgents, setClientAgents] = useState<ClientAgent[]>([
@@ -75,22 +69,6 @@ const WebsiteBubblePage: React.FC = () => {
     // You could add a toast notification here
   };
 
-  const handleCreateAgent = () => {
-    if (newAgent.name.trim()) {
-      const agent: ClientAgent = {
-        id: Date.now().toString(),
-        name: newAgent.name.trim(),
-        status: 'active',
-        widgetId: `boltcall-${newAgent.name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`,
-        color: newAgent.color,
-        position: newAgent.position,
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-      setClientAgents([...clientAgents, agent]);
-      setNewAgent({ name: '', color: '#3B82F6', position: 'bottom-right' });
-      setShowCreateModal(false);
-    }
-  };
 
   const toggleAgentStatus = (id: string) => {
     setClientAgents(clientAgents.map(agent => 
@@ -102,27 +80,17 @@ const WebsiteBubblePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex items-center justify-between"
-      >
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Website Bubble</h1>
-          <p className="text-gray-600 mt-1">
-            Manage your website chat bubbles and get integration code for your client agents.
-          </p>
-        </div>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center justify-between"
         >
-          <Plus className="w-4 h-4" />
-          Create Agent
-        </button>
-      </motion.div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Website Bubble</h1>
+          </div>
+        </motion.div>
 
       {/* Client Agents Table */}
       <motion.div
@@ -144,13 +112,7 @@ const WebsiteBubblePage: React.FC = () => {
                   Agent Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Widget ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Position
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Created
@@ -173,9 +135,6 @@ const WebsiteBubblePage: React.FC = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500 font-mono">{agent.widgetId}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
                     <button
                       onClick={() => toggleAgentStatus(agent.id)}
                       className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -186,9 +145,6 @@ const WebsiteBubblePage: React.FC = () => {
                     >
                       {agent.status}
                     </button>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {agent.position.replace('-', ' ')}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {new Date(agent.createdAt).toLocaleDateString()}
@@ -231,7 +187,7 @@ const WebsiteBubblePage: React.FC = () => {
                   onClick={() => setShowIntegrationCode(false)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  <EyeOff className="w-6 h-6" />
+                  <X className="w-6 h-6" />
                 </button>
               </div>
 
@@ -268,95 +224,11 @@ const WebsiteBubblePage: React.FC = () => {
                 </ol>
               </div>
 
-              <div className="flex justify-end gap-3 mt-6">
-                <button
-                  onClick={() => setShowIntegrationCode(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Close
-                </button>
-              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Create Agent Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full mx-4">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900">Create New Agent</h2>
-                <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <EyeOff className="w-6 h-6" />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Agent Name
-                  </label>
-                  <input
-                    type="text"
-                    value={newAgent.name}
-                    onChange={(e) => setNewAgent({ ...newAgent, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter agent name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Bubble Color
-                  </label>
-                  <input
-                    type="color"
-                    value={newAgent.color}
-                    onChange={(e) => setNewAgent({ ...newAgent, color: e.target.value })}
-                    className="w-full h-10 border border-gray-300 rounded-lg cursor-pointer"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Position
-                  </label>
-                  <select
-                    value={newAgent.position}
-                    onChange={(e) => setNewAgent({ ...newAgent, position: e.target.value as any })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="bottom-right">Bottom Right</option>
-                    <option value="bottom-left">Bottom Left</option>
-                    <option value="top-right">Top Right</option>
-                    <option value="top-left">Top Left</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 mt-6">
-                <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleCreateAgent}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Create Agent
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
