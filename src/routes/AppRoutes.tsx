@@ -24,6 +24,7 @@ import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
 import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
+import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
@@ -86,6 +87,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="instant-lead-reply" element={<InstantLeadReplyPage />} />
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
+          <Route path="website-bubble" element={<WebsiteBubblePage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="settings/preferences" element={<PreferencesPage />} />
           <Route path="settings/members" element={<MembersPage />} />

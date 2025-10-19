@@ -150,6 +150,7 @@ const DashboardLayout: React.FC = () => {
   const messagingItems = [
     { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
+    { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
   ];
 
   const navItemsBottom = [
@@ -172,6 +173,7 @@ const DashboardLayout: React.FC = () => {
     if (path === '/dashboard/widgets') return 'Widgets';
     if (path === '/dashboard/sms-booking') return 'SMS Booking';
     if (path === '/dashboard/reminders') return 'Reminders';
+    if (path === '/dashboard/website-bubble') return 'Website Bubble';
     if (path === '/dashboard/assistant') return 'AI Receptionist';
     if (path === '/dashboard/missed-calls') return 'Missed Calls';
     if (path === '/dashboard/instant-lead-reply') return 'Instant Lead Reply';
