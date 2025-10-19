@@ -69,7 +69,7 @@ const HowItWorks: React.FC = () => {
             </motion.h5>
             <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px' }}>
               <WhisperText
-                text="Close leads in"
+                text="Close leads in "
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
                 delay={125}
                 duration={0.625}
@@ -78,7 +78,6 @@ const HowItWorks: React.FC = () => {
                 triggerStart="top 85%"
                 style={{ fontSize: '1.155em' }}
               />
-              <br />
               <WhisperText
                 text="lightning speed."
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"

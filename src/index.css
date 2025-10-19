@@ -175,6 +175,24 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+  /* Custom scrollbar for dashboard sidebar */
+  .dashboard-sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .dashboard-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .dashboard-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+  }
+  
+  .dashboard-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.7);
+  }
 }
 
 .animate-pulse {

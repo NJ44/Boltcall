@@ -21,7 +21,8 @@ import {
   Bell,
   Calendar,
   Phone,
-  AlertCircle
+  AlertCircle,
+  FileText
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -139,6 +140,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
     { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-4 h-4" /> },
+    { to: '/dashboard/documents', label: 'Documents', icon: <FileText className="w-4 h-4" /> },
   ];
 
   // Dropdown items
@@ -169,6 +171,7 @@ const DashboardLayout: React.FC = () => {
     if (path === '/dashboard/agents') return 'Agents';
     if (path === '/dashboard/knowledge') return 'Knowledge Base';
     if (path === '/dashboard/phone') return 'Phone Numbers';
+    if (path === '/dashboard/documents') return 'Documents';
     if (path === '/dashboard/widgets') return 'Widgets';
     if (path === '/dashboard/sms-booking') return 'SMS Booking';
     if (path === '/dashboard/reminders') return 'Reminders';
@@ -371,8 +374,8 @@ const DashboardLayout: React.FC = () => {
             </div>
             
             {/* Navigation */}
-            <nav className="flex-1 flex flex-col" aria-label="Main navigation">
-              <div className="flex-1">
+            <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
+              <div className="flex-1 px-2">
                 {/* Group 1 */}
                 <div className="space-y-1 mb-4">
                   {navItemsGroup1.map((item) => {
@@ -437,7 +440,7 @@ const DashboardLayout: React.FC = () => {
               </div>
 
               {/* Bottom Group - Always at bottom */}
-              <div className="space-y-1 mt-auto">
+              <div className="space-y-1 mt-auto px-2">
                 {navItemsBottom.map((item) => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return renderNavItem(item, isActive);
@@ -445,7 +448,7 @@ const DashboardLayout: React.FC = () => {
               </div>
 
               {/* Footer Group - Always at very bottom */}
-              <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+              <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 px-2">
                 {navItemsFooter.map((item) => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return renderNavItem(item, isActive);

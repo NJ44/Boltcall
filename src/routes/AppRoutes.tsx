@@ -22,6 +22,7 @@ import NotificationsPage from '../pages/dashboard/settings/NotificationsPage';
 import AssistantPage from '../pages/dashboard/AssistantPage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
+import DocumentsPage from '../pages/dashboard/DocumentsPage';
 import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import Privacy from '../pages/Privacy';
@@ -82,6 +83,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="knowledge" element={<KnowledgeBasePage />} />
           <Route path="phone" element={<PhoneNumbersPage />} />
           <Route path="assistant" element={<AssistantPage />} />
+          <Route path="documents" element={<DocumentsPage />} />
           <Route path="integrations" element={<IntegrationsPage />} />
           <Route path="instant-lead-reply" element={<InstantLeadReplyPage />} />
           <Route path="sms" element={<SmsPage />} />

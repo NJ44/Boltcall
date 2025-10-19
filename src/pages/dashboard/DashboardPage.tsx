@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AlertTriangle, Power, PhoneOff, MessageSquareOff, BellOff, HelpCircle, X, Send } from 'lucide-react';
 import Plan from '../../components/ui/agent-plan';
 import { EmptyState } from '../../components/ui/empty-state';
+import DocumentsQuickAccess from '../../components/dashboard/DocumentsQuickAccess';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DashboardPage: React.FC = () => {
@@ -43,6 +44,9 @@ const DashboardPage: React.FC = () => {
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <Plan />
       </div>
+
+      {/* Documents Quick Access */}
+      <DocumentsQuickAccess />
 
       {/* Danger Zone */}
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-red-200 dark:border-red-900 overflow-hidden">

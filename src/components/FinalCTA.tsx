@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { EmptyState } from './ui/empty-state';
 import { Users, Phone, Calendar } from 'lucide-react';
 
 const FinalCTA: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <Section id="contact" background="white">
       <div className="max-w-4xl mx-auto py-20">
@@ -14,7 +17,7 @@ const FinalCTA: React.FC = () => {
             icons={[Users, Phone, Calendar]}
             action={{
               label: "Start the free setup",
-              onClick: () => console.log("Setup guide clicked")
+              onClick: () => navigate('/setup')
             }}
           />
         </div>
