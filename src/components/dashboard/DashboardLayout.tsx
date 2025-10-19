@@ -21,7 +21,11 @@ import {
   Bell,
   Calendar,
   Phone,
-  AlertCircle
+  AlertCircle,
+  FileText,
+  Ticket,
+  Calendar as CalendarIcon,
+  Crown
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -32,10 +36,14 @@ const DashboardLayout: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
+  const [showHelpSidebar, setShowHelpSidebar] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
+  
+  // Mock user plan - in real app, this would come from user context/API
+  const userPlan: 'free' | 'pro' | 'elite' = 'free';
   
   // Notification toggles
   const [notifications, setNotifications] = useState({
@@ -551,7 +559,7 @@ const DashboardLayout: React.FC = () => {
                  ? 'bg-blue-600 text-white hover:bg-blue-700'
                  : 'bg-blue-600 text-white hover:bg-blue-700'
              }`}
-             onClick={() => window.location.href = '/contact'}
+             onClick={() => setShowHelpSidebar(true)}
            >
              <HelpCircle className="w-4 h-4" />
              Help
@@ -755,6 +763,155 @@ const DashboardLayout: React.FC = () => {
                   notifications.systemAlert ? 'translate-x-7' : 'translate-x-1'
                 }`} />
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Help Sidebar */}
+    {showHelpSidebar && (
+      <div className="fixed inset-0 z-50 overflow-hidden">
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black bg-opacity-50"
+          onClick={() => setShowHelpSidebar(false)}
+        />
+        
+        {/* Sidebar */}
+        <div className="absolute right-0 top-0 h-full w-96 bg-white shadow-xl">
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">Help & Support</h2>
+              <button
+                onClick={() => setShowHelpSidebar(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 p-6 space-y-6">
+              {/* Documentation Links */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-4">Documentation</h3>
+                <div className="space-y-3">
+                  <Link
+                    to="/help-center"
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                    onClick={() => setShowHelpSidebar(false)}
+                  >
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <FileText className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                        Documentation
+                      </div>
+                      <div className="text-sm text-gray-500">Complete guides and API reference</div>
+                    </div>
+                  </Link>
+                  
+                  <Link
+                    to="/help-center"
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                    onClick={() => setShowHelpSidebar(false)}
+                  >
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                      <HelpCircle className="w-4 h-4 text-green-600" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-900 group-hover:text-green-600 transition-colors">
+                        Help Center
+                      </div>
+                      <div className="text-sm text-gray-500">FAQs, guides, and troubleshooting</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Support Actions */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-4">Get Support</h3>
+                <div className="space-y-3">
+                  {/* Create Support Ticket */}
+                  <button
+                    onClick={() => {
+                      // Handle support ticket creation
+                      console.log('Create support ticket');
+                      setShowHelpSidebar(false);
+                    }}
+                    className="w-full flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors group"
+                  >
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <Ticket className="w-5 h-5 text-orange-600" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-medium text-gray-900 group-hover:text-orange-600 transition-colors">
+                        Create Support Ticket
+                      </div>
+                      <div className="text-sm text-gray-500">Submit your issue for detailed assistance.</div>
+                    </div>
+                  </button>
+
+                  {/* Schedule Onboarding - Only for paid plans */}
+                  {userPlan !== 'free' && (
+                    <button
+                      onClick={() => {
+                        // Handle onboarding scheduling
+                        console.log('Schedule onboarding');
+                        setShowHelpSidebar(false);
+                      }}
+                      className="w-full flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-colors group"
+                    >
+                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <CalendarIcon className="w-5 h-5 text-purple-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-medium text-gray-900 group-hover:text-purple-600 transition-colors">
+                          Schedule Onboarding
+                        </div>
+                        <div className="text-sm text-gray-500">Get personalized setup assistance</div>
+                      </div>
+                    </button>
+                  )}
+
+                  {/* Upgrade Button - Only for free plan */}
+                  {userPlan === 'free' && (
+                    <button
+                      onClick={() => {
+                        // Handle upgrade
+                        console.log('Upgrade plan');
+                        setShowHelpSidebar(false);
+                      }}
+                      className="w-full flex items-center gap-3 p-4 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transition-all group"
+                    >
+                      <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <Crown className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-medium group-hover:text-yellow-200 transition-colors">
+                          Upgrade
+                        </div>
+                        <div className="text-sm text-blue-100">Unlock premium features and support</div>
+                      </div>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Plan Status */}
+              <div className="pt-4 border-t border-gray-200">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className={`w-2 h-2 rounded-full ${
+                    userPlan === 'free' ? 'bg-gray-400' : 
+                    userPlan === 'pro' ? 'bg-blue-500' : 'bg-purple-500'
+                  }`} />
+                  <span>Current plan: {userPlan === 'free' ? 'Free' : userPlan === 'pro' ? 'Pro' : 'Elite'}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
