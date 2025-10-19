@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FileText, BookOpen } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
+import { createAgentAndKnowledgeBase } from '../../../lib/webhooks';
+import Button from '../../ui/Button';
 
 const StepKnowledge: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
+  const [isCreatingAgent, setIsCreatingAgent] = useState(false);
+  const [agentCreated, setAgentCreated] = useState(false);
+
+  const handleCreateAgent = async () => {
+    if (agentCreated) return;
+    
+    setIsCreatingAgent(true);
+    try {
+      await createAgentAndKnowledgeBase({
+        businessName: businessProfile.businessName || '',
+        websiteUrl: businessProfile.websiteUrl || '',
+        mainCategory: businessProfile.mainCategory || '',
+        country: businessProfile.country || '',
+        serviceAreas: businessProfile.serviceAreas || [],
+        openingHours: businessProfile.openingHours || {},
+        languages: businessProfile.languages || [],
+      });
+      
+      setAgentCreated(true);
+      console.log('Agent and knowledge base created successfully');
+      
+      // Trigger next step after successful creation
+      window.dispatchEvent(new CustomEvent('knowledge-step-completed'));
+    } catch (error) {
+      console.error('Error creating agent:', error);
+      alert('Failed to create AI agent. Please try again.');
+    } finally {
+      setIsCreatingAgent(false);
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -37,6 +69,24 @@ const StepKnowledge: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Create Agent Button */}
+      <div className="text-center">
+        <Button
+          onClick={handleCreateAgent}
+          disabled={isCreatingAgent || agentCreated}
+          variant="primary"
+          size="lg"
+          className="mx-auto"
+        >
+          {isCreatingAgent ? 'Creating AI Agent...' : agentCreated ? 'AI Agent Created ✓' : 'Create AI Agent & Knowledge Base'}
+        </Button>
+        {agentCreated && (
+          <p className="text-green-600 text-sm mt-2">
+            Your AI agent has been created successfully!
+          </p>
+        )}
       </div>
 
       {/* Document Upload Note */}

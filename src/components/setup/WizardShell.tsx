@@ -34,7 +34,7 @@ const WizardShell: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Listen for phone step completion event
+  // Listen for step completion events
   useEffect(() => {
     const handlePhoneStepCompleted = () => {
       // Mark phone step as completed and move to next step
@@ -47,10 +47,23 @@ const WizardShell: React.FC = () => {
       }
     };
 
+    const handleKnowledgeStepCompleted = () => {
+      // Mark knowledge step as completed and move to next step
+      markStepCompleted(currentStep);
+      
+      if (currentStep < setupSteps.length) {
+        const nextStep = currentStep + 1;
+        updateStep(nextStep);
+        setExpandedStep(nextStep);
+      }
+    };
+
     window.addEventListener('phone-step-completed', handlePhoneStepCompleted);
+    window.addEventListener('knowledge-step-completed', handleKnowledgeStepCompleted);
     
     return () => {
       window.removeEventListener('phone-step-completed', handlePhoneStepCompleted);
+      window.removeEventListener('knowledge-step-completed', handleKnowledgeStepCompleted);
     };
   }, [currentStep, markStepCompleted, updateStep]);
 
