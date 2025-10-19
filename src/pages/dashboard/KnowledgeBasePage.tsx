@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PenTool, X, Upload, Globe } from 'lucide-react';
+import { PenTool, X, Upload, Globe, Plus, FileText, Edit, Trash2, Save } from 'lucide-react';
+
+interface Document {
+  id: string;
+  name: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 const KnowledgeBasePage: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -9,8 +17,34 @@ const KnowledgeBasePage: React.FC = () => {
   const [fileInput, setFileInput] = useState<File | null>(null);
   const [blankPageTitle, setBlankPageTitle] = useState('');
   
-  // Knowledge bases array - empty means no knowledge bases
-  const knowledgeBases: any[] = [];
+  // Document management state
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [editingDocumentId, setEditingDocumentId] = useState<string | null>(null);
+  const [editingDocumentContent, setEditingDocumentContent] = useState('');
+  const [showDocumentEditor, setShowDocumentEditor] = useState(false);
+  
+  // Load documents from localStorage on component mount
+  useEffect(() => {
+    const savedDocuments = localStorage.getItem('boltcall-documents');
+    if (savedDocuments) {
+      try {
+        const parsed = JSON.parse(savedDocuments);
+        const documentsWithDates = parsed.map((doc: any) => ({
+          ...doc,
+          createdAt: new Date(doc.createdAt),
+          updatedAt: new Date(doc.updatedAt)
+        }));
+        setDocuments(documentsWithDates);
+      } catch (error) {
+        console.error('Error loading documents:', error);
+      }
+    }
+  }, []);
+
+  // Save documents to localStorage whenever documents change
+  useEffect(() => {
+    localStorage.setItem('boltcall-documents', JSON.stringify(documents));
+  }, [documents]);
 
 
   const handleAddFromUrl = () => {
@@ -58,9 +92,49 @@ const KnowledgeBasePage: React.FC = () => {
   };
 
   const handleSubmitBlankPage = () => {
-    console.log('Creating blank page:', blankPageTitle);
-    // Implementation for blank page creation
-    handleClosePopup();
+    if (blankPageTitle.trim()) {
+      const newDoc: Document = {
+        id: Date.now().toString(),
+        name: blankPageTitle.trim(),
+        content: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      setDocuments(prev => [newDoc, ...prev]);
+      setBlankPageTitle('');
+      handleClosePopup();
+      // Automatically open the new document for editing
+      handleEditDocument(newDoc);
+    }
+  };
+
+  const handleEditDocument = (doc: Document) => {
+    setEditingDocumentId(doc.id);
+    setEditingDocumentContent(doc.content);
+    setShowDocumentEditor(true);
+  };
+
+  const handleSaveDocument = () => {
+    if (editingDocumentId) {
+      setDocuments(documents.map(doc => 
+        doc.id === editingDocumentId 
+          ? { ...doc, content: editingDocumentContent, updatedAt: new Date() } 
+          : doc
+      ));
+      setEditingDocumentId(null);
+      setEditingDocumentContent('');
+      setShowDocumentEditor(false);
+    }
+  };
+
+  const handleDeleteDocument = (id: string) => {
+    setDocuments(documents.filter(doc => doc.id !== id));
+  };
+
+  const handleCancelEdit = () => {
+    setEditingDocumentId(null);
+    setEditingDocumentContent('');
+    setShowDocumentEditor(false);
   };
 
 
@@ -78,7 +152,7 @@ const KnowledgeBasePage: React.FC = () => {
         </div>
       </motion.div>
 
-      {knowledgeBases.length === 0 ? (
+      {documents.length === 0 ? (
         /* No knowledge bases - Show add options in center */
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -129,42 +203,66 @@ const KnowledgeBasePage: React.FC = () => {
           </div>
         </motion.div>
       ) : (
-        /* Has knowledge bases - Show table */
+        /* Has documents - Show documents grid */
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+          className="space-y-6"
         >
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Knowledge Base
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Last Updated
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {knowledgeBases.map((kb: any) => (
-                  <tr key={kb.id}>
-                    <td className="px-6 py-4">{kb.name}</td>
-                    <td className="px-6 py-4">{kb.status}</td>
-                    <td className="px-6 py-4">{kb.lastUpdated}</td>
-                    <td className="px-6 py-4">Actions</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Add New Document Button */}
+          <div className="flex justify-end">
+            <button
+              onClick={handleAddBlankPage}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              Add Document
+            </button>
+          </div>
+
+          {/* Documents Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {documents.map((doc, index) => (
+              <motion.div
+                key={doc.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-lg shadow-md border border-gray-200 p-6 flex flex-col hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEditDocument(doc)}
+                      className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors"
+                      title="Edit Document"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteDocument(doc.id)}
+                      className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                      title="Delete Document"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">{doc.name}</h3>
+                <p className="text-gray-600 text-sm mb-4 flex-1">
+                  {doc.content.substring(0, 100)}...
+                </p>
+                <div className="text-xs text-gray-400 border-t pt-3">
+                  <div>Created: {doc.createdAt.toLocaleDateString()}</div>
+                  <div>Updated: {doc.updatedAt.toLocaleDateString()}</div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       )}
@@ -338,6 +436,62 @@ const KnowledgeBasePage: React.FC = () => {
         </div>
       </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* Document Editor Modal */}
+      <AnimatePresence>
+        {showDocumentEditor && editingDocumentId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            onClick={handleCancelEdit}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-lg p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Edit Document: {documents.find(d => d.id === editingDocumentId)?.name}
+                </h2>
+                <button
+                  onClick={handleCancelEdit}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <textarea
+                value={editingDocumentContent}
+                onChange={(e) => setEditingDocumentContent(e.target.value)}
+                className="w-full h-96 p-4 border border-gray-300 rounded-lg resize-y mb-6 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Start writing your document here..."
+              />
+              
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={handleCancelEdit}
+                  className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveDocument}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  Save Changes
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

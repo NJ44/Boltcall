@@ -21,8 +21,7 @@ import {
   Bell,
   Calendar,
   Phone,
-  AlertCircle,
-  FileText
+  AlertCircle
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -140,7 +139,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
     { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-4 h-4" /> },
-    { to: '/dashboard/documents', label: 'Documents', icon: <FileText className="w-4 h-4" /> },
   ];
 
   // Dropdown items
@@ -171,7 +169,6 @@ const DashboardLayout: React.FC = () => {
     if (path === '/dashboard/agents') return 'Agents';
     if (path === '/dashboard/knowledge') return 'Knowledge Base';
     if (path === '/dashboard/phone') return 'Phone Numbers';
-    if (path === '/dashboard/documents') return 'Documents';
     if (path === '/dashboard/widgets') return 'Widgets';
     if (path === '/dashboard/sms-booking') return 'SMS Booking';
     if (path === '/dashboard/reminders') return 'Reminders';
