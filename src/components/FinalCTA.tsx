@@ -13,7 +13,7 @@ const FinalCTA: React.FC = () => {
         <div className="flex flex-col items-center justify-center text-center">
           <EmptyState
             title="Fast. Simple. Scalable."
-            description="Create one ai agent free in 5 minutes, and assign to any of your business channels."
+            description="Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels."
             icons={[Users, Phone, Calendar]}
             action={{
               label: "Start the free setup",
