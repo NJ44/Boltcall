@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Globe, Shield, Volume2 } from 'lucide-react';
+import { Bell, Globe } from 'lucide-react';
 
 const SettingsPage: React.FC = () => {
   return (
@@ -101,89 +101,6 @@ const SettingsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Voice & Audio */}
-        <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Volume2 className="w-5 h-5 text-purple-600" />
-            </div>
-            <h2 className="text-lg font-semibold text-zinc-900">Voice & Audio</h2>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="voice" className="block text-sm font-medium text-zinc-700 mb-2">
-                AI Voice
-              </label>
-              <select
-                id="voice"
-                defaultValue="sarah"
-                className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-              >
-                <option value="sarah">Sarah (Female, Professional)</option>
-                <option value="mike">Mike (Male, Friendly)</option>
-                <option value="emily">Emily (Female, Calm)</option>
-                <option value="david">David (Male, Authoritative)</option>
-              </select>
-            </div>
-            
-            <div>
-              <label htmlFor="volume" className="block text-sm font-medium text-zinc-700 mb-2">
-                Volume Level
-              </label>
-              <input
-                type="range"
-                id="volume"
-                min="0"
-                max="100"
-                defaultValue="80"
-                className="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer"
-              />
-              <div className="flex justify-between text-xs text-zinc-500 mt-1">
-                <span>Quiet</span>
-                <span>Loud</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Security */}
-        <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-red-100 rounded-lg">
-              <Shield className="w-5 h-5 text-red-600" />
-            </div>
-            <h2 className="text-lg font-semibold text-zinc-900">Security</h2>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-medium text-zinc-900">Two-Factor Authentication</h3>
-                <p className="text-sm text-zinc-600">Add an extra layer of security to your account</p>
-              </div>
-              <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm">
-                Enable
-              </button>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-medium text-zinc-900">Session Timeout</h3>
-                <p className="text-sm text-zinc-600">Automatically log out after inactivity</p>
-              </div>
-              <select
-                defaultValue="30"
-                className="px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm"
-              >
-                <option value="15">15 minutes</option>
-                <option value="30">30 minutes</option>
-                <option value="60">1 hour</option>
-                <option value="120">2 hours</option>
-              </select>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Save button */}

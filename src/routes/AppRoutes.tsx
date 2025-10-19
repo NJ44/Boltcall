@@ -25,6 +25,7 @@ import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
 import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
+import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
@@ -95,6 +96,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings/notifications" element={<NotificationsPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
+        <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
