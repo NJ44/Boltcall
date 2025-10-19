@@ -25,7 +25,9 @@ import {
   FileText,
   Ticket,
   Calendar as CalendarIcon,
-  Crown
+  Crown,
+  Server,
+  Mail
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -37,6 +39,7 @@ const DashboardLayout: React.FC = () => {
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
+  const [showServicesModal, setShowServicesModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
@@ -52,6 +55,20 @@ const DashboardLayout: React.FC = () => {
     appointmentCancelled: true,
     missedCall: true,
     systemAlert: false
+  });
+
+  // Services status
+  const [services, setServices] = useState({
+    aiReceptionist: true,
+    phoneSystem: true,
+    sms: true,
+    whatsapp: false,
+    email: true,
+    calendar: true,
+    analytics: true,
+    voiceLibrary: true,
+    knowledgeBase: true,
+    websiteBubble: false
   });
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -93,6 +110,13 @@ const DashboardLayout: React.FC = () => {
 
   const toggleNotification = (key: keyof typeof notifications) => {
     setNotifications(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  const toggleService = (key: keyof typeof services) => {
+    setServices(prev => ({
       ...prev,
       [key]: !prev[key]
     }));
@@ -524,6 +548,19 @@ const DashboardLayout: React.FC = () => {
                    {/* Notification indicator dot */}
                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
                  </button>
+
+                 {/* Services Status Button */}
+                 <button
+                   onClick={() => setShowServicesModal(true)}
+                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
+                   aria-label="Services status"
+                 >
+                   <Server className="w-5 h-5" />
+                   {/* Services status indicator dot */}
+                   <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
+                     Object.values(services).some(service => !service) ? 'bg-orange-500' : 'bg-green-500'
+                   }`}></div>
+                 </button>
                  
                  
                  {/* Add Team Member Button */}
@@ -764,6 +801,281 @@ const DashboardLayout: React.FC = () => {
                 }`} />
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Services Status Modal */}
+    {showServicesModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowServicesModal(false)}>
+        <div 
+          className="bg-white rounded-2xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Server className="w-5 h-5 text-blue-600" />
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900">Services Status</h2>
+            </div>
+            <button
+              onClick={() => setShowServicesModal(false)}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {/* Core Services */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 mb-3">Core Services</h3>
+              <div className="space-y-3">
+                {/* AI Receptionist */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Users className="w-5 h-5 text-blue-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">AI Receptionist</div>
+                      <div className="text-sm text-gray-500">Automated call handling</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('aiReceptionist')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.aiReceptionist ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.aiReceptionist ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Phone System */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-green-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Phone System</div>
+                      <div className="text-sm text-gray-500">Incoming and outgoing calls</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('phoneSystem')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.phoneSystem ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.phoneSystem ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* SMS */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <MessageSquare className="w-5 h-5 text-purple-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">SMS</div>
+                      <div className="text-sm text-gray-500">Text messaging service</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('sms')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.sms ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.sms ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-5 h-5 text-blue-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Email</div>
+                      <div className="text-sm text-gray-500">Email notifications and alerts</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('email')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.email ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.email ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Communication Services */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 mb-3">Communication</h3>
+              <div className="space-y-3">
+                {/* WhatsApp */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <MessageSquare className="w-5 h-5 text-green-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">WhatsApp</div>
+                      <div className="text-sm text-gray-500">WhatsApp Business integration</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('whatsapp')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.whatsapp ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.whatsapp ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Website Bubble */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <MessageSquare className="w-5 h-5 text-blue-500" />
+                    <div>
+                      <div className="font-medium text-gray-900">Website Bubble</div>
+                      <div className="text-sm text-gray-500">Live chat on your website</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('websiteBubble')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.websiteBubble ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.websiteBubble ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Management Services */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 mb-3">Management</h3>
+              <div className="space-y-3">
+                {/* Calendar */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="w-5 h-5 text-orange-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Calendar</div>
+                      <div className="text-sm text-gray-500">Appointment scheduling</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('calendar')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.calendar ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.calendar ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Analytics */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <BarChart3 className="w-5 h-5 text-purple-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Analytics</div>
+                      <div className="text-sm text-gray-500">Performance tracking and reports</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('analytics')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.analytics ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.analytics ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Voice Library */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Server className="w-5 h-5 text-indigo-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Voice Library</div>
+                      <div className="text-sm text-gray-500">AI voice management</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('voiceLibrary')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.voiceLibrary ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.voiceLibrary ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Knowledge Base */}
+                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <Building2 className="w-5 h-5 text-teal-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">Knowledge Base</div>
+                      <div className="text-sm text-gray-500">Document and information management</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('knowledgeBase')}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${
+                      services.knowledgeBase ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                      services.knowledgeBase ? 'translate-x-7' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-gray-200">
+            <button
+              onClick={() => setShowServicesModal(false)}
+              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Close
+            </button>
+            <button
+              onClick={() => {
+                // Handle save changes
+                console.log('Services updated:', services);
+                setShowServicesModal(false);
+              }}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Save Changes
+            </button>
           </div>
         </div>
       </div>

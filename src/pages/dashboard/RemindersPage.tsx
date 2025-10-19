@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, Save, MessageSquare, Bot, Plus, Edit, Trash2, Calendar, User, Phone, Mail } from 'lucide-react';
-import Button from '../../components/ui/Button';
+import { Clock, Plus, Edit, Trash2, Calendar, User, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Reminder {
@@ -67,7 +66,6 @@ const RemindersPage: React.FC = () => {
     }
   ]);
 
-  const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedReminder, setSelectedReminder] = useState<Reminder | null>(null);
@@ -97,7 +95,6 @@ const RemindersPage: React.FC = () => {
       setReminders([...reminders, newReminder]);
     }
     setShowEditModal(false);
-    setShowCreateModal(false);
     setEditingReminder({});
   };
 
@@ -117,7 +114,7 @@ const RemindersPage: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => setShowCreateModal(true)}
+          onClick={() => setShowEditModal(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />

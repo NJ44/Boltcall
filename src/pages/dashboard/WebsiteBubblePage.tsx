@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Plus, Copy, Eye, EyeOff, Code, Globe, Settings } from 'lucide-react';
+import { Plus, Copy, EyeOff, Code, Settings } from 'lucide-react';
 
 interface ClientAgent {
   id: string;
