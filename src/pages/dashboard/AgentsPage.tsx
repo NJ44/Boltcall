@@ -324,9 +324,6 @@ const AgentsPage: React.FC = () => {
 
           {/* Agents table */}
           <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-zinc-200">
-              <h2 className="text-lg font-semibold text-zinc-900">Active Agents</h2>
-            </div>
             
             <div className="overflow-x-auto">
               <table className="w-full">

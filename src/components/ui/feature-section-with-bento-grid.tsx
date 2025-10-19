@@ -103,7 +103,7 @@ function Feature() {
               ref={(el) => { cardRefs.current[1] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 1)}
               onMouseLeave={() => handleMouseLeave(1)}
-              className="bg-muted rounded-xl p-6 flex flex-col shadow-xl h-56 transition-transform duration-300 ease-out cursor-pointer -mt-[31px]"
+              className="bg-muted rounded-xl p-6 flex flex-col shadow-xl h-[229px] transition-transform duration-300 ease-out cursor-pointer -mt-[36px]"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

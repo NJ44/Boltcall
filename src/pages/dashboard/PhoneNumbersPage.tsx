@@ -64,9 +64,6 @@ const PhoneNumbersPage: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="bg-white rounded-lg border border-gray-200 overflow-hidden"
         >
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Active Phone Numbers</h2>
-          </div>
           
           <div className="divide-y divide-gray-200">
             {phoneNumbers.map((phone, index) => (

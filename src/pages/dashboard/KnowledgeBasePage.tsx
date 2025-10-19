@@ -160,7 +160,6 @@ const KnowledgeBasePage: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="max-w-3xl mx-auto text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Add a New Document</h2>
             <p className="text-gray-600">You can upload PDFs, create documents, or link web pages.</p>
           </div>
 
