@@ -102,7 +102,7 @@ const KnowledgeBasePage: React.FC = () => {
       };
       setDocuments(prev => [newDoc, ...prev]);
       setBlankPageTitle('');
-    handleClosePopup();
+      handleClosePopup();
       // Automatically open the new document for editing
       handleEditDocument(newDoc);
     }
@@ -140,6 +140,17 @@ const KnowledgeBasePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center justify-between"
+      >
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Knowledge Base</h1>
+        </div>
+      </motion.div>
 
       {documents.length === 0 ? (
         /* No knowledge bases - Show add options in center */
@@ -264,9 +275,8 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-[100]"
+              className="fixed inset-0 bg-black bg-opacity-50 z-50"
               onClick={handleClosePopup}
-              style={{ top: 0, left: 0, right: 0, bottom: 0 }}
             />
             
             {/* Popup */}
@@ -274,9 +284,9 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-0 z-[101] flex items-center justify-center p-4"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
             >
-              <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+              <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto z-10">
                 <div className="p-6">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">

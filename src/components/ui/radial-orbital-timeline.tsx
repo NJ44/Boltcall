@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Link, Zap } from "lucide-react";
 import { Badge } from "./badge";
+import Button from "./Button";
 import { Card, CardContent, CardHeader, CardTitle } from "./card-shadcn";
 
 interface TimelineItem {
@@ -310,11 +311,12 @@ export default function RadialOrbitalTimeline({
                                 (i) => i.id === relatedId
                               );
                               return (
-                                <button
+                                <Button
                                   key={relatedId}
+                                  size="sm"
                                   className="flex items-center h-6 px-2 py-0 text-xs rounded-none border border-white/20 bg-transparent hover:bg-white/10 text-white/80 hover:text-white transition-all"
-                                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                    e.stopPropagation();
+                                  onClick={(e?: React.MouseEvent<HTMLButtonElement>) => {
+                                    e?.stopPropagation();
                                     toggleItem(relatedId);
                                   }}
                                 >
@@ -323,7 +325,7 @@ export default function RadialOrbitalTimeline({
                                     size={8}
                                     className="ml-1 text-white/60"
                                   />
-                                </button>
+                                </Button>
                               );
                             })}
                           </div>

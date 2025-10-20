@@ -11,6 +11,7 @@ import {
 } from './animated-card-chart';
 import { Tilt } from './tilt';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { Clock } from 'lucide-react';
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -49,8 +50,8 @@ function Feature() {
               ref={(el) => { cardRefs.current[0] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 0)}
               onMouseLeave={() => handleMouseLeave(0)}
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center h-64 transition-transform duration-300 ease-out cursor-pointer"
-              style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1)', transformStyle: 'preserve-3d' }}
+              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-64 transition-transform duration-300 ease-out cursor-pointer"
+              style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -102,13 +103,17 @@ function Feature() {
               ref={(el) => { cardRefs.current[1] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 1)}
               onMouseLeave={() => handleMouseLeave(1)}
-              className="bg-muted rounded-xl p-6 flex flex-col h-[236px] transition-transform duration-300 ease-out cursor-pointer -mt-[43px] relative"
-              style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1)', transformStyle: 'preserve-3d' }}
+              className="bg-muted rounded-xl p-6 flex flex-col shadow-2xl h-[233px] transition-transform duration-300 ease-out cursor-pointer -mt-[40px] relative"
+              style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
+              {/* Background Clock Icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Clock className="w-32 h-32 text-white opacity-50" />
+              </div>
               
               {/* Centered Content */}
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
@@ -124,8 +129,8 @@ function Feature() {
               ref={(el) => { cardRefs.current[2] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 2)}
               onMouseLeave={() => handleMouseLeave(2)}
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center h-48 transition-transform duration-300 ease-out cursor-pointer"
-              style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.1)', transformStyle: 'preserve-3d' }}
+              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-48 transition-transform duration-300 ease-out cursor-pointer"
+              style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}

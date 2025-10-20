@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LayoutDashboard, 
   BarChart3, 
@@ -232,27 +231,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/help-center', label: 'Help Center', icon: <HelpCircle className="w-5 h-5" /> },
   ];
 
-  // Get current page name from route
-  const getPageName = () => {
-    const path = location.pathname;
-    if (path === '/dashboard') return 'Overview';
-    if (path === '/dashboard/analytics') return 'Analytics';
-    if (path === '/dashboard/agents') return 'Agents';
-    if (path === '/dashboard/knowledge') return 'Knowledge Base';
-    if (path === '/dashboard/phone') return 'Phone Numbers';
-    if (path === '/dashboard/widgets') return 'Widgets';
-    if (path === '/dashboard/sms-booking') return 'SMS Booking';
-    if (path === '/dashboard/reminders') return 'Reminders';
-    if (path === '/dashboard/website-bubble') return 'Website Bubble';
-    if (path === '/dashboard/assistant') return 'AI Receptionist';
-    if (path === '/dashboard/missed-calls') return 'Missed Calls';
-    if (path === '/dashboard/instant-lead-reply') return 'Instant Lead Reply';
-    if (path === '/dashboard/sms') return 'SMS';
-    if (path === '/dashboard/whatsapp') return 'WhatsApp';
-    if (path === '/dashboard/integrations') return 'Integrations';
-    if (path.startsWith('/dashboard/settings')) return 'Settings';
-    return 'Dashboard';
-  };
 
   // Helper function to render navigation items
   const renderNavItem = (item: any, isActive: boolean) => {
@@ -564,9 +542,6 @@ const DashboardLayout: React.FC = () => {
                  >
                    <Menu className="w-5 h-5" />
                  </button>
-                 <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                   {getPageName()}
-                 </h1>
                </div>
           
                {/* Right side - Free Trial, Notifications, Add Member, and Dark Mode */}
@@ -1180,27 +1155,15 @@ const DashboardLayout: React.FC = () => {
     )}
 
     {/* Help Sidebar */}
-    <AnimatePresence>
-      {showHelpSidebar && (
-        <div className="fixed inset-0 z-50 overflow-hidden">
-          {/* Backdrop */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-black bg-opacity-50"
-            onClick={() => setShowHelpSidebar(false)}
-          />
-          
-          {/* Sidebar */}
-          <motion.div 
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="absolute right-0 top-0 h-full w-96 bg-white shadow-xl"
-          >
+    <div className={`fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 ${showHelpSidebar ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300"
+        onClick={() => setShowHelpSidebar(false)}
+      />
+      
+      {/* Sidebar */}
+      <div className={`absolute right-0 top-0 h-full w-96 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${showHelpSidebar ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -1335,10 +1298,8 @@ const DashboardLayout: React.FC = () => {
               </div>
             </div>
           </div>
-          </motion.div>
         </div>
-      )}
-    </AnimatePresence>
+      </div>
     </ToastProvider>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
-import { ContainerScroll } from './ui/cards-stack';
+import { ContainerScroll, CardSticky } from './ui/cards-stack';
 import { Check } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
@@ -103,10 +103,12 @@ const HowItWorks: React.FC = () => {
           {/* Sticky Cards */}
           <ContainerScroll className="space-y-11 py-11 ml-16" style={{ minHeight: 'calc(100vh + 800px)' }}>
             {PROCESS_PHASES.map((phase, index) => (
-              <div
+              <CardSticky
                 key={phase.id}
+                index={index + 2}
+                incrementY={14}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '450px', minHeight: '400px' }}
+                style={{ maxWidth: '600px', top: '128px', bottom: 'auto' }}
               >
                 <div className="p-5 md:p-7 h-full flex">
                   {/* Left side - Header, text, and checklist */}
@@ -144,7 +146,7 @@ const HowItWorks: React.FC = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </CardSticky>
             ))}
           </ContainerScroll>
         </div>

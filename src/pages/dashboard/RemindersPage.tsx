@@ -112,14 +112,14 @@ const RemindersPage: React.FC = () => {
           <p className="text-gray-600 mt-1">
             Manage appointment reminders and track their status.
           </p>
-        </div>
-        <button
+            </div>
+            <button
           onClick={() => setShowEditModal(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
           Add Reminder
-        </button>
+            </button>
       </motion.div>
 
       {/* Reminders Table */}
@@ -174,17 +174,17 @@ const RemindersPage: React.FC = () => {
                           <Phone className="w-3 h-3 text-gray-400" />
                           <span className="text-xs text-gray-500">{reminder.clientPhone}</span>
                         </div>
-                      </div>
-                    </div>
+          </div>
+        </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 text-gray-400 mr-2" />
-            <div>
+                      <div>
                         <div className="text-sm text-gray-900">{reminder.appointmentDate}</div>
                         <div className="text-sm text-gray-500">{reminder.appointmentTime}</div>
-                      </div>
-                    </div>
+          </div>
+        </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ const RemindersPage: React.FC = () => {
                   <td className="px-6 py-4">
                     <div className="text-sm text-gray-900 max-w-xs truncate" title={reminder.reminderText}>
                       {reminder.reminderText}
-            </div>
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center gap-2">
@@ -223,7 +223,7 @@ const RemindersPage: React.FC = () => {
                         <Edit className="w-4 h-4" />
                         Reschedule
                       </button>
-            <button
+                      <button
                         onClick={() => {
                           setSelectedReminder(reminder);
                           setShowDeleteModal(true);
@@ -233,8 +233,8 @@ const RemindersPage: React.FC = () => {
                       >
                         <Trash2 className="w-4 h-4" />
                         Delete
-            </button>
-          </div>
+                      </button>
+                    </div>
                   </td>
                 </motion.tr>
               ))}
@@ -290,9 +290,8 @@ const RemindersPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]"
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
             onClick={() => setShowEditModal(false)}
-            style={{ top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
