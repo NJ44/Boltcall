@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import { HeroScrollDemo } from '../components/HeroScrollDemo';
@@ -21,6 +22,9 @@ const Home: React.FC = () => {
 
   return (
     <div className="bg-blue-600 relative">
+      {/* Giveaway Bar */}
+      <GiveawayBar />
+      
       {/* Content */}
       <div className="relative z-10">
         <Header />

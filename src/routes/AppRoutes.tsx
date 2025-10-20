@@ -35,6 +35,7 @@ import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import Features10Demo from '../pages/Features10Demo';
+import Giveaway from '../pages/Giveaway';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
 import TiltDemo from '../pages/TiltDemo';
@@ -103,6 +104,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/features-10-demo" element={<Features10Demo />} />
+        <Route path="/giveaway" element={<Giveaway />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
         <Route path="/tilt-demo" element={<TiltDemo />} />
