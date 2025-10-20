@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Button from './ui/Button';
 import Section from './ui/Section';
@@ -35,15 +34,10 @@ const Hero: React.FC = () => {
     <>
       <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
         
-        <div className="relative z-[10000] text-center">
+        <div className="relative z-[10000] text-center" style={{ backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}>
         {/* Main Headline */}
         {showMainText && (
-          <motion.h1 
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]">
             <WhisperText
               text="NEVER MISS A"
               className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
@@ -71,31 +65,21 @@ const Hero: React.FC = () => {
               y={0}
               triggerStart="top 80%"
             />
-          </motion.h1>
+          </h1>
         )}
 
         {/* Subheadline */}
         {showSubText && (
-          <motion.p
-            className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-[9999]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <p className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-[9999]">
             24/7 lead capture via calls, forms, and chat. Instant SMS/call <br />
             follow-up and auto-booking.
-          </motion.p>
+          </p>
         )}
 
 
         {/* CTA Buttons */}
         {showButtons && (
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-[9999]"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-[9999]">
           <Button
             onClick={() => {
               const howItWorksSection = document.getElementById('how-it-works');
@@ -117,9 +101,9 @@ const Hero: React.FC = () => {
             className="w-full sm:w-auto bg-transparent border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 hover:bg-transparent px-6 py-2 transition-all duration-75"
           >
             5-Min Free Setup
-          </Button>
-          </motion.div>
-        )}
+            </Button>
+            </div>
+          )}
 
         </div>
 

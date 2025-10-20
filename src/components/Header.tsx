@@ -50,7 +50,8 @@ const Header: React.FC = () => {
       className="fixed top-0 left-0 right-0 z-[10001] bg-transparent backdrop-blur-md"
       initial={{ y: -100, opacity: 0 }}
       animate={showNavbar ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      style={{ backfaceVisibility: 'hidden', WebkitFontSmoothing: 'antialiased' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -ml-4">
         <div className="flex items-center h-16">
