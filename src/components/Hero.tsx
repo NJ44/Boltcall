@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Button from './ui/Button';
@@ -9,6 +9,27 @@ import WhisperText from './ui/whisper-text';
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const navigate = useNavigate();
+  const [showMainText, setShowMainText] = useState(false);
+  const [showSubText, setShowSubText] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
+
+  useEffect(() => {
+    // Main text appears 2 seconds after website loads
+    const timer1 = setTimeout(() => {
+      setShowMainText(true);
+    }, 2000);
+
+    // Sub text and buttons appear 3 minutes after website loads
+    const timer2 = setTimeout(() => {
+      setShowSubText(true);
+      setShowButtons(true);
+    }, 180000); // 3 minutes = 180,000ms
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
 
   return (
     <>
@@ -16,55 +37,65 @@ const Hero: React.FC = () => {
         
         <div className="relative z-[10000] text-center">
         {/* Main Headline */}
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]">
-          <WhisperText
-            text="NEVER MISS A"
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
-            delay={125}
-            duration={0.625}
-            x={-20}
-            y={0}
-            triggerStart="top 80%"
-          />{' '}
-          <WhisperText
-            text="LEAD"
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
-            delay={125}
-            duration={0.625}
-            x={-20}
-            y={0}
-            triggerStart="top 80%"
-          />{' '}
-          <WhisperText
-            text="AGAIN."
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
-            delay={125}
-            duration={0.625}
-            x={-20}
-            y={0}
-            triggerStart="top 80%"
-          />
-        </h1>
+        {showMainText && (
+          <motion.h1 
+            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <WhisperText
+              text="NEVER MISS A"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
+              delay={125}
+              duration={0.625}
+              x={-20}
+              y={0}
+              triggerStart="top 80%"
+            />{' '}
+            <WhisperText
+              text="LEAD"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
+              delay={125}
+              duration={0.625}
+              x={-20}
+              y={0}
+              triggerStart="top 80%"
+            />{' '}
+            <WhisperText
+              text="AGAIN."
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
+              delay={125}
+              duration={0.625}
+              x={-20}
+              y={0}
+              triggerStart="top 80%"
+            />
+          </motion.h1>
+        )}
 
         {/* Subheadline */}
-        <motion.p
-          className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-[9999]"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.7 }}
-        >
-          24/7 lead capture via calls, forms, and chat. Instant SMS/call <br />
-          follow-up and auto-booking.
-        </motion.p>
+        {showSubText && (
+          <motion.p
+            className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-[9999]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            24/7 lead capture via calls, forms, and chat. Instant SMS/call <br />
+            follow-up and auto-booking.
+          </motion.p>
+        )}
 
 
         {/* CTA Buttons */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-[9999]"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0 }}
-        >
+        {showButtons && (
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-[9999]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
           <Button
             onClick={() => {
               const howItWorksSection = document.getElementById('how-it-works');
@@ -87,7 +118,8 @@ const Hero: React.FC = () => {
           >
             5-Min Free Setup
           </Button>
-        </motion.div>
+          </motion.div>
+        )}
 
         </div>
 
