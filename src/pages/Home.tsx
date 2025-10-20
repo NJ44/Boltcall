@@ -63,7 +63,6 @@ const Home: React.FC = () => {
             <Footer />
           </div>
         </main>
-        <div className="-mt-[555px]"></div>
       </div>
     </div>
   );
