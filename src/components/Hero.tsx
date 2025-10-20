@@ -12,11 +12,11 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <Section id="hero" background="gray" className="relative pt-20 pb-64 lg:pt-32 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
+      <Section id="hero" background="gray" className="relative pt-8 pb-64 lg:pt-12 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
         
         <div className="relative z-[10000] text-center">
         {/* Main Headline */}
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 pt-8 relative z-[9999]">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 relative z-[9999]">
           <WhisperText
             text="NEVER MISS A"
             className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
