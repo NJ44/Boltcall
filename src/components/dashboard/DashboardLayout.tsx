@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LayoutDashboard, 
   BarChart3, 
@@ -1179,16 +1180,27 @@ const DashboardLayout: React.FC = () => {
     )}
 
     {/* Help Sidebar */}
-    {showHelpSidebar && (
-      <div className="fixed inset-0 z-50 overflow-hidden">
-        {/* Backdrop */}
-        <div 
-          className="absolute inset-0 bg-black bg-opacity-50"
-          onClick={() => setShowHelpSidebar(false)}
-        />
-        
-        {/* Sidebar */}
-        <div className="absolute right-0 top-0 h-full w-96 bg-white shadow-xl">
+    <AnimatePresence>
+      {showHelpSidebar && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Backdrop */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-black bg-opacity-50"
+            onClick={() => setShowHelpSidebar(false)}
+          />
+          
+          {/* Sidebar */}
+          <motion.div 
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="absolute right-0 top-0 h-full w-96 bg-white shadow-xl"
+          >
           <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -1323,9 +1335,10 @@ const DashboardLayout: React.FC = () => {
               </div>
             </div>
           </div>
+          </motion.div>
         </div>
-      </div>
-    )}
+      )}
+    </AnimatePresence>
     </ToastProvider>
   );
 };

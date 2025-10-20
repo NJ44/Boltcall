@@ -269,10 +269,6 @@ const AgentsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Page header */}
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900">Agents</h1>
-      </div>
 
       {agents.length === 0 ? (
         /* No agents - Show create options */
@@ -586,10 +582,10 @@ const AgentsPage: React.FC = () => {
       {/* Templates Modal */}
       {showTemplatesModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-zinc-900">Browse Industry Templates</h2>
+          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+            <div className="p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-zinc-900">Browse Industry Templates</h2>
                 <button 
                   onClick={() => setShowTemplatesModal(false)}
                   className="text-zinc-400 hover:text-zinc-600 transition-colors"
@@ -598,78 +594,61 @@ const AgentsPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-zinc-600 mb-6">
-                Choose from our pre-built AI agent templates designed for specific industries. 
-                Each template comes with industry-specific features, sample questions, and optimized settings.
+              <p className="text-zinc-600 mb-4 text-sm">
+                Choose from our pre-built AI agent templates designed for specific industries.
               </p>
 
               {/* Templates Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {industryTemplates.map((template) => (
                   <div
                     key={template.id}
-                    className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all cursor-pointer group"
+                    className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group"
                     onClick={() => handleTemplateSelect(template)}
                   >
                     {/* Template Header */}
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className={`w-12 h-12 ${template.color} rounded-lg flex items-center justify-center text-white`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className={`w-8 h-8 ${template.color} rounded-md flex items-center justify-center text-white text-sm`}>
                         {template.icon}
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors text-sm">
                           {template.name}
                         </h3>
-                        <p className="text-sm text-gray-500">{template.industry}</p>
+                        <p className="text-xs text-gray-500">{template.industry}</p>
                       </div>
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm mb-4">{template.description}</p>
+                    <p className="text-gray-600 text-xs mb-2 line-clamp-2">{template.description}</p>
 
                     {/* Features */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-900 mb-2">Key Features:</h4>
-                      <ul className="text-xs text-gray-600 space-y-1">
-                        {template.features.slice(0, 3).map((feature, index) => (
-                          <li key={index} className="flex items-center gap-2">
-                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                            {feature}
-                          </li>
-                        ))}
-                        {template.features.length > 3 && (
-                          <li className="text-gray-500">+{template.features.length - 3} more</li>
-                        )}
-                      </ul>
-                    </div>
-
-                    {/* Sample Questions */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-900 mb-2">Sample Questions:</h4>
-                      <div className="text-xs text-gray-600 bg-gray-50 rounded-lg p-2">
-                        "{template.sampleQuestions[0]}"
-                      </div>
-                    </div>
-
-                    {/* Voice & Greeting */}
-                    <div className="text-xs text-gray-500 space-y-1">
-                      <div><strong>Voice:</strong> {template.voice}</div>
-                      <div className="truncate"><strong>Greeting:</strong> {template.greeting}</div>
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {template.features.slice(0, 2).map((feature, index) => (
+                        <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                          {feature}
+                        </span>
+                      ))}
+                      {template.features.length > 2 && (
+                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                          +{template.features.length - 2}
+                        </span>
+                      )}
                     </div>
 
                     {/* Use Template Button */}
-                    <button className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                      Use This Template
+                    <button className="w-full px-2 py-1 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 transition-colors">
+                      Use Template
                     </button>
                   </div>
                 ))}
               </div>
 
               {/* Modal Actions */}
-              <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-zinc-200">
+              <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-zinc-200">
                 <button
                   onClick={() => setShowTemplatesModal(false)}
-                  className="px-4 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
+                  className="px-3 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors text-sm"
                 >
                   Cancel
                 </button>
