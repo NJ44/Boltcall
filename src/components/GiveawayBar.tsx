@@ -1,21 +1,11 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Gift, X, Star } from 'lucide-react';
+import { Gift, Star } from 'lucide-react';
 
 const GiveawayBar: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  const handleDismiss = () => {
-    setIsVisible(false);
-  };
-
-  if (!isVisible) return null;
-
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
+    <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
@@ -60,14 +50,6 @@ const GiveawayBar: React.FC = () => {
                   </Link>
                 </div>
 
-                {/* Right side - Dismiss button */}
-                <button
-                  onClick={handleDismiss}
-                  className="flex-shrink-0 p-1 rounded-full hover:bg-white/20 transition-colors duration-200"
-                  aria-label="Dismiss announcement"
-                >
-                  <X className="w-5 h-5" />
-                </button>
               </div>
 
               {/* Mobile CTA */}
@@ -86,8 +68,6 @@ const GiveawayBar: React.FC = () => {
           {/* Shimmer effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 animate-shimmer"></div>
         </motion.div>
-      )}
-    </AnimatePresence>
   );
 };
 
