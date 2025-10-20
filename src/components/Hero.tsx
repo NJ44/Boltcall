@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      <Section id="hero" background="gray" className="relative pt-0 pb-64 lg:pt-0 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
+      <Section id="hero" background="gray" className="relative -mt-24 pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
         
         <div className="relative z-[10000] text-center">
         {/* Main Headline */}
