@@ -20,7 +20,7 @@ const GiveawayBar: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-red-500 text-white"
+          className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white fixed top-0 left-0 right-0 z-50"
         >
           {/* Animated background pattern */}
           <div className="absolute inset-0 overflow-hidden">

@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       <GiveawayBar />
       
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 pt-32">
         <Header />
         <main className="pb-0">
           <Hero />

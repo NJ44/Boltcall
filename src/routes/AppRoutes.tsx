@@ -15,10 +15,6 @@ import SmsPage from '../pages/dashboard/SmsPage';
 import WhatsappPage from '../pages/dashboard/WhatsappPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
 import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
-import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
-import MembersPage from '../pages/dashboard/settings/MembersPage';
-import BillingPage from '../pages/dashboard/settings/BillingPage';
-import NotificationsPage from '../pages/dashboard/settings/NotificationsPage';
 import AssistantPage from '../pages/dashboard/AssistantPage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
@@ -36,6 +32,12 @@ import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import Features10Demo from '../pages/Features10Demo';
 import Giveaway from '../pages/Giveaway';
+import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
+import MembersPage from '../pages/dashboard/settings/MembersPage';
+import PlanBillingPage from '../pages/dashboard/settings/PlanBillingPage';
+import PackagesPage from '../pages/dashboard/settings/PackagesPage';
+import UsagePage from '../pages/dashboard/settings/UsagePage';
+import NotificationPage from '../pages/dashboard/settings/NotificationPage';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
 import TiltDemo from '../pages/TiltDemo';
@@ -93,8 +95,10 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings" element={<SettingsPage />} />
           <Route path="settings/preferences" element={<PreferencesPage />} />
           <Route path="settings/members" element={<MembersPage />} />
-          <Route path="settings/billing" element={<BillingPage />} />
-          <Route path="settings/notifications" element={<NotificationsPage />} />
+          <Route path="settings/plan-billing" element={<PlanBillingPage />} />
+          <Route path="settings/packages" element={<PackagesPage />} />
+          <Route path="settings/usage" element={<UsagePage />} />
+          <Route path="settings/notifications" element={<NotificationPage />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
         <Route path="/help-center" element={<HelpCenter />} />

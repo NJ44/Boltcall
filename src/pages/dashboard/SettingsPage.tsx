@@ -1,113 +1,161 @@
 import React from 'react';
-import { Bell, Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Settings, Users, CreditCard, Package, BarChart3, Bell, Palette, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const SettingsPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const settingsSections = [
+    {
+      id: 'preferences',
+      title: 'Preferences',
+      description: 'Customize your experience and account settings',
+      icon: <Palette className="w-6 h-6" />,
+      color: 'text-purple-600 bg-purple-100',
+      route: '/dashboard/settings/preferences'
+    },
+    {
+      id: 'members',
+      title: 'Members',
+      description: 'Manage team members and their access levels',
+      icon: <Users className="w-6 h-6" />,
+      color: 'text-blue-600 bg-blue-100',
+      route: '/dashboard/settings/members'
+    },
+    {
+      id: 'plan-billing',
+      title: 'Plan & Billing',
+      description: 'Manage your subscription and payment information',
+      icon: <CreditCard className="w-6 h-6" />,
+      color: 'text-green-600 bg-green-100',
+      route: '/dashboard/settings/plan-billing'
+    },
+    {
+      id: 'packages',
+      title: 'Packages',
+      description: 'Browse and manage available service packages',
+      icon: <Package className="w-6 h-6" />,
+      color: 'text-orange-600 bg-orange-100',
+      route: '/dashboard/settings/packages'
+    },
+    {
+      id: 'usage',
+      title: 'Usage',
+      description: 'Monitor your AI agent\'s performance and usage',
+      icon: <BarChart3 className="w-6 h-6" />,
+      color: 'text-indigo-600 bg-indigo-100',
+      route: '/dashboard/settings/usage'
+    },
+    {
+      id: 'notifications',
+      title: 'Notifications',
+      description: 'Configure notification preferences and channels',
+      icon: <Bell className="w-6 h-6" />,
+      color: 'text-pink-600 bg-pink-100',
+      route: '/dashboard/settings/notifications'
+    }
+  ];
+
   return (
     <div className="space-y-8">
-      {/* Page header */}
+      {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-zinc-900">Settings</h1>
-        <p className="text-zinc-600 mt-1">Manage your account preferences and system settings</p>
+        <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
+        <p className="text-gray-600 mt-2">
+          Manage your account preferences and system settings
+        </p>
       </div>
 
-      {/* Settings sections */}
-      <div className="space-y-6">
-        {/* Notifications */}
-        <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Bell className="w-5 h-5 text-blue-600" />
-            </div>
-            <h2 className="text-lg font-semibold text-zinc-900">Notifications</h2>
+      {/* Settings Overview */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+            <Settings className="w-5 h-5 text-gray-600" />
           </div>
-          
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-medium text-zinc-900">Email Notifications</h3>
-                <p className="text-sm text-zinc-600">Receive email alerts for new appointments and leads</p>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" defaultChecked className="sr-only peer" />
-                <div className="w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-              </label>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-medium text-zinc-900">SMS Notifications</h3>
-                <p className="text-sm text-zinc-600">Get text messages for urgent appointments</p>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" className="sr-only peer" />
-                <div className="w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-              </label>
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-medium text-zinc-900">Push Notifications</h3>
-                <p className="text-sm text-zinc-600">Browser notifications for real-time updates</p>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" defaultChecked className="sr-only peer" />
-                <div className="w-11 h-6 bg-zinc-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-              </label>
-            </div>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">Settings Overview</h2>
+            <p className="text-sm text-gray-600">Quick access to all your settings and preferences</p>
           </div>
         </div>
-
-        {/* Language & Region */}
-        <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <Globe className="w-5 h-5 text-green-600" />
-            </div>
-            <h2 className="text-lg font-semibold text-zinc-900">Language & Region</h2>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="language" className="block text-sm font-medium text-zinc-700 mb-2">
-                Language
-              </label>
-              <select
-                id="language"
-                defaultValue="en"
-                className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-              >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-              </select>
-            </div>
-            
-            <div>
-              <label htmlFor="timezone" className="block text-sm font-medium text-zinc-700 mb-2">
-                Timezone
-              </label>
-              <select
-                id="timezone"
-                defaultValue="est"
-                className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-              >
-                <option value="est">Eastern Time (EST)</option>
-                <option value="pst">Pacific Time (PST)</option>
-                <option value="cst">Central Time (CST)</option>
-                <option value="mst">Mountain Time (MST)</option>
-              </select>
-            </div>
-          </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {settingsSections.map((section, index) => (
+            <motion.button
+              key={section.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              onClick={() => navigate(section.route)}
+              className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${section.color}`}>
+                  {section.icon}
+                </div>
+                <div className="text-left">
+                  <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                    {section.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">{section.description}</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+            </motion.button>
+          ))}
         </div>
-
       </div>
 
-      {/* Save button */}
-      <div className="flex justify-end">
-        <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-          Save All Settings
-        </button>
+      {/* Quick Actions */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        <div className="grid md:grid-cols-2 gap-4">
+          <button 
+            onClick={() => navigate('/dashboard/settings/plan-billing')}
+            className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+              <CreditCard className="w-4 h-4 text-green-600" />
+            </div>
+            <div className="text-left">
+              <h3 className="font-medium text-gray-900">Manage Billing</h3>
+              <p className="text-sm text-gray-600">Update payment methods and view invoices</p>
+            </div>
+          </button>
+          
+          <button 
+            onClick={() => navigate('/dashboard/settings/members')}
+            className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <Users className="w-4 h-4 text-blue-600" />
+            </div>
+            <div className="text-left">
+              <h3 className="font-medium text-gray-900">Invite Team Member</h3>
+              <p className="text-sm text-gray-600">Add new members to your team</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Settings Changes</h2>
+        <div className="space-y-3">
+          {[
+            { action: 'Notification preferences updated', time: '2 hours ago', type: 'notifications' },
+            { action: 'Team member added', time: '1 day ago', type: 'members' },
+            { action: 'Billing information updated', time: '3 days ago', type: 'billing' }
+          ].map((activity, index) => (
+            <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-gray-900">{activity.action}</p>
+                <p className="text-xs text-gray-600">{activity.time}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import Button from './ui/Button';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
 
   const navItems = [
@@ -35,9 +36,22 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      // When scrolled past the announcement bar (64px), make header stick to top
+      setIsSticky(scrollTop >= 64);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-[10001] bg-transparent backdrop-blur-md"
+      className={`fixed left-0 right-0 z-40 bg-transparent backdrop-blur-md transition-all duration-300 ${
+        isSticky ? 'top-0' : 'top-16'
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
