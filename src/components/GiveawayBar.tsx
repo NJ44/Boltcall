@@ -32,7 +32,7 @@ const GiveawayBar: React.FC = () => {
 
           <div className="relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between py-3">
+              <div className="flex items-center justify-between py-2">
                 {/* Left side - Announcement content */}
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center space-x-2">
@@ -71,7 +71,7 @@ const GiveawayBar: React.FC = () => {
               </div>
 
               {/* Mobile CTA */}
-              <div className="md:hidden pb-3">
+              <div className="md:hidden pb-2">
                 <Link
                   to="/giveaway"
                   className="inline-flex items-center justify-center w-full px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg font-semibold text-sm transition-all duration-300 border border-white/30"
