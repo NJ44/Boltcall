@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
     <>
       <Section id="hero" background="gray" className="relative -mt-24 pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
         
-        <div className="relative z-[10000] text-center">
+        <div className="relative z-[10000] text-center pt-16 lg:pt-20">
         {/* Main Headline */}
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 relative z-[9999]">
           <WhisperText

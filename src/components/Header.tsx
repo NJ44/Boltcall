@@ -50,7 +50,7 @@ const Header: React.FC = () => {
   return (
     <motion.header
       className={`fixed left-0 right-0 z-40 bg-transparent backdrop-blur-md transition-all duration-300 ${
-        isSticky ? 'top-0' : 'top-16'
+        isSticky ? 'top-0' : 'top-[61px]'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
