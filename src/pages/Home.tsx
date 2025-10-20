@@ -21,7 +21,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-blue-600 relative">
+    <div className="relative">
       {/* Giveaway Bar */}
       <GiveawayBar />
       
