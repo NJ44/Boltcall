@@ -53,7 +53,7 @@ const GiveawayPage: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-blue-600 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -96,10 +96,10 @@ const GiveawayPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-blue-600">
       {/* Header */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-red-500/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-blue-600/20 to-blue-700/20"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -115,7 +115,7 @@ const GiveawayPage: React.FC = () => {
               <Gift className="w-10 h-10 text-yellow-300" />
             </motion.div>
             
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
               🎉 MEGA GIVEAWAY! 🎉
             </h1>
             
@@ -204,7 +204,7 @@ const GiveawayPage: React.FC = () => {
               variant="primary"
               size="lg"
               disabled={isLoading || !email}
-              className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white font-bold py-4 text-lg"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-lg"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -244,7 +244,7 @@ const GiveawayPage: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-black/20 backdrop-blur-sm py-8">
+      <div className="bg-blue-700 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Link to="/">
             <Button variant="outline" className="text-white border-white/30 hover:bg-white/10">
