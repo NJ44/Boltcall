@@ -102,7 +102,7 @@ const KnowledgeBasePage: React.FC = () => {
       };
       setDocuments(prev => [newDoc, ...prev]);
       setBlankPageTitle('');
-      handleClosePopup();
+    handleClosePopup();
       // Automatically open the new document for editing
       handleEditDocument(newDoc);
     }
@@ -264,8 +264,9 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-50"
+              className="fixed inset-0 bg-black bg-opacity-50 z-[100]"
               onClick={handleClosePopup}
+              style={{ top: 0, left: 0, right: 0, bottom: 0 }}
             />
             
             {/* Popup */}
@@ -273,7 +274,7 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 z-[101] flex items-center justify-center p-4"
             >
               <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-6">

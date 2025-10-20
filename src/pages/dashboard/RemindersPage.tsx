@@ -180,7 +180,7 @@ const RemindersPage: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 text-gray-400 mr-2" />
-                      <div>
+            <div>
                         <div className="text-sm text-gray-900">{reminder.appointmentDate}</div>
                         <div className="text-sm text-gray-500">{reminder.appointmentTime}</div>
                       </div>
@@ -211,7 +211,7 @@ const RemindersPage: React.FC = () => {
                   <td className="px-6 py-4">
                     <div className="text-sm text-gray-900 max-w-xs truncate" title={reminder.reminderText}>
                       {reminder.reminderText}
-                    </div>
+            </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center gap-2">
@@ -223,7 +223,7 @@ const RemindersPage: React.FC = () => {
                         <Edit className="w-4 h-4" />
                         Reschedule
                       </button>
-                      <button
+            <button
                         onClick={() => {
                           setSelectedReminder(reminder);
                           setShowDeleteModal(true);
@@ -233,8 +233,8 @@ const RemindersPage: React.FC = () => {
                       >
                         <Trash2 className="w-4 h-4" />
                         Delete
-                      </button>
-                    </div>
+            </button>
+          </div>
                   </td>
                 </motion.tr>
               ))}
@@ -290,8 +290,9 @@ const RemindersPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]"
             onClick={() => setShowEditModal(false)}
+            style={{ top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -312,7 +313,7 @@ const RemindersPage: React.FC = () => {
                       onChange={(e) => setEditingReminder({ ...editingReminder, appointmentDate: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
-                  </div>
+            </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Time</label>
                     <input
@@ -321,8 +322,8 @@ const RemindersPage: React.FC = () => {
                       onChange={(e) => setEditingReminder({ ...editingReminder, appointmentTime: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
-                  </div>
-                </div>
+          </div>
+        </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Timing</label>
@@ -338,9 +339,9 @@ const RemindersPage: React.FC = () => {
                     <option value="48 hours before">48 hours before</option>
                     <option value="72 hours before">72 hours before</option>
                   </select>
-                </div>
+      </div>
 
-                <div>
+          <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
                   <textarea
                     value={editingReminder.reminderText || ''}
@@ -348,8 +349,8 @@ const RemindersPage: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     rows={4}
                   />
-                </div>
-              </div>
+          </div>
+        </div>
 
               <div className="flex justify-end gap-3 mt-6">
                 <button
@@ -364,7 +365,7 @@ const RemindersPage: React.FC = () => {
                 >
                   Save Changes
                 </button>
-              </div>
+      </div>
             </motion.div>
           </motion.div>
         )}

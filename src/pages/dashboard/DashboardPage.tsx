@@ -172,8 +172,9 @@ const DashboardPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 z-40"
+              className="fixed inset-0 bg-black/30 z-[100]"
               onClick={() => setShowHelpChat(false)}
+              style={{ top: 0, left: 0, right: 0, bottom: 0 }}
             />
 
             {/* Side Panel */}
@@ -182,7 +183,7 @@ const DashboardPage: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 h-full w-full md:w-[400px] bg-white shadow-2xl z-50 flex flex-col"
+              className="fixed right-0 top-0 h-full w-full md:w-[400px] bg-white shadow-2xl z-[101] flex flex-col"
             >
               {/* Header */}
               <div className="bg-blue-600 text-white p-6 flex items-center justify-between">
