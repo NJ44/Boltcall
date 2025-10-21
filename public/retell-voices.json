@@ -7,66 +7,66 @@
     "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-7cf0e2b1-8daf-4fe4-89ad-f6039398f359.mp3"
   },
   {
-    "id": "cartesia-Alice",
-    "name": "Alice",
-    "accent": "American",
-    "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-alice-preview.mp3"
-  },
-  {
-    "id": "cartesia-Bella",
-    "name": "Bella",
-    "accent": "American",
-    "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-bella-preview.mp3"
-  },
-  {
-    "id": "cartesia-Charlie",
-    "name": "Charlie",
+    "id": "11labs-Dorothy",
+    "name": "Dorothy",
     "accent": "British",
-    "gender": "Male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-charlie-preview.mp3"
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/Dorothy.mp3"
   },
   {
-    "id": "cartesia-Diana",
-    "name": "Diana",
+    "id": "openai-Nova",
+    "name": "Nova",
     "accent": "American",
-    "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-diana-preview.mp3"
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/nova_.wav"
   },
   {
-    "id": "cartesia-Eve",
-    "name": "Eve",
-    "accent": "American",
-    "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-eve-preview.mp3"
-  },
-  {
-    "id": "cartesia-Frank",
-    "name": "Frank",
-    "accent": "American",
-    "gender": "Male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-frank-preview.mp3"
-  },
-  {
-    "id": "cartesia-Grace",
-    "name": "Grace",
+    "id": "11labs-Anthony",
+    "name": "Anthony",
     "accent": "British",
-    "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-grace-preview.mp3"
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/anthony.mp3"
   },
   {
-    "id": "cartesia-Henry",
-    "name": "Henry",
-    "accent": "British",
-    "gender": "Male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-henry-preview.mp3"
+    "id": "11labs-Billy",
+    "name": "Billy",
+    "accent": "American",
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/billy.mp3"
   },
   {
-    "id": "cartesia-Iris",
-    "name": "Iris",
+    "id": "11labs-Lily",
+    "name": "Lily",
+    "accent": "American",
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/lily.mp3"
+  },
+  {
+    "id": "11labs-Marissa",
+    "name": "Marissa",
+    "accent": "American",
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/marissa.mp3"
+  },
+  {
+    "id": "cartesia-Brian",
+    "name": "Brian",
+    "accent": "American",
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-ccb4cea5-13c8-4559-a9c8-e83bc8171c4d.mp3"
+  },
+  {
+    "id": "cartesia-Evie",
+    "name": "Evie",
+    "accent": "American",
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-214c4b7d-9ba4-4114-87fa-be8e4ce9330e.mp3"
+  },
+  {
+    "id": "cartesia-Summer",
+    "name": "Summer",
     "accent": "American",
     "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-iris-preview.mp3"
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-f80e7298-93f5-46d0-86f2-b8f29cfc88bd.mp3"
   }
 ]
