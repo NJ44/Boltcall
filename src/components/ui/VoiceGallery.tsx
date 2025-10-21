@@ -32,6 +32,16 @@ const VoiceGallery: React.FC<VoiceGalleryProps> = ({
         setLoading(true);
         const voicesData = await getVoices();
         setVoices(voicesData);
+        
+        // Preload all audio files for faster playback
+        voicesData.forEach(voice => {
+          if (voice.preview) {
+            const audio = new Audio();
+            audio.preload = 'metadata';
+            audio.src = voice.preview;
+          }
+        });
+        
         setLoading(false);
       } catch (err) {
         setError('Failed to load voices');
@@ -42,32 +52,63 @@ const VoiceGallery: React.FC<VoiceGalleryProps> = ({
     fetchVoices();
   }, []);
 
-  const handlePlay = (voiceId: string) => {
-    // Pause any currently playing audio
+  // Cleanup audio when component unmounts
+  useEffect(() => {
+    return () => {
+      if (sharedAudioRef.current) {
+        sharedAudioRef.current.pause();
+        sharedAudioRef.current.src = '';
+      }
+    };
+  }, []);
+
+  const handlePlay = async (voiceId: string) => {
+    // Stop any currently playing audio immediately
     if (sharedAudioRef.current) {
       sharedAudioRef.current.pause();
       sharedAudioRef.current.currentTime = 0;
+      sharedAudioRef.current.src = '';
     }
     
-    setPlayingVoiceId(voiceId);
+    // Clear any existing playing state
+    setPlayingVoiceId(null);
     
-    // Set the audio source and play
     const voice = voices.find(v => v.id === voiceId);
     if (voice && sharedAudioRef.current) {
+      // Preload the audio to reduce delay
+      sharedAudioRef.current.preload = 'auto';
       sharedAudioRef.current.src = voice.preview;
-      sharedAudioRef.current.play().catch(console.error);
+      
+      // Set up event listeners for this audio
+      sharedAudioRef.current.oncanplaythrough = () => {
+        setPlayingVoiceId(voiceId);
+        sharedAudioRef.current?.play().catch(console.error);
+      };
+      
+      sharedAudioRef.current.onerror = () => {
+        console.error('Failed to load audio:', voice.preview);
+        setPlayingVoiceId(null);
+      };
+      
+      // Load the audio
+      sharedAudioRef.current.load();
     }
   };
 
   const handlePause = () => {
     if (sharedAudioRef.current) {
       sharedAudioRef.current.pause();
+      sharedAudioRef.current.currentTime = 0;
     }
     setPlayingVoiceId(null);
   };
 
   const handleEnded = () => {
     setPlayingVoiceId(null);
+    // Clean up the audio reference
+    if (sharedAudioRef.current) {
+      sharedAudioRef.current.currentTime = 0;
+    }
   };
 
   if (loading) {
