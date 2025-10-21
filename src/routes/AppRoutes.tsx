@@ -8,6 +8,7 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Dashboard from '../pages/Dashboard';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
+import SettingsLayout from '../components/dashboard/SettingsLayout';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
 import AgentsPage from '../pages/dashboard/AgentsPage';
@@ -32,6 +33,7 @@ import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import Features10Demo from '../pages/Features10Demo';
 import Giveaway from '../pages/Giveaway';
+import GeneralPage from '../pages/dashboard/settings/GeneralPage';
 import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
 import MembersPage from '../pages/dashboard/settings/MembersPage';
 import PlanBillingPage from '../pages/dashboard/settings/PlanBillingPage';
@@ -93,13 +95,46 @@ const NavigationWrapper: React.FC = () => {
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="website-bubble" element={<WebsiteBubblePage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="settings/preferences" element={<PreferencesPage />} />
-          <Route path="settings/members" element={<MembersPage />} />
-          <Route path="settings/plan-billing" element={<PlanBillingPage />} />
-          <Route path="settings/packages" element={<PackagesPage />} />
-          <Route path="settings/usage" element={<UsagePage />} />
-          <Route path="settings/notifications" element={<NotificationPage />} />
+          <Route path="settings" element={
+            <SettingsLayout>
+              <SettingsPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/general" element={
+            <SettingsLayout>
+              <GeneralPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/preferences" element={
+            <SettingsLayout>
+              <PreferencesPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/members" element={
+            <SettingsLayout>
+              <MembersPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/plan-billing" element={
+            <SettingsLayout>
+              <PlanBillingPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/packages" element={
+            <SettingsLayout>
+              <PackagesPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/usage" element={
+            <SettingsLayout>
+              <UsagePage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/notifications" element={
+            <SettingsLayout>
+              <NotificationPage />
+            </SettingsLayout>
+          } />
         </Route>
         <Route path="/setup" element={<Setup />} />
         <Route path="/help-center" element={<HelpCenter />} />

@@ -12,7 +12,7 @@ const FreeSetup: React.FC = () => {
             </div>
             <h2 className="text-8xl md:text-9xl lg:text-[10rem] font-bold text-white mb-6" style={{ fontSize: '4em' }}>
               <div>One Setup.</div>
-              <div>All Channels.</div>
+              <div>All <span className="text-blue-500">Channels.</span></div>
             </h2>
             <p className="text-xl text-white mb-8">
               Get your AI assistant up and running in minutes with our completely free setup process. No hidden fees, no credit card required.
