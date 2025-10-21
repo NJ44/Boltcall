@@ -38,6 +38,7 @@ import PlanBillingPage from '../pages/dashboard/settings/PlanBillingPage';
 import PackagesPage from '../pages/dashboard/settings/PackagesPage';
 import UsagePage from '../pages/dashboard/settings/UsagePage';
 import NotificationPage from '../pages/dashboard/settings/NotificationPage';
+import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
 import TiltDemo from '../pages/TiltDemo';
@@ -109,6 +110,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/features-10-demo" element={<Features10Demo />} />
         <Route path="/giveaway" element={<Giveaway />} />
+        <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
         <Route path="/tilt-demo" element={<TiltDemo />} />

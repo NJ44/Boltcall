@@ -102,7 +102,7 @@ const KnowledgeBasePage: React.FC = () => {
       };
       setDocuments(prev => [newDoc, ...prev]);
       setBlankPageTitle('');
-      handleClosePopup();
+    handleClosePopup();
       // Automatically open the new document for editing
       handleEditDocument(newDoc);
     }

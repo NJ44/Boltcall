@@ -63,19 +63,21 @@ export async function getVoices(): Promise<any[]> {
       }));
     }
 
-    // Real Retell API call
-    const response = await fetch('https://api.retellai.com/v2/voices', {
-      headers: { 
+    // For development: use a simple fetch with CORS proxy
+    const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.retellai.com/v2/voices'), {
+      method: 'GET',
+      headers: {
         'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
-    const data = await response.json();
+
+    const proxyData = await response.json();
+    const data = JSON.parse(proxyData.contents);
     
     return data.items.map((voice: any) => ({
       id: voice.voice_id,
