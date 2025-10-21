@@ -63,29 +63,70 @@ export async function getVoices(): Promise<any[]> {
       }));
     }
 
-    // For development: use a simple fetch with CORS proxy
-    const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.retellai.com/v2/voices'), {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Check if we have cached voices in localStorage (less than 1 hour old)
+    const cachedVoices = localStorage.getItem('retellVoices');
+    const cachedTimestamp = localStorage.getItem('retellVoicesTimestamp');
+    
+    if (cachedVoices && cachedTimestamp) {
+      const age = Date.now() - parseInt(cachedTimestamp);
+      if (age < 3600000) { // 1 hour
+        console.log('Using cached Retell voices');
+        return JSON.parse(cachedVoices);
+      }
     }
 
-    const proxyData = await response.json();
-    const data = JSON.parse(proxyData.contents);
+    // Try to fetch from the HTML page that can bypass CORS
+    try {
+      const response = await fetch('/fetch-voices.html');
+      if (response.ok) {
+        // Wait a bit for the page to fetch and store the data
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Check if data was stored
+        const storedVoices = localStorage.getItem('retellVoices');
+        if (storedVoices) {
+          console.log('Using voices fetched via HTML page');
+          return JSON.parse(storedVoices);
+        }
+      }
+    } catch (htmlError) {
+      console.warn('Could not fetch via HTML page:', htmlError);
+    }
+
+    // Fallback: try direct API call (might work in some browsers)
+    try {
+      const response = await fetch('https://api.retellai.com/v2/voices', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Transform the data and limit to 10 voices
+        const voices = data.items.slice(0, 10).map((voice: any) => ({
+          id: voice.voice_id,
+          name: voice.name,
+          accent: voice.accent,
+          gender: voice.gender,
+          preview: voice.preview_audio_url,
+        }));
+
+        // Cache the voices
+        localStorage.setItem('retellVoices', JSON.stringify(voices));
+        localStorage.setItem('retellVoicesTimestamp', Date.now().toString());
+        
+        return voices;
+      }
+    } catch (directError) {
+      console.warn('Direct API call failed:', directError);
+    }
+
+    throw new Error('All API methods failed');
     
-    return data.items.map((voice: any) => ({
-      id: voice.voice_id,
-      name: voice.name,
-      accent: voice.accent,
-      gender: voice.gender,
-      preview: voice.preview_audio_url,
-    }));
   } catch (error) {
     console.error('Error fetching voices:', error);
     console.log('Falling back to mock data...');
