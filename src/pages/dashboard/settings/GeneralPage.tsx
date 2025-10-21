@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, MapPin, Globe, User, Save, RefreshCw } from 'lucide-react';
+import { Building2, MapPin, Save, RefreshCw } from 'lucide-react';
 
 const GeneralPage: React.FC = () => {
   const [businessInfo, setBusinessInfo] = useState({

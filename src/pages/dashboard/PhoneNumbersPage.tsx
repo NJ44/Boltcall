@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Plus, PhoneCall, Settings, Trash2 } from 'lucide-react';
+import { Plus, PhoneCall, Settings, Trash2 } from 'lucide-react';
 
 const PhoneNumbersPage: React.FC = () => {
   // Mock data - in real app this would come from API
