@@ -1,5 +1,5 @@
 import * as React from "react";
-import { UpgradeBanner } from "@/components/ui/upgrade-banner";
+import { UpgradeBanner } from "./upgrade-banner";
 
 function UpgradeBannerDemo() {
   const [isVisible, setIsVisible] = React.useState(true);

@@ -120,10 +120,7 @@ export default function RadialOrbitalTimeline({
     const y = radius * Math.sin(radian) + centerOffset.y;
 
     const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(
-      0.4,
-      Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))
-    );
+    const opacity = 1; // Always keep opacity at 1
 
     return { x, y, angle, zIndex, opacity };
   };
@@ -187,7 +184,7 @@ export default function RadialOrbitalTimeline({
             const Icon = item.icon;
 
             const nodeStyle = {
-              transform: `translate(${position.x}px, ${position.y}px)`,
+              transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))`,
               zIndex: isExpanded ? 200 : position.zIndex,
               opacity: isExpanded ? 1 : position.opacity,
             };
@@ -340,7 +337,7 @@ export default function RadialOrbitalTimeline({
 
           {/* Additional 3 icons on smaller circle */}
           {[1, 2, 3].map((index) => {
-            const angle = ((index / 3) * 360 + rotationAngle * 1.5) % 360; // Faster rotation
+            const angle = ((index / 3) * 360 - rotationAngle * 1.5) % 360; // Rotate in opposite direction
             const radius = 100; // Smaller radius for inner circle
             const radian = (angle * Math.PI) / 180;
 
@@ -348,13 +345,10 @@ export default function RadialOrbitalTimeline({
             const y = radius * Math.sin(radian) + centerOffset.y;
 
             const zIndex = Math.round(50 + 25 * Math.cos(radian));
-            const opacity = Math.max(
-              0.6,
-              Math.min(1, 0.6 + 0.4 * ((1 + Math.sin(radian)) / 2))
-            );
+            const opacity = 1; // Always keep opacity at 1
 
             const nodeStyle = {
-              transform: `translate(${x}px, ${y}px)`,
+              transform: `translate(calc(${x}px - 50%), calc(${y}px - 50%))`,
               zIndex: zIndex,
               opacity: opacity,
             };
