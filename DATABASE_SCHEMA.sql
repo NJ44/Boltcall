@@ -76,7 +76,33 @@ CREATE TRIGGER update_workspaces_updated_at BEFORE UPDATE ON workspaces
 CREATE TRIGGER update_business_profiles_updated_at BEFORE UPDATE ON business_profiles
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+-- Create voices table for Retell AI voices
+CREATE TABLE voices (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  accent TEXT NOT NULL,
+  gender TEXT NOT NULL,
+  preview_audio_url TEXT NOT NULL,
+  provider TEXT DEFAULT 'retell',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable Row Level Security for voices table
+ALTER TABLE voices ENABLE ROW LEVEL SECURITY;
+
+-- Create RLS policy for voices (public read access)
+CREATE POLICY "Anyone can view voices" ON voices
+  FOR SELECT USING (is_active = true);
+
+-- Create updated_at trigger for voices
+CREATE TRIGGER update_voices_updated_at BEFORE UPDATE ON voices
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
 -- Create indexes for better performance
 CREATE INDEX idx_workspaces_user_id ON workspaces(user_id);
 CREATE INDEX idx_business_profiles_workspace_id ON business_profiles(workspace_id);
 CREATE INDEX idx_business_profiles_user_id ON business_profiles(user_id);
+CREATE INDEX idx_voices_provider ON voices(provider);
+CREATE INDEX idx_voices_is_active ON voices(is_active);

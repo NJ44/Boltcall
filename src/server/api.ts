@@ -49,83 +49,49 @@ const mockVoices = [
 
 export async function getVoices(): Promise<any[]> {
   try {
-    // Use Vite environment variable
-    const apiKey = import.meta.env.VITE_RETELL_API_KEY;
-    
-    if (!apiKey) {
-      console.warn('VITE_RETELL_API_KEY not found, using mock data');
-      return mockVoices.map(voice => ({
-        id: voice.voice_id,
-        name: voice.name,
-        accent: voice.accent,
-        gender: voice.gender,
-        preview: voice.preview_audio_url,
-      }));
-    }
-
-    // Check if we have cached voices in localStorage (less than 1 hour old)
-    const cachedVoices = localStorage.getItem('retellVoices');
-    const cachedTimestamp = localStorage.getItem('retellVoicesTimestamp');
-    
-    if (cachedVoices && cachedTimestamp) {
-      const age = Date.now() - parseInt(cachedTimestamp);
-      if (age < 3600000) { // 1 hour
-        console.log('Using cached Retell voices');
-        return JSON.parse(cachedVoices);
-      }
-    }
-
-    // Try to fetch from the HTML page that can bypass CORS
+    // Try to fetch from Supabase voices table first
     try {
-      const response = await fetch('/fetch-voices.html');
-      if (response.ok) {
-        // Wait a bit for the page to fetch and store the data
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Check if data was stored
-        const storedVoices = localStorage.getItem('retellVoices');
-        if (storedVoices) {
-          console.log('Using voices fetched via HTML page');
-          return JSON.parse(storedVoices);
-        }
-      }
-    } catch (htmlError) {
-      console.warn('Could not fetch via HTML page:', htmlError);
-    }
+      const { data: voices, error } = await supabase
+        .from('voices')
+        .select('id, name, accent, gender, preview_audio_url')
+        .eq('is_active', true)
+        .limit(10);
 
-    // Fallback: try direct API call (might work in some browsers)
-    try {
-      const response = await fetch('https://api.retellai.com/v2/voices', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        
-        // Transform the data and limit to 10 voices
-        const voices = data.items.slice(0, 10).map((voice: any) => ({
-          id: voice.voice_id,
+      if (!error && voices && voices.length > 0) {
+        console.log('Using real Retell voices from Supabase');
+        return voices.map(voice => ({
+          id: voice.id,
           name: voice.name,
           accent: voice.accent,
           gender: voice.gender,
           preview: voice.preview_audio_url,
         }));
-
-        // Cache the voices
-        localStorage.setItem('retellVoices', JSON.stringify(voices));
-        localStorage.setItem('retellVoicesTimestamp', Date.now().toString());
-        
-        return voices;
       }
-    } catch (directError) {
-      console.warn('Direct API call failed:', directError);
+    } catch (supabaseError) {
+      console.warn('Could not fetch from Supabase:', supabaseError);
     }
 
-    throw new Error('All API methods failed');
+    // Fallback: try to fetch from the static JSON file
+    try {
+      const response = await fetch('/retell-voices.json');
+      if (response.ok) {
+        const voices = await response.json();
+        console.log('Using real Retell voices from JSON file');
+        return voices;
+      }
+    } catch (jsonError) {
+      console.warn('Could not fetch from JSON file:', jsonError);
+    }
+
+    // Final fallback: use mock data
+    console.log('Using mock data as final fallback');
+    return mockVoices.map(voice => ({
+      id: voice.voice_id,
+      name: voice.name,
+      accent: voice.accent,
+      gender: voice.gender,
+      preview: voice.preview_audio_url,
+    }));
     
   } catch (error) {
     console.error('Error fetching voices:', error);

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "cartesia-Adam",
+    "name": "Adam",
+    "accent": "British",
+    "gender": "Male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-7cf0e2b1-8daf-4fe4-89ad-f6039398f359.mp3"
+  },
+  {
+    "id": "cartesia-Alice",
+    "name": "Alice",
+    "accent": "American",
+    "gender": "Female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-alice-preview.mp3"
+  },
+  {
+    "id": "cartesia-Bella",
+    "name": "Bella",
+    "accent": "American",
+    "gender": "Female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-bella-preview.mp3"
+  },
+  {
+    "id": "cartesia-Charlie",
+    "name": "Charlie",
+    "accent": "British",
+    "gender": "Male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-charlie-preview.mp3"
+  },
+  {
+    "id": "cartesia-Diana",
+    "name": "Diana",
+    "accent": "American",
+    "gender": "Female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-diana-preview.mp3"
+  },
+  {
+    "id": "cartesia-Eve",
+    "name": "Eve",
+    "accent": "American",
+    "gender": "Female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-eve-preview.mp3"
+  },
+  {
+    "id": "cartesia-Frank",
+    "name": "Frank",
+    "accent": "American",
+    "gender": "Male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-frank-preview.mp3"
+  },
+  {
+    "id": "cartesia-Grace",
+    "name": "Grace",
+    "accent": "British",
+    "gender": "Female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-grace-preview.mp3"
+  },
+  {
+    "id": "cartesia-Henry",
+    "name": "Henry",
+    "accent": "British",
+    "gender": "Male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-henry-preview.mp3"
+  },
+  {
+    "id": "cartesia-Iris",
+    "name": "Iris",
+    "accent": "American",
+    "gender": "Female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-iris-preview.mp3"
+  }
+]
