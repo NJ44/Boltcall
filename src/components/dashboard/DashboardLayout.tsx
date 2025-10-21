@@ -1133,6 +1133,7 @@ const DashboardLayout: React.FC = () => {
               </div>
             </div>
           </div>
+          </div>
 
           {/* Footer */}
           <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-gray-200">
@@ -1300,7 +1301,6 @@ const DashboardLayout: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
