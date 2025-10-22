@@ -35,9 +35,10 @@ const BillingPage: React.FC = () => {
     },
     {
       name: "ENTERPRISE",
-      level: "all",
+      level: "custom",
       price: { monthly: 1497, yearly: 14970 },
       description: "Everything on PRO plus:",
+      isCustom: true,
     },
   ];
 

@@ -28,14 +28,29 @@ export const createAgentAndKnowledgeBase = async (data: {
   serviceAreas: string[];
   openingHours: any;
   languages: string[];
+  clientId?: string;
 }): Promise<CreateAgentResponse> => {
   try {
-    const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/ed6b6d51-1122-49b2-ba5b-1d1d0d1bc4fe', {
+    // Generate a client ID if not provided
+    const clientId = data.clientId || `client_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    const payload = {
+      website_url: data.websiteUrl,
+      client_id: clientId,
+      business_name: data.businessName,
+      main_category: data.mainCategory,
+      country: data.country,
+      service_areas: data.serviceAreas,
+      opening_hours: data.openingHours,
+      languages: data.languages,
+    };
+
+    const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/3a4fe147-8277-4390-b1e6-c903fad3d7d2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {

@@ -4,9 +4,11 @@ import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
 import { createAgentAndKnowledgeBase } from '../../../lib/webhooks';
 import Button from '../../ui/Button';
+import { useAuth } from '../../../contexts/AuthContext';
 
 const StepKnowledge: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
+  const { user } = useAuth();
   const [isCreatingAgent, setIsCreatingAgent] = useState(false);
   const [agentCreated, setAgentCreated] = useState(false);
 
@@ -23,6 +25,7 @@ const StepKnowledge: React.FC = () => {
         serviceAreas: businessProfile.serviceAreas || [],
         openingHours: businessProfile.openingHours || {},
         languages: businessProfile.languages || [],
+        clientId: user?.id || undefined,
       });
       
       setAgentCreated(true);

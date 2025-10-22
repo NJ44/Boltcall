@@ -104,7 +104,7 @@ export function PricingTable({
               )}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className={cn("text-2xl font-bold", plan.isCustom && "text-white")}>
+                <span className="text-2xl font-bold text-gray-900">
                   {plan.name}
                 </span>
                 {plan.popular && (
@@ -124,7 +124,7 @@ export function PricingTable({
                         currency: "USD",
                       }}
                       value={isYearly ? plan.price.yearly / 12 : plan.price.monthly}
-                      className="text-lg font-bold"
+                      className="text-lg font-bold text-gray-900"
                     />
                     <span className="text-xs font-normal text-zinc-500">
                       /month
@@ -142,19 +142,19 @@ export function PricingTable({
               <div className="mt-4 space-y-2">
                 {plan.level === 'starter' && (
                   <>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       AI Receptionist
                     </div>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       SMS & Call Management
                     </div>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
@@ -164,19 +164,19 @@ export function PricingTable({
                 )}
                 {plan.level === 'pro' && (
                   <>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       Everything in Starter
                     </div>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       Advanced Analytics
                     </div>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
@@ -186,19 +186,19 @@ export function PricingTable({
                 )}
                 {plan.level === 'all' && (
                   <>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       Everything in Pro
                     </div>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       White-glove Onboarding
                     </div>
-                    <div className="flex items-center text-xs text-zinc-600">
+                    <div className="flex items-center text-xs text-gray-900">
                       <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
@@ -263,7 +263,7 @@ export function PricingTable({
                       key={plan.level}
                       className={cn(
                         "w-20 flex justify-center items-center font-bold py-2 text-lg",
-                        plan.isCustom ? "text-white bg-gray-900 rounded" : "text-gray-600"
+                        plan.isCustom ? "text-white bg-gray-900 rounded" : "text-gray-900"
                       )}
                       style={{ marginLeft: '0px' }}
                     >
@@ -277,7 +277,7 @@ export function PricingTable({
                   key={feature.name}
                   className="flex items-center p-4 transition-all duration-300 hover:bg-gray-50"
                 >
-                  <div className="flex-1 text-sm pl-4">{feature.name}</div>
+                  <div className="flex-1 text-sm pl-4 text-gray-900">{feature.name}</div>
                   <div className="flex items-center text-sm" style={{ gap: '80px', paddingRight: '16px' }}>
                     {plans.filter(plan => !plan.excludeFromTable).map((plan) => (
                       <div

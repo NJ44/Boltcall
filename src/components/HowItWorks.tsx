@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
 import { Check } from 'lucide-react';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 
 const PROCESS_PHASES = [
@@ -67,7 +66,7 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px' }}>
+            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px', lineHeight: '0.9' }}>
               <WhisperText
                 text="Close leads in "
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
@@ -77,8 +76,7 @@ const HowItWorks: React.FC = () => {
                 y={0}
                 triggerStart="top 85%"
                 style={{ fontSize: '1.155em' }}
-              />
-              <WhisperText
+              /><WhisperText
                 text="lightning speed."
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
                 delay={125}
@@ -108,11 +106,11 @@ const HowItWorks: React.FC = () => {
                 index={index + 2}
                 incrementY={14}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '600px', top: '128px', bottom: 'auto' }}
+                style={{ maxWidth: '500px', top: '128px', bottom: 'auto', minHeight: '320px' }}
               >
-                <div className="p-5 md:p-7 h-full flex">
-                  {/* Left side - Header, text, and checklist */}
-                  <div className="flex-1 pr-4">
+                <div className="p-5 md:p-7 h-full">
+                  {/* Full width content */}
+                  <div className="w-full">
                     <div className="flex items-center justify-between mb-3">
                       <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
                         {phase.title}
@@ -136,14 +134,9 @@ const HowItWorks: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* Right side - Animation */}
+                  {/* Right side - Animation removed */}
                   <div className="flex-shrink-0 w-48 h-48">
-                    <DotLottieReact
-                      src={phase.animationUrl}
-                      loop
-                      autoplay
-                      className="w-full h-full"
-                    />
+                    {/* Animation removed */}
                   </div>
                 </div>
               </CardSticky>

@@ -49,14 +49,14 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className={`fixed left-0 right-0 z-40 bg-transparent backdrop-blur-md transition-all duration-300 ${
-        isSticky ? 'top-0' : 'top-[53px]'
+      className={`fixed left-0 right-0 z-50 bg-transparent backdrop-blur-md transition-all duration-300 ${
+        isSticky ? 'top-0' : 'top-[43px]'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -ml-4">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 -ml-4">
         <div className="flex items-center h-16">
           {/* Logo */}
           <Link to="/">

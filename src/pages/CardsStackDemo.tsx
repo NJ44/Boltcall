@@ -194,7 +194,7 @@ const Achievements = () => {
             incrementY={20}
             index={index + 2}
             className="flex h-72 w-[420px] flex-col place-content-center justify-evenly rounded-2xl border border-current p-8 shadow-2xl"
-            style={{ rotate: index + 2, background: achievement.bg }}
+            style={{ rotate: `${index + 2}deg`, background: achievement.bg }}
           >
             <h1 className="text-left text-6xl font-semibold opacity-80">
               {achievement.title}

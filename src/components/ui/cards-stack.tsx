@@ -1,12 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
-import type { HTMLMotionProps } from "framer-motion"
+import type { HTMLAttributes } from "react"
 
 import { cn } from '../../lib/utils'
 
-interface CardStickyProps extends HTMLMotionProps<"div"> {
+interface CardStickyProps extends HTMLAttributes<HTMLDivElement> {
   index: number
   incrementY?: number
   incrementZ?: number
@@ -46,12 +45,11 @@ const CardSticky = React.forwardRef<HTMLDivElement, CardStickyProps>(
     const z = index * incrementZ
 
     return (
-      <motion.div
+      <div
         ref={ref}
-        layout="position"
         style={{
-          top: y,
-          z,
+          top: `${y}px`,
+          zIndex: z,
           backfaceVisibility: "hidden",
           ...style,
         }}
@@ -59,7 +57,7 @@ const CardSticky = React.forwardRef<HTMLDivElement, CardStickyProps>(
         {...props}
       >
         {children}
-      </motion.div>
+      </div>
     )
   }
 )

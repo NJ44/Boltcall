@@ -12,9 +12,24 @@ import {
 import { Tilt } from './tilt';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Clock } from 'lucide-react';
+import {
+  AreaChart,
+  Area,
+  ResponsiveContainer
+} from "recharts";
+import CountUp from "react-countup";
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const chartData = [
+    { month: "Jan", value: 50 },
+    { month: "Feb", value: 90 },
+    { month: "Mar", value: 140 },
+    { month: "Apr", value: 200 },
+    { month: "May", value: 240 },
+    { month: "Jun", value: 300 },
+  ];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     const card = cardRefs.current[index];
@@ -57,13 +72,67 @@ function Feature() {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="flex flex-col text-left max-w-md">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2">Increased revenue</h3>
-                <p className="text-muted-foreground text-base">
+              {/* Left side - Text content */}
+              <div className="flex flex-col text-left max-w-xs">
+                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Increased revenue</h3>
+                <p className="text-muted-foreground text-base mb-4">
                   Convert more leads into paying customers with faster response times and better qualification processes.
                 </p>
+                
+                {/* Checkmark list */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs">✓</span>
+                    </div>
+                    <span className="text-sm text-gray-700">Faster response times</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs">✓</span>
+                    </div>
+                    <span className="text-sm text-gray-700">Better qualification processes</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs">✓</span>
+                    </div>
+                    <span className="text-sm text-gray-700">Higher conversion rates</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex-1"></div>
+
+              {/* Right side - Chart */}
+              <div className="flex-1 flex items-center justify-center ml-6">
+                <div className="relative w-full h-48 bg-white rounded-xl overflow-hidden">
+                  {/* Chart */}
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={chartData}>
+                      <defs>
+                        <linearGradient id="ruixenBlue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4} />
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <Area
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#3b82f6"
+                        strokeWidth={2}
+                        fill="url(#ruixenBlue)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+
+                  {/* Overlay Hero Number */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                    <h3 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">
+                      <CountUp end={391} duration={2.5} />%
+                    </h3>
+                    <p className="text-gray-500 text-sm">Sales conversions</p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
             
             {/* Animated Card Chart */}
@@ -103,7 +172,7 @@ function Feature() {
               ref={(el) => { cardRefs.current[1] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 1)}
               onMouseLeave={() => handleMouseLeave(1)}
-              className="bg-muted rounded-xl p-6 flex flex-col shadow-2xl h-[233px] transition-transform duration-300 ease-out cursor-pointer -mt-[40px] relative"
+              className="bg-muted rounded-xl p-6 flex flex-col shadow-2xl h-[235px] transition-transform duration-300 ease-out cursor-pointer -mt-[42px] relative"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -117,7 +186,7 @@ function Feature() {
               
               {/* Centered Content */}
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2">Saved time</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Saved time</h3>
                 <p className="text-muted-foreground text-sm max-w-xs">
                   Automate repetitive tasks and focus on what matters most - closing deals and growing your business.
                 </p>
@@ -137,7 +206,7 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left max-w-sm">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2">Customer satisfaction</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Customer satisfaction</h3>
                 <p className="text-muted-foreground text-base">
                   Deliver exceptional customer experiences with instant responses and personalized interactions that build trust and loyalty.
                 </p>

@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Gift, Star, Clock, Users, Trophy, CheckCircle, ArrowLeft, Mail } from 'lucide-react';
-import Button from '../components/ui/Button';
+import { Gift, Star, Clock, Users, Trophy } from 'lucide-react';
 
 const GiveawayPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  useEffect(() => {
+    // Halloween 2025 is October 31st
+    const halloween2025 = new Date('2025-10-31T23:59:59').getTime();
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setIsLoading(false);
-    }, 1500);
-  };
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const difference = halloween2025 - now;
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
 
   const prizes = [
     {
@@ -44,90 +62,86 @@ const GiveawayPage: React.FC = () => {
     }
   ];
 
-  const requirements = [
-    "Follow us on social media",
-    "Share this giveaway with friends",
-    "Sign up for our newsletter",
-    "Leave a review on our platform"
-  ];
-
-  if (isSubmitted) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 max-w-md w-full text-center"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
-          >
-            <CheckCircle className="w-10 h-10 text-green-600" />
-          </motion.div>
-          
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">🎉 You're In! 🎉</h1>
-          <p className="text-gray-600 mb-6">
-            Congratulations! You've successfully entered our mega giveaway. 
-            We'll notify you if you win!
-          </p>
-          
-          <div className="bg-blue-50 rounded-xl p-4 mb-6">
-            <h3 className="font-semibold text-blue-900 mb-2">What's Next?</h3>
-            <ul className="text-sm text-blue-800 space-y-1">
-              <li>• Check your email for confirmation</li>
-              <li>• Follow us on social media (bonus entries!)</li>
-              <li>• Share with friends for more chances</li>
-              <li>• Winner announced on December 31st</li>
-            </ul>
-          </div>
-
-          <Link to="/">
-            <Button variant="primary" size="lg" className="w-full">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Homepage
-            </Button>
-          </Link>
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
+      {/* Header with Logo */}
       <div className="bg-gray-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
-              <Gift className="w-8 h-8 text-blue-600" />
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-              Giveaway Contest
-            </h1>
-            
-            <p className="text-lg md:text-xl mb-8 text-gray-600 max-w-2xl mx-auto">
-              Enter for a chance to win amazing prizes worth over <strong className="text-blue-600">$1,500</strong>
-            </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
+          <div className="pt-6 pb-4">
+            <Link to="/">
+              <img 
+                src="/boltcall_full_logo.png" 
+                alt="Boltcall" 
+                className="h-12 w-auto"
+              />
+            </Link>
+          </div>
+          
+          <div className="py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center"
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
+                <Gift className="w-8 h-8 text-blue-600" />
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+                Giveaway Contest
+              </h1>
+              
+              <p className="text-lg md:text-xl mb-8 text-gray-600 max-w-2xl mx-auto">
+                Enter for a chance to win amazing prizes worth over <strong className="text-blue-600">$1,500</strong>
+              </p>
 
-            <div className="flex items-center justify-center space-x-8 text-gray-500">
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm">Ends Dec 31st</span>
+              {/* Giveaway Countdown Timer */}
+              <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl p-6 mb-8 max-w-2xl mx-auto">
+                <div className="flex items-center justify-center mb-4">
+                  <Clock className="w-6 h-6 mr-2" />
+                  <span className="text-xl font-bold">🎁 Giveaway Countdown</span>
+                </div>
+                <div className="flex items-center justify-center space-x-4">
+                  <div className="text-center">
+                    <div className="bg-white/20 rounded-lg px-4 py-2">
+                      <div className="text-2xl font-bold">{timeLeft.days}</div>
+                      <div className="text-sm">Days</div>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="bg-white/20 rounded-lg px-4 py-2">
+                      <div className="text-2xl font-bold">{timeLeft.hours}</div>
+                      <div className="text-sm">Hours</div>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="bg-white/20 rounded-lg px-4 py-2">
+                      <div className="text-2xl font-bold">{timeLeft.minutes}</div>
+                      <div className="text-sm">Minutes</div>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="bg-white/20 rounded-lg px-4 py-2">
+                      <div className="text-2xl font-bold">{timeLeft.seconds}</div>
+                      <div className="text-sm">Seconds</div>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-orange-100 text-sm mt-3">
+                  Contest ends on Halloween (October 31st, 2025)
+                </p>
               </div>
-              <div className="flex items-center space-x-2">
-                <Users className="w-4 h-4" />
-                <span className="text-sm">1,000+ entries</span>
+
+              <div className="flex items-center justify-center space-x-8 text-gray-500">
+                <div className="flex items-center space-x-2">
+                  <Users className="w-4 h-4" />
+                  <span className="text-sm">1,000+ entries</span>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -165,89 +179,35 @@ const GiveawayPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Entry Form */}
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      {/* Qualification Quiz */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
+          transition={{ delay: 0.5 }}
+          className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl p-8 mb-8"
         >
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Enter Contest</h2>
-          
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-gray-700 text-sm font-medium mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter your email address"
-                />
-              </div>
-            </div>
-
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              disabled={isLoading || !email}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-lg"
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-4">🎯 Qualification Quiz</h2>
+            <p className="text-lg mb-6 opacity-90">
+              Complete this quick quiz to qualify for the giveaway and increase your chances of winning!
+            </p>
+            <a
+              href="https://form.typeform.com/to/tmB4QfSf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center bg-white text-purple-600 font-bold py-4 px-8 rounded-xl hover:bg-gray-100 transition-colors duration-200 text-lg"
             >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Entering...
-                </div>
-              ) : (
-                <div className="flex items-center justify-center">
-                  <Gift className="w-5 h-5 mr-2" />
-                  Submit Entry
-                </div>
-              )}
-            </Button>
-          </form>
-
-          {/* Requirements */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Entry Requirements:</h3>
-            <ul className="space-y-2">
-              {requirements.map((req, index) => (
-                <li key={index} className="flex items-center text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
-                  {req}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Terms */}
-          <div className="mt-6 text-center">
-            <p className="text-xs text-gray-500">
-              By entering, you agree to our terms and conditions. 
-              Winners will be contacted via email and announced on our social media.
+              <Star className="w-5 h-5 mr-2" />
+              Take Qualification Quiz
+            </a>
+            <p className="text-sm mt-4 opacity-75">
+              Opens in a new tab • Takes 2-3 minutes to complete
             </p>
           </div>
         </motion.div>
       </div>
 
-      {/* Footer */}
-      <div className="bg-gray-50 border-t border-gray-200 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Link to="/">
-            <Button variant="outline" className="text-gray-600 border-gray-300 hover:bg-gray-100">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Homepage
-            </Button>
-          </Link>
-        </div>
-      </div>
     </div>
   );
 };

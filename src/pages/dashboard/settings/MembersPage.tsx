@@ -178,8 +178,8 @@ const MembersPage: React.FC = () => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
         <div className="p-6 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900">Team Members</h2>
-        </div>
-        
+      </div>
+
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">
@@ -207,13 +207,13 @@ const MembersPage: React.FC = () => {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                           <User className="w-5 h-5 text-gray-600" />
-                        </div>
+                      </div>
                         <div>
                           <div className="font-medium text-gray-900">{member.name}</div>
                           <div className="text-sm text-gray-600">{member.email}</div>
-                        </div>
                       </div>
-                    </td>
+                    </div>
+                  </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${roleInfo.color}`}>
@@ -221,12 +221,12 @@ const MembersPage: React.FC = () => {
                         </div>
                         <span className="text-sm font-medium text-gray-900">{roleInfo.name}</span>
                       </div>
-                    </td>
+                  </td>
                     <td className="py-4 px-6">
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(member.status)}`}>
-                        {member.status}
-                      </span>
-                    </td>
+                      {member.status}
+                    </span>
+                  </td>
                     <td className="py-4 px-6 text-sm text-gray-600">{member.joinedDate}</td>
                     <td className="py-4 px-6 text-sm text-gray-600">{member.lastActive}</td>
                     <td className="py-4 px-6">
@@ -236,9 +236,9 @@ const MembersPage: React.FC = () => {
                         </button>
                         <button className="p-1 hover:bg-gray-100 rounded">
                           <MoreVertical className="w-4 h-4 text-gray-600" />
-                        </button>
+                    </button>
                       </div>
-                    </td>
+                  </td>
                   </motion.tr>
                 );
               })}
@@ -320,11 +320,11 @@ const MembersPage: React.FC = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => setShowInviteModal(false)}
-                >
-                  Cancel
+                onClick={() => setShowInviteModal(false)}
+              >
+                Cancel
                 </Button>
-              </div>
+            </div>
             </form>
           </motion.div>
         </div>

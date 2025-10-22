@@ -380,3 +380,111 @@ WHERE is_primary = true AND is_active = true;
 CREATE UNIQUE INDEX idx_unique_phone_number 
 ON phone_numbers(phone_number) 
 WHERE is_active = true;
+
+-- Create website_widgets table for client widget preferences
+CREATE TABLE website_widgets (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  business_profile_id UUID REFERENCES business_profiles(id) ON DELETE CASCADE NOT NULL,
+  user_id UUID REFERENCES auth.users(id) NOT NULL,
+  workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE NOT NULL,
+  widget_name TEXT NOT NULL DEFAULT 'AI Assistant',
+  widget_color TEXT NOT NULL DEFAULT '#3B82F6', -- Default blue color
+  logo_url TEXT,
+  bot_name TEXT NOT NULL DEFAULT 'AI Assistant',
+  popup_message TEXT NOT NULL DEFAULT 'Hi! How can I help you today?',
+  show_ai_popup BOOLEAN NOT NULL DEFAULT true,
+  show_ai_popup_time INTEGER NOT NULL DEFAULT 5, -- seconds
+  auto_open BOOLEAN NOT NULL DEFAULT false,
+  widget_position TEXT NOT NULL DEFAULT 'bottom-right', -- 'bottom-right', 'bottom-left', 'top-right', 'top-left'
+  widget_size TEXT NOT NULL DEFAULT 'medium', -- 'small', 'medium', 'large'
+  theme TEXT NOT NULL DEFAULT 'light', -- 'light', 'dark', 'auto'
+  language TEXT NOT NULL DEFAULT 'en', -- Language code
+  custom_css TEXT, -- Custom CSS styles
+  custom_js TEXT, -- Custom JavaScript
+  dynamic_data JSONB DEFAULT '{}', -- Dynamic data for personalization
+  recaptcha_key TEXT, -- Google reCAPTCHA site key
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  is_public BOOLEAN NOT NULL DEFAULT false, -- Allow sharing with other users
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable Row Level Security for website_widgets table
+ALTER TABLE website_widgets ENABLE ROW LEVEL SECURITY;
+
+-- Create RLS policies for website_widgets
+CREATE POLICY "Users can view own website widgets" ON website_widgets
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view public website widgets" ON website_widgets
+  FOR SELECT USING (is_public = true);
+
+CREATE POLICY "Users can insert own website widgets" ON website_widgets
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own website widgets" ON website_widgets
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete own website widgets" ON website_widgets
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- Create updated_at trigger for website_widgets
+CREATE TRIGGER update_website_widgets_updated_at BEFORE UPDATE ON website_widgets
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Create indexes for better performance
+CREATE INDEX idx_website_widgets_business_profile_id ON website_widgets(business_profile_id);
+CREATE INDEX idx_website_widgets_user_id ON website_widgets(user_id);
+CREATE INDEX idx_website_widgets_workspace_id ON website_widgets(workspace_id);
+CREATE INDEX idx_website_widgets_is_active ON website_widgets(is_active);
+CREATE INDEX idx_website_widgets_is_public ON website_widgets(is_public);
+CREATE INDEX idx_website_widgets_widget_position ON website_widgets(widget_position);
+CREATE INDEX idx_website_widgets_theme ON website_widgets(theme);
+CREATE INDEX idx_website_widgets_language ON website_widgets(language);
+
+-- Add constraint to ensure only one active widget per business profile
+CREATE UNIQUE INDEX idx_unique_active_widget 
+ON website_widgets(business_profile_id) 
+WHERE is_active = true;
+
+-- Insert default widget configuration for existing business profiles
+INSERT INTO website_widgets (
+  business_profile_id,
+  user_id,
+  workspace_id,
+  widget_name,
+  widget_color,
+  bot_name,
+  popup_message,
+  show_ai_popup,
+  show_ai_popup_time,
+  auto_open,
+  widget_position,
+  widget_size,
+  theme,
+  language,
+  is_active,
+  is_public
+)
+SELECT 
+  bp.id,
+  bp.user_id,
+  bp.workspace_id,
+  'AI Assistant',
+  '#3B82F6',
+  'AI Assistant',
+  'Hi! How can I help you today?',
+  true,
+  5,
+  false,
+  'bottom-right',
+  'medium',
+  'light',
+  'en',
+  true,
+  false
+FROM business_profiles bp
+WHERE NOT EXISTS (
+  SELECT 1 FROM website_widgets ww 
+  WHERE ww.business_profile_id = bp.id
+);
