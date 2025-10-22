@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, X, Code, Settings } from 'lucide-react';
+import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type } from 'lucide-react';
 
 interface ClientAgent {
   id: string;
@@ -51,17 +51,24 @@ const WebsiteBubblePage: React.FC = () => {
     const agent = clientAgents.find(a => a.id === agentId);
     if (!agent) return '';
 
-    return `<!-- Boltcall Website Bubble Integration -->
-<script>
-  window.BoltcallConfig = {
-    widgetId: '${agent.widgetId}',
-    agentName: '${agent.name}',
-    color: '${agent.color}',
-    position: '${agent.position}',
-    apiKey: 'your-api-key-here'
-  };
-</script>
-<script src="https://cdn.boltcall.com/widget.js" async></script>`;
+    return `<script
+    id="retell-widget"
+    src="https://dashboard.retellai.com/retell-widget.js"
+    type="module"
+    data-public-key="YOUR_RETELL_PUBLIC_KEY"
+    data-agent-id="YOUR_CHAT_AGENT_ID"
+    data-agent-version="YOUR_AGENT_VERSION"
+    data-title="YOUR_CUSTOM_TITLE"
+    data-logo-url="YOUR_LOGO_URL"
+    data-color="YOUR_CUSTOM_COLOR"
+    data-bot-name="YOUR_BOT_NAME"
+    data-popup-message="YOUR_POPUP_MESSAGE"
+    data-show-ai-popup="true"
+    data-show-ai-popup-time="5"
+    data-auto-open="false"
+    data-dynamic='{"key": "value"}'
+    data-recaptcha-key="YOUR_GOOGLE_RECAPTCHA_SITE_KEY"
+></script>`;
   };
 
   const copyToClipboard = (text: string) => {
@@ -87,8 +94,18 @@ const WebsiteBubblePage: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="flex items-center justify-between"
         >
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Website Bubble</h1>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <MessageCircle className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Website Bubble</h1>
+              <p className="text-sm text-gray-600 mt-1">Add AI chat widgets to your website in minutes</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-500">Free Trial</span>
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
           </div>
         </motion.div>
 
@@ -99,9 +116,6 @@ const WebsiteBubblePage: React.FC = () => {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="bg-white rounded-lg border border-gray-200 overflow-hidden"
       >
-        <div className="px-6 py-4 border-b border-gray-200">
-          <p className="text-sm text-gray-600">Manage your website chat agents and their configurations.</p>
-        </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -175,6 +189,114 @@ const WebsiteBubblePage: React.FC = () => {
         </div>
       </motion.div>
 
+      {/* Bubble Widget Settings */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="bg-white rounded-lg border border-gray-200 p-6"
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+            <Settings className="w-5 h-5 text-purple-600" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900">Widget Settings</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Color Settings */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <Palette className="w-4 h-4 inline mr-1" />
+              Widget Color
+            </label>
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                defaultValue="#3B82F6"
+                className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
+              />
+              <input
+                type="text"
+                defaultValue="#3B82F6"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="#3B82F6"
+              />
+            </div>
+          </div>
+
+          {/* Logo Settings */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <Image className="w-4 h-4 inline mr-1" />
+              Logo URL
+            </label>
+            <input
+              type="url"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="https://your-website.com/logo.png"
+            />
+          </div>
+
+          {/* Bot Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <Type className="w-4 h-4 inline mr-1" />
+              Bot Name
+            </label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="AI Assistant"
+            />
+          </div>
+
+          {/* Popup Message */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <MessageCircle className="w-4 h-4 inline mr-1" />
+              Popup Message
+            </label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Hi! How can I help you today?"
+            />
+          </div>
+
+          {/* Auto Open */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Auto Open
+            </label>
+            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option value="false">Disabled</option>
+              <option value="true">Enabled</option>
+            </select>
+          </div>
+
+          {/* Popup Time */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Show Popup After (seconds)
+            </label>
+            <input
+              type="number"
+              min="1"
+              max="60"
+              defaultValue="5"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            Save Settings
+          </button>
+        </div>
+      </motion.div>
+
       {/* Integration Code Modal */}
       {showIntegrationCode && selectedAgent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -195,7 +317,7 @@ const WebsiteBubblePage: React.FC = () => {
                   Agent: {clientAgents.find(a => a.id === selectedAgent)?.name}
                 </label>
                 <p className="text-sm text-gray-600 mb-4">
-                  Copy this code and paste it into your website's HTML, just before the closing &lt;/body&gt; tag.
+                  Copy this Retell widget code and paste it into your website's HTML, just before the closing &lt;/body&gt; tag.
                 </p>
               </div>
 
@@ -215,11 +337,22 @@ const WebsiteBubblePage: React.FC = () => {
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h3 className="text-sm font-medium text-blue-900 mb-2">Integration Instructions:</h3>
                 <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
-                  <li>Copy the code above</li>
-                  <li>Paste it into your website's HTML before the closing &lt;/body&gt; tag</li>
-                  <li>Replace 'your-api-key-here' with your actual API key</li>
+                  <li>Copy the Retell widget code above</li>
+                  <li>Replace the placeholder values with your actual configuration:
+                    <ul className="ml-4 mt-1 space-y-1 list-disc">
+                      <li>YOUR_RETELL_PUBLIC_KEY - Your Retell public API key</li>
+                      <li>YOUR_CHAT_AGENT_ID - Your agent ID from Retell dashboard</li>
+                      <li>YOUR_AGENT_VERSION - Your agent version</li>
+                      <li>YOUR_CUSTOM_TITLE - Custom title for the widget</li>
+                      <li>YOUR_LOGO_URL - URL to your logo image</li>
+                      <li>YOUR_CUSTOM_COLOR - Widget color (hex code)</li>
+                      <li>YOUR_BOT_NAME - Name displayed for the bot</li>
+                      <li>YOUR_POPUP_MESSAGE - Initial message shown to users</li>
+                    </ul>
+                  </li>
+                  <li>Paste the code into your website's HTML before the closing &lt;/body&gt; tag</li>
                   <li>Save and publish your website</li>
-                  <li>The chat bubble will appear on your website</li>
+                  <li>The AI chat bubble will appear on your website</li>
                 </ol>
               </div>
 
