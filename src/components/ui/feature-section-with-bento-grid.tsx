@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   AnimatedCard,
@@ -21,6 +21,8 @@ import CountUp from "react-countup";
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const chartData = [
     { month: "Jan", value: 50 },
@@ -30,6 +32,30 @@ function Feature() {
     { month: "May", value: 240 },
     { month: "Jun", value: 300 },
   ];
+
+  // Intersection observer to trigger animation when card is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.3 } // Trigger when 30% of the element is visible
+    );
+
+    if (chartRef.current) {
+      observer.observe(chartRef.current);
+    }
+
+    return () => {
+      if (chartRef.current) {
+        observer.unobserve(chartRef.current);
+      }
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     const card = cardRefs.current[index];
@@ -104,7 +130,7 @@ function Feature() {
 
               {/* Right side - Chart */}
               <div className="flex-1 flex items-center justify-center ml-6">
-                <div className="relative w-full h-48 bg-white rounded-xl overflow-hidden">
+                <div ref={chartRef} className="relative w-full h-48 bg-white rounded-xl overflow-hidden">
                   {/* Chart */}
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData}>
@@ -127,7 +153,7 @@ function Feature() {
                   {/* Overlay Hero Number */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
                     <h3 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">
-                      <CountUp end={391} duration={2.5} />%
+                      {isVisible ? <CountUp end={391} duration={5} /> : '0'}%
                     </h3>
                     <p className="text-gray-500 text-sm">Sales conversions</p>
                   </div>
@@ -181,7 +207,7 @@ function Feature() {
             >
               {/* Background Clock Icon */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <Clock className="w-32 h-32 text-white opacity-50" />
+                <Clock className="w-48 h-48 text-white opacity-50" />
               </div>
               
               {/* Centered Content */}

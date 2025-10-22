@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock } from 'lucide-react';
 
 const GiveawayBar: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -53,22 +52,26 @@ const GiveawayBar: React.FC = () => {
               </div>
 
               {/* Right side - Giveaway Countdown */}
-              <div className="flex items-center space-x-2 text-sm">
-                <Clock className="w-4 h-4 text-yellow-300" />
-                <span className="font-medium">🎁 Until giveaway:</span>
-                <div className="flex items-center space-x-1">
-                  <span className="bg-white/20 px-2 py-1 rounded text-xs font-bold">
-                    {timeLeft.days}d
-                  </span>
-                  <span className="bg-white/20 px-2 py-1 rounded text-xs font-bold">
-                    {timeLeft.hours}h
-                  </span>
-                  <span className="bg-white/20 px-2 py-1 rounded text-xs font-bold">
-                    {timeLeft.minutes}m
-                  </span>
-                  <span className="bg-white/20 px-2 py-1 rounded text-xs font-bold">
-                    {timeLeft.seconds}s
-                  </span>
+              <div className="flex items-center space-x-3 text-sm">
+                <span className="font-medium">Until giveaway:</span>
+                <div className="bg-white/20 px-3 py-1.5 rounded-lg">
+                  <div className="flex items-center space-x-2 text-sm font-bold">
+                    <span className="min-w-[2rem] text-center">
+                      {timeLeft.days}d
+                    </span>
+                    <span className="text-white/60">:</span>
+                    <span className="min-w-[2rem] text-center">
+                      {timeLeft.hours}h
+                    </span>
+                    <span className="text-white/60">:</span>
+                    <span className="min-w-[2rem] text-center">
+                      {timeLeft.minutes}m
+                    </span>
+                    <span className="text-white/60">:</span>
+                    <span className="min-w-[2rem] text-center">
+                      {timeLeft.seconds}s
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

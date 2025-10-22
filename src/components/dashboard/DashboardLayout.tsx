@@ -27,7 +27,11 @@ import {
   Calendar as CalendarIcon,
   Crown,
   Server,
-  Mail
+  Mail,
+  ArrowLeft,
+  Palette,
+  CreditCard,
+  Package
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -231,6 +235,17 @@ const DashboardLayout: React.FC = () => {
     { to: '/help-center', label: 'Help Center', icon: <HelpCircle className="w-5 h-5" /> },
   ];
 
+  // Settings navigation items
+  const settingsNavItems = [
+    { to: '/dashboard/settings/general', label: 'General', icon: <Settings className="w-4 h-4" /> },
+    { to: '/dashboard/settings/preferences', label: 'Preferences', icon: <Palette className="w-4 h-4" /> },
+    { to: '/dashboard/settings/members', label: 'Members', icon: <Users className="w-4 h-4" /> },
+    { to: '/dashboard/settings/plan-billing', label: 'Plan & Billing', icon: <CreditCard className="w-4 h-4" /> },
+    { to: '/dashboard/settings/packages', label: 'Packages', icon: <Package className="w-4 h-4" /> },
+    { to: '/dashboard/settings/usage', label: 'Usage', icon: <BarChart3 className="w-4 h-4" /> },
+    { to: '/dashboard/settings/notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
+  ];
+
 
   // Helper function to render navigation items
   const renderNavItem = (item: any, isActive: boolean) => {
@@ -423,13 +438,40 @@ const DashboardLayout: React.FC = () => {
             {/* Navigation */}
             <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
               <div className="flex-1 px-2">
-                {/* Group 1 */}
-                <div className="space-y-1 mb-4">
-                  {navItemsGroup1.map((item) => {
-                    const isActive = location.pathname === item.to;
-                    return renderNavItem(item, isActive);
-                  })}
-                </div>
+                {/* Check if we're in settings pages */}
+                {location.pathname.startsWith('/dashboard/settings') ? (
+                  <>
+                    {/* Go Back Link */}
+                    <div className="mb-4">
+                      <Link
+                        to="/dashboard"
+                        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 rounded-lg"
+                      >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span className="text-sm font-medium">Go Back</span>
+                      </Link>
+                    </div>
+
+                    {/* Settings Navigation */}
+                    <div className="space-y-1 mb-4">
+                      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+                        Settings
+                      </h3>
+                      {settingsNavItems.map((item) => {
+                        const isActive = location.pathname === item.to;
+                        return renderNavItem(item, isActive);
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Group 1 */}
+                    <div className="space-y-1 mb-4">
+                      {navItemsGroup1.map((item) => {
+                        const isActive = location.pathname === item.to;
+                        return renderNavItem(item, isActive);
+                      })}
+                    </div>
 
                 {/* Group 2 */}
                 <div className="space-y-1 mb-4">
@@ -484,6 +526,8 @@ const DashboardLayout: React.FC = () => {
                     </div>
                   )}
                 </div>
+                  </>
+                )}
               </div>
 
               {/* Bottom Group - Always at bottom */}
