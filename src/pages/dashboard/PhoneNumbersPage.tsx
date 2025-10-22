@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, PhoneCall, Settings, Trash2 } from 'lucide-react';
+import { Plus, PhoneCall, Settings, Trash2, ShoppingCart, Wifi } from 'lucide-react';
 
 const PhoneNumbersPage: React.FC = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showSipModal, setShowSipModal] = useState(false);
+  const [sipFormData, setSipFormData] = useState({
+    phoneNumber: '',
+    terminationUri: '',
+    sipTrunkUsername: '',
+    sipTrunkPassword: '',
+    nickname: ''
+  });
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   // Mock data - in real app this would come from API
   const phoneNumbers = [
     {
@@ -35,8 +60,43 @@ const PhoneNumbersPage: React.FC = () => {
   ];
 
   const handleAddPhoneNumber = () => {
-    console.log('Adding new phone number...');
-    // Implementation for adding phone number
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleBuyNewNumber = () => {
+    setShowDropdown(false);
+    console.log('Buying new number...');
+    // Implementation for buying new number
+  };
+
+  const handleSipTrunking = () => {
+    setShowDropdown(false);
+    setShowSipModal(true);
+  };
+
+  const handleSipFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSipFormData({
+      ...sipFormData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSipFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('SIP configuration:', sipFormData);
+    setShowSipModal(false);
+    // Implementation for saving SIP configuration
+  };
+
+  const handleSipFormCancel = () => {
+    setShowSipModal(false);
+    setSipFormData({
+      phoneNumber: '',
+      terminationUri: '',
+      sipTrunkUsername: '',
+      sipTrunkPassword: '',
+      nickname: ''
+    });
   };
 
   return (
@@ -58,15 +118,50 @@ const PhoneNumbersPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex justify-end"
+        className="flex justify-end relative"
       >
-        <button
-          onClick={handleAddPhoneNumber}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          Add Phone Number
-        </button>
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={handleAddPhoneNumber}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Add Phone Number
+          </button>
+          
+          {/* Dropdown */}
+          {showDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-10"
+            >
+              <div className="py-2">
+                <button
+                  onClick={handleBuyNewNumber}
+                  className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                >
+                  <ShoppingCart className="w-5 h-5 text-blue-600" />
+                  <div>
+                    <div className="font-medium text-gray-900">Buy new number</div>
+                    <div className="text-sm text-gray-500">Purchase a new phone number</div>
+                  </div>
+                </button>
+                <button
+                  onClick={handleSipTrunking}
+                  className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                >
+                  <Wifi className="w-5 h-5 text-green-600" />
+                  <div>
+                    <div className="font-medium text-gray-900">Connect to your number via SIP trunking</div>
+                    <div className="text-sm text-gray-500">Use your existing phone number</div>
+                  </div>
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </div>
       </motion.div>
 
       {/* Phone Numbers Table */}
@@ -151,6 +246,118 @@ const PhoneNumbersPage: React.FC = () => {
           </table>
         </div>
       </motion.div>
+
+      {/* SIP Configuration Modal */}
+      {showSipModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-white rounded-lg p-6 w-full max-w-md mx-4"
+          >
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              Connect to your number via SIP trunking
+            </h2>
+            
+            <form onSubmit={handleSipFormSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={sipFormData.phoneNumber}
+                  onChange={handleSipFormChange}
+                  placeholder="Enter phone number"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Termination URI
+                </label>
+                <input
+                  type="text"
+                  name="terminationUri"
+                  value={sipFormData.terminationUri}
+                  onChange={handleSipFormChange}
+                  placeholder="Enter termination URI (NOT Retell SIP server uri)"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  SIP Trunk User Name (Optional)
+                </label>
+                <input
+                  type="text"
+                  name="sipTrunkUsername"
+                  value={sipFormData.sipTrunkUsername}
+                  onChange={handleSipFormChange}
+                  placeholder="Enter SIP Trunk User Name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  SIP Trunk Password (Optional)
+                </label>
+                <input
+                  type="password"
+                  name="sipTrunkPassword"
+                  value={sipFormData.sipTrunkPassword}
+                  onChange={handleSipFormChange}
+                  placeholder="Enter SIP Trunk Password"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Nickname (Optional)
+                </label>
+                <input
+                  type="text"
+                  name="nickname"
+                  value={sipFormData.nickname}
+                  onChange={handleSipFormChange}
+                  placeholder="Enter Nickname"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
+                <p className="text-sm text-yellow-800">
+                  <strong>Note:</strong> Configuration can take up to 48 hours
+                </p>
+              </div>
+              
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={handleSipFormCancel}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
 
     </div>
   );

@@ -56,6 +56,7 @@ import Accordion05Demo from '../pages/Accordion05Demo';
 import DotPatternDemo from '../pages/DotPatternDemo';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
+import AdminPanel from '../pages/AdminPanel';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -162,6 +163,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
