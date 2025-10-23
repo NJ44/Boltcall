@@ -9,11 +9,11 @@ const FreeSetup: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-left">
           {/* Content */}
-          <div className="bg-transparent max-w-2xl">
+          <div className="bg-transparent max-w-xl">
             <div className="mb-4">
               <span className="text-sm uppercase tracking-wider font-medium text-white/70">SETUP</span>
             </div>
-            <h2 className="text-8xl md:text-9xl lg:text-[10rem] font-bold text-white mb-6" style={{ fontSize: '4em' }}>
+            <h2 className="font-bold text-white mb-6" style={{ fontSize: '54px', lineHeight: '0.9' }}>
               <div>One Setup.</div>
               <div>All <span className="text-blue-500">Channels.</span></div>
             </h2>

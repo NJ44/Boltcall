@@ -37,7 +37,7 @@ const GiveawayBar: React.FC = () => {
 
   return (
     <Link to="/giveaway" className="block">
-      <div className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 transition-colors duration-300">
+      <div className="relative bg-blue-600 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none">
         <div className="relative z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-2">

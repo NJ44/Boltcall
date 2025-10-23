@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
-import { Check } from 'lucide-react';
+import DatabaseWithRestApi from './ui/database-with-rest-api';
 
 
 const PROCESS_PHASES = [
@@ -11,12 +11,6 @@ const PROCESS_PHASES = [
     title: "AI Receptionist",
     description:
       "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
-    checklist: [
-      "24/7 call answering",
-      "Lead qualification",
-      "Appointment scheduling",
-      "Call transcription"
-    ],
     animationUrl: "/AI_assistant.lottie"
   },
   {
@@ -24,12 +18,6 @@ const PROCESS_PHASES = [
     title: "Instant Ads Replies",
     description:
       "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
-    checklist: [
-      "Instant response to ads",
-      "Personalized messaging",
-      "Lead capture forms",
-      "Follow-up automation"
-    ],
     animationUrl: "/statistics_on_tab.lottie"
   },
   {
@@ -37,12 +25,6 @@ const PROCESS_PHASES = [
     title: "SMS Booking",
     description:
       "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
-    checklist: [
-      "SMS lead capture",
-      "Automated scheduling",
-      "Appointment reminders",
-      "Calendar integration"
-    ],
     animationUrl: "/sms_agent.lottie"
   },
 ];
@@ -106,7 +88,7 @@ const HowItWorks: React.FC = () => {
                 index={index + 2}
                 incrementY={14}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '400px', top: '128px', bottom: 'auto', minHeight: '320px' }}
+                style={{ maxWidth: '440px', top: '128px', bottom: 'auto', minHeight: '320px' }}
               >
                 <div className="p-5 md:p-7 h-full">
                   {/* Full width content */}
@@ -122,16 +104,6 @@ const HowItWorks: React.FC = () => {
                       </div>
                     </div>
                     <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
-                    
-                    {/* Checklist */}
-                    <div className="space-y-2">
-                      {phase.checklist.map((item, itemIndex) => (
-                        <div key={itemIndex} className="flex items-center gap-2">
-                          <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                          <span className="text-sm text-gray-700">{item}</span>
-                        </div>
-                      ))}
-                    </div>
                   </div>
                   
                   {/* Right side - Animation removed */}

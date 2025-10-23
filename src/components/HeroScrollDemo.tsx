@@ -10,19 +10,37 @@ export function HeroScrollDemo() {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
       title: 'AI Receptionist',
       description: 'Never miss a call again with our AI receptionist that answers calls 24/7, schedules appointments, and provides instant support to your patients.',
-      layout: 'split'
+      layout: 'new-layout',
+      features: [
+        '24/7 call answering',
+        'Lead qualification',
+        'Appointment scheduling',
+        'Call transcription'
+      ]
     },
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
       title: 'Instant Ads/Forms Replay',
       description: 'Auto-texts and calls new leads within seconds, qualifies them, and books them straight to your calendar without any manual intervention.',
-      layout: 'default'
+      layout: 'new-layout',
+      features: [
+        'Instant response to ads',
+        'Personalized messaging',
+        'Lead capture forms',
+        'Follow-up automation'
+      ]
     },
     'sms-whatsapp': {
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
       title: 'SMS/Whatsapp Booking Agent',
       description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow.',
-      layout: 'split'
+      layout: 'new-layout',
+      features: [
+        'SMS lead capture',
+        'Automated scheduling',
+        'Appointment reminders',
+        'Calendar integration'
+      ]
     },
     'dashboard-analytics': {
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop',
@@ -118,22 +136,33 @@ export function HeroScrollDemo() {
           {/* Semi-transparent container for flipping screen content */}
           <div className="flex-1 bg-white/87 backdrop-blur-sm rounded-3xl p-10 mx-2 mt-4 mb-6">
             <div className="h-full flex flex-col items-center justify-center px-4">
-              {currentContent.layout === 'split' ? (
-              // AI Receptionist - Split Layout
+              {currentContent.layout === 'new-layout' ? (
+              // New Layout - Header/Text on left, Animation on right
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-center">
                 <div className="text-left">
                   <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                     {currentContent.title}
                   </h2>
-                  <p className="text-base md:text-lg text-white">
+                  <p className="text-base md:text-lg text-white mb-6">
                     {currentContent.description}
                   </p>
+                  {/* V sign list */}
+                  <ul className="space-y-3">
+                    {currentContent.features.map((feature, index) => (
+                      <li key={index} className="flex items-center gap-3 text-white">
+                        <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div className="flex justify-center">
                   <img
                     src={currentContent.image}
                     alt={currentContent.title}
-                    className="w-[250px] h-[250px] rounded-lg shadow-lg object-cover"
+                    className="w-[300px] h-[300px] rounded-lg shadow-lg object-cover"
                   />
                 </div>
               </div>

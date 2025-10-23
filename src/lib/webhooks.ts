@@ -49,6 +49,7 @@ export const createAgentAndKnowledgeBase = async (data: {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': 'perbP3PNqCvbu9JxG3YZvlBC9dS6OjR2',
       },
       body: JSON.stringify(payload),
     });
@@ -72,6 +73,7 @@ export const getAvailablePhoneNumbers = async (): Promise<PhoneNumber[]> => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': 'perbP3PNqCvbu9JxG3YZvlBC9dS6OjR2',
       },
     });
 
@@ -94,6 +96,7 @@ export const purchasePhoneNumber = async (phoneNumber: string): Promise<Purchase
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': 'perbP3PNqCvbu9JxG3YZvlBC9dS6OjR2',
       },
       body: JSON.stringify({ phoneNumber }),
     });
