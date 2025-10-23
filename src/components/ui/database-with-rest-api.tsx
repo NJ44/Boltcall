@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Folder, HeartHandshakeIcon, SparklesIcon, Phone, MessageSquare, Megaphone, Globe } from "lucide-react";
+import { SparklesIcon, Phone, MessageSquare, Megaphone, Globe } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 interface DatabaseWithRestApiProps {
@@ -13,10 +13,6 @@ interface DatabaseWithRestApiProps {
     third: string;
     fourth: string;
   };
-  buttonTexts?: {
-    first: string;
-    second: string;
-  };
   title?: string;
   lightColor?: string;
 }
@@ -25,14 +21,13 @@ const DatabaseWithRestApi = ({
   className,
   circleText,
   badgeTexts,
-  buttonTexts,
   title,
   lightColor,
 }: DatabaseWithRestApiProps) => {
   return (
     <div
       className={cn(
-        "relative flex h-[350px] w-full max-w-[500px] flex-col items-center",
+        "relative flex h-[280px] w-full max-w-[400px] flex-col items-center",
         className
       )}
     >
@@ -115,7 +110,7 @@ const DatabaseWithRestApi = ({
               height="10"
               rx="5"
             ></rect>
-            <ChannelIcon x="16" y="6" type="phone"></ChannelIcon>
+            <ChannelIcon x="18" y="7" type="phone"></ChannelIcon>
             <text
               x="28"
               y="12"
@@ -137,7 +132,7 @@ const DatabaseWithRestApi = ({
               height="10"
               rx="5"
             ></rect>
-            <ChannelIcon x="62" y="6" type="sms"></ChannelIcon>
+            <ChannelIcon x="64" y="7" type="sms"></ChannelIcon>
             <text
               x="74"
               y="12"
@@ -159,7 +154,7 @@ const DatabaseWithRestApi = ({
               height="10"
               rx="5"
             ></rect>
-            <ChannelIcon x="110" y="6" type="ads"></ChannelIcon>
+            <ChannelIcon x="112" y="7" type="ads"></ChannelIcon>
             <text
               x="122"
               y="12"
@@ -181,7 +176,7 @@ const DatabaseWithRestApi = ({
               height="10"
               rx="5"
             ></rect>
-            <ChannelIcon x="152" y="6" type="website"></ChannelIcon>
+            <ChannelIcon x="154" y="7" type="website"></ChannelIcon>
             <text
               x="165"
               y="12"
@@ -246,35 +241,41 @@ const DatabaseWithRestApi = ({
           </span>
         </div>
         {/* box outter circle */}
-        <div className="absolute -bottom-8 z-30 grid h-[60px] w-[60px] place-items-center rounded-full border-t bg-[#141516] font-semibold text-xs">
-          {circleText ? circleText : "SVG"}
+        <div className="absolute -bottom-6 z-30 grid h-[48px] w-[48px] place-items-center rounded-full border-t bg-[#141516] font-semibold text-xs">
+          {circleText ? circleText : (
+            <img 
+              src="/boltcall_icon.png" 
+              alt="Boltcall" 
+              className="w-6 h-6 object-contain"
+            />
+          )}
         </div>
         {/* box content */}
-        <div className="relative z-10 flex h-[150px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background shadow-md">
+        <div className="relative z-10 flex h-[120px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background shadow-md">
           {/* Circles */}
           <motion.div
-            className="absolute -bottom-14 h-[100px] w-[100px] rounded-full border-t bg-accent/5"
+            className="absolute -bottom-12 h-[80px] w-[80px] rounded-full border-t bg-accent/5"
             animate={{
               scale: [0.98, 1.02, 0.98, 1, 1, 1, 1, 1, 1],
             }}
             transition={{ duration: 2, repeat: Infinity }}
           />
           <motion.div
-            className="absolute -bottom-20 h-[145px] w-[145px] rounded-full border-t bg-accent/5"
+            className="absolute -bottom-16 h-[115px] w-[115px] rounded-full border-t bg-accent/5"
             animate={{
               scale: [1, 1, 1, 0.98, 1.02, 0.98, 1, 1, 1],
             }}
             transition={{ duration: 2, repeat: Infinity }}
           />
           <motion.div
-            className="absolute -bottom-[100px] h-[190px] w-[190px] rounded-full border-t bg-accent/5"
+            className="absolute -bottom-[80px] h-[150px] w-[150px] rounded-full border-t bg-accent/5"
             animate={{
               scale: [1, 1, 1, 1, 1, 0.98, 1.02, 0.98, 1, 1],
             }}
             transition={{ duration: 2, repeat: Infinity }}
           />
           <motion.div
-            className="absolute -bottom-[120px] h-[235px] w-[235px] rounded-full border-t bg-accent/5"
+            className="absolute -bottom-[100px] h-[185px] w-[185px] rounded-full border-t bg-accent/5"
             animate={{
               scale: [1, 1, 1, 1, 1, 1, 0.98, 1.02, 0.98, 1],
             }}
