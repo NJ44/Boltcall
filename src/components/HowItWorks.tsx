@@ -106,7 +106,7 @@ const HowItWorks: React.FC = () => {
                 index={index + 2}
                 incrementY={14}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '500px', top: '128px', bottom: 'auto', minHeight: '320px' }}
+                style={{ maxWidth: '400px', top: '128px', bottom: 'auto', minHeight: '320px' }}
               >
                 <div className="p-5 md:p-7 h-full">
                   {/* Full width content */}

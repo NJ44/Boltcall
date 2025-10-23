@@ -207,13 +207,13 @@ function Feature() {
             >
               {/* Background Clock Icon */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <Clock className="w-48 h-48 text-white opacity-50" />
+                <Clock className="w-52 h-52 text-gray-300 opacity-40" />
               </div>
               
               {/* Centered Content */}
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Saved time</h3>
-                <p className="text-muted-foreground text-sm max-w-xs">
+                <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">Saved time</h3>
+                <p className="text-muted-foreground text-base max-w-xs">
                   Automate repetitive tasks and focus on what matters most - closing deals and growing your business.
                 </p>
               </div>

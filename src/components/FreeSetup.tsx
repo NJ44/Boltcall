@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from './ui/Button';
 
 const FreeSetup: React.FC = () => {
   const navigate = useNavigate();
@@ -21,14 +20,12 @@ const FreeSetup: React.FC = () => {
             <p className="text-xl text-white mb-8">
               Get your AI assistant up and running in minutes with our completely free setup process. No hidden fees, no credit card required.
             </p>
-            <Button
+            <button
               onClick={() => navigate('/setup')}
-              variant="primary"
-              size="md"
-              className="w-full sm:w-auto bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 transition-all duration-75"
+              className="bg-white text-blue-600 px-4 py-2 rounded-lg text-lg font-medium hover:bg-gray-50 transition-colors"
             >
               Start Setup
-            </Button>
+            </button>
           </div>
         </div>
       </div>

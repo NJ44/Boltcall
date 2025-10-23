@@ -104,7 +104,7 @@ export function PricingTable({
               )}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl font-bold text-gray-900">
+                <span className={`text-2xl font-bold ${plan.isCustom ? 'text-white' : 'text-gray-900'}`}>
                   {plan.name}
                 </span>
                 {plan.popular && (

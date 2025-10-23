@@ -50,7 +50,7 @@ import FeatureSectionDemo from '../pages/FeatureSectionDemo';
 import MultipleSelectDemo from '../pages/MultipleSelectDemo';
 import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
 import EmptyStateDemo from '../pages/EmptyStateDemo';
-import DisplayCardsDemo from '../pages/DisplayCardsDemo';
+import DatabaseWithRestApiDemo from '../pages/DatabaseWithRestApiDemo';
 import NewAccordionDemo from '../pages/NewAccordionDemo';
 import Accordion05Demo from '../pages/Accordion05Demo';
 import DotPatternDemo from '../pages/DotPatternDemo';
@@ -156,7 +156,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/multiple-select-demo" element={<MultipleSelectDemo />} />
         <Route path="/custom-checkbox-demo" element={<CustomCheckboxDemo />} />
         <Route path="/empty-state-demo" element={<EmptyStateDemo />} />
-        <Route path="/display-cards-demo" element={<DisplayCardsDemo />} />
+        <Route path="/database-with-rest-api-demo" element={<DatabaseWithRestApiDemo />} />
         <Route path="/new-accordion-demo" element={<NewAccordionDemo />} />
         <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
         <Route path="/dot-pattern-demo" element={<DotPatternDemo />} />
