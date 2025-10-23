@@ -18,31 +18,16 @@ const Hero: React.FC = () => {
         {/* Main Headline */}
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main mb-6 relative z-10">
           <WhisperText
-            text="NEVER MISS A"
+            text="NEVER MISS A LEAD AGAIN."
             className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
-            delay={125}
+            delay={200}
             duration={0.625}
             x={-20}
             y={0}
             triggerStart="top 80%"
-          />{' '}
-          <WhisperText
-            text="LEAD"
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-blue-500 inline-block"
-            delay={125}
-            duration={0.625}
-            x={-20}
-            y={0}
-            triggerStart="top 80%"
-          />{' '}
-          <WhisperText
-            text="AGAIN."
-            className="text-3xl md:text-5xl lg:text-6xl font-bold text-text-main inline-block"
-            delay={125}
-            duration={0.625}
-            x={-20}
-            y={0}
-            triggerStart="top 80%"
+            wordStyles={{
+              "LEAD": { color: "#3b82f6" }
+            }}
           />
         </h1>
 
@@ -51,7 +36,7 @@ const Hero: React.FC = () => {
           className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.7 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
           24/7 lead capture via calls, forms, and chat. Instant SMS/call <br />
           follow-up and auto-booking.

@@ -488,3 +488,180 @@ WHERE NOT EXISTS (
   SELECT 1 FROM website_widgets ww 
   WHERE ww.business_profile_id = bp.id
 );
+
+-- To enable vector search capabilities (optional):
+-- Run this command in Supabase SQL editor first:
+-- CREATE EXTENSION IF NOT EXISTS vector;
+-- Then uncomment the embedding_vector line in knowledge_base table
+
+-- Agents table
+CREATE TABLE agents (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  business_profile_id UUID NOT NULL REFERENCES business_profiles(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  workspace_id UUID,
+  
+  -- Agent basic information
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  agent_type VARCHAR(50) NOT NULL DEFAULT 'ai_receptionist', -- ai_receptionist, sms_agent, ads_agent, website_agent
+  status VARCHAR(20) NOT NULL DEFAULT 'active', -- active, inactive, training, error
+  
+  -- Agent configuration
+  voice_id VARCHAR(255), -- Retell voice ID
+  voice_settings JSONB DEFAULT '{}',
+  language VARCHAR(10) DEFAULT 'en',
+  accent VARCHAR(50),
+  speaking_speed DECIMAL(3,2) DEFAULT 1.0,
+  
+  -- AI configuration
+  personality VARCHAR(255),
+  conversation_style VARCHAR(100) DEFAULT 'professional',
+  max_conversation_length INTEGER DEFAULT 50,
+  response_delay INTEGER DEFAULT 1000, -- milliseconds
+  
+  -- Business logic
+  business_hours JSONB DEFAULT '{}',
+  after_hours_message TEXT,
+  escalation_rules JSONB DEFAULT '{}',
+  call_routing JSONB DEFAULT '{}',
+  
+  -- Performance metrics
+  total_calls INTEGER DEFAULT 0,
+  successful_calls INTEGER DEFAULT 0,
+  average_call_duration INTEGER DEFAULT 0, -- seconds
+  conversion_rate DECIMAL(5,2) DEFAULT 0.0,
+  customer_satisfaction DECIMAL(3,2) DEFAULT 0.0,
+  
+  -- Integration settings
+  integrations JSONB DEFAULT '{}',
+  webhook_urls JSONB DEFAULT '{}',
+  api_keys JSONB DEFAULT '{}',
+  
+  -- Metadata
+  tags TEXT[],
+  is_public BOOLEAN DEFAULT false,
+  is_template BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Knowledge base table
+CREATE TABLE knowledge_base (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  business_profile_id UUID NOT NULL REFERENCES business_profiles(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  workspace_id UUID,
+  
+  -- Content information
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  content_type VARCHAR(50) NOT NULL DEFAULT 'text', -- text, faq, policy, procedure, product_info
+  category VARCHAR(100),
+  subcategory VARCHAR(100),
+  
+  -- Content metadata
+  keywords TEXT[],
+  tags TEXT[],
+  language VARCHAR(10) DEFAULT 'en',
+  priority INTEGER DEFAULT 1, -- 1-5, higher number = higher priority
+  
+  -- Usage tracking
+  usage_count INTEGER DEFAULT 0,
+  last_used_at TIMESTAMP WITH TIME ZONE,
+  success_rate DECIMAL(5,2) DEFAULT 0.0,
+  
+  -- Content status
+  status VARCHAR(20) NOT NULL DEFAULT 'active', -- active, inactive, draft, archived
+  is_public BOOLEAN DEFAULT false,
+  is_verified BOOLEAN DEFAULT false,
+  
+  -- File attachments
+  attachments JSONB DEFAULT '[]',
+  file_urls TEXT[],
+  
+  -- AI processing
+  -- embedding_vector VECTOR(1536), -- Uncomment after enabling vector extension
+  ai_summary TEXT,
+  ai_tags TEXT[],
+  
+  -- Version control
+  version INTEGER DEFAULT 1,
+  parent_id UUID REFERENCES knowledge_base(id) ON DELETE SET NULL,
+  
+  -- Metadata
+  source VARCHAR(255),
+  author VARCHAR(255),
+  last_reviewed_at TIMESTAMP WITH TIME ZONE,
+  review_interval_days INTEGER DEFAULT 90,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create indexes for agents table
+CREATE INDEX idx_agents_business_profile_id ON agents(business_profile_id);
+CREATE INDEX idx_agents_user_id ON agents(user_id);
+CREATE INDEX idx_agents_workspace_id ON agents(workspace_id);
+CREATE INDEX idx_agents_status ON agents(status);
+CREATE INDEX idx_agents_agent_type ON agents(agent_type);
+CREATE INDEX idx_agents_created_at ON agents(created_at);
+
+-- Create indexes for knowledge_base table
+CREATE INDEX idx_knowledge_base_business_profile_id ON knowledge_base(business_profile_id);
+CREATE INDEX idx_knowledge_base_user_id ON knowledge_base(user_id);
+CREATE INDEX idx_knowledge_base_workspace_id ON knowledge_base(workspace_id);
+CREATE INDEX idx_knowledge_base_content_type ON knowledge_base(content_type);
+CREATE INDEX idx_knowledge_base_category ON knowledge_base(category);
+CREATE INDEX idx_knowledge_base_status ON knowledge_base(status);
+CREATE INDEX idx_knowledge_base_priority ON knowledge_base(priority);
+CREATE INDEX idx_knowledge_base_keywords ON knowledge_base USING GIN(keywords);
+CREATE INDEX idx_knowledge_base_tags ON knowledge_base USING GIN(tags);
+CREATE INDEX idx_knowledge_base_created_at ON knowledge_base(created_at);
+
+-- Create vector index for embeddings (if using vector search)
+-- CREATE INDEX idx_knowledge_base_embedding ON knowledge_base USING ivfflat (embedding_vector vector_cosine_ops) WITH (lists = 100);
+
+-- Create RLS policies for agents table
+ALTER TABLE agents ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view their own agents" ON agents
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own agents" ON agents
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own agents" ON agents
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own agents" ON agents
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- Create RLS policies for knowledge_base table
+ALTER TABLE knowledge_base ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view their own knowledge base" ON knowledge_base
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own knowledge base" ON knowledge_base
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own knowledge base" ON knowledge_base
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own knowledge base" ON knowledge_base
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- Create updated_at triggers for both tables
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_agents_updated_at BEFORE UPDATE ON agents
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_knowledge_base_updated_at BEFORE UPDATE ON knowledge_base
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

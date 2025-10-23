@@ -2,10 +2,18 @@ import { useState, useMemo } from "react";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
 
+interface ContentData {
+  image: string;
+  title: string;
+  description: string;
+  layout: string;
+  features?: string[];
+}
+
 export function HeroScrollDemo() {
   const [activeTab, setActiveTab] = useState('ai-receptionist');
 
-  const contentData = {
+  const contentData: Record<string, ContentData> = {
     'ai-receptionist': {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
       title: 'AI Receptionist',
@@ -148,7 +156,7 @@ export function HeroScrollDemo() {
                   </p>
                   {/* V sign list */}
                   <ul className="space-y-3">
-                    {currentContent.features.map((feature, index) => (
+                    {currentContent.features?.map((feature, index) => (
                       <li key={index} className="flex items-center gap-3 text-white">
                         <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

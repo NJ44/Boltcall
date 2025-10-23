@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
-import DatabaseWithRestApi from './ui/database-with-rest-api';
 
 
 const PROCESS_PHASES = [

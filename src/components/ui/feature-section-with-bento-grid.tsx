@@ -100,32 +100,10 @@ function Feature() {
             >
               {/* Left side - Text content */}
               <div className="flex flex-col text-left max-w-xs">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Increased revenue</h3>
+                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Increased closing rates</h3>
                 <p className="text-muted-foreground text-base mb-4">
-                  Convert more leads into paying customers with faster response times and better qualification processes.
+                  Answering a lead within 60 seconds or less makes you 391% more likely to close the deal. Speed is everything in lead conversion.
                 </p>
-                
-                {/* Checkmark list */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Faster response times</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Better qualification processes</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Higher conversion rates</span>
-                  </div>
-                </div>
               </div>
 
               {/* Right side - Chart */}
@@ -184,9 +162,9 @@ function Feature() {
                     <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
                   </CardVisual>
                   <CardBody>
-                    <CardTitle>Higher closing rates</CardTitle>
+                    <CardTitle>60-Second Response Rule</CardTitle>
                     <CardDescription>
-                      Achieve up to 391% higher conversion rates with instant lead response and AI-powered qualification.
+                      Companies that respond to leads within 60 seconds are 391% more likely to convert them into customers.
                     </CardDescription>
                   </CardBody>
                 </AnimatedCard>

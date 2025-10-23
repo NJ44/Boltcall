@@ -13,6 +13,7 @@ interface WhisperTextProps {
   y?: number;  
   triggerStart?: string;
   style?: React.CSSProperties;
+  wordStyles?: { [key: string]: React.CSSProperties };
 }
 
 const WhisperText: React.FC<WhisperTextProps> = ({
@@ -24,6 +25,7 @@ const WhisperText: React.FC<WhisperTextProps> = ({
   y = 0,
   triggerStart = "top 90%",
   style,
+  wordStyles = {},
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +60,10 @@ const WhisperText: React.FC<WhisperTextProps> = ({
         key={i}
         data-word
         className="inline-block whitespace-nowrap"
-        style={{ position: "relative" }}
+        style={{ 
+          position: "relative",
+          ...wordStyles[word]
+        }}
       >
         {word}
       </span>
