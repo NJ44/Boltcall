@@ -36,6 +36,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
+import { addLogEntry, logUserAction } from '../../lib/logging';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -49,8 +50,12 @@ const DashboardLayout: React.FC = () => {
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   
+  // Get current user from auth context
+  const { user } = useAuth();
+  
   // Mock user plan - in real app, this would come from user context/API
   const userPlan: 'free' | 'pro' | 'elite' = 'free';
+  
   
   // Notification toggles
   const [notifications, setNotifications] = useState({
@@ -74,8 +79,16 @@ const DashboardLayout: React.FC = () => {
     knowledgeBase: true,
     websiteBubble: false
   });
+
+  // Log dashboard access when component mounts
+  useEffect(() => {
+    if (user?.id) {
+      addLogEntry('Dashboard Access', 'User accessed dashboard', user.id);
+    }
+  }, [user?.id]);
+
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
 
   // Add dashboard-page class to body for normal scrolling
@@ -94,6 +107,7 @@ const DashboardLayout: React.FC = () => {
     setSidebarOpen(false);
   };
 
+
   const toggleSidebarCollapse = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
@@ -101,6 +115,9 @@ const DashboardLayout: React.FC = () => {
 
   const handleLogout = async () => {
     try {
+      if (user?.id) {
+        await logUserAction('User Logout', 'User logged out from dashboard', user.id);
+      }
       await logout();
     } catch (error) {
       console.error('Logout error:', error);
@@ -113,16 +130,24 @@ const DashboardLayout: React.FC = () => {
   };
 
   const toggleNotification = (key: keyof typeof notifications) => {
+    const newValue = !notifications[key];
+    if (user?.id) {
+      logUserAction('Notification Toggle', `Toggled ${key} notification to ${newValue ? 'enabled' : 'disabled'}`, user.id);
+    }
     setNotifications(prev => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: newValue
     }));
   };
 
   const toggleService = (key: keyof typeof services) => {
+    const newValue = !services[key];
+    if (user?.id) {
+      logUserAction('Service Toggle', `Toggled ${key} service to ${newValue ? 'enabled' : 'disabled'}`, user.id);
+    }
     setServices(prev => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: newValue
     }));
   };
 

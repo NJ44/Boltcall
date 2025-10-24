@@ -49,7 +49,7 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className={`fixed left-0 right-0 z-50 bg-transparent backdrop-blur-md transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 ${
         isSticky ? 'top-0' : 'top-[43px]'
       }`}
       initial={{ y: -100 }}
@@ -154,7 +154,7 @@ const Header: React.FC = () => {
 
           {/* Mobile menu button - Fixed to top right */}
           <button
-            className="md:hidden fixed top-4 right-4 z-50 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200"
+            className="md:hidden fixed top-4 right-4 z-[120] p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
