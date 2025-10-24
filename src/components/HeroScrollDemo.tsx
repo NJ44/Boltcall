@@ -1,9 +1,11 @@
 import { useState, useMemo } from "react";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface ContentData {
   image: string;
+  animation?: string;
   title: string;
   description: string;
   layout: string;
@@ -16,6 +18,7 @@ export function HeroScrollDemo() {
   const contentData: Record<string, ContentData> = {
     'ai-receptionist': {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
+      animation: '/AI_assistant.lottie',
       title: 'AI Receptionist',
       description: 'Never miss a call again with our AI receptionist that answers calls 24/7, schedules appointments, and provides instant support to your patients.',
       layout: 'new-layout',
@@ -28,6 +31,7 @@ export function HeroScrollDemo() {
     },
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
+      animation: '/statistics_on_tab.lottie',
       title: 'Instant Ads/Forms Replay',
       description: 'Auto-texts and calls new leads within seconds, qualifies them, and books them straight to your calendar without any manual intervention.',
       layout: 'new-layout',
@@ -40,6 +44,7 @@ export function HeroScrollDemo() {
     },
     'sms-whatsapp': {
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
+      animation: '/sms_agent.lottie',
       title: 'SMS/Whatsapp Booking Agent',
       description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow.',
       layout: 'new-layout',
@@ -167,11 +172,20 @@ export function HeroScrollDemo() {
                   </ul>
                 </div>
                 <div className="flex justify-center">
-                  <img
-                    src={currentContent.image}
-                    alt={currentContent.title}
-                    className="w-[300px] h-[300px] rounded-lg shadow-lg object-cover"
-                  />
+                  {currentContent.animation ? (
+                    <DotLottieReact
+                      src={currentContent.animation}
+                      loop
+                      autoplay
+                      className="w-[300px] h-[300px]"
+                    />
+                  ) : (
+                    <img
+                      src={currentContent.image}
+                      alt={currentContent.title}
+                      className="w-[300px] h-[300px] rounded-lg shadow-lg object-cover"
+                    />
+                  )}
                 </div>
               </div>
             ) : currentContent.layout === 'features' ? (

@@ -7,6 +7,7 @@ import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { createUserWorkspaceAndProfile } from '../../lib/database';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
 
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepAccount = React.lazy(() => import('./steps/StepAccount'));
@@ -28,6 +29,7 @@ const WizardShell: React.FC = () => {
   const [expandedStep, setExpandedStep] = useState(0);
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
   const { user } = useAuth();
+  const { showToast } = useToast();
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -165,7 +167,12 @@ const WizardShell: React.FC = () => {
         businessProfile: storeBusinessProfile
       });
       // You might want to show an error message to the user here
-      alert(`Failed to save your business profile: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`);
+      showToast({
+        title: 'Save Failed',
+        message: `Failed to save your business profile: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`,
+        variant: 'error',
+        duration: 5000
+      });
     }
   };
 

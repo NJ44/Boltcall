@@ -3,9 +3,11 @@ import { Phone, Check, ShoppingCart } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import { getAvailablePhoneNumbers, purchasePhoneNumber, type PhoneNumber } from '../../../lib/webhooks';
+import { useToast } from '../../../contexts/ToastContext';
 
 const StepPhone: React.FC = () => {
   const { phone, updatePhone } = useSetupStore();
+  const { showToast } = useToast();
   const [phoneNumber, setPhoneNumber] = useState(phone.newNumber.number || '');
   const [availableNumbers, setAvailableNumbers] = useState<PhoneNumber[]>([]);
   const [isLoadingNumbers, setIsLoadingNumbers] = useState(false);
@@ -25,7 +27,12 @@ const StepPhone: React.FC = () => {
       setAvailableNumbers(numbers);
     } catch (error) {
       console.error('Error loading phone numbers:', error);
-      alert('Failed to load available phone numbers. Please try again.');
+      showToast({
+        title: 'Error',
+        message: 'Failed to load available phone numbers. Please try again.',
+        variant: 'error',
+        duration: 5000
+      });
     } finally {
       setIsLoadingNumbers(false);
     }
@@ -55,7 +62,12 @@ const StepPhone: React.FC = () => {
 
   const handlePurchaseNumber = async () => {
     if (!selectedNumber) {
-      alert('Please select a phone number first.');
+      showToast({
+        title: 'Selection Required',
+        message: 'Please select a phone number first.',
+        variant: 'warning',
+        duration: 4000
+      });
       return;
     }
 
@@ -69,11 +81,21 @@ const StepPhone: React.FC = () => {
         // Trigger next step after successful purchase
         window.dispatchEvent(new CustomEvent('phone-step-completed'));
       } else {
-        alert(result.message || 'Failed to purchase phone number. Please try again.');
+        showToast({
+          title: 'Purchase Failed',
+          message: result.message || 'Failed to purchase phone number. Please try again.',
+          variant: 'error',
+          duration: 5000
+        });
       }
     } catch (error) {
       console.error('Error purchasing phone number:', error);
-      alert('Failed to purchase phone number. Please try again.');
+      showToast({
+        title: 'Error',
+        message: 'Failed to purchase phone number. Please try again.',
+        variant: 'error',
+        duration: 5000
+      });
     } finally {
       setIsPurchasing(false);
     }

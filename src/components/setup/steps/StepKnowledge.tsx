@@ -5,10 +5,12 @@ import StyledInput from '../../ui/StyledInput';
 import { createAgentAndKnowledgeBase } from '../../../lib/webhooks';
 import Button from '../../ui/Button';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useToast } from '../../../contexts/ToastContext';
 
 const StepKnowledge: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
   const { user } = useAuth();
+  const { showToast } = useToast();
   const [isCreatingAgent, setIsCreatingAgent] = useState(false);
   const [agentCreated, setAgentCreated] = useState(false);
 
@@ -35,7 +37,12 @@ const StepKnowledge: React.FC = () => {
       window.dispatchEvent(new CustomEvent('knowledge-step-completed'));
     } catch (error) {
       console.error('Error creating agent:', error);
-      alert('Failed to create AI agent. Please try again.');
+      showToast({
+        title: 'Error',
+        message: 'Failed to create AI agent. Please try again.',
+        variant: 'error',
+        duration: 5000
+      });
     } finally {
       setIsCreatingAgent(false);
     }

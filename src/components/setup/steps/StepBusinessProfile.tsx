@@ -108,13 +108,13 @@ const StepBusinessProfile: React.FC = () => {
               <select
                 value={businessProfile.mainCategory}
                 onChange={(e) => updateBusinessProfile({ mainCategory: e.target.value })}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 appearance-none bg-white ${
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 appearance-none bg-white text-gray-900 ${
                   errors.mainCategory ? 'border-red-300 focus:border-red-500' : 'border-gray-300 focus:border-brand-blue'
                 }`}
               >
-                <option value="">Select your business category</option>
+                <option value="" className="text-gray-900">Select your business category</option>
                 {categories.map(category => (
-                  <option key={category.value} value={category.value}>
+                  <option key={category.value} value={category.value} className="text-gray-900">
                     {category.label}
                   </option>
                 ))}
@@ -141,13 +141,13 @@ const StepBusinessProfile: React.FC = () => {
               <select
                 value={businessProfile.country || ''}
                 onChange={(e) => updateBusinessProfile({ country: e.target.value })}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 appearance-none bg-white ${
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 appearance-none bg-white text-gray-900 ${
                   errors.country ? 'border-red-300 focus:border-red-500' : 'border-gray-300 focus:border-brand-blue'
                 }`}
               >
-                <option value="">Select your country</option>
+                <option value="" className="text-gray-900">Select your country</option>
                 {countries.map(country => (
-                  <option key={country.value} value={country.value}>
+                  <option key={country.value} value={country.value} className="text-gray-900">
                     {country.label}
                   </option>
                 ))}

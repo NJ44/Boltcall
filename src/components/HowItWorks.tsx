@@ -7,23 +7,23 @@ import { ContainerScroll, CardSticky } from './ui/cards-stack';
 const PROCESS_PHASES = [
   {
     id: "process-1",
-    title: "AI Receptionist",
+    title: "Getting the leads",
     description:
-      "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
+      "Your AI receptionist captures leads 24/7 from calls, forms, and ads, ensuring no opportunity is missed with instant response times.",
     animationUrl: "/AI_assistant.lottie"
   },
   {
     id: "process-2",
-    title: "Instant Ads Replies",
+    title: "Qualify & Nurture",
     description:
-      "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
+      "Our AI intelligently qualifies each lead through personalized conversations, understanding their needs and determining their buying intent.",
     animationUrl: "/statistics_on_tab.lottie"
   },
   {
     id: "process-3",
-    title: "SMS Booking",
+    title: "Booking",
     description:
-      "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
+      "Convert qualified leads into booked appointments with automated scheduling, reminders, and seamless calendar integration.",
     animationUrl: "/sms_agent.lottie"
   },
 ];

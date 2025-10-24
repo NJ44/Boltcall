@@ -100,7 +100,7 @@ const Header: React.FC = () => {
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" className="transition-colors text-text-muted hover:text-brand-blue">
-                  Dashboard
+                  Go To Dashboard
                 </Link>
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4 text-text-muted" />
@@ -216,7 +216,7 @@ const Header: React.FC = () => {
                           className="block w-full text-center py-3 px-6 text-brand-blue hover:bg-brand-blue/10 rounded-xl transition-all duration-300 font-medium text-lg"
                           onClick={() => setIsMenuOpen(false)}
                         >
-                          Dashboard
+                          Go To Dashboard
                         </Link>
                       </motion.div>
                       <motion.div
