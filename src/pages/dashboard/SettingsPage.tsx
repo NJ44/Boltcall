@@ -60,12 +60,6 @@ const SettingsPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600 mt-2">
-          Manage your account preferences and system settings
-        </p>
-      </div>
 
       {/* Settings Overview */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">

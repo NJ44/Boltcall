@@ -71,12 +71,6 @@ const UsagePage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Usage & Analytics</h1>
-        <p className="text-gray-600 mt-2">
-          Monitor your AI agent's performance and usage statistics
-        </p>
-      </div>
 
       {/* Usage Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

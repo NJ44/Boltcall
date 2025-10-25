@@ -44,14 +44,6 @@ const BillingPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900 flex items-center gap-2">
-          <CreditCard className="w-6 h-6" />
-          Plan & Billing
-        </h1>
-        <p className="text-zinc-600 mt-1">Manage your subscription and billing information</p>
-      </div>
 
       {/* Current Plan */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">

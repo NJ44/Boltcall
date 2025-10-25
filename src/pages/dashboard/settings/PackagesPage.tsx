@@ -76,12 +76,6 @@ const PackagesPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Packages</h1>
-        <p className="text-gray-600 mt-2">
-          Choose the perfect package for your business needs. All packages include 48-hour setup time.
-        </p>
-      </div>
 
       {/* Setup Notice */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

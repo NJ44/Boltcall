@@ -107,12 +107,6 @@ const RemindersPage: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="flex items-center justify-between"
       >
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Reminders</h1>
-          <p className="text-gray-600 mt-1">
-            Manage appointment reminders and track their status.
-          </p>
-            </div>
             <button
           onClick={() => setShowEditModal(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"

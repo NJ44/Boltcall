@@ -88,27 +88,6 @@ const WebsiteBubblePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <MessageCircle className="w-5 h-5 text-blue-600" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Website Bubble</h1>
-              <p className="text-sm text-gray-600 mt-1">Add AI chat widgets to your website in minutes</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-500">Free Trial</span>
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          </div>
-        </motion.div>
 
       {/* Client Agents Card Table */}
       <motion.div

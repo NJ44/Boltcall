@@ -42,10 +42,6 @@ const IntegrationsPage: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="flex items-center justify-between"
       >
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Integrations</h1>
-          <p className="text-gray-600 mt-1">Connect your favorite tools and automate your workflow</p>
-        </div>
       </motion.div>
 
       {/* Integrations Grid */}

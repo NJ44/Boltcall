@@ -147,9 +147,6 @@ const KnowledgeBasePage: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="flex items-center justify-between"
       >
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Knowledge Base</h1>
-        </div>
       </motion.div>
 
       {documents.length === 0 ? (

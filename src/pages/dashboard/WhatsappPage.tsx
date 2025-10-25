@@ -48,13 +48,6 @@ const WhatsappPage: React.FC = () => {
         className="flex items-center justify-between"
       >
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold text-gray-900">WhatsApp Integrations</h1>
-            <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-full">
-              BETA
-            </span>
-          </div>
-          <p className="text-gray-600 mt-1">Connect WhatsApp Business for patient communication</p>
         </div>
       </motion.div>
 
