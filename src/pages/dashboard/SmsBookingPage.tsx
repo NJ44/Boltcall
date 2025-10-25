@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Clock, Edit, Trash2, Calendar, User, Phone } from 'lucide-react';
+import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CardTable from '../../components/ui/CardTable';
 
-interface Reminder {
+interface SmsBooking {
   id: string;
   clientName: string;
   clientPhone: string;
@@ -19,8 +19,8 @@ interface Reminder {
   notes?: string;
 }
 
-const RemindersPage: React.FC = () => {
-  const [reminders, setReminders] = useState<Reminder[]>([
+const SmsBookingPage: React.FC = () => {
+  const [smsBookings, setSmsBookings] = useState<SmsBooking[]>([
     {
       id: '1',
       clientName: 'John Smith',
@@ -70,47 +70,46 @@ const RemindersPage: React.FC = () => {
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedReminder, setSelectedReminder] = useState<Reminder | null>(null);
-  const [editingReminder, setEditingReminder] = useState<Partial<Reminder>>({});
+  const [selectedBooking, setSelectedBooking] = useState<SmsBooking | null>(null);
+  const [editingBooking, setEditingBooking] = useState<Partial<SmsBooking>>({});
 
-  const handleDeleteReminder = (id: string) => {
-    setReminders(reminders.filter(reminder => reminder.id !== id));
+  const handleDeleteBooking = (id: string) => {
+    setSmsBookings(smsBookings.filter(booking => booking.id !== id));
     setShowDeleteModal(false);
-    setSelectedReminder(null);
+    setSelectedBooking(null);
   };
 
-  const handleRescheduleReminder = (reminder: Reminder) => {
-    setEditingReminder(reminder);
+  const handleRescheduleBooking = (booking: SmsBooking) => {
+    setEditingBooking(booking);
     setShowEditModal(true);
   };
 
-  const handleSaveReminder = () => {
-    if (editingReminder.id) {
-      setReminders(reminders.map(r => 
-        r.id === editingReminder.id ? { ...r, ...editingReminder } as Reminder : r
+  const handleSaveBooking = () => {
+    if (editingBooking.id) {
+      setSmsBookings(smsBookings.map(b => 
+        b.id === editingBooking.id ? { ...b, ...editingBooking } as SmsBooking : b
       ));
     } else {
-      const newReminder: Reminder = {
+      const newBooking: SmsBooking = {
         id: Date.now().toString(),
-        ...editingReminder as Omit<Reminder, 'id'>
+        ...editingBooking as Omit<SmsBooking, 'id'>
       };
-      setReminders([...reminders, newReminder]);
+      setSmsBookings([...smsBookings, newBooking]);
     }
     setShowEditModal(false);
-    setEditingReminder({});
+    setEditingBooking({});
   };
 
   return (
     <div className="space-y-6">
-
-      {/* Reminders Table */}
+      {/* SMS Bookings Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
         <CardTable
-          data={reminders}
+          data={smsBookings}
           columns={[
             { key: 'client', label: 'Client & Service', width: '25%' },
             { key: 'appointment', label: 'Appointment', width: '20%' },
@@ -119,7 +118,7 @@ const RemindersPage: React.FC = () => {
             { key: 'text', label: 'Reminder Text', width: '20%' },
             { key: 'actions', label: 'Actions', width: '5%' }
           ]}
-          renderRow={(reminder) => (
+          renderRow={(booking) => (
             <div className="flex items-center gap-6">
               {/* Checkbox */}
               <input
@@ -129,15 +128,15 @@ const RemindersPage: React.FC = () => {
               
               {/* Client & Service */}
               <div className="flex items-center gap-3 flex-1">
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <User className="w-5 h-5 text-blue-600" />
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-5 h-5 text-green-600" />
                 </div>
                 <div>
-                  <div className="text-sm font-medium text-gray-900">{reminder.clientName}</div>
-                  <div className="text-sm text-gray-500">{reminder.service}</div>
+                  <div className="text-sm font-medium text-gray-900">{booking.clientName}</div>
+                  <div className="text-sm text-gray-500">{booking.service}</div>
                   <div className="flex items-center gap-2 mt-1">
                     <Phone className="w-3 h-3 text-gray-400" />
-                    <span className="text-xs text-gray-500">{reminder.clientPhone}</span>
+                    <span className="text-xs text-gray-500">{booking.clientPhone}</span>
                   </div>
                 </div>
               </div>
@@ -146,21 +145,21 @@ const RemindersPage: React.FC = () => {
               <div className="flex items-center gap-2 flex-1">
                 <Calendar className="w-4 h-4 text-gray-400" />
                 <div>
-                  <div className="text-sm text-gray-900">{reminder.appointmentDate}</div>
-                  <div className="text-sm text-gray-500">{reminder.appointmentTime}</div>
+                  <div className="text-sm text-gray-900">{booking.appointmentDate}</div>
+                  <div className="text-sm text-gray-500">{booking.appointmentTime}</div>
                 </div>
               </div>
               
               {/* Status */}
               <div className="flex items-center gap-2 flex-1">
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                  reminder.status === 'active'
+                  booking.status === 'active'
                     ? 'bg-green-100 text-green-800'
                     : 'bg-gray-100 text-gray-800'
                 }`}>
-                  {reminder.status}
+                  {booking.status}
                 </span>
-                {reminder.reminderSent && (
+                {booking.reminderSent && (
                   <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
                     Sent
                   </span>
@@ -170,25 +169,25 @@ const RemindersPage: React.FC = () => {
               {/* Reminder Timing */}
               <div className="flex items-center gap-2 flex-1">
                 <Clock className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-900">{reminder.reminderTime}</span>
+                <span className="text-sm text-gray-900">{booking.reminderTime}</span>
               </div>
               
               {/* Reminder Text */}
               <div className="text-sm text-gray-900 flex-1 truncate">
-                {reminder.reminderText}
+                {booking.reminderText}
               </div>
               
               {/* Actions */}
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => handleRescheduleReminder(reminder)}
+                  onClick={() => handleRescheduleBooking(booking)}
                   className="text-blue-600 hover:text-blue-900 transition-colors"
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => {
-                    setSelectedReminder(reminder);
+                    setSelectedBooking(booking);
                     setShowDeleteModal(true);
                   }}
                   className="text-red-600 hover:text-red-900 transition-colors"
@@ -198,97 +197,16 @@ const RemindersPage: React.FC = () => {
               </div>
             </div>
           )}
-          emptyStateText="No reminders found"
+          emptyStateText="No SMS bookings found"
           emptyStateAnimation="/No_Data_Preview.lottie"
           onAddNew={() => setShowEditModal(true)}
-          addNewText="Add Reminder"
+          addNewText="Add SMS Booking"
         />
-      </motion.div>
-
-      {/* Reminders Configuration */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
-      >
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-            <Clock className="w-4 h-4 text-blue-600" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">Reminders Configuration</h2>
-            <p className="text-sm text-gray-600">Configure your reminder settings and templates</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Default Reminder Settings */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Default Settings</h3>
-            <div className="space-y-3">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Default Reminder Time</label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <option value="24">24 hours before</option>
-                  <option value="48">48 hours before</option>
-                  <option value="72">72 hours before</option>
-                  <option value="168">1 week before</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Default Message Template</label>
-                <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={3}
-                  placeholder="Enter your default reminder message template..."
-                ></textarea>
-              </div>
-            </div>
-          </div>
-
-          {/* Notification Settings */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Notification Settings</h3>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Email Reminders</label>
-                  <p className="text-xs text-gray-500">Send reminders via email</p>
-                </div>
-                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" defaultChecked />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">SMS Reminders</label>
-                  <p className="text-xs text-gray-500">Send reminders via SMS</p>
-                </div>
-                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Auto-send Reminders</label>
-                  <p className="text-xs text-gray-500">Automatically send reminders</p>
-                </div>
-                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" defaultChecked />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
-          <button className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-            Reset to Defaults
-          </button>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-            Save Configuration
-          </button>
-        </div>
       </motion.div>
 
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
-        {showDeleteModal && selectedReminder && (
+        {showDeleteModal && selectedBooking && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -303,9 +221,9 @@ const RemindersPage: React.FC = () => {
               className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Delete Reminder</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Delete SMS Booking</h2>
               <p className="text-gray-600 mb-6">
-                Are you sure you want to delete the reminder for {selectedReminder.clientName}'s appointment? This action cannot be undone.
+                Are you sure you want to delete the SMS booking for {selectedBooking.clientName}'s appointment? This action cannot be undone.
               </p>
               <div className="flex justify-end gap-3">
                 <button
@@ -315,7 +233,7 @@ const RemindersPage: React.FC = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={() => handleDeleteReminder(selectedReminder.id)}
+                  onClick={() => handleDeleteBooking(selectedBooking.id)}
                   className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
                   Delete
@@ -343,7 +261,7 @@ const RemindersPage: React.FC = () => {
               className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Reschedule Reminder</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-6">Reschedule SMS Booking</h2>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -351,27 +269,27 @@ const RemindersPage: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Date</label>
                     <input
                       type="date"
-                      value={editingReminder.appointmentDate || ''}
-                      onChange={(e) => setEditingReminder({ ...editingReminder, appointmentDate: e.target.value })}
+                      value={editingBooking.appointmentDate || ''}
+                      onChange={(e) => setEditingBooking({ ...editingBooking, appointmentDate: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
-            </div>
+                  </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Time</label>
                     <input
                       type="time"
-                      value={editingReminder.appointmentTime || ''}
-                      onChange={(e) => setEditingReminder({ ...editingReminder, appointmentTime: e.target.value })}
+                      value={editingBooking.appointmentTime || ''}
+                      onChange={(e) => setEditingBooking({ ...editingBooking, appointmentTime: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
-          </div>
-        </div>
+                  </div>
+                </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Timing</label>
                   <select
-                    value={editingReminder.reminderTime || ''}
-                    onChange={(e) => setEditingReminder({ ...editingReminder, reminderTime: e.target.value })}
+                    value={editingBooking.reminderTime || ''}
+                    onChange={(e) => setEditingBooking({ ...editingBooking, reminderTime: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="1 hour before">1 hour before</option>
@@ -381,18 +299,18 @@ const RemindersPage: React.FC = () => {
                     <option value="48 hours before">48 hours before</option>
                     <option value="72 hours before">72 hours before</option>
                   </select>
-      </div>
+                </div>
 
-          <div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
                   <textarea
-                    value={editingReminder.reminderText || ''}
-                    onChange={(e) => setEditingReminder({ ...editingReminder, reminderText: e.target.value })}
+                    value={editingBooking.reminderText || ''}
+                    onChange={(e) => setEditingBooking({ ...editingBooking, reminderText: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     rows={4}
                   />
-          </div>
-        </div>
+                </div>
+              </div>
 
               <div className="flex justify-end gap-3 mt-6">
                 <button
@@ -402,12 +320,12 @@ const RemindersPage: React.FC = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={handleSaveReminder}
+                  onClick={handleSaveBooking}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Save Changes
                 </button>
-      </div>
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -416,4 +334,4 @@ const RemindersPage: React.FC = () => {
   );
 };
 
-export default RemindersPage;
+export default SmsBookingPage;

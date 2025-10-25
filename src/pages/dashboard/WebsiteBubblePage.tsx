@@ -113,10 +113,6 @@ const WebsiteBubblePage: React.FC = () => {
               
               {/* Agent Name */}
               <div className="flex items-center gap-3 flex-1">
-                <div 
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: agent.color }}
-                ></div>
                 <div className="font-medium text-gray-900">{agent.name}</div>
               </div>
               
@@ -204,16 +200,16 @@ const WebsiteBubblePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Logo Settings */}
+          {/* Logo Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Image className="w-4 h-4 inline mr-1" />
-              Logo URL
+              Logo Upload
             </label>
             <input
-              type="url"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="https://your-website.com/logo.png"
+              type="file"
+              accept="image/*"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
             />
           </div>
 
@@ -243,30 +239,6 @@ const WebsiteBubblePage: React.FC = () => {
             />
           </div>
 
-          {/* Auto Open */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Auto Open
-            </label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-              <option value="false">Disabled</option>
-              <option value="true">Enabled</option>
-            </select>
-          </div>
-
-          {/* Popup Time */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Show Popup After (seconds)
-            </label>
-            <input
-              type="number"
-              min="1"
-              max="60"
-              defaultValue="5"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
         </div>
 
         <div className="mt-6 flex justify-end">

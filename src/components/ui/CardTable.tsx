@@ -133,7 +133,7 @@ const CardTable: React.FC<CardTableProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all duration-200"
+              className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-200"
             >
               {renderRow(item, index)}
             </motion.div>
@@ -141,7 +141,7 @@ const CardTable: React.FC<CardTableProps> = ({
         ) : (
           <div className="p-12 text-center">
             <div className="flex flex-col items-center justify-center">
-              <div className="w-32 h-32 mb-4">
+              <div className="w-48 h-48 mb-4">
                 <DotLottieReact
                   src={emptyStateAnimation}
                   loop
