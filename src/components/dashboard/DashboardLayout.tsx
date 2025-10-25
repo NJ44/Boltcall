@@ -133,7 +133,7 @@ const DashboardLayout: React.FC = () => {
     // Define page name mappings for better display
     const pageNames: Record<string, string> = {
       '/dashboard': 'Dashboard',
-      '/dashboard/agents': 'AI Agents',
+      '/dashboard/agents': 'Agents',
       '/dashboard/phone-numbers': 'Phone Numbers',
       '/dashboard/website-bubble': 'Website Bubble',
       '/dashboard/knowledge-base': 'Knowledge Base',

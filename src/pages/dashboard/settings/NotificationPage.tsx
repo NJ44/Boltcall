@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Mail, Phone, MessageSquare, Calendar, AlertTriangle, CheckCircle, Settings, Volume2, VolumeX, Clock } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import CardTable from '../../../components/ui/CardTable';
 
 const NotificationPage: React.FC = () => {
   const [notificationSettings, setNotificationSettings] = useState({
@@ -378,6 +379,72 @@ const NotificationPage: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Notifications Table */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="mt-8"
+      >
+        <CardTable
+          data={[]}
+          columns={[
+            { key: 'type', label: 'Notification Type', width: '25%' },
+            { key: 'message', label: 'Message', width: '40%' },
+            { key: 'channel', label: 'Channel', width: '15%' },
+            { key: 'status', label: 'Status', width: '10%' },
+            { key: 'timestamp', label: 'Time', width: '10%' }
+          ]}
+          renderRow={(notification) => (
+            <div className="flex items-center gap-6">
+              {/* Checkbox */}
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              
+              {/* Notification Type */}
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Bell className="w-4 h-4 text-blue-600" />
+                </div>
+                <div className="font-medium text-gray-900">{notification.type}</div>
+              </div>
+              
+              {/* Message */}
+              <div className="text-sm text-gray-600 flex-1 truncate">
+                {notification.message}
+              </div>
+              
+              {/* Channel */}
+              <div className="text-sm text-gray-500 flex-1">
+                {notification.channel}
+              </div>
+              
+              {/* Status */}
+              <div className="flex-1">
+                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                  notification.status === 'Sent' 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-yellow-100 text-yellow-800'
+                }`}>
+                  {notification.status}
+                </span>
+              </div>
+              
+              {/* Timestamp */}
+              <div className="text-sm text-gray-500 flex-1">
+                {notification.timestamp}
+              </div>
+            </div>
+          )}
+          emptyStateText="No notifications found"
+          emptyStateAnimation="/No_Data_Preview.lottie"
+          onAddNew={() => console.log('Add new notification')}
+          addNewText="Send Test Notification"
+        />
+      </motion.div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, PhoneCall, ShoppingCart, Wifi, MoreHorizontal, Flame } from 'lucide-react';
+import { PhoneCall, MoreHorizontal, Flame } from 'lucide-react';
 import CardTable from '../../components/ui/CardTable';
 
 const PhoneNumbersPage: React.FC = () => {
@@ -64,17 +64,6 @@ const PhoneNumbersPage: React.FC = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const handleBuyNewNumber = () => {
-    setShowDropdown(false);
-    console.log('Buying new number...');
-    // Implementation for buying new number
-  };
-
-  const handleSipTrunking = () => {
-    setShowDropdown(false);
-    setShowSipModal(true);
-  };
-
   const handleSipFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSipFormData({
       ...sipFormData,
@@ -103,56 +92,6 @@ const PhoneNumbersPage: React.FC = () => {
   return (
     <div className="space-y-6">
 
-      {/* Add Phone Number Button */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="flex justify-end relative"
-      >
-        <div className="relative" ref={dropdownRef}>
-          <button
-            onClick={handleAddPhoneNumber}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            Add Phone Number
-          </button>
-          
-          {/* Dropdown */}
-          {showDropdown && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-10"
-            >
-              <div className="py-2">
-                <button
-                  onClick={handleBuyNewNumber}
-                  className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 transition-colors"
-                >
-                  <ShoppingCart className="w-5 h-5 text-blue-600" />
-                  <div>
-                    <div className="font-medium text-gray-900">Buy new number</div>
-                    <div className="text-sm text-gray-500">Purchase a new phone number</div>
-                  </div>
-                </button>
-                <button
-                  onClick={handleSipTrunking}
-                  className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 transition-colors"
-                >
-                  <Wifi className="w-5 h-5 text-green-600" />
-                  <div>
-                    <div className="font-medium text-gray-900">Connect to your number via SIP trunking</div>
-                    <div className="text-sm text-gray-500">Use your existing phone number</div>
-                  </div>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </div>
-      </motion.div>
 
       {/* Phone Numbers Card Table */}
       <motion.div

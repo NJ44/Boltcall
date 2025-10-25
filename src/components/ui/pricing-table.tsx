@@ -99,7 +99,7 @@ export function PricingTable({
               className={cn(
                 "flex-1 p-4 rounded-xl text-left flex flex-col min-h-[360px]",
                 plan.isCustom 
-                  ? "bg-gray-900 text-white border border-gray-700 shadow-2xl"
+                  ? "bg-gray-900 text-white border border-gray-700 shadow-2xl shadow-gray-900/50 hover:shadow-3xl hover:shadow-gray-900/60 transition-all duration-300"
                   : "bg-white border border-zinc-200 dark:border-zinc-800 shadow-lg",
               )}
             >
@@ -238,10 +238,8 @@ export function PricingTable({
                   onClick={() => plan.isCustom ? window.location.href = '/contact' : onPlanSelect?.(plan.level)}
                   className={cn(
                     "w-full px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg",
-                  plan.isCustom
-                    ? "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white"
-                    : "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",
-                  !plan.isCustom && buttonClassName
+                    "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",
+                    buttonClassName
                   )}
                 >
                   {plan.isCustom ? "Contact Us" : "Get Started for Free"}

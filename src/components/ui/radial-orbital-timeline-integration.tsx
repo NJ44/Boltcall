@@ -80,20 +80,22 @@ export default function RadialOrbitalTimelineIntegration({
   };
 
   useEffect(() => {
-    let rotationTimer: NodeJS.Timeout;
+    let animationFrame: number;
 
     if (autoRotate && viewMode === "orbital") {
-      rotationTimer = setInterval(() => {
+      const animate = () => {
         setRotationAngle((prev) => {
-          const newAngle = (prev + 0.3) % 360;
-          return Number(newAngle.toFixed(3));
+          const newAngle = (prev + 0.15) % 360;
+          return newAngle;
         });
-      }, 50);
+        animationFrame = requestAnimationFrame(animate);
+      };
+      animationFrame = requestAnimationFrame(animate);
     }
 
     return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
       }
     };
   }, [autoRotate, viewMode]);
@@ -110,7 +112,7 @@ export default function RadialOrbitalTimelineIntegration({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 150; // Smaller radius for integration
+    const radius = 160; // Match the white hollow circle radius (w-80 h-80 = 320px diameter = 160px radius)
     const radian = (angle * Math.PI) / 180;
 
     const x = radius * Math.cos(radian) + centerOffset.x;
@@ -211,8 +213,8 @@ export default function RadialOrbitalTimelineIntegration({
                     isExpanded
                       ? "bg-white text-black"
                       : isRelated
-                      ? "bg-white/50 text-black"
-                      : "bg-white/20 text-white"
+                      ? "bg-white text-black"
+                      : "bg-white text-black"
                   }
                   border-2 
                   ${
@@ -220,7 +222,7 @@ export default function RadialOrbitalTimelineIntegration({
                       ? "border-white shadow-lg shadow-white/30"
                       : isRelated
                       ? "border-white animate-pulse"
-                      : "border-white/40"
+                      : "border-white"
                   }
                   transition-all duration-300 transform
                   ${isExpanded ? "scale-150" : ""}
@@ -231,7 +233,7 @@ export default function RadialOrbitalTimelineIntegration({
 
                 <div
                   className={`
-                  absolute top-10 whitespace-nowrap
+                  absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap
                   text-xs font-semibold tracking-wider
                   transition-all duration-300
                   ${isExpanded ? "text-white scale-125" : "text-white/70"}

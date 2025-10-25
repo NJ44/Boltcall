@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PenTool, X, Upload, Globe, Plus, FileText, Edit, Trash2, Save } from 'lucide-react';
+import CardTable from '../../components/ui/CardTable';
 
 interface Document {
   id: string;
@@ -262,6 +263,76 @@ const KnowledgeBasePage: React.FC = () => {
           </div>
         </motion.div>
       )}
+
+      {/* Knowledge Base Table */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="mt-8"
+      >
+        <CardTable
+          data={documents}
+          columns={[
+            { key: 'name', label: 'Document Name', width: '30%' },
+            { key: 'content', label: 'Content Preview', width: '40%' },
+            { key: 'createdAt', label: 'Created', width: '15%' },
+            { key: 'updatedAt', label: 'Updated', width: '15%' }
+          ]}
+          renderRow={(doc) => (
+            <div className="flex items-center gap-6">
+              {/* Checkbox */}
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              
+              {/* Document Name */}
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                </div>
+                <div className="font-medium text-gray-900">{doc.name}</div>
+              </div>
+              
+              {/* Content Preview */}
+              <div className="text-sm text-gray-600 flex-1 truncate">
+                {doc.content.substring(0, 50)}...
+              </div>
+              
+              {/* Created Date */}
+              <div className="text-sm text-gray-500 flex-1">
+                {doc.createdAt.toLocaleDateString()}
+              </div>
+              
+              {/* Updated Date */}
+              <div className="text-sm text-gray-500 flex-1">
+                {doc.updatedAt.toLocaleDateString()}
+              </div>
+              
+              {/* Actions */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleEditDocument(doc)}
+                  className="text-blue-600 hover:text-blue-900 transition-colors"
+                >
+                  <Edit className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleDeleteDocument(doc.id)}
+                  className="text-red-600 hover:text-red-900 transition-colors"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+          emptyStateText="No knowledge base documents found"
+          emptyStateAnimation="/No_Data_Preview.lottie"
+          onAddNew={() => setShowPopup(true)}
+          addNewText="Add Document"
+        />
+      </motion.div>
 
       {/* Popup Modal */}
       <AnimatePresence>
