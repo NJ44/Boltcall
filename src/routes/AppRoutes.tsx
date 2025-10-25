@@ -22,6 +22,7 @@ import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
 import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
+import RemindersPage from '../pages/dashboard/RemindersPage';
 import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
@@ -98,6 +99,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="website-bubble" element={<WebsiteBubblePage />} />
+          <Route path="reminders" element={<RemindersPage />} />
           <Route path="settings" element={
             <SettingsLayout>
               <SettingsPage />
