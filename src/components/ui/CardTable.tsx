@@ -56,9 +56,9 @@ const CardTable: React.FC<CardTableProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-lg border border-gray-200 ${className}`}>
+    <div className={`${className}`}>
       {/* Top Control Bar */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4 flex-1">
             {/* Search Input */}
@@ -102,13 +102,6 @@ const CardTable: React.FC<CardTableProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* View Toggle */}
-            <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-              <svg className="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-              </svg>
-            </button>
-
             {/* Add New Button */}
             {onAddNew && (
               <button
@@ -118,7 +111,7 @@ const CardTable: React.FC<CardTableProps> = ({
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                {addNewText}
+                <span className="font-bold">{addNewText}</span>
               </button>
             )}
           </div>
