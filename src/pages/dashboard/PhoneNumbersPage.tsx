@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, PhoneCall, Settings, Trash2, ShoppingCart, Wifi } from 'lucide-react';
+import { Plus, PhoneCall, ShoppingCart, Wifi, MoreHorizontal, Flame } from 'lucide-react';
+import CardTable from '../../components/ui/CardTable';
 
 const PhoneNumbersPage: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -164,87 +165,89 @@ const PhoneNumbersPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Phone Numbers Table */}
+      {/* Phone Numbers Card Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="bg-white rounded-lg border border-gray-200 overflow-hidden"
       >
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Phone Number
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Location
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Type
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Assigned To
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Created
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {phoneNumbers.map((phone) => (
-                <tr key={phone.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                        <PhoneCall className="w-4 h-4 text-green-600" />
-                      </div>
-                      <div className="text-sm font-medium text-gray-900">{phone.number}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {phone.location}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {phone.type}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {phone.assignedTo}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      phone.status === 'Active' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {phone.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {phone.createdAt}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center gap-2">
-                      <button className="text-blue-600 hover:text-blue-900">
-                        <Settings className="w-4 h-4" />
-                      </button>
-                      <button className="text-red-600 hover:text-red-900">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <CardTable
+          columns={[
+            { key: 'number', label: 'Phone Number', width: '25%' },
+            { key: 'location', label: 'Location', width: '20%' },
+            { key: 'type', label: 'Type', width: '15%' },
+            { key: 'assignedTo', label: 'Assigned To', width: '20%' },
+            { key: 'status', label: 'Status', width: '10%' },
+            { key: 'createdAt', label: 'Created', width: '10%' }
+          ]}
+          data={phoneNumbers}
+          renderRow={(phone) => (
+            <div className="flex items-center gap-4">
+              {/* Checkbox */}
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              
+              {/* Phone Number */}
+              <div className="flex items-center gap-3" style={{ width: '25%' }}>
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <PhoneCall className="w-4 h-4 text-green-600" />
+                </div>
+                <div className="font-medium text-gray-900">{phone.number}</div>
+              </div>
+              
+              {/* Location */}
+              <div className="text-sm text-gray-900" style={{ width: '20%' }}>
+                {phone.location}
+              </div>
+              
+              {/* Type */}
+              <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                {phone.type}
+              </div>
+              
+              {/* Assigned To */}
+              <div className="text-sm text-gray-900" style={{ width: '20%' }}>
+                {phone.assignedTo}
+              </div>
+              
+              {/* Status */}
+              <div style={{ width: '10%' }}>
+                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                  phone.status === 'Active' 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-red-100 text-red-800'
+                }`}>
+                  {phone.status}
+                </span>
+              </div>
+              
+              {/* Created Date */}
+              <div className="text-sm text-gray-500" style={{ width: '10%' }}>
+                {phone.createdAt}
+              </div>
+              
+              {/* Action Icons */}
+              <div className="flex items-center gap-2 ml-auto">
+                <button className="text-green-600 hover:text-green-800">
+                  <Flame className="w-4 h-4" />
+                </button>
+                <button className="text-gray-600 hover:text-gray-800">
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+          emptyStateText="No phone numbers found. Add your first phone number to get started."
+          searchPlaceholder="Search phone numbers..."
+          filterOptions={[
+            { label: 'Active', value: 'active' },
+            { label: 'Inactive', value: 'inactive' }
+          ]}
+          onAddNew={handleAddPhoneNumber}
+          addNewText="Add Phone Number"
+        />
       </motion.div>
 
       {/* SIP Configuration Modal */}

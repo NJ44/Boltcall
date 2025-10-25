@@ -1,8 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap } from "lucide-react";
-import { Badge } from "./badge";
-import { ButtonShadcn as Button } from "./button-shadcn";
 import { Card, CardContent, CardHeader, CardTitle } from "./card-shadcn";
 
 interface TimelineItem {
@@ -136,18 +133,6 @@ export default function RadialOrbitalTimeline({
     return relatedItems.includes(itemId);
   };
 
-  const getStatusStyles = (status: TimelineItem["status"]): string => {
-    switch (status) {
-      case "completed":
-        return "text-white bg-black border-white";
-      case "in-progress":
-        return "text-black bg-white border-black";
-      case "pending":
-        return "text-white bg-black/40 border-white/50";
-      default:
-        return "text-white bg-black/40 border-white/50";
-    }
-  };
 
   return (
      <div

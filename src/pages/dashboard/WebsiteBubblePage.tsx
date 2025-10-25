@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type } from 'lucide-react';
+import CardTable from '../../components/ui/CardTable';
 
 interface ClientAgent {
   id: string;
@@ -109,84 +110,83 @@ const WebsiteBubblePage: React.FC = () => {
           </div>
         </motion.div>
 
-      {/* Client Agents Table */}
+      {/* Client Agents Card Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="bg-white rounded-lg border border-gray-200 overflow-hidden"
       >
-
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Agent Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Created
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {clientAgents.map((agent) => (
-                <tr key={agent.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div 
-                        className="w-4 h-4 rounded-full mr-3"
-                        style={{ backgroundColor: agent.color }}
-                      ></div>
-                      <div className="text-sm font-medium text-gray-900">{agent.name}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <button
-                      onClick={() => toggleAgentStatus(agent.id)}
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        agent.status === 'active'
-                          ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                      }`}
-                    >
-                      {agent.status}
-                    </button>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(agent.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => {
-                          setSelectedAgent(agent.id);
-                          setShowIntegrationCode(true);
-                        }}
-                        className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
-                      >
-                        <Code className="w-4 h-4" />
-                        Get Code
-                      </button>
-                      <button
-                        className="text-gray-600 hover:text-gray-900"
-                        title="Settings"
-                      >
-                        <Settings className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <CardTable
+          columns={[
+            { key: 'name', label: 'Agent Name', width: '40%' },
+            { key: 'status', label: 'Status', width: '20%' },
+            { key: 'createdAt', label: 'Created', width: '20%' },
+            { key: 'actions', label: 'Actions', width: '20%' }
+          ]}
+          data={clientAgents}
+          renderRow={(agent) => (
+            <div className="flex items-center gap-4">
+              {/* Checkbox */}
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              
+              {/* Agent Name */}
+              <div className="flex items-center gap-3" style={{ width: '40%' }}>
+                <div 
+                  className="w-4 h-4 rounded-full"
+                  style={{ backgroundColor: agent.color }}
+                ></div>
+                <div className="font-medium text-gray-900">{agent.name}</div>
+              </div>
+              
+              {/* Status */}
+              <div style={{ width: '20%' }}>
+                <button
+                  onClick={() => toggleAgentStatus(agent.id)}
+                  className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                    agent.status === 'active'
+                      ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                  }`}
+                >
+                  {agent.status}
+                </button>
+              </div>
+              
+              {/* Created Date */}
+              <div className="text-sm text-gray-500" style={{ width: '20%' }}>
+                {new Date(agent.createdAt).toLocaleDateString()}
+              </div>
+              
+              {/* Action Icons */}
+              <div className="flex items-center gap-2" style={{ width: '20%' }}>
+                <button
+                  onClick={() => {
+                    setSelectedAgent(agent.id);
+                    setShowIntegrationCode(true);
+                  }}
+                  className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
+                >
+                  <Code className="w-4 h-4" />
+                  Get Code
+                </button>
+                <button className="text-gray-600 hover:text-gray-900">
+                  <Settings className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+          emptyStateText="No agents found. Create your first AI agent to get started."
+          searchPlaceholder="Search agents..."
+          filterOptions={[
+            { label: 'Active', value: 'active' },
+            { label: 'Inactive', value: 'inactive' }
+          ]}
+          onAddNew={() => console.log('Add new agent')}
+          addNewText="Create Agent"
+        />
       </motion.div>
 
       {/* Bubble Widget Settings */}
@@ -299,7 +299,7 @@ const WebsiteBubblePage: React.FC = () => {
 
       {/* Integration Code Modal */}
       {showIntegrationCode && selectedAgent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-0 m-0">
           <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
@@ -321,6 +321,18 @@ const WebsiteBubblePage: React.FC = () => {
                 </p>
               </div>
 
+              {/* Integration Instructions - moved before code */}
+              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                <h3 className="text-sm font-medium text-blue-900 mb-2">Integration Instructions:</h3>
+                <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+                  <li>Copy the Retell widget code below</li>
+                  <li>Replace the placeholder values with your actual configuration</li>
+                  <li>Paste the code into your website's HTML before the closing &lt;/body&gt; tag</li>
+                  <li>Save and publish your website</li>
+                  <li>The AI chat bubble will appear on your website</li>
+                </ol>
+              </div>
+
               <div className="relative">
                 <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
                   <code>{generateIntegrationCode(selectedAgent)}</code>
@@ -332,28 +344,6 @@ const WebsiteBubblePage: React.FC = () => {
                 >
                   <Copy className="w-4 h-4" />
                 </button>
-              </div>
-
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h3 className="text-sm font-medium text-blue-900 mb-2">Integration Instructions:</h3>
-                <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
-                  <li>Copy the Retell widget code above</li>
-                  <li>Replace the placeholder values with your actual configuration:
-                    <ul className="ml-4 mt-1 space-y-1 list-disc">
-                      <li>YOUR_RETELL_PUBLIC_KEY - Your Retell public API key</li>
-                      <li>YOUR_CHAT_AGENT_ID - Your agent ID from Retell dashboard</li>
-                      <li>YOUR_AGENT_VERSION - Your agent version</li>
-                      <li>YOUR_CUSTOM_TITLE - Custom title for the widget</li>
-                      <li>YOUR_LOGO_URL - URL to your logo image</li>
-                      <li>YOUR_CUSTOM_COLOR - Widget color (hex code)</li>
-                      <li>YOUR_BOT_NAME - Name displayed for the bot</li>
-                      <li>YOUR_POPUP_MESSAGE - Initial message shown to users</li>
-                    </ul>
-                  </li>
-                  <li>Paste the code into your website's HTML before the closing &lt;/body&gt; tag</li>
-                  <li>Save and publish your website</li>
-                  <li>The AI chat bubble will appear on your website</li>
-                </ol>
               </div>
 
             </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors } from 'lucide-react';
+import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
+import CardTable from '../../components/ui/CardTable';
 
 interface Agent {
   id: number;
@@ -322,76 +323,87 @@ const AgentsPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Agents table */}
-          <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
-            
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-zinc-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                      Agent
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                      Calls Today
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                      Avg Response
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                      Success Rate
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                      Last Active
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-200">
-                  {agents.map((agent) => (
-                    <tr key={agent.id} className="hover:bg-zinc-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
-                            <Users className="w-4 h-4 text-zinc-600" />
-                          </div>
-                          <div className="ml-3">
-                            <div className="text-sm font-medium text-zinc-900">{agent.name}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                          agent.status === 'active' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                            agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
-                          }`}></div>
-                          {agent.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
-                        {agent.callsToday}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
-                        {agent.avgResponseTime}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-900">
-                        {agent.successRate}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-500">
-                        {agent.lastActive}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          {/* Agents Card Table */}
+          <CardTable
+            columns={[
+              { key: 'name', label: 'Agent', width: '25%' },
+              { key: 'status', label: 'Status', width: '15%' },
+              { key: 'callsToday', label: 'Calls Today', width: '15%' },
+              { key: 'avgResponseTime', label: 'Avg Response', width: '15%' },
+              { key: 'successRate', label: 'Success Rate', width: '15%' },
+              { key: 'lastActive', label: 'Last Active', width: '15%' }
+            ]}
+            data={agents}
+            renderRow={(agent) => (
+              <div className="flex items-center gap-4">
+                {/* Checkbox */}
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                
+                {/* Agent Name */}
+                <div className="flex items-center gap-3" style={{ width: '25%' }}>
+                  <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
+                    <Users className="w-4 h-4 text-zinc-600" />
+                  </div>
+                  <div className="font-medium text-gray-900">{agent.name}</div>
+                </div>
+                
+                {/* Status */}
+                <div style={{ width: '15%' }}>
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                    agent.status === 'active' 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                      agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
+                    }`}></div>
+                    {agent.status}
+                  </span>
+                </div>
+                
+                {/* Calls Today */}
+                <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                  {agent.callsToday}
+                </div>
+                
+                {/* Avg Response */}
+                <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                  {agent.avgResponseTime}
+                </div>
+                
+                {/* Success Rate */}
+                <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                  {agent.successRate}
+                </div>
+                
+                {/* Last Active */}
+                <div className="text-sm text-gray-500" style={{ width: '15%' }}>
+                  {agent.lastActive}
+                </div>
+                
+                {/* Action Icons */}
+                <div className="flex items-center gap-2 ml-auto">
+                  <button className="text-green-600 hover:text-green-800">
+                    <Flame className="w-4 h-4" />
+                  </button>
+                  <button className="text-gray-600 hover:text-gray-800">
+                    <MoreHorizontal className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+            emptyStateText="No agents found. Create your first AI agent to get started."
+            searchPlaceholder="Search agents..."
+            filterOptions={[
+              { label: 'Active', value: 'active' },
+              { label: 'Inactive', value: 'inactive' }
+            ]}
+            onAddNew={() => setShowCreateModal(true)}
+            addNewText="Add Agent"
+          />
         </>
       )}
 

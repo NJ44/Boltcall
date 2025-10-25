@@ -49,6 +49,7 @@ const DashboardLayout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
+  const [scrollbarVisible, setScrollbarVisible] = useState(false);
   
   // Get current user from auth context
   const { user } = useAuth();
@@ -86,6 +87,40 @@ const DashboardLayout: React.FC = () => {
       addLogEntry('Dashboard Access', 'User accessed dashboard', user.id);
     }
   }, [user?.id]);
+
+  // Scrollbar auto-hide functionality
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    
+    const handleScroll = () => {
+      setScrollbarVisible(true);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        setScrollbarVisible(false);
+      }, 3000); // Hide after 3 seconds of inactivity
+    };
+
+    const mainElement = mainContentRef.current;
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll, { passive: true });
+      mainElement.addEventListener('mouseenter', () => setScrollbarVisible(true));
+      mainElement.addEventListener('mouseleave', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          setScrollbarVisible(false);
+        }, 3000);
+      });
+    }
+
+    return () => {
+      if (mainElement) {
+        mainElement.removeEventListener('scroll', handleScroll);
+        mainElement.removeEventListener('mouseenter', () => setScrollbarVisible(true));
+        mainElement.removeEventListener('mouseleave', () => {});
+      }
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   const location = useLocation();
   const { logout } = useAuth();
@@ -376,7 +411,7 @@ const DashboardLayout: React.FC = () => {
          {/* Left Panel - Navigation with Logo at Top */}
          <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 ${
            sidebarCollapsed ? 'w-16' : 'w-64'
-         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-gray-800 rounded-2xl shadow-lg m-2`}>
+         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-gray-800 rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
@@ -623,7 +658,9 @@ const DashboardLayout: React.FC = () => {
          {/* Right Panel - Main Content with Top Bar */}
          <main 
            ref={mainContentRef}
-           className="flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-gray-50 dark:bg-gray-900 shadow-lg m-2"
+           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-gray-50 dark:bg-gray-900 shadow-lg m-2 dashboard-main-scroll ${
+             scrollbarVisible ? 'scrollbar-visible' : 'scrollbar-hidden'
+           }`}
            style={{
              scrollBehavior: 'auto',
              WebkitOverflowScrolling: 'touch',

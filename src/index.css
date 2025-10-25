@@ -159,6 +159,53 @@
   background: rgba(156, 163, 175, 0.7);
 }
 
+/* Subtle scrollbar with auto-hide for dashboard main content */
+.dashboard-main-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.dashboard-main-scroll::-webkit-scrollbar {
+  width: 8px;
+  transition: all 0.3s ease;
+}
+
+.dashboard-main-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dashboard-main-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.dashboard-main-scroll:hover::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+}
+
+.dashboard-main-scroll:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+/* Auto-hide scrollbar states */
+.dashboard-main-scroll.scrollbar-visible::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+}
+
+.dashboard-main-scroll.scrollbar-visible {
+  scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+}
+
+.dashboard-main-scroll.scrollbar-hidden::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.dashboard-main-scroll.scrollbar-hidden {
+  scrollbar-color: transparent transparent;
+}
+
 @layer base {
   /* Ensure select options have black text */
   select option {
