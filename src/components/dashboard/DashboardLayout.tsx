@@ -91,6 +91,42 @@ const DashboardLayout: React.FC = () => {
   const { logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
 
+  // Get current page name based on route
+  const getPageName = () => {
+    const path = location.pathname;
+    
+    // Define page name mappings for better display
+    const pageNames: Record<string, string> = {
+      '/dashboard': 'Dashboard',
+      '/dashboard/agents': 'AI Agents',
+      '/dashboard/phone-numbers': 'Phone Numbers',
+      '/dashboard/website-bubble': 'Website Bubble',
+      '/dashboard/knowledge-base': 'Knowledge Base',
+      '/dashboard/analytics': 'Analytics',
+      '/dashboard/settings': 'Settings',
+      '/dashboard/settings/members': 'Team Members',
+      '/dashboard/settings/packages': 'Packages',
+      '/dashboard/settings/billing': 'Billing',
+      '/dashboard/reminders': 'Reminders',
+      '/dashboard/integrations': 'Integrations',
+      '/dashboard/instant-lead-reply': 'Instant Lead Reply',
+    };
+    
+    // Return mapped name or convert path to title case
+    if (pageNames[path]) {
+      return pageNames[path];
+    }
+    
+    // Fallback: convert path to title case
+    const pathSegments = path.split('/').filter(Boolean);
+    const pageSegment = pathSegments[pathSegments.length - 1] || 'dashboard';
+    
+    return pageSegment
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
   // Add dashboard-page class to body for normal scrolling
   useEffect(() => {
     document.body.classList.add('dashboard-page');
@@ -598,7 +634,7 @@ const DashboardLayout: React.FC = () => {
            {/* Top Bar - Page Header */}
            <div className="sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 bg-gray-50/80 backdrop-blur-sm">
              <div className="flex items-center justify-between h-16 px-6">
-               {/* Page Name Header */}
+               {/* Left side - Mobile menu button and Page Name */}
                <div className="flex items-center gap-3">
                  <button
                    onClick={toggleSidebar}
@@ -611,6 +647,18 @@ const DashboardLayout: React.FC = () => {
                  >
                    <Menu className="w-5 h-5" />
                  </button>
+                 
+                 {/* Page Name Header */}
+                 <div className="flex items-center gap-2">
+                   <div className={`w-1 h-6 rounded-full ${
+                     isDarkMode ? 'bg-blue-400' : 'bg-blue-600'
+                   }`}></div>
+                   <h1 className={`text-xl font-semibold ${
+                     isDarkMode ? 'text-white' : 'text-gray-900'
+                   }`}>
+                     {getPageName()}
+                   </h1>
+                 </div>
                </div>
           
                {/* Right side - Free Trial, Notifications, Add Member, and Dark Mode */}

@@ -21,7 +21,7 @@ import CountUp from "react-countup";
 
 function Feature() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isChartVisible, setIsChartVisible] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
 
   const chartData = [
@@ -33,28 +33,9 @@ function Feature() {
     { month: "Jun", value: 300 },
   ];
 
-  // Intersection observer to trigger animation when card is visible
+  // Reset chart animation when component mounts
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.3 } // Trigger when 30% of the element is visible
-    );
-
-    if (chartRef.current) {
-      observer.observe(chartRef.current);
-    }
-
-    return () => {
-      if (chartRef.current) {
-        observer.unobserve(chartRef.current);
-      }
-    };
+    setIsChartVisible(false);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
@@ -97,6 +78,12 @@ function Feature() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
+              onAnimationStart={() => {
+                // Start chart animation when card starts fading in
+                setTimeout(() => {
+                  setIsChartVisible(true);
+                }, 100);
+              }}
             >
               {/* Left side - Text content */}
               <div className="flex flex-col text-left max-w-xs">
@@ -108,10 +95,10 @@ function Feature() {
 
               {/* Right side - Chart */}
               <div className="flex-1 flex items-center justify-center ml-6">
-                <div ref={chartRef} className="relative w-full h-48 bg-white rounded-xl overflow-hidden">
+                <div ref={chartRef} className="relative w-full h-48 bg-muted rounded-xl overflow-hidden">
                   {/* Chart */}
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData}>
+                    <AreaChart data={isChartVisible ? chartData : []}>
                       <defs>
                         <linearGradient id="ruixenBlue" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4} />
@@ -124,16 +111,21 @@ function Feature() {
                         stroke="#3b82f6"
                         strokeWidth={2}
                         fill="url(#ruixenBlue)"
+                        animationDuration={3000}
+                        animationEasing="ease-in-out"
+                        isAnimationActive={isChartVisible}
                       />
                     </AreaChart>
                   </ResponsiveContainer>
 
                   {/* Overlay Hero Number */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                    <h3 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">
-                      {isVisible ? <CountUp end={391} duration={5} /> : '0'}%
-                    </h3>
-                    <p className="text-gray-500 text-sm">Sales conversions</p>
+                    <div className="px-4 py-2 rounded-lg">
+                      <h3 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">
+                        {isChartVisible ? <CountUp end={391} duration={5} /> : '0'}%
+                      </h3>
+                      <p className="text-gray-500 text-sm">Sales conversions</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -190,9 +182,9 @@ function Feature() {
               
               {/* Centered Content */}
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
-                <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">Saved time</h3>
+                <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">Save time</h3>
                 <p className="text-muted-foreground text-base max-w-xs">
-                  Automate repetitive tasks and focus on what matters most - closing deals and growing your business.
+                  BoltCall handles the repetitive work so you can focus on growing your business.
                 </p>
               </div>
             </motion.div>

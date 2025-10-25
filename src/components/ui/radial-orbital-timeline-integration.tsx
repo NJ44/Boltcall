@@ -1,8 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap } from "lucide-react";
-import { Badge } from "./badge";
-import { ButtonShadcn as Button } from "./button-shadcn";
 import { Card, CardContent, CardHeader, CardTitle } from "./card-shadcn";
 
 interface TimelineItem {
@@ -17,13 +14,13 @@ interface TimelineItem {
   energy: number;
 }
 
-interface RadialOrbitalTimelineProps {
+interface RadialOrbitalTimelineIntegrationProps {
   timelineData: TimelineItem[];
 }
 
-export default function RadialOrbitalTimeline({
+export default function RadialOrbitalTimelineIntegration({
   timelineData,
-}: RadialOrbitalTimelineProps) {
+}: RadialOrbitalTimelineIntegrationProps) {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );
@@ -113,7 +110,7 @@ export default function RadialOrbitalTimeline({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 200;
+    const radius = 150; // Smaller radius for integration
     const radian = (angle * Math.PI) / 180;
 
     const x = radius * Math.cos(radian) + centerOffset.x;
@@ -136,26 +133,13 @@ export default function RadialOrbitalTimeline({
     return relatedItems.includes(itemId);
   };
 
-  const getStatusStyles = (status: TimelineItem["status"]): string => {
-    switch (status) {
-      case "completed":
-        return "text-white bg-black border-white";
-      case "in-progress":
-        return "text-black bg-white border-black";
-      case "pending":
-        return "text-white bg-black/40 border-white/50";
-      default:
-        return "text-white bg-black/40 border-white/50";
-    }
-  };
-
   return (
-     <div
-       className="w-full h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 overflow-hidden"
-       ref={containerRef}
-       onClick={handleContainerClick}
-     >
-      <div className="relative w-full max-w-4xl h-full flex items-center justify-center">
+    <div
+      className="w-full h-full flex items-center justify-center overflow-hidden"
+      ref={containerRef}
+      onClick={handleContainerClick}
+    >
+      <div className="relative w-full h-full flex items-center justify-center">
         <div
           className="absolute w-full h-full flex items-center justify-center"
           ref={orbitRef}
@@ -164,20 +148,22 @@ export default function RadialOrbitalTimeline({
             transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
           }}
         >
-           <div className="absolute w-20 h-20 rounded-full bg-white animate-pulse flex items-center justify-center z-10">
-             <div className="absolute w-24 h-24 rounded-full border border-white/20 animate-ping opacity-70"></div>
-             <div
-               className="absolute w-28 h-28 rounded-full border border-white/10 animate-ping opacity-50"
-               style={{ animationDelay: "0.5s" }}
-             ></div>
-             <img 
-               src="/boltcall_icon.png" 
-               alt="BoltCall" 
-               className="w-12 h-12 rounded-full object-contain"
-             />
-           </div>
+          {/* Center Logo */}
+          <div className="absolute w-16 h-16 rounded-full bg-white animate-pulse flex items-center justify-center z-10">
+            <div className="absolute w-20 h-20 rounded-full border border-white/20 animate-ping opacity-70"></div>
+            <div
+              className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
+              style={{ animationDelay: "0.5s" }}
+            ></div>
+            <img 
+              src="/boltcall_icon.png" 
+              alt="BoltCall" 
+              className="w-10 h-10 rounded-full object-contain"
+            />
+          </div>
 
-          <div className="absolute w-96 h-96 rounded-full border-2 border-white/10"></div>
+          {/* Orbital Path */}
+          <div className="absolute w-80 h-80 rounded-full border-2 border-white/10"></div>
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -211,41 +197,41 @@ export default function RadialOrbitalTimeline({
                   }`}
                   style={{
                     background: `radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)`,
-                    width: `${item.energy * 0.5 + 40}px`,
-                    height: `${item.energy * 0.5 + 40}px`,
-                    left: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                    top: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
+                    width: `${item.energy * 0.3 + 40}px`,
+                    height: `${item.energy * 0.3 + 40}px`,
+                    left: `-${(item.energy * 0.3 + 40 - 40) / 2}px`,
+                    top: `-${(item.energy * 0.3 + 40 - 40) / 2}px`,
                   }}
                 ></div>
 
-                 <div
-                   className={`
-                   w-12 h-12 rounded-full flex items-center justify-center
-                   ${
-                     isExpanded
-                       ? "bg-white text-black"
-                       : isRelated
-                       ? "bg-white/50 text-black"
-                       : "bg-black text-white"
-                   }
-                   border-2 
-                   ${
-                     isExpanded
-                       ? "border-white shadow-lg shadow-white/30"
-                       : isRelated
-                       ? "border-white animate-pulse"
-                       : "border-white/40"
-                   }
-                   transition-all duration-300 transform
-                   ${isExpanded ? "scale-150" : ""}
-                 `}
-                 >
-                   <Icon size={18} />
-                 </div>
+                <div
+                  className={`
+                  w-10 h-10 rounded-full flex items-center justify-center
+                  ${
+                    isExpanded
+                      ? "bg-white text-black"
+                      : isRelated
+                      ? "bg-white/50 text-black"
+                      : "bg-white/20 text-white"
+                  }
+                  border-2 
+                  ${
+                    isExpanded
+                      ? "border-white shadow-lg shadow-white/30"
+                      : isRelated
+                      ? "border-white animate-pulse"
+                      : "border-white/40"
+                  }
+                  transition-all duration-300 transform
+                  ${isExpanded ? "scale-150" : ""}
+                `}
+                >
+                  <Icon size={16} />
+                </div>
 
                 <div
                   className={`
-                  absolute top-12  whitespace-nowrap
+                  absolute top-10 whitespace-nowrap
                   text-xs font-semibold tracking-wider
                   transition-all duration-300
                   ${isExpanded ? "text-white scale-125" : "text-white/70"}
@@ -255,16 +241,16 @@ export default function RadialOrbitalTimeline({
                 </div>
 
                 {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-64 bg-black/90 backdrop-blur-lg border-white/30 shadow-xl shadow-white/10 overflow-visible">
+                  <Card className="absolute top-16 left-1/2 -translate-x-1/2 w-56 bg-black/90 backdrop-blur-lg border-white/30 shadow-xl shadow-white/10 overflow-visible">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-white/50"></div>
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm">
                         {item.title}
                       </CardTitle>
                     </CardHeader>
-                     <CardContent className="text-xs text-white/80">
-                       <p>{item.content}</p>
-                     </CardContent>
+                    <CardContent className="text-xs text-white/80">
+                      <p>{item.content}</p>
+                    </CardContent>
                   </Card>
                 )}
               </div>

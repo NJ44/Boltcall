@@ -30,9 +30,9 @@ import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
-import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import Features10Demo from '../pages/Features10Demo';
 import Giveaway from '../pages/Giveaway';
+import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import GeneralPage from '../pages/dashboard/settings/GeneralPage';
 import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
 import MembersPage from '../pages/dashboard/settings/MembersPage';
@@ -143,9 +143,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
-        <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/features-10-demo" element={<Features10Demo />} />
         <Route path="/giveaway" element={<Giveaway />} />
+        <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
         <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
