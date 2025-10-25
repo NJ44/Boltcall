@@ -132,10 +132,12 @@
 .dashboard-sidebar {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
 }
 
 .dashboard-sidebar::-webkit-scrollbar {
   width: 6px;
+  transition: all 0.3s ease;
 }
 
 .dashboard-sidebar::-webkit-scrollbar-track {
@@ -145,18 +147,20 @@
 .dashboard-sidebar::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
+/* Remove hover color changes for sidebar scrollbar - keep it always transparent */
 .dashboard-sidebar:hover {
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  scrollbar-color: transparent transparent;
 }
 
 .dashboard-sidebar:hover::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.5);
+  background: transparent;
 }
 
 .dashboard-sidebar:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.7);
+  background: transparent;
 }
 
 /* Subtle scrollbar with auto-hide for dashboard main content */
@@ -168,7 +172,7 @@
 
 .dashboard-main-scroll::-webkit-scrollbar {
   width: 8px;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 
 .dashboard-main-scroll::-webkit-scrollbar-track {
@@ -178,7 +182,7 @@
 .dashboard-main-scroll::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 4px;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 
 .dashboard-main-scroll:hover::-webkit-scrollbar-thumb {
@@ -204,6 +208,15 @@
 
 .dashboard-main-scroll.scrollbar-hidden {
   scrollbar-color: transparent transparent;
+}
+
+/* Chart component CSS variables */
+:root {
+  --destructive-foreground: oklch(1 0 0);
+}
+
+.dark {
+  --destructive-foreground: oklch(1 0 0);
 }
 
 @layer base {

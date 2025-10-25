@@ -29,13 +29,11 @@ const CardTable: React.FC<CardTableProps> = ({
   emptyStateText = "No data available",
   emptyStateAnimation = "/No_Data_Preview.lottie",
   searchPlaceholder = "Search...",
-  filterOptions = [],
   onAddNew,
   addNewText = "Add New",
   className = ""
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterValue, setFilterValue] = useState('all');
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
@@ -77,28 +75,6 @@ const CardTable: React.FC<CardTableProps> = ({
               />
             </div>
 
-            {/* Filter Dropdown */}
-            {filterOptions.length > 0 && (
-              <div className="relative">
-                <select
-                  value={filterValue}
-                  onChange={(e) => setFilterValue(e.target.value)}
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="all">All statuses</option>
-                  {filterOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -120,7 +96,7 @@ const CardTable: React.FC<CardTableProps> = ({
 
       {/* Table Headers - Simple Text */}
       <div className="px-6 py-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           {/* Checkbox for select all */}
           <input
             type="checkbox"

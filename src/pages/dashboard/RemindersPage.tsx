@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Clock, Plus, Edit, Trash2, Calendar, User, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CardTable from '../../components/ui/CardTable';
 
 interface Reminder {
   id: string;
@@ -19,52 +20,7 @@ interface Reminder {
 }
 
 const RemindersPage: React.FC = () => {
-  const [reminders, setReminders] = useState<Reminder[]>([
-    {
-      id: '1',
-      clientName: 'John Smith',
-      clientPhone: '+1 (555) 123-4567',
-      clientEmail: 'john.smith@email.com',
-      appointmentDate: '2024-01-15',
-      appointmentTime: '10:00 AM',
-      service: 'Dental Cleaning',
-      status: 'active',
-      reminderTime: '24 hours before',
-      reminderText: 'Hi John! This is a friendly reminder about your dental cleaning appointment tomorrow at 10:00 AM. Please arrive 10 minutes early. If you need to reschedule, please call us at (555) 123-4567.',
-      reminderSent: false,
-      createdAt: '2024-01-10',
-      notes: 'First time patient'
-    },
-    {
-      id: '2',
-      clientName: 'Sarah Johnson',
-      clientPhone: '+1 (555) 987-6543',
-      clientEmail: 'sarah.j@email.com',
-      appointmentDate: '2024-01-16',
-      appointmentTime: '2:30 PM',
-      service: 'HVAC Maintenance',
-      status: 'active',
-      reminderTime: '48 hours before',
-      reminderText: 'Hello Sarah! Your HVAC maintenance appointment is scheduled for January 16th at 2:30 PM. Our technician will arrive within the scheduled time window. Please ensure access to your HVAC unit.',
-      reminderSent: true,
-      createdAt: '2024-01-08',
-      notes: 'Annual maintenance'
-    },
-    {
-      id: '3',
-      clientName: 'Mike Davis',
-      clientPhone: '+1 (555) 456-7890',
-      clientEmail: 'mike.davis@email.com',
-      appointmentDate: '2024-01-18',
-      appointmentTime: '9:00 AM',
-      service: 'Auto Repair',
-      status: 'inactive',
-      reminderTime: '24 hours before',
-      reminderText: 'Hi Mike! Your car service appointment is tomorrow at 9:00 AM. Please bring your vehicle keys and any service records you have.',
-      reminderSent: false,
-      createdAt: '2024-01-12'
-    }
-  ]);
+  const [reminders, setReminders] = useState<Reminder[]>([]);
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -121,120 +77,101 @@ const RemindersPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="bg-white rounded-lg border border-gray-200 overflow-hidden"
       >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Client & Service
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Appointment
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Reminder Timing
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Reminder Text
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {reminders.map((reminder, index) => (
-                <motion.tr
-                  key={reminder.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="hover:bg-gray-50"
+        <CardTable
+          data={reminders}
+          columns={[
+            { key: 'client', label: 'Client & Service', width: '25%' },
+            { key: 'appointment', label: 'Appointment', width: '20%' },
+            { key: 'status', label: 'Status', width: '15%' },
+            { key: 'timing', label: 'Reminder Timing', width: '15%' },
+            { key: 'text', label: 'Reminder Text', width: '20%' },
+            { key: 'actions', label: 'Actions', width: '5%' }
+          ]}
+          renderRow={(reminder) => (
+            <div className="flex items-center gap-6">
+              {/* Checkbox */}
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              
+              {/* Client & Service */}
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <User className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">{reminder.clientName}</div>
+                  <div className="text-sm text-gray-500">{reminder.service}</div>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Phone className="w-3 h-3 text-gray-400" />
+                    <span className="text-xs text-gray-500">{reminder.clientPhone}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Appointment */}
+              <div className="flex items-center gap-2 flex-1">
+                <Calendar className="w-4 h-4 text-gray-400" />
+                <div>
+                  <div className="text-sm text-gray-900">{reminder.appointmentDate}</div>
+                  <div className="text-sm text-gray-500">{reminder.appointmentTime}</div>
+                </div>
+              </div>
+              
+              {/* Status */}
+              <div className="flex items-center gap-2 flex-1">
+                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                  reminder.status === 'active'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-gray-100 text-gray-800'
+                }`}>
+                  {reminder.status}
+                </span>
+                {reminder.reminderSent && (
+                  <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                    Sent
+                  </span>
+                )}
+              </div>
+              
+              {/* Reminder Timing */}
+              <div className="flex items-center gap-2 flex-1">
+                <Clock className="w-4 h-4 text-gray-400" />
+                <span className="text-sm text-gray-900">{reminder.reminderTime}</span>
+              </div>
+              
+              {/* Reminder Text */}
+              <div className="text-sm text-gray-900 flex-1 truncate">
+                {reminder.reminderText}
+              </div>
+              
+              {/* Actions */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleRescheduleReminder(reminder)}
+                  className="text-blue-600 hover:text-blue-900 transition-colors"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <User className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{reminder.clientName}</div>
-                        <div className="text-sm text-gray-500">{reminder.service}</div>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Phone className="w-3 h-3 text-gray-400" />
-                          <span className="text-xs text-gray-500">{reminder.clientPhone}</span>
-                        </div>
-          </div>
-        </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <Calendar className="w-4 h-4 text-gray-400 mr-2" />
-                      <div>
-                        <div className="text-sm text-gray-900">{reminder.appointmentDate}</div>
-                        <div className="text-sm text-gray-500">{reminder.appointmentTime}</div>
-          </div>
-        </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        reminder.status === 'active'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {reminder.status}
-                      </span>
-                      {reminder.reminderSent && (
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                          Sent
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-900">{reminder.reminderTime}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900 max-w-xs truncate" title={reminder.reminderText}>
-                      {reminder.reminderText}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleRescheduleReminder(reminder)}
-                        className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
-                        title="Reschedule"
-                      >
-                        <Edit className="w-4 h-4" />
-                        Reschedule
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedReminder(reminder);
-                          setShowDeleteModal(true);
-                        }}
-                        className="text-red-600 hover:text-red-900 flex items-center gap-1"
-                        title="Delete"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  <Edit className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => {
+                    setSelectedReminder(reminder);
+                    setShowDeleteModal(true);
+                  }}
+                  className="text-red-600 hover:text-red-900 transition-colors"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+          emptyStateText="No reminders found"
+          emptyStateAnimation="/No_Data_Preview.lottie"
+          onAddNew={() => setShowEditModal(true)}
+          addNewText="Add Reminder"
+        />
       </motion.div>
 
       {/* Delete Confirmation Modal */}

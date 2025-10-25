@@ -690,7 +690,7 @@ const DashboardLayout: React.FC = () => {
                    <div className={`w-1 h-6 rounded-full ${
                      isDarkMode ? 'bg-blue-400' : 'bg-blue-600'
                    }`}></div>
-                   <h1 className={`text-xl font-semibold ${
+                   <h1 className={`text-2xl font-semibold ${
                      isDarkMode ? 'text-white' : 'text-gray-900'
                    }`}>
                      {getPageName()}
