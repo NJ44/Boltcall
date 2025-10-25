@@ -335,7 +335,7 @@ const AgentsPage: React.FC = () => {
             ]}
             data={agents}
             renderRow={(agent) => (
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-6">
                 {/* Checkbox */}
                 <input
                   type="checkbox"
@@ -343,7 +343,7 @@ const AgentsPage: React.FC = () => {
                 />
                 
                 {/* Agent Name */}
-                <div className="flex items-center gap-3" style={{ width: '25%' }}>
+                <div className="flex items-center gap-3 flex-1">
                   <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
                     <Users className="w-4 h-4 text-zinc-600" />
                   </div>
@@ -351,7 +351,7 @@ const AgentsPage: React.FC = () => {
                 </div>
                 
                 {/* Status */}
-                <div style={{ width: '15%' }}>
+                <div className="flex-1">
                   <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                     agent.status === 'active' 
                       ? 'bg-green-100 text-green-800' 
@@ -365,27 +365,27 @@ const AgentsPage: React.FC = () => {
                 </div>
                 
                 {/* Calls Today */}
-                <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                <div className="text-sm text-gray-900 flex-1">
                   {agent.callsToday}
                 </div>
                 
                 {/* Avg Response */}
-                <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                <div className="text-sm text-gray-900 flex-1">
                   {agent.avgResponseTime}
                 </div>
                 
                 {/* Success Rate */}
-                <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+                <div className="text-sm text-gray-900 flex-1">
                   {agent.successRate}
                 </div>
                 
                 {/* Last Active */}
-                <div className="text-sm text-gray-500" style={{ width: '15%' }}>
+                <div className="text-sm text-gray-500 flex-1">
                   {agent.lastActive}
                 </div>
                 
                 {/* Action Icons */}
-                <div className="flex items-center gap-2 ml-auto">
+                <div className="flex items-center gap-2">
                   <button className="text-green-600 hover:text-green-800">
                     <Flame className="w-4 h-4" />
                   </button>

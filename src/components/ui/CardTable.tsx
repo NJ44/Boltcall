@@ -125,8 +125,8 @@ const CardTable: React.FC<CardTableProps> = ({
         </div>
       </div>
 
-      {/* Table Headers */}
-      <div className="px-6 py-3 bg-gray-50 border-b border-gray-200">
+      {/* Table Headers - Simple Text */}
+      <div className="px-6 py-4">
         <div className="flex items-center gap-4">
           {/* Checkbox for select all */}
           <input
@@ -134,12 +134,12 @@ const CardTable: React.FC<CardTableProps> = ({
             className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
           
-          {/* Column headers */}
+          {/* Column headers - Simple text without background */}
           {columns.map((column) => (
             <div
               key={column.key}
-              className={`flex items-center gap-2 text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                column.sortable ? 'cursor-pointer hover:text-gray-700' : ''
+              className={`flex items-center gap-2 text-sm font-medium text-gray-700 ${
+                column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
               }`}
               style={{ width: column.width }}
               onClick={() => column.sortable && handleSort(column.key)}
@@ -155,8 +155,8 @@ const CardTable: React.FC<CardTableProps> = ({
         </div>
       </div>
 
-      {/* Table Content */}
-      <div className="divide-y divide-gray-200">
+      {/* Table Content - Card-based rows */}
+      <div className="space-y-3 px-6 pb-6">
         {filteredData.length > 0 ? (
           filteredData.map((item, index) => (
             <motion.div
@@ -164,7 +164,7 @@ const CardTable: React.FC<CardTableProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="p-6 hover:bg-gray-50 transition-colors"
+              className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all duration-200"
             >
               {renderRow(item, index)}
             </motion.div>

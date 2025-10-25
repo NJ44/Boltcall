@@ -1,6 +1,6 @@
 import * as React from "react"
 import { cn } from "../../lib/utils"
-import { ButtonShadcn } from "./button-shadcn"
+import { Button } from "./button-shadcn"
 import type { LucideIcon } from "lucide-react"
 
 interface EmptyStateProps {
@@ -58,7 +58,7 @@ export function EmptyState({
       <h2 className="text-foreground font-medium mt-4 text-4xl">{title}</h2>
       <p className="text-base text-muted-foreground mt-2 whitespace-pre-line">{description}</p>
       {action && (
-        <ButtonShadcn
+        <Button
           onClick={action.onClick}
           variant="outline"
           className={cn(
@@ -67,7 +67,7 @@ export function EmptyState({
           )}
         >
           {action.label}
-        </ButtonShadcn>
+        </Button>
       )}
     </div>
   )

@@ -48,6 +48,7 @@ import AnimatedCardChartDemo from '../pages/AnimatedCardChartDemo';
 import CardsStackDemo from '../pages/CardsStackDemo';
 import FeatureSectionDemo from '../pages/FeatureSectionDemo';
 import MultipleSelectDemo from '../pages/MultipleSelectDemo';
+import InteractiveCheckoutDemo from '../pages/InteractiveCheckoutDemo';
 import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
 import EmptyStateDemo from '../pages/EmptyStateDemo';
 import DatabaseWithRestApiDemo from '../pages/DatabaseWithRestApiDemo';
@@ -146,6 +147,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features-10-demo" element={<Features10Demo />} />
         <Route path="/giveaway" element={<Giveaway />} />
         <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
+        <Route path="/interactive-checkout-demo" element={<InteractiveCheckoutDemo />} />
         <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />

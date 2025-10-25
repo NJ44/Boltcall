@@ -171,7 +171,7 @@ const PhoneNumbersPage: React.FC = () => {
           ]}
           data={phoneNumbers}
           renderRow={(phone) => (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               {/* Checkbox */}
               <input
                 type="checkbox"
@@ -179,7 +179,7 @@ const PhoneNumbersPage: React.FC = () => {
               />
               
               {/* Phone Number */}
-              <div className="flex items-center gap-3" style={{ width: '25%' }}>
+              <div className="flex items-center gap-3 flex-1">
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                   <PhoneCall className="w-4 h-4 text-green-600" />
                 </div>
@@ -187,22 +187,22 @@ const PhoneNumbersPage: React.FC = () => {
               </div>
               
               {/* Location */}
-              <div className="text-sm text-gray-900" style={{ width: '20%' }}>
+              <div className="text-sm text-gray-900 flex-1">
                 {phone.location}
               </div>
               
               {/* Type */}
-              <div className="text-sm text-gray-900" style={{ width: '15%' }}>
+              <div className="text-sm text-gray-900 flex-1">
                 {phone.type}
               </div>
               
               {/* Assigned To */}
-              <div className="text-sm text-gray-900" style={{ width: '20%' }}>
+              <div className="text-sm text-gray-900 flex-1">
                 {phone.assignedTo}
               </div>
               
               {/* Status */}
-              <div style={{ width: '10%' }}>
+              <div className="flex-1">
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                   phone.status === 'Active' 
                     ? 'bg-green-100 text-green-800' 
@@ -213,12 +213,12 @@ const PhoneNumbersPage: React.FC = () => {
               </div>
               
               {/* Created Date */}
-              <div className="text-sm text-gray-500" style={{ width: '10%' }}>
+              <div className="text-sm text-gray-500 flex-1">
                 {phone.createdAt}
               </div>
               
               {/* Action Icons */}
-              <div className="flex items-center gap-2 ml-auto">
+              <div className="flex items-center gap-2">
                 <button className="text-green-600 hover:text-green-800">
                   <Flame className="w-4 h-4" />
                 </button>

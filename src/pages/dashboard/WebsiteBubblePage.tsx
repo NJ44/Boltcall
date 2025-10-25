@@ -104,7 +104,7 @@ const WebsiteBubblePage: React.FC = () => {
           ]}
           data={clientAgents}
           renderRow={(agent) => (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               {/* Checkbox */}
               <input
                 type="checkbox"
@@ -112,7 +112,7 @@ const WebsiteBubblePage: React.FC = () => {
               />
               
               {/* Agent Name */}
-              <div className="flex items-center gap-3" style={{ width: '40%' }}>
+              <div className="flex items-center gap-3 flex-1">
                 <div 
                   className="w-4 h-4 rounded-full"
                   style={{ backgroundColor: agent.color }}
@@ -121,7 +121,7 @@ const WebsiteBubblePage: React.FC = () => {
               </div>
               
               {/* Status */}
-              <div style={{ width: '20%' }}>
+              <div className="flex-1">
                 <button
                   onClick={() => toggleAgentStatus(agent.id)}
                   className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -135,12 +135,12 @@ const WebsiteBubblePage: React.FC = () => {
               </div>
               
               {/* Created Date */}
-              <div className="text-sm text-gray-500" style={{ width: '20%' }}>
+              <div className="text-sm text-gray-500 flex-1">
                 {new Date(agent.createdAt).toLocaleDateString()}
               </div>
               
               {/* Action Icons */}
-              <div className="flex items-center gap-2" style={{ width: '20%' }}>
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
                     setSelectedAgent(agent.id);
