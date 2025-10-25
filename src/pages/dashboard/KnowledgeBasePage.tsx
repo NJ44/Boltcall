@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool } from 'lucide-react';
-import CardTable from '../../components/ui/CardTable';
+import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 
 interface Document {
   id: string;
@@ -134,7 +134,7 @@ const KnowledgeBasePage: React.FC = () => {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="mt-8"
       >
-        <CardTable
+        <CardTableWithPanel
           data={documents}
           columns={[
             { key: 'name', label: 'Document Name', width: '30%' },
@@ -154,10 +154,10 @@ const KnowledgeBasePage: React.FC = () => {
               <div className="flex items-center gap-3 flex-1">
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <FileText className="w-4 h-4 text-blue-600" />
-                </div>
+        </div>
                 <div className="font-medium text-gray-900">{doc.name}</div>
-              </div>
-              
+          </div>
+
               {/* Content Preview */}
               <div className="text-sm text-gray-600 flex-1 truncate">
                 {doc.content.substring(0, 50)}...
@@ -171,31 +171,31 @@ const KnowledgeBasePage: React.FC = () => {
               {/* Updated Date */}
               <div className="text-sm text-gray-500 flex-1">
                 {doc.updatedAt.toLocaleDateString()}
-              </div>
-              
+          </div>
+
               {/* Actions */}
               <div className="flex items-center gap-2">
-                <button
-                  onClick={() => handleEditDocument(doc)}
+                    <button
+                      onClick={() => handleEditDocument(doc)}
                   className="text-blue-600 hover:text-blue-900 transition-colors"
-                >
-                  <Edit className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => handleDeleteDocument(doc.id)}
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteDocument(doc.id)}
                   className="text-red-600 hover:text-red-900 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
           )}
           emptyStateText="No knowledge base documents found"
           emptyStateAnimation="/No_Data_Preview.lottie"
           onAddNew={() => setShowPopup(true)}
           addNewText="Add Document"
         />
-      </motion.div>
+        </motion.div>
 
       {/* Popup Modal */}
       <AnimatePresence>

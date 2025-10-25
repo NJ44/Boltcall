@@ -128,7 +128,7 @@ const DashboardLayout: React.FC = () => {
     
     // Define page name mappings for better display
     const pageNames: Record<string, string> = {
-      '/dashboard': 'Dashboard',
+      '/dashboard': 'Overview',
       '/dashboard/agents': 'Agents',
       '/dashboard/phone-numbers': 'Phone Numbers',
       '/dashboard/website-bubble': 'Website Bubble',
@@ -303,6 +303,7 @@ const DashboardLayout: React.FC = () => {
   const navItemsGroup2 = [
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
     { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-4 h-4" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-4 h-4" /> },
   ];
 
@@ -318,9 +319,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
   ];
 
-  const navItemsBottom = [
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-5 h-5" /> },
-  ];
+  const navItemsBottom: Array<{ to: string; label: string; icon: React.ReactNode }> = [];
 
   const navItemsFooter = [
     { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },

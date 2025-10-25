@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type } from 'lucide-react';
-import CardTable from '../../components/ui/CardTable';
+import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type, Save } from 'lucide-react';
+import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 
 interface ClientAgent {
   id: string;
@@ -16,6 +16,11 @@ interface ClientAgent {
 const WebsiteBubblePage: React.FC = () => {
   const [showIntegrationCode, setShowIntegrationCode] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string>('');
+  
+  // Sliding panel states
+  const [showAddPanel, setShowAddPanel] = useState(false);
+  const [showEditPanel, setShowEditPanel] = useState(false);
+  const [editingAgent, setEditingAgent] = useState<Partial<ClientAgent>>({});
 
   // Mock client agents data
   const [clientAgents, setClientAgents] = useState<ClientAgent[]>([
@@ -86,6 +91,40 @@ const WebsiteBubblePage: React.FC = () => {
     ));
   };
 
+  const handleAddNewAgent = () => {
+    setEditingAgent({});
+    setShowAddPanel(true);
+  };
+
+  const handleEditAgent = (agent: ClientAgent) => {
+    setEditingAgent(agent);
+    setShowEditPanel(true);
+  };
+
+  const handleSaveAgent = () => {
+    if (editingAgent.id) {
+      setClientAgents(prev => 
+        prev.map(agent => 
+          agent.id === editingAgent.id ? { ...agent, ...editingAgent } as ClientAgent : agent
+        )
+      );
+    } else {
+      const newAgent: ClientAgent = {
+        id: Date.now().toString(),
+        name: editingAgent.name || '',
+        status: 'active',
+        widgetId: `boltcall-${Date.now()}`,
+        color: editingAgent.color || '#3B82F6',
+        position: editingAgent.position || 'bottom-right',
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+      setClientAgents(prev => [...prev, newAgent]);
+    }
+    setShowAddPanel(false);
+    setShowEditPanel(false);
+    setEditingAgent({});
+  };
+
   return (
     <div className="space-y-6">
 
@@ -95,7 +134,7 @@ const WebsiteBubblePage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <CardTable
+        <CardTableWithPanel
           columns={[
             { key: 'checkbox', label: '', width: '5%' },
             { key: 'name', label: 'Agent Name', width: '35%' },
@@ -117,43 +156,46 @@ const WebsiteBubblePage: React.FC = () => {
               {/* Agent Name */}
               <div className="flex items-center gap-3 flex-1">
                 <div className="font-medium text-gray-900">{agent.name}</div>
-              </div>
+                    </div>
               
               {/* Status */}
               <div className="flex-1">
-                <button
-                  onClick={() => toggleAgentStatus(agent.id)}
-                  className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    agent.status === 'active'
-                      ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                  }`}
-                >
-                  {agent.status}
-                </button>
+                    <button
+                      onClick={() => toggleAgentStatus(agent.id)}
+                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        agent.status === 'active'
+                          ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                      }`}
+                    >
+                      {agent.status}
+                    </button>
               </div>
               
               {/* Created Date */}
               <div className="text-sm text-gray-500 flex-1">
-                {new Date(agent.createdAt).toLocaleDateString()}
+                    {new Date(agent.createdAt).toLocaleDateString()}
               </div>
               
               {/* Action Icons */}
               <div className="flex items-center gap-2 flex-1">
-                <button
-                  onClick={() => {
-                    setSelectedAgent(agent.id);
-                    setShowIntegrationCode(true);
-                  }}
-                  className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
-                >
-                  <Code className="w-4 h-4" />
-                  Get Code
-                </button>
-                <button className="text-gray-600 hover:text-gray-900">
-                  <Settings className="w-4 h-4" />
-                </button>
-              </div>
+                      <button
+                        onClick={() => {
+                          setSelectedAgent(agent.id);
+                          setShowIntegrationCode(true);
+                        }}
+                        className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
+                      >
+                        <Code className="w-4 h-4" />
+                        Get Code
+                      </button>
+                      <button
+                  onClick={() => handleEditAgent(agent)}
+                        className="text-gray-600 hover:text-gray-900"
+                      >
+                        <Settings className="w-4 h-4" />
+                      </button>
+                    </div>
             </div>
           )}
           emptyStateText="No agents found. Create your first AI agent to get started."
@@ -162,8 +204,140 @@ const WebsiteBubblePage: React.FC = () => {
             { label: 'Active', value: 'active' },
             { label: 'Inactive', value: 'inactive' }
           ]}
-          onAddNew={() => console.log('Add new agent')}
+          onAddNew={handleAddNewAgent}
           addNewText="Create Agent"
+          showAddPanel={showAddPanel}
+          onCloseAddPanel={() => setShowAddPanel(false)}
+          addPanelTitle="Create New Agent"
+          addPanelContent={
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Agent Name</label>
+                <input
+                  type="text"
+                  value={editingAgent.name || ''}
+                  onChange={(e) => setEditingAgent({ ...editingAgent, name: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter agent name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Color</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={editingAgent.color || '#3B82F6'}
+                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
+                    className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={editingAgent.color || '#3B82F6'}
+                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="#3B82F6"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Position</label>
+                <select
+                  value={editingAgent.position || 'bottom-right'}
+                  onChange={(e) => setEditingAgent({ ...editingAgent, position: e.target.value as any })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="bottom-right">Bottom Right</option>
+                  <option value="bottom-left">Bottom Left</option>
+                  <option value="top-right">Top Right</option>
+                  <option value="top-left">Top Left</option>
+                </select>
+              </div>
+              
+              <div className="flex justify-end gap-3 pt-4 border-t">
+                <button
+                  onClick={() => setShowAddPanel(false)}
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveAgent}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  Create Agent
+                </button>
+              </div>
+            </div>
+          }
+          showEditPanel={showEditPanel}
+          onCloseEditPanel={() => setShowEditPanel(false)}
+          editPanelTitle="Edit Agent"
+          editPanelContent={
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Agent Name</label>
+                <input
+                  type="text"
+                  value={editingAgent.name || ''}
+                  onChange={(e) => setEditingAgent({ ...editingAgent, name: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Color</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={editingAgent.color || '#3B82F6'}
+                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
+                    className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={editingAgent.color || '#3B82F6'}
+                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Position</label>
+                <select
+                  value={editingAgent.position || 'bottom-right'}
+                  onChange={(e) => setEditingAgent({ ...editingAgent, position: e.target.value as any })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="bottom-right">Bottom Right</option>
+                  <option value="bottom-left">Bottom Left</option>
+                  <option value="top-right">Top Right</option>
+                  <option value="top-left">Top Left</option>
+                </select>
+              </div>
+              
+              <div className="flex justify-end gap-3 pt-4 border-t">
+                <button
+                  onClick={() => setShowEditPanel(false)}
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveAgent}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  Save Changes
+                </button>
+              </div>
+        </div>
+          }
         />
       </motion.div>
 

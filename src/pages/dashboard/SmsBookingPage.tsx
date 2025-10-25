@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CardTable from '../../components/ui/CardTable';
+import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 
 interface SmsBooking {
   id: string;
@@ -108,7 +108,7 @@ const SmsBookingPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <CardTable
+        <CardTableWithPanel
           data={smsBookings}
           columns={[
             { key: 'client', label: 'Client & Service', width: '25%' },

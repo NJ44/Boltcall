@@ -58,6 +58,7 @@ import DatabaseWithRestApiDemo from '../pages/DatabaseWithRestApiDemo';
 import NewAccordionDemo from '../pages/NewAccordionDemo';
 import Accordion05Demo from '../pages/Accordion05Demo';
 import DotPatternDemo from '../pages/DotPatternDemo';
+import FileUploadDemo from '../pages/FileUploadDemo';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
@@ -168,6 +169,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/new-accordion-demo" element={<NewAccordionDemo />} />
         <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
         <Route path="/dot-pattern-demo" element={<DotPatternDemo />} />
+        <Route path="/file-upload-demo" element={<FileUploadDemo />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AlertTriangle, Power, PhoneOff, MessageSquareOff, BellOff, HelpCircle, X, Send } from 'lucide-react';
-import Plan from '../../components/ui/agent-plan';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -39,9 +38,98 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Agent Plan Component */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <Plan />
+      {/* Service Status Overview */}
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 p-6">
+          <h2 className="text-xl font-semibold text-gray-900">Service Status</h2>
+          <p className="text-sm text-gray-600 mt-1">Monitor the status of all your BoltCall services</p>
+        </div>
+        
+        <div className="p-6 space-y-4">
+          {/* AI Receptionist */}
+          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div>
+                <h4 className="font-medium text-gray-900">AI Receptionist</h4>
+                <p className="text-sm text-gray-600">Handling incoming calls</p>
+              </div>
+            </div>
+            <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+              Active
+            </span>
+          </div>
+
+          {/* SMS Messaging */}
+          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div>
+                <h4 className="font-medium text-gray-900">SMS Messaging</h4>
+                <p className="text-sm text-gray-600">Sending automated text messages</p>
+              </div>
+            </div>
+            <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+              Active
+            </span>
+          </div>
+
+          {/* Email Notifications */}
+          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div>
+                <h4 className="font-medium text-gray-900">Email Notifications</h4>
+                <p className="text-sm text-gray-600">Sending email alerts</p>
+              </div>
+            </div>
+            <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+              Active
+            </span>
+          </div>
+
+          {/* Website Chat Widget */}
+          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div>
+                <h4 className="font-medium text-gray-900">Website Chat Widget</h4>
+                <p className="text-sm text-gray-600">Configured but not active</p>
+              </div>
+            </div>
+            <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full">
+              Pending
+            </span>
+          </div>
+
+          {/* Voice Library */}
+          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div>
+                <h4 className="font-medium text-gray-900">Voice Library</h4>
+                <p className="text-sm text-gray-600">Voice models loaded and ready</p>
+              </div>
+            </div>
+            <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+              Active
+            </span>
+          </div>
+
+          {/* Analytics */}
+          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div>
+                <h4 className="font-medium text-gray-900">Analytics</h4>
+                <p className="text-sm text-gray-600">Collecting and processing data</p>
+              </div>
+            </div>
+            <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+              Active
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Danger Zone */}

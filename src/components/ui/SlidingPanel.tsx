@@ -69,7 +69,11 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            transition={{ 
+              type: 'tween', 
+              ease: [0.25, 0.46, 0.45, 0.94], 
+              duration: 0.4 
+            }}
             className={`fixed right-0 top-0 h-full ${sizeClasses[size]} bg-white shadow-2xl z-50 flex flex-col ${className}`}
           >
             {/* Header */}

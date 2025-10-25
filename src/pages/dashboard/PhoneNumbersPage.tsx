@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { PhoneCall, MoreHorizontal, Flame } from 'lucide-react';
-import CardTable from '../../components/ui/CardTable';
+import { PhoneCall, MoreHorizontal } from 'lucide-react';
+import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 
 const PhoneNumbersPage: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -99,12 +99,11 @@ const PhoneNumbersPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <CardTable
+        <CardTableWithPanel
           columns={[
-            { key: 'number', label: 'Phone Number', width: '25%' },
-            { key: 'location', label: 'Location', width: '20%' },
-            { key: 'type', label: 'Type', width: '15%' },
-            { key: 'assignedTo', label: 'Assigned To', width: '20%' },
+            { key: 'number', label: 'Phone Number', width: '30%' },
+            { key: 'location', label: 'Location', width: '25%' },
+            { key: 'assignedTo', label: 'Assigned To', width: '25%' },
             { key: 'status', label: 'Status', width: '10%' },
             { key: 'createdAt', label: 'Created', width: '10%' }
           ]}
@@ -130,11 +129,6 @@ const PhoneNumbersPage: React.FC = () => {
                 {phone.location}
               </div>
               
-              {/* Type */}
-              <div className="text-sm text-gray-900 flex-1">
-                {phone.type}
-              </div>
-              
               {/* Assigned To */}
               <div className="text-sm text-gray-900 flex-1">
                 {phone.assignedTo}
@@ -158,9 +152,6 @@ const PhoneNumbersPage: React.FC = () => {
               
               {/* Action Icons */}
               <div className="flex items-center gap-2">
-                <button className="text-green-600 hover:text-green-800">
-                  <Flame className="w-4 h-4" />
-                </button>
                 <button className="text-gray-600 hover:text-gray-800">
                   <MoreHorizontal className="w-4 h-4" />
                 </button>

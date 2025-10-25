@@ -118,8 +118,12 @@ const IntegrationsPage: React.FC = () => {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-96 bg-white shadow-xl z-50 overflow-y-auto rounded-l-3xl"
+              transition={{ 
+                type: 'tween', 
+                ease: [0.25, 0.46, 0.45, 0.94], 
+                duration: 0.4 
+              }}
+              className="fixed right-0 top-0 h-screen w-96 bg-white shadow-xl z-50 overflow-y-auto rounded-l-3xl"
             >
               <div className="p-6">
                 {/* Header */}
