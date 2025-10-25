@@ -20,7 +20,53 @@ interface Reminder {
 }
 
 const RemindersPage: React.FC = () => {
-  const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [reminders, setReminders] = useState<Reminder[]>([
+    {
+      id: '1',
+      clientName: 'John Smith',
+      clientPhone: '+1 (555) 123-4567',
+      clientEmail: 'john@example.com',
+      appointmentDate: '2024-01-15',
+      appointmentTime: '10:00 AM',
+      service: 'Dental Cleaning',
+      status: 'active',
+      reminderTime: '24 hours before',
+      reminderText: 'Hi John, this is a reminder about your dental cleaning appointment tomorrow at 10:00 AM. Please arrive 10 minutes early.',
+      reminderSent: true,
+      createdAt: '2024-01-10',
+      notes: 'Regular cleaning appointment'
+    },
+    {
+      id: '2',
+      clientName: 'Sarah Johnson',
+      clientPhone: '+1 (555) 987-6543',
+      clientEmail: 'sarah@example.com',
+      appointmentDate: '2024-01-16',
+      appointmentTime: '2:00 PM',
+      service: 'Consultation',
+      status: 'active',
+      reminderTime: '2 hours before',
+      reminderText: 'Hello Sarah, your consultation appointment is scheduled for today at 2:00 PM. We look forward to seeing you!',
+      reminderSent: false,
+      createdAt: '2024-01-12',
+      notes: 'Initial consultation'
+    },
+    {
+      id: '3',
+      clientName: 'Mike Wilson',
+      clientPhone: '+1 (555) 456-7890',
+      clientEmail: 'mike@example.com',
+      appointmentDate: '2024-01-18',
+      appointmentTime: '9:30 AM',
+      service: 'Follow-up',
+      status: 'inactive',
+      reminderTime: '48 hours before',
+      reminderText: 'Hi Mike, this is a reminder about your follow-up appointment on January 18th at 9:30 AM.',
+      reminderSent: true,
+      createdAt: '2024-01-14',
+      notes: 'Post-treatment follow-up'
+    }
+  ]);
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
