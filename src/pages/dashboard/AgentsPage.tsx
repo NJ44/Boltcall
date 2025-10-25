@@ -270,10 +270,6 @@ const AgentsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Page header */}
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900">Agents</h1>
-      </div>
 
       {agents.length === 0 ? (
         /* No agents - Show create options */

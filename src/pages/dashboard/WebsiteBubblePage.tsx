@@ -97,7 +97,8 @@ const WebsiteBubblePage: React.FC = () => {
       >
         <CardTable
           columns={[
-            { key: 'name', label: 'Agent Name', width: '40%' },
+            { key: 'checkbox', label: '', width: '5%' },
+            { key: 'name', label: 'Agent Name', width: '35%' },
             { key: 'status', label: 'Status', width: '20%' },
             { key: 'createdAt', label: 'Created', width: '20%' },
             { key: 'actions', label: 'Actions', width: '20%' }
@@ -106,10 +107,12 @@ const WebsiteBubblePage: React.FC = () => {
           renderRow={(agent) => (
             <div className="flex items-center gap-6">
               {/* Checkbox */}
-              <input
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
+              <div className="w-4 h-4 flex-shrink-0">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+              </div>
               
               {/* Agent Name */}
               <div className="flex items-center gap-3 flex-1">
@@ -136,7 +139,7 @@ const WebsiteBubblePage: React.FC = () => {
               </div>
               
               {/* Action Icons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-1">
                 <button
                   onClick={() => {
                     setSelectedAgent(agent.id);

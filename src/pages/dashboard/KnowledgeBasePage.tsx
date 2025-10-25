@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PenTool, X, Upload, Globe, Plus, FileText, Edit, Trash2, Save } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool } from 'lucide-react';
 import CardTable from '../../components/ui/CardTable';
 
 interface Document {
@@ -48,20 +48,6 @@ const KnowledgeBasePage: React.FC = () => {
   }, [documents]);
 
 
-  const handleAddFromUrl = () => {
-    setPopupType('url');
-    setShowPopup(true);
-  };
-
-  const handleAddFromFile = () => {
-    setPopupType('file');
-    setShowPopup(true);
-  };
-
-  const handleAddBlankPage = () => {
-    setPopupType('blank');
-    setShowPopup(true);
-  };
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -141,129 +127,6 @@ const KnowledgeBasePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex items-center justify-between"
-      >
-      </motion.div>
-
-      {documents.length === 0 ? (
-        /* No knowledge bases - Show add options in center */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <div className="max-w-3xl mx-auto text-center mb-8">
-            <p className="text-gray-600">You can upload PDFs, create documents, or link web pages.</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6">
-            {/* Upload PDF File */}
-            <button
-              onClick={handleAddFromFile}
-              className="group border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all bg-transparent"
-            >
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
-                <Upload className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Upload PDF File</h3>
-              <p className="text-sm text-gray-600">Directly upload your file with...</p>
-            </button>
-
-            {/* Blank Document */}
-            <button
-              onClick={handleAddBlankPage}
-              className="group border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all bg-transparent"
-            >
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
-                <PenTool className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Blank Document</h3>
-              <p className="text-sm text-gray-600">Manually add the information to a...</p>
-            </button>
-
-            {/* Paste from URL */}
-            <button
-              onClick={handleAddFromUrl}
-              className="group border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all bg-transparent"
-            >
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
-                <Globe className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Paste from URL</h3>
-              <p className="text-sm text-gray-600">Scan information from URL link to...</p>
-            </button>
-          </div>
-        </motion.div>
-      ) : (
-        /* Has documents - Show documents grid */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="space-y-6"
-        >
-          {/* Add New Document Button */}
-          <div className="flex justify-end">
-            <button
-              onClick={handleAddBlankPage}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Add Document
-            </button>
-          </div>
-
-          {/* Documents Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {documents.map((doc, index) => (
-              <motion.div
-                key={doc.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-md border border-gray-200 p-6 flex flex-col hover:shadow-lg transition-shadow"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEditDocument(doc)}
-                      className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors"
-                      title="Edit Document"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteDocument(doc.id)}
-                      className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
-                      title="Delete Document"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-                
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate">{doc.name}</h3>
-                <p className="text-gray-600 text-sm mb-4 flex-1">
-                  {doc.content.substring(0, 100)}...
-                </p>
-                <div className="text-xs text-gray-400 border-t pt-3">
-                  <div>Created: {doc.createdAt.toLocaleDateString()}</div>
-                  <div>Updated: {doc.updatedAt.toLocaleDateString()}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      )}
-
       {/* Knowledge Base Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

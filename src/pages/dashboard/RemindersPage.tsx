@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Clock, Edit, Trash2, Calendar, User, Phone } from 'lucide-react';
+import { Clock, Edit, Trash2, Calendar, User, Phone, Save, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CardTable from '../../components/ui/CardTable';
+import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 
 interface Reminder {
   id: string;
@@ -72,6 +72,10 @@ const RemindersPage: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedReminder, setSelectedReminder] = useState<Reminder | null>(null);
   const [editingReminder, setEditingReminder] = useState<Partial<Reminder>>({});
+  
+  // Sliding panel states
+  const [showAddPanel, setShowAddPanel] = useState(false);
+  const [showEditPanel, setShowEditPanel] = useState(false);
 
   const handleDeleteReminder = (id: string) => {
     setReminders(reminders.filter(reminder => reminder.id !== id));
@@ -81,7 +85,12 @@ const RemindersPage: React.FC = () => {
 
   const handleRescheduleReminder = (reminder: Reminder) => {
     setEditingReminder(reminder);
-    setShowEditModal(true);
+    setShowEditPanel(true);
+  };
+
+  const handleAddNewReminder = () => {
+    setEditingReminder({});
+    setShowAddPanel(true);
   };
 
   const handleSaveReminder = () => {
@@ -97,6 +106,8 @@ const RemindersPage: React.FC = () => {
       setReminders([...reminders, newReminder]);
     }
     setShowEditModal(false);
+    setShowAddPanel(false);
+    setShowEditPanel(false);
     setEditingReminder({});
   };
 
@@ -109,7 +120,7 @@ const RemindersPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <CardTable
+        <CardTableWithPanel
           data={reminders}
           columns={[
             { key: 'client', label: 'Client & Service', width: '25%' },
@@ -200,8 +211,257 @@ const RemindersPage: React.FC = () => {
           )}
           emptyStateText="No reminders found"
           emptyStateAnimation="/No_Data_Preview.lottie"
-          onAddNew={() => setShowEditModal(true)}
+          onAddNew={handleAddNewReminder}
           addNewText="Add Reminder"
+          showAddPanel={showAddPanel}
+          onCloseAddPanel={() => setShowAddPanel(false)}
+          addPanelTitle="Add New Reminder"
+          addPanelContent={
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Client Name</label>
+                  <input
+                    type="text"
+                    value={editingReminder.clientName || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, clientName: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter client name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Client Phone</label>
+                  <input
+                    type="tel"
+                    value={editingReminder.clientPhone || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, clientPhone: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter phone number"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Client Email</label>
+                <input
+                  type="email"
+                  value={editingReminder.clientEmail || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, clientEmail: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter email address"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Date</label>
+                  <input
+                    type="date"
+                    value={editingReminder.appointmentDate || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, appointmentDate: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Time</label>
+                  <input
+                    type="time"
+                    value={editingReminder.appointmentTime || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, appointmentTime: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Service</label>
+                <input
+                  type="text"
+                  value={editingReminder.service || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, service: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter service type"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Time</label>
+                <select
+                  value={editingReminder.reminderTime || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, reminderTime: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select reminder time</option>
+                  <option value="1 hour before">1 hour before</option>
+                  <option value="2 hours before">2 hours before</option>
+                  <option value="4 hours before">4 hours before</option>
+                  <option value="24 hours before">24 hours before</option>
+                  <option value="48 hours before">48 hours before</option>
+                  <option value="72 hours before">72 hours before</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
+                <textarea
+                  value={editingReminder.reminderText || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, reminderText: e.target.value })}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter reminder message"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
+                <textarea
+                  value={editingReminder.notes || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, notes: e.target.value })}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter any additional notes"
+                />
+              </div>
+              
+              <div className="flex justify-end gap-3 pt-4 border-t">
+                <button
+                  onClick={() => setShowAddPanel(false)}
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveReminder}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  Save Reminder
+                </button>
+              </div>
+            </div>
+          }
+          showEditPanel={showEditPanel}
+          onCloseEditPanel={() => setShowEditPanel(false)}
+          editPanelTitle="Edit Reminder"
+          editPanelContent={
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Client Name</label>
+                  <input
+                    type="text"
+                    value={editingReminder.clientName || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, clientName: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Client Phone</label>
+                  <input
+                    type="tel"
+                    value={editingReminder.clientPhone || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, clientPhone: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Client Email</label>
+                <input
+                  type="email"
+                  value={editingReminder.clientEmail || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, clientEmail: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Date</label>
+                  <input
+                    type="date"
+                    value={editingReminder.appointmentDate || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, appointmentDate: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Time</label>
+                  <input
+                    type="time"
+                    value={editingReminder.appointmentTime || ''}
+                    onChange={(e) => setEditingReminder({ ...editingReminder, appointmentTime: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Service</label>
+                <input
+                  type="text"
+                  value={editingReminder.service || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, service: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Time</label>
+                <select
+                  value={editingReminder.reminderTime || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, reminderTime: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="1 hour before">1 hour before</option>
+                  <option value="2 hours before">2 hours before</option>
+                  <option value="4 hours before">4 hours before</option>
+                  <option value="24 hours before">24 hours before</option>
+                  <option value="48 hours before">48 hours before</option>
+                  <option value="72 hours before">72 hours before</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
+                <textarea
+                  value={editingReminder.reminderText || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, reminderText: e.target.value })}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
+                <textarea
+                  value={editingReminder.notes || ''}
+                  onChange={(e) => setEditingReminder({ ...editingReminder, notes: e.target.value })}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div className="flex justify-end gap-3 pt-4 border-t">
+                <button
+                  onClick={() => setShowEditPanel(false)}
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveReminder}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          }
         />
       </motion.div>
 

@@ -569,7 +569,7 @@ const DashboardLayout: React.FC = () => {
                                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                          }`}
                        >
-                    <span>Messaging</span>
+                    <span>Text</span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {messagingDropdownOpen && (
