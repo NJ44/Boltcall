@@ -1,7 +1,6 @@
 import React from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
-  ArrowLeft, 
   Settings as SettingsIcon,
   Palette, 
   Users, 
@@ -17,7 +16,6 @@ interface SettingsLayoutProps {
 
 const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const settingsNavItems = [
     {
@@ -64,26 +62,14 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
     }
   ];
 
-  const handleGoBack = () => {
-    navigate('/dashboard');
-  };
 
   return (
     <div className="flex flex-col h-full">
       {/* Top Panel - Settings Navigation */}
       <div className="bg-white border-b border-gray-200 flex-shrink-0">
-        <div className="p-6">
-          {/* Go Back Link */}
-          <button
-            onClick={handleGoBack}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm font-medium">Go Back</span>
-          </button>
-
+        <div className="p-4">
           {/* Settings Navigation - Horizontal */}
-          <nav className="flex flex-wrap gap-2">
+          <nav className="flex gap-1 overflow-x-auto">
             {settingsNavItems.map((item) => {
               const isActive = location.pathname === item.route || 
                               location.pathname.startsWith(item.route + '/');
@@ -92,7 +78,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
                 <Link
                   key={item.id}
                   to={item.route}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                     isActive
                       ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-700'
                       : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'

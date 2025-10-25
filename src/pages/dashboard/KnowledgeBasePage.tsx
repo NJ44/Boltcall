@@ -137,26 +137,30 @@ const KnowledgeBasePage: React.FC = () => {
         <CardTableWithPanel
           data={documents}
           columns={[
-            { key: 'name', label: 'Document Name', width: '30%' },
-            { key: 'content', label: 'Content Preview', width: '40%' },
+            { key: 'checkbox', label: '', width: '5%' },
+            { key: 'name', label: 'Document Name', width: '25%' },
+            { key: 'content', label: 'Content Preview', width: '35%' },
             { key: 'createdAt', label: 'Created', width: '15%' },
-            { key: 'updatedAt', label: 'Updated', width: '15%' }
+            { key: 'updatedAt', label: 'Updated', width: '15%' },
+            { key: 'actions', label: 'Actions', width: '5%' }
           ]}
           renderRow={(doc) => (
             <div className="flex items-center gap-6">
               {/* Checkbox */}
-              <input
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
+              <div className="w-4 h-4 flex-shrink-0">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+              </div>
               
               {/* Document Name */}
               <div className="flex items-center gap-3 flex-1">
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <FileText className="w-4 h-4 text-blue-600" />
-        </div>
+                </div>
                 <div className="font-medium text-gray-900">{doc.name}</div>
-          </div>
+              </div>
 
               {/* Content Preview */}
               <div className="text-sm text-gray-600 flex-1 truncate">
@@ -171,10 +175,10 @@ const KnowledgeBasePage: React.FC = () => {
               {/* Updated Date */}
               <div className="text-sm text-gray-500 flex-1">
                 {doc.updatedAt.toLocaleDateString()}
-          </div>
+              </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-shrink-0">
                     <button
                       onClick={() => handleEditDocument(doc)}
                   className="text-blue-600 hover:text-blue-900 transition-colors"

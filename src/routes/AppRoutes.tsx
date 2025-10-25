@@ -24,6 +24,7 @@ import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import RemindersPage from '../pages/dashboard/RemindersPage';
 import SmsBookingPage from '../pages/dashboard/SmsBookingPage';
+import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
 import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
@@ -96,6 +97,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="knowledge" element={<KnowledgeBasePage />} />
           <Route path="phone" element={<PhoneNumbersPage />} />
           <Route path="assistant" element={<AssistantPage />} />
+          <Route path="missed-calls" element={<MissedCallsPage />} />
           <Route path="integrations" element={<IntegrationsPage />} />
           <Route path="instant-lead-reply" element={<InstantLeadReplyPage />} />
           <Route path="sms" element={<SmsPage />} />

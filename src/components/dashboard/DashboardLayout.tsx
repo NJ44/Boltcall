@@ -140,6 +140,8 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/settings/billing': 'Billing',
       '/dashboard/reminders': 'Reminders',
       '/dashboard/integrations': 'Integrations',
+      '/dashboard/assistant': 'AI Receptionist',
+      '/dashboard/missed-calls': 'Missed Calls',
       '/dashboard/instant-lead-reply': 'Instant Lead Reply',
     };
     
@@ -302,7 +304,7 @@ const DashboardLayout: React.FC = () => {
 
   const navItemsGroup2 = [
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
-    { to: '/dashboard/knowledge', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
+    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-4 h-4" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-4 h-4" /> },
   ];
