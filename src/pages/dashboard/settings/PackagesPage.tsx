@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Target, User, Check, Clock, Star } from 'lucide-react';
+import { Globe, Target, User, Check, Star } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 
 const PackagesPage: React.FC = () => {
@@ -76,19 +76,6 @@ const PackagesPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-
-      {/* Setup Notice */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <div className="flex items-center gap-3">
-          <Clock className="w-5 h-5 text-blue-600" />
-          <div>
-            <h3 className="font-semibold text-blue-900">Quick Setup</h3>
-            <p className="text-sm text-blue-700">
-              Every package comes with a 48-hour setup time. Our team will have your system up and running quickly!
-            </p>
-          </div>
-        </div>
-      </div>
 
       {/* Packages Grid */}
       <div className="grid md:grid-cols-3 gap-8">
@@ -182,56 +169,6 @@ const PackagesPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Additional Info */}
-      <div className="bg-gray-50 rounded-xl p-6">
-        <h3 className="font-semibold text-gray-900 mb-3">Package Benefits</h3>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Clock className="w-6 h-6 text-blue-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Quick Setup</h4>
-            <p className="text-sm text-gray-600">48-hour setup time for all packages</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Check className="w-6 h-6 text-green-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Full Support</h4>
-            <p className="text-sm text-gray-600">24/7 customer support included</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Star className="w-6 h-6 text-purple-600" />
-            </div>
-            <h4 className="font-medium text-gray-900 mb-1">Satisfaction Guarantee</h4>
-            <p className="text-sm text-gray-600">30-day money-back guarantee</p>
-          </div>
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-900 mb-4">Frequently Asked Questions</h3>
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-medium text-gray-900 mb-1">How long does setup take?</h4>
-            <p className="text-sm text-gray-600">All packages include a 48-hour setup time. Our team works quickly to get your system running.</p>
-          </div>
-          
-          <div>
-            <h4 className="font-medium text-gray-900 mb-1">Can I change packages later?</h4>
-            <p className="text-sm text-gray-600">Yes, you can upgrade or downgrade your package at any time. Changes take effect on your next billing cycle.</p>
-          </div>
-          
-          <div>
-            <h4 className="font-medium text-gray-900 mb-1">Is there a free trial?</h4>
-            <p className="text-sm text-gray-600">We offer a 30-day money-back guarantee on all packages. Try risk-free!</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -33,6 +33,12 @@ export function Magnetic({
   const springY = useSpring(y, springOptions);
 
   useEffect(() => {
+    if (!isHovered) {
+      x.set(0);
+      y.set(0);
+      return;
+    }
+
     const calculateDistance = (e: MouseEvent) => {
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
@@ -43,7 +49,7 @@ export function Magnetic({
 
         const absoluteDistance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
-        if (isHovered && absoluteDistance <= range) {
+        if (absoluteDistance <= range) {
           const scale = 1 - absoluteDistance / range;
           x.set(distanceX * intensity * scale);
           y.set(distanceY * intensity * scale);
@@ -107,6 +113,7 @@ export function Magnetic({
       style={{
         x: springX,
         y: springY,
+        display: 'inline-block',
       }}
     >
       {children}

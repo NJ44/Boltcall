@@ -129,12 +129,7 @@ const KnowledgeBasePage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Knowledge Base Table */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        className="mt-8"
-      >
+      <div className="mt-8">
         <CardTableWithPanel
           data={documents}
           columns={[
@@ -200,7 +195,7 @@ const KnowledgeBasePage: React.FC = () => {
           onAddNew={() => setShowPopup(true)}
           addNewText="Add Document"
         />
-        </motion.div>
+      </div>
 
       {/* Popup Modal */}
       <AnimatePresence>
@@ -211,7 +206,7 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-[9999]"
               onClick={handleClosePopup}
             />
             
@@ -220,7 +215,7 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+              className="fixed top-0 left-0 right-0 bottom-0 z-[10000] flex items-center justify-center p-4 pointer-events-none"
             >
               <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto z-10 pointer-events-auto">
                 <div className="p-6">
@@ -381,7 +376,7 @@ const KnowledgeBasePage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 flex items-center justify-center z-[9999]"
             onClick={handleCancelEdit}
           >
             <motion.div

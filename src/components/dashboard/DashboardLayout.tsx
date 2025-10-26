@@ -131,9 +131,11 @@ const DashboardLayout: React.FC = () => {
     const pageNames: Record<string, string> = {
       '/dashboard': 'Overview',
       '/dashboard/agents': 'Agents',
+      '/dashboard/phone': 'Phone Numbers',
       '/dashboard/phone-numbers': 'Phone Numbers',
       '/dashboard/website-bubble': 'Website Bubble',
       '/dashboard/knowledge-base': 'Knowledge Base',
+      '/dashboard/knowledge': 'Knowledge Base',
       '/dashboard/analytics': 'Analytics',
       '/dashboard/settings': 'Settings',
       '/dashboard/settings/members': 'Team Members',

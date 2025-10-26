@@ -232,7 +232,7 @@ const WizardShell: React.FC = () => {
                 disabled={!isStepAccessible(step.id)}
                 className={`w-full text-left p-10 mb-0 transition-all duration-200 ${
                   isStepAccessible(step.id)
-                    ? 'cursor-pointer'
+                    ? 'cursor-pointer hover:bg-gray-50/50'
                     : 'opacity-50 cursor-not-allowed'
                 }`}
               >
@@ -283,17 +283,22 @@ const WizardShell: React.FC = () => {
                )}
 
               {/* Step Content */}
-              <AnimatePresence>
+              <AnimatePresence mode="wait" initial={false}>
                 {expandedStep === step.id && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
+                    key={expandedStep}
+                    initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                    transition={{ 
+                      type: 'tween',
+                      ease: 'anticipate',
+                      duration: 0.4 
+                    }}
                     className="overflow-hidden"
                   >
                     <div className="px-6 pb-6">
-                      <Card className="p-8">
+                      <Card className="p-8 bg-white">
                         {StepComponent && (
                           <Suspense fallback={
                             <div className="flex items-center justify-center py-8">

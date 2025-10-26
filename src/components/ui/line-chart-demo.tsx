@@ -28,11 +28,11 @@ const salesData = [
 const chartConfig = {
   goals: {
     label: 'Goals',
-    color: 'var(--color-pink-500)',
+    color: '#93c5fd', // blue-300
   },
   sales: {
     label: 'Sales',
-    color: 'var(--color-teal-500)',
+    color: '#3b82f6', // blue-500
   },
 } satisfies ChartConfig;
 
@@ -101,8 +101,8 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps) => {
 
 export default function LineChartDemo() {
   return (
-     <div className="w-full max-w-5xl min-h-screen flex items-center justify-center p-6 lg:p-8">
-      <Card className="w-full lg:max-w-4xl">
+     <div className="w-full">
+      <Card className="w-full bg-white">
         <CardHeader className="border-0 min-h-auto pt-6 pb-6">
           <div className="flex items-center justify-between">
             <CardTitle className="text-base font-semibold">Sales Overview</CardTitle>
@@ -148,7 +148,7 @@ export default function LineChartDemo() {
         <CardContent className="px-2.5 flex flex-col items-end">
           <ChartContainer
             config={chartConfig}
-            className="h-[350px] w-full [&_.recharts-curve.recharts-tooltip-cursor]:stroke-initial"
+            className="h-[280px] w-full [&_.recharts-curve.recharts-tooltip-cursor]:stroke-initial"
           >
             <ComposedChart
               data={salesData}
@@ -222,7 +222,7 @@ export default function LineChartDemo() {
                 stroke={chartConfig.sales.color}
                 strokeWidth={2}
                 dot={{
-                  fill: 'var(--background)',
+                  fill: '#ffffff',
                   strokeWidth: 2,
                   r: 6,
                   stroke: chartConfig.sales.color,
@@ -237,7 +237,7 @@ export default function LineChartDemo() {
                 strokeWidth={2}
                 strokeDasharray="4 4"
                 dot={{
-                  fill: 'var(--background)',
+                  fill: '#ffffff',
                   strokeWidth: 2,
                   r: 6,
                   stroke: chartConfig.goals.color,

@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Edit, Globe, Settings } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
-import Button from '../../ui/Button';
 import PageLoader from '../../PageLoader';
 
 const StepReview: React.FC = () => {
@@ -42,8 +41,8 @@ const StepReview: React.FC = () => {
       // Stop loading animation
       setIsLaunching(false);
       
-      // Navigate directly to dashboard
-      navigate('/dashboard');
+      // Navigate to dashboard with setup completion flag
+      navigate('/dashboard?setupCompleted=true');
       
     } catch (error) {
       console.error('Error launching setup:', error);
@@ -148,15 +147,13 @@ const StepReview: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">{section.title}</h3>
               </div>
-              <Button
+              <button
                 onClick={() => updateStep(section.id)}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-1"
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
               >
-                <Edit className="w-3 h-3" />
+                <Edit className="w-4 h-4" />
                 <span>Edit</span>
-              </Button>
+              </button>
             </div>
 
             <div className="space-y-2">
@@ -190,14 +187,13 @@ const StepReview: React.FC = () => {
             Your AI receptionist is ready to go live. Complete the setup to start using your dashboard.
           </p>
 
-          <Button
+          <button
             onClick={handleLaunch}
             disabled={isLaunching}
-            variant="primary"
-            className="bg-white text-brand-blue hover:bg-gray-50 px-8 py-3 text-lg font-semibold"
+            className="px-6 py-3 bg-white text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLaunching ? 'Completing Setup...' : 'Complete Setup'}
-          </Button>
+          </button>
 
           {review.isLaunched && (
             <motion.div

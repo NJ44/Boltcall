@@ -17,7 +17,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50"
+            className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[9999]"
             onClick={onClose}
           />
           
@@ -27,7 +27,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.6 }}
-            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4"
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[10000] bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4"
           >
             <div className="relative p-8">
               {/* Close button */}
@@ -78,7 +78,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                     onClick={onClose}
                     className="flex-1 bg-gradient-to-r from-brand-blue to-brand-sky text-white px-6 py-3 rounded-xl font-medium hover:from-brand-blue/90 hover:to-brand-sky/90 transition-all"
                   >
-                    Go to Dashboard
+                    Get Started
                   </button>
                 </motion.div>
               </div>

@@ -116,34 +116,36 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
         </div>
 
         {/* Table Headers - Simple Text */}
-        <div className="px-6 py-4">
-          <div className="flex items-center gap-6">
-            {/* Checkbox for select all */}
-            <input
-              type="checkbox"
-              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
-            
-            {/* Column headers - Simple text without background */}
-            {columns.map((column) => (
-              <div
-                key={column.key}
-                className={`flex items-center gap-2 text-sm font-medium text-gray-700 ${
-                  column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
-                }`}
-                style={{ width: column.width }}
-                onClick={() => column.sortable && handleSort(column.key)}
-              >
-                {column.label}
-                {column.sortable && (
-                  <svg className="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                  </svg>
-                )}
-              </div>
-            ))}
+        {filteredData.length > 0 && (
+          <div className="px-6 py-4">
+            <div className="flex items-center gap-6">
+              {/* Checkbox for select all */}
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              
+              {/* Column headers - Simple text without background */}
+              {columns.map((column) => (
+                <div
+                  key={column.key}
+                  className={`flex items-center gap-2 text-sm font-medium text-gray-700 ${
+                    column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
+                  }`}
+                  style={{ width: column.width }}
+                  onClick={() => column.sortable && handleSort(column.key)}
+                >
+                  {column.label}
+                  {column.sortable && (
+                    <svg className="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Table Content - Card-based rows */}
         <div className="space-y-3 px-6 pb-6">
@@ -154,15 +156,15 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all duration-200"
+                className="bg-white rounded-lg border border-gray-200 p-6 shadow-lg"
               >
                 {renderRow(item, index)}
               </motion.div>
             ))
           ) : (
-            <div className="p-12 text-center">
+            <div className="pt-6 pb-12 px-12 text-center">
               <div className="flex flex-col items-center justify-center">
-                <div className="w-48 h-48 mb-4">
+                <div className="w-64 h-64 -mb-4">
                   <DotLottieReact
                     src={emptyStateAnimation}
                     loop
@@ -170,8 +172,7 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
                     className="w-full h-full"
                   />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No data found</h3>
-                <p className="text-gray-500 mb-6">{emptyStateText}</p>
+                <p className="text-gray-500 mb-4">{emptyStateText}</p>
                 {onAddNew && (
                   <Magnetic>
                     <button

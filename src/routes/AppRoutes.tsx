@@ -60,6 +60,7 @@ import NewAccordionDemo from '../pages/NewAccordionDemo';
 import Accordion05Demo from '../pages/Accordion05Demo';
 import DotPatternDemo from '../pages/DotPatternDemo';
 import FileUploadDemo from '../pages/FileUploadDemo';
+import MagneticDemo from '../pages/MagneticDemo';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
@@ -94,7 +95,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
           <Route path="voice-library" element={<VoiceLibraryPage />} />
-          <Route path="knowledge" element={<KnowledgeBasePage />} />
+          <Route path="knowledge-base" element={<KnowledgeBasePage />} />
           <Route path="phone" element={<PhoneNumbersPage />} />
           <Route path="assistant" element={<AssistantPage />} />
           <Route path="missed-calls" element={<MissedCallsPage />} />
@@ -172,6 +173,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
         <Route path="/dot-pattern-demo" element={<DotPatternDemo />} />
         <Route path="/file-upload-demo" element={<FileUploadDemo />} />
+        <Route path="/magnetic-demo" element={<MagneticDemo />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
