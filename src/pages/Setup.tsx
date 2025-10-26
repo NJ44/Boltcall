@@ -23,7 +23,7 @@ const Setup: React.FC = () => {
 
   // Show loader while checking
   if (isChecking) {
-    return <PageLoader />;
+    return <PageLoader isLoading={true} />;
   }
 
   return (
