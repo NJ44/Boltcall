@@ -33,6 +33,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
+import { Magnetic } from '../ui/magnetic';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -1255,16 +1256,18 @@ const DashboardLayout: React.FC = () => {
             >
               Close
             </button>
-            <button
-              onClick={() => {
-                // Handle save changes
-                console.log('Services updated:', services);
-                setShowServicesModal(false);
-              }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Save Changes
-            </button>
+            <Magnetic>
+              <button
+                onClick={() => {
+                  // Handle save changes
+                  console.log('Services updated:', services);
+                  setShowServicesModal(false);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Save Changes
+              </button>
+            </Magnetic>
           </div>
         </div>
       </div>

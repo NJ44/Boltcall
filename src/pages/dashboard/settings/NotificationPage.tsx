@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Bell, Mail, Phone, MessageSquare, Calendar, AlertTriangle, CheckCircle, Settings, Volume2, VolumeX, Clock } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import CardTable from '../../../components/ui/CardTable';
+import { Magnetic } from '../../../components/ui/magnetic';
 
 const NotificationPage: React.FC = () => {
   const [notificationSettings, setNotificationSettings] = useState({
@@ -156,14 +157,16 @@ const NotificationPage: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <Button
-          variant="primary"
-          onClick={handleSave}
-          disabled={isSaving}
-        >
-          <Settings className="w-4 h-4 mr-2" />
-          {isSaving ? 'Saving...' : 'Save Settings'}
-        </Button>
+        <Magnetic>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            disabled={isSaving}
+          >
+            <Settings className="w-4 h-4 mr-2" />
+            {isSaving ? 'Saving...' : 'Save Settings'}
+          </Button>
+        </Magnetic>
       </div>
 
       {saveMessage && (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, CheckCircle, Crown, Star } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import { Magnetic } from '../../../components/ui/magnetic';
 
 const PlanBillingPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'plan' | 'billing'>('plan');
@@ -416,9 +417,11 @@ const PlanBillingPage: React.FC = () => {
               </div>
             </div>
             <div className="mt-6">
-              <Button variant="primary">
-                Save Changes
-              </Button>
+              <Magnetic>
+                <Button variant="primary">
+                  Save Changes
+                </Button>
+              </Magnetic>
             </div>
           </div>
         </div>

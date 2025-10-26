@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Clock, Edit, Trash2, Calendar, User, Phone, Save, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import { Magnetic } from '../../components/ui/magnetic';
 
 interface Reminder {
   id: string;
@@ -331,13 +332,15 @@ const RemindersPage: React.FC = () => {
                   <X className="w-4 h-4" />
                   Cancel
                 </button>
-                <button
-                  onClick={handleSaveReminder}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <Save className="w-4 h-4" />
-                  Save Reminder
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={handleSaveReminder}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    Save Reminder
+                  </button>
+                </Magnetic>
               </div>
             </div>
           }
@@ -452,13 +455,15 @@ const RemindersPage: React.FC = () => {
                   <X className="w-4 h-4" />
                   Cancel
                 </button>
-                <button
-                  onClick={handleSaveReminder}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <Save className="w-4 h-4" />
-                  Save Changes
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={handleSaveReminder}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    Save Changes
+                  </button>
+                </Magnetic>
               </div>
             </div>
           }
@@ -540,9 +545,11 @@ const RemindersPage: React.FC = () => {
           <button className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
             Reset to Defaults
           </button>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-            Save Configuration
-          </button>
+          <Magnetic>
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              Save Configuration
+            </button>
+          </Magnetic>
         </div>
       </motion.div>
 

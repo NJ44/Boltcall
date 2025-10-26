@@ -1,5 +1,6 @@
 import React from 'react';
 import { Building2, Globe, Clock, Phone, Mail } from 'lucide-react';
+import { Magnetic } from '../../components/ui/magnetic';
 
 const BusinessPage: React.FC = () => {
   return (
@@ -134,12 +135,14 @@ const BusinessPage: React.FC = () => {
 
           {/* Save Button */}
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Save Changes
-            </button>
+            <Magnetic>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Save Changes
+              </button>
+            </Magnetic>
           </div>
         </form>
       </div>

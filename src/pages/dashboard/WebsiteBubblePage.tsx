@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type, Save } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import { Magnetic } from '../../components/ui/magnetic';
 
 interface ClientAgent {
   id: string;
@@ -263,13 +264,15 @@ const WebsiteBubblePage: React.FC = () => {
                   <X className="w-4 h-4" />
                   Cancel
                 </button>
-                <button
-                  onClick={handleSaveAgent}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <Save className="w-4 h-4" />
-                  Create Agent
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={handleSaveAgent}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    Create Agent
+                  </button>
+                </Magnetic>
               </div>
             </div>
           }
@@ -328,13 +331,15 @@ const WebsiteBubblePage: React.FC = () => {
                   <X className="w-4 h-4" />
                   Cancel
                 </button>
-                <button
-                  onClick={handleSaveAgent}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <Save className="w-4 h-4" />
-                  Save Changes
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={handleSaveAgent}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    Save Changes
+                  </button>
+                </Magnetic>
               </div>
         </div>
           }
@@ -419,9 +424,11 @@ const WebsiteBubblePage: React.FC = () => {
         </div>
 
         <div className="mt-6 flex justify-end">
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-            Save Settings
-          </button>
+          <Magnetic>
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              Save Settings
+            </button>
+          </Magnetic>
         </div>
       </motion.div>
 

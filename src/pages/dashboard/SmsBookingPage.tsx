@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import { Magnetic } from '../../components/ui/magnetic';
 
 interface SmsBooking {
   id: string;
@@ -319,12 +320,14 @@ const SmsBookingPage: React.FC = () => {
                 >
                   Cancel
                 </button>
-                <button
-                  onClick={handleSaveBooking}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Save Changes
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={handleSaveBooking}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Save Changes
+                  </button>
+                </Magnetic>
               </div>
             </motion.div>
           </motion.div>

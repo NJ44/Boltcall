@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, MapPin, Save, RefreshCw } from 'lucide-react';
+import { Magnetic } from '../../../components/ui/magnetic';
 
 const GeneralPage: React.FC = () => {
   const [businessInfo, setBusinessInfo] = useState({
@@ -307,23 +308,25 @@ const GeneralPage: React.FC = () => {
             <p className="text-green-600 text-sm font-medium">{saveMessage}</p>
           )}
         </div>
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSaving ? (
-            <>
-              <RefreshCw className="w-4 h-4 animate-spin" />
-              Saving...
-            </>
-          ) : (
-            <>
-              <Save className="w-4 h-4" />
-              Save Changes
-            </>
-          )}
-        </button>
+        <Magnetic>
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSaving ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                Save Changes
+              </>
+            )}
+          </button>
+        </Magnetic>
       </motion.div>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PhoneCall, MoreHorizontal } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import { Magnetic } from '../../components/ui/magnetic';
 
 const PhoneNumbersPage: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -269,12 +270,14 @@ const PhoneNumbersPage: React.FC = () => {
                 >
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Save
-                </button>
+                <Magnetic>
+                  <button
+                    type="submit"
+                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  >
+                    Save
+                  </button>
+                </Magnetic>
               </div>
             </form>
           </motion.div>

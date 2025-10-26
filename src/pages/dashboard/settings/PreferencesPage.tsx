@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Moon, Sun, Palette, Bell, Eye, Shield, Save, RefreshCw } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import { Magnetic } from '../../../components/ui/magnetic';
 
 const PreferencesPage: React.FC = () => {
   const [preferences, setPreferences] = useState({
@@ -76,18 +77,20 @@ const PreferencesPage: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <Button
-          variant="primary"
-          onClick={handleSave}
-          disabled={isSaving}
-        >
-          {isSaving ? (
-            <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-          ) : (
-            <Save className="w-4 h-4 mr-2" />
-          )}
-          {isSaving ? 'Saving...' : 'Save Changes'}
-        </Button>
+        <Magnetic>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            disabled={isSaving}
+          >
+            {isSaving ? (
+              <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Save className="w-4 h-4 mr-2" />
+            )}
+            {isSaving ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </Magnetic>
       </div>
 
       {saveMessage && (
