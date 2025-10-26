@@ -619,7 +619,7 @@ const DashboardLayout: React.FC = () => {
          {/* Right Panel - Main Content with Top Bar */}
          <main 
            ref={mainContentRef}
-           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-gray-50 dark:bg-gray-900 shadow-lg m-2 dashboard-main-scroll ${
+           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-white dark:bg-gray-900 shadow-lg m-2 dashboard-main-scroll ${
              scrollbarVisible ? 'scrollbar-visible' : 'scrollbar-hidden'
            }`}
            style={{
@@ -630,7 +630,7 @@ const DashboardLayout: React.FC = () => {
            tabIndex={0}
          >
            {/* Top Bar - Page Header */}
-           <div className="sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 bg-gray-50/80 backdrop-blur-sm">
+           <div className="sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 bg-white/80 backdrop-blur-sm">
              <div className="flex items-center justify-between h-16 px-6">
                {/* Left side - Mobile menu button and Page Name */}
                <div className="flex items-center gap-3">
