@@ -48,6 +48,8 @@ import UsagePage from '../pages/dashboard/settings/UsagePage';
 import NotificationPage from '../pages/dashboard/settings/NotificationPage';
 import NotificationPreferencesPage from '../pages/dashboard/settings/NotificationPreferencesPage';
 import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
+import SidebarDemoPage from '../pages/SidebarDemoPage';
+import SkeletonDemoPage from '../pages/SkeletonDemoPage';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
 import TiltDemo from '../pages/TiltDemo';
@@ -173,6 +175,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/interactive-checkout-demo" element={<InteractiveCheckoutDemo />} />
         <Route path="/line-chart-demo" element={<LineChartDemo />} />
         <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
+        <Route path="/sidebar-demo" element={<SidebarDemoPage />} />
+        <Route path="/skeleton-demo" element={<SkeletonDemoPage />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
         <Route path="/tilt-demo" element={<TiltDemo />} />

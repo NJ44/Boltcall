@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DashboardSkeleton } from '../../../components/ui/loading-skeleton';
 import { motion } from 'framer-motion';
 import { 
   Bell, 
@@ -218,9 +219,8 @@ const NotificationPreferencesPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
-        <span className="ml-3 text-gray-600">Loading preferences...</span>
+      <div className="p-6">
+        <DashboardSkeleton />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
@@ -248,8 +249,8 @@ const KnowledgeBasePage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading knowledge base...</div>
+      <div className="p-6">
+        <DashboardSkeleton />
       </div>
     );
   }
@@ -302,32 +303,32 @@ const KnowledgeBasePage: React.FC = () => {
                         <div className="py-2">
                           <button
                             onClick={handleUploadFiles}
-                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
                           >
-                            <Upload className="w-5 h-5 text-blue-600" />
+                            <Upload className="w-4 h-4 text-blue-600" />
                             <div>
-                              <div className="font-medium text-gray-900">Upload files</div>
-                              <div className="text-sm text-gray-500">PDF, DOC, TXT, and more</div>
+                              <div className="text-sm font-medium text-gray-900">Upload files</div>
+                              <div className="text-xs text-gray-500">PDF, DOC, TXT, and more</div>
                             </div>
                           </button>
                           <button
                             onClick={handleAddWebsite}
-                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
                           >
-                            <Globe className="w-5 h-5 text-green-600" />
+                            <Globe className="w-4 h-4 text-green-600" />
                             <div>
-                              <div className="font-medium text-gray-900">Websites</div>
-                              <div className="text-sm text-gray-500">Import from URL</div>
+                              <div className="text-sm font-medium text-gray-900">Websites</div>
+                              <div className="text-xs text-gray-500">Import from URL</div>
                             </div>
                           </button>
                           <button
                             onClick={handleAddText}
-                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
                           >
-                            <PenTool className="w-5 h-5 text-purple-600" />
+                            <PenTool className="w-4 h-4 text-purple-600" />
                             <div>
-                              <div className="font-medium text-gray-900">Add text</div>
-                              <div className="text-sm text-gray-500">Create from scratch</div>
+                              <div className="text-sm font-medium text-gray-900">Add text</div>
+                              <div className="text-xs text-gray-500">Create from scratch</div>
                             </div>
                           </button>
                         </div>

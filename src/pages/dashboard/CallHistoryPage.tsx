@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
 import { 
   Phone, 
   PhoneIncoming, 
@@ -293,9 +294,8 @@ const CallHistoryPage: React.FC = () => {
       {/* Calls Table */}
       <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
-            <span className="ml-3 text-gray-600">Loading call history...</span>
+          <div className="p-6">
+            <DashboardSkeleton />
           </div>
         ) : error ? (
           <div className="flex items-center justify-center py-12">
