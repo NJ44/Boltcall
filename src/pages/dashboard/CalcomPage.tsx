@@ -273,9 +273,9 @@ const CalcomPage: React.FC = () => {
                         <Clock className="w-3 h-3 inline mr-1" />
                         {eventType.duration} min
                       </span>
-                      {eventType.price > 0 && (
+                      {(eventType.price ?? 0) > 0 && (
                         <span className="text-xs text-gray-500">
-                          ${eventType.price}
+                          ${eventType.price ?? 0}
                         </span>
                       )}
                     </div>

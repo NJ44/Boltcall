@@ -44,11 +44,6 @@ export default function GiftCard({
     y.set(0)
   }
 
-  const getMaskedNumber = (number: string) => {
-    const cleaned = number.replace(/[-\s]/g, '')
-    const lastFour = cleaned.slice(-4)
-    return `GIFT-••••-••••-${lastFour}`
-  }
 
   const variantStyles = {
     gradient: "bg-gradient-to-br from-brand-blue via-brand-blueDark to-blue-800",
@@ -58,33 +53,6 @@ export default function GiftCard({
     silver: "bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500",
   }
 
-  const brandStyles = {
-    boltcall: {
-      logo: "BOLTCALL",
-      color: "text-blue-500",
-      icon: "⚡"
-    },
-    apple: {
-      logo: "APPLE",
-      color: "text-gray-800",
-      icon: "🍎"
-    },
-    google: {
-      logo: "GOOGLE PLAY",
-      color: "text-blue-500",
-      icon: "🎮"
-    },
-    starbucks: {
-      logo: "STARBUCKS",
-      color: "text-green-600",
-      icon: "☕"
-    },
-    target: {
-      logo: "TARGET",
-      color: "text-red-500",
-      icon: "🎯"
-    }
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen relative overflow-hidden w-full">
