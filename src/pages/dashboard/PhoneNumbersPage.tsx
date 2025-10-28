@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { PhoneCall, MoreHorizontal } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { PhoneCall, MoreHorizontal, ChevronDown, Plus, Phone, Settings } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
@@ -16,12 +16,24 @@ interface PhoneNumber {
   createdAt: string;
 }
 
+interface TwilioPhoneNumber {
+  phoneNumber: string;
+  friendlyName: string;
+  locality: string;
+  region: string;
+  country: string;
+  price: string;
+}
+
 const PhoneNumbersPage: React.FC = () => {
   const { user } = useAuth();
   const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSipModal, setShowSipModal] = useState(false);
+  const [showTwilioModal, setShowTwilioModal] = useState(false);
+  const [twilioNumbers, setTwilioNumbers] = useState<TwilioPhoneNumber[]>([]);
+  const [loadingTwilioNumbers, setLoadingTwilioNumbers] = useState(false);
   const [sipFormData, setSipFormData] = useState({
     phoneNumber: '',
     terminationUri: '',
@@ -94,6 +106,71 @@ const PhoneNumbersPage: React.FC = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const handleBuyNewNumber = async () => {
+    setShowDropdown(false);
+    setLoadingTwilioNumbers(true);
+    setShowTwilioModal(true);
+    
+    // Mock Twilio numbers - replace with actual Twilio API call
+    setTimeout(() => {
+      const mockTwilioNumbers: TwilioPhoneNumber[] = [
+        {
+          phoneNumber: '+1 (555) 123-4567',
+          friendlyName: 'US Local Number',
+          locality: 'New York',
+          region: 'NY',
+          country: 'US',
+          price: '$1.00/month'
+        },
+        {
+          phoneNumber: '+1 (555) 234-5678',
+          friendlyName: 'US Local Number',
+          locality: 'Los Angeles',
+          region: 'CA',
+          country: 'US',
+          price: '$1.00/month'
+        },
+        {
+          phoneNumber: '+1 (555) 345-6789',
+          friendlyName: 'US Local Number',
+          locality: 'Chicago',
+          region: 'IL',
+          country: 'US',
+          price: '$1.00/month'
+        },
+        {
+          phoneNumber: '+1 (555) 456-7890',
+          friendlyName: 'US Toll-Free',
+          locality: 'Toll-Free',
+          region: 'US',
+          country: 'US',
+          price: '$2.00/month'
+        },
+        {
+          phoneNumber: '+1 (555) 567-8901',
+          friendlyName: 'US Local Number',
+          locality: 'Miami',
+          region: 'FL',
+          country: 'US',
+          price: '$1.00/month'
+        }
+      ];
+      setTwilioNumbers(mockTwilioNumbers);
+      setLoadingTwilioNumbers(false);
+    }, 1500);
+  };
+
+  const handleConnectSip = () => {
+    setShowDropdown(false);
+    setShowSipModal(true);
+  };
+
+  const handlePurchaseNumber = (number: TwilioPhoneNumber) => {
+    console.log('Purchasing number:', number);
+    // Implementation for purchasing the number via Twilio
+    setShowTwilioModal(false);
+  };
+
   const handleSipFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSipFormData({
       ...sipFormData,
@@ -137,23 +214,88 @@ const PhoneNumbersPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <CardTableWithPanel
-          columns={[
-            { key: 'number', label: 'Phone Number', width: '30%' },
-            { key: 'location', label: 'Location', width: '25%' },
-            { key: 'assignedTo', label: 'Assigned To', width: '25%' },
-            { key: 'status', label: 'Status', width: '10%' },
-            { key: 'createdAt', label: 'Created', width: '10%' }
-          ]}
-          data={phoneNumbers}
-          renderRow={(phone) => (
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+          {/* Custom Header with Dropdown */}
+          <div className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 flex-1">
+                {/* Search Input */}
+                <div className="relative flex-1 max-w-xs">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search phone numbers..."
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Add Phone Number Dropdown */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={handleAddPhoneNumber}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span className="font-bold">Add Phone Number</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {showDropdown && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+                      >
+                        <div className="py-2">
+                          <button
+                            onClick={handleBuyNewNumber}
+                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                          >
+                            <Phone className="w-5 h-5 text-blue-600" />
+                            <div>
+                              <div className="font-medium text-gray-900">Buy a new number</div>
+                              <div className="text-sm text-gray-500">Purchase from Twilio</div>
+                            </div>
+                          </button>
+                          <button
+                            onClick={handleConnectSip}
+                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                          >
+                            <Settings className="w-5 h-5 text-green-600" />
+                            <div>
+                              <div className="font-medium text-gray-900">Connect to your number via SIP trunking</div>
+                              <div className="text-sm text-gray-500">Use existing number</div>
+                            </div>
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <CardTableWithPanel
+            columns={[
+              { key: 'number', label: 'Phone Number', width: '30%' },
+              { key: 'location', label: 'Location', width: '25%' },
+              { key: 'assignedTo', label: 'Assigned To', width: '25%' },
+              { key: 'status', label: 'Status', width: '10%' },
+              { key: 'createdAt', label: 'Created', width: '10%' }
+            ]}
+            data={phoneNumbers}
+            renderRow={(phone) => (
             <div className="flex items-center gap-6">
-              {/* Checkbox */}
-              <input
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              
               {/* Phone Number */}
               <div className="flex items-center gap-3 flex-1">
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
@@ -202,27 +344,135 @@ const PhoneNumbersPage: React.FC = () => {
             { label: 'Active', value: 'active' },
             { label: 'Inactive', value: 'inactive' }
           ]}
-          onAddNew={handleAddPhoneNumber}
-          addNewText="Add Phone Number"
         />
+        </div>
       </motion.div>
 
-      {/* SIP Configuration Modal */}
-      {showSipModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      {/* Twilio Numbers Modal */}
+      <AnimatePresence>
+        {showTwilioModal && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-white rounded-lg p-6 w-full max-w-md mx-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            onClick={() => setShowTwilioModal(false)}
           >
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Buy a New Phone Number</h2>
+                  <button
+                    onClick={() => setShowTwilioModal(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                {loadingTwilioNumbers ? (
+                  <div className="flex items-center justify-center py-12">
+                    <div className="flex items-center gap-3">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                      <span className="text-gray-600">Loading available numbers...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-gray-600 mb-4">
+                      Choose from available phone numbers. All numbers include unlimited inbound calls and SMS.
+                    </p>
+                    
+                    {twilioNumbers.map((number, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                              <Phone className="w-5 h-5 text-blue-600" />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-gray-900">{number.phoneNumber}</div>
+                              <div className="text-sm text-gray-600">
+                                {number.locality}, {number.region} • {number.friendlyName}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-semibold text-gray-900">{number.price}</div>
+                            <button
+                              onClick={() => handlePurchaseNumber(number)}
+                              className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                            >
+                              Purchase
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                    
+                    <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div className="text-sm text-gray-600">
+                          <p className="font-medium text-gray-900 mb-1">Important:</p>
+                          <ul className="space-y-1 list-disc list-inside">
+                            <li>Numbers are billed monthly to your Twilio account</li>
+                            <li>Setup typically takes 1-2 minutes</li>
+                            <li>You can release numbers anytime from your dashboard</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* SIP Configuration Modal */}
+      <AnimatePresence>
+        {showSipModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            onClick={() => setShowSipModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 w-full max-w-md mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               Connect to your number via SIP trunking
             </h2>
             
             <form onSubmit={handleSipFormSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Phone Number
                 </label>
                 <input
@@ -231,13 +481,13 @@ const PhoneNumbersPage: React.FC = () => {
                   value={sipFormData.phoneNumber}
                   onChange={handleSipFormChange}
                   placeholder="Enter phone number"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Termination URI
                 </label>
                 <input
@@ -246,13 +496,13 @@ const PhoneNumbersPage: React.FC = () => {
                   value={sipFormData.terminationUri}
                   onChange={handleSipFormChange}
                   placeholder="Enter termination URI (NOT Retell SIP server uri)"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   SIP Trunk User Name (Optional)
                 </label>
                 <input
@@ -261,12 +511,12 @@ const PhoneNumbersPage: React.FC = () => {
                   value={sipFormData.sipTrunkUsername}
                   onChange={handleSipFormChange}
                   placeholder="Enter SIP Trunk User Name"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   SIP Trunk Password (Optional)
                 </label>
                 <input
@@ -275,12 +525,12 @@ const PhoneNumbersPage: React.FC = () => {
                   value={sipFormData.sipTrunkPassword}
                   onChange={handleSipFormChange}
                   placeholder="Enter SIP Trunk Password"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Nickname (Optional)
                 </label>
                 <input
@@ -289,7 +539,7 @@ const PhoneNumbersPage: React.FC = () => {
                   value={sipFormData.nickname}
                   onChange={handleSipFormChange}
                   placeholder="Enter Nickname"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
                 />
               </div>
               
@@ -317,9 +567,10 @@ const PhoneNumbersPage: React.FC = () => {
                 </Magnetic>
               </div>
             </form>
+            </motion.div>
           </motion.div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
     </div>
   );

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -21,6 +21,10 @@ const KnowledgeBasePage: React.FC = () => {
   const [fileInput, setFileInput] = useState<File | null>(null);
   const [blankPageTitle, setBlankPageTitle] = useState('');
   
+  // Dropdown state
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  
   // Document management state
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +32,20 @@ const KnowledgeBasePage: React.FC = () => {
   const [editingDocumentContent, setEditingDocumentContent] = useState('');
   const [showDocumentEditor, setShowDocumentEditor] = useState(false);
   
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   // Fetch documents from Supabase
   const fetchDocuments = async () => {
     if (!user?.id) {
@@ -204,6 +222,29 @@ const KnowledgeBasePage: React.FC = () => {
     setShowDocumentEditor(false);
   };
 
+  // Dropdown handlers
+  const handleAddDocument = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleUploadFiles = () => {
+    setShowDropdown(false);
+    setPopupType('file');
+    setShowPopup(true);
+  };
+
+  const handleAddWebsite = () => {
+    setShowDropdown(false);
+    setPopupType('url');
+    setShowPopup(true);
+  };
+
+  const handleAddText = () => {
+    setShowDropdown(false);
+    setPopupType('blank');
+    setShowPopup(true);
+  };
+
 
   if (isLoading) {
     return (
@@ -217,16 +258,97 @@ const KnowledgeBasePage: React.FC = () => {
     <div className="space-y-6">
       {/* Knowledge Base Table */}
       <div className="mt-8">
-        <CardTableWithPanel
-          data={documents}
-          columns={[
-            { key: 'name', label: 'Document Name', width: '25%' },
-            { key: 'content', label: 'Content Preview', width: '35%' },
-            { key: 'createdAt', label: 'Created', width: '15%' },
-            { key: 'updatedAt', label: 'Updated', width: '15%' },
-            { key: 'actions', label: 'Actions', width: '10%' }
-          ]}
-          renderRow={(doc) => (
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+          {/* Custom Header with Dropdown */}
+          <div className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 flex-1">
+                {/* Search Input */}
+                <div className="relative flex-1 max-w-xs">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search documents..."
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Add Document Dropdown */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={handleAddDocument}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span className="font-bold">Add Document</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {showDropdown && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+                      >
+                        <div className="py-2">
+                          <button
+                            onClick={handleUploadFiles}
+                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                          >
+                            <Upload className="w-5 h-5 text-blue-600" />
+                            <div>
+                              <div className="font-medium text-gray-900">Upload files</div>
+                              <div className="text-sm text-gray-500">PDF, DOC, TXT, and more</div>
+                            </div>
+                          </button>
+                          <button
+                            onClick={handleAddWebsite}
+                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                          >
+                            <Globe className="w-5 h-5 text-green-600" />
+                            <div>
+                              <div className="font-medium text-gray-900">Websites</div>
+                              <div className="text-sm text-gray-500">Import from URL</div>
+                            </div>
+                          </button>
+                          <button
+                            onClick={handleAddText}
+                            className="w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3"
+                          >
+                            <PenTool className="w-5 h-5 text-purple-600" />
+                            <div>
+                              <div className="font-medium text-gray-900">Add text</div>
+                              <div className="text-sm text-gray-500">Create from scratch</div>
+                            </div>
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <CardTableWithPanel
+            data={documents}
+            columns={[
+              { key: 'name', label: 'Document Name', width: '25%' },
+              { key: 'content', label: 'Content Preview', width: '35%' },
+              { key: 'createdAt', label: 'Created', width: '15%' },
+              { key: 'updatedAt', label: 'Updated', width: '15%' },
+              { key: 'actions', label: 'Actions', width: '10%' }
+            ]}
+            renderRow={(doc) => (
             <div className="flex items-center gap-6">
               {/* Document Name */}
               <div className="flex items-center gap-3 flex-1">
@@ -270,9 +392,8 @@ const KnowledgeBasePage: React.FC = () => {
           )}
           emptyStateText="No knowledge base documents found"
           emptyStateAnimation="/No_Data_Preview.lottie"
-          onAddNew={() => setShowPopup(true)}
-          addNewText="Add Document"
         />
+        </div>
       </div>
 
       {/* Popup Modal */}
