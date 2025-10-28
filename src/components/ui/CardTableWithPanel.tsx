@@ -116,17 +116,9 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
         {filteredData.length > 0 && (
           <div className="px-6 py-4">
             <div className="flex items-center gap-6">
-              {/* Checkbox column header */}
-              <div className="w-4 h-4 flex-shrink-0">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-              </div>
-              
-              {/* Column headers with exact same flex structure as rows */}
-              {columns.slice(1).map((column, index) => {
-                if (index === 0) { // Agent Name column
+              {/* Column headers - skip checkbox column */}
+              {columns.filter(col => col.key !== 'checkbox').map((column, index) => {
+                if (index === 0) { // First column (usually name)
                   return (
                     <div
                       key={column.key}

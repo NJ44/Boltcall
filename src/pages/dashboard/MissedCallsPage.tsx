@@ -98,25 +98,16 @@ const MissedCallsPage: React.FC = () => {
         <CardTableWithPanel
           data={missedCalls}
           columns={[
-            { key: 'checkbox', label: '', width: '5%' },
             { key: 'caller', label: 'Caller Information', width: '25%' },
             { key: 'missedAt', label: 'Missed At', width: '15%' },
             { key: 'duration', label: 'Duration', width: '10%' },
             { key: 'status', label: 'Status', width: '15%' },
             { key: 'agent', label: 'Assigned Agent', width: '15%' },
             { key: 'callback', label: 'Callback', width: '10%' },
-            { key: 'actions', label: 'Actions', width: '5%' }
+            { key: 'actions', label: 'Actions', width: '10%' }
           ]}
           renderRow={(call) => (
             <div className="flex items-center gap-6">
-              {/* Checkbox */}
-              <div className="w-4 h-4 flex-shrink-0">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-              </div>
-              
               {/* Caller Information */}
               <div className="flex items-center gap-3 flex-1">
                 <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
