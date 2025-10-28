@@ -17,8 +17,8 @@ export interface RetellAgentResponse {
   message?: string;
 }
 
-// Create knowledge base in Retell AI
-export const createRetellKnowledgeBase = async (data: {
+// Define interfaces for better type safety
+interface CreateKnowledgeBaseData {
   businessName: string;
   websiteUrl?: string;
   mainCategory: string;
@@ -39,8 +39,18 @@ export const createRetellKnowledgeBase = async (data: {
     cancellation: string;
     reschedule: string;
     deposit: string;
-  }>;
-}): Promise<RetellKnowledgeBaseResponse> => {
+  };
+}
+
+interface CreateAgentData {
+  businessName: string;
+  knowledgeBaseId: string;
+  mainCategory: string;
+  languages: string[];
+}
+
+// Create knowledge base in Retell AI
+export const createRetellKnowledgeBase = async (data: CreateKnowledgeBaseData): Promise<RetellKnowledgeBaseResponse> => {
   try {
     const retellApiKey = process.env.RETELL_API_KEY || 'YOUR_RETELL_API_KEY';
     
@@ -50,28 +60,19 @@ export const createRetellKnowledgeBase = async (data: {
     // Add business information
     knowledgeBaseTexts.push({
       title: "Business Information",
-      text: `Business Name: ${data.businessName}
-Category: ${data.mainCategory}
-Country: ${data.country}
-Service Areas: ${data.serviceAreas.join(', ')}
-
-Languages Supported: ${data.languages.join(', ')}
-
-Opening Hours:
-${Object.entries(data.openingHours).map(([day, hours]: [string, any]) => {
-  if (hours.closed) return `${day}: Closed`;
-  return `${day}: ${hours.open} - ${hours.close}`;
-}).join('\n')}`
+      text: `Business Name: ${data.businessName}\nCategory: ${data.mainCategory}\nCountry: ${data.country}\nService Areas: ${data.serviceAreas.join(', ')}\n\nLanguages Supported: ${data.languages.join(', ')}\n\nOpening Hours:\n${Object.entries(data.openingHours).map(([day, hours]: [string, any]) => {
+        if (hours.closed) return `${day}: Closed`;
+        return `${day}: ${hours.open} - ${hours.close}`;
+      }).join('\n')}`
     });
 
     // Add services if provided
     if (data.services && data.services.length > 0) {
       knowledgeBaseTexts.push({
         title: "Services Offered",
-        text: `Our services include:
-${data.services.map(service => 
-  `• ${service.name} - Duration: ${service.duration} minutes, Price: $${service.price}`
-).join('\n')}`
+        text: `Our services include:\n${data.services.map(service => 
+          `• ${service.name} - Duration: ${service.duration} minutes, Price: $${service.price}`
+        ).join('\n')}`
       });
     }
 
@@ -89,27 +90,14 @@ ${data.services.map(service =>
     if (data.policies) {
       knowledgeBaseTexts.push({
         title: "Business Policies",
-        text: `Cancellation Policy: ${data.policies.cancellation}
-
-Reschedule Policy: ${data.policies.reschedule}
-
-Deposit Policy: ${data.policies.deposit}`
+        text: `Cancellation Policy: ${data.policies.cancellation}\n\nReschedule Policy: ${data.policies.reschedule}\n\nDeposit Policy: ${data.policies.deposit}`
       });
     }
 
     // Add general business information
     knowledgeBaseTexts.push({
       title: "General Business Information",
-      text: `We are a ${data.mainCategory} business serving ${data.serviceAreas.join(', ')}. 
-We support multiple languages: ${data.languages.join(', ')}.
-${data.websiteUrl ? `Visit our website at ${data.websiteUrl} for more information.` : ''}
-
-Our AI assistant is here to help you with:
-- Answering questions about our services
-- Providing information about our business hours
-- Helping with appointment scheduling
-- Explaining our policies and procedures
-- Connecting you with the right team member`
+      text: `We are a ${data.mainCategory} business serving ${data.serviceAreas.join(', ')}. We support multiple languages: ${data.languages.join(', ')}.\n${data.websiteUrl ? `Visit our website at ${data.websiteUrl} for more information.` : ''}\n\nOur AI assistant is here to help you with:\n- Answering questions about our services\n- Providing information about our business hours\n- Helping with appointment scheduling\n- Explaining our policies and procedures\n- Connecting you with the right team member`
     });
 
     const payload = {
@@ -145,12 +133,7 @@ Our AI assistant is here to help you with:
 };
 
 // Create Retell agent with knowledge base
-export const createRetellAgent = async (data: {
-  businessName: string;
-  knowledgeBaseId: string;
-  mainCategory: string;
-  languages: string[];
-}): Promise<RetellAgentResponse> => {
+export const createRetellAgent = async (data: CreateAgentData): Promise<RetellAgentResponse> => {
   try {
     const retellApiKey = process.env.RETELL_API_KEY || 'YOUR_RETELL_API_KEY';
     
@@ -160,17 +143,7 @@ export const createRetellAgent = async (data: {
       llm_websocket_url: 'wss://api.retellai.com/v2/llm/stream',
       voice_id: '11labs-Adrian', // Default voice
       knowledge_base_ids: [data.knowledgeBaseId],
-      system_prompt: `You are an AI assistant for ${data.businessName}, a ${data.mainCategory} business. 
-Your role is to help customers with information about our services, answer questions, and assist with appointments.
-
-Key guidelines:
-- Be friendly, professional, and helpful
-- Provide accurate information based on our knowledge base
-- If you don't know something, offer to connect them with a team member
-- Always maintain a positive tone
-- Focus on being helpful and solving customer problems
-
-Languages supported: ${data.languages.join(', ')}`
+      system_prompt: `You are an AI assistant for ${data.businessName}, a ${data.mainCategory} business. Your role is to help customers with information about our services, answer questions, and assist with appointments.\n\nKey guidelines:\n- Be friendly, professional, and helpful\n- Provide accurate information based on our knowledge base\n- If you don't know something, offer to connect them with a team member\n- Always maintain a positive tone\n- Focus on being helpful and solving customer problems\n\nLanguages supported: ${data.languages.join(', ')}`
     };
 
     const response = await fetch('https://api.retellai.com/v2/create-agent', {
@@ -200,29 +173,7 @@ Languages supported: ${data.languages.join(', ')}`
 };
 
 // Combined function to create both knowledge base and agent
-export const createRetellAgentAndKnowledgeBase = async (data: {
-  businessName: string;
-  websiteUrl?: string;
-  mainCategory: string;
-  country: string;
-  serviceAreas: string[];
-  openingHours: any;
-  languages: string[];
-  services?: Array<{
-    name: string;
-    duration: number;
-    price: number;
-  }>;
-  faqs?: Array<{
-    question: string;
-    answer: string;
-  }>;
-  policies?: {
-    cancellation: string;
-    reschedule: string;
-    deposit: string;
-  }>;
-}): Promise<{
+export const createRetellAgentAndKnowledgeBase = async (data: CreateKnowledgeBaseData): Promise<{
   knowledge_base_id: string;
   agent_id: string;
   success: boolean;
