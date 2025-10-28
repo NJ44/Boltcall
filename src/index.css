@@ -238,10 +238,15 @@ button:active,
 }
 
 @layer base {
-  /* Ensure select options have black text */
+  /* Ensure select options have proper contrast */
   select option {
     color: #1f2937 !important;
     background-color: white !important;
+  }
+  
+  .dark select option {
+    color: #f9fafb !important;
+    background-color: #374151 !important;
   }
   
   :root {

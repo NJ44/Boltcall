@@ -48,24 +48,24 @@ export interface ToasterRef {
 }
 
 const variantStyles: Record<Variant, string> = {
-  default: 'bg-white border-gray-200 text-gray-900',
-  success: 'bg-white border-green-600/50 text-gray-900',
-  error: 'bg-white border-red-600/50 text-gray-900',
-  warning: 'bg-white border-amber-600/50 text-gray-900',
+  default: 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100',
+  success: 'bg-white dark:bg-gray-800 border-green-600/50 dark:border-green-500/50 text-gray-900 dark:text-gray-100',
+  error: 'bg-white dark:bg-gray-800 border-red-600/50 dark:border-red-500/50 text-gray-900 dark:text-gray-100',
+  warning: 'bg-white dark:bg-gray-800 border-amber-600/50 dark:border-amber-500/50 text-gray-900 dark:text-gray-100',
 };
 
 const titleColor: Record<Variant, string> = {
-  default: 'text-gray-900',
-  success: 'text-green-600',
-  error: 'text-red-600',
-  warning: 'text-amber-600',
+  default: 'text-gray-900 dark:text-gray-100',
+  success: 'text-green-600 dark:text-green-400',
+  error: 'text-red-600 dark:text-red-400',
+  warning: 'text-amber-600 dark:text-amber-400',
 };
 
 const iconColor: Record<Variant, string> = {
-  default: 'text-gray-500',
-  success: 'text-green-600',
-  error: 'text-red-600',
-  warning: 'text-amber-600',
+  default: 'text-gray-500 dark:text-gray-400',
+  success: 'text-green-600 dark:text-green-400',
+  error: 'text-red-600 dark:text-red-400',
+  warning: 'text-amber-600 dark:text-amber-400',
 };
 
 const variantIcons: Record<Variant, React.ComponentType<{ className?: string }>> = {
@@ -125,7 +125,7 @@ const Toaster = forwardRef<ToasterRef, { defaultPosition?: Position }>(
                       {title}
                     </h3>
                   )}
-                  <p className="text-xs text-gray-600">{message}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">{message}</p>
                 </div>
               </div>
 
@@ -158,10 +158,10 @@ const Toaster = forwardRef<ToasterRef, { defaultPosition?: Position }>(
                     sonnerToast.dismiss(toastId);
                     onDismiss?.();
                   }}
-                  className="rounded-full p-1 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  className="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
                   aria-label="Dismiss notification"
                 >
-                  <X className="h-3 w-3 text-gray-500" />
+                  <X className="h-3 w-3 text-gray-500 dark:text-gray-400" />
                 </button>
               </div>
             </motion.div>

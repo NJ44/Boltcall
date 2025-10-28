@@ -74,16 +74,16 @@ const SlidingPanel: React.FC<SlidingPanelProps> = ({
               ease: [0.25, 0.46, 0.45, 0.94], 
               duration: 0.4 
             }}
-            className={`fixed right-0 top-0 h-full ${sizeClasses[size]} bg-white shadow-2xl z-50 flex flex-col ${className}`}
+            className={`fixed right-0 top-0 h-full ${sizeClasses[size]} bg-white dark:bg-gray-800 shadow-2xl z-50 flex flex-col ${className}`}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gray-50">
-              <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
 

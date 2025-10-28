@@ -304,7 +304,7 @@ const KnowledgeBasePage: React.FC = () => {
               exit={{ opacity: 0, scale: 0.95 }}
               className="fixed top-0 left-0 right-0 bottom-0 z-[10000] flex items-center justify-center p-4 pointer-events-none"
             >
-              <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto z-10 pointer-events-auto">
+              <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto z-10 pointer-events-auto">
                 <div className="p-6">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">

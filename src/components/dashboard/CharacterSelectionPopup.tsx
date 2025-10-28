@@ -58,7 +58,7 @@ const CharacterSelectionPopup: React.FC<CharacterSelectionPopupProps> = ({
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            className="bg-white rounded-2xl p-6 max-w-2xl w-full mx-4 shadow-2xl"
+            className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-2xl w-full mx-4 shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-6">

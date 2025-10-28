@@ -27,7 +27,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.6 }}
-            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[10000] bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4"
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[10000] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full mx-4"
           >
             <div className="relative p-8">
               {/* Close button */}
