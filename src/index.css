@@ -249,6 +249,15 @@ button:active,
     background-color: #374151 !important;
   }
   
+  /* Ensure input text is always visible */
+  input {
+    color: #1f2937 !important;
+  }
+  
+  .dark input {
+    color: #f9fafb !important;
+  }
+  
   :root {
     --background: 221.2 83.2% 53.3%;
     --foreground: 210 40% 98%;

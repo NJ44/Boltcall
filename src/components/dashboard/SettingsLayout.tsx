@@ -59,6 +59,12 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
       label: 'Notifications',
       icon: <Bell className="w-5 h-5" />,
       route: '/dashboard/settings/notifications'
+    },
+    {
+      id: 'notification-preferences',
+      label: 'Notification Preferences',
+      icon: <Bell className="w-5 h-5" />,
+      route: '/dashboard/settings/notification-preferences'
     }
   ];
 

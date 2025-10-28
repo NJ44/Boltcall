@@ -46,6 +46,7 @@ import PlanBillingPage from '../pages/dashboard/settings/PlanBillingPage';
 import PackagesPage from '../pages/dashboard/settings/PackagesPage';
 import UsagePage from '../pages/dashboard/settings/UsagePage';
 import NotificationPage from '../pages/dashboard/settings/NotificationPage';
+import NotificationPreferencesPage from '../pages/dashboard/settings/NotificationPreferencesPage';
 import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
@@ -152,6 +153,11 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings/notifications" element={
             <SettingsLayout>
               <NotificationPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/notification-preferences" element={
+            <SettingsLayout>
+              <NotificationPreferencesPage />
             </SettingsLayout>
           } />
         </Route>
