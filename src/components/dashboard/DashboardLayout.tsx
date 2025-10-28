@@ -568,6 +568,53 @@ const DashboardLayout: React.FC = () => {
                   )}
                   </AnimatePresence>
                 </div>
+
+                {/* Get Free Packages Container - After Chats Dropdown */}
+                <div className="mb-4">
+                  <motion.div
+                    className="relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white cursor-pointer mx-2"
+                    onMouseEnter={() => setFreePackagesExpanded(true)}
+                    onMouseLeave={() => setFreePackagesExpanded(false)}
+                    layout
+                  >
+                    {/* Expanded Options - Show ABOVE the main title */}
+                    <AnimatePresence>
+                      {freePackagesExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
+                          className="px-4 pt-4 space-y-2 overflow-hidden"
+                        >
+                          <button
+                            onClick={() => {
+                              // Handle referrals click
+                              console.log('Referrals clicked');
+                            }}
+                            className="w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm"
+                          >
+                            Referrals
+                          </button>
+                          <button
+                            onClick={() => {
+                              // Handle leave a review click
+                              console.log('Leave a review clicked');
+                            }}
+                            className="w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm"
+                          >
+                            Leave a review
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Main Title - Always Visible at Bottom */}
+                    <div className="flex items-center justify-center h-12 px-4">
+                      <span className="text-sm font-semibold">Get Free Packages</span>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
 
               {/* Bottom Group - Always at bottom */}
@@ -586,58 +633,6 @@ const DashboardLayout: React.FC = () => {
                 })}
               </div>
 
-              {/* Get Free Packages Container */}
-              <div className="mt-4 px-2 pb-2">
-                <motion.div
-                  className="relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white cursor-pointer"
-                  onMouseEnter={() => setFreePackagesExpanded(true)}
-                  onMouseLeave={() => setFreePackagesExpanded(false)}
-                  animate={{ 
-                    height: freePackagesExpanded ? "auto" : "48px" 
-                  }}
-                  transition={{ 
-                    duration: 0.3, 
-                    ease: [0.4, 0.0, 0.2, 1] 
-                  }}
-                >
-                  {/* Main Title - Always Visible */}
-                  <div className="flex items-center justify-center h-12 px-4">
-                    <span className="text-sm font-semibold">Get Free Packages</span>
-                  </div>
-
-                  {/* Expanded Options */}
-                  <AnimatePresence>
-                    {freePackagesExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="px-4 pb-4 space-y-2"
-                      >
-                        <button
-                          onClick={() => {
-                            // Handle referrals click
-                            console.log('Referrals clicked');
-                          }}
-                          className="w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm"
-                        >
-                          Referrals
-                        </button>
-                        <button
-                          onClick={() => {
-                            // Handle leave a review click
-                            console.log('Leave a review clicked');
-                          }}
-                          className="w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm"
-                        >
-                          Leave a review
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </div>
             </nav>
             
           </div>

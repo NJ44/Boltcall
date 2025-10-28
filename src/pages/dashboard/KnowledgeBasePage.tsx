@@ -294,37 +294,37 @@ const KnowledgeBasePage: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+                        className="absolute right-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10"
                       >
-                        <div className="py-2">
+                        <div className="py-1">
                           <button
                             onClick={handleUploadFiles}
-                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                            className="w-full px-2 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
                           >
-                            <Upload className="w-4 h-4 text-blue-600" />
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">Upload files</div>
-                              <div className="text-xs text-gray-500">PDF, DOC, TXT, and more</div>
+                            <Upload className="w-3 h-3 text-blue-600 flex-shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-medium text-gray-900 truncate">Upload files</div>
+                              <div className="text-xs text-gray-500 truncate">PDF, DOC, TXT</div>
                             </div>
                           </button>
                           <button
                             onClick={handleAddWebsite}
-                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                            className="w-full px-2 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
                           >
-                            <Globe className="w-4 h-4 text-green-600" />
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">Websites</div>
-                              <div className="text-xs text-gray-500">Import from URL</div>
+                            <Globe className="w-3 h-3 text-green-600 flex-shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-medium text-gray-900 truncate">Websites</div>
+                              <div className="text-xs text-gray-500 truncate">Import from URL</div>
                             </div>
                           </button>
                           <button
                             onClick={handleAddText}
-                            className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                            className="w-full px-2 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
                           >
-                            <PenTool className="w-4 h-4 text-purple-600" />
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">Add text</div>
-                              <div className="text-xs text-gray-500">Create from scratch</div>
+                            <PenTool className="w-3 h-3 text-purple-600 flex-shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-medium text-gray-900 truncate">Add text</div>
+                              <div className="text-xs text-gray-500 truncate">Create from scratch</div>
                             </div>
                           </button>
                         </div>
