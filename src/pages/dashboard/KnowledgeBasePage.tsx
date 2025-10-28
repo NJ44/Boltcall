@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
-import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -500,15 +499,13 @@ const KnowledgeBasePage: React.FC = () => {
                 >
                   Cancel
                 </button>
-                <Magnetic>
-                  <button
-                    onClick={handleSaveDocument}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                  >
-                    <Save className="w-4 h-4" />
-                    Save Changes
-                  </button>
-                </Magnetic>
+                <button
+                  onClick={handleSaveDocument}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <Save className="w-4 h-4" />
+                  Save Changes
+                </button>
               </div>
             </motion.div>
           </motion.div>

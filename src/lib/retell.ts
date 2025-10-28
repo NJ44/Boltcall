@@ -210,3 +210,130 @@ export const createRetellAgentAndKnowledgeBase = async (data: CreateKnowledgeBas
     throw error;
   }
 };
+
+// Interface for call history data
+export interface RetellCall {
+  call_id: string;
+  agent_id: string;
+  agent_name: string;
+  call_status: string;
+  call_type: string;
+  direction?: string;
+  start_timestamp: number;
+  end_timestamp?: number;
+  duration_ms?: number;
+  transcript?: string;
+  recording_url?: string;
+  disconnection_reason?: string;
+  call_analysis?: {
+    call_summary?: string;
+    user_sentiment?: string;
+    call_successful?: boolean;
+  };
+  metadata?: any;
+}
+
+export interface RetellCallsResponse {
+  calls: RetellCall[];
+  pagination_key?: string;
+  total_count?: number;
+}
+
+// Get call history from Retell AI
+export const getRetellCallHistory = async (params: {
+  agentIds?: string[];
+  limit?: number;
+  paginationKey?: string;
+  startDate?: Date;
+  endDate?: Date;
+  callStatus?: string[];
+  direction?: string[];
+}): Promise<RetellCallsResponse> => {
+  try {
+    const retellApiKey = process.env.RETELL_API_KEY || 'YOUR_RETELL_API_KEY';
+    
+    const filterCriteria: any = {};
+    
+    // Add agent filter if provided
+    if (params.agentIds && params.agentIds.length > 0) {
+      filterCriteria.agent_id = params.agentIds;
+    }
+    
+    // Add status filter if provided
+    if (params.callStatus && params.callStatus.length > 0) {
+      filterCriteria.call_status = params.callStatus;
+    }
+    
+    // Add direction filter if provided
+    if (params.direction && params.direction.length > 0) {
+      filterCriteria.direction = params.direction;
+    }
+    
+    // Add timestamp filter if provided
+    if (params.startDate || params.endDate) {
+      filterCriteria.start_timestamp = {};
+      if (params.startDate) {
+        filterCriteria.start_timestamp.lower_threshold = params.startDate.getTime();
+      }
+      if (params.endDate) {
+        filterCriteria.start_timestamp.upper_threshold = params.endDate.getTime();
+      }
+    }
+    
+    const payload = {
+      filter_criteria: filterCriteria,
+      sort_order: 'descending',
+      limit: params.limit || 50,
+      ...(params.paginationKey && { pagination_key: params.paginationKey })
+    };
+
+    const response = await fetch('https://api.retellai.com/v2/list-calls', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${retellApiKey}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Retell API error: ${response.status} - ${errorData.message || response.statusText}`);
+    }
+
+    const result = await response.json();
+    return {
+      calls: result,
+      pagination_key: result.pagination_key,
+      total_count: result.length
+    };
+  } catch (error) {
+    console.error('Error fetching Retell call history:', error);
+    throw error;
+  }
+};
+
+// Get single call details from Retell AI
+export const getRetellCallDetails = async (callId: string): Promise<RetellCall> => {
+  try {
+    const retellApiKey = process.env.RETELL_API_KEY || 'YOUR_RETELL_API_KEY';
+
+    const response = await fetch(`https://api.retellai.com/get-call/${callId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${retellApiKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Retell API error: ${response.status} - ${errorData.message || response.statusText}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error fetching Retell call details:', error);
+    throw error;
+  }
+};

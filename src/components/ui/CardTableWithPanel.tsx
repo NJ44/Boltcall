@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import SlidingPanel from './SlidingPanel';
-import { Magnetic } from './magnetic';
 
 interface CardTableColumn {
   key: string;
@@ -99,17 +98,15 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
             <div className="flex items-center gap-2">
               {/* Add New Button */}
               {onAddNew && (
-                <Magnetic>
-                  <button
-                    onClick={onAddNew}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                  >
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span className="font-bold">{addNewText}</span>
-                  </button>
-                </Magnetic>
+                <button
+                  onClick={onAddNew}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="font-bold">{addNewText}</span>
+                </button>
               )}
             </div>
           </div>
@@ -174,17 +171,15 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
                 </div>
                 <p className="text-gray-500 mb-4">{emptyStateText}</p>
                 {onAddNew && (
-                  <Magnetic>
-                    <button
-                      onClick={onAddNew}
-                      className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                    >
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                      {addNewText}
-                    </button>
-                  </Magnetic>
+                  <button
+                    onClick={onAddNew}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    {addNewText}
+                  </button>
                 )}
               </div>
             </div>

@@ -26,6 +26,8 @@ import RemindersPage from '../pages/dashboard/RemindersPage';
 import SmsBookingPage from '../pages/dashboard/SmsBookingPage';
 import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
+import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
+import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
 import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
@@ -110,6 +112,8 @@ const NavigationWrapper: React.FC = () => {
           <Route path="reminders" element={<RemindersPage />} />
           <Route path="sms-booking" element={<SmsBookingPage />} />
           <Route path="calcom" element={<CalcomPage />} />
+          <Route path="call-history" element={<CallHistoryPage />} />
+          <Route path="chat-history" element={<ChatHistoryPage />} />
           <Route path="settings" element={
             <SettingsLayout>
               <SettingsPage />

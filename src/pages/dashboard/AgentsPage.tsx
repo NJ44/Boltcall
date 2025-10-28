@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
@@ -21,12 +22,22 @@ interface Agent {
 interface CreateAgentForm {
   name: string;
   voice: string;
-  timezone: string;
   knowledgeBase: string;
   phoneNumber: string;
   humanTransferPhone: string;
   direction: 'inbound' | 'outbound';
   language: string;
+}
+
+interface KnowledgeBase {
+  id: string;
+  name: string;
+}
+
+interface PhoneNumber {
+  id: string;
+  number: string;
+  name?: string;
 }
 
 interface IndustryTemplate {
@@ -50,10 +61,11 @@ const AgentsPage: React.FC = () => {
   const [showTemplatesModal, setShowTemplatesModal] = useState(false);
   const [showTestChatModal, setShowTestChatModal] = useState(false);
   const [selectedAgentForTest, setSelectedAgentForTest] = useState<Agent | null>(null);
+  const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
+  const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
     name: '',
     voice: '',
-    timezone: '',
     knowledgeBase: '',
     phoneNumber: '',
     humanTransferPhone: '',
@@ -249,7 +261,6 @@ const AgentsPage: React.FC = () => {
     setCreateForm({
       name: '',
       voice: '',
-      timezone: '',
       knowledgeBase: '',
       phoneNumber: '',
       humanTransferPhone: '',
@@ -264,7 +275,6 @@ const AgentsPage: React.FC = () => {
     setCreateForm({
       name: template.name,
       voice: template.voice,
-      timezone: 'America/New_York',
       knowledgeBase: template.description,
       phoneNumber: '',
       humanTransferPhone: '',
@@ -330,6 +340,61 @@ const AgentsPage: React.FC = () => {
     };
 
     fetchAgents();
+  }, [user?.id]);
+
+  // Fetch user's knowledge bases
+  useEffect(() => {
+    const fetchKnowledgeBases = async () => {
+      if (!user?.id) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('knowledge_base')
+          .select('id, title')
+          .eq('user_id', user.id)
+          .order('title');
+
+        if (error) {
+          console.error('Error fetching knowledge bases:', error);
+          return;
+        }
+
+        setUserKnowledgeBases((data || []).map(kb => ({
+          id: kb.id,
+          name: kb.title
+        })));
+      } catch (error) {
+        console.error('Error fetching knowledge bases:', error);
+      }
+    };
+
+    fetchKnowledgeBases();
+  }, [user?.id]);
+
+  // Fetch user's phone numbers
+  useEffect(() => {
+    const fetchPhoneNumbers = async () => {
+      if (!user?.id) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('phone_numbers')
+          .select('id, number, name')
+          .eq('user_id', user.id)
+          .order('name');
+
+        if (error) {
+          console.error('Error fetching phone numbers:', error);
+          return;
+        }
+
+        setUserPhoneNumbers(data || []);
+      } catch (error) {
+        console.error('Error fetching phone numbers:', error);
+      }
+    };
+
+    fetchPhoneNumbers();
   }, [user?.id]);
 
   if (isLoading) {
@@ -483,9 +548,24 @@ const AgentsPage: React.FC = () => {
       )}
 
       {/* Create Agent Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <AnimatePresence>
+        {showCreateModal && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            onClick={() => setShowCreateModal(false)}
+          >
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-zinc-900">Create New Agent</h2>
@@ -527,26 +607,6 @@ const AgentsPage: React.FC = () => {
                   />
                 </div>
 
-                {/* Timezone */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Timezone *
-                  </label>
-                  <select
-                    value={createForm.timezone}
-                    onChange={(e) => handleInputChange('timezone', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="">Select timezone</option>
-                    <option value="UTC-8">Pacific Time (UTC-8)</option>
-                    <option value="UTC-7">Mountain Time (UTC-7)</option>
-                    <option value="UTC-6">Central Time (UTC-6)</option>
-                    <option value="UTC-5">Eastern Time (UTC-5)</option>
-                    <option value="UTC+0">UTC (UTC+0)</option>
-                    <option value="UTC+1">Central European Time (UTC+1)</option>
-                    <option value="UTC+8">China Standard Time (UTC+8)</option>
-                  </select>
-                </div>
 
                 {/* Knowledge Base Choice */}
                 <div>
@@ -556,15 +616,25 @@ const AgentsPage: React.FC = () => {
                   <select
                     value={createForm.knowledgeBase}
                     onChange={(e) => handleInputChange('knowledgeBase', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
                   >
-                    <option value="">Select knowledge base</option>
-                    <option value="general">General Business</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="legal">Legal Services</option>
-                    <option value="tech">Technology</option>
-                    <option value="custom">Custom Knowledge Base</option>
+                    <option value="" className="text-zinc-900">Select knowledge base</option>
+                    {userKnowledgeBases.map((kb) => (
+                      <option key={kb.id} value={kb.id} className="text-zinc-900">
+                        {kb.name}
+                      </option>
+                    ))}
                   </select>
+                  <p className="text-sm text-blue-600 mt-2">
+                    <a 
+                      href="/dashboard/knowledge-base" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-800 underline"
+                    >
+                      Create a new knowledge base
+                    </a>
+                  </p>
                 </div>
 
                 {/* Phone Number */}
@@ -572,13 +642,18 @@ const AgentsPage: React.FC = () => {
                   <label className="block text-sm font-medium text-zinc-700 mb-2">
                     Phone Number *
                   </label>
-                  <input
-                    type="tel"
+                  <select
                     value={createForm.phoneNumber}
                     onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="+1 (555) 123-4567"
-                  />
+                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
+                  >
+                    <option value="" className="text-zinc-900">Select phone number</option>
+                    {userPhoneNumbers.map((phone) => (
+                      <option key={phone.id} value={phone.number} className="text-zinc-900">
+                        {phone.number} {phone.name && `(${phone.name})`}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Human Transfer Phone */}
@@ -601,7 +676,7 @@ const AgentsPage: React.FC = () => {
                     Call Direction *
                   </label>
                   <div className="flex gap-4">
-                    <label className="flex items-center">
+                    <label className="flex items-center text-zinc-900">
                       <input
                         type="radio"
                         name="direction"
@@ -612,7 +687,7 @@ const AgentsPage: React.FC = () => {
                       />
                       Inbound (Receives calls)
                     </label>
-                    <label className="flex items-center">
+                    <label className="flex items-center text-zinc-900">
                       <input
                         type="radio"
                         name="direction"
@@ -634,18 +709,18 @@ const AgentsPage: React.FC = () => {
                   <select
                     value={createForm.language}
                     onChange={(e) => handleInputChange('language', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
                   >
-                    <option value="">Select language</option>
-                    <option value="en">English</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="it">Italian</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="zh">Chinese</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ko">Korean</option>
+                    <option value="" className="text-zinc-900">Select language</option>
+                    <option value="en" className="text-zinc-900">English</option>
+                    <option value="es" className="text-zinc-900">Spanish</option>
+                    <option value="fr" className="text-zinc-900">French</option>
+                    <option value="de" className="text-zinc-900">German</option>
+                    <option value="it" className="text-zinc-900">Italian</option>
+                    <option value="pt" className="text-zinc-900">Portuguese</option>
+                    <option value="zh" className="text-zinc-900">Chinese</option>
+                    <option value="ja" className="text-zinc-900">Japanese</option>
+                    <option value="ko" className="text-zinc-900">Korean</option>
                   </select>
                 </div>
               </div>
@@ -666,9 +741,10 @@ const AgentsPage: React.FC = () => {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Templates Modal */}
       {showTemplatesModal && (
