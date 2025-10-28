@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
-import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface Agent {
-  id: number;
+  id: string;
   name: string;
   status: string;
   callsToday: number;
   avgResponseTime: string;
   successRate: string;
   lastActive: string;
+  agent_type?: string;
+  description?: string;
+  created_at?: string;
 }
 
 interface CreateAgentForm {
@@ -38,8 +43,13 @@ interface IndustryTemplate {
 }
 
 const AgentsPage: React.FC = () => {
+  const { user } = useAuth();
+  const [agents, setAgents] = useState<Agent[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showTemplatesModal, setShowTemplatesModal] = useState(false);
+  const [showTestChatModal, setShowTestChatModal] = useState(false);
+  const [selectedAgentForTest, setSelectedAgentForTest] = useState<Agent | null>(null);
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
     name: '',
     voice: '',
@@ -265,8 +275,70 @@ const AgentsPage: React.FC = () => {
     setShowCreateModal(true);
   };
 
-  // Empty array to show no agents state, or populate with agents
-  const agents: Agent[] = [];
+  const handleTestChat = (agent: Agent) => {
+    setSelectedAgentForTest(agent);
+    setShowTestChatModal(true);
+  };
+
+  // Fetch agents from Supabase
+  useEffect(() => {
+    const fetchAgents = async () => {
+      if (!user?.id) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('agents')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching agents:', error);
+          return;
+        }
+
+        // Transform Supabase data to Agent interface
+        const transformedAgents: Agent[] = (data || []).map((agent: any) => ({
+          id: agent.id,
+          name: agent.name,
+          status: agent.status || 'active',
+          callsToday: agent.total_calls || 0,
+          avgResponseTime: agent.average_call_duration 
+            ? `${Math.floor(agent.average_call_duration / 60)}m ${agent.average_call_duration % 60}s`
+            : '0m 0s',
+          successRate: agent.conversion_rate 
+            ? `${agent.conversion_rate}%`
+            : '0%',
+          lastActive: agent.updated_at 
+            ? new Date(agent.updated_at).toLocaleDateString()
+            : new Date().toLocaleDateString(),
+          agent_type: agent.agent_type,
+          description: agent.description,
+          created_at: agent.created_at
+        }));
+
+        setAgents(transformedAgents);
+      } catch (error) {
+        console.error('Error fetching agents:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAgents();
+  }, [user?.id]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-500">Loading agents...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -382,6 +454,13 @@ const AgentsPage: React.FC = () => {
                 
                 {/* Action Icons */}
                 <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => handleTestChat(agent)}
+                    className="text-blue-600 hover:text-blue-800 transition-colors"
+                    title="Test Chat"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                  </button>
                   <button className="text-green-600 hover:text-green-800">
                     <Flame className="w-4 h-4" />
                   </button>
@@ -678,8 +757,125 @@ const AgentsPage: React.FC = () => {
         </div>
       )}
 
+      {/* Test Chat Modal */}
+      {showTestChatModal && selectedAgentForTest && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full mx-4">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-zinc-900">Test Chat - {selectedAgentForTest.name}</h2>
+                <button 
+                  onClick={() => {
+                    setShowTestChatModal(false);
+                    setSelectedAgentForTest(null);
+                  }}
+                  className="text-zinc-400 hover:text-zinc-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-blue-800 text-sm mb-2">
+                    <strong>How it works:</strong>
+                  </p>
+                  <ul className="text-blue-700 text-sm space-y-1">
+                    <li>• Enter your phone number below</li>
+                    <li>• Click "Call Me" to receive a call</li>
+                    <li>• Test your AI agent in real-time</li>
+                  </ul>
+                </div>
+
+                {/* Retell Chat Widget Container */}
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <div id="retell-voice-widget" className="min-h-[200px] flex items-center justify-center">
+                    <div className="text-center">
+                      <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-600 mb-4">Test your AI agent with a phone callback</p>
+                      <div className="space-y-3">
+                        <input
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          id="phone-input"
+                        />
+                        <button
+                          onClick={() => initializeRetellWidget(selectedAgentForTest.id)}
+                          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                        >
+                          Call Me Now
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-500 text-center">
+                  This will initiate a phone call to test your AI agent. Standard call rates may apply.
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-zinc-200">
+                <button
+                  onClick={() => {
+                    setShowTestChatModal(false);
+                    setSelectedAgentForTest(null);
+                  }}
+                  className="px-4 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
+};
+
+// Function to initialize Retell widget
+const initializeRetellWidget = (agentId: string) => {
+  const phoneInput = document.getElementById('phone-input') as HTMLInputElement;
+  const phoneNumber = phoneInput?.value;
+
+  if (!phoneNumber) {
+    alert('Please enter your phone number');
+    return;
+  }
+
+  // Load Retell script if not already loaded
+  if (!document.querySelector('script[src="https://cdn.retellai.com/chat-widget.js"]')) {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.retellai.com/chat-widget.js';
+    script.onload = () => {
+      initWidget(agentId, phoneNumber);
+    };
+    document.head.appendChild(script);
+  } else {
+    initWidget(agentId, phoneNumber);
+  }
+};
+
+// Initialize the widget
+const initWidget = (agentId: string, phoneNumber: string) => {
+  const container = document.getElementById('retell-voice-widget');
+  if (container && (window as any).RetellChatWidget) {
+    // Clear existing content
+    container.innerHTML = '<div id="retell-voice"></div>';
+    
+    // Initialize Retell widget
+    (window as any).RetellChatWidget.init({
+      publicKey: "public_key_c894825223963729a1ba5",
+      agentId: agentId,
+      mode: "callback",
+      mount: document.getElementById("retell-voice"),
+      phoneNumber: phoneNumber // Pre-fill the phone number
+    });
+  }
 };
 
 export default AgentsPage;

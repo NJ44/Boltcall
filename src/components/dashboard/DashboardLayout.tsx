@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -551,16 +552,41 @@ const DashboardLayout: React.FC = () => {
                     }`}
                   >
                     <span>Calls</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${callsDropdownOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ease-in-out ${callsDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
-                  {callsDropdownOpen && (
-                    <div className="ml-4 space-y-1">
-                      {callsItems.map((item) => {
-                  const isActive = location.pathname === item.to;
-                        return renderNavItem(item, isActive);
-                      })}
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {callsDropdownOpen && (
+                      <motion.div 
+                        className="ml-4 space-y-1 overflow-hidden"
+                        initial={{ 
+                          height: 0, 
+                          opacity: 0,
+                          y: -10
+                        }}
+                        animate={{ 
+                          height: "auto", 
+                          opacity: 1,
+                          y: 0
+                        }}
+                        exit={{ 
+                          height: 0, 
+                          opacity: 0,
+                          y: -10
+                        }}
+                        transition={{ 
+                          duration: 0.3,
+                          ease: [0.4, 0.0, 0.2, 1],
+                          opacity: { duration: 0.2 },
+                          y: { duration: 0.3 }
+                        }}
+                      >
+                        {callsItems.map((item) => {
+                    const isActive = location.pathname === item.to;
+                          return renderNavItem(item, isActive);
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Messaging Dropdown */}
@@ -573,17 +599,42 @@ const DashboardLayout: React.FC = () => {
                                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                          }`}
                        >
-                    <span>Text</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
+                    <span>Chats</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ease-in-out ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
-                  {messagingDropdownOpen && (
-                    <div className="ml-4 space-y-1">
-                      {messagingItems.map((item) => {
-                        const isActive = location.pathname === item.to;
-                        return renderNavItem(item, isActive);
-                      })}
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {messagingDropdownOpen && (
+                      <motion.div 
+                        className="ml-4 space-y-1 overflow-hidden"
+                        initial={{ 
+                          height: 0, 
+                          opacity: 0,
+                          y: -10
+                        }}
+                        animate={{ 
+                          height: "auto", 
+                          opacity: 1,
+                          y: 0
+                        }}
+                        exit={{ 
+                          height: 0, 
+                          opacity: 0,
+                          y: -10
+                        }}
+                        transition={{ 
+                          duration: 0.3,
+                          ease: [0.4, 0.0, 0.2, 1],
+                          opacity: { duration: 0.2 },
+                          y: { duration: 0.3 }
+                        }}
+                      >
+                        {messagingItems.map((item) => {
+                          const isActive = location.pathname === item.to;
+                          return renderNavItem(item, isActive);
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
 

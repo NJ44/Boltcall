@@ -35,6 +35,8 @@ const StyledWrapper = styled.div`
   .button2:active {
     color: #666;
     box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+    transform: none;
+    scale: 1;
   }
 
   .button2:before {

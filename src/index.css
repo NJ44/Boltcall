@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent button size changes on press */
+button:active,
+.button:active,
+[role="button"]:active {
+  transform: none !important;
+  scale: 1 !important;
+}
+
 /* Animation for the pulsing effect */
 @keyframes pulse {
   0%, 100% {

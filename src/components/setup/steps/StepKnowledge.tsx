@@ -3,6 +3,7 @@ import { FileText, BookOpen } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
 import { createAgentAndKnowledgeBase } from '../../../lib/webhooks';
+import { createRetellAgentAndKnowledgeBase } from '../../../lib/retell';
 import Button from '../../ui/Button';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
@@ -13,12 +14,33 @@ const StepKnowledge: React.FC = () => {
   const { showToast } = useToast();
   const [isCreatingAgent, setIsCreatingAgent] = useState(false);
   const [agentCreated, setAgentCreated] = useState(false);
+  const [retellAgentId, setRetellAgentId] = useState<string | null>(null);
+  const [retellKnowledgeBaseId, setRetellKnowledgeBaseId] = useState<string | null>(null);
 
   const handleCreateAgent = async () => {
     if (agentCreated) return;
     
     setIsCreatingAgent(true);
     try {
+      // Create Retell knowledge base and agent
+      const retellResponse = await createRetellAgentAndKnowledgeBase({
+        businessName: businessProfile.businessName || '',
+        websiteUrl: businessProfile.websiteUrl || '',
+        mainCategory: businessProfile.mainCategory || '',
+        country: businessProfile.country || '',
+        serviceAreas: businessProfile.serviceAreas || [],
+        openingHours: businessProfile.openingHours || {},
+        languages: businessProfile.languages || [],
+        // Add knowledge base data if available
+        services: [], // Could be populated from knowledgeBase.services
+        faqs: [], // Could be populated from knowledgeBase.faqs
+        policies: undefined // Could be populated from knowledgeBase.policies
+      });
+
+      setRetellAgentId(retellResponse.agent_id);
+      setRetellKnowledgeBaseId(retellResponse.knowledge_base_id);
+
+      // Also create the original agent for backward compatibility
       await createAgentAndKnowledgeBase({
         businessName: businessProfile.businessName || '',
         websiteUrl: businessProfile.websiteUrl || '',
@@ -31,7 +53,16 @@ const StepKnowledge: React.FC = () => {
       });
       
       setAgentCreated(true);
-      console.log('Agent and knowledge base created successfully');
+      console.log('Retell agent and knowledge base created successfully');
+      console.log('Agent ID:', retellResponse.agent_id);
+      console.log('Knowledge Base ID:', retellResponse.knowledge_base_id);
+      
+      showToast({
+        title: 'Success',
+        message: 'AI agent and knowledge base created successfully!',
+        variant: 'success',
+        duration: 5000
+      });
       
       // Trigger next step after successful creation
       window.dispatchEvent(new CustomEvent('knowledge-step-completed'));
@@ -93,9 +124,21 @@ const StepKnowledge: React.FC = () => {
           {isCreatingAgent ? 'Creating AI Agent...' : agentCreated ? 'AI Agent Created ✓' : 'Create AI Agent & Knowledge Base'}
         </Button>
         {agentCreated && (
-          <p className="text-green-600 text-sm mt-2">
-            Your AI agent has been created successfully!
-          </p>
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-green-800 text-sm font-medium mb-2">
+              ✓ AI agent and knowledge base created successfully!
+            </p>
+            {retellAgentId && (
+              <p className="text-green-700 text-xs">
+                Retell Agent ID: {retellAgentId}
+              </p>
+            )}
+            {retellKnowledgeBaseId && (
+              <p className="text-green-700 text-xs">
+                Knowledge Base ID: {retellKnowledgeBaseId}
+              </p>
+            )}
+          </div>
         )}
       </div>
 

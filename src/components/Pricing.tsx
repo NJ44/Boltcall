@@ -10,60 +10,43 @@ const Pricing: React.FC = () => {
 
   // PricingTable data
   const pricingFeatures = [
-    // Starter features (from old STARTER card)
-    { name: "1 editor", included: "starter" },
-    { name: "1 connection", included: "starter" },
-    { name: "2 dashboards", included: "starter" },
-    { name: "Answer questions with IndexAI", included: "starter" },
+    // Starter Plan Features
+    { name: "Missed calls", included: "starter" },
+    { name: "Speed to lead", included: "starter" },
+    { name: "Reminders (bonus)", included: "starter" },
+    { name: "Analytics dashboard", included: "starter" },
     
-    // Pro features (from old PRO card)
-    { name: "Unlimited connections", included: "pro" },
-    { name: "Unlimited dashboards", included: "pro" },
-    { name: "10-20x higher AI question limit", included: "pro" },
+    // Pro Plan Features (includes everything from Starter)
+    { name: "AI receptionist", included: "pro" },
+    { name: "Speed to lead - full funnel", included: "pro" },
+    { name: "SMS chat", included: "pro" },
+    { name: "Post service follow ups (bonus)", included: "pro" },
+    { name: "Free website widget (bonus)", included: "pro" },
     
-    // Enterprise features (from old ENTERPRISE card)
-    { name: "Embedded analytics", included: "all" },
-    { name: "Custom domains", included: "all" },
-    { name: "Whitelabeling", included: "all" },
-    { name: "Dedicated support", included: "all" },
-    
-    // Additional features from the new structure
-    { name: "Instant SMS to new leads", included: "starter" },
-    { name: "Qualification + nurturing (3–5 smart questions)", included: "starter" },
-    { name: "Auto-booking to Google Calendar", included: "starter" },
-    { name: "Owner notifications (SMS + email)", included: "starter" },
-    { name: "AI receptionist (voice) + live transfer", included: "pro" },
-    { name: "Dashboard (response time, booked jobs, missed leads, transcripts)", included: "pro" },
-    { name: "Call transcripts with intent tags", included: "pro" },
-    { name: "White-glove onboarding (done-for-you in 48h)", included: "all" },
-    { name: "VIP support (same-day + phone/WhatsApp)", included: "all" },
-    { name: "Quarterly strategy review (scripts, funnels, offers)", included: "all" },
-    { name: "Branded voice (custom greeting voice + name)", included: "all" },
-    { name: "Compliance pack (recording notice & retention presets)", included: "all" },
-    { name: "Dedicated account manager", included: "custom" },
-    { name: "Custom integrations", included: "custom" },
-    { name: "SLA guarantee", included: "custom" },
+    // Agency Plan Features (includes everything from Pro)
+    { name: "Locations", included: "all" },
+    { name: "AI audits", included: "all" },
   ];
 
   const pricingPlans = [
     {
-      name: "STARTER",
+      name: "Starter",
       level: "starter",
       price: { monthly: 197, yearly: 1970 },
-      description: "Good for testing things out, something like that.",
+      description: "Perfect for getting started with lead management.",
     },
     {
-      name: "PRO",
+      name: "Pro",
       level: "pro",
       price: { monthly: 497, yearly: 4970 },
       popular: true,
-      description: "Everything on Starter plus:",
+      description: "Everything in Starter plus:",
     },
     {
       name: "AGENCY",
       level: "all",
       price: { monthly: 1497, yearly: 14970 },
-      description: "Everything on PRO plus:",
+      description: "Everything in Pro plus:",
     },
     {
       name: "ENTERPRISE",

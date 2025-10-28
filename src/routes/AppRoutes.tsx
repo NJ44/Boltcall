@@ -25,6 +25,7 @@ import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import RemindersPage from '../pages/dashboard/RemindersPage';
 import SmsBookingPage from '../pages/dashboard/SmsBookingPage';
 import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
+import CalcomPage from '../pages/dashboard/CalcomPage';
 import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
@@ -61,6 +62,8 @@ import Accordion05Demo from '../pages/Accordion05Demo';
 import DotPatternDemo from '../pages/DotPatternDemo';
 import FileUploadDemo from '../pages/FileUploadDemo';
 import MagneticDemo from '../pages/MagneticDemo';
+import CreditCardPage from '../pages/CreditCardPage';
+import GiftCardPage from '../pages/GiftCardPage';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
@@ -106,6 +109,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="website-bubble" element={<WebsiteBubblePage />} />
           <Route path="reminders" element={<RemindersPage />} />
           <Route path="sms-booking" element={<SmsBookingPage />} />
+          <Route path="calcom" element={<CalcomPage />} />
           <Route path="settings" element={
             <SettingsLayout>
               <SettingsPage />
@@ -173,7 +177,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
         <Route path="/dot-pattern-demo" element={<DotPatternDemo />} />
         <Route path="/file-upload-demo" element={<FileUploadDemo />} />
-        <Route path="/magnetic-demo" element={<MagneticDemo />} />
+            <Route path="/magnetic-demo" element={<MagneticDemo />} />
+            <Route path="/credit-card-demo" element={<CreditCardPage />} />
+            <Route path="/gift-card-demo" element={<GiftCardPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

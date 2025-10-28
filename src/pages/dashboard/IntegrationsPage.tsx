@@ -5,6 +5,7 @@ import { ExternalLink, X } from 'lucide-react';
 const IntegrationsPage: React.FC = () => {
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
 
   const handleContainerClick = () => {
     setIsSidePanelOpen(true);
@@ -17,6 +18,13 @@ const IntegrationsPage: React.FC = () => {
   const handleConnect = () => {
     console.log('Connecting with API key:', apiKey);
     // Implementation for connecting with Cal.com
+    setIsConnected(true);
+    setIsSidePanelOpen(false);
+  };
+
+  const handleOpenCalcom = () => {
+    // Navigate to Cal.com page
+    window.location.href = '/dashboard/calcom';
   };
 
   // Add effect to update body class when panel is open
@@ -54,7 +62,7 @@ const IntegrationsPage: React.FC = () => {
         {/* Cal.com Integration */}
         <div 
           className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={isConnected ? undefined : handleContainerClick}
         >
           <div className="flex items-center gap-4 mb-4">
             {/* Cal.com Logo */}
@@ -69,10 +77,19 @@ const IntegrationsPage: React.FC = () => {
             </div>
           </div>
           
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-4">
             Connect Cal.com to automatically schedule appointments and sync your availability. 
             Your AI receptionist can book meetings directly into your calendar.
           </p>
+
+          {isConnected && (
+            <button
+              onClick={handleOpenCalcom}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Open Cal.com
+            </button>
+          )}
         </div>
 
         {/* WhatsApp Integration */}

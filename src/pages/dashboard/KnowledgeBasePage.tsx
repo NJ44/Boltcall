@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface Document {
   id: string;
@@ -13,6 +15,7 @@ interface Document {
 }
 
 const KnowledgeBasePage: React.FC = () => {
+  const { user } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState<'url' | 'file' | 'blank' | null>(null);
   const [urlInput, setUrlInput] = useState('');
@@ -21,32 +24,52 @@ const KnowledgeBasePage: React.FC = () => {
   
   // Document management state
   const [documents, setDocuments] = useState<Document[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [editingDocumentId, setEditingDocumentId] = useState<string | null>(null);
   const [editingDocumentContent, setEditingDocumentContent] = useState('');
   const [showDocumentEditor, setShowDocumentEditor] = useState(false);
   
-  // Load documents from localStorage on component mount
-  useEffect(() => {
-    const savedDocuments = localStorage.getItem('boltcall-documents');
-    if (savedDocuments) {
-      try {
-        const parsed = JSON.parse(savedDocuments);
-        const documentsWithDates = parsed.map((doc: any) => ({
-          ...doc,
-          createdAt: new Date(doc.createdAt),
-          updatedAt: new Date(doc.updatedAt)
-        }));
-        setDocuments(documentsWithDates);
-      } catch (error) {
-        console.error('Error loading documents:', error);
-      }
+  // Fetch documents from Supabase
+  const fetchDocuments = async () => {
+    if (!user?.id) {
+      setIsLoading(false);
+      return;
     }
-  }, []);
 
-  // Save documents to localStorage whenever documents change
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase
+        .from('knowledge_base')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching documents:', error);
+        return;
+      }
+
+      // Transform Supabase data to Document interface
+      const transformedDocuments: Document[] = (data || []).map((doc: any) => ({
+        id: doc.id,
+        name: doc.title || 'Untitled',
+        content: doc.content || '',
+        createdAt: new Date(doc.created_at || new Date()),
+        updatedAt: new Date(doc.updated_at || doc.created_at || new Date())
+      }));
+
+      setDocuments(transformedDocuments);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem('boltcall-documents', JSON.stringify(documents));
-  }, [documents]);
+    fetchDocuments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
 
 
@@ -79,20 +102,42 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
-  const handleSubmitBlankPage = () => {
-    if (blankPageTitle.trim()) {
-      const newDoc: Document = {
-        id: Date.now().toString(),
-        name: blankPageTitle.trim(),
-        content: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      setDocuments(prev => [newDoc, ...prev]);
-      setBlankPageTitle('');
-    handleClosePopup();
-      // Automatically open the new document for editing
-      handleEditDocument(newDoc);
+  const handleSubmitBlankPage = async () => {
+    if (blankPageTitle.trim() && user?.id) {
+      try {
+        const { data, error } = await supabase
+          .from('knowledge_base')
+          .insert([{
+            user_id: user.id,
+            title: blankPageTitle.trim(),
+            content: '',
+            content_type: 'text',
+            status: 'draft'
+          }])
+          .select()
+          .single();
+
+        if (error) {
+          console.error('Error creating document:', error);
+          return;
+        }
+
+        const newDoc: Document = {
+          id: data.id,
+          name: data.title,
+          content: data.content || '',
+          createdAt: new Date(data.created_at),
+          updatedAt: new Date(data.updated_at || data.created_at)
+        };
+
+        setDocuments(prev => [newDoc, ...prev]);
+        setBlankPageTitle('');
+        handleClosePopup();
+        // Automatically open the new document for editing
+        handleEditDocument(newDoc);
+      } catch (error) {
+        console.error('Error creating document:', error);
+      }
     }
   };
 
@@ -102,21 +147,56 @@ const KnowledgeBasePage: React.FC = () => {
     setShowDocumentEditor(true);
   };
 
-  const handleSaveDocument = () => {
-    if (editingDocumentId) {
-      setDocuments(documents.map(doc => 
-        doc.id === editingDocumentId 
-          ? { ...doc, content: editingDocumentContent, updatedAt: new Date() } 
-          : doc
-      ));
-      setEditingDocumentId(null);
-      setEditingDocumentContent('');
-      setShowDocumentEditor(false);
+  const handleSaveDocument = async () => {
+    if (editingDocumentId && user?.id) {
+      try {
+        const { error } = await supabase
+          .from('knowledge_base')
+          .update({
+            content: editingDocumentContent,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', editingDocumentId)
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error saving document:', error);
+          return;
+        }
+
+        setDocuments(documents.map(doc => 
+          doc.id === editingDocumentId 
+            ? { ...doc, content: editingDocumentContent, updatedAt: new Date() } 
+            : doc
+        ));
+        setEditingDocumentId(null);
+        setEditingDocumentContent('');
+        setShowDocumentEditor(false);
+      } catch (error) {
+        console.error('Error saving document:', error);
+      }
     }
   };
 
-  const handleDeleteDocument = (id: string) => {
-    setDocuments(documents.filter(doc => doc.id !== id));
+  const handleDeleteDocument = async (id: string) => {
+    if (!user?.id) return;
+
+    try {
+      const { error } = await supabase
+        .from('knowledge_base')
+        .delete()
+        .eq('id', id)
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error('Error deleting document:', error);
+        return;
+      }
+
+      setDocuments(documents.filter(doc => doc.id !== id));
+    } catch (error) {
+      console.error('Error deleting document:', error);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -125,6 +205,14 @@ const KnowledgeBasePage: React.FC = () => {
     setShowDocumentEditor(false);
   };
 
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-500">Loading knowledge base...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

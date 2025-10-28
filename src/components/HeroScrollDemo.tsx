@@ -80,11 +80,10 @@ export function HeroScrollDemo() {
               onClick={() => setActiveTab('ai-receptionist')}
               className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'ai-receptionist'
-                  ? 'bg-white text-gray-900 shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  ? 'bg-white text-gray-900 shadow-lg'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
               }`}
               style={{ 
-                transform: activeTab === 'ai-receptionist' ? 'scale(1.05)' : 'scale(1)', 
                 backfaceVisibility: 'hidden', 
                 WebkitFontSmoothing: 'antialiased',
                 opacity: activeTab === 'ai-receptionist' ? 1 : 0.85
@@ -97,11 +96,10 @@ export function HeroScrollDemo() {
               onClick={() => setActiveTab('speed-to-lead')}
               className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'speed-to-lead'
-                  ? 'bg-white text-gray-900 shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  ? 'bg-white text-gray-900 shadow-lg'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
               }`}
               style={{ 
-                transform: activeTab === 'speed-to-lead' ? 'scale(1.05)' : 'scale(1)', 
                 backfaceVisibility: 'hidden', 
                 WebkitFontSmoothing: 'antialiased',
                 opacity: activeTab === 'speed-to-lead' ? 1 : 0.85
@@ -114,11 +112,10 @@ export function HeroScrollDemo() {
               onClick={() => setActiveTab('sms-whatsapp')}
               className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'sms-whatsapp'
-                  ? 'bg-white text-gray-900 shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  ? 'bg-white text-gray-900 shadow-lg'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
               }`}
               style={{ 
-                transform: activeTab === 'sms-whatsapp' ? 'scale(1.05)' : 'scale(1)', 
                 backfaceVisibility: 'hidden', 
                 WebkitFontSmoothing: 'antialiased',
                 opacity: activeTab === 'sms-whatsapp' ? 1 : 0.85
@@ -131,11 +128,10 @@ export function HeroScrollDemo() {
               onClick={() => setActiveTab('dashboard-analytics')}
               className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'dashboard-analytics'
-                  ? 'bg-white text-gray-900 shadow-lg scale-105'
-                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md border-2 border-gray-200 hover:border-gray-300'
+                  ? 'bg-white text-gray-900 shadow-lg'
+                  : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
               }`}
               style={{ 
-                transform: activeTab === 'dashboard-analytics' ? 'scale(1.05)' : 'scale(1)', 
                 backfaceVisibility: 'hidden', 
                 WebkitFontSmoothing: 'antialiased',
                 opacity: activeTab === 'dashboard-analytics' ? 1 : 0.85

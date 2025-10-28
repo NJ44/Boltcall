@@ -3,8 +3,23 @@ import { motion } from 'framer-motion';
 import { PhoneCall, MoreHorizontal } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+
+interface PhoneNumber {
+  id: string;
+  number: string;
+  location: string;
+  status: string;
+  type: string;
+  assignedTo: string;
+  createdAt: string;
+}
 
 const PhoneNumbersPage: React.FC = () => {
+  const { user } = useAuth();
+  const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSipModal, setShowSipModal] = useState(false);
   const [sipFormData, setSipFormData] = useState({
@@ -30,36 +45,50 @@ const PhoneNumbersPage: React.FC = () => {
     };
   }, []);
 
-  // Mock data - in real app this would come from API
-  const phoneNumbers = [
-    {
-      id: 1,
-      number: '+1 (555) 123-4567',
-      location: 'New York, NY',
-      status: 'Active',
-      type: 'Main Business',
-      assignedTo: 'AI Receptionist',
-      createdAt: '2024-01-15'
-    },
-    {
-      id: 2,
-      number: '+1 (555) 987-6543',
-      location: 'Los Angeles, CA',
-      status: 'Active',
-      type: 'Support Line',
-      assignedTo: 'Customer Service AI',
-      createdAt: '2024-01-20'
-    },
-    {
-      id: 3,
-      number: '+1 (555) 456-7890',
-      location: 'Chicago, IL',
-      status: 'Inactive',
-      type: 'Sales Line',
-      assignedTo: 'Sales AI',
-      createdAt: '2024-02-01'
-    }
-  ];
+  // Fetch phone numbers from Supabase
+  useEffect(() => {
+    const fetchPhoneNumbers = async () => {
+      if (!user?.id) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('phone_numbers')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching phone numbers:', error);
+          return;
+        }
+
+        // Transform Supabase data to PhoneNumber interface
+        const transformedNumbers: PhoneNumber[] = (data || []).map((phone: any) => ({
+          id: phone.id,
+          number: phone.phone_number || '',
+          location: phone.location || 'N/A',
+          status: phone.status || 'inactive',
+          type: phone.phone_type || 'main',
+          assignedTo: phone.assigned_agent_name || 'Not assigned',
+          createdAt: phone.created_at 
+            ? new Date(phone.created_at).toLocaleDateString()
+            : new Date().toLocaleDateString()
+        }));
+
+        setPhoneNumbers(transformedNumbers);
+      } catch (error) {
+        console.error('Error fetching phone numbers:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPhoneNumbers();
+  }, [user?.id]);
 
   const handleAddPhoneNumber = () => {
     setShowDropdown(!showDropdown);
@@ -89,6 +118,14 @@ const PhoneNumbersPage: React.FC = () => {
       nickname: ''
     });
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-500">Loading phone numbers...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

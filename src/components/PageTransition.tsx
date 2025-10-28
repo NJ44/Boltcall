@@ -20,9 +20,11 @@ const pageVariants = {
 };
 
 const pageTransition: Transition = {
-  type: 'tween',
-  ease: 'easeInOut',
-  duration: 0.2,
+  type: 'spring',
+  stiffness: 300,
+  damping: 30,
+  mass: 0.8,
+  duration: 0.4,
 };
 
 const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
@@ -40,9 +42,11 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
           transition={pageTransition}
           className="w-full"
           style={{ 
-            willChange: 'opacity',
-            // Start hidden to prevent flash
+            willChange: 'opacity, transform',
             position: 'relative',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'translateZ(0)',
           }}
         >
           {children}

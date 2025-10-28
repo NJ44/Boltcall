@@ -112,13 +112,13 @@ export default function RadialOrbitalTimelineIntegration({
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 160; // Match the white hollow circle radius (w-80 h-80 = 320px diameter = 160px radius)
+    const radius = 140; // Orbital path radius (160px) minus half icon size (20px) to center icons on the path
     const radian = (angle * Math.PI) / 180;
 
     const x = radius * Math.cos(radian) + centerOffset.x;
     const y = radius * Math.sin(radian) + centerOffset.y;
 
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
+    const zIndex = 100; // Fixed z-index to prevent elliptical motion
     const opacity = 1; // Always keep opacity at 1
 
     return { x, y, angle, zIndex, opacity };
@@ -165,7 +165,7 @@ export default function RadialOrbitalTimelineIntegration({
           </div>
 
           {/* Orbital Path */}
-          <div className="absolute w-80 h-80 rounded-full border-2 border-white/10"></div>
+          <div className="absolute w-80 h-80 rounded-full border-2 border-white/10 flex items-center justify-center"></div>
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);

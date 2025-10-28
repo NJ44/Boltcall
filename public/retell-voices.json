@@ -1,72 +1,72 @@
 [
   {
-    "id": "cartesia-Adam",
-    "name": "Adam",
-    "accent": "British",
-    "gender": "Male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-7cf0e2b1-8daf-4fe4-89ad-f6039398f359.mp3"
-  },
-  {
-    "id": "11labs-Dorothy",
-    "name": "Dorothy",
-    "accent": "British",
-    "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/Dorothy.mp3"
-  },
-  {
-    "id": "openai-Nova",
-    "name": "Nova",
-    "accent": "American",
-    "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/nova_.wav"
-  },
-  {
-    "id": "11labs-Anthony",
-    "name": "Anthony",
-    "accent": "British",
-    "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/anthony.mp3"
-  },
-  {
-    "id": "11labs-Billy",
-    "name": "Billy",
+    "id": "11labs-Adrian",
+    "name": "Adrian",
     "accent": "American",
     "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/billy.mp3"
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/adrian.mp3"
   },
   {
-    "id": "11labs-Lily",
-    "name": "Lily",
-    "accent": "American",
-    "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/lily.mp3"
-  },
-  {
-    "id": "11labs-Marissa",
-    "name": "Marissa",
-    "accent": "American",
-    "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/marissa.mp3"
-  },
-  {
-    "id": "cartesia-Brian",
-    "name": "Brian",
+    "id": "11labs-Antoni",
+    "name": "Antoni",
     "accent": "American",
     "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-ccb4cea5-13c8-4559-a9c8-e83bc8171c4d.mp3"
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/antoni.mp3"
   },
   {
-    "id": "cartesia-Evie",
-    "name": "Evie",
+    "id": "11labs-Arnold",
+    "name": "Arnold",
+    "accent": "American",
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/arnold.mp3"
+  },
+  {
+    "id": "11labs-Bella",
+    "name": "Bella",
     "accent": "American",
     "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-214c4b7d-9ba4-4114-87fa-be8e4ce9330e.mp3"
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/bella.mp3"
   },
   {
-    "id": "cartesia-Summer",
-    "name": "Summer",
+    "id": "11labs-Domi",
+    "name": "Domi",
     "accent": "American",
-    "gender": "Female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-f80e7298-93f5-46d0-86f2-b8f29cfc88bd.mp3"
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/domi.mp3"
+  },
+  {
+    "id": "11labs-Elli",
+    "name": "Elli",
+    "accent": "American",
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/elli.mp3"
+  },
+  {
+    "id": "11labs-Josh",
+    "name": "Josh",
+    "accent": "American",
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/josh.mp3"
+  },
+  {
+    "id": "11labs-Rachel",
+    "name": "Rachel",
+    "accent": "American",
+    "gender": "female",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/rachel.mp3"
+  },
+  {
+    "id": "11labs-Sam",
+    "name": "Sam",
+    "accent": "American",
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/sam.mp3"
+  },
+  {
+    "id": "11labs-Thomas",
+    "name": "Thomas",
+    "accent": "American",
+    "gender": "male",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/thomas.mp3"
   }
 ]
