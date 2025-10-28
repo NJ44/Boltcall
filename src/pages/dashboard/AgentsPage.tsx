@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
+import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
 import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
@@ -399,11 +399,7 @@ const AgentsPage: React.FC = () => {
   }, [user?.id]);
 
   if (isLoading) {
-    return (
-      <div className="p-6">
-        <DashboardSkeleton />
-      </div>
-    );
+    return <AgentsSkeleton />;
   }
 
   return (

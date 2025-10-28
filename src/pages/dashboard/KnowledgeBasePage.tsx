@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
+import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
@@ -248,11 +248,7 @@ const KnowledgeBasePage: React.FC = () => {
 
 
   if (isLoading) {
-    return (
-      <div className="p-6">
-        <DashboardSkeleton />
-      </div>
-    );
+    return <KnowledgeBaseSkeleton />;
   }
 
   return (

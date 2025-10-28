@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
+import { ChatHistorySkeleton } from '../../components/ui/loading-skeleton';
 import { 
   MessageSquare, 
   Clock, 
@@ -295,9 +295,7 @@ const ChatHistoryPage: React.FC = () => {
       {/* Chats Table */}
       <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         {loading ? (
-          <div className="p-6">
-            <DashboardSkeleton />
-          </div>
+          <ChatHistorySkeleton />
         ) : error ? (
           <div className="flex items-center justify-center py-12">
             <AlertCircle className="w-8 h-8 text-red-600" />

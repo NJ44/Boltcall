@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { DashboardSkeleton, TableSkeleton, CardsSkeleton, LoadingSkeleton } from '../components/ui/loading-skeleton';
+import { 
+  DashboardSkeleton, 
+  TableSkeleton, 
+  CardsSkeleton, 
+  LoadingSkeleton,
+  KnowledgeBaseSkeleton,
+  AgentsSkeleton,
+  PhoneNumbersSkeleton,
+  CallHistorySkeleton,
+  ChatHistorySkeleton,
+  NotificationPreferencesSkeleton
+} from '../components/ui/loading-skeleton';
 
 const SkeletonDemoPage: React.FC = () => {
-  const [activeDemo, setActiveDemo] = useState<'dashboard' | 'table' | 'cards' | 'custom'>('dashboard');
+  const [activeDemo, setActiveDemo] = useState<'knowledge-base' | 'agents' | 'phone-numbers' | 'call-history' | 'chat-history' | 'notifications' | 'dashboard' | 'table' | 'cards' | 'custom'>('knowledge-base');
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
@@ -18,57 +29,192 @@ const SkeletonDemoPage: React.FC = () => {
 
         {/* Demo Controls */}
         <div className="mb-8">
-          <div className="flex gap-2 flex-wrap">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+            <button
+              onClick={() => setActiveDemo('knowledge-base')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeDemo === 'knowledge-base'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              Knowledge Base
+            </button>
+            <button
+              onClick={() => setActiveDemo('agents')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeDemo === 'agents'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              Agents
+            </button>
+            <button
+              onClick={() => setActiveDemo('phone-numbers')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeDemo === 'phone-numbers'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              Phone Numbers
+            </button>
+            <button
+              onClick={() => setActiveDemo('call-history')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeDemo === 'call-history'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              Call History
+            </button>
+            <button
+              onClick={() => setActiveDemo('chat-history')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeDemo === 'chat-history'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              Chat History
+            </button>
+            <button
+              onClick={() => setActiveDemo('notifications')}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeDemo === 'notifications'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              Notifications
+            </button>
             <button
               onClick={() => setActiveDemo('dashboard')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeDemo === 'dashboard'
                   ? 'bg-blue-600 text-white'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
-              Dashboard Layout
+              Dashboard
             </button>
             <button
               onClick={() => setActiveDemo('table')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeDemo === 'table'
                   ? 'bg-blue-600 text-white'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
-              Table Layout
+              Table
             </button>
             <button
               onClick={() => setActiveDemo('cards')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeDemo === 'cards'
                   ? 'bg-blue-600 text-white'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
-              Cards Layout
+              Cards
             </button>
             <button
               onClick={() => setActiveDemo('custom')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 activeDemo === 'custom'
                   ? 'bg-blue-600 text-white'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
-              Custom Layout
+              Custom
             </button>
           </div>
         </div>
 
         {/* Demo Content */}
         <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+          {activeDemo === 'knowledge-base' && (
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Knowledge Base Page Skeleton
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Search bar + Document table with exact layout matching
+              </p>
+              <KnowledgeBaseSkeleton />
+            </div>
+          )}
+
+          {activeDemo === 'agents' && (
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Agents Page Skeleton
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Add button + Agent cards with avatar, name, and stats
+              </p>
+              <AgentsSkeleton />
+            </div>
+          )}
+
+          {activeDemo === 'phone-numbers' && (
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Phone Numbers Page Skeleton
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Search + Add dropdown + Phone numbers table
+              </p>
+              <PhoneNumbersSkeleton />
+            </div>
+          )}
+
+          {activeDemo === 'call-history' && (
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Call History Page Skeleton
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Filters section + Call details table with icons
+              </p>
+              <CallHistorySkeleton />
+            </div>
+          )}
+
+          {activeDemo === 'chat-history' && (
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Chat History Page Skeleton
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Filters section + Chat details table
+              </p>
+              <ChatHistorySkeleton />
+            </div>
+          )}
+
+          {activeDemo === 'notifications' && (
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Notification Preferences Skeleton
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Settings sections with toggle switches
+              </p>
+              <NotificationPreferencesSkeleton />
+            </div>
+          )}
+
           {activeDemo === 'dashboard' && (
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Dashboard Skeleton (Used in: Agents, Knowledge Base, Phone Numbers)
+                Generic Dashboard Skeleton
               </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                4 top cards + 2 bottom larger cards (fallback layout)
+              </p>
               <DashboardSkeleton />
             </div>
           )}
@@ -76,8 +222,11 @@ const SkeletonDemoPage: React.FC = () => {
           {activeDemo === 'table' && (
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Table Skeleton (Used in: Call History, Chat History)
+                Generic Table Skeleton
               </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Basic table header + rows (fallback layout)
+              </p>
               <TableSkeleton rows={6} columns={5} />
             </div>
           )}
@@ -85,8 +234,11 @@ const SkeletonDemoPage: React.FC = () => {
           {activeDemo === 'cards' && (
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Cards Skeleton (Used in: Grid layouts)
+                Cards Grid Skeleton
               </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Responsive grid layout for card-based content
+              </p>
               <CardsSkeleton count={9} />
             </div>
           )}
@@ -94,8 +246,11 @@ const SkeletonDemoPage: React.FC = () => {
           {activeDemo === 'custom' && (
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Custom Skeleton (Configurable)
+                Custom Skeleton
               </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Configurable skeleton for any custom layout
+              </p>
               <LoadingSkeleton variant="custom" rows={4} className="max-w-md" />
             </div>
           )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
+import { PhoneNumbersSkeleton } from '../../components/ui/loading-skeleton';
 import { PhoneCall, MoreHorizontal, ChevronDown, Plus, Phone, Settings } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
@@ -198,11 +198,7 @@ const PhoneNumbersPage: React.FC = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="p-6">
-        <DashboardSkeleton />
-      </div>
-    );
+    return <PhoneNumbersSkeleton />;
   }
 
   return (
@@ -382,7 +378,7 @@ const PhoneNumbersPage: React.FC = () => {
 
                 {loadingTwilioNumbers ? (
                   <div className="py-6">
-                    <DashboardSkeleton />
+                    <PhoneNumbersSkeleton />
                   </div>
                 ) : (
                   <div className="space-y-3">

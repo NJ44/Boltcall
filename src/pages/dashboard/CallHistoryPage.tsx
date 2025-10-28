@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { DashboardSkeleton } from '../../components/ui/loading-skeleton';
+import { CallHistorySkeleton } from '../../components/ui/loading-skeleton';
 import { 
   Phone, 
   PhoneIncoming, 
@@ -294,9 +294,7 @@ const CallHistoryPage: React.FC = () => {
       {/* Calls Table */}
       <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         {loading ? (
-          <div className="p-6">
-            <DashboardSkeleton />
-          </div>
+          <CallHistorySkeleton />
         ) : error ? (
           <div className="flex items-center justify-center py-12">
             <AlertCircle className="w-8 h-8 text-red-600" />

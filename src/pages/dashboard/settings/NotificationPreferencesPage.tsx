@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DashboardSkeleton } from '../../../components/ui/loading-skeleton';
+import { NotificationPreferencesSkeleton } from '../../../components/ui/loading-skeleton';
 import { motion } from 'framer-motion';
 import { 
   Bell, 
@@ -218,11 +218,7 @@ const NotificationPreferencesPage: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="p-6">
-        <DashboardSkeleton />
-      </div>
-    );
+    return <NotificationPreferencesSkeleton />;
   }
 
   return (
