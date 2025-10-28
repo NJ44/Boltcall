@@ -6,7 +6,6 @@ import { cn } from "../../lib/utils"
 
 const PERSPECTIVE = 1000
 const CARD_ANIMATION_DURATION = 0.6
-const INITIAL_DELAY = 0.2
 
 interface GiftCardCompactProps extends React.HTMLAttributes<HTMLDivElement> {
   cardNumber?: string

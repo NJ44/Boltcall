@@ -6,22 +6,15 @@ import { cn } from "../../lib/utils"
 
 const PERSPECTIVE = 1000
 const CARD_ANIMATION_DURATION = 0.6
-const INITIAL_DELAY = 0.2
 
 interface GiftCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  cardNumber?: string
-  cardHolder?: string
   balance?: string
   variant?: "gradient" | "dark" | "glass" | "gold" | "silver"
-  brand?: "boltcall" | "apple" | "google" | "starbucks" | "target"
 }
 
 export default function GiftCard({
-  cardNumber = "GIFT-1234-5678-9012",
-  cardHolder = "SARAH JOHNSON",
   balance = "$250.00",
   variant = "gradient",
-  brand = "boltcall",
 }: GiftCardProps) {
   const [isFlipped, setIsFlipped] = React.useState(false)
   const [isClicked, setIsClicked] = React.useState(false)
