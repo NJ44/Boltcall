@@ -13,38 +13,28 @@ import {
   User,
   Moon,
   Sun,
-  Plug,
   UserPlus,
   HelpCircle,
-  ChevronLeft,
-  ChevronRight as ChevronRightIcon,
   ChevronDown,
   Bell,
   Calendar,
   Phone,
-  AlertCircle,
   FileText,
   Ticket,
   Calendar as CalendarIcon,
   Crown,
-  Server,
-  Mail
+  Server
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
-import { Magnetic } from '../ui/magnetic';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showAddMemberModal, setShowAddMemberModal] = useState(false);
-  const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
-  const [showServicesModal, setShowServicesModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
@@ -181,9 +171,6 @@ const DashboardLayout: React.FC = () => {
   };
 
 
-  const toggleSidebarCollapse = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
 
 
   const handleLogout = async () => {
@@ -309,17 +296,19 @@ const DashboardLayout: React.FC = () => {
   const navItemsGroup2 = [
     { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
     { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-4 h-4" /> },
-    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <MessageSquare className="w-4 h-4" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-4 h-4" /> },
+    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-4 h-4" /> },
   ];
 
   // Dropdown items
   const callsItems = [
+    { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-4 h-4" /> },
     { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-4 h-4" /> },
     { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-4 h-4" /> },
   ];
 
   const messagingItems = [
+    { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-4 h-4" /> },
     { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
@@ -336,34 +325,6 @@ const DashboardLayout: React.FC = () => {
 
   // Helper function to render navigation items
   const renderNavItem = (item: any, isActive: boolean) => {
-    if (sidebarCollapsed) {
-      return (
-        <Link
-          key={item.to}
-          to={item.to}
-          onClick={closeSidebar}
-          className={`relative flex items-center justify-center p-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
-            isActive
-              ? isDarkMode 
-                ? 'bg-gray-800 text-white' 
-                : 'bg-blue-50 text-blue-700'
-              : isDarkMode 
-                ? 'text-white hover:bg-gray-800' 
-                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-          }`}
-          title={item.label}
-        >
-          {item.icon}
-          {/* Tooltip */}
-          <div className={`absolute left-full ml-2 px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 ${
-            isDarkMode ? 'bg-gray-700' : 'bg-gray-900'
-          }`}>
-            {item.label}
-          </div>
-        </Link>
-      );
-    }
-
     return (
       <Link
         key={item.to}
@@ -400,9 +361,7 @@ const DashboardLayout: React.FC = () => {
       <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100 dark:bg-gray-900">
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
-         <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 ${
-           sidebarCollapsed ? 'w-16' : 'w-64'
-         } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-gray-800 rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
+         <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-gray-800 rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
@@ -410,24 +369,15 @@ const DashboardLayout: React.FC = () => {
               to="/dashboard" 
               className="flex items-center justify-center"
             >
-              {sidebarCollapsed ? (
-                <img 
-                  src="/boltcall_icon.png" 
-                  alt="Boltcall" 
-                  className="h-8 w-8"
-                />
-              ) : (
               <img 
                 src="/boltcall_full_logo.png" 
                 alt="Boltcall" 
                   className="h-14 w-auto"
               />
-              )}
             </Link>
           </div>
           
             {/* User Profile - Below Logo */}
-            {!sidebarCollapsed && (
             <div className="mb-4 px-2">
              <div className="relative" data-user-menu>
                <button
@@ -488,7 +438,6 @@ const DashboardLayout: React.FC = () => {
                )}
              </div>
            </div>
-            )}
 
             {/* Mobile menu button */}
               <button
@@ -503,24 +452,6 @@ const DashboardLayout: React.FC = () => {
                 <X className="w-5 h-5" />
               </button>
 
-            {/* Collapse/Expand button - Moved to right border */}
-            <div className="absolute top-4 -right-3 z-50">
-              <button
-                onClick={toggleSidebarCollapse}
-                className={`p-2 rounded-full bg-white shadow-lg border transition-colors ${
-                  isDarkMode 
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
-                }`}
-                aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-              >
-                {sidebarCollapsed ? (
-                  <ChevronRightIcon className="w-4 h-4" />
-                ) : (
-                  <ChevronLeft className="w-4 h-4" />
-                )}
-              </button>
-            </div>
             
             {/* Navigation */}
             <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
@@ -555,7 +486,7 @@ const DashboardLayout: React.FC = () => {
                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ease-in-out ${callsDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
-                    {callsDropdownOpen && (
+                  {callsDropdownOpen && (
                       <motion.div 
                         className="ml-4 space-y-1 overflow-hidden"
                         initial={{ 
@@ -580,12 +511,12 @@ const DashboardLayout: React.FC = () => {
                           y: { duration: 0.3 }
                         }}
                       >
-                        {callsItems.map((item) => {
-                    const isActive = location.pathname === item.to;
-                          return renderNavItem(item, isActive);
-                        })}
+                      {callsItems.map((item) => {
+                  const isActive = location.pathname === item.to;
+                        return renderNavItem(item, isActive);
+                      })}
                       </motion.div>
-                    )}
+                  )}
                   </AnimatePresence>
                 </div>
 
@@ -603,7 +534,7 @@ const DashboardLayout: React.FC = () => {
                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ease-in-out ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
-                    {messagingDropdownOpen && (
+                  {messagingDropdownOpen && (
                       <motion.div 
                         className="ml-4 space-y-1 overflow-hidden"
                         initial={{ 
@@ -628,12 +559,12 @@ const DashboardLayout: React.FC = () => {
                           y: { duration: 0.3 }
                         }}
                       >
-                        {messagingItems.map((item) => {
-                          const isActive = location.pathname === item.to;
-                          return renderNavItem(item, isActive);
-                        })}
+                      {messagingItems.map((item) => {
+                        const isActive = location.pathname === item.to;
+                        return renderNavItem(item, isActive);
+                      })}
                       </motion.div>
-                    )}
+                  )}
                   </AnimatePresence>
                 </div>
               </div>
@@ -717,9 +648,9 @@ const DashboardLayout: React.FC = () => {
                    Free Trial
                  </div>
                  
-                 {/* Notification Button */}
+                 {/* Notification Dropdown */}
+                 <div className="relative group">
                  <button
-                   onClick={() => setShowNotificationModal(true)}
                    className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
                    aria-label="Notification settings"
                  >
@@ -728,9 +659,92 @@ const DashboardLayout: React.FC = () => {
                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
                  </button>
 
-                 {/* Services Status Button */}
-                 <button
-                   onClick={() => setShowServicesModal(true)}
+                   {/* Notification Dropdown Content */}
+                   <div className="absolute right-0 top-full mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
+                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+          <div className="flex items-center justify-between mb-4">
+                         <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Notification Settings
+                         </h3>
+          </div>
+          
+                       <div className="space-y-3 max-h-80 overflow-y-auto">
+            {/* New Lead Notification */}
+                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Users className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>New Lead Arrives</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a new lead is captured</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('newLead')}
+                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                  notifications.newLead ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                               notifications.newLead ? 'translate-x-5' : 'translate-x-0.5'
+                }`} />
+              </button>
+            </div>
+
+            {/* Appointment Booked Notification */}
+                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Calendar className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Appointment Booked</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when an appointment is scheduled</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('appointmentBooked')}
+                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                  notifications.appointmentBooked ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                               notifications.appointmentBooked ? 'translate-x-5' : 'translate-x-0.5'
+                }`} />
+              </button>
+            </div>
+
+            {/* Missed Call Notification */}
+                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Phone className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Missed Call</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a call is missed</div>
+                </div>
+              </div>
+              <button
+                onClick={() => toggleNotification('missedCall')}
+                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                  notifications.missedCall ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                               notifications.missedCall ? 'translate-x-5' : 'translate-x-0.5'
+                }`} />
+              </button>
+            </div>
+                </div>
+                </div>
+              </div>
+                 </div>
+
+                 {/* Services Status Dropdown */}
+                 <div className="relative group">
+              <button
                    className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
                    aria-label="Services status"
                  >
@@ -739,37 +753,184 @@ const DashboardLayout: React.FC = () => {
                    <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
                      Object.values(services).some(service => !service) ? 'bg-orange-500' : 'bg-green-500'
                    }`}></div>
-                 </button>
+              </button>
                  
-                 
-                 {/* Add Team Member Button */}
-                 <button
-                   onClick={() => setShowAddMemberModal(true)}
+                   {/* Services Status Dropdown Content */}
+                   <div className="absolute right-0 top-full mt-2 w-96 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
+                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                       <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Server className="w-5 h-5 text-blue-600" />
+              </div>
+                         <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Services Status</h3>
+          </div>
+
+                       <div className="space-y-3 max-h-80 overflow-y-auto">
+                {/* AI Receptionist */}
+                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-200'}`}>
+                  <div className="flex items-center gap-3">
+                             <Users className="w-4 h-4 text-blue-600" />
+                    <div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>AI Receptionist</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Automated call handling</div>
+                      {services.aiReceptionist && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('aiReceptionist'))}`}></div>
+                                   <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('aiReceptionist'))}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('aiReceptionist')}
+                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                      services.aiReceptionist ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                               services.aiReceptionist ? 'translate-x-5' : 'translate-x-0.5'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Phone System */}
+                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-200'}`}>
+                  <div className="flex items-center gap-3">
+                             <Phone className="w-4 h-4 text-green-600" />
+                    <div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Phone System</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Incoming and outgoing calls</div>
+                      {services.phoneSystem && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('phoneSystem'))}`}></div>
+                                   <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('phoneSystem'))}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('phoneSystem')}
+                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                      services.phoneSystem ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                               services.phoneSystem ? 'translate-x-5' : 'translate-x-0.5'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* SMS */}
+                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-200'}`}>
+                  <div className="flex items-center gap-3">
+                             <MessageSquare className="w-4 h-4 text-purple-600" />
+                    <div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>SMS</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Text messaging service</div>
+                      {services.sms && (
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('sms'))}`}></div>
+                                   <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('sms'))}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => toggleService('sms')}
+                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                      services.sms ? 'bg-green-600' : 'bg-gray-300'
+                    }`}
+                  >
+                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+                               services.sms ? 'translate-x-5' : 'translate-x-0.5'
+                    }`} />
+                  </button>
+                </div>
+                        </div>
+                </div>
+              </div>
+            </div>
+
+                 {/* Add Team Member Dropdown */}
+                 <div className="relative group">
+                  <button
                    className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
                    aria-label="Add team member"
-                 >
+            >
                    <UserPlus className="w-5 h-5" />
-                 </button>
-                 
+                  </button>
+
+                   {/* Add Member Dropdown Content */}
+                   <div className="absolute right-0 top-full mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
+                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                       <div className="flex items-center gap-3 mb-4">
+                         <div className="p-2 bg-blue-100 rounded-lg">
+                           <UserPlus className="w-5 h-5 text-blue-600" />
+                        </div>
+                         <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Add Team Member</h3>
+            </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                Gmail Address
+              </label>
+              <input
+                type="email"
+                placeholder="colleague@gmail.com"
+                             className={`w-full px-3 py-2 rounded-lg border transition-colors text-sm ${
+                  isDarkMode
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                }`}
+              />
+                </div>
+
+                    <div>
+              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                Role
+              </label>
+              <select
+                             className={`w-full px-3 py-2 rounded-lg border transition-colors text-sm ${
+                  isDarkMode
+                    ? 'bg-gray-700 border-gray-600 text-white'
+                    : 'bg-white border-gray-300 text-gray-900'
+                }`}
+              >
+                <option>Member</option>
+                <option>Admin</option>
+              </select>
+                </div>
+
+                  <button
+                           className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors text-sm"
+                  >
+              Send Invitation
+                  </button>
+                </div>
+                        </div>
+                    </div>
+                  </div>
+          
                  {/* Dark Mode Toggle */}
-                 <button
+                  <button
                    onClick={toggleDarkMode}
                    className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
                    aria-label="Toggle dark mode"
                  >
                    {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                 </button>
-               </div>
-             </div>
-           </div>
-           
+                  </button>
+                </div>
+              </div>
+            </div>
+
            {/* Page Content */}
            <div className="p-6">
              <Outlet />
-           </div>
+          </div>
 
            {/* Help Button - Bottom Right */}
-           <button
+            <button
              className={`fixed bottom-6 right-6 px-4 py-2 rounded-lg shadow-lg transition-all duration-300 flex items-center gap-2 text-sm font-medium ${
                isDarkMode
                  ? 'bg-blue-600 text-white hover:bg-blue-700'
@@ -779,552 +940,13 @@ const DashboardLayout: React.FC = () => {
            >
              <HelpCircle className="w-4 h-4" />
              Help
-           </button>
+            </button>
          </main>
-      </div>
-    </div>
-
-    {/* Add Team Member Modal */}
-    {showAddMemberModal && (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowAddMemberModal(false)}>
-        <div 
-          className={`rounded-2xl p-6 max-w-md w-full mx-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Add Team Member
-            </h2>
-            <button
-              onClick={() => setShowAddMemberModal(false)}
-              className={`p-1 rounded-lg ${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Gmail Address
-              </label>
-              <input
-                type="email"
-                placeholder="colleague@gmail.com"
-                className={`w-full px-4 py-2 rounded-lg border transition-colors ${
-                  isDarkMode
-                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                }`}
-              />
-            </div>
-            
-            <div>
-              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Role
-              </label>
-              <select
-                className={`w-full px-4 py-2 rounded-lg border transition-colors ${
-                  isDarkMode
-                    ? 'bg-gray-700 border-gray-600 text-white'
-                    : 'bg-white border-gray-300 text-gray-900'
-                }`}
-              >
-                <option>Member</option>
-                <option>Admin</option>
-              </select>
-            </div>
-            
-            <button
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
-              onClick={() => setShowAddMemberModal(false)}
-            >
-              Send Invitation
-            </button>
           </div>
         </div>
-      </div>
-    )}
 
-    {/* Notification Settings Modal */}
-    {showNotificationModal && (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowNotificationModal(false)}>
-        <div 
-          className="rounded-2xl p-6 max-w-md w-full mx-4 bg-white"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">
-              Notification Settings
-            </h2>
-            <button
-              onClick={() => setShowNotificationModal(false)}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            {/* New Lead Notification */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Users className="w-4 h-4 text-blue-600" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">New Lead Arrives</div>
-                  <div className="text-sm text-gray-500">Get notified when a new lead is captured</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('newLead')}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications.newLead ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                  notifications.newLead ? 'translate-x-7' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
 
-            {/* Appointment Booked Notification */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Calendar className="w-4 h-4 text-blue-600" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">Appointment Booked</div>
-                  <div className="text-sm text-gray-500">Get notified when an appointment is scheduled</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('appointmentBooked')}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications.appointmentBooked ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                  notifications.appointmentBooked ? 'translate-x-7' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
 
-            {/* Appointment Cancelled Notification */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <X className="w-4 h-4 text-blue-600" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">Appointment Cancelled</div>
-                  <div className="text-sm text-gray-500">Get notified when an appointment is cancelled</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('appointmentCancelled')}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications.appointmentCancelled ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                  notifications.appointmentCancelled ? 'translate-x-7' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
-
-            {/* Missed Call Notification */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Phone className="w-4 h-4 text-blue-600" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">Missed Call</div>
-                  <div className="text-sm text-gray-500">Get notified when a call is missed</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('missedCall')}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications.missedCall ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                  notifications.missedCall ? 'translate-x-7' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
-
-            {/* System Alert Notification */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <AlertCircle className="w-4 h-4 text-blue-600" />
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">System Alerts</div>
-                  <div className="text-sm text-gray-500">Get notified about system updates and issues</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('systemAlert')}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications.systemAlert ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                  notifications.systemAlert ? 'translate-x-7' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
-
-    {/* Services Status Modal */}
-    {showServicesModal && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowServicesModal(false)}>
-        <div 
-          className="bg-white rounded-3xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="p-6 flex-shrink-0">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Server className="w-5 h-5 text-blue-600" />
-              </div>
-              <h2 className="text-xl font-semibold text-gray-900">Services Status</h2>
-            </div>
-            <button
-              onClick={() => setShowServicesModal(false)}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          </div>
-
-          <div className="flex-1 overflow-y-auto px-6 pb-6">
-            <div className="space-y-4">
-            {/* Core Services */}
-            <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-3">Core Services</h3>
-              <div className="space-y-3">
-                {/* AI Receptionist */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Users className="w-5 h-5 text-blue-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">AI Receptionist</div>
-                      <div className="text-sm text-gray-500">Automated call handling</div>
-                      {services.aiReceptionist && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('aiReceptionist'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('aiReceptionist'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('aiReceptionist')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.aiReceptionist ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.aiReceptionist ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* Phone System */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-green-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Phone System</div>
-                      <div className="text-sm text-gray-500">Incoming and outgoing calls</div>
-                      {services.phoneSystem && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('phoneSystem'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('phoneSystem'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('phoneSystem')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.phoneSystem ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.phoneSystem ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* SMS */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <MessageSquare className="w-5 h-5 text-purple-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">SMS</div>
-                      <div className="text-sm text-gray-500">Text messaging service</div>
-                      {services.sms && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('sms'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('sms'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('sms')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.sms ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.sms ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* Email */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-5 h-5 text-blue-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Email</div>
-                      <div className="text-sm text-gray-500">Email notifications and alerts</div>
-                      {services.email && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('email'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('email'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('email')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.email ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.email ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Communication Services */}
-            <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-3">Communication</h3>
-              <div className="space-y-3">
-                {/* WhatsApp */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <MessageSquare className="w-5 h-5 text-green-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">WhatsApp</div>
-                      <div className="text-sm text-gray-500">WhatsApp Business integration</div>
-                      {services.whatsapp && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('whatsapp'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('whatsapp'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('whatsapp')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.whatsapp ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.whatsapp ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* Website Bubble */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <MessageSquare className="w-5 h-5 text-blue-500" />
-                    <div>
-                      <div className="font-medium text-gray-900">Website Bubble</div>
-                      <div className="text-sm text-gray-500">Live chat on your website</div>
-                      {services.websiteBubble && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('websiteBubble'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('websiteBubble'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('websiteBubble')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.websiteBubble ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.websiteBubble ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Management Services */}
-            <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-3">Management</h3>
-              <div className="space-y-3">
-                {/* Calendar */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Calendar className="w-5 h-5 text-orange-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Calendar</div>
-                      <div className="text-sm text-gray-500">Appointment scheduling</div>
-                      {services.calendar && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('calendar'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('calendar'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('calendar')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.calendar ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.calendar ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* Analytics */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <BarChart3 className="w-5 h-5 text-purple-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Analytics</div>
-                      <div className="text-sm text-gray-500">Performance tracking and reports</div>
-                      {services.analytics && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('analytics'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('analytics'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('analytics')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.analytics ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.analytics ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* Voice Library */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Server className="w-5 h-5 text-indigo-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Voice Library</div>
-                      <div className="text-sm text-gray-500">AI voice management</div>
-                      {services.voiceLibrary && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('voiceLibrary'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('voiceLibrary'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('voiceLibrary')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.voiceLibrary ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.voiceLibrary ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-
-                {/* Knowledge Base */}
-                <div className="flex items-center justify-between p-4 border border-gray-200 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <Building2 className="w-5 h-5 text-teal-600" />
-                    <div>
-                      <div className="font-medium text-gray-900">Knowledge Base</div>
-                      <div className="text-sm text-gray-500">Document and information management</div>
-                      {services.knowledgeBase && (
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('knowledgeBase'))}`}></div>
-                          <span className="text-xs text-gray-600">{getStatusText(getServiceStatus('knowledgeBase'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('knowledgeBase')}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      services.knowledgeBase ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-                      services.knowledgeBase ? 'translate-x-7' : 'translate-x-1'
-                    }`} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-
-          {/* Footer */}
-          <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-gray-200">
-            <button
-              onClick={() => setShowServicesModal(false)}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Close
-            </button>
-            <Magnetic>
-              <button
-                onClick={() => {
-                  // Handle save changes
-                  console.log('Services updated:', services);
-                  setShowServicesModal(false);
-                }}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Save Changes
-              </button>
-            </Magnetic>
-          </div>
-        </div>
-      </div>
-    )}
 
     {/* Help Sidebar */}
     <div className={`fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 ${showHelpSidebar ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
