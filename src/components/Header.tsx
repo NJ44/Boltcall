@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'Contact', href: '/contact' },
   ];
-
-  const handleLogout = async () => {
-    await logout();
-    setIsMenuOpen(false);
-  };
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
@@ -30,8 +26,8 @@ const Header: React.FC = () => {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Handle page routes - let React Router handle navigation
-      window.location.href = href;
+      // Handle page routes - use React Router navigation
+      navigate(href);
     }
     setIsMenuOpen(false);
   };
@@ -99,19 +95,12 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4 ml-auto">
             {isAuthenticated ? (
               <>
-                <Link to="/dashboard" className="transition-colors text-text-muted hover:text-brand-blue">
-                  Go To Dashboard
-                </Link>
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-text-muted" />
-                  <span className="text-sm text-text-muted">{user?.name}</span>
-                </div>
                 <Button
-                  onClick={handleLogout}
-                  variant="outline"
+                  onClick={() => handleNavClick('/dashboard')}
+                  variant="primary"
                   size="sm"
                 >
-                  Logout
+                  Go To Dashboard
                 </Button>
               </>
             ) : (
@@ -211,25 +200,16 @@ const Header: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <Link
-                          to="/dashboard"
-                          className="block w-full text-center py-3 px-6 text-brand-blue hover:bg-brand-blue/10 rounded-xl transition-all duration-300 font-medium text-lg"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          Go To Dashboard
-                        </Link>
-                      </motion.div>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
                         <Button
-                          onClick={handleLogout}
-                          variant="outline"
+                          onClick={() => {
+                            handleNavClick('/dashboard');
+                            setIsMenuOpen(false);
+                          }}
+                          variant="primary"
                           size="md"
                           className="w-full py-3 text-lg font-medium"
                         >
-                          Logout
+                          Go To Dashboard
                         </Button>
                       </motion.div>
                     </>
