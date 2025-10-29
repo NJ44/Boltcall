@@ -305,6 +305,7 @@ const DashboardLayout: React.FC = () => {
   // Dropdown items
   const callsItems = [
     { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-4 h-4" /> },
+    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-4 h-4" /> },
     { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-4 h-4" /> },
     { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-4 h-4" /> },
   ];
@@ -312,7 +313,6 @@ const DashboardLayout: React.FC = () => {
   const messagingItems = [
     { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-4 h-4" /> },
     { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
-    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-4 h-4" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
   ];
