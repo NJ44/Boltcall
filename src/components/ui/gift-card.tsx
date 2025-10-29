@@ -10,11 +10,13 @@ const CARD_ANIMATION_DURATION = 0.6
 interface GiftCardProps extends React.HTMLAttributes<HTMLDivElement> {
   balance?: string
   variant?: "gradient" | "dark" | "glass" | "gold" | "silver"
+  showFullPage?: boolean
 }
 
 export default function GiftCard({
   balance = "$250.00",
   variant = "gradient",
+  showFullPage = false,
 }: GiftCardProps) {
   const [isFlipped, setIsFlipped] = React.useState(false)
   const [isClicked, setIsClicked] = React.useState(false)
@@ -48,35 +50,42 @@ export default function GiftCard({
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen relative overflow-hidden w-full">
-      {/* Background with brand colors */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-sky via-brand-blue to-brand-blueDark dark:from-blue-900 dark:via-blue-800 dark:to-blue-700" />
-      
-      {/* Animated background orbs */}
-      <motion.div
-        className="absolute top-20 left-20 w-96 h-96 bg-brand-sky/20 dark:bg-brand-blue/10 rounded-full blur-3xl"
-        animate={{
-          x: [0, 50, 0],
-          y: [0, -30, 0],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-20 w-96 h-96 bg-brand-blue/20 dark:bg-brand-blueDark/10 rounded-full blur-3xl"
-        animate={{
-          x: [0, -50, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+    <div className={cn(
+      "flex items-center justify-center relative overflow-hidden w-full",
+      showFullPage ? "min-h-screen" : ""
+    )}>
+      {showFullPage && (
+        <>
+          {/* Background with brand colors */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-sky via-brand-blue to-brand-blueDark dark:from-blue-900 dark:via-blue-800 dark:to-blue-700" />
+          
+          {/* Animated background orbs */}
+          <motion.div
+            className="absolute top-20 left-20 w-96 h-96 bg-brand-sky/20 dark:bg-brand-blue/10 rounded-full blur-3xl"
+            animate={{
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-20 w-96 h-96 bg-brand-blue/20 dark:bg-brand-blueDark/10 rounded-full blur-3xl"
+            animate={{
+              x: [0, -50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </>
+      )}
 
       <div className="relative">
         <motion.div
@@ -241,14 +250,16 @@ export default function GiftCard({
         </motion.div>
 
         {/* Instructions */}
-        <motion.div
-          className="text-center text-gray-600 dark:text-gray-400 text-sm mt-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <p>Click to flip • 3D mouse effect • Eye reveals details</p>
-        </motion.div>
+        {showFullPage && (
+          <motion.div
+            className="text-center text-gray-600 dark:text-gray-400 text-sm mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1 }}
+          >
+            <p>Click to flip • 3D mouse effect • Eye reveals details</p>
+          </motion.div>
+        )}
       </div>
     </div>
   )
