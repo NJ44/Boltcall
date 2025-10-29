@@ -14,6 +14,7 @@ interface PhoneNumber {
   status: string;
   type: string;
   assignedTo: string;
+  assignedAgentId: string | null;
   createdAt: string;
 }
 
@@ -87,6 +88,7 @@ const PhoneNumbersPage: React.FC = () => {
           status: phone.status || 'inactive',
           type: phone.phone_type || 'main',
           assignedTo: phone.assigned_agent_name || 'Not assigned',
+          assignedAgentId: phone.assigned_agent_id || null,
           createdAt: phone.created_at 
             ? new Date(phone.created_at).toLocaleDateString()
             : new Date().toLocaleDateString()
@@ -284,9 +286,10 @@ const PhoneNumbersPage: React.FC = () => {
 
           <CardTableWithPanel
             columns={[
-              { key: 'number', label: 'Phone Number', width: '30%' },
-              { key: 'location', label: 'Location', width: '25%' },
-              { key: 'assignedTo', label: 'Assigned To', width: '25%' },
+              { key: 'number', label: 'Phone Number', width: '25%' },
+              { key: 'location', label: 'Location', width: '20%' },
+              { key: 'assignedTo', label: 'Assigned To', width: '20%' },
+              { key: 'assignedAgentId', label: 'Assigned Agent', width: '15%' },
               { key: 'status', label: 'Status', width: '10%' },
               { key: 'createdAt', label: 'Created', width: '10%' }
             ]}
@@ -309,6 +312,17 @@ const PhoneNumbersPage: React.FC = () => {
               {/* Assigned To */}
               <div className="text-sm text-gray-900 flex-1">
                 {phone.assignedTo}
+              </div>
+              
+              {/* Assigned Agent ID */}
+              <div className="text-sm text-gray-900 flex-1">
+                {phone.assignedAgentId ? (
+                  <span className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 text-blue-700 text-xs font-medium">
+                    {phone.assignedAgentId}
+                  </span>
+                ) : (
+                  <span className="text-gray-400 text-xs">Not assigned</span>
+                )}
               </div>
               
               {/* Status */}

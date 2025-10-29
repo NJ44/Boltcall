@@ -50,6 +50,7 @@ import NotificationPreferencesPage from '../pages/dashboard/settings/Notificatio
 import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
 import SidebarDemoPage from '../pages/SidebarDemoPage';
 import SkeletonDemoPage from '../pages/SkeletonDemoPage';
+import OrbitingSkillsDemo from '../pages/OrbitingSkillsDemo';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
 import TiltDemo from '../pages/TiltDemo';
@@ -177,6 +178,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
         <Route path="/sidebar-demo" element={<SidebarDemoPage />} />
         <Route path="/skeleton-demo" element={<SkeletonDemoPage />} />
+        <Route path="/orbiting-skills-demo" element={<OrbitingSkillsDemo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
         <Route path="/tilt-demo" element={<TiltDemo />} />

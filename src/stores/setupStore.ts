@@ -279,7 +279,7 @@ export const useSetupStore = create<SetupStore>()(
 export const setupSteps = [
   { id: 1, title: 'Account', description: 'Basic account setup' },
   { id: 2, title: 'Business Profile', description: 'Company information' },
-  { id: 3, title: 'Phone', description: 'Phone number setup' },
-  { id: 4, title: 'Knowledge Base', description: 'Services and FAQs' },
+  { id: 3, title: 'Knowledge Base', description: 'Services and FAQs' },
+  { id: 4, title: 'Phone Number', description: 'Phone number setup' },
   { id: 5, title: 'Review & Launch', description: 'Final review and go live' },
 ];

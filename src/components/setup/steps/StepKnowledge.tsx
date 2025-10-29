@@ -94,7 +94,7 @@ const StepKnowledge: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
-                  Business Information (Optional)
+                  Business website
                 </div>
               </label>
               <StyledInput
@@ -104,9 +104,6 @@ const StepKnowledge: React.FC = () => {
                 placeholder="https://yourbusiness.com"
                 name="websiteUrl"
               />
-              <p className="mt-2 text-sm text-gray-500">
-                Our AI will analyze your website to understand your services and business information.
-              </p>
             </div>
           </div>
         </div>
