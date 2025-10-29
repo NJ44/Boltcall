@@ -20,6 +20,7 @@ import AssistantPage from '../pages/dashboard/AssistantPage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
 import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
+import SpeedToLeadPage from '../pages/dashboard/SpeedToLeadPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import RemindersPage from '../pages/dashboard/RemindersPage';
@@ -110,6 +111,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="missed-calls" element={<MissedCallsPage />} />
           <Route path="integrations" element={<IntegrationsPage />} />
           <Route path="instant-lead-reply" element={<InstantLeadReplyPage />} />
+          <Route path="speed-to-lead" element={<SpeedToLeadPage />} />
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
           <Route path="website-bubble" element={<WebsiteBubblePage />} />

@@ -23,7 +23,8 @@ import {
   Ticket,
   Calendar as CalendarIcon,
   Crown,
-  Server
+  Server,
+  Zap
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -311,6 +312,7 @@ const DashboardLayout: React.FC = () => {
   const messagingItems = [
     { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-4 h-4" /> },
     { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
+    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-4 h-4" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
   ];
@@ -567,7 +569,7 @@ const DashboardLayout: React.FC = () => {
                       </motion.div>
                   )}
                   </AnimatePresence>
-                </div>
+                    </div>
 
                 {/* Get Free Packages Container - After Chats Dropdown */}
                 <div className="mb-4">
