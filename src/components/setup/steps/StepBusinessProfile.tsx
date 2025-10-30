@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
-import MultiSelect from '../forms/MultiSelect';
 import StyledInput from '../../ui/StyledInput';
 
 const StepBusinessProfile: React.FC = () => {
