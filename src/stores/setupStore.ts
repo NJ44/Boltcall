@@ -19,6 +19,13 @@ export interface SetupData {
     websiteUrl: string;
     mainCategory: string;
     country: string;
+    // Primary location fields captured during setup
+    locationName?: string;
+    addressLine1?: string;
+    addressLine2?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
     serviceAreas: string[];
     openingHours: Record<string, { open: string; close: string; closed: boolean }>;
     languages: string[];
@@ -124,6 +131,12 @@ const defaultData: SetupData = {
     websiteUrl: '',
     mainCategory: '',
     country: '',
+    locationName: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    postalCode: '',
     serviceAreas: [],
     openingHours: {
       monday: { open: '09:00', close: '17:00', closed: false },

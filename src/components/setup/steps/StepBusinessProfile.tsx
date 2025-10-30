@@ -160,6 +160,81 @@ const StepBusinessProfile: React.FC = () => {
         </div>
       </div>
 
+      {/* Primary Location */}
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Primary Location</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Location Name</label>
+              <StyledInput
+                type="text"
+                value={businessProfile.locationName || ''}
+                onChange={(e) => updateBusinessProfile({ locationName: e.target.value })}
+                placeholder="e.g., Downtown Clinic"
+                name="locationName"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Address Line 1</label>
+              <StyledInput
+                type="text"
+                value={businessProfile.addressLine1 || ''}
+                onChange={(e) => updateBusinessProfile({ addressLine1: e.target.value })}
+                placeholder="Street address"
+                name="addressLine1"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Address Line 2 (optional)</label>
+              <StyledInput
+                type="text"
+                value={businessProfile.addressLine2 || ''}
+                onChange={(e) => updateBusinessProfile({ addressLine2: e.target.value })}
+                placeholder="Apartment, suite, unit, etc."
+                name="addressLine2"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+              <StyledInput
+                type="text"
+                value={businessProfile.city || ''}
+                onChange={(e) => updateBusinessProfile({ city: e.target.value })}
+                placeholder="City"
+                name="city"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">State/Province</label>
+              <StyledInput
+                type="text"
+                value={businessProfile.state || ''}
+                onChange={(e) => updateBusinessProfile({ state: e.target.value })}
+                placeholder="State or province"
+                name="state"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
+              <StyledInput
+                type="text"
+                value={businessProfile.postalCode || ''}
+                onChange={(e) => updateBusinessProfile({ postalCode: e.target.value })}
+                placeholder="ZIP / Postal code"
+                name="postalCode"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Languages */}
       <div className="space-y-6">
         <div>
