@@ -67,9 +67,13 @@ export const createAgentAndKnowledgeBase = async (data: {
 };
 
 // Get available phone numbers webhook
-export const getAvailablePhoneNumbers = async (): Promise<PhoneNumber[]> => {
+export const getAvailablePhoneNumbers = async (country?: string): Promise<PhoneNumber[]> => {
   try {
-    const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/56056949-3a98-4987-94be-cba983065391', {
+    const url = new URL('https://n8n.srv974118.hstgr.cloud/webhook/56056949-3a98-4987-94be-cba983065391');
+    if (country) {
+      url.searchParams.set('country', country.toUpperCase());
+    }
+    const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

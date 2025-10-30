@@ -6,9 +6,8 @@ import { getAvailablePhoneNumbers, purchasePhoneNumber, type PhoneNumber } from 
 import { useToast } from '../../../contexts/ToastContext';
 
 const StepPhone: React.FC = () => {
-  const { phone, updatePhone } = useSetupStore();
+  const { phone, updatePhone, businessProfile } = useSetupStore();
   const { showToast } = useToast();
-  const [phoneNumber, setPhoneNumber] = useState(phone.newNumber.number || '');
   const [availableNumbers, setAvailableNumbers] = useState<PhoneNumber[]>([]);
   const [isLoadingNumbers, setIsLoadingNumbers] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState<string>('');
@@ -23,7 +22,8 @@ const StepPhone: React.FC = () => {
   const loadAvailableNumbers = async () => {
     setIsLoadingNumbers(true);
     try {
-      const numbers = await getAvailablePhoneNumbers();
+      const country = (businessProfile.country || '').toUpperCase();
+      const numbers = await getAvailablePhoneNumbers(country || undefined);
       setAvailableNumbers(numbers);
     } catch (error) {
       console.error('Error loading phone numbers:', error);
@@ -38,20 +38,10 @@ const StepPhone: React.FC = () => {
     }
   };
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhoneNumber(value);
-    updatePhone({
-      newNumber: {
-        ...phone.newNumber,
-        number: value,
-      },
-    });
-  };
+  
 
   const handleNumberSelect = (number: PhoneNumber) => {
     setSelectedNumber(number.phone_number);
-    setPhoneNumber(number.friendly_name);
     updatePhone({
       newNumber: {
         ...phone.newNumber,
@@ -203,29 +193,7 @@ const StepPhone: React.FC = () => {
         </div>
       )}
 
-      {/* Manual Input Fallback */}
-      <div className="border-t pt-6">
-        <div className="text-center">
-          <p className="text-sm text-gray-500 mb-4">Or enter your own phone number:</p>
-          <input
-            type="tel"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            placeholder="+1 (555) 123-4567"
-            className="w-full max-w-sm mx-auto px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          {phoneNumber.trim() && !purchasedNumber && (
-            <Button
-              onClick={handleContinue}
-              variant="primary"
-              size="lg"
-              className="mx-auto mt-4"
-            >
-              Continue with Own Number
-            </Button>
-          )}
-        </div>
-      </div>
+      {/* Manual input removed per request */}
     </div>
   );
 };

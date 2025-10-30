@@ -7,7 +7,6 @@ import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { createUserWorkspaceAndProfile } from '../../lib/database';
 import { createAgentAndKnowledgeBase } from '../../lib/webhooks';
-import { createRetellAgentAndKnowledgeBase } from '../../lib/retell';
 import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -176,18 +175,6 @@ const WizardShell: React.FC = () => {
       if (currentStep === 3) {
         try {
           showToast({ title: 'Starting setup', message: 'Creating AI agent and knowledge base...', variant: 'default', duration: 3000 });
-          const retellResponse = await createRetellAgentAndKnowledgeBase({
-            businessName: storeBusinessProfile.businessName || '',
-            websiteUrl: storeBusinessProfile.websiteUrl || '',
-            mainCategory: storeBusinessProfile.mainCategory || '',
-            country: storeBusinessProfile.country || '',
-            serviceAreas: storeBusinessProfile.serviceAreas || [],
-            openingHours: storeBusinessProfile.openingHours || {},
-            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
-            services: [],
-            faqs: [],
-            policies: undefined,
-          });
           await createAgentAndKnowledgeBase({
             businessName: storeBusinessProfile.businessName || '',
             websiteUrl: storeBusinessProfile.websiteUrl || '',
@@ -198,7 +185,7 @@ const WizardShell: React.FC = () => {
             languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
             clientId: user?.id || undefined,
           });
-          console.log('Knowledge step agent created', retellResponse);
+          console.log('Knowledge step agent created');
           showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });
         } catch (e) {
           console.error('Knowledge step webhook failed', e);
