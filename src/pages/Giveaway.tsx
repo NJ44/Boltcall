@@ -69,7 +69,7 @@ const GiveawayPage: React.FC = () => {
               </ul>
             </div>
 
-            <p className="mt-6 text-xs text-white/50">Disclaimer: Terms apply. Any taxes or fees are the responsibility of the winner.</p>
+            {/* Disclaimer removed per request */}
           </div>
 
           {/* Right: brand panel */}
