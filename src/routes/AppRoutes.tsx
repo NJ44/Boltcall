@@ -29,6 +29,7 @@ import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
 import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
 import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
+import LocationDashboardPage from '../pages/dashboard/LocationDashboardPage';
 import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
@@ -102,6 +103,7 @@ const NavigationWrapper: React.FC = () => {
           } 
         >
           <Route index element={<DashboardPage />} />
+          <Route path="locations/:locationId" element={<LocationDashboardPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
           <Route path="voice-library" element={<VoiceLibraryPage />} />

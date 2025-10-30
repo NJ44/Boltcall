@@ -30,6 +30,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
+import { LocationSwitcher } from './LocationSwitcher';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -692,8 +693,9 @@ const DashboardLayout: React.FC = () => {
                  </div>
                </div>
           
-               {/* Right side - Free Trial, Notifications, Add Member, and Dark Mode */}
-               <div className="flex items-center gap-3">
+              {/* Right side - Location switcher, Free Trial, Notifications */}
+              <div className="flex items-center gap-3">
+                <LocationSwitcher />
                  {/* Free Trial Indicator */}
                  <div className="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
                    Free Trial

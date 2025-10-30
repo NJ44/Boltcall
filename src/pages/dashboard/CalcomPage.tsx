@@ -39,6 +39,10 @@ const CalcomPage: React.FC = () => {
     price: 0
   });
 
+  const [connectOpen, setConnectOpen] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
+
   const handleAddEventType = () => {
     if (newEventType.name.trim()) {
       const eventType: EventType = {
@@ -91,13 +95,25 @@ const CalcomPage: React.FC = () => {
           </div>
         </div>
         
-        <button
-          onClick={handleOpenCalcom}
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Open Cal.com
-        </button>
+        <div className="flex items-center gap-3">
+          <span className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full ${isConnected ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+            <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-gray-400'}`} />
+            {isConnected ? 'Connected' : 'Not Connected'}
+          </span>
+          <button
+            onClick={() => setConnectOpen(true)}
+            className="flex items-center gap-2 border border-blue-200 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+          >
+            Connect Cal.com
+          </button>
+          <button
+            onClick={handleOpenCalcom}
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <ExternalLink className="w-4 h-4" />
+            Open Cal.com
+          </button>
+        </div>
       </motion.div>
 
       {/* Stats Cards */}
@@ -320,6 +336,39 @@ const CalcomPage: React.FC = () => {
         </div>
       </motion.div>
 
+      {/* Connect Drawer */}
+      {connectOpen && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setConnectOpen(false)} />
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-900 shadow-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <img src="/cal.com_logo.png" alt="Cal.com" className="w-8 h-8" />
+                <h2 className="text-lg font-semibold">Connect Cal.com</h2>
+              </div>
+              <button onClick={() => setConnectOpen(false)} className="text-gray-500 hover:text-gray-700">Close</button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">Paste your Cal.com API key to connect and manage event types from your account.</p>
+            <input
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter Cal.com API key"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3"
+            />
+            <button
+              onClick={() => { if (apiKey.trim()) { setIsConnected(true); setConnectOpen(false);} }}
+              className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Connect
+            </button>
+            <div className="mt-6 text-sm text-gray-600">
+              After connecting, we’ll pull your event types and display them below. You can add new ones via the Cal.com API.
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Integration Info */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -339,6 +388,16 @@ const CalcomPage: React.FC = () => {
           <li>Send confirmation details to both you and the customer</li>
         </ul>
       </motion.div>
+
+      {/* Embedded Calendar placeholder */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Calendar</h2>
+        <iframe
+          title="cal-embed"
+          className="w-full h-[600px] rounded-md border"
+          src={isConnected ? 'https://app.cal.com' : 'about:blank'}
+        />
+      </div>
     </div>
   );
 };

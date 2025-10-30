@@ -2,9 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Share2, Check } from 'lucide-react';
 import { AuroraBackground } from '@/components/ui/aurora-background';
+import { motion } from 'framer-motion';
 
 const GiveawayPage: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://boltcall.com/giveaway';
+  const shareText = encodeURIComponent("I'm entering Boltcall's giveaway — if either of us wins, we both win! Join here:");
+  const encodedUrl = encodeURIComponent(shareUrl);
+  const twitterHref = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodedUrl}`;
+  const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+  const linkedinHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
 
   useEffect(() => {
     const endsAt = new Date();
@@ -28,13 +35,15 @@ const GiveawayPage: React.FC = () => {
     <AuroraBackground className="min-h-screen h-auto items-start justify-start bg-white">
       <header className="w-full py-8">
         <div className="max-w-4xl mx-auto px-4 flex justify-center">
-          <Link to="/" className="block">
-            <img src="/boltcall_full_logo.png" alt="Boltcall" className="h-16 w-auto" />
-          </Link>
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
+            <Link to="/" className="block">
+              <img src="/boltcall_full_logo.png" alt="Boltcall" className="h-16 w-auto" />
+            </Link>
+          </motion.div>
         </div>
       </header>
 
-        <div className="max-w-4xl mx-auto px-4 pb-16">
+        <motion.div className="max-w-4xl mx-auto px-4 pb-16" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: 'easeOut', delay: 0.15 }}>
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl overflow-hidden shadow-[0_35px_60px_-12px_rgba(0,0,0,0.6)]">
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
@@ -101,15 +110,36 @@ const GiveawayPage: React.FC = () => {
 
               <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
 
-              <div className="text-sm opacity-90">Like us on Facebook so you don’t miss out on future contests.</div>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-3 inline-flex items-center gap-2 bg-[#1877F2] text-white px-4 py-2 rounded-md shadow hover:opacity-95"
-              >
-                <Facebook className="w-4 h-4" /> Like
-              </a>
+              <div className="text-sm md:text-base opacity-90">Share the giveaway on your socials for a higher chance to win!</div>
+              <div className="mt-4 grid grid-cols-3 gap-2 justify-center w-full max-w-[220px] mx-auto">
+                <a
+                  href={twitterHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Share on X (Twitter)"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z"/></svg>
+                </a>
+                <a
+                  href={facebookHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Share on Facebook"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                >
+                  <Facebook className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href={linkedinHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Share on LinkedIn"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M4.983 3.5C4.983 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.483 1.12 2.483 2.5zM.25 8.25h4.5v15.5H.25zM8.75 8.25h4.31v2.12h.06c.6-1.14 2.06-2.34 4.24-2.34 4.53 0 5.37 2.98 5.37 6.85v7.88h-4.5v-6.98c0-1.66-.03-3.8-2.31-3.8-2.31 0-2.67 1.8-2.67 3.66v7.12h-4.5z"/></svg>
+                </a>
+              </div>
 
               <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
 
@@ -124,7 +154,7 @@ const GiveawayPage: React.FC = () => {
             </div>
           </div>
         </div>
-        </div>
+        </motion.div>
     </AuroraBackground>
   );
 };

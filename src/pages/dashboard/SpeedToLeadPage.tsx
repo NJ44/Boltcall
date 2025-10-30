@@ -312,14 +312,14 @@ const SpeedToLeadPage: React.FC = () => {
 
       {/* Setup Instructions - Buttons */}
       <div>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Setup Instructions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white mb-5">Setup Instructions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Website Forms Button */}
           <button
             onClick={() => openInstructionModal('website')}
-            className="group flex items-center gap-4 p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-purple-300 dark:hover:border-purple-700 hover:shadow-md transition-all"
+            className="group relative flex items-center gap-4 p-6 rounded-xl bg-white/80 dark:bg-gray-900/60 backdrop-blur border border-white/20 ring-1 ring-gray-200/60 dark:ring-gray-700/60 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 hover:ring-purple-400/40"
           >
-            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/15 to-purple-600/10 dark:from-purple-400/15 dark:to-purple-500/10 flex items-center justify-center group-hover:from-purple-500/25 group-hover:to-purple-600/20 transition-colors">
               <Globe className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
             <div className="text-left">
@@ -331,9 +331,9 @@ const SpeedToLeadPage: React.FC = () => {
           {/* Google Ads Button */}
           <button
             onClick={() => openInstructionModal('google')}
-            className="group flex items-center gap-4 p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all"
+            className="group relative flex items-center gap-4 p-6 rounded-xl bg-white/80 dark:bg-gray-900/60 backdrop-blur border border-white/20 ring-1 ring-gray-200/60 dark:ring-gray-700/60 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 hover:ring-blue-400/40"
           >
-            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/15 to-blue-600/10 dark:from-blue-400/15 dark:to-blue-500/10 flex items-center justify-center group-hover:from-blue-500/25 group-hover:to-blue-600/20 transition-colors">
               <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -350,9 +350,9 @@ const SpeedToLeadPage: React.FC = () => {
           {/* Facebook Ads Button */}
           <button
             onClick={() => openInstructionModal('facebook')}
-            className="group flex items-center gap-4 p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all"
+            className="group relative flex items-center gap-4 p-6 rounded-xl bg-white/80 dark:bg-gray-900/60 backdrop-blur border border-white/20 ring-1 ring-gray-200/60 dark:ring-gray-700/60 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 hover:ring-blue-400/40"
           >
-            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/15 to-blue-600/10 dark:from-blue-400/15 dark:to-blue-500/10 flex items-center justify-center group-hover:from-blue-500/25 group-hover:to-blue-600/20 transition-colors">
               <Facebook className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="text-left">
