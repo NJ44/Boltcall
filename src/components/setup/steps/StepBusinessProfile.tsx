@@ -167,17 +167,6 @@ const StepBusinessProfile: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Location Name</label>
-              <StyledInput
-                type="text"
-                value={businessProfile.locationName || ''}
-                onChange={(e) => updateBusinessProfile({ locationName: e.target.value })}
-                placeholder="e.g., Downtown Clinic"
-                name="locationName"
-              />
-            </div>
-
-            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Address Line 1</label>
               <StyledInput
                 type="text"
@@ -185,17 +174,6 @@ const StepBusinessProfile: React.FC = () => {
                 onChange={(e) => updateBusinessProfile({ addressLine1: e.target.value })}
                 placeholder="Street address"
                 name="addressLine1"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Address Line 2 (optional)</label>
-              <StyledInput
-                type="text"
-                value={businessProfile.addressLine2 || ''}
-                onChange={(e) => updateBusinessProfile({ addressLine2: e.target.value })}
-                placeholder="Apartment, suite, unit, etc."
-                name="addressLine2"
               />
             </div>
 

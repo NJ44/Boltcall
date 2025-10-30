@@ -19,10 +19,8 @@ export interface SetupData {
     websiteUrl: string;
     mainCategory: string;
     country: string;
-    // Primary location fields captured during setup
-    locationName?: string;
+    // Primary location fields captured during setup (name inferred from address)
     addressLine1?: string;
-    addressLine2?: string;
     city?: string;
     state?: string;
     postalCode?: string;
@@ -131,9 +129,7 @@ const defaultData: SetupData = {
     websiteUrl: '',
     mainCategory: '',
     country: '',
-    locationName: '',
     addressLine1: '',
-    addressLine2: '',
     city: '',
     state: '',
     postalCode: '',

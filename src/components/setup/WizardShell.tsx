@@ -6,6 +6,7 @@ import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { createUserWorkspaceAndProfile } from '../../lib/database';
+import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 
@@ -136,6 +137,31 @@ const WizardShell: React.FC = () => {
         );
         
         console.log('Successfully created workspace and business profile:', { workspace, businessProfile });
+
+        // Auto-create primary location using address fields
+        try {
+          const nameFromAddress = storeBusinessProfile.addressLine1?.trim() || storeBusinessProfile.businessName || 'Primary Location';
+          await LocationService.create({
+            business_profile_id: businessProfile.id,
+            user_id: user.id,
+            name: nameFromAddress,
+            slug: null,
+            phone: null,
+            email: null,
+            address_line1: storeBusinessProfile.addressLine1 || null,
+            address_line2: null,
+            city: storeBusinessProfile.city || null,
+            state: storeBusinessProfile.state || null,
+            postal_code: storeBusinessProfile.postalCode || null,
+            country: storeBusinessProfile.country || null,
+            timezone: account.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+            is_primary: true,
+            is_active: true,
+          } as any);
+          console.log('Primary location created');
+        } catch (locErr) {
+          console.warn('Could not create primary location:', locErr);
+        }
         
         // Update the account with workspace ID
         if (account) {

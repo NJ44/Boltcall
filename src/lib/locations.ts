@@ -22,6 +22,15 @@ export interface Location {
 }
 
 export class LocationService {
+  static async create(params: Omit<Location, 'id' | 'created_at' | 'updated_at'>): Promise<Location> {
+    const { data, error } = await supabase
+      .from('locations')
+      .insert([params])
+      .select('*')
+      .single();
+    if (error) throw new Error(error.message);
+    return data as Location;
+  }
   static async listByBusinessProfile(businessProfileId: string): Promise<Location[]> {
     const { data, error } = await supabase
       .from('locations')
