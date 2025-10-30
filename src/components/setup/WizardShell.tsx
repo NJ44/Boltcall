@@ -6,6 +6,8 @@ import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { createUserWorkspaceAndProfile } from '../../lib/database';
+import { createAgentAndKnowledgeBase } from '../../lib/webhooks';
+import { createRetellAgentAndKnowledgeBase } from '../../lib/retell';
 import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -132,7 +134,7 @@ const WizardShell: React.FC = () => {
             country: storeBusinessProfile.country,
             service_areas: storeBusinessProfile.serviceAreas,
             opening_hours: storeBusinessProfile.openingHours,
-            languages: storeBusinessProfile.languages,
+            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
           }
         );
         
@@ -170,6 +172,40 @@ const WizardShell: React.FC = () => {
         }
       }
       
+      // Knowledge step: run webhook on Continue
+      if (currentStep === 3) {
+        try {
+          showToast({ title: 'Starting setup', message: 'Creating AI agent and knowledge base...', variant: 'default', duration: 3000 });
+          const retellResponse = await createRetellAgentAndKnowledgeBase({
+            businessName: storeBusinessProfile.businessName || '',
+            websiteUrl: storeBusinessProfile.websiteUrl || '',
+            mainCategory: storeBusinessProfile.mainCategory || '',
+            country: storeBusinessProfile.country || '',
+            serviceAreas: storeBusinessProfile.serviceAreas || [],
+            openingHours: storeBusinessProfile.openingHours || {},
+            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
+            services: [],
+            faqs: [],
+            policies: undefined,
+          });
+          await createAgentAndKnowledgeBase({
+            businessName: storeBusinessProfile.businessName || '',
+            websiteUrl: storeBusinessProfile.websiteUrl || '',
+            mainCategory: storeBusinessProfile.mainCategory || '',
+            country: storeBusinessProfile.country || '',
+            serviceAreas: storeBusinessProfile.serviceAreas || [],
+            openingHours: storeBusinessProfile.openingHours || {},
+            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
+            clientId: user?.id || undefined,
+          });
+          console.log('Knowledge step agent created', retellResponse);
+          showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });
+        } catch (e) {
+          console.error('Knowledge step webhook failed', e);
+          showToast({ title: 'Agent setup failed', message: e instanceof Error ? e.message : 'Unknown error', variant: 'error', duration: 6000 });
+        }
+      }
+
       // Mark current step as completed
       markStepCompleted(currentStep);
       
@@ -340,7 +376,7 @@ const WizardShell: React.FC = () => {
                         
                         {/* Continue Button - Hide for review step (step 5) */}
                         {expandedStep === currentStep && currentStep !== 5 && (
-                          <div className="mt-6 pt-6 border-t border-gray-200">
+                          <div className="mt-6">
                             <div className="flex justify-end">
                               <Button
                                 onClick={handleContinue}

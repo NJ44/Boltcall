@@ -88,7 +88,7 @@ const StepReview: React.FC = () => {
         { label: 'Website', value: businessProfile.websiteUrl || 'Not set' },
         { label: 'Category', value: businessProfile.mainCategory || 'Not set' },
         { label: 'Service Areas', value: businessProfile.serviceAreas.join(', ') || 'Not set' },
-        { label: 'Languages', value: businessProfile.languages.join(', ') || 'English' },
+        { label: 'Language', value: businessProfile.languages || 'English' },
       ],
     },
   ];

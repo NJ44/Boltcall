@@ -40,7 +40,7 @@ const StepKnowledge: React.FC = () => {
         country: businessProfile.country || '',
         serviceAreas: businessProfile.serviceAreas || [],
         openingHours: businessProfile.openingHours || {},
-        languages: businessProfile.languages || [],
+        languages: businessProfile.languages ? [businessProfile.languages] : [],
         // Add knowledge base data if available
         services: [], // Could be populated from knowledgeBase.services
         faqs: [], // Could be populated from knowledgeBase.faqs
@@ -58,7 +58,7 @@ const StepKnowledge: React.FC = () => {
         country: businessProfile.country || '',
         serviceAreas: businessProfile.serviceAreas || [],
         openingHours: businessProfile.openingHours || {},
-        languages: businessProfile.languages || [],
+        languages: businessProfile.languages ? [businessProfile.languages] : [],
         clientId: user?.id || undefined,
       });
       
@@ -88,14 +88,9 @@ const StepKnowledge: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Knowledge Base */}
+      {/* Website input only */}
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Knowledge Base Setup</h3>
-          <p className="text-gray-600 mb-6">
-            Set up your knowledge base so the AI can answer questions about your business and services.
-          </p>
-          
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -114,36 +109,6 @@ const StepKnowledge: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Create Agent Button */}
-      <div className="text-center">
-        <Button
-          onClick={handleCreateAgent}
-          disabled={isCreatingAgent || agentCreated}
-          variant="primary"
-          size="lg"
-          className="mx-auto"
-        >
-          {isCreatingAgent ? 'Creating AI Agent...' : agentCreated ? 'AI Agent Created ✓' : 'Create AI Agent & Knowledge Base'}
-        </Button>
-        {agentCreated && (
-          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-green-800 text-sm font-medium mb-2">
-              ✓ AI agent and knowledge base created successfully!
-            </p>
-            {retellAgentId && (
-              <p className="text-green-700 text-xs">
-                Retell Agent ID: {retellAgentId}
-              </p>
-            )}
-            {retellKnowledgeBaseId && (
-              <p className="text-green-700 text-xs">
-                Knowledge Base ID: {retellKnowledgeBaseId}
-              </p>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Document Upload Note */}

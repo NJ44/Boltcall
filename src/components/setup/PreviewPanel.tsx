@@ -38,7 +38,7 @@ const PreviewPanel: React.FC = () => {
     return hours ? `${hours.open} - ${hours.close}` : 'Hours not set';
   };
 
-  const getLanguageNames = (codes: string[]) => {
+  const getLanguageNames = (codes: string | string[]) => {
     const languageMap: Record<string, string> = {
       en: 'English',
       es: 'Spanish',
@@ -53,7 +53,8 @@ const PreviewPanel: React.FC = () => {
       ko: 'Korean',
     };
     
-    return codes.map(code => languageMap[code] || code).join(', ');
+    const list = Array.isArray(codes) ? codes : [codes];
+    return list.filter(Boolean).map(code => languageMap[code] || code).join(', ');
   };
 
   return (
@@ -91,7 +92,7 @@ const PreviewPanel: React.FC = () => {
             <span className="text-gray-600">{getBusinessHours()}</span>
           </div>
 
-          {businessProfile.languages.length > 0 && (
+          {businessProfile.languages && (
             <div className="flex items-center space-x-2 text-sm">
               <span className="text-gray-400">🌐</span>
               <span className="text-gray-600">{getLanguageNames(businessProfile.languages)}</span>
