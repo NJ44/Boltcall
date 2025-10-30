@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FileText, BookOpen } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
-import { useAuth } from '../../../contexts/AuthContext';
+ 
 
 const StepKnowledge: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
-  const { user } = useAuth();
   
 
   return (

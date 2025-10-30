@@ -107,7 +107,7 @@ const WizardShell: React.FC = () => {
       businessProfile.businessName &&
       businessProfile.mainCategory &&
       businessProfile.country &&
-      businessProfile.languages.length > 0
+      businessProfile.languages
     );
   };
 
