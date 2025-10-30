@@ -26,7 +26,7 @@ export interface SetupData {
     postalCode?: string;
     serviceAreas: string[];
     openingHours: Record<string, { open: string; close: string; closed: boolean }>;
-    languages: string[];
+    languages: string;
   };
   
   // Step 3: Calendar
@@ -143,7 +143,7 @@ const defaultData: SetupData = {
       saturday: { open: '09:00', close: '17:00', closed: false },
       sunday: { open: '09:00', close: '17:00', closed: false },
     },
-    languages: ['en'],
+    languages: 'en',
   },
   calendar: {
     isConnected: false,
