@@ -77,6 +77,9 @@ export interface UpdateCallbackRequest {
   status?: CallbackStatus;
   priority?: number;
   scheduled_at?: string;
+  completed_at?: string;
+  attempted_at?: string;
+  attempt_count?: number;
   notes?: string;
   special_instructions?: string;
   assigned_agent_id?: string;

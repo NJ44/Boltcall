@@ -25,7 +25,7 @@ const StepKnowledge: React.FC = () => {
     showToast({
       title: 'Starting setup',
       message: 'Creating AI agent and knowledge base in the background...',
-      variant: 'info',
+      variant: 'default',
       duration: 4000
     });
     // Let the wizard proceed to next step right away

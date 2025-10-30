@@ -124,6 +124,7 @@ export interface UpdateChatRequest {
   agent_id?: string;
   agent_notes?: string;
   internal_notes?: string;
+  ended_at?: string;
   customer_sentiment?: CustomerSentiment;
   customer_intent?: CustomerIntent;
   customer_urgency?: CustomerUrgency;

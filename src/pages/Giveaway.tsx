@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, Facebook, Share2, Check } from 'lucide-react';
+import { Facebook, Share2, Check } from 'lucide-react';
 
 const GiveawayPage: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
