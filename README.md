@@ -136,6 +136,91 @@ CREATE TABLE leads (
 );
 ```
 
+#### Callbacks Table
+```sql
+CREATE TABLE callbacks (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  lead_id UUID REFERENCES leads(id) ON DELETE CASCADE,
+  client_name TEXT NOT NULL,
+  client_phone TEXT NOT NULL,
+  client_email TEXT,
+  company_name TEXT,
+  preferred_callback_time TIMESTAMP WITH TIME ZONE,
+  preferred_time_range VARCHAR(50),
+  timezone VARCHAR(50) DEFAULT 'UTC',
+  urgency VARCHAR(20) DEFAULT 'normal',
+  status VARCHAR(20) DEFAULT 'pending',
+  priority INTEGER DEFAULT 5,
+  callback_reason TEXT,
+  notes TEXT,
+  special_instructions TEXT,
+  scheduled_at TIMESTAMP WITH TIME ZONE,
+  completed_at TIMESTAMP WITH TIME ZONE,
+  attempted_at TIMESTAMP WITH TIME ZONE,
+  attempt_count INTEGER DEFAULT 0,
+  outcome VARCHAR(50),
+  outcome_notes TEXT,
+  follow_up_required BOOLEAN DEFAULT false,
+  follow_up_date TIMESTAMP WITH TIME ZONE,
+  assigned_agent_id UUID REFERENCES auth.users(id),
+  agent_notes TEXT,
+  source VARCHAR(100),
+  source_details TEXT,
+  tags TEXT[],
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+#### Chats Table
+```sql
+CREATE TABLE chats (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  lead_id UUID REFERENCES leads(id) ON DELETE CASCADE,
+  chat_session_id VARCHAR(255) UNIQUE NOT NULL,
+  external_chat_id VARCHAR(255),
+  primary_phone VARCHAR(20) NOT NULL,
+  secondary_phone VARCHAR(20),
+  phone_type VARCHAR(20) DEFAULT 'mobile',
+  customer_name VARCHAR(255),
+  customer_email VARCHAR(255),
+  customer_company VARCHAR(255),
+  agent_id UUID REFERENCES auth.users(id),
+  status VARCHAR(20) DEFAULT 'active',
+  priority VARCHAR(10) DEFAULT 'normal',
+  chat_type VARCHAR(20) DEFAULT 'inbound',
+  started_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  last_activity_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  ended_at TIMESTAMP WITH TIME ZONE,
+  duration_seconds INTEGER DEFAULT 0,
+  language VARCHAR(10) DEFAULT 'en',
+  timezone VARCHAR(50) DEFAULT 'UTC',
+  source VARCHAR(50) DEFAULT 'website',
+  source_details TEXT,
+  chat_history JSONB DEFAULT '[]',
+  message_count INTEGER DEFAULT 0,
+  last_message TEXT,
+  last_message_at TIMESTAMP WITH TIME ZONE,
+  customer_sentiment VARCHAR(20),
+  customer_intent VARCHAR(50),
+  customer_urgency VARCHAR(20) DEFAULT 'normal',
+  agent_notes TEXT,
+  internal_notes TEXT,
+  tags TEXT[],
+  resolution_status VARCHAR(20),
+  resolution_notes TEXT,
+  follow_up_required BOOLEAN DEFAULT false,
+  follow_up_date TIMESTAMP WITH TIME ZONE,
+  customer_satisfaction INTEGER,
+  agent_rating INTEGER,
+  quality_score DECIMAL(3,2),
+  integration_data JSONB DEFAULT '{}',
+  metadata JSONB DEFAULT '{}',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
 ### Authentication Features
 
 - User registration with email verification

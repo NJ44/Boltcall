@@ -112,18 +112,7 @@ const FreeSetup: React.FC = () => {
             </motion.button>
           </div>
 
-          {/* Right side - Radial Orbital Timeline */}
-          <motion.div 
-            className="relative"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <div className="relative w-full h-96">
-              <RadialOrbitalTimelineIntegration timelineData={timelineData} />
-            </div>
-          </motion.div>
+          {/* Right side removed per request */}
         </div>
       </div>
     </section>

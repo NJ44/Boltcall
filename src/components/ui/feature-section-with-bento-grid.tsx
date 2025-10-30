@@ -154,9 +154,9 @@ function Feature() {
                     <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
                   </CardVisual>
                   <CardBody>
-                    <CardTitle>60-Second Response Rule</CardTitle>
+                    <CardTitle>Increased Revenue</CardTitle>
                     <CardDescription>
-                      Companies that respond to leads within 60 seconds are 391% more likely to convert them into customers.
+                      Faster responses capture more opportunities, boosting conversions and revenue.
                     </CardDescription>
                   </CardBody>
                 </AnimatedCard>

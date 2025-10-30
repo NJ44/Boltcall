@@ -19,8 +19,18 @@ const StepKnowledge: React.FC = () => {
 
   const handleCreateAgent = async () => {
     if (agentCreated) return;
-    
+
+    // Immediately allow user to continue; run workflow in background
     setIsCreatingAgent(true);
+    showToast({
+      title: 'Starting setup',
+      message: 'Creating AI agent and knowledge base in the background...',
+      variant: 'info',
+      duration: 4000
+    });
+    // Let the wizard proceed to next step right away
+    window.dispatchEvent(new CustomEvent('knowledge-step-completed'));
+
     try {
       // Create Retell knowledge base and agent
       const retellResponse = await createRetellAgentAndKnowledgeBase({
@@ -56,23 +66,20 @@ const StepKnowledge: React.FC = () => {
       console.log('Retell agent and knowledge base created successfully');
       console.log('Agent ID:', retellResponse.agent_id);
       console.log('Knowledge Base ID:', retellResponse.knowledge_base_id);
-      
+
       showToast({
-        title: 'Success',
-        message: 'AI agent and knowledge base created successfully!',
+        title: 'Agent ready',
+        message: 'AI agent and knowledge base were created successfully.',
         variant: 'success',
         duration: 5000
       });
-      
-      // Trigger next step after successful creation
-      window.dispatchEvent(new CustomEvent('knowledge-step-completed'));
     } catch (error) {
       console.error('Error creating agent:', error);
       showToast({
-        title: 'Error',
-        message: 'Failed to create AI agent. Please try again.',
+        title: 'Agent setup failed',
+        message: error instanceof Error ? error.message : 'Unknown error during agent creation.',
         variant: 'error',
-        duration: 5000
+        duration: 6000
       });
     } finally {
       setIsCreatingAgent(false);
