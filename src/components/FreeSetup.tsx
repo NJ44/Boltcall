@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Bot, Megaphone, FormInput, Globe, MessageSquare } from "lucide-react";
 
 const FreeSetup: React.FC = () => {
   const navigate = useNavigate();

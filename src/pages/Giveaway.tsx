@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Share2, Check } from 'lucide-react';
+import { AuroraBackground } from '@/components/ui/aurora-background';
 
 const GiveawayPage: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -24,7 +25,7 @@ const GiveawayPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <AuroraBackground className="min-h-screen h-auto items-start justify-start bg-white">
       <header className="w-full py-8">
         <div className="max-w-4xl mx-auto px-4 flex justify-center">
           <Link to="/" className="block">
@@ -33,8 +34,8 @@ const GiveawayPage: React.FC = () => {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl overflow-hidden shadow-xl">
+        <div className="max-w-4xl mx-auto px-4 pb-16">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl overflow-hidden shadow-[0_35px_60px_-12px_rgba(0,0,0,0.6)]">
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
@@ -123,8 +124,8 @@ const GiveawayPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+        </div>
+    </AuroraBackground>
   );
 };
 

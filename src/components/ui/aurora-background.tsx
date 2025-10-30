@@ -1,6 +1,7 @@
 "use client";
-import { cn } from "../../lib/utils";
+
 import React, { type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   children: ReactNode;
@@ -24,7 +25,6 @@ export const AuroraBackground = ({
       >
         <div className="absolute inset-0 overflow-hidden">
           <div
-            //   I'm sorry but this is what peak developer performance looks like // trigger warning
             className={cn(
               `
             [--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)]
@@ -35,7 +35,7 @@ export const AuroraBackground = ({
             [background-size:300%,_200%]
             [background-position:50%_50%,50%_50%]
             filter blur-[10px] invert dark:invert-0
-            after:content-[""] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] 
+            after:content-["" ] after:absolute after:inset-0 after:[background-image:var(--white-gradient),var(--aurora)] 
             after:dark:[background-image:var(--dark-gradient),var(--aurora)]
             after:[background-size:200%,_100%] 
             after:animate-aurora after:[background-attachment:fixed] after:mix-blend-difference
@@ -53,3 +53,4 @@ export const AuroraBackground = ({
   );
 };
 
+export default AuroraBackground;
