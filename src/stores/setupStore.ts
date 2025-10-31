@@ -11,6 +11,7 @@ export interface SetupData {
     timezone: string;
     workspaceId?: string;
     userId?: string;
+    businessProfileId?: string;
   };
   
   // Step 2: Business Profile
@@ -19,6 +20,7 @@ export interface SetupData {
     websiteUrl: string;
     mainCategory: string;
     country: string;
+    businessPhone?: string;
     // Primary location fields captured during setup (name inferred from address)
     addressLine1?: string;
     city?: string;

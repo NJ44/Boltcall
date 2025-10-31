@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Check, ShoppingCart } from 'lucide-react';
+import { Phone, Check } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import Button from '../../ui/Button';
 import { getAvailablePhoneNumbers, purchasePhoneNumber, type PhoneNumber } from '../../../lib/webhooks';
@@ -50,8 +50,8 @@ const StepPhone: React.FC = () => {
     });
   };
 
-  const handlePurchaseNumber = async () => {
-    if (!selectedNumber) {
+  const handleContinue = async () => {
+    if (!selectedNumber && !purchasedNumber) {
       showToast({
         title: 'Selection Required',
         message: 'Please select a phone number first.',
@@ -61,39 +61,44 @@ const StepPhone: React.FC = () => {
       return;
     }
 
-    setIsPurchasing(true);
-    try {
-      const result = await purchasePhoneNumber(selectedNumber);
-      if (result.success) {
-        setPurchasedNumber(selectedNumber);
-        console.log('Phone number purchased successfully:', result.phoneNumber);
-        
-        // Trigger next step after successful purchase
-        window.dispatchEvent(new CustomEvent('phone-step-completed'));
-      } else {
+    // If number is not yet purchased, purchase it first
+    if (!purchasedNumber && selectedNumber) {
+      setIsPurchasing(true);
+      try {
+        const result = await purchasePhoneNumber(selectedNumber);
+        if (result.success) {
+          setPurchasedNumber(selectedNumber);
+          showToast({
+            title: 'Success',
+            message: 'Phone number purchased successfully!',
+            variant: 'success',
+            duration: 3000
+          });
+          // Trigger next step after successful purchase
+          window.dispatchEvent(new CustomEvent('phone-step-completed'));
+        } else {
+          showToast({
+            title: 'Purchase Failed',
+            message: result.message || 'Failed to purchase phone number. Please try again.',
+            variant: 'error',
+            duration: 5000
+          });
+        }
+      } catch (error) {
+        console.error('Error purchasing phone number:', error);
         showToast({
-          title: 'Purchase Failed',
-          message: result.message || 'Failed to purchase phone number. Please try again.',
+          title: 'Error',
+          message: 'Failed to purchase phone number. Please try again.',
           variant: 'error',
           duration: 5000
         });
+      } finally {
+        setIsPurchasing(false);
       }
-    } catch (error) {
-      console.error('Error purchasing phone number:', error);
-      showToast({
-        title: 'Error',
-        message: 'Failed to purchase phone number. Please try again.',
-        variant: 'error',
-        duration: 5000
-      });
-    } finally {
-      setIsPurchasing(false);
+    } else {
+      // Number already purchased, just continue
+      window.dispatchEvent(new CustomEvent('phone-step-completed'));
     }
-  };
-
-  const handleContinue = () => {
-    // Mark as completed and trigger next step
-    window.dispatchEvent(new CustomEvent('phone-step-completed'));
   };
 
   return (
@@ -113,14 +118,6 @@ const StepPhone: React.FC = () => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h4 className="text-lg font-medium text-gray-900">Available Phone Numbers</h4>
-          <Button
-            onClick={loadAvailableNumbers}
-            disabled={isLoadingNumbers}
-            variant="outline"
-            size="sm"
-          >
-            {isLoadingNumbers ? 'Loading...' : 'Refresh'}
-          </Button>
         </div>
 
         {isLoadingNumbers ? (
@@ -156,42 +153,27 @@ const StepPhone: React.FC = () => {
         )}
       </div>
 
-      {/* Purchase Button */}
-      {selectedNumber && !purchasedNumber && (
-        <div className="text-center">
-          <Button
-            onClick={handlePurchaseNumber}
-            disabled={isPurchasing}
-            variant="primary"
-            size="lg"
-            className="mx-auto"
-          >
-            {isPurchasing ? 'Purchasing...' : 'Purchase Number'}
-            {!isPurchasing && <ShoppingCart className="w-4 h-4 ml-2" />}
-          </Button>
-        </div>
-      )}
-
-      {/* Success Message */}
-      {purchasedNumber && (
-        <div className="text-center">
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+      {/* Continue Button */}
+      <div className="text-center">
+        {purchasedNumber && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
             <div className="flex items-center justify-center gap-2 text-green-800">
               <Check className="w-5 h-5" />
               <span className="font-medium">Phone number purchased successfully!</span>
             </div>
             <p className="text-green-700 mt-1">Number: {purchasedNumber}</p>
           </div>
-          <Button
-            onClick={handleContinue}
-            variant="primary"
-            size="lg"
-            className="mx-auto mt-4"
-          >
-            Continue to Review
-          </Button>
-        </div>
-      )}
+        )}
+        <Button
+          onClick={handleContinue}
+          disabled={isPurchasing}
+          variant="primary"
+          size="lg"
+          className="mx-auto"
+        >
+          {isPurchasing ? 'Purchasing...' : 'Continue'}
+        </Button>
+      </div>
 
       {/* Manual input removed per request */}
     </div>

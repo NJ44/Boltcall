@@ -105,13 +105,13 @@ const GiveawayPage: React.FC = () => {
                 rel="noopener noreferrer"
                 className="mt-8 inline-flex items-center justify-center px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors"
               >
-                Enter Contest
+                Enter Giveaway
               </a>
 
               <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
 
               <div className="text-sm md:text-base opacity-90">Share the giveaway on your socials for a higher chance to win!</div>
-              <div className="mt-4 grid grid-cols-3 gap-2 justify-center w-full max-w-[220px] mx-auto">
+              <div className="mt-4 flex items-center justify-center gap-2.5 px-2">
                 <a
                   href={twitterHref}
                   target="_blank"

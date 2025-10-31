@@ -27,7 +27,7 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account } = useSetupStore();
+  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account, updateAccount } = useSetupStore();
   const [expandedStep, setExpandedStep] = useState(0);
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
   const { user } = useAuth();
@@ -147,7 +147,7 @@ const WizardShell: React.FC = () => {
             user_id: user.id,
             name: nameFromAddress,
             slug: null,
-            phone: null,
+            phone: storeBusinessProfile.businessPhone || null,
             email: null,
             address_line1: storeBusinessProfile.addressLine1 || null,
             address_line2: null,
@@ -164,11 +164,12 @@ const WizardShell: React.FC = () => {
           console.warn('Could not create primary location:', locErr);
         }
         
-        // Update the account with workspace ID
-        if (account) {
-          // You might want to update the account store with the workspace ID
-          console.log('Workspace created with ID:', workspace.id);
-        }
+        // Update the account with workspace ID and business profile ID
+        updateAccount({
+          workspaceId: workspace.id,
+          businessProfileId: businessProfile.id,
+        });
+        console.log('Workspace created with ID:', workspace.id, 'Business Profile ID:', businessProfile.id);
       }
       
       // Knowledge step: run webhook on Continue
@@ -184,6 +185,7 @@ const WizardShell: React.FC = () => {
             openingHours: storeBusinessProfile.openingHours || {},
             languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
             clientId: user?.id || undefined,
+            businessProfileId: account.businessProfileId || undefined,
           });
           console.log('Knowledge step agent created');
           showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });

@@ -93,6 +93,28 @@ const StepBusinessProfile: React.FC = () => {
         </div>
       </div>
 
+      {/* Business Phone Number */}
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Business Phone Number</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <StyledInput
+                type="tel"
+                value={businessProfile.businessPhone || ''}
+                onChange={(e) => updateBusinessProfile({ businessPhone: e.target.value })}
+                placeholder="Enter your business phone number"
+                name="businessPhone"
+              />
+              {errors.businessPhone && (
+                <p className="mt-1 text-sm text-red-600">{errors.businessPhone}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Business Category */}
       <div className="space-y-6">
         <div>
