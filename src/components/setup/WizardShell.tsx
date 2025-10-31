@@ -221,6 +221,14 @@ const WizardShell: React.FC = () => {
 
         // If number is not yet purchased, purchase it first
         if (!purchasedNumber && selectedNumber) {
+          // Show progress toast immediately
+          showToast({
+            title: 'Acquiring Phone Number',
+            message: 'Please wait while we acquire your phone number...',
+            variant: 'default',
+            duration: 3000
+          });
+          
           try {
             const result = await purchasePhoneNumber(selectedNumber);
             if (result.success) {

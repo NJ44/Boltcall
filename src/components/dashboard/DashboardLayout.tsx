@@ -40,7 +40,6 @@ const DashboardLayout: React.FC = () => {
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
-  const [freePackagesExpanded, setFreePackagesExpanded] = useState(false);
   
   // Get current user from auth context
   const { user } = useAuth();
@@ -429,6 +428,15 @@ const DashboardLayout: React.FC = () => {
                      </div>
                    </div>
                     <div className="border-t border-gray-100 dark:border-gray-700">
+                     <Link
+                       to="/dashboard/settings/plan-billing"
+                       onClick={() => setShowUserMenu(false)}
+                       className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
+                          isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                     >
+                       Plans & Billing
+                     </Link>
                      <button
                        onClick={handleLogout}
                         className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
@@ -572,52 +580,6 @@ const DashboardLayout: React.FC = () => {
                   </AnimatePresence>
                     </div>
 
-                {/* Get Free Packages Container - After Chats Dropdown */}
-                <div className="mb-4">
-                  <motion.div
-                    className="relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white cursor-pointer mx-2"
-                    onMouseEnter={() => setFreePackagesExpanded(true)}
-                    onMouseLeave={() => setFreePackagesExpanded(false)}
-                    layout
-                  >
-                    {/* Expanded Options - Show ABOVE the main title */}
-                    <AnimatePresence>
-                      {freePackagesExpanded && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
-                          className="px-4 pt-4 space-y-2 overflow-hidden"
-                        >
-                          <button
-                            onClick={() => {
-                              // Handle referrals click
-                              console.log('Referrals clicked');
-                            }}
-                            className="w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm"
-                          >
-                            Referrals
-                          </button>
-                          <button
-                            onClick={() => {
-                              // Handle leave a review click
-                              console.log('Leave a review clicked');
-                            }}
-                            className="w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm"
-                          >
-                            Leave a review
-                          </button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Main Title - Always Visible at Bottom */}
-                    <div className="flex items-center justify-center h-12 px-4">
-                      <span className="text-sm font-semibold">Get Free Packages</span>
-                    </div>
-                  </motion.div>
-                </div>
               </div>
 
               {/* Bottom Group - Always at bottom */}
@@ -693,13 +655,13 @@ const DashboardLayout: React.FC = () => {
                  </div>
                </div>
           
-              {/* Right side - Location switcher, Free Trial, Notifications */}
+              {/* Right side - Free Trial, Location switcher, Notifications */}
               <div className="flex items-center gap-3">
-                <LocationSwitcher />
                  {/* Free Trial Indicator */}
                  <div className="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
                    Free Trial
                  </div>
+                <LocationSwitcher />
                  
                  {/* Notification Dropdown */}
                  <div className="relative group">
