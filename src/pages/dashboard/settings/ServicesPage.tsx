@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Server, Users, Phone, MessageSquare, MessageCircle, Mail, Calendar, BarChart3, Headphones, BookOpen, Globe, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
+import { Users, Phone, MessageSquare, MessageCircle, Mail, Calendar, BarChart3, Headphones, BookOpen, Globe, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 import { useToast } from '../../../contexts/ToastContext';
 
 interface Service {
