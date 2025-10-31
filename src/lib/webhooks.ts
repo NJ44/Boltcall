@@ -30,6 +30,7 @@ export const createAgentAndKnowledgeBase = async (data: {
   languages: string[];
   clientId?: string;
   businessProfileId?: string;
+  locationId?: string;
 }): Promise<CreateAgentResponse> => {
   try {
     // Generate a client ID if not provided
@@ -45,6 +46,7 @@ export const createAgentAndKnowledgeBase = async (data: {
       opening_hours: data.openingHours,
       languages: data.languages,
       ...(data.businessProfileId && { business_profile_id: data.businessProfileId }),
+      ...(data.locationId && { location_id: data.locationId }),
     };
 
     const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/3a4fe147-8277-4390-b1e6-c903fad3d7d2', {

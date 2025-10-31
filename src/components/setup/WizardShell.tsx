@@ -6,7 +6,7 @@ import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { createUserWorkspaceAndProfile } from '../../lib/database';
-import { createAgentAndKnowledgeBase } from '../../lib/webhooks';
+import { createAgentAndKnowledgeBase, purchasePhoneNumber } from '../../lib/webhooks';
 import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -27,7 +27,7 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account, updateAccount } = useSetupStore();
+  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account, phone, updatePhone, updateAccount } = useSetupStore();
   const [expandedStep, setExpandedStep] = useState(0);
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
   const { user } = useAuth();
@@ -140,9 +140,10 @@ const WizardShell: React.FC = () => {
         console.log('Successfully created workspace and business profile:', { workspace, businessProfile });
 
         // Auto-create primary location using address fields
+        let locationId: string | undefined;
         try {
           const nameFromAddress = storeBusinessProfile.addressLine1?.trim() || storeBusinessProfile.businessName || 'Primary Location';
-          await LocationService.create({
+          const location = await LocationService.create({
             business_profile_id: businessProfile.id,
             user_id: user.id,
             name: nameFromAddress,
@@ -159,15 +160,17 @@ const WizardShell: React.FC = () => {
             is_primary: true,
             is_active: true,
           } as any);
-          console.log('Primary location created');
+          locationId = location.id;
+          console.log('Primary location created:', locationId);
         } catch (locErr) {
           console.warn('Could not create primary location:', locErr);
         }
         
-        // Update the account with workspace ID and business profile ID
+        // Update the account with workspace ID, business profile ID, and location ID
         updateAccount({
           workspaceId: workspace.id,
           businessProfileId: businessProfile.id,
+          locationId: locationId,
         });
         console.log('Workspace created with ID:', workspace.id, 'Business Profile ID:', businessProfile.id);
       }
@@ -190,6 +193,7 @@ const WizardShell: React.FC = () => {
               languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
               clientId: user?.id || undefined,
               businessProfileId: account.businessProfileId || undefined,
+              locationId: account.locationId || undefined,
             });
             console.log('Knowledge step agent created');
             showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });
@@ -198,6 +202,56 @@ const WizardShell: React.FC = () => {
             showToast({ title: 'Agent setup failed', message: e instanceof Error ? e.message : 'Unknown error', variant: 'error', duration: 6000 });
           }
         })(); // Immediately invoke the async function - runs in background
+      }
+
+      // Phone step: purchase phone number on Continue
+      if (currentStep === 4) {
+        const selectedNumber = phone.selectedPhoneNumber;
+        const purchasedNumber = phone.purchasedPhoneNumber;
+
+        if (!selectedNumber && !purchasedNumber) {
+          showToast({
+            title: 'Selection Required',
+            message: 'Please select a phone number first.',
+            variant: 'warning',
+            duration: 4000
+          });
+          return; // Don't continue if no number selected
+        }
+
+        // If number is not yet purchased, purchase it first
+        if (!purchasedNumber && selectedNumber) {
+          try {
+            const result = await purchasePhoneNumber(selectedNumber);
+            if (result.success) {
+              updatePhone({ purchasedPhoneNumber: selectedNumber });
+              showToast({
+                title: 'Success',
+                message: 'Phone number purchased successfully!',
+                variant: 'success',
+                duration: 3000
+              });
+            } else {
+              showToast({
+                title: 'Purchase Failed',
+                message: result.message || 'Failed to purchase phone number. Please try again.',
+                variant: 'error',
+                duration: 5000
+              });
+              return; // Don't continue if purchase failed
+            }
+          } catch (error) {
+            console.error('Error purchasing phone number:', error);
+            showToast({
+              title: 'Error',
+              message: 'Failed to purchase phone number. Please try again.',
+              variant: 'error',
+              duration: 5000
+            });
+            return; // Don't continue if purchase failed
+          }
+        }
+        // If already purchased or just purchased, continue to next step
       }
 
       // Mark current step as completed

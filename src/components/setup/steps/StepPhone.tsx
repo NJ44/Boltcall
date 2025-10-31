@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Check } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
-import Button from '../../ui/Button';
-import { getAvailablePhoneNumbers, purchasePhoneNumber, type PhoneNumber } from '../../../lib/webhooks';
+import { getAvailablePhoneNumbers, type PhoneNumber } from '../../../lib/webhooks';
 import { useToast } from '../../../contexts/ToastContext';
 
 const StepPhone: React.FC = () => {
@@ -10,9 +9,8 @@ const StepPhone: React.FC = () => {
   const { showToast } = useToast();
   const [availableNumbers, setAvailableNumbers] = useState<PhoneNumber[]>([]);
   const [isLoadingNumbers, setIsLoadingNumbers] = useState(false);
-  const [selectedNumber, setSelectedNumber] = useState<string>('');
-  const [isPurchasing, setIsPurchasing] = useState(false);
-  const [purchasedNumber, setPurchasedNumber] = useState<string>('');
+  const selectedNumber = phone.selectedPhoneNumber || '';
+  const purchasedNumber = phone.purchasedPhoneNumber || '';
 
   // Load available phone numbers when component mounts
   useEffect(() => {
@@ -41,64 +39,13 @@ const StepPhone: React.FC = () => {
   
 
   const handleNumberSelect = (number: PhoneNumber) => {
-    setSelectedNumber(number.phone_number);
     updatePhone({
+      selectedPhoneNumber: number.phone_number,
       newNumber: {
         ...phone.newNumber,
         number: number.friendly_name,
       },
     });
-  };
-
-  const handleContinue = async () => {
-    if (!selectedNumber && !purchasedNumber) {
-      showToast({
-        title: 'Selection Required',
-        message: 'Please select a phone number first.',
-        variant: 'warning',
-        duration: 4000
-      });
-      return;
-    }
-
-    // If number is not yet purchased, purchase it first
-    if (!purchasedNumber && selectedNumber) {
-      setIsPurchasing(true);
-      try {
-        const result = await purchasePhoneNumber(selectedNumber);
-        if (result.success) {
-          setPurchasedNumber(selectedNumber);
-          showToast({
-            title: 'Success',
-            message: 'Phone number purchased successfully!',
-            variant: 'success',
-            duration: 3000
-          });
-          // Trigger next step after successful purchase
-          window.dispatchEvent(new CustomEvent('phone-step-completed'));
-        } else {
-          showToast({
-            title: 'Purchase Failed',
-            message: result.message || 'Failed to purchase phone number. Please try again.',
-            variant: 'error',
-            duration: 5000
-          });
-        }
-      } catch (error) {
-        console.error('Error purchasing phone number:', error);
-        showToast({
-          title: 'Error',
-          message: 'Failed to purchase phone number. Please try again.',
-          variant: 'error',
-          duration: 5000
-        });
-      } finally {
-        setIsPurchasing(false);
-      }
-    } else {
-      // Number already purchased, just continue
-      window.dispatchEvent(new CustomEvent('phone-step-completed'));
-    }
   };
 
   return (
@@ -153,9 +100,9 @@ const StepPhone: React.FC = () => {
         )}
       </div>
 
-      {/* Continue Button */}
-      <div className="text-center">
-        {purchasedNumber && (
+      {/* Success Message */}
+      {purchasedNumber && (
+        <div className="text-center">
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
             <div className="flex items-center justify-center gap-2 text-green-800">
               <Check className="w-5 h-5" />
@@ -163,17 +110,8 @@ const StepPhone: React.FC = () => {
             </div>
             <p className="text-green-700 mt-1">Number: {purchasedNumber}</p>
           </div>
-        )}
-        <Button
-          onClick={handleContinue}
-          disabled={isPurchasing}
-          variant="primary"
-          size="lg"
-          className="mx-auto"
-        >
-          {isPurchasing ? 'Purchasing...' : 'Continue'}
-        </Button>
-      </div>
+        </div>
+      )}
 
       {/* Manual input removed per request */}
     </div>

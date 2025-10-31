@@ -12,6 +12,7 @@ export interface SetupData {
     workspaceId?: string;
     userId?: string;
     businessProfileId?: string;
+    locationId?: string;
   };
   
   // Step 2: Business Profile
@@ -49,10 +50,13 @@ export interface SetupData {
     useExistingNumber: boolean;
     existingNumber: string;
     forwardingInstructions: string;
+    selectedPhoneNumber?: string;
+    purchasedPhoneNumber?: string;
     newNumber: {
       country: string;
       areaCode: string;
       number: string;
+      selectedPhoneNumber?: string;
     };
     routing: {
       businessHoursNumbers: string[];
