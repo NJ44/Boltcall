@@ -8,11 +8,10 @@ const PackagesPage: React.FC = () => {
     {
       id: 'website-ultimate',
       name: 'Website Ultimate Package',
-      icon: <Globe className="w-8 h-8" />,
+      icon: <Globe className="w-6 h-6" />,
       description: 'Complete website automation and AI integration package',
       price: '$299',
       period: '/month',
-      color: 'from-blue-500 to-blue-700',
       features: [
         'AI-powered website chatbot',
         'Lead capture and qualification',
@@ -30,11 +29,10 @@ const PackagesPage: React.FC = () => {
     {
       id: 'ads-package',
       name: 'Ads Package',
-      icon: <Target className="w-8 h-8" />,
+      icon: <Target className="w-6 h-6" />,
       description: 'Maximize your advertising ROI with AI-powered ad management',
       price: '$199',
       period: '/month',
-      color: 'from-purple-500 to-purple-700',
       features: [
         'AI ad optimization',
         'Automated bid management',
@@ -52,11 +50,10 @@ const PackagesPage: React.FC = () => {
     {
       id: 'personal-assistant',
       name: 'Personal Assistant Package',
-      icon: <User className="w-8 h-8" />,
+      icon: <User className="w-6 h-6" />,
       description: 'Your personal AI assistant for business automation',
       price: '$149',
       period: '/month',
-      color: 'from-green-500 to-green-700',
       features: [
         'Personal AI assistant',
         'Email management and responses',
@@ -76,86 +73,81 @@ const PackagesPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Packages</h1>
+        <p className="text-gray-600">Choose the package that best fits your business needs</p>
+      </div>
 
       {/* Packages Grid */}
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-6">
         {packages.map((pkg, index) => (
           <motion.div
             key={pkg.id}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`relative bg-white rounded-2xl shadow-lg border-2 overflow-hidden ${
-              pkg.popular ? 'border-purple-500 shadow-purple-200' : 'border-gray-200'
+            className={`relative bg-gray-900 text-white border border-gray-700 rounded-2xl shadow-2xl shadow-gray-900/50 hover:shadow-3xl hover:shadow-gray-900/60 transition-all duration-300 overflow-hidden flex flex-col h-full ${
+              pkg.popular ? 'ring-2 ring-gray-600 scale-[1.02]' : ''
             }`}
           >
             {/* Popular Badge */}
             {pkg.popular && (
-              <div className="absolute top-4 right-4 z-10">
-                <div className="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-current" />
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
+                <span className="inline-flex items-center bg-white text-gray-900 px-4 py-1 text-sm font-medium rounded-full shadow-lg">
+                  <Star className="w-3 h-3 mr-1 fill-current text-gray-900" />
                   Most Popular
-                </div>
+                </span>
               </div>
             )}
 
             {/* Package Header */}
-            <div className={`bg-gradient-to-r ${pkg.color} p-6 text-white relative overflow-hidden`}>
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-4 left-4 w-8 h-8 border-2 border-white rounded-full"></div>
-                <div className="absolute bottom-4 right-4 w-6 h-6 border-2 border-white rounded-full"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border-2 border-white rounded-full"></div>
+            <div className="p-6 pb-4">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 border border-gray-700">
+                  {pkg.icon}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-white mb-1">{pkg.name}</h3>
+                  <p className="text-gray-400 text-sm">{pkg.description}</p>
+                </div>
               </div>
               
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                    {pkg.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">{pkg.name}</h3>
-                    <p className="text-white/80 text-sm">{pkg.description}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold">{pkg.price}</span>
-                  <span className="text-white/70">{pkg.period}</span>
-                </div>
+              <div className="flex items-baseline gap-1 mt-4">
+                <span className="text-4xl font-bold text-white">{pkg.price}</span>
+                <span className="text-gray-400 text-lg">{pkg.period}</span>
               </div>
             </div>
 
             {/* Package Features */}
-            <div className="p-6">
-              <h4 className="font-semibold text-gray-900 mb-4">What's Included:</h4>
+            <div className="px-6 pb-6 flex-1">
+              <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wide">What's Included:</h4>
               <ul className="space-y-3">
                 {pkg.features.map((feature, featureIndex) => (
                   <motion.li
                     key={featureIndex}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: (index * 0.1) + (featureIndex * 0.05) }}
-                    className="flex items-center gap-3"
+                    transition={{ delay: (index * 0.1) + (featureIndex * 0.03) }}
+                    className="flex items-start gap-3"
                   >
-                    <div className={`w-5 h-5 rounded-full bg-gradient-to-r ${pkg.color} flex items-center justify-center flex-shrink-0`}>
-                      <Check className="w-3 h-3 text-white" />
+                    <div className="flex-shrink-0 mt-0.5">
+                      <Check className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-gray-700 text-sm">{feature}</span>
+                    <span className="text-sm text-gray-300 leading-relaxed">{feature}</span>
                   </motion.li>
                 ))}
               </ul>
             </div>
 
             {/* Package Footer */}
-            <div className="p-6 pt-0">
+            <div className="p-6 pt-0 mt-auto">
               <Button
                 variant={pkg.popular ? "primary" : "outline"}
                 size="lg"
                 className={`w-full ${
                   pkg.popular 
-                    ? 'bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white border-0' 
-                    : ''
+                    ? 'bg-white text-gray-900 hover:bg-gray-100 border-0' 
+                    : 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700'
                 }`}
               >
                 {pkg.popular ? 'Get Started' : 'Choose Plan'}

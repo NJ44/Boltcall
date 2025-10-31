@@ -3,6 +3,8 @@ import { Component, type ErrorInfo, type ReactNode } from 'react';
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  isSetupPage?: boolean;
 }
 
 interface State {
@@ -21,6 +23,12 @@ class ErrorBoundary extends Component<Props, State> {
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
+    if (this.props.onError) {
+      // Call onError asynchronously to ensure component is ready and toasts can be shown
+      setTimeout(() => {
+        this.props.onError!(error, errorInfo);
+      }, 0);
+    }
   }
 
   public render() {

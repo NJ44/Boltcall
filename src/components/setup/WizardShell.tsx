@@ -1,7 +1,7 @@
 import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
@@ -32,6 +32,7 @@ const WizardShell: React.FC = () => {
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
   const { user } = useAuth();
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -284,13 +285,44 @@ const WizardShell: React.FC = () => {
         user: user?.id,
         businessProfile: storeBusinessProfile
       });
-      // You might want to show an error message to the user here
+      
+      // Get user-friendly error message
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      let userFriendlyMessage = 'An unexpected error occurred while setting up your account.';
+      
+      // Provide specific error messages based on error type
+      if (errorMessage.includes('network') || errorMessage.includes('fetch')) {
+        userFriendlyMessage = 'Unable to connect to our servers. Please check your internet connection and try again.';
+      } else if (errorMessage.includes('auth') || errorMessage.includes('permission')) {
+        userFriendlyMessage = 'Your session may have expired. Please sign in again to continue.';
+      } else if (errorMessage.includes('validation') || errorMessage.includes('invalid')) {
+        userFriendlyMessage = 'Some of the information you entered is invalid. Please review your entries and try again.';
+      } else if (errorMessage.includes('database') || errorMessage.includes('duplicate')) {
+        userFriendlyMessage = 'There was an issue saving your information. Please try again in a moment.';
+      }
+      
+      // Show user-friendly error toast
       showToast({
-        title: 'Save Failed',
-        message: `Failed to save your business profile: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`,
+        title: 'Setup Error',
+        message: userFriendlyMessage,
         variant: 'error',
-        duration: 5000
+        duration: 6000
       });
+      
+      // After a short delay, show redirect toast
+      setTimeout(() => {
+        showToast({
+          title: 'Redirecting to Dashboard',
+          message: 'We\'re redirecting you to your dashboard where you can try again or contact support if the issue persists.',
+          variant: 'default',
+          duration: 4000
+        });
+        
+        // Redirect after toast is shown
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 4500);
+      }, 2000);
     }
   };
 
