@@ -49,6 +49,7 @@ import PackagesPage from '../pages/dashboard/settings/PackagesPage';
 import UsagePage from '../pages/dashboard/settings/UsagePage';
 import NotificationPage from '../pages/dashboard/settings/NotificationPage';
 import NotificationPreferencesPage from '../pages/dashboard/settings/NotificationPreferencesPage';
+import ServicesPage from '../pages/dashboard/settings/ServicesPage';
 import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
 import SidebarDemoPage from '../pages/SidebarDemoPage';
 import SkeletonDemoPage from '../pages/SkeletonDemoPage';
@@ -165,6 +166,11 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings/notification-preferences" element={
             <SettingsLayout>
               <NotificationPreferencesPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/services" element={
+            <SettingsLayout>
+              <ServicesPage />
             </SettingsLayout>
           } />
         </Route>

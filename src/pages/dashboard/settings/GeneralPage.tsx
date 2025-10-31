@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, MapPin, Save, RefreshCw } from 'lucide-react';
+import { Building2, MapPin, Save, RefreshCw, AlertTriangle, Trash2 } from 'lucide-react';
 import { Magnetic } from '../../../components/ui/magnetic';
+import { useToast } from '../../../contexts/ToastContext';
+import Button from '../../../components/ui/Button';
 
 const GeneralPage: React.FC = () => {
+  const { showToast } = useToast();
   const [businessInfo, setBusinessInfo] = useState({
     businessName: 'BoltCall Solutions',
     language: 'en',
@@ -24,6 +27,9 @@ const GeneralPage: React.FC = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -328,6 +334,143 @@ const GeneralPage: React.FC = () => {
           </button>
         </Magnetic>
       </motion.div>
+
+      {/* Danger Zone */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="bg-white rounded-lg border border-red-200 p-6"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+            <AlertTriangle className="w-5 h-5 text-red-600" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Danger Zone</h2>
+            <p className="text-sm text-gray-600 mt-1">Irreversible and destructive actions</p>
+          </div>
+        </div>
+
+        <div className="border-t border-red-200 pt-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">Delete Workspace</h3>
+              <p className="text-sm text-gray-600">
+                Once you delete a workspace, there is no going back. Please be certain.
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteModal(true)}
+              className="border-red-300 text-red-600 hover:bg-red-50"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete Workspace
+            </Button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Delete Workspace Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900">Delete Workspace</h2>
+            </div>
+            
+            <p className="text-gray-600 mb-6">
+              This action cannot be undone. This will permanently delete your workspace, 
+              all associated data, members, and settings.
+            </p>
+
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Type <span className="font-semibold">DELETE</span> to confirm:
+              </label>
+              <input
+                type="text"
+                value={deleteConfirmText}
+                onChange={(e) => setDeleteConfirmText(e.target.value)}
+                className="w-full px-3 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="DELETE"
+              />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setDeleteConfirmText('');
+                }}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="outline"
+                onClick={async () => {
+                  if (deleteConfirmText !== 'DELETE') {
+                    showToast({
+                      title: 'Invalid Confirmation',
+                      message: 'Please type DELETE to confirm',
+                      variant: 'error',
+                      duration: 3000
+                    });
+                    return;
+                  }
+
+                  setIsDeleting(true);
+                  try {
+                    // TODO: Implement workspace deletion API call
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    showToast({
+                      title: 'Workspace Deleted',
+                      message: 'Your workspace has been permanently deleted',
+                      variant: 'success',
+                      duration: 4000
+                    });
+                    // TODO: Redirect to home or login page
+                    setShowDeleteModal(false);
+                  } catch (error) {
+                    showToast({
+                      title: 'Deletion Failed',
+                      message: 'Failed to delete workspace. Please try again.',
+                      variant: 'error',
+                      duration: 4000
+                    });
+                  } finally {
+                    setIsDeleting(false);
+                  }
+                }}
+                disabled={isDeleting || deleteConfirmText !== 'DELETE'}
+                className="flex-1 border-red-600 text-red-600 hover:bg-red-50 disabled:opacity-50"
+              >
+                {isDeleting ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Delete Workspace
+                  </>
+                )}
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };

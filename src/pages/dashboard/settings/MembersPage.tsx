@@ -159,7 +159,7 @@ const MembersPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {members.map((member, index) => {
+              {members.map((member) => {
                 const roleInfo = getRoleInfo(member.role);
                 return (
                   <motion.tr

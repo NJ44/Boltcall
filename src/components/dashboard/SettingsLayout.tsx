@@ -2,12 +2,12 @@ import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
   Settings as SettingsIcon,
-  Palette, 
   Users, 
   CreditCard, 
   Package, 
   BarChart3, 
-  Bell 
+  Bell,
+  Server
 } from 'lucide-react';
 
 interface SettingsLayoutProps {
@@ -23,12 +23,6 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
       label: 'General',
       icon: <SettingsIcon className="w-5 h-5" />,
       route: '/dashboard/settings/general'
-    },
-    {
-      id: 'preferences',
-      label: 'Preferences',
-      icon: <Palette className="w-5 h-5" />,
-      route: '/dashboard/settings/preferences'
     },
     {
       id: 'members',
@@ -59,6 +53,12 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
       label: 'Notifications',
       icon: <Bell className="w-5 h-5" />,
       route: '/dashboard/settings/notifications'
+    },
+    {
+      id: 'services',
+      label: 'Services',
+      icon: <Server className="w-5 h-5" />,
+      route: '/dashboard/settings/services'
     }
   ];
 
