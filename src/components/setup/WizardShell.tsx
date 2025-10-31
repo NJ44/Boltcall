@@ -172,27 +172,30 @@ const WizardShell: React.FC = () => {
         console.log('Workspace created with ID:', workspace.id, 'Business Profile ID:', businessProfile.id);
       }
       
-      // Knowledge step: run webhook on Continue
+      // Knowledge step: run webhook on Continue (fire and forget, don't wait)
       if (currentStep === 3) {
-        try {
-          showToast({ title: 'Starting setup', message: 'Creating AI agent and knowledge base...', variant: 'default', duration: 3000 });
-          await createAgentAndKnowledgeBase({
-            businessName: storeBusinessProfile.businessName || '',
-            websiteUrl: storeBusinessProfile.websiteUrl || '',
-            mainCategory: storeBusinessProfile.mainCategory || '',
-            country: storeBusinessProfile.country || '',
-            serviceAreas: storeBusinessProfile.serviceAreas || [],
-            openingHours: storeBusinessProfile.openingHours || {},
-            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
-            clientId: user?.id || undefined,
-            businessProfileId: account.businessProfileId || undefined,
+        showToast({ title: 'Starting setup', message: 'Creating AI agent and knowledge base...', variant: 'default', duration: 3000 });
+        
+        // Call webhook asynchronously without awaiting - move to next step immediately
+        createAgentAndKnowledgeBase({
+          businessName: storeBusinessProfile.businessName || '',
+          websiteUrl: storeBusinessProfile.websiteUrl || '',
+          mainCategory: storeBusinessProfile.mainCategory || '',
+          country: storeBusinessProfile.country || '',
+          serviceAreas: storeBusinessProfile.serviceAreas || [],
+          openingHours: storeBusinessProfile.openingHours || {},
+          languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
+          clientId: user?.id || undefined,
+          businessProfileId: account.businessProfileId || undefined,
+        })
+          .then(() => {
+            console.log('Knowledge step agent created');
+            showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });
+          })
+          .catch((e) => {
+            console.error('Knowledge step webhook failed', e);
+            showToast({ title: 'Agent setup failed', message: e instanceof Error ? e.message : 'Unknown error', variant: 'error', duration: 6000 });
           });
-          console.log('Knowledge step agent created');
-          showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });
-        } catch (e) {
-          console.error('Knowledge step webhook failed', e);
-          showToast({ title: 'Agent setup failed', message: e instanceof Error ? e.message : 'Unknown error', variant: 'error', duration: 6000 });
-        }
       }
 
       // Mark current step as completed
