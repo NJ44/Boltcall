@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, CheckCircle, Star } from 'lucide-react';
 import Button from '../../../components/ui/Button';
-import { Magnetic } from '../../../components/ui/magnetic';
 
 const PlanBillingPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'plan' | 'billing'>('plan');
@@ -290,8 +289,8 @@ const PlanBillingPage: React.FC = () => {
                 <h2 className="text-xl font-semibold text-gray-900">Billing History</h2>
                 <p className="text-gray-600">Your recent invoices and payments</p>
               </div>
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
+              <Button variant="outline" size="sm" className="flex items-center">
+                <Download className="w-4 h-4 mr-2 flex-shrink-0" />
                 Export All
               </Button>
             </div>
@@ -322,8 +321,8 @@ const PlanBillingPage: React.FC = () => {
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <Button variant="outline" size="sm">
-                          <Download className="w-4 h-4 mr-1" />
+                        <Button variant="outline" size="sm" className="flex items-center">
+                          <Download className="w-4 h-4 mr-1 flex-shrink-0" />
                           Download
                         </Button>
                       </td>
@@ -334,51 +333,6 @@ const PlanBillingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Billing Information */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Billing Information</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  defaultValue="Your Company Inc."
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Tax ID</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter tax ID"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input
-                  type="email"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  defaultValue="billing@yourcompany.com"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                <input
-                  type="tel"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-            </div>
-            <div className="mt-6">
-              <Magnetic>
-                <Button variant="primary">
-                  Save Changes
-                </Button>
-              </Magnetic>
-            </div>
-          </div>
         </div>
       )}
     </div>

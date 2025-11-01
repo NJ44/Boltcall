@@ -11,6 +11,9 @@ const SetupContent: React.FC = () => {
   const { showToast } = useToast();
 
   const handleError = (error: Error) => {
+    // Log error for debugging
+    console.error('Setup error caught by ErrorBoundary:', error);
+    
     // Show user-friendly error message
     showToast({
       title: 'Setup Error',

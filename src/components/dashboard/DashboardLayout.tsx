@@ -134,6 +134,7 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/settings/members': 'Team Members',
       '/dashboard/settings/packages': 'Packages',
       '/dashboard/settings/billing': 'Billing',
+      '/dashboard/settings/plan-billing': 'Plan & Billing',
       '/dashboard/reminders': 'Reminders',
       '/dashboard/integrations': 'Integrations',
       '/dashboard/assistant': 'AI Receptionist',
