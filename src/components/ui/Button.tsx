@@ -14,7 +14,10 @@ interface ButtonProps {
 
 const StyledWrapper = styled.div`
   .button2 {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
     transition: all 0.2s ease-in;
     position: relative;
     overflow: hidden;
