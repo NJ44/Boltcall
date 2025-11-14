@@ -48,24 +48,23 @@ const GiveawayPage: React.FC = () => {
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
-              <h2 className="uppercase tracking-widest text-sm text-white/70">Enter for a</h2>
-              <h1 className="mt-1 text-3xl md:text-4xl font-extrabold">
-                Chance to win <span className="text-brand-blue">Dinner for Two</span>.
+              <h1 className="text-3xl md:text-4xl font-extrabold">
+                <span className="text-brand-blue">6 Months Free Pro Plan</span> + <span className="text-brand-blue">Website Package</span>.
               </h1>
 
               <p className="mt-10 text-white/80 text-sm leading-6 max-w-md">
-                We’re rewarding one lucky winner with a five-course feast. Enter your email before the deadline. Signing up also gives you early access to Boltcall news, special events, and exclusive discounts.
+                We're rewarding one lucky winner with 6 months of our Pro plan plus a complete website package. Enter your email before the deadline. Signing up also gives you early access to Boltcall news, special events, and exclusive discounts.
               </p>
 
               {/* Prize highlights */}
               <ul className="mt-6 space-y-3 text-white/90 text-sm">
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
-                  <span>Five-course ramen feast for two</span>
+                  <span>6 months of Pro plan subscription (valued at $294)</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
-                  <span>Appetizers and tempura included</span>
+                  <span>Complete website package included</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />

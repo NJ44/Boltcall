@@ -11,36 +11,42 @@ const FreeSetup: React.FC = () => {
       description: 'Reduce no-shows automatically.',
       icon: AlarmClock,
       accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+      gradient: 'from-blue-500/10 to-blue-600/5',
     },
     {
       title: 'Follow Ups',
       description: 'Keep conversations warm.',
       icon: RefreshCcw,
       accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+      gradient: 'from-purple-500/10 to-purple-600/5',
     },
     {
       title: 'Ads',
       description: 'Turn clicks into calls.',
       icon: Megaphone,
       accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+      gradient: 'from-orange-500/10 to-orange-600/5',
     },
     {
       title: 'SMS',
       description: 'Two-way texting that books.',
       icon: MessageSquare,
       accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+      gradient: 'from-green-500/10 to-green-600/5',
     },
     {
       title: 'Website',
       description: 'Book meetings on your site.',
       icon: Globe,
       accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+      gradient: 'from-cyan-500/10 to-cyan-600/5',
     },
     {
       title: 'AI Receptionist',
       description: 'Answer and route every call.',
       icon: MessageSquare,
       accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+      gradient: 'from-indigo-500/10 to-indigo-600/5',
     },
   ];
 
@@ -105,7 +111,7 @@ const FreeSetup: React.FC = () => {
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="flex flex-col gap-1.5 rounded-lg border border-white/25 bg-white/5 px-3 py-2.5 shadow-md"
+                  className={`flex flex-col gap-1.5 rounded-lg border border-white/25 bg-gradient-to-br ${feature.gradient} px-3 py-2.5 shadow-md h-full min-h-[100px]`}
                 >
                   <div className="flex items-center gap-2.5">
                     <div className={`flex h-9 w-9 items-center justify-center rounded-md border ${feature.accent}`}>
