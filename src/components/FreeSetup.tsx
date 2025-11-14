@@ -1,9 +1,48 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { AlarmClock, RefreshCcw, Megaphone, MessageSquare, Globe } from 'lucide-react';
 
 const FreeSetup: React.FC = () => {
   const navigate = useNavigate();
+  const features = [
+    {
+      title: 'Reminders',
+      description: 'Reduce no-shows automatically.',
+      icon: AlarmClock,
+      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+    },
+    {
+      title: 'Follow Ups',
+      description: 'Keep conversations warm.',
+      icon: RefreshCcw,
+      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+    },
+    {
+      title: 'Ads',
+      description: 'Turn clicks into calls.',
+      icon: Megaphone,
+      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+    },
+    {
+      title: 'SMS',
+      description: 'Two-way texting that books.',
+      icon: MessageSquare,
+      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+    },
+    {
+      title: 'Website',
+      description: 'Book meetings on your site.',
+      icon: Globe,
+      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+    },
+    {
+      title: 'AI Receptionist',
+      description: 'Answer and route every call.',
+      icon: MessageSquare,
+      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
+    },
+  ];
 
   // Removed unused timeline and visualization per design update
 
@@ -54,7 +93,31 @@ const FreeSetup: React.FC = () => {
             </motion.button>
           </div>
 
-          {/* Right side removed per request */}
+          {/* Right side - Feature list */}
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              {features.map((feature) => (
+                <div
+                  key={feature.title}
+                  className="flex flex-col gap-1.5 rounded-lg border border-white/25 bg-white/5 px-3 py-2.5 shadow-md"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className={`flex h-9 w-9 items-center justify-center rounded-md border ${feature.accent}`}>
+                      <feature.icon className="h-5 w-5 text-white" />
+                    </div>
+                    <h4 className="text-base font-semibold text-white leading-none">{feature.title}</h4>
+                  </div>
+                  <p className="text-[11px] text-blue-200 leading-relaxed">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

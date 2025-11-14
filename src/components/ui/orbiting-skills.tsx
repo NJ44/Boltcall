@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect, useState, memo } from 'react';
 
 // --- Type Definitions ---
@@ -95,6 +96,7 @@ const SkillIcon = memo(({ type }: SkillIconProps) => {
   const IconComponent = iconComponents[type]?.component;
   return IconComponent ? <IconComponent /> : null;
 });
+
 SkillIcon.displayName = 'SkillIcon';
 
 // --- Configuration for the Orbiting Skills ---
@@ -168,7 +170,6 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const { orbitRadius, size, iconType, label } = config;
 
-  // Ensure consistent orbital positioning with fixed radius
   const x = Math.cos(angle) * orbitRadius;
   const y = Math.sin(angle) * orbitRadius;
 
@@ -178,7 +179,7 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
+        transform: `translate(calc(${x}px - 50%), calc(${y}px - 50%))`,
         zIndex: isHovered ? 20 : 10,
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -207,6 +208,7 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
     </div>
   );
 });
+
 OrbitingSkill.displayName = 'OrbitingSkill';
 
 // --- Optimized Orbit Path Component ---
@@ -257,6 +259,7 @@ const GlowingOrbitPath = memo(({ radius, glowColor = 'cyan', animationDelay = 0 
     </div>
   );
 });
+
 GlowingOrbitPath.displayName = 'GlowingOrbitPath';
 
 // --- Main App Component ---
@@ -336,9 +339,7 @@ export default function OrbitingSkills() {
 
         {/* Render orbiting skill icons */}
         {skillsConfig.map((config) => {
-          // Calculate angle with consistent timing and fixed orbital mechanics
-          // Each icon maintains its exact orbital radius throughout the animation
-          const angle = (time * config.speed) + config.phaseShift;
+          const angle = time * config.speed + (config.phaseShift || 0);
           return (
             <OrbitingSkill
               key={config.id}
