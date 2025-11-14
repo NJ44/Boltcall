@@ -51,6 +51,10 @@ import NotificationPage from '../pages/dashboard/settings/NotificationPage';
 import NotificationPreferencesPage from '../pages/dashboard/settings/NotificationPreferencesPage';
 import ServicesPage from '../pages/dashboard/settings/ServicesPage';
 import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
+import SpeedTestLanding from '../pages/speed-test/SpeedTestLanding';
+import SpeedTestLogin from '../pages/speed-test/SpeedTestLogin';
+import SpeedTestReport from '../pages/speed-test/SpeedTestReport';
+import SpeedTestOffer from '../pages/speed-test/SpeedTestOffer';
 import SidebarDemoPage from '../pages/SidebarDemoPage';
 import SkeletonDemoPage from '../pages/SkeletonDemoPage';
 import OrbitingSkillsDemo from '../pages/OrbitingSkillsDemo';
@@ -178,6 +182,12 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
+        
+        {/* Speed Test Funnel */}
+        <Route path="/speed-test" element={<SpeedTestLanding />} />
+        <Route path="/speed-test/login" element={<SpeedTestLogin />} />
+        <Route path="/speed-test/report" element={<SpeedTestReport />} />
+        <Route path="/speed-test/offer" element={<SpeedTestOffer />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/features-10-demo" element={<Features10Demo />} />
