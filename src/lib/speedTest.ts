@@ -14,7 +14,7 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
   
   // Require API key - no mock data fallback
   if (!API_KEY) {
-    throw new Error('PageSpeed Insights API key not found. Please add VITE_PAGESPEED_API_KEY to your .env file.');
+    throw new Error('PageSpeed Insights API key not found. Please add VITE_PAGESPEED_API_KEY to your .env file and restart your dev server.');
   }
 
   try {
@@ -25,7 +25,16 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
     
     if (!mobileResponse.ok) {
       const errorData = await mobileResponse.json().catch(() => ({}));
-      throw new Error(`Mobile test failed: ${errorData.error?.message || mobileResponse.statusText} (${mobileResponse.status})`);
+      let errorMsg = errorData.error?.message || mobileResponse.statusText;
+      
+      // Provide helpful error messages for common issues
+      if (mobileResponse.status === 403 && errorMsg.includes('referer')) {
+        errorMsg = 'API key has referer restrictions. Please configure your Google Cloud API key to allow requests from this domain, or remove referer restrictions.';
+      } else if (mobileResponse.status === 400 && errorMsg.includes('API key')) {
+        errorMsg = 'Invalid API key. Please check your VITE_PAGESPEED_API_KEY in the .env file.';
+      }
+      
+      throw new Error(`Mobile test failed: ${errorMsg} (${mobileResponse.status})`);
     }
     
     const mobileData = await mobileResponse.json();
@@ -42,7 +51,16 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
     
     if (!desktopResponse.ok) {
       const errorData = await desktopResponse.json().catch(() => ({}));
-      throw new Error(`Desktop test failed: ${errorData.error?.message || desktopResponse.statusText} (${desktopResponse.status})`);
+      let errorMsg = errorData.error?.message || desktopResponse.statusText;
+      
+      // Provide helpful error messages for common issues
+      if (desktopResponse.status === 403 && errorMsg.includes('referer')) {
+        errorMsg = 'API key has referer restrictions. Please configure your Google Cloud API key to allow requests from this domain, or remove referer restrictions.';
+      } else if (desktopResponse.status === 400 && errorMsg.includes('API key')) {
+        errorMsg = 'Invalid API key. Please check your VITE_PAGESPEED_API_KEY in the .env file.';
+      }
+      
+      throw new Error(`Desktop test failed: ${errorMsg} (${desktopResponse.status})`);
     }
     
     const desktopData = await desktopResponse.json();
