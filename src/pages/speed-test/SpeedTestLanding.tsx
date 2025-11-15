@@ -34,6 +34,9 @@ const SpeedTestLanding: React.FC = () => {
       navigate('/speed-test/report');
     } catch (error) {
       console.error('Speed test error:', error);
+      // Show error message to user
+      const errorMessage = error instanceof Error ? error.message : 'Failed to run speed test. Please try again.';
+      alert(errorMessage);
       setIsLoading(false);
     }
   };

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Check, ArrowRight } from 'lucide-react';
-import GiveawayBar from '../components/GiveawayBar';
-import Header from '../components/Header';
+import { Check, ArrowRight, Clock, Users } from 'lucide-react';
 import Button from '../components/ui/Button';
 import StyledInput from '../components/ui/StyledInput';
 
@@ -18,9 +16,21 @@ const offerSchema = z.object({
 
 type OfferFormData = z.infer<typeof offerSchema>;
 
+// Initial remaining places
+const INITIAL_PLACES = 12;
+// Countdown target: 24 hours from now (can be adjusted)
+const getCountdownTarget = () => {
+  const target = new Date();
+  target.setHours(target.getHours() + 24);
+  return target;
+};
+
 const OfferPage: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [remainingPlaces, setRemainingPlaces] = useState(INITIAL_PLACES);
+  const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [countdownTarget] = useState(getCountdownTarget());
 
   const {
     register,
@@ -30,6 +40,49 @@ const OfferPage: React.FC = () => {
   } = useForm<OfferFormData>({
     resolver: zodResolver(offerSchema),
   });
+
+  // Fetch initial remaining places count
+  useEffect(() => {
+    const fetchRemainingPlaces = async () => {
+      try {
+        // Try to get remaining places from the webhook (GET request if supported)
+        // For now, we'll get it from localStorage as a fallback, but ideally the webhook should return it
+        const stored = localStorage.getItem('offer_remaining_places');
+        if (stored) {
+          const places = parseInt(stored, 10);
+          if (!isNaN(places) && places >= 0) {
+            setRemainingPlaces(places);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching remaining places:', error);
+      }
+    };
+    fetchRemainingPlaces();
+  }, []);
+
+  // Countdown timer effect
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const targetTime = countdownTarget.getTime();
+      const difference = targetTime - now;
+
+      if (difference > 0) {
+        const hours = Math.floor(difference / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        setCountdown({ hours, minutes, seconds });
+      } else {
+        setCountdown({ hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, [countdownTarget]);
 
   const onSubmit = async (data: OfferFormData) => {
     setIsSubmitting(true);
@@ -48,12 +101,30 @@ const OfferPage: React.FC = () => {
         throw new Error('Failed to submit form');
       }
 
+      // Try to get remaining places from response
+      let updatedPlaces = remainingPlaces;
+      try {
+        const responseData = await response.json();
+        if (responseData.remainingPlaces !== undefined) {
+          updatedPlaces = responseData.remainingPlaces;
+        } else {
+          // If webhook doesn't return it, decrease locally
+          updatedPlaces = Math.max(0, remainingPlaces - 1);
+        }
+      } catch {
+        // If response is not JSON or doesn't have remainingPlaces, decrease locally
+        updatedPlaces = Math.max(0, remainingPlaces - 1);
+      }
+
+      // Update remaining places
+      setRemainingPlaces(updatedPlaces);
+      localStorage.setItem('offer_remaining_places', updatedPlaces.toString());
+
       console.log('Offer form submitted:', data);
       setIsSubmitted(true);
       reset();
       
-      // Reset success message after 5 seconds
-      setTimeout(() => setIsSubmitted(false), 5000);
+      // Don't auto-reset - keep thank you message shown
     } catch (error) {
       console.error('Error submitting form:', error);
       // You might want to show an error message to the user here
@@ -64,17 +135,9 @@ const OfferPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Giveaway Bar */}
-      <GiveawayBar />
-      
-      {/* Header */}
-      <div className="relative z-10 pt-32">
-        <Header />
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-b from-blue-50/30 to-white">
       {/* Main Content */}
-      <main className="relative z-10 pt-2 pb-20">
+      <main className="relative z-10 pt-20 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left Section - Title and Text */}
@@ -82,40 +145,86 @@ const OfferPage: React.FC = () => {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="space-y-6 mt-0"
+              className="space-y-6 mt-0 overflow-visible"
             >
-              <motion.h1
+              {/* Limited Places & Countdown Timer */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="flex flex-col sm:flex-row gap-4 mb-8"
+              >
+                {/* Limited Places Counter */}
+                <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
+                  <Users className="w-3 h-3 text-blue-600" />
+                  <div>
+                    <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Limited Places</div>
+                    <div className="text-sm font-semibold text-gray-900 leading-tight">{remainingPlaces} Left</div>
+                  </div>
+                </div>
+
+                {/* Countdown Timer */}
+                <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
+                  <Clock className="w-3 h-3 text-blue-600" />
+                  <div>
+                    <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Time Remaining</div>
+                    <div className="text-sm font-semibold text-gray-900 font-mono leading-tight">
+                      {String(countdown.hours).padStart(2, '0')}:
+                      {String(countdown.minutes).padStart(2, '0')}:
+                      {String(countdown.seconds).padStart(2, '0')}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
+                className="overflow-visible"
               >
-                Special Offer
-                <span className="block text-blue-600 mt-2">
-                  Limited Time Only
-                </span>
-              </motion.h1>
+                <div className="text-sm text-blue-600 uppercase tracking-wide font-semibold mb-2">
+                  Limited Time Offer
+                </div>
+                <h1 className="text-5xl lg:text-6xl font-bold leading-[1.2] pb-2">
+                  <span className="text-gray-900">Website</span>{' '}
+                  <span className="text-blue-600">Ignite</span>
+                </h1>
+              </motion.div>
+
               <motion.ul
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-lg text-gray-600 leading-relaxed space-y-2 list-none"
+                className="text-lg text-gray-600 leading-relaxed space-y-4 list-none"
               >
                 <li className="flex items-start">
-                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Complete redesign</span>
+                  <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-gray-900">Full website redesign</div>
+                    <div className="text-base text-gray-600 mt-1">Built modern, fast, and tailored to your brand.</div>
+                  </div>
                 </li>
                 <li className="flex items-start">
-                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>SEO Optimised website</span>
+                  <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-gray-900">SEO-optimized from the ground up</div>
+                    <div className="text-base text-gray-600 mt-1">So people actually find you.</div>
+                  </div>
                 </li>
                 <li className="flex items-start">
-                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Ai widget</span>
+                  <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-gray-900">Smart AI widget on your site</div>
+                    <div className="text-base text-gray-600 mt-1">Answers visitors instantly and boosts conversions.</div>
+                  </div>
                 </li>
                 <li className="flex items-start">
-                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Instant follow ups on new leads</span>
+                  <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="font-semibold text-gray-900">Automatic follow-ups for every new lead</div>
+                    <div className="text-base text-gray-600 mt-1">No more missed opportunities.</div>
+                  </div>
                 </li>
               </motion.ul>
             </motion.div>
@@ -127,7 +236,7 @@ const OfferPage: React.FC = () => {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-8 -mt-[40px] lg:-mt-[40px]"
             >
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-xl p-6 lg:p-7 border border-gray-200 max-w-md">
+              <div className="bg-gradient-to-br from-blue-50/50 via-white to-blue-50/30 rounded-2xl shadow-xl p-6 lg:p-7 border border-blue-100 max-w-md">
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -218,20 +327,22 @@ const OfferPage: React.FC = () => {
                       </div>
 
                       {/* Submit Button */}
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 py-3 text-lg font-semibold"
-                      >
-                        {isSubmitting ? (
-                          'Processing...'
-                        ) : (
-                          <>
-                            Get Your Free Website
-                            <ArrowRight className="w-5 h-5 ml-2 inline" />
-                          </>
-                        )}
-                      </Button>
+                      <div className="mt-6 mb-4">
+                        <Button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 py-2 text-base font-semibold"
+                        >
+                          {isSubmitting ? (
+                            'Processing...'
+                          ) : (
+                            <>
+                              Submit
+                              <ArrowRight className="w-4 h-4 ml-2 inline" />
+                            </>
+                          )}
+                        </Button>
+                      </div>
 
                       <p className="text-xs text-gray-500 text-center mt-6">
                         By submitting this form, you agree to our terms and conditions.
