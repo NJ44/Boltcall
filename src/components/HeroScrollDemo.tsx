@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
@@ -45,7 +46,7 @@ export function HeroScrollDemo() {
     'sms-whatsapp': {
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
       animation: '/sms_agent.lottie',
-      title: 'SMS/Whatsapp Booking Agent',
+      title: 'SMS Booking Agent',
       description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow.',
       layout: 'new-layout',
       features: [
@@ -122,7 +123,7 @@ export function HeroScrollDemo() {
               }}
             >
               <MessageSquare className={`w-4 h-4 ${activeTab === 'sms-whatsapp' ? 'text-blue-500' : 'text-gray-700'}`} />
-              SMS/Whatsapp Booking
+              SMS Booking
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
@@ -145,6 +146,15 @@ export function HeroScrollDemo() {
           {/* Semi-transparent container for flipping screen content */}
           <div className="flex-1 bg-white/87 backdrop-blur-sm rounded-3xl p-10 mx-2 mt-4 mb-6">
             <div className="h-full flex flex-col items-center justify-center px-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="w-full"
+                >
               {currentContent.layout === 'new-layout' ? (
               // New Layout - Header/Text on left, Animation on right
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-center">
@@ -248,6 +258,8 @@ export function HeroScrollDemo() {
           </p>
               </>
             )}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>

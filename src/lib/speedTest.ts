@@ -9,7 +9,20 @@ interface SpeedTestResults {
   status: 'slow' | 'average' | 'fast';
 }
 
-export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
+// Helper function to add timeout to fetch
+function fetchWithTimeout(url: string, timeoutMs: number = 90000): Promise<Response> {
+  return Promise.race([
+    fetch(url),
+    new Promise<Response>((_, reject) =>
+      setTimeout(() => reject(new Error(`Request timeout after ${timeoutMs / 1000} seconds`)), timeoutMs)
+    )
+  ]) as Promise<Response>;
+}
+
+export async function runSpeedTest(
+  url: string,
+  onProgress?: (progress: number, message: string) => void
+): Promise<SpeedTestResults> {
   const API_KEY = import.meta.env.VITE_PAGESPEED_API_KEY || process.env.REACT_APP_PAGESPEED_API_KEY;
   
   // Require API key - no mock data fallback
@@ -17,10 +30,19 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
     throw new Error('PageSpeed Insights API key not found. Please add VITE_PAGESPEED_API_KEY to your .env file and restart your dev server.');
   }
 
+  console.log('Starting speed test for:', url);
+  console.log('API Key present:', !!API_KEY);
+
+  onProgress?.(5, 'Initializing speed test...');
+
   try {
-    // Mobile test
-    const mobileResponse = await fetch(
-      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${API_KEY}`
+    // Mobile test (90 second timeout - PageSpeed API can take 30-60 seconds)
+    console.log('Running mobile test...');
+    onProgress?.(10, 'Testing mobile performance...');
+    
+    const mobileResponse = await fetchWithTimeout(
+      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&key=${API_KEY}`,
+      90000
     );
     
     if (!mobileResponse.ok) {
@@ -37,6 +59,7 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
       throw new Error(`Mobile test failed: ${errorMsg} (${mobileResponse.status})`);
     }
     
+    onProgress?.(40, 'Analyzing mobile results...');
     const mobileData = await mobileResponse.json();
     
     // Check for API errors in response
@@ -44,9 +67,14 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
       throw new Error(`API Error: ${mobileData.error.message || 'Unknown error'}`);
     }
     
-    // Desktop test
-    const desktopResponse = await fetch(
-      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=desktop&key=${API_KEY}`
+    console.log('Mobile test completed');
+    onProgress?.(50, 'Mobile test complete. Testing desktop performance...');
+    
+    // Desktop test (90 second timeout)
+    console.log('Running desktop test...');
+    const desktopResponse = await fetchWithTimeout(
+      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=desktop&key=${API_KEY}`,
+      90000
     );
     
     if (!desktopResponse.ok) {
@@ -63,12 +91,16 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
       throw new Error(`Desktop test failed: ${errorMsg} (${desktopResponse.status})`);
     }
     
+    onProgress?.(80, 'Analyzing desktop results...');
     const desktopData = await desktopResponse.json();
     
     // Check for API errors in response
     if (desktopData.error) {
       throw new Error(`API Error: ${desktopData.error.message || 'Unknown error'}`);
     }
+    
+    console.log('Desktop test completed');
+    onProgress?.(90, 'Generating report...');
     
     // Extract scores and metrics
     const mobileScore = Math.round((mobileData.lighthouseResult?.categories?.performance?.score || 0) * 100);
@@ -108,6 +140,8 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
       status = 'slow';
     }
     
+    onProgress?.(100, 'Complete!');
+    
     return {
       loadingTime,
       mobileScore,
@@ -117,8 +151,21 @@ export async function runSpeedTest(url: string): Promise<SpeedTestResults> {
     };
   } catch (error) {
     console.error('Speed test error:', error);
-    // Re-throw the error instead of using mock data
+    
+    // Provide more specific error messages
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error('Network error: Unable to connect to PageSpeed Insights API. Please check your internet connection.');
+    }
+    
     if (error instanceof Error) {
+      // Check for timeout
+      if (error.message.includes('timeout')) {
+        throw new Error('The speed test is taking too long. The website might be slow or unreachable. Please try again.');
+      }
+      // Check for CORS
+      if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+        throw new Error('CORS error: Please check your API key restrictions in Google Cloud Console. Make sure your domain is allowed.');
+      }
       throw error;
     }
     throw new Error('An unknown error occurred while running the speed test');

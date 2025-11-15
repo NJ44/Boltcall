@@ -13,6 +13,8 @@ const SpeedTestLanding: React.FC = () => {
   const { setUrl, setResults } = useSpeedTestStore();
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressMessage, setProgressMessage] = useState('Testing your website speed...');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,19 +27,29 @@ const SpeedTestLanding: React.FC = () => {
     }
 
     setIsLoading(true);
+    setProgress(0);
+    setProgressMessage('Testing your website speed...');
     setUrl(url);
 
     try {
-      // Run speed test and go to report
-      const results = await runSpeedTest(url);
+      // Run speed test with progress callback
+      const results = await runSpeedTest(url, (progressValue, message) => {
+        setProgress(progressValue);
+        setProgressMessage(message);
+      });
       setResults(results);
+      // Small delay to show 100% before navigation
+      await new Promise(resolve => setTimeout(resolve, 500));
       navigate('/speed-test/report');
     } catch (error) {
       console.error('Speed test error:', error);
       // Show error message to user
       const errorMessage = error instanceof Error ? error.message : 'Failed to run speed test. Please try again.';
       alert(errorMessage);
+    } finally {
+      // Always reset loading state, even if navigation fails
       setIsLoading(false);
+      setProgress(0);
     }
   };
 
@@ -98,16 +110,15 @@ const SpeedTestLanding: React.FC = () => {
                 >
                   <div className="flex items-center gap-2 text-blue-600">
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span className="text-sm font-medium">Testing your website speed...</span>
+                    <span className="text-sm font-medium">{progressMessage}</span>
                   </div>
                   <div className="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                     <motion.div
-                      className="h-full bg-blue-600 rounded-full"
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 2, ease: 'easeInOut' }}
+                      className="h-full bg-blue-600 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${progress}%` }}
                     />
                   </div>
+                  <span className="text-xs text-gray-500">{progress}%</span>
                 </motion.div>
               )}
             </form>

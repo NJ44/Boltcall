@@ -175,12 +175,7 @@ const Layer1: React.FC<LayerProps> = ({ color, secondaryColor }) => {
         } as React.CSSProperties
       }
     >
-      <div className="flex shrink-0 items-center rounded-full border border-zinc-200 bg-white/25 px-1.5 py-0.5 backdrop-blur-sm transition-opacity duration-300 ease-in-out group-hover/animated-card:opacity-0 dark:border-zinc-800 dark:bg-black/25">
-        <div className="h-1.5 w-1.5 rounded-full bg-[var(--color)]" />
-        <span className="ml-1 text-[10px] text-black dark:text-white">
-          +391%
-        </span>
-      </div>
+      {/* Tag removed as requested */}
     </div>
   );
 };
@@ -196,11 +191,11 @@ const Layer2: React.FC<{ color: string }> = ({ color }) => {
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 shrink-0 rounded-full bg-[var(--color)]" />
             <p className="text-xs text-black dark:text-white">
-              Random Data Visualization
+              Revenue Growth Metrics
             </p>
           </div>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
-            Displaying some interesting stats.
+            Track your revenue increase over time with faster lead responses.
           </p>
         </div>
       </div>
