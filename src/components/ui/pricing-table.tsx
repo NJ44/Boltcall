@@ -250,7 +250,7 @@ export function PricingTable({
         </div>
 
 
-        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white shadow-lg relative z-10">
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl bg-white shadow-lg relative z-10 hidden md:block">
           <div>
             <div>
               <div className="flex items-center p-4 bg-white sticky top-16 z-10 border-b border-gray-200">

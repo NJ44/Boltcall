@@ -49,30 +49,34 @@ const GiveawayPage: React.FC = () => {
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-extrabold">
-                <span className="text-brand-blue">6 Months Free Pro Plan</span> + <span className="text-brand-blue">Website Package</span>.
+                <span className="text-brand-blue">6 Months Pro Plan</span>
               </h1>
 
               <p className="mt-10 text-white/80 text-sm leading-6 max-w-md">
-                We're rewarding one lucky winner with 6 months of our Pro plan plus a complete website package. Enter your email before the deadline. Signing up also gives you early access to Boltcall news, special events, and exclusive discounts.
+                We're rewarding one lucky winner with 6 months of our Pro plan plus a complete website package.
               </p>
 
               {/* Prize highlights */}
               <ul className="mt-6 space-y-3 text-white/90 text-sm">
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
-                  <span>6 months of Pro plan subscription (valued at $294)</span>
+                  <span>AI Receptionist</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
-                  <span>Complete website package included</span>
+                  <span>SMS messaging</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
-                  <span>Early access to special events</span>
+                  <span>Instant form replies</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
-                  <span>Exclusive discounts for subscribers</span>
+                  <span>Instant follow-ups</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
+                  <span>Plus more bonuses</span>
                 </li>
               </ul>
             </div>
@@ -83,7 +87,7 @@ const GiveawayPage: React.FC = () => {
           {/* Right: brand panel */}
           <div className="bg-gradient-to-b from-brand-blue to-brand-sky text-white p-10 md:p-12">
             <div className="text-center">
-              <p className="uppercase tracking-widest text-xs text-white/80">Contest ends in:</p>
+              <p className="uppercase tracking-widest text-xs text-white/80">Giveaway ends in:</p>
               <div className="mt-4 flex items-center justify-center gap-6">
                 {[
                   { label: 'days', value: timeLeft.days },
@@ -142,7 +146,7 @@ const GiveawayPage: React.FC = () => {
 
               <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
 
-              <div className="text-sm opacity-90">Share it with a friend—if either of you wins, you both celebrate the prize together!</div>
+              <div className="text-sm opacity-90">Share it with a friend. if either of you wins, you both win the big prize!</div>
               <div className="mt-4 flex items-center justify-center gap-4">
                 <a href="https://twitter.com/intent/tweet" target="_blank" rel="noreferrer" className="bg-white/20 hover:bg-white/25 px-3 py-2 rounded-md">
                   <Share2 className="w-4 h-4" />

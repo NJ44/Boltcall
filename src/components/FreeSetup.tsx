@@ -111,15 +111,15 @@ const FreeSetup: React.FC = () => {
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className={`flex flex-col gap-1.5 rounded-lg border border-white/25 bg-gradient-to-br ${feature.gradient} px-3 py-2.5 shadow-md h-full min-h-[100px]`}
+                  className="flex flex-col gap-1.5 rounded-lg bg-white px-3 py-2.5 shadow-md border border-gray-200 h-full min-h-[100px]"
                 >
                   <div className="flex items-center gap-2.5">
-                    <div className={`flex h-9 w-9 items-center justify-center rounded-md border ${feature.accent}`}>
-                      <feature.icon className="h-5 w-5 text-white" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-md">
+                      <feature.icon className="h-5 w-5 text-blue-600" />
                     </div>
-                    <h4 className="text-base font-semibold text-white leading-none">{feature.title}</h4>
+                    <h4 className="text-base font-semibold text-gray-900 leading-none">{feature.title}</h4>
                   </div>
-                  <p className="text-[11px] text-blue-200 leading-relaxed">{feature.description}</p>
+                  <p className="text-[11px] text-gray-600 leading-relaxed">{feature.description}</p>
                 </div>
               ))}
             </div>

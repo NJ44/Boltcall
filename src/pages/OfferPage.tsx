@@ -82,7 +82,7 @@ const OfferPage: React.FC = () => {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="space-y-6"
+              className="space-y-6 mt-0"
             >
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -95,14 +95,29 @@ const OfferPage: React.FC = () => {
                   Limited Time Only
                 </span>
               </motion.h1>
-              <motion.p
+              <motion.ul
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-lg text-gray-600 leading-relaxed"
+                className="text-lg text-gray-600 leading-relaxed space-y-2 list-none"
               >
-                Don't miss out on this exclusive opportunity to transform your business.
-              </motion.p>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Complete redesign</span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>SEO Optimised website</span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Ai widget</span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Instant follow ups on new leads</span>
+                </li>
+              </motion.ul>
             </motion.div>
 
             {/* Right Section - Form */}
@@ -110,7 +125,7 @@ const OfferPage: React.FC = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:sticky lg:top-8"
+              className="lg:sticky lg:top-8 -mt-[40px] lg:-mt-[40px]"
             >
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-xl p-6 lg:p-7 border border-gray-200 max-w-md">
                 {isSubmitted ? (
@@ -133,7 +148,7 @@ const OfferPage: React.FC = () => {
                   <>
                     <div className="mb-6">
                       <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                        Claim Your Offer
+                        Get Your Free Website
                       </h2>
                     </div>
 
@@ -212,13 +227,13 @@ const OfferPage: React.FC = () => {
                           'Processing...'
                         ) : (
                           <>
-                            Claim Offer Now
+                            Get Your Free Website
                             <ArrowRight className="w-5 h-5 ml-2 inline" />
                           </>
                         )}
                       </Button>
 
-                      <p className="text-xs text-gray-500 text-center">
+                      <p className="text-xs text-gray-500 text-center mt-6">
                         By submitting this form, you agree to our terms and conditions.
                         We respect your privacy and will never share your information.
                       </p>
