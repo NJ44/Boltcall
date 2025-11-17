@@ -78,6 +78,7 @@ import MagneticDemo from '../pages/MagneticDemo';
 import CreditCardPage from '../pages/CreditCardPage';
 import GiftCardPage from '../pages/GiftCardPage';
 import LampDemo from '../pages/LampDemo';
+import HeroDemoPage from '../pages/HeroDemoPage';
 import OfferPage from '../pages/OfferPage';
 import Documentation from '../pages/Documentation';
 import NotFound from '../pages/NotFound';
@@ -219,6 +220,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/credit-card-demo" element={<CreditCardPage />} />
             <Route path="/gift-card-demo" element={<GiftCardPage />} />
             <Route path="/lamp-demo" element={<LampDemo />} />
+            <Route path="/hero-demo" element={<HeroDemoPage />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/privacy-policy" element={<Privacy />} />

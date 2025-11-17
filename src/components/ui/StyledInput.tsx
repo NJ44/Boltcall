@@ -88,6 +88,16 @@ const StyledWrapper = styled.div`
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  /* Remove grey autofill background in browsers */
+  input.form__field:-webkit-autofill,
+  input.form__field:-webkit-autofill:hover,
+  input.form__field:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+    box-shadow: 0 0 0px 1000px #ffffff inset;
+    -webkit-text-fill-color: #000000;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 `;
 
 const StyledInput: React.FC<StyledInputProps> = ({

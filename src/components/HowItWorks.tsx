@@ -75,7 +75,7 @@ const HowItWorks: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              BoltCall transforms how you capture and convert leads. Our AI-powered system works 24/7 to ensure you never miss an opportunity, responding instantly to every inquiry and booking qualified appointments automatically.
+              24/7 AI captures leads, responds instantly, and books appointments automatically—so you never miss an opportunity.
             </motion.p>
           </div>
 

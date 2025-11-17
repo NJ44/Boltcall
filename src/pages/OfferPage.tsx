@@ -137,7 +137,7 @@ const OfferPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50/30 to-white">
       {/* Main Content */}
-      <main className="relative z-10 pt-20 pb-20">
+      <main className="relative z-10 pt-12 md:pt-16 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left Section - Title and Text */}
@@ -236,7 +236,7 @@ const OfferPage: React.FC = () => {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-8 -mt-[40px] lg:-mt-[40px]"
             >
-              <div className="bg-gradient-to-br from-blue-50/50 via-white to-blue-50/30 rounded-2xl shadow-xl p-6 lg:p-7 border border-blue-100 max-w-md">
+              <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-7 border border-blue-100 max-w-md">
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -250,7 +250,7 @@ const OfferPage: React.FC = () => {
                       Thank You!
                     </h3>
                     <p className="text-gray-600">
-                      We've received your information and will contact you shortly.
+                      Check your email for confirmation and the next steps.
                     </p>
                   </motion.div>
                 ) : (
