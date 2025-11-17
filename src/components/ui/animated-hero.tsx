@@ -8,11 +8,11 @@ import { motion } from "framer-motion";
 
 function Hero() {
 
-  const [titleNumber, setTitleNumber] = useState(0);
+  const [titleNumber, setTitleNumber] = useState(1);
 
   const titles = useMemo(
 
-    () => ["CALL", "LEAD", "MESSAGE", "FOLLOW-UP"],
+    () => ["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"],
 
     []
 
@@ -50,9 +50,9 @@ function Hero() {
 
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
 
-          <div className="flex gap-4 flex-col">
+          <div className="flex gap-4 flex-col items-start w-full">
 
-            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-2xl tracking-tighter text-center font-bold text-text-main flex items-center justify-center flex-wrap gap-2 -ml-4 md:-ml-8">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-start gap-2 ml-4 md:ml-8 flex-nowrap">
 
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
@@ -76,7 +76,7 @@ function Hero() {
                 A
               </motion.span>
 
-              <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[220px] md:min-w-[320px] h-[1.2em]">
+              <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[240px] md:min-w-[380px] h-[1.2em] ml-[2px]">
 
                 {titles.map((title, index) => (
 
