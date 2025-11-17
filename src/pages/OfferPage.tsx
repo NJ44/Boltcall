@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { Link } from 'react-router-dom';
 import { Check, ArrowRight, Clock, Users } from 'lucide-react';
 import Button from '../components/ui/Button';
 import StyledInput from '../components/ui/StyledInput';
@@ -11,7 +12,7 @@ const offerSchema = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   company: z.string().min(2, 'Company name must be at least 2 characters'),
-  companyWebsite: z.string().url('Please enter a valid website URL'),
+  companyWebsite: z.string().url('Please enter a valid website URL').optional().or(z.literal('')),
 });
 
 type OfferFormData = z.infer<typeof offerSchema>;
@@ -135,47 +136,64 @@ const OfferPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50/30 to-white">
+    <div className="min-h-screen bg-white relative">
+      {/* Top Bar with Logo and Counters */}
+      <div className="absolute top-0 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8 pt-2">
+        <div className="max-w-7xl mx-auto flex items-center gap-4 flex-wrap">
+          {/* Boltcall Logo */}
+          <Link to="/">
+            <img 
+              src="/boltcall_full_logo.png" 
+              alt="Boltcall Logo" 
+              className="h-12 md:h-16"
+            />
+          </Link>
+          
+          {/* Limited Places & Countdown Timer */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4"
+          >
+            {/* Limited Places Counter */}
+            <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
+              <Users className="w-3 h-3 text-blue-600" />
+              <div>
+                <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Limited Places</div>
+                <div className="text-sm font-semibold text-gray-900 leading-tight">{remainingPlaces} Left</div>
+              </div>
+            </div>
+
+            {/* Countdown Timer */}
+            <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
+              <Clock className="w-3 h-3 text-blue-600" />
+              <div>
+                <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Time Remaining</div>
+                <div className="text-sm font-semibold text-gray-900 font-mono leading-tight">
+                  {String(countdown.hours).padStart(2, '0')}:
+                  {String(countdown.minutes).padStart(2, '0')}:
+                  {String(countdown.seconds).padStart(2, '0')}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+      
       {/* Main Content */}
       <main className="relative z-10 pt-12 md:pt-16 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-0 items-start relative">
+            {/* Blue background on right side */}
+            <div className="hidden lg:block fixed right-0 top-0 w-full bg-blue-600 -z-10 h-screen" style={{ left: '50%' }}></div>
             {/* Left Section - Title and Text */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="space-y-6 mt-0 overflow-visible"
+              className="space-y-6 mt-8 md:mt-16 overflow-visible pr-8 lg:pr-12 relative z-10"
             >
-              {/* Limited Places & Countdown Timer */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4 mb-8"
-              >
-                {/* Limited Places Counter */}
-                <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
-                  <Users className="w-3 h-3 text-blue-600" />
-                  <div>
-                    <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Limited Places</div>
-                    <div className="text-sm font-semibold text-gray-900 leading-tight">{remainingPlaces} Left</div>
-                  </div>
-                </div>
-
-                {/* Countdown Timer */}
-                <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
-                  <Clock className="w-3 h-3 text-blue-600" />
-                  <div>
-                    <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Time Remaining</div>
-                    <div className="text-sm font-semibold text-gray-900 font-mono leading-tight">
-                      {String(countdown.hours).padStart(2, '0')}:
-                      {String(countdown.minutes).padStart(2, '0')}:
-                      {String(countdown.seconds).padStart(2, '0')}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -190,6 +208,9 @@ const OfferPage: React.FC = () => {
                   <span className="text-gray-900">Website</span>{' '}
                   <span className="text-blue-600">Ignite</span>
                 </h1>
+                <p className="text-lg text-gray-600 mt-4 max-w-xl">
+                  Get a fully redesigned, modern website absolutely free—fast, SEO-optimized, with AI widget and automated lead follow-ups.
+                </p>
               </motion.div>
 
               <motion.ul
@@ -234,7 +255,7 @@ const OfferPage: React.FC = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:sticky lg:top-8 -mt-[40px] lg:-mt-[40px]"
+              className="lg:sticky lg:top-8 -mt-[40px] lg:-mt-[40px] relative z-10 lg:ml-8 xl:ml-16"
             >
               <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-7 border border-blue-100 max-w-md">
                 {isSubmitted ? (
@@ -317,7 +338,6 @@ const OfferPage: React.FC = () => {
                           type="url"
                           placeholder="Company Website URL"
                           name="companyWebsite"
-                          required
                         />
                         {errors.companyWebsite && (
                           <p className="mt-1 text-sm text-red-600">

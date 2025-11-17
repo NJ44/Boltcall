@@ -79,7 +79,7 @@ export function HeroScrollDemo() {
           <div className="flex flex-wrap justify-center gap-5 mb-3 -mt-[15px] relative z-50 w-full max-w-[2200px] mx-auto px-2">
             <button
               onClick={() => setActiveTab('ai-receptionist')}
-              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[24px] py-[12px] rounded-2xl text-base transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'ai-receptionist'
                   ? 'bg-white text-gray-900 shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
@@ -90,12 +90,12 @@ export function HeroScrollDemo() {
                 opacity: activeTab === 'ai-receptionist' ? 1 : 0.85
               }}
             >
-              <Phone className={`w-4 h-4 ${activeTab === 'ai-receptionist' ? 'text-blue-500' : 'text-gray-700'}`} />
+              <Phone className={`w-5 h-5 ${activeTab === 'ai-receptionist' ? 'text-blue-500' : 'text-gray-700'}`} />
               AI Receptionist
             </button>
             <button
               onClick={() => setActiveTab('speed-to-lead')}
-              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[24px] py-[12px] rounded-2xl text-base transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'speed-to-lead'
                   ? 'bg-white text-gray-900 shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
@@ -106,12 +106,12 @@ export function HeroScrollDemo() {
                 opacity: activeTab === 'speed-to-lead' ? 1 : 0.85
               }}
             >
-              <Megaphone className={`w-4 h-4 ${activeTab === 'speed-to-lead' ? 'text-blue-500' : 'text-gray-700'}`} />
+              <Megaphone className={`w-5 h-5 ${activeTab === 'speed-to-lead' ? 'text-blue-500' : 'text-gray-700'}`} />
               Instant Ads replies
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
-              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[24px] py-[12px] rounded-2xl text-base transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'sms-whatsapp'
                   ? 'bg-white text-gray-900 shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
@@ -122,12 +122,12 @@ export function HeroScrollDemo() {
                 opacity: activeTab === 'sms-whatsapp' ? 1 : 0.85
               }}
             >
-              <MessageSquare className={`w-4 h-4 ${activeTab === 'sms-whatsapp' ? 'text-blue-500' : 'text-gray-700'}`} />
+              <MessageSquare className={`w-5 h-5 ${activeTab === 'sms-whatsapp' ? 'text-blue-500' : 'text-gray-700'}`} />
               SMS Booking
             </button>
             <button
               onClick={() => setActiveTab('dashboard-analytics')}
-              className={`px-[18px] py-[9px] rounded-2xl text-sm transition-all duration-75 flex items-center gap-2 ${
+              className={`px-[24px] py-[12px] rounded-2xl text-base transition-all duration-75 flex items-center gap-2 ${
                 activeTab === 'dashboard-analytics'
                   ? 'bg-white text-gray-900 shadow-lg'
                   : 'bg-white text-gray-700 hover:bg-white hover:shadow-md'
@@ -138,7 +138,7 @@ export function HeroScrollDemo() {
                 opacity: activeTab === 'dashboard-analytics' ? 1 : 0.85
               }}
             >
-              <BarChart3 className={`w-4 h-4 ${activeTab === 'dashboard-analytics' ? 'text-blue-500' : 'text-gray-700'}`} />
+              <BarChart3 className={`w-5 h-5 ${activeTab === 'dashboard-analytics' ? 'text-blue-500' : 'text-gray-700'}`} />
               Dashboard Analytics
             </button>
           </div>
