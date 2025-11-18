@@ -118,7 +118,7 @@ const GiveawayPage: React.FC = () => {
                 <a
                   href={twitterHref}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="Share on X (Twitter)"
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                 >
@@ -127,7 +127,7 @@ const GiveawayPage: React.FC = () => {
                 <a
                   href={facebookHref}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="Share on Facebook"
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                 >
@@ -136,7 +136,7 @@ const GiveawayPage: React.FC = () => {
                 <a
                   href={linkedinHref}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="Share on LinkedIn"
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                 >
@@ -148,7 +148,7 @@ const GiveawayPage: React.FC = () => {
 
               <div className="text-sm opacity-90">Share it with a friend. if either of you wins, you both win the big prize!</div>
               <div className="mt-4 flex items-center justify-center gap-4">
-                <a href="https://twitter.com/intent/tweet" target="_blank" rel="noreferrer" className="bg-white/20 hover:bg-white/25 px-3 py-2 rounded-md">
+                <a href="https://twitter.com/intent/tweet" target="_blank" rel="noopener noreferrer" className="bg-white/20 hover:bg-white/25 px-3 py-2 rounded-md">
                   <Share2 className="w-4 h-4" />
                 </a>
               </div>

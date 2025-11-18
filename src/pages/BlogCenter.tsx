@@ -40,6 +40,14 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Website Performance'
   },
+  {
+    title: 'The Complete Guide to SEO: Why Your Business Can\'t Afford to Ignore Search Rankings',
+    slug: '/complete-guide-to-seo',
+    excerpt: '75% of users never go beyond the first page of search results. Discover why SEO is critical for your business and how to get started with a free SEO audit.',
+    date: 'January 30, 2025',
+    readTime: '9 min read',
+    category: 'SEO Strategy'
+  },
   // Add more blog posts here as they are created
 ];
 

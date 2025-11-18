@@ -8,6 +8,7 @@ import Button from './ui/Button';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -37,9 +38,94 @@ const Header: React.FC = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // When scrolled past the announcement bar (64px), make header stick to top
       setIsSticky(scrollTop >= 64);
+
+      // Check if navbar is over a blue background section
+      // Only check when scrolled past the hero section to avoid immediate white on scroll
+      if (scrollTop < 200) {
+        setIsOverBlueBackground(false);
+        return;
+      }
+
+      const header = document.querySelector('header');
+      if (!header) return;
+
+      const headerRect = header.getBoundingClientRect();
+      const headerCenterY = headerRect.top + headerRect.height / 2;
+      const headerCenterX = window.innerWidth / 2;
+
+      // Get element at the center of the header
+      const elementBelow = document.elementFromPoint(headerCenterX, headerCenterY);
+
+      if (elementBelow) {
+        // Traverse up the DOM tree to find a section or container with blue/dark background
+        let currentElement: HTMLElement | null = elementBelow as HTMLElement;
+        let foundBlueBackground = false;
+
+        while (currentElement && currentElement !== document.documentElement) {
+          const computedStyle = window.getComputedStyle(currentElement);
+          const bgColor = computedStyle.backgroundColor;
+          const className = currentElement.className || '';
+          const tagName = currentElement.tagName.toLowerCase();
+
+          // Check for blue background classes - be more specific
+          const hasBlueClass = 
+            className.includes('bg-blue-600') || 
+            className.includes('bg-blue-700') ||
+            className.includes('bg-blue-800') ||
+            (className.includes('bg-gradient') && (className.includes('blue') || className.includes('brand-blue'))) ||
+            className.includes('bg-brand-blue') ||
+            className.includes('bg-muted') ||
+            className.includes('bg-black') ||
+            className.includes('bg-gray-900') ||
+            className.includes('bg-gray-800');
+
+          // Check if background color is blue-ish or dark (RGB values)
+          // Only check if it's not transparent
+          if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent' && bgColor !== 'rgb(255, 255, 255)') {
+            const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (rgbMatch) {
+              const r = parseInt(rgbMatch[1]);
+              const g = parseInt(rgbMatch[2]);
+              const b = parseInt(rgbMatch[3]);
+              // Check if it's a dark color (low RGB values) or blue-ish (high blue, low red/green)
+              // Be more strict - only dark backgrounds or clearly blue backgrounds
+              const isDarkBackground = r < 100 && g < 100 && b < 100;
+              const isBlueBackground = b > r + 50 && b > g + 50 && b > 150;
+              
+              if (isDarkBackground || isBlueBackground) {
+                foundBlueBackground = true;
+                break;
+              }
+            }
+          }
+
+          if (hasBlueClass) {
+            foundBlueBackground = true;
+            break;
+          }
+
+          // Check if we've reached a section or main container
+          if (tagName === 'section' || tagName === 'main') {
+            // If this section has white text, it likely has a dark background
+            const textColor = computedStyle.color;
+            if (textColor && textColor.includes('255') && textColor.includes('255, 255, 255')) {
+              foundBlueBackground = true;
+              break;
+            }
+          }
+
+          currentElement = currentElement.parentElement;
+        }
+
+        setIsOverBlueBackground(foundBlueBackground);
+      } else {
+        setIsOverBlueBackground(false);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Also check on initial load
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -74,13 +160,17 @@ const Header: React.FC = () => {
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className="relative font-medium py-2 text-text-muted"
+                className={`relative font-medium py-2 transition-colors duration-300 ${
+                  isOverBlueBackground ? 'text-white' : 'text-text-muted'
+                }`}
                 whileHover="hover"
                 initial="initial"
               >
                 {item.label}
                 <motion.div
-                  className="absolute bottom-0 left-0 h-0.5 bg-brand-blue"
+                  className={`absolute bottom-0 left-0 h-0.5 ${
+                    isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
+                  }`}
                   variants={{
                     initial: { width: 0, opacity: 0 },
                     hover: { width: "100%", opacity: 1 }
@@ -105,7 +195,12 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="transition-colors font-medium text-text-muted hover:text-brand-blue">
+                <Link 
+                  to="/login" 
+                  className={`transition-colors font-medium hover:text-brand-blue ${
+                    isOverBlueBackground ? 'text-white' : 'text-text-muted'
+                  }`}
+                >
                   Login
                 </Link>
                 <div style={{ 
