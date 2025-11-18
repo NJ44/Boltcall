@@ -24,6 +24,22 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Business Strategy'
   },
+  {
+    title: 'Why Speed Matters: The 391% Advantage of Responding in 60 Seconds',
+    slug: '/why-speed-matters-391-percent-advantage',
+    excerpt: 'Research shows that contacting a lead within 60 seconds increases conversion rates by 391%. Discover why speed is the ultimate competitive advantage in lead generation.',
+    date: 'January 20, 2025',
+    readTime: '6 min read',
+    category: 'Lead Generation'
+  },
+  {
+    title: 'Why Website Speed Is Everything: The Hidden Cost of Slow Loading Pages',
+    slug: '/why-website-speed-is-everything',
+    excerpt: '53% of users abandon sites that take longer than 3 seconds to load. Discover why website speed is critical and how it impacts your bottom line.',
+    date: 'January 25, 2025',
+    readTime: '7 min read',
+    category: 'Website Performance'
+  },
   // Add more blog posts here as they are created
 ];
 
@@ -34,18 +50,18 @@ const BlogCenter: React.FC = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
+      <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-8"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Boltcall Blog
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Insights, strategies, and tips to help your business thrive with AI-powered solutions
             </p>
           </motion.div>
@@ -53,7 +69,7 @@ const BlogCenter: React.FC = () => {
       </section>
 
       {/* Blog Posts Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {blogPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => (

@@ -83,6 +83,8 @@ import OfferPage from '../pages/OfferPage';
 import Documentation from '../pages/Documentation';
 import Blog from '../pages/Blog';
 import BlogCenter from '../pages/BlogCenter';
+import BlogSpeed from '../pages/BlogSpeed';
+import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 
@@ -227,6 +229,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/the-new-reality-for-local-businesses" element={<Blog />} />
+        <Route path="/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
+        <Route path="/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />
