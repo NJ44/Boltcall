@@ -62,7 +62,7 @@ const Header: React.FC = () => {
             >
               <img 
                 src="/boltcall_full_logo.png" 
-                alt="Boltcall" 
+                alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
                 className="h-16 w-auto -translate-y-[3.1px]"
               />
             </motion.div>

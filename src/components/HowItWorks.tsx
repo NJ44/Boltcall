@@ -7,7 +7,7 @@ import { ContainerScroll, CardSticky } from './ui/cards-stack';
 const PROCESS_PHASES = [
   {
     id: "process-1",
-    title: "Getting the leads",
+    title: "Capture the lead",
     description:
       "Your AI receptionist captures leads 24/7 from calls, forms, and ads, ensuring no opportunity is missed with instant response times.",
     animationUrl: "/AI_assistant.lottie"
@@ -21,7 +21,7 @@ const PROCESS_PHASES = [
   },
   {
     id: "process-3",
-    title: "Booking",
+    title: "Book appointments",
     description:
       "Convert qualified leads into booked appointments with automated scheduling, reminders, and seamless calendar integration.",
     animationUrl: "/sms_agent.lottie"
@@ -80,29 +80,29 @@ const HowItWorks: React.FC = () => {
           </div>
 
           {/* Sticky Cards */}
-          <ContainerScroll className="space-y-11 py-11 ml-16" style={{ minHeight: '100vh' }}>
+          <ContainerScroll className="space-y-11 py-11 ml-4 md:ml-16" style={{ minHeight: '100vh' }}>
             {PROCESS_PHASES.map((phase, index) => (
               <CardSticky
                 key={phase.id}
                 index={index + 2}
                 incrementY={14}
-                className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '440px', top: '128px', bottom: 'auto', minHeight: '320px' }}
+                className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-[280px] md:max-w-[440px]"
+                style={{ top: '128px', bottom: 'auto', minHeight: '280px' }}
               >
-                <div className="p-5 md:p-7 h-full">
+                <div className="p-4 md:p-7 h-full">
                   {/* Full width content */}
                   <div className="w-full">
                     <div className="flex items-center justify-between mb-3">
-                      <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
+                      <h2 className="text-[calc(1.25rem*0.97*0.97*0.97)] md:text-[calc(1.875rem*0.97*0.97*0.97)] lg:text-[calc(2.25rem*0.97*0.97*0.97)] font-bold tracking-tight text-gray-900">
                         {phase.title}
                       </h2>
-                      <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
-                        <span className="text-lg font-bold">
+                      <div className="bg-blue-600 text-white rounded-full w-9 h-9 md:w-11 md:h-11 flex items-center justify-center flex-shrink-0">
+                        <span className="text-base md:text-lg font-bold">
                           {String(index + 1).padStart(2, "0")}
                         </span>
                       </div>
                     </div>
-                    <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
+                    <p className="text-sm md:text-lg text-gray-600 leading-relaxed mb-5">{phase.description}</p>
                   </div>
                   
                   {/* Right side - Animation removed */}

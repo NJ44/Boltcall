@@ -19,10 +19,10 @@ type OfferFormData = z.infer<typeof offerSchema>;
 
 // Initial remaining places
 const INITIAL_PLACES = 12;
-// Countdown target: 24 hours from now (can be adjusted)
+// Countdown target: 48 hours from now (can be adjusted)
 const getCountdownTarget = () => {
   const target = new Date();
-  target.setHours(target.getHours() + 24);
+  target.setHours(target.getHours() + 48);
   return target;
 };
 
@@ -202,14 +202,14 @@ const OfferPage: React.FC = () => {
                 className="overflow-visible"
               >
                 <div className="text-sm text-blue-600 uppercase tracking-wide font-semibold mb-2">
-                  Limited Time Offer
+                  Only 12 Spots Left - Ends in 48 Hours
                 </div>
-                <h1 className="text-5xl lg:text-6xl font-bold leading-[1.2] pb-2">
-                  <span className="text-gray-900">Website</span>{' '}
-                  <span className="text-blue-600">Ignite</span>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.2] pb-2">
+                  <span className="text-gray-900">Get a Website That</span>{' '}
+                  <span className="text-blue-600">Brings You Customers</span>
                 </h1>
                 <p className="text-lg text-gray-600 mt-4 max-w-xl">
-                  Get a fully redesigned, modern website absolutely free—fast, SEO-optimized, with AI widget and automated lead follow-ups.
+                  We're giving away 12 free websites this month because we just hit 1,000 happy clients. Your site will be fast. It will rank on Google. And it will turn visitors into customers while you sleep.
                 </p>
               </motion.div>
 
@@ -222,32 +222,43 @@ const OfferPage: React.FC = () => {
                 <li className="flex items-start">
                   <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-gray-900">Full website redesign</div>
-                    <div className="text-base text-gray-600 mt-1">Built modern, fast, and tailored to your brand.</div>
+                    <div className="font-semibold text-gray-900">Your new site loads in under 2 seconds</div>
+                    <div className="text-base text-gray-600 mt-1">Customers won't wait. Your site won't make them.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-gray-900">SEO-optimized from the ground up</div>
-                    <div className="text-base text-gray-600 mt-1">So people actually find you.</div>
+                    <div className="font-semibold text-gray-900">Google finds you first</div>
+                    <div className="text-base text-gray-600 mt-1">When people search for what you do, your name shows up at the top.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-gray-900">Smart AI widget on your site</div>
-                    <div className="text-base text-gray-600 mt-1">Answers visitors instantly and boosts conversions.</div>
+                    <div className="font-semibold text-gray-900">AI talks to visitors 24/7</div>
+                    <div className="text-base text-gray-600 mt-1">Even at 3am, someone is answering questions and booking appointments.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-gray-900">Automatic follow-ups for every new lead</div>
-                    <div className="text-base text-gray-600 mt-1">No more missed opportunities.</div>
+                    <div className="font-semibold text-gray-900">Every lead gets a text or call in seconds</div>
+                    <div className="text-base text-gray-600 mt-1">No more checking your email hours later to find out you missed a customer.</div>
                   </div>
                 </li>
               </motion.ul>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200"
+              >
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  <strong>P.S.</strong> This is only for small business owners who are tired of losing customers to competitors with better websites. If you're happy with zero online leads, this isn't for you. But if you want customers finding you instead of your competition, fill out the form now. Only 12 spots left.
+                </p>
+              </motion.div>
             </motion.div>
 
             {/* Right Section - Form */}
@@ -278,8 +289,11 @@ const OfferPage: React.FC = () => {
                   <>
                     <div className="mb-6">
                       <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                        Get Your Free Website
+                        Claim Your Free Website
                       </h2>
+                      <p className="text-sm text-gray-600 mt-2">
+                        Fill out the form below. We'll review your business and get back to you within 24 hours to start building your site.
+                      </p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
@@ -357,7 +371,7 @@ const OfferPage: React.FC = () => {
                             'Processing...'
                           ) : (
                             <>
-                              Submit
+                              Claim My Free Website Now
                               <ArrowRight className="w-4 h-4 ml-2 inline" />
                             </>
                           )}

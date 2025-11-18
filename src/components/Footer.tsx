@@ -1,11 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Button from './ui/Button';
+import { Facebook, Twitter, Linkedin } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const footerLinks = {
     product: [
@@ -14,6 +11,7 @@ const Footer: React.FC = () => {
       { label: 'FAQ', href: '#faq' }
     ],
     company: [
+      { label: 'Blog', href: '/blog' },
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms of Service', href: '/terms-of-service' }
@@ -51,7 +49,7 @@ const Footer: React.FC = () => {
               >
                 <img 
                   src="/boltcall_full_logo.png" 
-                  alt="Boltcall" 
+                  alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
                   className="h-12 mb-3"
                 />
               </motion.div>
@@ -145,20 +143,40 @@ const Footer: React.FC = () => {
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-4"
+              className="flex items-center gap-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Button
-                onClick={scrollToTop}
-                variant="outline"
-                size="sm"
-                className="text-gray-700 border-gray-400 hover:bg-gray-100"
+              {/* Social Media Links */}
+              <a
+                href="https://www.facebook.com/profile.php?id=61582307818752"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-brand-blue transition-colors"
+                aria-label="Boltcall on Facebook"
               >
-                Back to Top
-              </Button>
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://x.com/boltcallteam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-brand-blue transition-colors"
+                aria-label="Boltcall on X (Twitter)"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/boltcall"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-brand-blue transition-colors"
+                aria-label="Boltcall on LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
             </motion.div>
           </div>
         </div>

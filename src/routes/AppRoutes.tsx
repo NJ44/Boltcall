@@ -81,6 +81,8 @@ import LampDemo from '../pages/LampDemo';
 import HeroDemoPage from '../pages/HeroDemoPage';
 import OfferPage from '../pages/OfferPage';
 import Documentation from '../pages/Documentation';
+import Blog from '../pages/Blog';
+import BlogCenter from '../pages/BlogCenter';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 
@@ -223,6 +225,8 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/hero-demo" element={<HeroDemoPage />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/documentation" element={<Documentation />} />
+        <Route path="/blog" element={<BlogCenter />} />
+        <Route path="/the-new-reality-for-local-businesses" element={<Blog />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

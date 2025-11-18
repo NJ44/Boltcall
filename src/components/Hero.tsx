@@ -80,7 +80,7 @@ const Hero: React.FC = () => {
                   </motion.span>
                 ))}
               </span>
-            </h1>
+        </h1>
           </div>
         </div>
 

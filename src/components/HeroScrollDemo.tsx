@@ -21,7 +21,7 @@ export function HeroScrollDemo() {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
       animation: '/AI_assistant.lottie',
       title: 'AI Receptionist',
-      description: 'Never miss a call again with our AI receptionist that answers calls 24/7, schedules appointments, and provides instant support to your patients.',
+      description: 'Transform every call into an opportunity with intelligent conversation handling and seamless customer experience.',
       layout: 'new-layout',
       features: [
         '24/7 call answering',
@@ -33,8 +33,8 @@ export function HeroScrollDemo() {
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
       animation: '/statistics_on_tab.lottie',
-      title: 'Instant Ads/Forms Replay',
-      description: 'Auto-texts and calls new leads within seconds, qualifies them, and books them straight to your calendar without any manual intervention.',
+      title: 'Instant Ads/Forms Reply',
+      description: 'Capture and convert leads instantly with automated responses that engage prospects the moment they show interest.',
       layout: 'new-layout',
       features: [
         'Instant response to ads',
@@ -107,7 +107,7 @@ export function HeroScrollDemo() {
               }}
             >
               <Megaphone className={`w-5 h-5 ${activeTab === 'speed-to-lead' ? 'text-blue-500' : 'text-gray-700'}`} />
-              Instant Ads replies
+              <span className="whitespace-nowrap">Instant Ads replies</span>
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
@@ -159,7 +159,7 @@ export function HeroScrollDemo() {
               // New Layout - Header/Text on left, Animation on right
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-center">
                 <div className="text-left">
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 whitespace-nowrap">
                     {currentContent.title}
                   </h2>
                   <p className="text-base md:text-lg text-white mb-6">
