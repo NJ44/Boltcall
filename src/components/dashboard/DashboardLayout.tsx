@@ -316,6 +316,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
+    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-4 h-4" /> },
   ];
 
   const navItemsBottom: Array<{ to: string; label: string; icon: React.ReactNode }> = [];

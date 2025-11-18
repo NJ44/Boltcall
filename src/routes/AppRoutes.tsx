@@ -26,6 +26,7 @@ import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import RemindersPage from '../pages/dashboard/RemindersPage';
 import SmsBookingPage from '../pages/dashboard/SmsBookingPage';
 import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
+import LeadReactivationPage from '../pages/dashboard/LeadReactivationPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
 import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
 import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
@@ -85,6 +86,7 @@ import Blog from '../pages/Blog';
 import BlogCenter from '../pages/BlogCenter';
 import BlogSpeed from '../pages/BlogSpeed';
 import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
+import SEOAnalyzer from '../pages/SEOAnalyzer';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 
@@ -131,6 +133,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="website-bubble" element={<WebsiteBubblePage />} />
           <Route path="reminders" element={<RemindersPage />} />
           <Route path="sms-booking" element={<SmsBookingPage />} />
+          <Route path="lead-reactivation" element={<LeadReactivationPage />} />
           <Route path="calcom" element={<CalcomPage />} />
           <Route path="call-history" element={<CallHistoryPage />} />
           <Route path="chat-history" element={<ChatHistoryPage />} />
@@ -231,6 +234,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/the-new-reality-for-local-businesses" element={<Blog />} />
         <Route path="/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
         <Route path="/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
+        <Route path="/seo-analyzer" element={<SEOAnalyzer />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

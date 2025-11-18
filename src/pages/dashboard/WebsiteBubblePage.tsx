@@ -137,7 +137,7 @@ const WebsiteBubblePage: React.FC = () => {
       >
         <CardTableWithPanel
           columns={[
-            { key: 'name', label: 'Agent Name', width: '35%' },
+            { key: 'name', label: 'Bubble Name', width: '35%' },
             { key: 'status', label: 'Status', width: '20%' },
             { key: 'createdAt', label: 'Created', width: '20%' },
             { key: 'actions', label: 'Actions', width: '25%' }
@@ -145,7 +145,7 @@ const WebsiteBubblePage: React.FC = () => {
           data={clientAgents}
           renderRow={(agent) => (
             <div className="flex items-center gap-6">
-              {/* Agent Name */}
+              {/* Bubble Name */}
               <div className="flex items-center gap-3 flex-1">
                 <div className="font-medium text-gray-900">{agent.name}</div>
               </div>
@@ -197,14 +197,14 @@ const WebsiteBubblePage: React.FC = () => {
             { label: 'Inactive', value: 'inactive' }
           ]}
           onAddNew={handleAddNewAgent}
-          addNewText="Create Agent"
+          addNewText="Create Bubble"
           showAddPanel={showAddPanel}
           onCloseAddPanel={() => setShowAddPanel(false)}
-          addPanelTitle="Create New Agent"
+          addPanelTitle="Create New Bubble"
           addPanelContent={
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Agent Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Bubble Name</label>
                 <input
                   type="text"
                   value={editingAgent.name || ''}
@@ -261,7 +261,7 @@ const WebsiteBubblePage: React.FC = () => {
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
                     <Save className="w-4 h-4" />
-                    Create Agent
+                    Create Bubble
                   </button>
                 </Magnetic>
               </div>
@@ -273,7 +273,7 @@ const WebsiteBubblePage: React.FC = () => {
           editPanelContent={
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Agent Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Bubble Name</label>
                 <input
                   type="text"
                   value={editingAgent.name || ''}

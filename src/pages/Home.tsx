@@ -35,11 +35,11 @@ const Home: React.FC = () => {
             <HeroScrollDemo />
           </div>
           
-          <div className="relative -top-[650px]">
+          <div className="relative -top-[600px]">
             <HowItWorks />
           </div>
           
-          <div className="relative -top-[555px]">
+          <div className="relative -top-[500px]">
             <StickyScrollSection />
           </div>
           
