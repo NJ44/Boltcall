@@ -188,13 +188,13 @@ const ChatHistoryPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
           >
-            <option value="all">All Status</option>
-            <option value="ended">Ended</option>
-            <option value="registered">Active</option>
-            <option value="not_connected">Not Connected</option>
-            <option value="error">Error</option>
+            <option value="all" className="text-black">All Status</option>
+            <option value="ended" className="text-black">Ended</option>
+            <option value="registered" className="text-black">Active</option>
+            <option value="not_connected" className="text-black">Not Connected</option>
+            <option value="error" className="text-black">Error</option>
           </select>
 
           {/* Start Date */}

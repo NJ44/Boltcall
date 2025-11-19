@@ -236,24 +236,24 @@ const CallHistoryPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
           >
-            <option value="all">All Status</option>
-            <option value="ended">Ended</option>
-            <option value="registered">Registered</option>
-            <option value="not_connected">Not Connected</option>
-            <option value="error">Error</option>
+            <option value="all" className="text-black">All Status</option>
+            <option value="ended" className="text-black">Ended</option>
+            <option value="registered" className="text-black">Registered</option>
+            <option value="not_connected" className="text-black">Not Connected</option>
+            <option value="error" className="text-black">Error</option>
           </select>
 
           {/* Direction Filter */}
           <select
             value={directionFilter}
             onChange={(e) => setDirectionFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
           >
-            <option value="all">All Directions</option>
-            <option value="inbound">Inbound</option>
-            <option value="outbound">Outbound</option>
+            <option value="all" className="text-black">All Directions</option>
+            <option value="inbound" className="text-black">Inbound</option>
+            <option value="outbound" className="text-black">Outbound</option>
           </select>
 
           {/* Start Date */}
