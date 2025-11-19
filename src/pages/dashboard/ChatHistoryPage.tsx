@@ -6,7 +6,6 @@ import {
   Clock, 
   User,
   Search,
-  RefreshCw,
   Eye,
   CheckCircle,
   XCircle,
@@ -170,22 +169,6 @@ const ChatHistoryPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Chat History</h1>
-          <p className="text-gray-600">View and manage your chat interactions from Retell AI</p>
-        </div>
-        <button
-          onClick={fetchChatHistory}
-          disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          Refresh
-        </button>
-      </div>
-
       {/* Filters */}
       <div className="bg-white rounded-lg shadow-sm border p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

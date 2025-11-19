@@ -689,9 +689,7 @@ const DashboardLayout: React.FC = () => {
             {/* New Lead Notification */}
                          <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Users className="w-4 h-4 text-blue-600" />
-                </div>
+                <Users className="w-4 h-4 text-blue-600" />
                 <div>
                                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>New Lead Arrives</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a new lead is captured</div>
@@ -712,9 +710,7 @@ const DashboardLayout: React.FC = () => {
             {/* Appointment Booked Notification */}
                          <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Calendar className="w-4 h-4 text-blue-600" />
-                </div>
+                <Calendar className="w-4 h-4 text-blue-600" />
                 <div>
                                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Appointment Booked</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when an appointment is scheduled</div>
@@ -735,9 +731,7 @@ const DashboardLayout: React.FC = () => {
             {/* Missed Call Notification */}
                          <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Phone className="w-4 h-4 text-blue-600" />
-                </div>
+                <Phone className="w-4 h-4 text-blue-600" />
                 <div>
                                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Missed Call</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a call is missed</div>
@@ -792,7 +786,6 @@ const DashboardLayout: React.FC = () => {
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Automated call handling</div>
                       {services.aiReceptionist && (
                         <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('aiReceptionist'))}`}></div>
                                    <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('aiReceptionist'))}</span>
                         </div>
                       )}
@@ -819,7 +812,6 @@ const DashboardLayout: React.FC = () => {
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Incoming and outgoing calls</div>
                       {services.phoneSystem && (
                         <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('phoneSystem'))}`}></div>
                                    <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('phoneSystem'))}</span>
                         </div>
                       )}
@@ -846,7 +838,6 @@ const DashboardLayout: React.FC = () => {
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Text messaging service</div>
                       {services.sms && (
                         <div className="flex items-center gap-2 mt-1">
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(getServiceStatus('sms'))}`}></div>
                                    <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('sms'))}</span>
                         </div>
                       )}

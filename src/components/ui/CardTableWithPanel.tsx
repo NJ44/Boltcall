@@ -21,6 +21,7 @@ interface CardTableWithPanelProps {
   onAddNew?: () => void;
   addNewText?: string;
   className?: string;
+  hideSearch?: boolean;
   // New props for sliding panel
   showAddPanel?: boolean;
   onCloseAddPanel?: () => void;
@@ -42,6 +43,7 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
   onAddNew,
   addNewText = "Add New",
   className = "",
+  hideSearch = false,
   showAddPanel = false,
   onCloseAddPanel,
   addPanelTitle = "Add New Item",
@@ -75,42 +77,44 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
     <>
       <div className={`${className}`}>
         {/* Top Control Bar */}
-        <div className="p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 flex-1">
-              {/* Search Input */}
-              <div className="relative flex-1 max-w-xs">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
+        {!hideSearch && (
+          <div className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 flex-1">
+                {/* Search Input */}
+                <div className="relative flex-1 max-w-xs">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder={searchPlaceholder}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
                 </div>
-                <input
-                  type="text"
-                  placeholder={searchPlaceholder}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* Add New Button */}
+                {onAddNew && (
+                  <button
+                    onClick={onAddNew}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  >
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span className="font-bold">{addNewText}</span>
+                  </button>
+                )}
               </div>
             </div>
-
-            <div className="flex items-center gap-2">
-              {/* Add New Button */}
-              {onAddNew && (
-                <button
-                  onClick={onAddNew}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                  <span className="font-bold">{addNewText}</span>
-                </button>
-              )}
-            </div>
           </div>
-        </div>
+        )}
 
         {/* Table Headers - Simple Text */}
         {filteredData.length > 0 && (

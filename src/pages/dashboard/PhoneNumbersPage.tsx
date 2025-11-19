@@ -294,6 +294,7 @@ const PhoneNumbersPage: React.FC = () => {
               { key: 'createdAt', label: 'Created', width: '10%' }
             ]}
             data={phoneNumbers}
+            hideSearch={true}
             renderRow={(phone) => (
             <div className="flex items-center gap-6">
               {/* Phone Number */}

@@ -50,6 +50,7 @@ const KnowledgeBasePage: React.FC = () => {
   const [editingDocumentId, setEditingDocumentId] = useState<string | null>(null);
   const [editingDocumentContent, setEditingDocumentContent] = useState('');
   const [showDocumentEditor, setShowDocumentEditor] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -431,25 +432,32 @@ const KnowledgeBasePage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm">
           {/* Custom Header */}
           <div className="p-6">
-            <div className="flex items-center justify-end">
-              <div className="flex items-center gap-2">
-                {/* New Knowledge Base Button */}
-                <button
-                  onClick={handleOpenNewKnowledgeBase}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                >
-                  <Building2 className="h-4 w-4" />
-                  <span className="font-bold">New Knowledge Base</span>
-                </button>
+            <div className="flex items-center justify-between">
+              {/* Search Input */}
+              <div className="relative flex-1 max-w-xs">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search documents..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
 
-                {/* Add Document Dropdown */}
+              <div className="flex items-center gap-2">
+                {/* New Knowledge Base Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={handleAddDocument}
                     className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
                   >
                     <Plus className="h-4 w-4" />
-                    <span className="font-bold">Add Document</span>
+                    <span className="font-bold">New Knowledge Base</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   
@@ -503,7 +511,10 @@ const KnowledgeBasePage: React.FC = () => {
           </div>
 
         <CardTableWithPanel
-          data={documents}
+          data={documents.filter(doc => 
+            doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            doc.content.toLowerCase().includes(searchTerm.toLowerCase())
+          )}
           columns={[
             { key: 'name', label: 'Document Name', width: '25%' },
             { key: 'content', label: 'Content Preview', width: '35%' },

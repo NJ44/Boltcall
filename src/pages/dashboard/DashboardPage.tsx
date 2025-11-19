@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, HelpCircle, X, Send, CheckCircle, Circle } from 'lucide-react';
+import { AlertTriangle, HelpCircle, X, Send, MessageSquare, Zap, Phone, Globe, Bell, Users, ArrowRight } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+
+interface Feature {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ReactNode;
+  setupLink: string;
+  isActive: boolean;
+  assignedAgentId: string | null;
+  assignedAgentName: string | null;
+}
 
 const DashboardPage: React.FC = () => {
+  const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showHelpChat, setShowHelpChat] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
@@ -14,6 +28,8 @@ const DashboardPage: React.FC = () => {
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [features, setFeatures] = useState<Feature[]>([]);
+  const [isLoadingFeatures, setIsLoadingFeatures] = useState(true);
 
   // Check if setup was just completed
   useEffect(() => {
@@ -39,6 +55,141 @@ const DashboardPage: React.FC = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Fetch features configuration
+  useEffect(() => {
+    const fetchFeatures = async () => {
+      if (!user?.id) {
+        setIsLoadingFeatures(false);
+        return;
+      }
+
+      try {
+        setIsLoadingFeatures(true);
+
+        // Fetch all relevant configurations
+        const [agentsResult, phoneNumbersResult, websiteWidgetsResult] = await Promise.all([
+          supabase.from('agents').select('id, name, agent_type, status').eq('user_id', user.id),
+          supabase.from('phone_numbers').select('id, assigned_agent_id, status').eq('user_id', user.id),
+          supabase.from('website_widgets').select('id, assigned_agent_id, is_active').eq('user_id', user.id)
+        ]);
+
+        const agentsData = agentsResult.data || [];
+        const websiteWidgetsData = websiteWidgetsResult.data || [];
+        const activeWebsiteWidget = websiteWidgetsData.find(w => w.is_active);
+        
+        // Helper function to get agent name by ID
+        const getAgentName = (agentId: string | null) => {
+          if (!agentId) return null;
+          return agentsData.find(a => a.id === agentId)?.name || null;
+        };
+
+        // Build features list
+        const featuresList: Feature[] = [
+          {
+            id: 'sms-booking',
+            name: 'SMS Booking',
+            description: 'Automated SMS appointment booking',
+            icon: <MessageSquare className="w-5 h-5" />,
+            setupLink: '/dashboard/sms-booking',
+            isActive: false, // Will be determined by checking if SMS booking is configured
+            assignedAgentId: null,
+            assignedAgentName: null
+          },
+          {
+            id: 'speed-to-lead',
+            name: 'Speed to Lead',
+            description: 'Instant lead response and qualification',
+            icon: <Zap className="w-5 h-5" />,
+            setupLink: '/dashboard/speed-to-lead',
+            isActive: false,
+            assignedAgentId: null,
+            assignedAgentName: null
+          },
+          {
+            id: 'instant-lead-reply',
+            name: 'Instant Lead Reply',
+            description: 'Automatic responses to new leads',
+            icon: <MessageSquare className="w-5 h-5" />,
+            setupLink: '/dashboard/instant-lead-reply',
+            isActive: false,
+            assignedAgentId: null,
+            assignedAgentName: null
+          },
+          {
+            id: 'ai-receptionist',
+            name: 'AI Receptionist',
+            description: 'AI-powered call handling and routing',
+            icon: <Phone className="w-5 h-5" />,
+            setupLink: '/dashboard/assistant',
+            isActive: agentsData.some(a => a.agent_type === 'ai_receptionist' && a.status === 'active'),
+            assignedAgentId: agentsData.find(a => a.agent_type === 'ai_receptionist' && a.status === 'active')?.id || null,
+            assignedAgentName: agentsData.find(a => a.agent_type === 'ai_receptionist' && a.status === 'active')?.name || null
+          },
+          {
+            id: 'website-bubble',
+            name: 'Website Bubble',
+            description: 'AI chat widget for your website',
+            icon: <Globe className="w-5 h-5" />,
+            setupLink: '/dashboard/website-bubble',
+            isActive: websiteWidgetsData.some(w => w.is_active),
+            assignedAgentId: activeWebsiteWidget?.assigned_agent_id || null,
+            assignedAgentName: getAgentName(activeWebsiteWidget?.assigned_agent_id || null)
+          },
+          {
+            id: 'reminders',
+            name: 'Reminders',
+            description: 'Automated appointment reminders',
+            icon: <Bell className="w-5 h-5" />,
+            setupLink: '/dashboard/reminders',
+            isActive: false, // Will be determined by checking reminders configuration
+            assignedAgentId: null,
+            assignedAgentName: null
+          },
+          {
+            id: 'lead-reactivation',
+            name: 'Lead Reactivation',
+            description: 'Re-engage with previous leads',
+            icon: <Users className="w-5 h-5" />,
+            setupLink: '/dashboard/lead-reactivation',
+            isActive: false,
+            assignedAgentId: null,
+            assignedAgentName: null
+          },
+          {
+            id: 'whatsapp',
+            name: 'WhatsApp',
+            description: 'WhatsApp messaging integration',
+            icon: <MessageSquare className="w-5 h-5" />,
+            setupLink: '/dashboard/whatsapp',
+            isActive: false,
+            assignedAgentId: null,
+            assignedAgentName: null
+          },
+          {
+            id: 'sms',
+            name: 'SMS',
+            description: 'SMS messaging service',
+            icon: <MessageSquare className="w-5 h-5" />,
+            setupLink: '/dashboard/sms',
+            isActive: agentsData.some(a => a.agent_type === 'sms_agent' && a.status === 'active'),
+            assignedAgentId: agentsData.find(a => a.agent_type === 'sms_agent' && a.status === 'active')?.id || null,
+            assignedAgentName: agentsData.find(a => a.agent_type === 'sms_agent' && a.status === 'active')?.name || null
+          }
+        ];
+
+        setFeatures(featuresList);
+      } catch (error) {
+        console.error('Error fetching features:', error);
+      } finally {
+        setIsLoadingFeatures(false);
+      }
+    };
+
+    if (user?.id) {
+      fetchFeatures();
+    }
+  }, [user?.id]);
 
   const handleSendMessage = () => {
     if (chatMessage.trim()) {
@@ -74,64 +225,68 @@ const DashboardPage: React.FC = () => {
         onClose={() => setShowCompletionPopup(false)} 
       />
 
-      {/* Tasks Section */}
+      {/* Features Section */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="bg-gray-50 border-b border-gray-200 p-6">
-          <h2 className="text-xl font-semibold text-gray-900">Tasks</h2>
-          <p className="text-sm text-gray-600 mt-1">Track your setup progress</p>
+          <h2 className="text-xl font-semibold text-gray-900">Features</h2>
+          <p className="text-sm text-gray-600 mt-1">Manage and configure your Boltcall features</p>
         </div>
         
         <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Task items */}
-            <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Account Setup</p>
-                <p className="text-xs text-gray-500">Basic account configuration</p>
-              </div>
+          {isLoadingFeatures ? (
+            <div className="text-center py-8 text-gray-500">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+              <p className="text-sm mt-2">Loading features...</p>
             </div>
-
-            <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Business Profile</p>
-                <p className="text-xs text-gray-500">Company information</p>
-              </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {features.map((feature) => (
+                <motion.div
+                  key={feature.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition-all"
+                >
+                  <div className={`p-3 rounded-lg ${feature.isActive ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                    <div className={feature.isActive ? 'text-blue-600' : 'text-gray-400'}>
+                      {feature.icon}
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="text-sm font-medium text-gray-900 truncate">{feature.name}</p>
+                      {feature.isActive ? (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          Active
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                          Inactive
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500 mb-2 truncate">{feature.description}</p>
+                    {feature.assignedAgentName && (
+                      <p className="text-xs text-gray-600">
+                        Agent: <span className="font-medium">{feature.assignedAgentName}</span>
+                      </p>
+                    )}
+                    {!feature.assignedAgentName && feature.isActive && (
+                      <p className="text-xs text-gray-400">No agent assigned</p>
+                    )}
+                  </div>
+                  
+                  <Link
+                    to={feature.setupLink}
+                    className="flex-shrink-0 text-blue-600 hover:text-blue-700 transition-colors"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-
-            <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Calendar Integration</p>
-                <p className="text-xs text-gray-500">Connect your calendar</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Phone Number</p>
-                <p className="text-xs text-gray-500">Configure phone system</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Knowledge Base</p>
-                <p className="text-xs text-gray-500">Add business information</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
-              <Circle className="w-5 h-5 text-gray-400 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Voice Library</p>
-                <p className="text-xs text-gray-500">Configure voice settings</p>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
