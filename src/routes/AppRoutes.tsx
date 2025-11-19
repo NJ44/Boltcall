@@ -89,6 +89,7 @@ import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import BlogSEO from '../pages/BlogSEO';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import DockDemoPage from '../pages/DockDemoPage';
+import StepperDemoPage from '../pages/StepperDemoPage';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 
@@ -231,6 +232,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/lamp-demo" element={<LampDemo />} />
             <Route path="/hero-demo" element={<HeroDemoPage />} />
             <Route path="/dock-demo" element={<DockDemoPage />} />
+            <Route path="/stepper-demo" element={<StepperDemoPage />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />

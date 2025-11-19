@@ -233,15 +233,6 @@ const DashboardLayout: React.FC = () => {
     return statuses[serviceKey];
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'running': return 'bg-green-500';
-      case 'warning': return 'bg-yellow-500';
-      case 'error': return 'bg-red-500';
-      default: return 'bg-gray-400';
-    }
-  };
-
   const getStatusText = (status: string) => {
     switch (status) {
       case 'running': return 'Running Good';

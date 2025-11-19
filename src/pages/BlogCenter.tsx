@@ -69,9 +69,6 @@ const BlogCenter: React.FC = () => {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Boltcall Blog
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Insights, strategies, and tips to help your business thrive with AI-powered solutions
-            </p>
           </motion.div>
         </div>
       </section>

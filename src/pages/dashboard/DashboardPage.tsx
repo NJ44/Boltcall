@@ -68,7 +68,7 @@ const DashboardPage: React.FC = () => {
         setIsLoadingFeatures(true);
 
         // Fetch all relevant configurations
-        const [agentsResult, phoneNumbersResult, websiteWidgetsResult] = await Promise.all([
+        const [agentsResult, , websiteWidgetsResult] = await Promise.all([
           supabase.from('agents').select('id, name, agent_type, status').eq('user_id', user.id),
           supabase.from('phone_numbers').select('id, assigned_agent_id, status').eq('user_id', user.id),
           supabase.from('website_widgets').select('id, assigned_agent_id, is_active').eq('user_id', user.id)

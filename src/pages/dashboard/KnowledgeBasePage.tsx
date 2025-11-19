@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
-import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, Building2 } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -112,13 +112,6 @@ const KnowledgeBasePage: React.FC = () => {
   }, [user?.id]);
 
   // New Knowledge Base handlers
-  const handleOpenNewKnowledgeBase = () => {
-    setShowNewKnowledgeBaseModal(true);
-    setKnowledgeBaseName('');
-    setKbDocuments([]);
-    setShowKbDocumentDropdown(false);
-  };
-
   const handleCloseNewKnowledgeBase = () => {
     setShowNewKnowledgeBaseModal(false);
     setKnowledgeBaseName('');
