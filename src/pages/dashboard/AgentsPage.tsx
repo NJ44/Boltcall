@@ -939,6 +939,140 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         </div>
       )}
 
+      {/* Agent Details Modal - Shows after template selection */}
+      {showAgentDetailsModal && selectedAgentDetails && (
+        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-zinc-900">{selectedAgentDetails.name}</h2>
+                  <p className="text-sm text-gray-500 mt-1">Agent created successfully</p>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowAgentDetailsModal(false);
+                    setSelectedAgentDetails(null);
+                  }}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Agent Status */}
+                <div className="flex items-center gap-3">
+                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                    selectedAgentDetails.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {selectedAgentDetails.status}
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    Created {selectedAgentDetails.created_at ? new Date(selectedAgentDetails.created_at).toLocaleDateString() : 'Just now'}
+                  </span>
+                </div>
+
+                {/* Voice Settings */}
+                <div className="bg-gray-50 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Voice Settings</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Voice ID</label>
+                      <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).voice_id || 'Not set'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Personality</label>
+                      <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).personality || 'Professional'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Conversation Style</label>
+                      <p className="text-gray-900 mt-1 capitalize">{(selectedAgentDetails as any).conversation_style || 'Professional'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Language</label>
+                      <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).language || 'English'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-700">Direction</label>
+                      <p className="text-gray-900 mt-1 capitalize">{(selectedAgentDetails as any).direction || 'Inbound'}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Greeting */}
+                {(selectedAgentDetails as any).templateGreeting && (
+                  <div className="bg-blue-50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Greeting</h3>
+                    <p className="text-gray-700 leading-relaxed">{(selectedAgentDetails as any).templateGreeting}</p>
+                  </div>
+                )}
+
+                {/* System Prompt */}
+                {(selectedAgentDetails as any).templateSystemPrompt && (
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">System Prompt</h3>
+                    <div className="bg-white rounded-lg p-4 border border-gray-200">
+                      <pre className="text-sm text-gray-700 whitespace-pre-wrap font-sans">
+                        {(selectedAgentDetails as any).templateSystemPrompt}
+                      </pre>
+                    </div>
+                  </div>
+                )}
+
+                {/* Sample Questions */}
+                {(selectedAgentDetails as any).templateSampleQuestions && (
+                  <div className="bg-green-50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Sample Questions</h3>
+                    <ul className="space-y-2">
+                      {((selectedAgentDetails as any).templateSampleQuestions || []).map((question: string, index: number) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="text-blue-600 mt-1">•</span>
+                          <span className="text-gray-700">{question}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Description */}
+                {selectedAgentDetails.description && (
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Description</h3>
+                    <p className="text-gray-700 leading-relaxed">{selectedAgentDetails.description}</p>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={() => {
+                      setShowAgentDetailsModal(false);
+                      setSelectedAgentDetails(null);
+                    }}
+                    className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Navigate to edit or configure the agent
+                      setShowAgentDetailsModal(false);
+                      // You can add navigation here if needed
+                    }}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Configure Agent
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
