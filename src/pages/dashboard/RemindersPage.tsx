@@ -16,22 +16,20 @@ const RemindersPage: React.FC = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
       >
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-            <Clock className="w-4 h-4 text-blue-600" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">Reminders Configuration</h2>
-            <p className="text-sm text-gray-600">Configure your reminder settings and templates</p>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          {/* Enable/Disable Reminders Toggle */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <Clock className="w-4 h-4 text-blue-600" />
+            </div>
             <div>
+              <h2 className="text-xl font-semibold text-gray-900">Reminders Configuration</h2>
+              <p className="text-sm text-gray-600">Configure your reminder settings and templates</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
               <label className="text-sm font-medium text-gray-900">Enable Reminders</label>
-              <p className="text-xs text-gray-500 mt-1">Turn reminders on or off for all clients</p>
+              <p className="text-xs text-gray-500">Turn reminders on or off for all clients</p>
             </div>
             <button
               onClick={() => setRemindersEnabled(!remindersEnabled)}
@@ -45,7 +43,10 @@ const RemindersPage: React.FC = () => {
                 }`}
               />
             </button>
+          </div>
         </div>
+
+        <div className="space-y-6">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Default Reminder Settings */}
@@ -53,7 +54,7 @@ const RemindersPage: React.FC = () => {
             <h3 className="text-lg font-medium text-gray-900">Default Settings</h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Default Reminder Time</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Reminder Time</label>
                   <select 
                     value={defaultReminderTime}
                     onChange={(e) => setDefaultReminderTime(e.target.value)}
@@ -66,7 +67,7 @@ const RemindersPage: React.FC = () => {
                 </select>
               </div>
               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Default Reminder Message</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
                 <textarea
                     value={defaultReminderText}
                     onChange={(e) => setDefaultReminderText(e.target.value)}
@@ -74,9 +75,6 @@ const RemindersPage: React.FC = () => {
                     rows={6}
                   placeholder="Enter your default reminder message template..."
                   />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Use variables: {'{{client_name}}'}, {'{{service}}'}, {'{{appointment_date}}'}, {'{{appointment_time}}'}
-                  </p>
               </div>
             </div>
           </div>

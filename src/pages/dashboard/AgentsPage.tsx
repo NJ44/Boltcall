@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
-import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Car, Utensils, GraduationCap, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle } from 'lucide-react';
+import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
 import { supabase } from '../../lib/supabase';
@@ -52,6 +52,7 @@ interface IndustryTemplate {
   greeting: string;
   sampleQuestions: string[];
   color: string;
+  direction: 'inbound' | 'outbound';
 }
 
 const AgentsPage: React.FC = () => {
@@ -61,7 +62,9 @@ const AgentsPage: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showTemplatesModal, setShowTemplatesModal] = useState(false);
   const [showTestChatModal, setShowTestChatModal] = useState(false);
+  const [showAgentDetailsModal, setShowAgentDetailsModal] = useState(false);
   const [selectedAgentForTest, setSelectedAgentForTest] = useState<Agent | null>(null);
+  const [selectedAgentDetails, setSelectedAgentDetails] = useState<Agent | null>(null);
   const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
@@ -91,7 +94,8 @@ const AgentsPage: React.FC = () => {
         'Would you like to schedule a maintenance appointment?',
         'Do you need a service quote?'
       ],
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      direction: 'inbound'
     },
     {
       id: 'dentist',
@@ -108,7 +112,8 @@ const AgentsPage: React.FC = () => {
         'Are you experiencing any dental pain?',
         'Would you like to schedule a cleaning?'
       ],
-      color: 'bg-green-500'
+      color: 'bg-green-500',
+      direction: 'inbound'
     },
     {
       id: 'real-estate',
@@ -125,58 +130,8 @@ const AgentsPage: React.FC = () => {
         'What is your budget range?',
         'Would you like to schedule a showing?'
       ],
-      color: 'bg-purple-500'
-    },
-    {
-      id: 'auto-repair',
-      name: 'Auto Repair Agent',
-      industry: 'Automotive',
-      icon: <Car className="w-8 h-8" />,
-      description: 'Automotive service agent for repair appointments and maintenance scheduling',
-      features: ['Service appointments', 'Diagnostic scheduling', 'Parts ordering', 'Warranty claims'],
-      voice: 'Professional Male',
-      greeting: 'Hello! Thank you for calling our auto repair shop. What can we help you with today?',
-      sampleQuestions: [
-        'What type of repair do you need?',
-        'What is the make and model of your vehicle?',
-        'Is your vehicle currently drivable?',
-        'Do you need a rental car?'
-      ],
-      color: 'bg-orange-500'
-    },
-    {
-      id: 'restaurant',
-      name: 'Restaurant Agent',
-      industry: 'Restaurant',
-      icon: <Utensils className="w-8 h-8" />,
-      description: 'Restaurant agent for reservations and customer service',
-      features: ['Reservation management', 'Menu inquiries', 'Special events', 'Customer feedback'],
-      voice: 'Friendly Female',
-      greeting: 'Welcome to our restaurant! I\'m here to help you with reservations and any questions.',
-      sampleQuestions: [
-        'How many people is the reservation for?',
-        'What date and time would you prefer?',
-        'Do you have any dietary restrictions?',
-        'Are you celebrating a special occasion?'
-      ],
-      color: 'bg-red-500'
-    },
-    {
-      id: 'education',
-      name: 'Education Agent',
-      industry: 'Education',
-      icon: <GraduationCap className="w-8 h-8" />,
-      description: 'Educational institution agent for enrollment and student services',
-      features: ['Enrollment inquiries', 'Course information', 'Student support', 'Event scheduling'],
-      voice: 'Professional Female',
-      greeting: 'Welcome to our educational institution! How can I help you with your educational journey?',
-      sampleQuestions: [
-        'Are you interested in enrolling?',
-        'What program are you considering?',
-        'Do you need financial aid information?',
-        'Would you like to schedule a campus tour?'
-      ],
-      color: 'bg-indigo-500'
+      color: 'bg-purple-500',
+      direction: 'inbound'
     },
     {
       id: 'legal',
@@ -193,7 +148,8 @@ const AgentsPage: React.FC = () => {
         'Do you need a consultation?',
         'Are there any urgent deadlines?'
       ],
-      color: 'bg-gray-700'
+      color: 'bg-gray-700',
+      direction: 'inbound'
     },
     {
       id: 'retail',
@@ -210,7 +166,8 @@ const AgentsPage: React.FC = () => {
         'Would you like to check product availability?',
         'Do you have any questions about our return policy?'
       ],
-      color: 'bg-pink-500'
+      color: 'bg-pink-500',
+      direction: 'inbound'
     },
     {
       id: 'healthcare',
@@ -227,7 +184,8 @@ const AgentsPage: React.FC = () => {
         'Do you have insurance?',
         'Is this an urgent medical concern?'
       ],
-      color: 'bg-teal-500'
+      color: 'bg-teal-500',
+      direction: 'inbound'
     },
     {
       id: 'beauty',
@@ -244,7 +202,8 @@ const AgentsPage: React.FC = () => {
         'What date and time work for you?',
         'Are you celebrating a special occasion?'
       ],
-      color: 'bg-rose-500'
+      color: 'bg-rose-500',
+      direction: 'inbound'
     }
   ];
 
@@ -271,19 +230,111 @@ const AgentsPage: React.FC = () => {
     setShowCreateModal(false);
   };
 
-  const handleTemplateSelect = (template: IndustryTemplate) => {
-    // Pre-fill the form with template data
-    setCreateForm({
-      name: template.name,
-      voice: template.voice,
-      knowledgeBase: template.description,
-      phoneNumber: '',
-      humanTransferPhone: '',
-      direction: 'inbound',
-      language: 'English'
-    });
-    setShowTemplatesModal(false);
-    setShowCreateModal(true);
+  const handleTemplateSelect = async (template: IndustryTemplate) => {
+    if (!user?.id) return;
+
+    try {
+      // Create system prompt from template
+      const systemPrompt = `You are ${template.name}. ${template.description}
+
+${template.greeting}
+
+Key guidelines:
+- Be ${template.voice.includes('Friendly') ? 'friendly and warm' : 'professional and courteous'}
+- Provide accurate information based on our knowledge base
+- If you don't know something, offer to connect them with a team member
+- Always maintain a positive tone
+- Focus on being helpful and solving customer problems
+
+Sample questions you might receive:
+${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
+
+      // Create agent in Supabase
+      const { data: newAgent, error } = await supabase
+        .from('agents')
+        .insert({
+          user_id: user.id,
+          name: template.name,
+          description: template.description,
+          agent_type: 'ai_receptionist',
+          status: 'active',
+          voice_id: template.voice,
+          language: 'en',
+          conversation_style: template.voice.includes('Friendly') ? 'friendly' : 'professional',
+          personality: template.voice,
+          system_prompt: systemPrompt,
+          greeting: template.greeting,
+          direction: template.direction
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating agent:', error);
+        return;
+      }
+
+      // Fetch the created agent with all details
+      const { data: agentData, error: fetchError } = await supabase
+        .from('agents')
+        .select('*')
+        .eq('id', newAgent.id)
+        .single();
+
+      if (fetchError) {
+        console.error('Error fetching agent:', fetchError);
+        return;
+      }
+
+      // Set agent details and show modal
+      setSelectedAgentDetails({
+        id: agentData.id,
+        name: agentData.name || template.name,
+        status: agentData.status || 'active',
+        callsToday: 0,
+        avgResponseTime: 'N/A',
+        successRate: '0%',
+        lastActive: 'Just now',
+        agent_type: agentData.agent_type,
+        description: agentData.description,
+        created_at: agentData.created_at,
+        // Add template data for display
+        ...agentData,
+        templateGreeting: template.greeting,
+        templateSampleQuestions: template.sampleQuestions,
+        templateSystemPrompt: systemPrompt
+      } as any);
+
+      // Refresh agents list
+      const fetchAgents = async () => {
+        const { data, error } = await supabase
+          .from('agents')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+
+        if (!error && data) {
+          setAgents(data.map((agent: any) => ({
+            id: agent.id,
+            name: agent.name,
+            status: agent.status || 'inactive',
+            callsToday: agent.total_calls || 0,
+            avgResponseTime: agent.average_call_duration ? `${agent.average_call_duration}s` : 'N/A',
+            successRate: agent.conversion_rate ? `${agent.conversion_rate}%` : '0%',
+            lastActive: agent.updated_at ? new Date(agent.updated_at).toLocaleDateString() : 'N/A',
+            agent_type: agent.agent_type,
+            description: agent.description,
+            created_at: agent.created_at
+          })));
+        }
+      };
+      await fetchAgents();
+
+      setShowTemplatesModal(false);
+      setShowAgentDetailsModal(true);
+    } catch (error) {
+      console.error('Error creating agent from template:', error);
+    }
   };
 
   const handleTestChat = (agent: Agent) => {
@@ -758,58 +809,40 @@ const AgentsPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-zinc-600 mb-6">
-                Choose from our pre-built AI agent templates designed for specific industries. 
-                Each template comes with industry-specific features, sample questions, and optimized settings.
-              </p>
-
               {/* Templates Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {industryTemplates.map((template) => (
                   <div
                     key={template.id}
-                    className="border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-all cursor-pointer group"
+                    className="border border-gray-200 rounded-xl p-6 hover:border-blue-500 hover:shadow-xl transition-all cursor-pointer group bg-white relative"
                     onClick={() => handleTemplateSelect(template)}
                   >
+                    {/* Inbound/Outbound Badge - Top Left */}
+                    <span className={`absolute top-3 left-3 px-2 py-0.5 rounded-full text-xs font-medium ${
+                      template.direction === 'inbound' 
+                        ? 'bg-blue-100 text-blue-700' 
+                        : 'bg-green-100 text-green-700'
+                    }`}>
+                      {template.direction === 'inbound' ? 'Inbound' : 'Outbound'}
+                    </span>
+
                     {/* Template Header */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-8 h-8 ${template.color} rounded-lg flex items-center justify-center text-white`}>
+                    <div className="flex items-center gap-4 mb-4 mt-2">
+                      <div className={`w-12 h-12 ${template.color} rounded-xl flex items-center justify-center text-white shadow-sm`}>
                         {template.icon}
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors text-sm">
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-base">
                           {template.name}
                         </h3>
-                        <p className="text-xs text-gray-500">{template.industry}</p>
                       </div>
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-xs mb-3 line-clamp-2">{template.description}</p>
-
-                    {/* Features */}
-                    <div className="mb-3">
-                      <h4 className="text-xs font-medium text-gray-900 mb-1">Features:</h4>
-                      <ul className="text-xs text-gray-600 space-y-1">
-                        {template.features.slice(0, 2).map((feature, index) => (
-                          <li key={index} className="flex items-center gap-1">
-                            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                            {feature}
-                          </li>
-                        ))}
-                        {template.features.length > 2 && (
-                          <li className="text-gray-500 text-xs">+{template.features.length - 2} more</li>
-                        )}
-                      </ul>
-                    </div>
-
-                    {/* Voice */}
-                    <div className="text-xs text-gray-500 mb-3">
-                      <div><strong>Voice:</strong> {template.voice}</div>
-                    </div>
+                    <p className="text-gray-700 text-sm mb-6 line-clamp-3 leading-relaxed">{template.description}</p>
 
                     {/* Use Template Button */}
-                    <button className="w-full mt-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs font-medium">
+                    <button className="w-full px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold shadow-sm">
                       Use Template
                     </button>
                   </div>

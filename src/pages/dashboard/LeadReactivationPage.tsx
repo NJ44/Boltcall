@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, CheckCircle, XCircle, Play, X } from 'lucide-react';
+import { CheckCircle, XCircle, Play, X } from 'lucide-react';
 import { FileUpload } from '@/components/ui/file-upload';
 import CardTableWithPanel from '@/components/ui/CardTableWithPanel';
 
 const LeadReactivationPage: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const [uploadedData, setUploadedData] = useState<any[]>([]);
   const [showCampaignModal, setShowCampaignModal] = useState(false);
@@ -14,7 +13,6 @@ const LeadReactivationPage: React.FC = () => {
     const selectedFile = files[0];
     if (selectedFile) {
       if (selectedFile.type === 'text/csv' || selectedFile.name.endsWith('.csv')) {
-        setFile(selectedFile);
         setUploadStatus('uploading');
 
         try {
@@ -84,7 +82,7 @@ const LeadReactivationPage: React.FC = () => {
             hideSearch={true}
             data={uploadedData}
             columns={getColumns()}
-            renderRow={(lead, index) => (
+            renderRow={(lead) => (
               <div className="flex items-center gap-6">
                 {Object.values(lead).map((value: any, cellIndex) => (
                   <div key={cellIndex} className="text-sm text-gray-900 flex-1 truncate">

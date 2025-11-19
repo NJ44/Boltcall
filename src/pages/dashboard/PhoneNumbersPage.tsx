@@ -472,14 +472,25 @@ const PhoneNumbersPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 w-full max-w-sm mx-4 max-h-[70vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3">
-              Connect to your number via SIP trunking
-            </h2>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    Connect to your number via SIP trunking
+                  </h2>
+                  <button
+                    onClick={() => setShowSipModal(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
             
-            <form onSubmit={handleSipFormSubmit} className="space-y-3">
+            <form onSubmit={handleSipFormSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Phone Number
@@ -576,6 +587,7 @@ const PhoneNumbersPage: React.FC = () => {
                 </Magnetic>
               </div>
             </form>
+              </div>
             </motion.div>
           </motion.div>
         )}

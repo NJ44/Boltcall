@@ -208,9 +208,6 @@ const OfferPage: React.FC = () => {
                   <span className="text-gray-900">Get a Website That</span>{' '}
                   <span className="text-blue-600">Brings You Customers</span>
                 </h1>
-                <p className="text-lg text-gray-600 mt-4 max-w-xl">
-                  We're giving away 12 free websites this month because we just hit 1,000 happy clients. Your site will be fast. It will rank on Google. And it will turn visitors into customers while you sleep.
-                </p>
               </motion.div>
 
               <motion.ul
@@ -222,7 +219,7 @@ const OfferPage: React.FC = () => {
                 <li className="flex items-start">
                   <Check className="w-5 h-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-gray-900">Your new site loads in under 2 seconds</div>
+                    <div className="font-semibold text-gray-900">Loads in under 2 seconds</div>
                     <div className="text-base text-gray-600 mt-1">Customers won't wait. Your site won't make them.</div>
                   </div>
                 </li>

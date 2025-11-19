@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type, Save } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
-import { FileUpload } from '@/components/ui/file-upload';
 
 interface ClientAgent {
   id: string;
@@ -18,7 +17,6 @@ interface ClientAgent {
 const WebsiteBubblePage: React.FC = () => {
   const [showIntegrationCode, setShowIntegrationCode] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string>('');
-  const [logoFile, setLogoFile] = useState<File | null>(null);
   
   // Sliding panel states
   const [showAddPanel, setShowAddPanel] = useState(false);
@@ -130,6 +128,19 @@ const WebsiteBubblePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
+
+      {/* Instructions Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-blue-50 border border-blue-200 rounded-lg p-4"
+      >
+        <h3 className="text-sm font-semibold text-blue-900 mb-2">Quick Start Guide</h3>
+        <p className="text-sm text-blue-800">
+          Create a website bubble to add an AI chat widget to your website. Configure the bubble name, color, and position, then copy the integration code to embed it on your site.
+        </p>
+      </motion.div>
 
       {/* Client Agents Card Table */}
       <motion.div
@@ -381,7 +392,18 @@ const WebsiteBubblePage: React.FC = () => {
               <Image className="w-4 h-4 inline mr-1" />
               Logo Upload
             </label>
-            <FileUpload onChange={(files) => setLogoFile(files[0] || null)} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                // Handle file upload if needed
+                const file = e.target.files?.[0];
+                if (file) {
+                  console.log('Logo file selected:', file.name);
+                }
+              }}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
 
           {/* Bot Name */}
