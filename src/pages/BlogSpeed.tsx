@@ -27,7 +27,7 @@ const BlogSpeed: React.FC = () => {
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Why Speed Matters: The 391% Advantage of Responding in 60 Seconds
+              The <span className="text-blue-600">391%</span> Advantage: Responding in 60 Seconds
             </h1>
             
             <div className="flex items-center gap-6 text-sm text-gray-600">

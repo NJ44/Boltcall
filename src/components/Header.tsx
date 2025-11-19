@@ -39,17 +39,29 @@ const Header: React.FC = () => {
       // When scrolled past the announcement bar (64px), make header stick to top
       setIsSticky(scrollTop >= 64);
 
-      // Check if navbar is over a blue background section
-      // Only check when scrolled past the hero section to avoid immediate white on scroll
-      if (scrollTop < 200) {
+      // Don't check for blue backgrounds until we've scrolled past the hero section
+      // This prevents the navbar from turning white immediately on page load
+      if (scrollTop < 300) {
         setIsOverBlueBackground(false);
         return;
       }
 
+      // Check if navbar is over a blue background section
       const header = document.querySelector('header');
       if (!header) return;
 
       const headerRect = header.getBoundingClientRect();
+
+      // First, check if we're over the pricing section by checking scroll position and section position
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        const pricingRect = pricingSection.getBoundingClientRect();
+        // Check if header is over or near the pricing section
+        if (headerRect.bottom >= pricingRect.top && headerRect.top <= pricingRect.bottom) {
+          setIsOverBlueBackground(false);
+          return;
+        }
+      }
       const headerCenterY = headerRect.top + headerRect.height / 2;
       const headerCenterX = window.innerWidth / 2;
 
@@ -60,19 +72,46 @@ const Header: React.FC = () => {
         // Traverse up the DOM tree to find a section or container with blue/dark background
         let currentElement: HTMLElement | null = elementBelow as HTMLElement;
         let foundBlueBackground = false;
+        let foundLightBackground = false;
 
         while (currentElement && currentElement !== document.documentElement) {
           const computedStyle = window.getComputedStyle(currentElement);
           const bgColor = computedStyle.backgroundColor;
           const className = currentElement.className || '';
           const tagName = currentElement.tagName.toLowerCase();
+          const id = currentElement.id || '';
 
-          // Check for blue background classes - be more specific
+          // Skip hero section - it has light background (gray gradient)
+          if (id === 'hero' || className.includes('hero') || className.includes('Hero')) {
+            foundLightBackground = true;
+            break;
+          }
+
+          // Skip pricing section - it has white background, navbar should be black
+          if (id === 'pricing' || className.includes('pricing') || className.includes('Pricing')) {
+            foundLightBackground = true;
+            break;
+          }
+
+          // Check for light background classes that should prevent white text
+          const hasLightClass = 
+            className.includes('bg-white') ||
+            className.includes('bg-gray-50') ||
+            className.includes('bg-gray-100') ||
+            className.includes('bg-light-blue') ||
+            (className.includes('bg-gradient') && (className.includes('white') || className.includes('light-blue')));
+
+          if (hasLightClass) {
+            foundLightBackground = true;
+            break;
+          }
+
+          // Check for blue background classes - be more specific, exclude gradients with white
           const hasBlueClass = 
             className.includes('bg-blue-600') || 
             className.includes('bg-blue-700') ||
             className.includes('bg-blue-800') ||
-            (className.includes('bg-gradient') && (className.includes('blue') || className.includes('brand-blue'))) ||
+            (className.includes('bg-gradient') && className.includes('blue') && !className.includes('white') && !className.includes('light-blue')) ||
             className.includes('bg-brand-blue') ||
             className.includes('bg-muted') ||
             className.includes('bg-black') ||
@@ -80,13 +119,20 @@ const Header: React.FC = () => {
             className.includes('bg-gray-800');
 
           // Check if background color is blue-ish or dark (RGB values)
-          // Only check if it's not transparent
-          if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent' && bgColor !== 'rgb(255, 255, 255)') {
+          // Only check if it's not transparent and not white/light
+          if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
             const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
             if (rgbMatch) {
               const r = parseInt(rgbMatch[1]);
               const g = parseInt(rgbMatch[2]);
               const b = parseInt(rgbMatch[3]);
+              
+              // Check if it's a light background (high RGB values) - if so, don't turn white
+              if (r > 200 && g > 200 && b > 200) {
+                foundLightBackground = true;
+                break;
+              }
+              
               // Check if it's a dark color (low RGB values) or blue-ish (high blue, low red/green)
               // Be more strict - only dark backgrounds or clearly blue backgrounds
               const isDarkBackground = r < 100 && g < 100 && b < 100;
@@ -107,25 +153,38 @@ const Header: React.FC = () => {
           // Check if we've reached a section or main container
           if (tagName === 'section' || tagName === 'main') {
             // If this section has white text, it likely has a dark background
+            // But also check if background is light - if so, don't turn white
             const textColor = computedStyle.color;
             if (textColor && textColor.includes('255') && textColor.includes('255, 255, 255')) {
-              foundBlueBackground = true;
-              break;
+              // Double check the background isn't light
+              if (bgColor) {
+                const rgbMatch = bgColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+                if (rgbMatch) {
+                  const r = parseInt(rgbMatch[1]);
+                  const g = parseInt(rgbMatch[2]);
+                  const b = parseInt(rgbMatch[3]);
+                  if (!(r > 200 && g > 200 && b > 200)) {
+                    foundBlueBackground = true;
+                    break;
+                  }
+                }
+              }
             }
           }
 
           currentElement = currentElement.parentElement;
         }
 
-        setIsOverBlueBackground(foundBlueBackground);
+        // Only set to white if we found blue background AND didn't find light background
+        setIsOverBlueBackground(foundBlueBackground && !foundLightBackground);
       } else {
         setIsOverBlueBackground(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Also check on initial load
-    handleScroll();
+    // Don't check on initial load - start with black links
+    // handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

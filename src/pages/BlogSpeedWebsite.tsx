@@ -27,7 +27,7 @@ const BlogSpeedWebsite: React.FC = () => {
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Why Website Speed Is Everything: The Hidden Cost of Slow Loading Pages
+              Why <span className="text-blue-600">Website Speed</span> Is Everything
             </h1>
             
             <div className="flex items-center gap-6 text-sm text-gray-600">

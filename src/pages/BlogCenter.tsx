@@ -17,7 +17,7 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
-    title: 'The New Reality for Local Businesses: Why AI Services Are No Longer Optional',
+    title: 'Why <span class="text-blue-600">AI Services</span> Are No Longer Optional',
     slug: '/the-new-reality-for-local-businesses',
     excerpt: 'The local business landscape has transformed dramatically. What worked yesterday won\'t work tomorrow. And the businesses that are thriving? They\'re the ones that embraced AI services early.',
     date: 'January 15, 2025',
@@ -25,7 +25,7 @@ const blogPosts: BlogPost[] = [
     category: 'Business Strategy'
   },
   {
-    title: 'Why Speed Matters: The 391% Advantage of Responding in 60 Seconds',
+    title: 'The <span class="text-blue-600">391%</span> Advantage: Responding in 60 Seconds',
     slug: '/why-speed-matters-391-percent-advantage',
     excerpt: 'Research shows that contacting a lead within 60 seconds increases conversion rates by 391%. Discover why speed is the ultimate competitive advantage in lead generation.',
     date: 'January 20, 2025',
@@ -33,7 +33,7 @@ const blogPosts: BlogPost[] = [
     category: 'Lead Generation'
   },
   {
-    title: 'Why Website Speed Is Everything: The Hidden Cost of Slow Loading Pages',
+    title: 'Why <span class="text-blue-600">Website Speed</span> Is Everything',
     slug: '/why-website-speed-is-everything',
     excerpt: '53% of users abandon sites that take longer than 3 seconds to load. Discover why website speed is critical and how it impacts your bottom line.',
     date: 'January 25, 2025',
@@ -41,7 +41,7 @@ const blogPosts: BlogPost[] = [
     category: 'Website Performance'
   },
   {
-    title: 'The Complete Guide to SEO: Why Your Business Can\'t Afford to Ignore Search Rankings',
+    title: 'Why <span class="text-blue-600">SEO</span> Can\'t Be Ignored',
     slug: '/complete-guide-to-seo',
     excerpt: '75% of users never go beyond the first page of search results. Discover why SEO is critical for your business and how to get started with a free SEO audit.',
     date: 'January 30, 2025',
@@ -96,9 +96,7 @@ const BlogCenter: React.FC = () => {
                     </div>
                     
                     {/* Title */}
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                      {post.title}
-                    </h2>
+                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors" dangerouslySetInnerHTML={{ __html: post.title }} />
                     
                     {/* Excerpt */}
                     <p className="text-gray-600 mb-6 flex-grow line-clamp-3">

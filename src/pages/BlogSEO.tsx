@@ -27,7 +27,7 @@ const BlogSEO: React.FC = () => {
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              The Complete Guide to SEO: Why Your Business Can't Afford to Ignore Search Rankings
+              Why <span className="text-blue-600">SEO</span> Can't Be Ignored
             </h1>
             
             <div className="flex items-center gap-6 text-sm text-gray-600">

@@ -27,7 +27,7 @@ const Blog: React.FC = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              The New Reality for Local Businesses: Why AI Services Are No Longer Optional
+              Why <span className="text-blue-600">AI Services</span> Are No Longer Optional
             </h1>
             
             <div className="flex items-center gap-6 text-sm text-gray-600">

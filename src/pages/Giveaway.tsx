@@ -48,12 +48,12 @@ const GiveawayPage: React.FC = () => {
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold">
-                <span className="text-brand-blue">6 Months Pro Plan</span>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-white">
+                <span className="text-white">3 Months</span> <span className="text-blue-500">Pro Plan</span> <span className="text-white">+</span> <span className="text-blue-500">smart website</span> <span className="text-white">package</span>
               </h1>
 
-              <p className="mt-10 text-white/80 text-sm leading-6 max-w-md">
-                We're rewarding one lucky winner with 6 months of our Pro plan plus a complete website package.
+              <p className="mt-10 text-white text-base md:text-lg leading-6 max-w-md">
+                We're rewarding one lucky winner with <span className="text-blue-500">3 months</span> of our <span className="text-blue-500">Pro plan</span> plus a complete <span className="text-blue-500">website package</span>.
               </p>
 
               {/* Prize highlights */}
