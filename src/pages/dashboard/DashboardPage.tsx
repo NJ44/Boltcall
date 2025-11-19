@@ -250,9 +250,9 @@ const DashboardPage: React.FC = () => {
                   <div className={`p-3 rounded-lg ${feature.isActive ? 'bg-blue-100' : 'bg-gray-100'}`}>
                     <div className={feature.isActive ? 'text-blue-600' : 'text-gray-400'}>
                       {feature.icon}
-                    </div>
-                  </div>
-                  
+              </div>
+            </div>
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <p className="text-sm font-medium text-gray-900 truncate">{feature.name}</p>
@@ -265,7 +265,7 @@ const DashboardPage: React.FC = () => {
                           Inactive
                         </span>
                       )}
-                    </div>
+              </div>
                     <p className="text-xs text-gray-500 mb-2 truncate">{feature.description}</p>
                     {feature.assignedAgentName && (
                       <p className="text-xs text-gray-600">
@@ -275,8 +275,8 @@ const DashboardPage: React.FC = () => {
                     {!feature.assignedAgentName && feature.isActive && (
                       <p className="text-xs text-gray-400">No agent assigned</p>
                     )}
-                  </div>
-                  
+            </div>
+
                   <Link
                     to={feature.setupLink}
                     className="flex-shrink-0 text-blue-600 hover:text-blue-700 transition-colors"
@@ -317,7 +317,7 @@ const DashboardPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 z-40"
+              className="fixed -inset-[200px] bg-black/30 z-40"
               onClick={() => setShowHelpChat(false)}
             />
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
+import { FileUpload } from '@/components/ui/file-upload';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -240,8 +241,8 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleFileUpload = (files: File[]) => {
+    const file = files[0];
     if (file) {
       setFileInput(file);
     }
@@ -504,6 +505,7 @@ const KnowledgeBasePage: React.FC = () => {
           </div>
 
         <CardTableWithPanel
+          hideSearch={true}
           data={documents.filter(doc => 
             doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             doc.content.toLowerCase().includes(searchTerm.toLowerCase())
@@ -572,7 +574,7 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-[9999]"
+              className="fixed -inset-[200px] bg-black bg-opacity-50 z-[9999]"
               onClick={handleCloseNewKnowledgeBase}
             />
             
@@ -732,7 +734,7 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-[10001]"
+              className="fixed -inset-[200px] bg-black bg-opacity-50 z-[10001]"
               onClick={handleClosePopup}
             />
             
@@ -809,33 +811,8 @@ const KnowledgeBasePage: React.FC = () => {
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                           Select File
                         </label>
-                        <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-                          <input
-                            type="file"
-                            onChange={handleFileUpload}
-                            accept=".pdf,.doc,.docx,.txt"
-                            className="hidden"
-                            id="file-upload"
-                          />
-                          <label
-                            htmlFor="file-upload"
-                            className="cursor-pointer flex flex-col items-center"
-                          >
-                            <Upload className="w-8 h-8 text-gray-400 mb-2" />
-                            <span className="text-sm text-gray-600 dark:text-gray-400">
-                              Click to upload or drag and drop
-                            </span>
-                            <span className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                              PDF, DOC, DOCX, TXT files
-                            </span>
-                          </label>
-                        </div>
-                        {fileInput && (
-                          <div className="mt-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <p className="text-sm text-gray-700 dark:text-gray-300">Selected: {fileInput.name}</p>
-                          </div>
-                        )}
-            </div>
+                        <FileUpload onChange={handleFileUpload} />
+                      </div>
                       <div className="flex gap-3 pt-4">
                         <button
                           onClick={handleClosePopup}
@@ -902,7 +879,7 @@ const KnowledgeBasePage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 flex items-center justify-center z-[9999]"
+            className="fixed -inset-[200px] bg-black/50 flex items-center justify-center z-[9999]"
             onClick={handleCancelEdit}
           >
             <motion.div

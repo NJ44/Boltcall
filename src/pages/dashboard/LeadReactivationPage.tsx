@@ -1,144 +1,111 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Upload, FileText, CheckCircle, XCircle, Download, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FileText, CheckCircle, XCircle, Play, X } from 'lucide-react';
+import { FileUpload } from '@/components/ui/file-upload';
+import CardTableWithPanel from '@/components/ui/CardTableWithPanel';
 
 const LeadReactivationPage: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const [uploadedData, setUploadedData] = useState<any[]>([]);
+  const [showCampaignModal, setShowCampaignModal] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
+  const handleFileChange = async (files: File[]) => {
+    const selectedFile = files[0];
     if (selectedFile) {
       if (selectedFile.type === 'text/csv' || selectedFile.name.endsWith('.csv')) {
         setFile(selectedFile);
-        setUploadStatus('idle');
+        setUploadStatus('uploading');
+
+        try {
+          // Read CSV file
+          const text = await selectedFile.text();
+          const lines = text.split('\n');
+          const headers = lines[0].split(',').map(h => h.trim());
+          const data = lines.slice(1)
+            .filter(line => line.trim())
+            .map(line => {
+              const values = line.split(',').map(v => v.trim());
+              const obj: any = {};
+              headers.forEach((header, index) => {
+                obj[header] = values[index] || '';
+              });
+              return obj;
+            });
+
+          setUploadedData(data);
+          setUploadStatus('success');
+          
+          // Here you would typically send the data to your backend API
+          // await uploadLeads(data);
+        } catch (error) {
+          console.error('Error uploading file:', error);
+          setUploadStatus('error');
+        }
       } else {
         alert('Please upload a CSV file');
       }
     }
   };
 
-  const handleUpload = async () => {
-    if (!file) return;
-
-    setUploadStatus('uploading');
-
-    try {
-      // Read CSV file
-      const text = await file.text();
-      const lines = text.split('\n');
-      const headers = lines[0].split(',').map(h => h.trim());
-      const data = lines.slice(1)
-        .filter(line => line.trim())
-        .map(line => {
-          const values = line.split(',').map(v => v.trim());
-          const obj: any = {};
-          headers.forEach((header, index) => {
-            obj[header] = values[index] || '';
-          });
-          return obj;
-        });
-
-      setUploadedData(data);
-      setUploadStatus('success');
-      
-      // Here you would typically send the data to your backend API
-      // await uploadLeads(data);
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      setUploadStatus('error');
-    }
-  };
-
-  const handleDownloadTemplate = () => {
-    const template = 'Name,Email,Phone,Company,Notes\nJohn Doe,john@example.com,555-1234,Acme Corp,Previous customer\nJane Smith,jane@example.com,555-5678,Tech Inc,Interested in product';
-    const blob = new Blob([template], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'lead-reactivation-template.csv';
-    a.click();
-    window.URL.revokeObjectURL(url);
+  // Get column headers from uploaded data
+  const getColumns = () => {
+    if (uploadedData.length === 0) return [];
+    return Object.keys(uploadedData[0]).map(key => ({
+      key,
+      label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '),
+      width: '20%'
+    }));
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Lead Reactivation</h1>
-        <p className="text-gray-600">
-          Upload a CSV file with lead information to reactivate and re-engage with previous leads.
-        </p>
-      </div>
+    <div className="p-6 max-w-7xl mx-auto">
+      {/* Leads Table */}
+      {uploadedData.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-lg border border-gray-200 shadow-sm mb-6"
+        >
+          <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900">Uploaded Leads</h2>
+              <p className="text-sm text-gray-600 mt-1">{uploadedData.length} leads ready for reactivation</p>
+            </div>
+            <button
+              onClick={() => setShowCampaignModal(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            >
+              <Play className="w-4 h-4" />
+              Start Lead Reactivation
+            </button>
+          </div>
+          <CardTableWithPanel
+            hideSearch={true}
+            data={uploadedData}
+            columns={getColumns()}
+            renderRow={(lead, index) => (
+              <div className="flex items-center gap-6">
+                {Object.values(lead).map((value: any, cellIndex) => (
+                  <div key={cellIndex} className="text-sm text-gray-900 flex-1 truncate">
+                    {String(value || '-')}
+                  </div>
+                ))}
+              </div>
+            )}
+            emptyStateText="No leads uploaded yet"
+          />
+        </motion.div>
+      )}
 
-      {/* Upload Section */}
+      {/* Upload Section - Smaller */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-lg border border-gray-200 shadow-sm p-6 mb-6"
+        className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 mb-6"
       >
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Upload CSV File</h2>
-        
-        <div className="space-y-4">
-          {/* File Input */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select CSV File
-            </label>
-            <div className="flex items-center gap-4">
-              <label className="flex-1 cursor-pointer">
-                <input
-                  type="file"
-                  accept=".csv"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-                <div className="flex items-center justify-center px-6 py-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-colors">
-                  <div className="text-center">
-                    <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600">
-                      {file ? file.name : 'Click to upload or drag and drop'}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">CSV files only</p>
-                  </div>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          {/* Template Download */}
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <AlertCircle className="w-4 h-4" />
-            <span>Need a template?</span>
-            <button
-              onClick={handleDownloadTemplate}
-              className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
-            >
-              <Download className="w-4 h-4" />
-              Download CSV Template
-            </button>
-          </div>
-
-          {/* Upload Button */}
-          <div className="flex justify-end">
-            <button
-              onClick={handleUpload}
-              disabled={!file || uploadStatus === 'uploading'}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
-            >
-              {uploadStatus === 'uploading' ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <Upload className="w-4 h-4" />
-                  Upload and Process
-                </>
-              )}
-            </button>
-          </div>
+        <div className="max-w-2xl">
+          <FileUpload onChange={handleFileChange} />
         </div>
       </motion.div>
 
@@ -175,54 +142,92 @@ const LeadReactivationPage: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Uploaded Data Preview */}
-      {uploadStatus === 'success' && uploadedData.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg border border-gray-200 shadow-sm p-6"
-        >
-          <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <FileText className="w-5 h-5" />
-            Uploaded Leads Preview
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  {Object.keys(uploadedData[0]).map((header) => (
-                    <th
-                      key={header}
-                      className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+      {/* Lead Reactivation Campaign Modal */}
+      <AnimatePresence>
+        {showCampaignModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
+              onClick={() => setShowCampaignModal(false)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                      Lead Reactivation Campaign
+                    </h2>
+                    <button
+                      onClick={() => setShowCampaignModal(false)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
                     >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {uploadedData.slice(0, 10).map((row, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    {Object.values(row).map((value: any, cellIndex) => (
-                      <td
-                        key={cellIndex}
-                        className="px-4 py-3 text-sm text-gray-900"
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Campaign Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Enter campaign name"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Select Agent
+                      </label>
+                      <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 text-black">
+                        <option value="">Select an agent</option>
+                        <option value="agent1">Agent 1</option>
+                        <option value="agent2">Agent 2</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Message Template
+                      </label>
+                      <textarea
+                        rows={4}
+                        placeholder="Enter your reactivation message..."
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+                      />
+                    </div>
+
+                    <div className="flex gap-3 pt-4">
+                      <button
+                        onClick={() => setShowCampaignModal(false)}
+                        className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                       >
-                        {value}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {uploadedData.length > 10 && (
-              <p className="text-sm text-gray-500 mt-4 text-center">
-                Showing first 10 of {uploadedData.length} leads
-              </p>
-            )}
-          </div>
-        </motion.div>
-      )}
+                        Cancel
+                      </button>
+                      <button
+                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Start Campaign
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

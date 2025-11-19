@@ -373,7 +373,7 @@ const SpeedToLeadPage: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeInstructionModal}
-              className="fixed inset-0 bg-black bg-opacity-50 z-50"
+              className="fixed -inset-[200px] bg-black bg-opacity-50 z-50"
             />
             
             {/* Modal */}

@@ -78,8 +78,8 @@ import { HomeIcon } from 'lucide-react';
         </div>
       </div>
 
-      {/* Dock Component - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
+      {/* Dock Component - Fixed at top right */}
+      <div className="fixed top-0 right-0 z-50">
         <AppleStyleDock />
       </div>
     </div>

@@ -45,60 +45,60 @@ const RemindersPage: React.FC = () => {
                 }`}
               />
             </button>
-          </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Default Reminder Settings */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">Default Settings</h3>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Default Reminder Time</label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Default Reminder Settings */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium text-gray-900">Default Settings</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Default Reminder Time</label>
                   <select 
                     value={defaultReminderTime}
                     onChange={(e) => setDefaultReminderTime(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
-                    <option value="24">24 hours before</option>
-                    <option value="48">48 hours before</option>
-                    <option value="72">72 hours before</option>
-                    <option value="168">1 week before</option>
-                  </select>
-                </div>
-                <div>
+                  <option value="24">24 hours before</option>
+                  <option value="48">48 hours before</option>
+                  <option value="72">72 hours before</option>
+                  <option value="168">1 week before</option>
+                </select>
+              </div>
+              <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Default Reminder Message</label>
-                  <textarea
+                <textarea
                     value={defaultReminderText}
                     onChange={(e) => setDefaultReminderText(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     rows={6}
-                    placeholder="Enter your default reminder message template..."
+                  placeholder="Enter your default reminder message template..."
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Use variables: {'{{client_name}}'}, {'{{service}}'}, {'{{appointment_date}}'}, {'{{appointment_time}}'}
                   </p>
-                </div>
               </div>
             </div>
+          </div>
 
-            {/* Notification Settings */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">Notification Settings</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Email Reminders</label>
-                    <p className="text-xs text-gray-500">Send reminders via email</p>
-                  </div>
-                  <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" defaultChecked />
+          {/* Notification Settings */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium text-gray-900">Notification Settings</h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Email Reminders</label>
+                  <p className="text-xs text-gray-500">Send reminders via email</p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">SMS Reminders</label>
-                    <p className="text-xs text-gray-500">Send reminders via SMS</p>
-                  </div>
-                  <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" defaultChecked />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="text-sm font-medium text-gray-700">SMS Reminders</label>
+                  <p className="text-xs text-gray-500">Send reminders via SMS</p>
                 </div>
+                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+              </div>
               </div>
             </div>
           </div>
@@ -110,8 +110,8 @@ const RemindersPage: React.FC = () => {
           </button>
           <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
             <Save className="w-4 h-4" />
-            Save Configuration
-          </button>
+              Save Configuration
+            </button>
         </div>
       </motion.div>
     </div>

@@ -680,7 +680,7 @@ const DashboardLayout: React.FC = () => {
             {/* New Lead Notification */}
                          <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
-                <Users className="w-4 h-4 text-blue-600" />
+                  <Users className="w-4 h-4 text-blue-600" />
                 <div>
                                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>New Lead Arrives</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a new lead is captured</div>
@@ -701,7 +701,7 @@ const DashboardLayout: React.FC = () => {
             {/* Appointment Booked Notification */}
                          <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
-                <Calendar className="w-4 h-4 text-blue-600" />
+                  <Calendar className="w-4 h-4 text-blue-600" />
                 <div>
                                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Appointment Booked</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when an appointment is scheduled</div>
@@ -722,7 +722,7 @@ const DashboardLayout: React.FC = () => {
             {/* Missed Call Notification */}
                          <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-blue-600" />
+                  <Phone className="w-4 h-4 text-blue-600" />
                 <div>
                                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Missed Call</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a call is missed</div>

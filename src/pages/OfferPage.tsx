@@ -149,35 +149,35 @@ const OfferPage: React.FC = () => {
             />
           </Link>
           
-          {/* Limited Places & Countdown Timer */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6 }}
+              {/* Limited Places & Countdown Timer */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-4"
-          >
-            {/* Limited Places Counter */}
-            <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
-              <Users className="w-3 h-3 text-blue-600" />
-              <div>
-                <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Limited Places</div>
-                <div className="text-sm font-semibold text-gray-900 leading-tight">{remainingPlaces} Left</div>
-              </div>
-            </div>
-
-            {/* Countdown Timer */}
-            <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
-              <Clock className="w-3 h-3 text-blue-600" />
-              <div>
-                <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Time Remaining</div>
-                <div className="text-sm font-semibold text-gray-900 font-mono leading-tight">
-                  {String(countdown.hours).padStart(2, '0')}:
-                  {String(countdown.minutes).padStart(2, '0')}:
-                  {String(countdown.seconds).padStart(2, '0')}
+              >
+                {/* Limited Places Counter */}
+                <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
+                  <Users className="w-3 h-3 text-blue-600" />
+                  <div>
+                    <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Limited Places</div>
+                    <div className="text-sm font-semibold text-gray-900 leading-tight">{remainingPlaces} Left</div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+
+                {/* Countdown Timer */}
+                <div className="border border-blue-200 rounded-lg px-3 py-1.5 flex items-center gap-2 bg-white">
+                  <Clock className="w-3 h-3 text-blue-600" />
+                  <div>
+                    <div className="text-xs text-blue-600 uppercase tracking-wide font-medium">Time Remaining</div>
+                    <div className="text-sm font-semibold text-gray-900 font-mono leading-tight">
+                      {String(countdown.hours).padStart(2, '0')}:
+                      {String(countdown.minutes).padStart(2, '0')}:
+                      {String(countdown.seconds).padStart(2, '0')}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
         </div>
       </div>
       

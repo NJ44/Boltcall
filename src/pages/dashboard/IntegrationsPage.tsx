@@ -126,7 +126,7 @@ const IntegrationsPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              className="fixed -inset-[200px] bg-black bg-opacity-50 z-40"
               onClick={handleClosePanel}
             />
             

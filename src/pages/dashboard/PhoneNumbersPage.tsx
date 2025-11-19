@@ -367,7 +367,7 @@ const PhoneNumbersPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
             onClick={() => setShowTwilioModal(false)}
           >
             <motion.div
@@ -464,7 +464,7 @@ const PhoneNumbersPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
             onClick={() => setShowSipModal(false)}
           >
             <motion.div
@@ -472,14 +472,14 @@ const PhoneNumbersPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 w-full max-w-md mx-4"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 w-full max-w-sm mx-4 max-h-[70vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3">
               Connect to your number via SIP trunking
             </h2>
             
-            <form onSubmit={handleSipFormSubmit} className="space-y-4">
+            <form onSubmit={handleSipFormSubmit} className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Phone Number

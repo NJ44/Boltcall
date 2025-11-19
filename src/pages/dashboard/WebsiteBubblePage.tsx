@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type, Save } from 'lucide-react';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
+import { FileUpload } from '@/components/ui/file-upload';
 
 interface ClientAgent {
   id: string;
@@ -17,6 +18,7 @@ interface ClientAgent {
 const WebsiteBubblePage: React.FC = () => {
   const [showIntegrationCode, setShowIntegrationCode] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string>('');
+  const [logoFile, setLogoFile] = useState<File | null>(null);
   
   // Sliding panel states
   const [showAddPanel, setShowAddPanel] = useState(false);
@@ -379,11 +381,7 @@ const WebsiteBubblePage: React.FC = () => {
               <Image className="w-4 h-4 inline mr-1" />
               Logo Upload
             </label>
-            <input
-              type="file"
-              accept="image/*"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-            />
+            <FileUpload onChange={(files) => setLogoFile(files[0] || null)} />
           </div>
 
           {/* Bot Name */}
@@ -425,7 +423,7 @@ const WebsiteBubblePage: React.FC = () => {
 
       {/* Integration Code Modal */}
       {showIntegrationCode && selectedAgent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-0 m-0">
+        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50 p-0 m-0">
           <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
