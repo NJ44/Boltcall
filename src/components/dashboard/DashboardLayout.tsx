@@ -293,6 +293,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-4 h-4" /> },
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-4 h-4" /> },
+    { to: '/dashboard/assistant', label: 'Assistant', icon: <HelpCircle className="w-4 h-4" /> },
   ];
 
   // Dropdown items

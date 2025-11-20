@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, X } from 'lucide-react';
+import { ExternalLink, X, Mail } from 'lucide-react';
 
 const IntegrationsPage: React.FC = () => {
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [isEmailPanelOpen, setIsEmailPanelOpen] = useState(false);
+  const [isMicrosoftPanelOpen, setIsMicrosoftPanelOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
+  const [emailAddress, setEmailAddress] = useState('');
+  const [microsoftAccount, setMicrosoftAccount] = useState('');
   const [isConnected, setIsConnected] = useState(false);
+  const [isEmailConnected, setIsEmailConnected] = useState(false);
+  const [isMicrosoftConnected, setIsMicrosoftConnected] = useState(false);
 
   const handleContainerClick = () => {
     setIsSidePanelOpen(true);
@@ -20,6 +26,20 @@ const IntegrationsPage: React.FC = () => {
     // Implementation for connecting with Cal.com
     setIsConnected(true);
     setIsSidePanelOpen(false);
+  };
+
+  const handleEmailConnect = () => {
+    console.log('Connecting email:', emailAddress);
+    // Implementation for connecting email
+    setIsEmailConnected(true);
+    setIsEmailPanelOpen(false);
+  };
+
+  const handleMicrosoftConnect = () => {
+    console.log('Connecting Microsoft account:', microsoftAccount);
+    // Implementation for connecting Microsoft
+    setIsMicrosoftConnected(true);
+    setIsMicrosoftPanelOpen(false);
   };
 
   const handleOpenCalcom = () => {
@@ -115,9 +135,262 @@ const IntegrationsPage: React.FC = () => {
             Your AI receptionist can handle WhatsApp conversations and provide instant support.
           </p>
         </div>
+
+        {/* Email Integration */}
+        <div 
+          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={() => setIsEmailPanelOpen(true)}
+        >
+          <div className="flex items-center gap-4 mb-4">
+            {/* Email Icon */}
+            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+              <Mail className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Email</h3>
+              <p className="text-sm text-gray-500">Email Integration</p>
+            </div>
+          </div>
+          
+          <p className="text-gray-600">
+            Connect your email account to enable email notifications and automated email responses. 
+            Your AI receptionist can send and receive emails on your behalf.
+          </p>
+
+          {isEmailConnected && (
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-700">Email connected: {emailAddress}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Microsoft Integration */}
+        <div 
+          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={() => setIsMicrosoftPanelOpen(true)}
+        >
+          <div className="flex items-center gap-4 mb-4">
+            {/* Microsoft Logo */}
+            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border-2 border-gray-300">
+              <svg className="w-8 h-8" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0H11V11H0V0Z" fill="#F25022"/>
+                <path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
+                <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/>
+                <path d="M12 12H23V23H12V12Z" fill="#FFB900"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Microsoft</h3>
+              <p className="text-sm text-gray-500">Office 365 & Teams</p>
+            </div>
+          </div>
+          
+          <p className="text-gray-600">
+            Connect your Microsoft account to sync with Office 365, Outlook, and Microsoft Teams. 
+            Your AI receptionist can access your calendar and send emails through your Microsoft account.
+          </p>
+
+          {isMicrosoftConnected && (
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-700">Microsoft connected: {microsoftAccount}</p>
+            </div>
+          )}
+        </div>
       </motion.div>
 
-      {/* Side Panel */}
+      {/* Email Integration Side Panel */}
+      <AnimatePresence>
+        {isEmailPanelOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed -inset-[200px] bg-black bg-opacity-50 z-40"
+              onClick={() => setIsEmailPanelOpen(false)}
+            />
+            
+            {/* Side Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ 
+                type: 'tween', 
+                ease: [0.25, 0.46, 0.45, 0.94], 
+                duration: 0.4 
+              }}
+              className="fixed right-0 top-0 h-screen w-96 bg-white shadow-xl z-50 overflow-y-auto rounded-l-3xl"
+            >
+              <div className="p-6">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <Mail className="w-5 h-5 text-white" />
+                    </div>
+                    <h2 className="text-xl font-semibold text-gray-900">Email Integration</h2>
+                  </div>
+                  <button
+                    onClick={() => setIsEmailPanelOpen(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-500" />
+                  </button>
+                </div>
+
+                {/* How it works section */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-medium text-gray-900 mb-3">How it works</h3>
+                  <p className="text-gray-600 mb-4">
+                    Connect your email account to enable automated email responses and notifications. 
+                    Your AI receptionist can handle email inquiries and send automated follow-ups.
+                  </p>
+                </div>
+
+                {/* Separator */}
+                <div className="border-t border-gray-200 mb-6"></div>
+
+                {/* Connect section */}
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Email</h3>
+                  <p className="text-gray-600 mb-6">
+                    Enter your email address to get started
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={emailAddress}
+                        onChange={(e) => setEmailAddress(e.target.value)}
+                        placeholder="your@email.com"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+                    
+                    <button
+                      onClick={handleEmailConnect}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Connect Email
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Microsoft Integration Side Panel */}
+      <AnimatePresence>
+        {isMicrosoftPanelOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed -inset-[200px] bg-black bg-opacity-50 z-40"
+              onClick={() => setIsMicrosoftPanelOpen(false)}
+            />
+            
+            {/* Side Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ 
+                type: 'tween', 
+                ease: [0.25, 0.46, 0.45, 0.94], 
+                duration: 0.4 
+              }}
+              className="fixed right-0 top-0 h-screen w-96 bg-white shadow-xl z-50 overflow-y-auto rounded-l-3xl"
+            >
+              <div className="p-6">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center border-2 border-gray-300">
+                      <svg className="w-5 h-5" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0H11V11H0V0Z" fill="#F25022"/>
+                        <path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
+                        <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/>
+                        <path d="M12 12H23V23H12V12Z" fill="#FFB900"/>
+                      </svg>
+                    </div>
+                    <h2 className="text-xl font-semibold text-gray-900">Microsoft Integration</h2>
+                  </div>
+                  <button
+                    onClick={() => setIsMicrosoftPanelOpen(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-500" />
+                  </button>
+                </div>
+
+                {/* How it works section */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-medium text-gray-900 mb-3">How it works</h3>
+                  <p className="text-gray-600 mb-4">
+                    Connect your Microsoft account to sync with Office 365, Outlook calendar, and Microsoft Teams. 
+                    Your AI receptionist can access your calendar, send emails, and manage appointments through your Microsoft account.
+                  </p>
+                  <a 
+                    href="https://www.microsoft.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 flex items-center gap-2"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Visit Microsoft website
+                  </a>
+                </div>
+
+                {/* Separator */}
+                <div className="border-t border-gray-200 mb-6"></div>
+
+                {/* Connect section */}
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Microsoft</h3>
+                  <p className="text-gray-600 mb-6">
+                    Enter your Microsoft account email to get started
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Microsoft Account Email
+                      </label>
+                      <input
+                        type="email"
+                        value={microsoftAccount}
+                        onChange={(e) => setMicrosoftAccount(e.target.value)}
+                        placeholder="your@outlook.com or your@microsoft.com"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+                    
+                    <button
+                      onClick={handleMicrosoftConnect}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Connect Microsoft
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Cal.com Side Panel */}
       <AnimatePresence>
         {isSidePanelOpen && (
           <>
