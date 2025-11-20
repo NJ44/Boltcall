@@ -110,7 +110,7 @@ const CardTable: React.FC<CardTableProps> = ({
               className={`flex items-center gap-2 text-sm font-medium text-gray-700 ${
                 column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
               }`}
-              style={{ width: column.width }}
+              style={column.width ? { width: column.width, flex: 'none' } : { flex: '1' }}
               onClick={() => column.sortable && handleSort(column.key)}
             >
               {column.label}

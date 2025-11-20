@@ -56,6 +56,14 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Complete Guide'
   },
+  {
+    title: 'Best <span class="text-blue-600">AI Receptionist Tools</span> for Small Businesses (Top 5 Compared)',
+    slug: '/best-ai-receptionist-tools-for-small-businesses',
+    excerpt: 'Compare the top 5 AI receptionist tools for small businesses. Detailed reviews of Boltcall, Smith.ai, Numa, Creovai, and OpenPhone AI Receptionist to help you choose the right solution.',
+    date: 'February 5, 2025',
+    readTime: '10 min read',
+    category: 'Tool Comparison'
+  },
   // Add more blog posts here as they are created
 ];
 

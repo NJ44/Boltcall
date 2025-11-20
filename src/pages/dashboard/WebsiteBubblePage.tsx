@@ -129,19 +129,6 @@ const WebsiteBubblePage: React.FC = () => {
   return (
     <div className="space-y-6">
 
-      {/* Instructions Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-blue-50 border border-blue-200 rounded-lg p-4"
-      >
-        <h3 className="text-sm font-semibold text-blue-900 mb-2">Quick Start Guide</h3>
-        <p className="text-sm text-blue-800">
-          Create a website bubble to add an AI chat widget to your website. Configure the bubble name, color, and position, then copy the integration code to embed it on your site.
-        </p>
-      </motion.div>
-
       {/* Client Agents Card Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

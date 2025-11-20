@@ -120,44 +120,24 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
         {filteredData.length > 0 && (
           <div className="px-6 py-4">
             <div className="flex items-center gap-6">
-              {/* Column headers - skip checkbox column */}
-              {columns.filter(col => col.key !== 'checkbox').map((column, index) => {
-                if (index === 0) { // First column (usually name)
-                  return (
-                    <div
-                      key={column.key}
-                      className={`flex items-center gap-3 flex-1 text-sm font-medium text-gray-700 ${
-                        column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
-                      }`}
-                      onClick={() => column.sortable && handleSort(column.key)}
-                    >
-                      {column.label}
-                      {column.sortable && (
-                        <svg className="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                        </svg>
-                      )}
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div
-                      key={column.key}
-                      className={`flex-1 text-sm font-medium text-gray-700 ${
-                        column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
-                      }`}
-                      onClick={() => column.sortable && handleSort(column.key)}
-                    >
-                      {column.label}
-                      {column.sortable && (
-                        <svg className="h-3 w-3 text-gray-400 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                        </svg>
-                      )}
-                    </div>
-                  );
-                }
-              })}
+              {/* Column headers - match row structure exactly */}
+              {columns.filter(col => col.key !== 'checkbox').map((column) => (
+                <div
+                  key={column.key}
+                  className={`flex items-center gap-2 text-sm font-medium text-gray-700 ${
+                    column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
+                  }`}
+                  style={column.width ? { width: column.width, flex: 'none' } : { flex: '1' }}
+                  onClick={() => column.sortable && handleSort(column.key)}
+                >
+                  {column.label}
+                  {column.sortable && (
+                    <svg className="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                    </svg>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}

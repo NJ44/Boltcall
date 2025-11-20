@@ -665,8 +665,6 @@ const DashboardLayout: React.FC = () => {
                    aria-label="Notification settings"
                  >
                    <Bell className="w-5 h-5" />
-                   {/* Notification indicator dot */}
-                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
                  </button>
 
                    {/* Notification Dropdown Content */}
@@ -753,10 +751,6 @@ const DashboardLayout: React.FC = () => {
                    aria-label="Services status"
                  >
                    <Server className="w-5 h-5" />
-                   {/* Services status indicator dot */}
-                   <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
-                     Object.values(services).some(service => !service) ? 'bg-orange-500' : 'bg-green-500'
-                   }`}></div>
               </button>
                  
                    {/* Services Status Dropdown Content */}
