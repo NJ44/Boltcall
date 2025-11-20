@@ -88,6 +88,7 @@ import BlogCenter from '../pages/BlogCenter';
 import BlogSpeed from '../pages/BlogSpeed';
 import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import BlogSEO from '../pages/BlogSEO';
+import BlogAIGuide from '../pages/BlogAIGuide';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import DockDemoPage from '../pages/DockDemoPage';
 import StepperDemoPage from '../pages/StepperDemoPage';
@@ -242,6 +243,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
         <Route path="/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
         <Route path="/complete-guide-to-seo" element={<BlogSEO />} />
+        <Route path="/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
         <Route path="/seo-analyzer" element={<SEOAnalyzer />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

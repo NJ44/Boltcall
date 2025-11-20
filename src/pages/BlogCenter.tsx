@@ -48,6 +48,14 @@ const blogPosts: BlogPost[] = [
     readTime: '9 min read',
     category: 'SEO Strategy'
   },
+  {
+    title: 'The Complete Guide to <span class="text-blue-600">AI for Local Businesses</span>',
+    slug: '/complete-guide-to-ai-for-local-businesses',
+    excerpt: 'Discover what AI can automate for service businesses, understand the costs vs benefits, and learn where to start. A comprehensive guide to transforming your local business with AI.',
+    date: 'February 1, 2025',
+    readTime: '12 min read',
+    category: 'Complete Guide'
+  },
   // Add more blog posts here as they are created
 ];
 
