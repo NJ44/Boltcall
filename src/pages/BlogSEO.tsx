@@ -67,7 +67,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             The Hidden Cost of Being Invisible
           </h2>
@@ -118,7 +118,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Why SEO Matters More Than Ever
           </h2>
@@ -175,7 +175,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             The SEO Fundamentals Every Business Needs
           </h2>
@@ -254,7 +254,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Common SEO Mistakes That Kill Your Rankings
           </h2>
@@ -303,7 +303,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Start Your SEO Journey Today
           </h2>

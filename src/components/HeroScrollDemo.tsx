@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
@@ -68,6 +68,16 @@ export function HeroScrollDemo() {
     contentData[activeTab as keyof typeof contentData], 
     [activeTab]
   );
+
+  // Preload all images when component mounts
+  useEffect(() => {
+    Object.values(contentData).forEach((content) => {
+      if (content.image) {
+        const img = new Image();
+        img.src = content.image;
+      }
+    });
+  }, []);
 
   return (
     <div className="flex flex-col overflow-hidden pb-[100px] -mt-[271px] pointer-events-none">
@@ -190,6 +200,8 @@ export function HeroScrollDemo() {
                       src={currentContent.image}
                       alt={currentContent.title}
                       className="w-[300px] h-[300px] rounded-lg shadow-lg object-cover"
+                      loading="eager"
+                      fetchPriority="high"
                     />
                   )}
                 </div>
@@ -237,6 +249,8 @@ export function HeroScrollDemo() {
                     src={currentContent.image}
                     alt={currentContent.title}
                     className="rounded-lg shadow-lg w-full max-w-md object-cover"
+                    loading="eager"
+                    fetchPriority="high"
                   />
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, TrendingUp, DollarSign, Clock, CheckCircle, Mail, Download, Phone, Zap } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, CheckCircle, Mail, Download, Phone, Zap } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -84,6 +84,7 @@ const industries = [
 ];
 
 const AIRevenueAudit: React.FC = () => {
+  const [surveyStarted, setSurveyStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [showResults, setShowResults] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -192,9 +193,10 @@ const AIRevenueAudit: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (currentStep < 4) {
+    if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
+      calculateAudit();
       setShowResults(true);
     }
   };
@@ -246,105 +248,95 @@ const AIRevenueAudit: React.FC = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <Calculator className="w-4 h-4" />
-              <span className="font-semibold">Free Revenue Calculator</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              How Much Can You <span className="text-blue-600">Earn</span> with AI?
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Get a personalized audit showing your potential revenue increase and cost savings with Boltcall's AI services.
-            </p>
-            
-            <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Industry</label>
-                  <select
-                    value={inputs.industry}
-                    onChange={(e) => handleInputChange('industry', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="">Select your industry</option>
-                    {industries.map(industry => (
-                      <option key={industry} value={industry}>{industry}</option>
-                    ))}
-                  </select>
+      {!surveyStarted ? (
+        <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                How Much Can You <span className="text-blue-600">Earn</span> with AI?
+              </h1>
+              
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Get a personalized audit showing your potential revenue increase and cost savings with Boltcall's AI services.
+              </p>
+              
+              <Button
+                onClick={() => setSurveyStarted(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg"
+              >
+                Start
+              </Button>
+            </motion.div>
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* Progress Bar */}
+          <section className="pt-32 pb-8 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="mb-8">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium text-gray-700">
+                    Step {currentStep} of 3
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    {Math.round((currentStep / 3) * 100)}%
+                  </span>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email (for full audit)</label>
-                  <input
-                    type="email"
-                    value={inputs.contactEmail}
-                    onChange={(e) => handleInputChange('contactEmail', e.target.value)}
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <motion.div
+                    className="bg-blue-600 h-2 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${(currentStep / 3) * 100}%` }}
+                    transition={{ duration: 0.3 }}
                   />
                 </div>
               </div>
-              <Button
-                onClick={() => setCurrentStep(1)}
-                className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
-              >
-                Start Free Audit
-              </Button>
             </div>
-            
-            <p className="text-sm text-gray-500">
-              Most local businesses see a 10–30% revenue lift within 90 days
-            </p>
-          </motion.div>
-        </div>
-      </section>
+          </section>
 
-      {/* Form Section */}
-      {!showResults && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-4xl mx-auto">
-            <Stepper
-              defaultValue={currentStep}
-              value={currentStep}
-              onValueChange={setCurrentStep}
-              orientation="vertical"
-            >
-              <StepperNav>
-                <StepperItem step={1} completed={currentStep > 1}>
-                  <StepperTrigger className="items-start pb-6 gap-3">
-                    <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
-                      {currentStep > 1 ? <CheckCircle className="w-4 h-4 text-white" /> : '1'}
-                    </StepperIndicator>
-                    <div className="text-left">
-                      <StepperTitle className="text-lg font-semibold">Business Profile</StepperTitle>
-                      <StepperDescription>Tell us about your business</StepperDescription>
-                    </div>
-                  </StepperTrigger>
-                  <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
-                </StepperItem>
+          {/* Form Section */}
+          {!showResults && (
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+              <div className="max-w-4xl mx-auto">
+                <Stepper
+                  defaultValue={currentStep}
+                  value={currentStep}
+                  onValueChange={setCurrentStep}
+                  orientation="vertical"
+                >
+                  <StepperNav>
+                    <StepperItem step={1} completed={currentStep > 1}>
+                      <StepperTrigger className="items-start pb-6 gap-3">
+                        <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
+                          {currentStep > 1 ? <CheckCircle className="w-4 h-4 text-white" /> : '1'}
+                        </StepperIndicator>
+                        <div className="text-left">
+                          <StepperTitle className="text-lg font-semibold">Business Profile</StepperTitle>
+                          <StepperDescription>Tell us about your business</StepperDescription>
+                        </div>
+                      </StepperTrigger>
+                      <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
+                    </StepperItem>
 
-                <StepperItem step={2} completed={currentStep > 2}>
-                  <StepperTrigger className="items-start pb-6 gap-3">
-                    <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
-                      {currentStep > 2 ? <CheckCircle className="w-4 h-4 text-white" /> : '2'}
-                    </StepperIndicator>
-                    <div className="text-left">
-                      <StepperTitle className="text-lg font-semibold">Current Performance</StepperTitle>
-                      <StepperDescription>Your current lead and booking metrics</StepperDescription>
-                    </div>
-                  </StepperTrigger>
-                  <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
-                </StepperItem>
+                    <StepperItem step={2} completed={currentStep > 2}>
+                      <StepperTrigger className="items-start pb-6 gap-3">
+                        <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
+                          {currentStep > 2 ? <CheckCircle className="w-4 h-4 text-white" /> : '2'}
+                        </StepperIndicator>
+                        <div className="text-left">
+                          <StepperTitle className="text-lg font-semibold">Current Performance</StepperTitle>
+                          <StepperDescription>Your current lead and booking metrics</StepperDescription>
+                        </div>
+                      </StepperTrigger>
+                      <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
+                    </StepperItem>
 
-                <StepperItem step={3} completed={currentStep > 3}>
+                    <StepperItem step={3} completed={currentStep > 3}>
                   <StepperTrigger className="items-start pb-6 gap-3">
                     <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
                       {currentStep > 3 ? <CheckCircle className="w-4 h-4 text-white" /> : '3'}
@@ -357,17 +349,6 @@ const AIRevenueAudit: React.FC = () => {
                   <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
                 </StepperItem>
 
-                <StepperItem step={4} completed={currentStep > 4}>
-                  <StepperTrigger className="items-start pb-6 gap-3">
-                    <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
-                      {currentStep > 4 ? <CheckCircle className="w-4 h-4 text-white" /> : '4'}
-                    </StepperIndicator>
-                    <div className="text-left">
-                      <StepperTitle className="text-lg font-semibold">AI Preferences</StepperTitle>
-                      <StepperDescription>Expected AI adoption rates</StepperDescription>
-                    </div>
-                  </StepperTrigger>
-                </StepperItem>
               </StepperNav>
 
               <StepperPanel className="mt-8">
@@ -558,50 +539,6 @@ const AIRevenueAudit: React.FC = () => {
                   </div>
                 </StepperContent>
 
-                <StepperContent value={4}>
-                  <div className="bg-white rounded-xl border border-gray-200 p-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">AI Preferences</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Expected AI Capture Rate (%)</label>
-                        <input
-                          type="number"
-                          value={inputs.expectedAiCaptureRate}
-                          onChange={(e) => handleInputChange('expectedAiCaptureRate', parseFloat(e.target.value) || 0)}
-                          min="0"
-                          max="100"
-                          step="0.1"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <p className="text-xs text-gray-500 mt-1">Percent of missed leads AI will capture</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Automation Target Follow-ups (%)</label>
-                        <input
-                          type="number"
-                          value={inputs.automationTargetFollowUps}
-                          onChange={(e) => handleInputChange('automationTargetFollowUps', parseFloat(e.target.value) || 0)}
-                          min="0"
-                          max="100"
-                          step="0.1"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <p className="text-xs text-gray-500 mt-1">Percent of follow-ups AI will automate</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Monthly AI Subscription</label>
-                        <input
-                          type="number"
-                          value={inputs.monthlyAiSubscription}
-                          onChange={(e) => handleInputChange('monthlyAiSubscription', parseFloat(e.target.value) || 0)}
-                          min="0"
-                          step="0.01"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </StepperContent>
               </StepperPanel>
 
               <div className="flex justify-between mt-8">
@@ -617,16 +554,16 @@ const AIRevenueAudit: React.FC = () => {
                   onClick={handleNext}
                   className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white"
                 >
-                  {currentStep === 4 ? 'Calculate Results' : 'Next'}
+                  {currentStep === 3 ? 'Calculate Results' : 'Next'}
                 </Button>
               </div>
             </Stepper>
           </div>
         </section>
-      )}
+        )}
 
-      {/* Results Section */}
-      {showResults && (
+        {/* Results Section */}
+        {showResults && (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <motion.div
@@ -837,6 +774,8 @@ const AIRevenueAudit: React.FC = () => {
             </motion.div>
           </div>
         </section>
+        )}
+        </>
       )}
 
       <Footer />

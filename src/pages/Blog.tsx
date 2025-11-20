@@ -67,7 +67,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             The Shifting Economy: What Changed?
           </h2>
@@ -119,7 +119,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Why Traditional Methods Are Failing
           </h2>
@@ -155,7 +155,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Why AI Services Are Critical Now
           </h2>
@@ -167,7 +167,7 @@ const Blog: React.FC = () => {
             </p>
             
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-8 rounded-2xl my-8">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
                 <Zap className="w-6 h-6" />
                 The AI Advantage
               </h3>
@@ -187,28 +187,28 @@ const Blog: React.FC = () => {
               </div>
             </div>
             
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">1. Never Miss a Lead Again</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-2">1. Never Miss a Lead Again</h3>
             <p>
               An AI receptionist answers every call. Every time. Even when you're closed. 
               Even when you're busy. Even when you're on vacation. It qualifies leads, 
               answers questions, and books appointments automatically.
             </p>
             
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">2. Respond Faster Than Your Competition</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-2">2. Respond Faster Than Your Competition</h3>
             <p>
               Speed wins. When someone calls your business, they're probably calling your 
               competitors too. The first business to respond gets the customer. AI responds 
               instantly, giving you the edge.
             </p>
             
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">3. Lower Costs, Higher Quality</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-2">3. Lower Costs, Higher Quality</h3>
             <p>
               AI doesn't need breaks, vacations, or raises. It doesn't make mistakes when 
               it's tired. It provides consistent, professional service every single time. 
               For a fraction of the cost of hiring staff.
             </p>
             
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">4. Scale Without Limits</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-2">4. Scale Without Limits</h3>
             <p>
               One AI can handle 100 calls at once. It doesn't get overwhelmed. It doesn't 
               need help. As your business grows, your AI scales with you automatically.
@@ -223,7 +223,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             The Choice Is Yours
           </h2>

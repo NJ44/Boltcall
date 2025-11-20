@@ -301,68 +301,40 @@ const AIAgentComparison: React.FC = () => {
           
           <div className="space-y-6">
             <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Immediate Response</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    While call centers make customers wait 2-5 minutes (or longer during peak times), Boltcall's AI 
-                    answers every call instantly—within 0-5 seconds. Research shows that responding within 60 seconds 
-                    increases conversion rates by 391%. With Boltcall, you never miss that critical window.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Immediate Response</h3>
+              <p className="text-gray-700 leading-relaxed">
+                While call centers make customers wait 2-5 minutes (or longer during peak times), Boltcall's AI 
+                answers every call instantly—within 0-5 seconds. Research shows that responding within 60 seconds 
+                increases conversion rates by 391%. With Boltcall, you never miss that critical window.
+              </p>
             </div>
 
             <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Globe className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">24/7 Availability</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Traditional call centers operate during business hours (typically 8am-6pm). That means 66% of 
-                    the day, your leads are going unanswered. Boltcall works 24/7/365—answering calls at 11 PM on Sunday, 
-                    on holidays, and during lunch breaks. Your business never closes, so your customer service shouldn't either.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">24/7 Availability</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Traditional call centers operate during business hours (typically 8am-6pm). That means 66% of 
+                the day, your leads are going unanswered. Boltcall works 24/7/365—answering calls at 11 PM on Sunday, 
+                on holidays, and during lunch breaks. Your business never closes, so your customer service shouldn't either.
+              </p>
             </div>
 
             <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Automated Follow-ups</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Call centers handle the initial call, but then what? Someone has to manually follow up, send reminders, 
-                    and nurture leads. Boltcall automates all of this—sending SMS reminders, following up on form submissions, 
-                    and keeping conversations warm. It's like having a full customer service team that never sleeps.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Automated Follow-ups</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Call centers handle the initial call, but then what? Someone has to manually follow up, send reminders, 
+                and nurture leads. Boltcall automates all of this—sending SMS reminders, following up on form submissions, 
+                and keeping conversations warm. It's like having a full customer service team that never sleeps.
+              </p>
             </div>
 
             <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Works with Forms, SMS, Calls</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Call centers only handle phone calls. Boltcall handles calls, SMS messages, form submissions, and 
-                    website chat—all in one platform. When a lead fills out a form on your website at 2 AM, Boltcall 
-                    responds instantly via SMS. When someone texts you, Boltcall handles it. It's a complete customer 
-                    engagement system, not just a phone service.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Works with Forms, SMS, Calls</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Call centers only handle phone calls. Boltcall handles calls, SMS messages, form submissions, and 
+                website chat—all in one platform. When a lead fills out a form on your website at 2 AM, Boltcall 
+                responds instantly via SMS. When someone texts you, Boltcall handles it. It's a complete customer 
+                engagement system, not just a phone service.
+              </p>
             </div>
           </div>
         </motion.section>
@@ -381,36 +353,22 @@ const AIAgentComparison: React.FC = () => {
           
           <div className="space-y-6">
             <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Users className="w-6 h-6 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Very Complex Sales Processes</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    If your sales process requires multiple back-and-forth conversations, extensive customization, or 
-                    complex negotiations that can't be automated, a human call center might be better. However, for most 
-                    local service businesses (dental, HVAC, auto repair, etc.), AI agents handle the vast majority of 
-                    inquiries perfectly.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Very Complex Sales Processes</h3>
+              <p className="text-gray-700 leading-relaxed">
+                If your sales process requires multiple back-and-forth conversations, extensive customization, or 
+                complex negotiations that can't be automated, a human call center might be better. However, for most 
+                local service businesses (dental, HVAC, auto repair, etc.), AI agents handle the vast majority of 
+                inquiries perfectly.
+              </p>
             </div>
 
             <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <ClockIcon className="w-6 h-6 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Long Qualification Calls</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    If your typical sales call takes 30+ minutes and requires deep relationship building, human agents 
-                    might be more effective. But for most businesses, the majority of calls are quick inquiries that AI 
-                    handles excellently—and AI can always transfer complex calls to your team.
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Long Qualification Calls</h3>
+              <p className="text-gray-700 leading-relaxed">
+                If your typical sales call takes 30+ minutes and requires deep relationship building, human agents 
+                might be more effective. But for most businesses, the majority of calls are quick inquiries that AI 
+                handles excellently—and AI can always transfer complex calls to your team.
+              </p>
             </div>
           </div>
         </motion.section>

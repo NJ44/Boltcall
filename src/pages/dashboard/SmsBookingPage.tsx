@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface SmsBooking {
   id: string;
@@ -21,6 +23,12 @@ interface SmsBooking {
 }
 
 const SmsBookingPage: React.FC = () => {
+  const { user } = useAuth();
+  const [phoneNumbers, setPhoneNumbers] = useState<Array<{ id: string; number: string }>>([]);
+  const [agents, setAgents] = useState<Array<{ id: string; name: string }>>([]);
+  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
+  const [selectedAgent, setSelectedAgent] = useState('');
+  
   const [smsBookings, setSmsBookings] = useState<SmsBooking[]>([
     {
       id: '1',
@@ -194,7 +202,11 @@ const SmsBookingPage: React.FC = () => {
           )}
           emptyStateText="No SMS bookings found"
           emptyStateAnimation="/No_Data_Preview.lottie"
-          onAddNew={() => setShowEditModal(true)}
+          onAddNew={() => {
+            setSelectedPhoneNumber('');
+            setSelectedAgent('');
+            setShowAddModal(true);
+          }}
           addNewText="Add SMS Booking"
         />
       </motion.div>
@@ -232,6 +244,84 @@ const SmsBookingPage: React.FC = () => {
                   className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
                   Delete
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Add SMS Booking Modal */}
+      <AnimatePresence>
+        {showAddModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
+            onClick={() => setShowAddModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-xl font-bold text-gray-900 mb-6">Add SMS Booking</h2>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Choose Phone Number</label>
+                  <select
+                    value={selectedPhoneNumber}
+                    onChange={(e) => setSelectedPhoneNumber(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+                  >
+                    <option value="">Select a phone number</option>
+                    {phoneNumbers.map((phone) => (
+                      <option key={phone.id} value={phone.id} className="text-black">
+                        {phone.number}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Choose Agent</label>
+                  <select
+                    value={selectedAgent}
+                    onChange={(e) => setSelectedAgent(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+                  >
+                    <option value="">Select an agent</option>
+                    {agents.map((agent) => (
+                      <option key={agent.id} value={agent.id} className="text-black">
+                        {agent.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 mt-6">
+                <button
+                  onClick={() => setShowAddModal(false)}
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (selectedPhoneNumber && selectedAgent) {
+                      // Handle the save logic here
+                      setShowAddModal(false);
+                    }
+                  }}
+                  disabled={!selectedPhoneNumber || !selectedAgent}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  Save
                 </button>
               </div>
             </motion.div>

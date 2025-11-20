@@ -54,10 +54,10 @@ const BlogAIGuide: React.FC = () => {
           className="mb-16"
         >
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Key Points Summary</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Key Points Summary</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div>
-                <h3 className="font-semibold text-lg mb-3">What AI Can Automate</h3>
+                <h3 className="font-semibold text-lg mb-1.5">What AI Can Automate</h3>
                 <ul className="space-y-2 text-blue-50">
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
@@ -66,7 +66,7 @@ const BlogAIGuide: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-3">Costs vs Benefits</h3>
+                <h3 className="font-semibold text-lg mb-1.5">Costs vs Benefits</h3>
                 <ul className="space-y-2 text-blue-50">
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
@@ -75,7 +75,7 @@ const BlogAIGuide: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-3">Where to Start</h3>
+                <h3 className="font-semibold text-lg mb-1.5">Where to Start</h3>
                 <ul className="space-y-2 text-blue-50">
                   <li className="flex items-start">
                     <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
@@ -94,7 +94,7 @@ const BlogAIGuide: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             What AI Can Automate for Service Businesses
           </h2>
@@ -107,7 +107,7 @@ const BlogAIGuide: React.FC = () => {
                   <Phone className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Calls</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Calls</h3>
                   <p className="text-gray-700 leading-relaxed">
                     AI receptionists answer every call, 24/7. They handle inquiries, schedule appointments, 
                     answer common questions, and transfer complex issues to your team. No more missed calls, 
@@ -125,7 +125,7 @@ const BlogAIGuide: React.FC = () => {
                   <MessageSquare className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">SMS</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">SMS</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Automated SMS booking lets customers schedule appointments via text message. 
                     Your AI agent handles the entire conversation, confirms availability, books the slot, 
@@ -143,7 +143,7 @@ const BlogAIGuide: React.FC = () => {
                   <RotateCw className="w-6 h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Follow-ups</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Follow-ups</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Keep conversations warm with automated follow-up sequences. Your AI reaches out to leads 
                     at the perfect time, nurtures relationships, and moves prospects through your sales funnel. 
@@ -160,7 +160,7 @@ const BlogAIGuide: React.FC = () => {
                   <Bell className="w-6 h-6 text-orange-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Reminders</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Reminders</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Reduce no-shows by up to 90% with automated appointment reminders. Your AI sends personalized 
                     reminders via SMS or email, confirming appointments and reducing last-minute cancellations. 
@@ -177,7 +177,7 @@ const BlogAIGuide: React.FC = () => {
                   <Zap className="w-6 h-6 text-indigo-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Lead Qualification</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Lead Qualification</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Instantly qualify leads as they come in. Your AI asks the right questions, determines 
                     urgency, identifies budget, and routes qualified leads directly to your calendar. 
@@ -196,7 +196,7 @@ const BlogAIGuide: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Benefits Explained Simply
           </h2>
@@ -206,7 +206,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <Clock className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Save Time</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">Save Time</h3>
               <p className="text-gray-700 leading-relaxed">
                 Automate repetitive tasks and free up 10-15 hours per week. Focus on what you do best 
                 while AI handles the routine work.
@@ -217,7 +217,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
                 <Phone className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Stop Missing Leads</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">Stop Missing Leads</h3>
               <p className="text-gray-700 leading-relaxed">
                 Answer every call, respond to every message instantly. Never lose a lead because you 
                 were too busy or it was after hours.
@@ -228,7 +228,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <Calendar className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Book More Appointments</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">Book More Appointments</h3>
               <p className="text-gray-700 leading-relaxed">
                 Convert more leads into booked appointments with instant responses and automated follow-ups. 
                 Studies show businesses that respond in under 60 seconds book 391% more appointments.
@@ -244,7 +244,7 @@ const BlogAIGuide: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Real Results from Real Businesses
           </h2>
@@ -284,7 +284,7 @@ const BlogAIGuide: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Boltcall's AI Suite
           </h2>
@@ -360,7 +360,7 @@ const BlogAIGuide: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Frequently Asked Questions
           </h2>
@@ -370,7 +370,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
                     Is AI too complicated for small businesses?
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
@@ -387,7 +387,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
                     How fast can I set it up?
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
@@ -405,7 +405,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
                     Will customers know they're talking to AI?
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
@@ -422,7 +422,7 @@ const BlogAIGuide: React.FC = () => {
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
                     What if I need to make changes later?
                   </h3>
                   <p className="text-gray-700 leading-relaxed">

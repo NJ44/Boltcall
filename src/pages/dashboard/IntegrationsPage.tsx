@@ -174,7 +174,7 @@ const IntegrationsPage: React.FC = () => {
                     className="text-blue-600 hover:text-blue-700 flex items-center gap-2"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    Link to the cal.com website
+                    Visit the Cal.com website
                   </a>
                 </div>
 
@@ -191,7 +191,7 @@ const IntegrationsPage: React.FC = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        API Key
+                        Get Your Cal.com API Key
                       </label>
                       <input
                         type="text"

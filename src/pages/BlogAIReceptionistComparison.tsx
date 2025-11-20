@@ -161,7 +161,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Quick Comparison Overview
           </h2>
@@ -195,7 +195,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Detailed Tool Reviews
           </h2>
@@ -275,7 +275,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Why Boltcall Stands Out for Local Businesses
           </h2>
@@ -320,14 +320,14 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             How to Choose the Right Tool
           </h2>
           
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">For Local Service Businesses</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">For Local Service Businesses</h3>
               <p>
                 If you're a dental practice, HVAC company, auto repair shop, or similar local service business, 
                 <strong className="text-gray-900"> Boltcall is your best bet</strong>. It combines all the features you need 
@@ -336,7 +336,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">For Businesses Needing Human Backup</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">For Businesses Needing Human Backup</h3>
               <p>
                 If you need the security of human agents backing up your AI, <strong className="text-gray-900">Smith.ai</strong> 
                 offers a hybrid model. Be prepared for higher costs and more complex setup.
@@ -344,7 +344,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">For Text-Only Needs</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">For Text-Only Needs</h3>
               <p>
                 If your customers primarily communicate via text and you don't need voice calls, 
                 <strong className="text-gray-900"> Numa</strong> might work, though you'll miss out on call handling capabilities.
@@ -352,7 +352,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">For Enterprise Teams</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">For Enterprise Teams</h3>
               <p>
                 If you're a larger team with specific customization needs and technical resources, 
                 <strong className="text-gray-900"> Creovai</strong> offers deep customization, but expect longer setup times 
@@ -361,7 +361,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">For Existing OpenPhone Users</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-1.5">For Existing OpenPhone Users</h3>
               <p>
                 If you're already using OpenPhone for your phone system, their AI receptionist feature might be convenient, 
                 though it's newer and may have fewer AI-specific features than dedicated solutions.
@@ -377,7 +377,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.0 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
             <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
             Final Thoughts
           </h2>
@@ -415,7 +415,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.1 }}
           className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-center text-white"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">
             Ready to Get Started?
           </h2>
           <p className="text-xl text-blue-50 mb-8 max-w-2xl mx-auto">
