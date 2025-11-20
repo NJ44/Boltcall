@@ -478,8 +478,8 @@ const PhoneNumbersPage: React.FC = () => {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                    Connect to your number via SIP trunking
-                  </h2>
+              Connect to your number via SIP trunking
+            </h2>
                   <button
                     onClick={() => setShowSipModal(false)}
                     className="text-gray-400 hover:text-gray-600 transition-colors"

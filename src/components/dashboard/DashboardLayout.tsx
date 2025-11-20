@@ -24,7 +24,8 @@ import {
   Calendar as CalendarIcon,
   Crown,
   Server,
-  Zap
+  Zap,
+  RotateCw
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -306,6 +307,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-4 h-4" /> },
     { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
+    { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-4 h-4" /> },
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
     { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-4 h-4" /> },
   ];
