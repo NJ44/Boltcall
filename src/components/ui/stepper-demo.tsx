@@ -44,7 +44,7 @@ const steps = [
   },
 ];
 
-const StepItem = ({ step, index, totalSteps, isLeftColumn }: { step: typeof steps[0], index: number, totalSteps: number, isLeftColumn: boolean }) => {
+const StepItem = ({ step, index, isLeftColumn }: { step: typeof steps[0], index: number, isLeftColumn: boolean }) => {
   const stepNumber = isLeftColumn ? index + 1 : index + 4;
   const isLastInColumn = isLeftColumn ? index === 2 : index === 2;
   
@@ -113,7 +113,6 @@ export default function StepperDemo() {
                       key={index}
                       step={step}
                       index={index}
-                      totalSteps={steps.length}
                       isLeftColumn={true}
                     />
                   ))}
@@ -138,7 +137,6 @@ export default function StepperDemo() {
                       key={index}
                       step={step}
                       index={index}
-                      totalSteps={steps.length}
                       isLeftColumn={false}
                     />
                   ))}

@@ -88,14 +88,14 @@ const RemindersPage: React.FC = () => {
                   <label className="text-sm font-medium text-gray-700">Email Reminders</label>
                   <p className="text-xs text-gray-500">Send reminders via email</p>
                 </div>
-                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" defaultChecked />
+                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 accent-blue-600" defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <label className="text-sm font-medium text-gray-700">SMS Reminders</label>
                   <p className="text-xs text-gray-500">Send reminders via SMS</p>
                 </div>
-                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 accent-blue-600" />
               </div>
               </div>
             </div>

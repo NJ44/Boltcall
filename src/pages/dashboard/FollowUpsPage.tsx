@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RotateCw } from 'lucide-react';
 import FeatureOnboarding from '../../components/dashboard/FeatureOnboarding';
 
 const FollowUpsPage: React.FC = () => {
-  const [followUps, setFollowUps] = useState<any[]>([]);
-
   return (
     <FeatureOnboarding
       featureKey="followUps"
