@@ -119,12 +119,10 @@ const AIRevenueAudit: React.FC = () => {
     const MCR = inputs.avgMissedCallRate / 100;
     const AiCapture = inputs.expectedAiCaptureRate / 100;
     const FollowUp = inputs.automationTargetFollowUps / 100;
-    const U = inputs.avgFollowUpRate / 100;
     const Salary = inputs.hourlySalaryReceptionist;
     const Hours = inputs.monthlyReceptionistHours;
     const AiCost = inputs.monthlyAiSubscription;
     const CurrentTool = inputs.monthlyToolSpend;
-    const CLTV = inputs.avgCustomerLifetimeValue || (V * 3);
     
     // Baseline
     const bookingsPerMonth = L * B;
