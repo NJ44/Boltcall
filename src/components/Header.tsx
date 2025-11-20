@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -9,6 +9,8 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const resourcesRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -16,6 +18,11 @@ const Header: React.FC = () => {
     { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'Contact', href: '/contact' },
+  ];
+
+  const resourcesItems = [
+    { label: 'AI Agent Comparison', href: '/ai-agent-comparison' },
+    { label: 'Blog', href: '/blog' },
   ];
 
   const handleNavClick = (href: string) => {
@@ -188,6 +195,23 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close Resources dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) {
+        setIsResourcesOpen(false);
+      }
+    };
+
+    if (isResourcesOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isResourcesOpen]);
+
   return (
     <motion.header
       className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 ${
@@ -238,6 +262,62 @@ const Header: React.FC = () => {
                 />
               </motion.button>
             ))}
+            
+            {/* Resources Dropdown */}
+            <div ref={resourcesRef} className="relative">
+              <motion.button
+                onClick={() => setIsResourcesOpen(!isResourcesOpen)}
+                className={`relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
+                  isOverBlueBackground ? 'text-white' : 'text-text-muted'
+                }`}
+                whileHover="hover"
+                initial="initial"
+              >
+                Resources
+                <ChevronDown className={`w-4 h-4 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} />
+                <motion.div
+                  className={`absolute bottom-0 left-0 h-0.5 ${
+                    isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
+                  }`}
+                  variants={{
+                    initial: { width: 0, opacity: 0 },
+                    hover: { width: "100%", opacity: 1 }
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </motion.button>
+              
+              {isResourcesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className={`absolute top-full left-0 mt-2 w-56 rounded-lg shadow-xl border ${
+                    isOverBlueBackground 
+                      ? 'bg-gray-800 border-gray-700' 
+                      : 'bg-white border-gray-200'
+                  } py-2 z-50`}
+                >
+                  {resourcesItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => {
+                        setIsResourcesOpen(false);
+                        setIsMenuOpen(false);
+                      }}
+                      className={`block px-4 py-2 text-sm transition-colors ${
+                        isOverBlueBackground
+                          ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                          : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </div>
           </nav>
 
           {/* Auth Buttons - pushed to right */}
@@ -341,6 +421,34 @@ const Header: React.FC = () => {
                     />
                   </motion.button>
                 ))}
+                
+                {/* Resources in Mobile Menu */}
+                <motion.div
+                  className="flex flex-col space-y-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: navItems.length * 0.1 }}
+                >
+                  <div className="text-2xl font-medium text-text-muted mb-2">Resources</div>
+                  {resourcesItems.map((item, index) => (
+                    <motion.button
+                      key={item.href}
+                      onClick={() => {
+                        handleNavClick(item.href);
+                        setIsMenuOpen(false);
+                      }}
+                      className="text-lg text-gray-600 hover:text-brand-blue transition-colors duration-300 py-2"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: (navItems.length + index) * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {item.label}
+                    </motion.button>
+                  ))}
+                </motion.div>
+                
                 {/* Auth buttons with smooth animations */}
                 <motion.div
                   className="flex flex-col space-y-4 mt-8"

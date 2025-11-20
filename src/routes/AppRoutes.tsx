@@ -90,6 +90,7 @@ import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import BlogSEO from '../pages/BlogSEO';
 import BlogAIGuide from '../pages/BlogAIGuide';
 import BlogAIReceptionistComparison from '../pages/BlogAIReceptionistComparison';
+import AIAgentComparison from '../pages/AIAgentComparison';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import DockDemoPage from '../pages/DockDemoPage';
 import StepperDemoPage from '../pages/StepperDemoPage';
@@ -246,6 +247,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/complete-guide-to-seo" element={<BlogSEO />} />
         <Route path="/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
         <Route path="/best-ai-receptionist-tools-for-small-businesses" element={<BlogAIReceptionistComparison />} />
+        <Route path="/ai-agent-comparison" element={<AIAgentComparison />} />
         <Route path="/seo-analyzer" element={<SEOAnalyzer />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />

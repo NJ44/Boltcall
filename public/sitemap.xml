@@ -59,6 +59,14 @@
     <priority>0.8</priority>
   </url>
   
+  <!-- Comparison Pages - High Priority for SEO -->
+  <url>
+    <loc>https://boltcall.org/ai-agent-comparison</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- SEO Tools - High Priority for Lead Generation -->
   <url>
     <loc>https://boltcall.org/seo-analyzer</loc>
