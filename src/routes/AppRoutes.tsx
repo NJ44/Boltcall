@@ -25,6 +25,7 @@ import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import RemindersPage from '../pages/dashboard/RemindersPage';
 import SmsBookingPage from '../pages/dashboard/SmsBookingPage';
+import FollowUpsPage from '../pages/dashboard/FollowUpsPage';
 import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
 import LeadReactivationPage from '../pages/dashboard/LeadReactivationPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
@@ -136,6 +137,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="website-bubble" element={<WebsiteBubblePage />} />
           <Route path="reminders" element={<RemindersPage />} />
           <Route path="sms-booking" element={<SmsBookingPage />} />
+          <Route path="follow-ups" element={<FollowUpsPage />} />
           <Route path="lead-reactivation" element={<LeadReactivationPage />} />
           <Route path="calcom" element={<CalcomPage />} />
           <Route path="call-history" element={<CallHistoryPage />} />
