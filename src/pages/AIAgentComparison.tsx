@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, CheckCircle, TrendingUp, Zap, Users, HelpCircle, DollarSign, Clock as ClockIcon, Award, AlertCircle, Globe } from 'lucide-react';
+import { Calendar, Clock, Phone, CheckCircle, TrendingUp, Zap, Users, HelpCircle, Clock as ClockIcon, AlertCircle, Globe } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -45,64 +44,7 @@ const AIAgentComparison: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Key Points Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-16"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Key Points Summary</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h3 className="font-semibold text-lg mb-3">The Real Differences</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>AI agents respond instantly, 24/7; call centers have wait times and business hours</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>AI costs $99-200/month; call centers cost $2,000-5,000/month</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>AI handles calls, SMS, forms, and follow-ups; call centers typically only handle calls</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-3">When Each Option is Better</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span><strong>AI agents:</strong> Most local businesses, instant response needs, budget-conscious</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span><strong>Call centers:</strong> Very complex sales, long qualification calls, high-touch service</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Cost Breakdown</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span><strong>AI agents:</strong> $99-200/month flat rate, no per-call fees</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span><strong>Call centers:</strong> $2,000-5,000/month + per-minute charges</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16">
         {/* Quick Comparison Table */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -200,7 +142,7 @@ const AIAgentComparison: React.FC = () => {
           
           <div className="grid md:grid-cols-2 gap-8">
             {/* AI Agents */}
-            <div className="bg-white border-2 border-blue-200 rounded-xl p-6">
+            <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Zap className="w-6 h-6 text-blue-600" />
@@ -268,7 +210,7 @@ const AIAgentComparison: React.FC = () => {
             </div>
 
             {/* Call Centers */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
                   <Users className="w-6 h-6 text-gray-600" />
@@ -358,7 +300,7 @@ const AIAgentComparison: React.FC = () => {
           </h2>
           
           <div className="space-y-6">
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border-l-4 border-blue-600">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Zap className="w-6 h-6 text-white" />
@@ -374,7 +316,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border-l-4 border-blue-600">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Globe className="w-6 h-6 text-white" />
@@ -390,7 +332,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border-l-4 border-blue-600">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-white" />
@@ -406,7 +348,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border-l-4 border-blue-600">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Users className="w-6 h-6 text-white" />
@@ -438,7 +380,7 @@ const AIAgentComparison: React.FC = () => {
           </h2>
           
           <div className="space-y-6">
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Users className="w-6 h-6 text-gray-600" />
@@ -455,7 +397,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <ClockIcon className="w-6 h-6 text-gray-600" />
@@ -486,7 +428,7 @@ const AIAgentComparison: React.FC = () => {
           </h2>
           
           <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -503,7 +445,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -521,7 +463,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -538,7 +480,7 @@ const AIAgentComparison: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div>
               <div className="flex items-start gap-4">
                 <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -556,27 +498,6 @@ const AIAgentComparison: React.FC = () => {
             </div>
           </div>
         </motion.section>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-center text-white"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to See the Difference?
-          </h2>
-          <p className="text-xl text-blue-50 mb-8 max-w-2xl mx-auto">
-            Try Boltcall free for 14 days. Get instant responses, 24/7 coverage, and automated follow-ups—all for a fraction of call center costs.
-          </p>
-          <Link
-            to="/dashboard"
-            className="inline-block bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-colors shadow-lg"
-          >
-            Start Free Trial
-          </Link>
-        </motion.div>
       </article>
 
       <Footer />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, MessageSquare, CheckCircle, TrendingUp, Zap, Users, Globe } from 'lucide-react';
+import { Calendar, Clock, Phone, MessageSquare, CheckCircle, TrendingUp, Zap, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -207,7 +207,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                className={`bg-white border-2 ${tool.color === 'blue' ? 'border-blue-200' : 'border-gray-200'} rounded-xl p-6 hover:shadow-lg transition-shadow`}
+                className=""
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className={`w-12 h-12 ${tool.color === 'blue' ? 'bg-blue-100' : tool.color === 'green' ? 'bg-green-100' : tool.color === 'purple' ? 'bg-purple-100' : tool.color === 'orange' ? 'bg-orange-100' : 'bg-indigo-100'} rounded-lg flex items-center justify-center flex-shrink-0`}>
@@ -280,7 +280,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
             Why Boltcall Stands Out for Local Businesses
           </h2>
           
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8 border-l-4 border-blue-600">
+          <div>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
                 While all these tools have their strengths, <strong className="text-gray-900">Boltcall is specifically 
@@ -326,7 +326,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           </h2>
           
           <div className="space-y-6 text-gray-700 leading-relaxed">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">For Local Service Businesses</h3>
               <p>
                 If you're a dental practice, HVAC company, auto repair shop, or similar local service business, 
@@ -335,7 +335,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">For Businesses Needing Human Backup</h3>
               <p>
                 If you need the security of human agents backing up your AI, <strong className="text-gray-900">Smith.ai</strong> 
@@ -343,7 +343,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">For Text-Only Needs</h3>
               <p>
                 If your customers primarily communicate via text and you don't need voice calls, 
@@ -351,7 +351,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">For Enterprise Teams</h3>
               <p>
                 If you're a larger team with specific customization needs and technical resources, 
@@ -360,7 +360,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">For Existing OpenPhone Users</h3>
               <p>
                 If you're already using OpenPhone for your phone system, their AI receptionist feature might be convenient, 
@@ -395,7 +395,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
               breaking the bank.
             </p>
             
-            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg my-8">
+            <div className="my-8">
               <p className="text-gray-800 font-medium mb-2">
                 💡 Pro Tip:
               </p>

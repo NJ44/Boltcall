@@ -79,7 +79,7 @@ const BlogSEO: React.FC = () => {
               first page of search results, and the top 3 positions capture 75% of all clicks.
             </p>
             
-            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg my-8">
+            <div className="my-8">
               <p className="text-gray-800 font-medium mb-3">
                 The Search Behavior Reality:
               </p>
@@ -129,7 +129,7 @@ const BlogSEO: React.FC = () => {
             </p>
 
             <div className="space-y-4">
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-blue-600" />
                   Organic Traffic is Free (After Initial Investment)
@@ -141,7 +141,7 @@ const BlogSEO: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
                   <BarChart3 className="w-5 h-5 text-blue-600" />
                   Higher Quality Leads
@@ -153,7 +153,7 @@ const BlogSEO: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-blue-600" />
                   Builds Trust and Credibility
@@ -356,7 +356,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+          <div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               The Bottom Line
             </h2>

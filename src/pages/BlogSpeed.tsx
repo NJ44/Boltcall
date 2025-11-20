@@ -87,7 +87,7 @@ const BlogSpeed: React.FC = () => {
               After 30 minutes? You might as well not bother.
             </p>
             
-            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg my-8">
+            <div className="my-8">
               <p className="text-gray-800 font-medium mb-3">
                 The Speed Timeline:
               </p>

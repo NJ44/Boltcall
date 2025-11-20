@@ -101,7 +101,7 @@ const BlogAIGuide: React.FC = () => {
           
           <div className="space-y-8">
             {/* Calls */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-blue-600" />
@@ -119,7 +119,7 @@ const BlogAIGuide: React.FC = () => {
             </div>
 
             {/* SMS */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <MessageSquare className="w-6 h-6 text-green-600" />
@@ -137,7 +137,7 @@ const BlogAIGuide: React.FC = () => {
             </div>
 
             {/* Follow-ups */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <RotateCw className="w-6 h-6 text-purple-600" />
@@ -154,7 +154,7 @@ const BlogAIGuide: React.FC = () => {
             </div>
 
             {/* Reminders */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Bell className="w-6 h-6 text-orange-600" />
@@ -171,7 +171,7 @@ const BlogAIGuide: React.FC = () => {
             </div>
 
             {/* Lead Qualification */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <div>
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Zap className="w-6 h-6 text-indigo-600" />
@@ -202,7 +202,7 @@ const BlogAIGuide: React.FC = () => {
           </h2>
           
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
+            <div>
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <Clock className="w-6 h-6 text-white" />
               </div>
@@ -213,7 +213,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
+            <div>
               <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
                 <Phone className="w-6 h-6 text-white" />
               </div>
@@ -224,7 +224,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
+            <div>
               <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <Calendar className="w-6 h-6 text-white" />
               </div>
@@ -250,7 +250,7 @@ const BlogAIGuide: React.FC = () => {
           </h2>
           
           <div className="space-y-6">
-            <div className="bg-white border-l-4 border-blue-600 rounded-r-lg p-6 shadow-sm">
+            <div>
               <p className="text-gray-700 leading-relaxed mb-4">
                 <strong className="text-gray-900">Dental Practice, Chicago:</strong> "We were losing 3-4 patients 
                 per week to missed calls. After implementing Boltcall's AI receptionist, we haven't missed a single 
@@ -258,7 +258,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border-l-4 border-green-600 rounded-r-lg p-6 shadow-sm">
+            <div>
               <p className="text-gray-700 leading-relaxed mb-4">
                 <strong className="text-gray-900">HVAC Company, Dallas:</strong> "The SMS booking feature changed 
                 everything. Our customers love being able to text us at any time. We've reduced no-shows by 85% 
@@ -266,7 +266,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border-l-4 border-purple-600 rounded-r-lg p-6 shadow-sm">
+            <div>
               <p className="text-gray-700 leading-relaxed mb-4">
                 <strong className="text-gray-900">Auto Repair Shop, Phoenix:</strong> "Before AI, we'd get 20-30 
                 calls per day and miss about 40% of them. Now our AI handles everything, qualifies leads, and 
@@ -290,7 +290,7 @@ const BlogAIGuide: React.FC = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-lg transition-all">
+            <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Phone className="w-5 h-5 text-blue-600" />
@@ -302,7 +302,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-green-300 hover:shadow-lg transition-all">
+            <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                   <MessageSquare className="w-5 h-5 text-green-600" />
@@ -314,7 +314,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-purple-300 hover:shadow-lg transition-all">
+            <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                   <RotateCw className="w-5 h-5 text-purple-600" />
@@ -326,7 +326,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-orange-300 hover:shadow-lg transition-all">
+            <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
                   <Zap className="w-5 h-5 text-orange-600" />
@@ -338,7 +338,7 @@ const BlogAIGuide: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6 hover:border-indigo-300 hover:shadow-lg transition-all md:col-span-2">
+            <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
                   <Globe className="w-5 h-5 text-indigo-600" />

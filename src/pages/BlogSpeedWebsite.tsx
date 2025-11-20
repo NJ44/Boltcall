@@ -79,7 +79,7 @@ const BlogSpeedWebsite: React.FC = () => {
               your site takes to load, your conversion rate drops by 7%.
             </p>
             
-            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg my-8">
+            <div className="my-8">
               <p className="text-gray-800 font-medium mb-3">
                 The Speed Impact:
               </p>
