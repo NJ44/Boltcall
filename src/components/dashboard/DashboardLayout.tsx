@@ -339,7 +339,9 @@ const DashboardLayout: React.FC = () => {
               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
         }`}
       >
-        {item.icon}
+        <span className="flex items-center -mt-0.5">
+          {item.icon}
+        </span>
         <span className="relative pb-1">
           {item.label}
           <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
