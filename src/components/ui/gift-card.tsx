@@ -1,8 +1,7 @@
-"use client"
-
 import * as React from "react"
 import { motion, useMotionValue, useTransform } from "framer-motion"
 import { cn } from "../../lib/utils"
+import { Sparkles, Gift } from "lucide-react"
 
 const PERSPECTIVE = 1000
 const CARD_ANIMATION_DURATION = 0.6
@@ -39,12 +38,11 @@ export default function GiftCard({
     y.set(0)
   }
 
-
   const variantStyles = {
-    gradient: "bg-gradient-to-br from-brand-blue via-brand-blueDark to-blue-800",
+    gradient: "bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700",
     dark: "bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900",
     glass: "bg-white/15 dark:bg-white/10 backdrop-blur-xl border border-white/20",
-    gold: "bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600",
+    gold: "bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-600",
     silver: "bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500",
   }
 
@@ -89,7 +87,7 @@ export default function GiftCard({
 
       <div className="relative">
         <motion.div
-          className="relative w-96 h-56"
+          className="relative w-72 h-44"
           style={{ perspective: PERSPECTIVE }}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -126,7 +124,7 @@ export default function GiftCard({
             {/* Front of card */}
             <motion.div
               className={cn(
-                "absolute inset-0 rounded-2xl p-8 shadow-2xl",
+                "absolute inset-0 rounded-xl p-6 shadow-2xl overflow-hidden",
                 variantStyles[variant],
                 "backface-hidden"
               )}
@@ -135,15 +133,50 @@ export default function GiftCard({
                 WebkitBackfaceVisibility: "hidden"
               }}
             >
+              {/* Decorative Pattern Overlay */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute top-0 left-0 w-full h-full" style={{
+                  backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                  backgroundSize: '20px 20px'
+                }} />
+              </div>
+
+              {/* Shimmer Effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{
+                  x: ['-100%', '100%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 2,
+                  ease: "linear"
+                }}
+              />
+
+              {/* Sparkle Decorations */}
+              <div className="absolute top-2 right-2">
+                <Sparkles className="w-4 h-4 text-white/60" />
+              </div>
+              <div className="absolute top-4 left-3">
+                <Gift className="w-3 h-3 text-white/50" />
+              </div>
+              <div className="absolute bottom-3 right-4">
+                <Sparkles className="w-3 h-3 text-white/40" />
+              </div>
+
               {/* Card content */}
-              <div className="relative h-full flex flex-col justify-between text-white">
+              <div className="relative h-full flex flex-col justify-between text-white z-10">
                 {/* Top section */}
                 <div className="flex justify-between items-start">
+                  <div className="text-xs font-semibold opacity-80 tracking-wider">BOLTCALL</div>
+                  <div className="text-xs font-semibold opacity-80">GIFT</div>
                 </div>
 
                 {/* Card number */}
                 <motion.div
-                  className="text-4xl font-black tracking-wider text-center"
+                  className="text-2xl font-black tracking-wider text-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -151,12 +184,18 @@ export default function GiftCard({
                   GIFT CARD
                 </motion.div>
 
+                {/* Balance preview */}
+                <div className="text-center">
+                  <div className="text-xs opacity-70 mb-1">Value</div>
+                  <div className="text-lg font-bold">{balance}</div>
+                </div>
+
                 {/* Bottom section */}
-                <div className="flex justify-end items-end pb-2">
+                <div className="flex justify-between items-end">
                   <motion.img 
                     src="/boltcall_full_logo.png" 
                     alt="Boltcall" 
-                    className="h-12 w-auto opacity-90"
+                    className="h-8 w-auto opacity-90"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ 
@@ -165,6 +204,7 @@ export default function GiftCard({
                       stiffness: 200
                     }}
                   />
+                  <div className="text-xs opacity-60">Click to flip</div>
                 </div>
               </div>
             </motion.div>
@@ -172,7 +212,7 @@ export default function GiftCard({
             {/* Back of card */}
             <motion.div
               className={cn(
-                "absolute inset-0 rounded-2xl shadow-2xl",
+                "absolute inset-0 rounded-xl shadow-2xl overflow-hidden",
                 variantStyles[variant],
                 "backface-hidden"
               )}
@@ -182,14 +222,22 @@ export default function GiftCard({
                 transform: "rotateY(180deg)"
               }}
             >
+              {/* Decorative Pattern Overlay */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-0 left-0 w-full h-full" style={{
+                  backgroundImage: `linear-gradient(45deg, transparent 30%, white 30%, white 50%, transparent 50%, transparent 80%, white 80%, white)`,
+                  backgroundSize: '15px 15px'
+                }} />
+              </div>
+
               {/* Magnetic strip */}
-              <div className="absolute top-8 left-0 right-0 h-12 bg-black/80" />
+              <div className="absolute top-4 left-0 right-0 h-8 bg-black/90" />
               
               {/* Balance panel */}
-              <div className="absolute top-24 left-6 right-6 bg-white/90 h-12 rounded flex items-center justify-between px-4">
-                <div className="text-black font-semibold text-sm">BALANCE</div>
+              <div className="absolute top-16 left-4 right-4 bg-white/95 h-10 rounded-lg flex items-center justify-between px-3 shadow-lg">
+                <div className="text-black font-semibold text-xs">BALANCE</div>
                 <motion.div 
-                  className="text-black font-mono font-bold text-lg"
+                  className="text-black font-mono font-bold text-base"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -198,15 +246,24 @@ export default function GiftCard({
                 </motion.div>
               </div>
 
+              {/* Card number display */}
+              <div className="absolute top-28 left-4 right-4">
+                <div className="text-white/60 text-[10px] mb-1">Card Number</div>
+                <div className="text-white font-mono text-xs tracking-wider">**** **** **** 1234</div>
+              </div>
+
               {/* Card info */}
-              <div className="absolute bottom-8 left-8 right-8 text-white text-xs space-y-2 opacity-70">
+              <div className="absolute bottom-4 left-4 right-4 text-white text-[10px] space-y-1 opacity-70">
                 <p>This gift card is non-refundable</p>
-                <p>Customer Service: 1-800-GIFT</p>
-                <p className="text-[10px]">
-                  Use this card at participating merchants. 
-                  Balance does not expire. Terms and conditions apply.
+                <p>Valid for all Boltcall services</p>
+                <p className="text-[9px] opacity-60">
+                  Balance does not expire. Terms apply.
                 </p>
               </div>
+
+              {/* Decorative corner elements */}
+              <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-white/30 rounded-tr-lg" />
+              <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-white/30 rounded-bl-lg" />
             </motion.div>
           </motion.div>
 

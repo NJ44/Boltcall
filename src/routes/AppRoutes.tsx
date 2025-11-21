@@ -95,6 +95,7 @@ import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import DockDemoPage from '../pages/DockDemoPage';
 import StepperDemoPage from '../pages/StepperDemoPage';
+import BannerDemoPage from '../pages/BannerDemoPage';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 import AIReceptionistPage from '../pages/features/AIReceptionistPage';
@@ -246,6 +247,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/hero-demo" element={<HeroDemoPage />} />
             <Route path="/dock-demo" element={<DockDemoPage />} />
             <Route path="/stepper-demo" element={<StepperDemoPage />} />
+            <Route path="/banner-demo" element={<BannerDemoPage />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />

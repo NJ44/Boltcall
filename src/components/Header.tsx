@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -22,13 +22,13 @@ const Header: React.FC = () => {
   ];
 
   const featuresItems = [
-    { label: 'AI Receptionist', href: '/features/ai-receptionist' },
-    { label: 'Instant Form Reply', href: '/features/instant-form-reply' },
-    { label: 'SMS Booking Assistant', href: '/features/sms-booking-assistant' },
-    { label: 'Automated Reminders', href: '/features/automated-reminders' },
-    { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system' },
-    { label: 'Website Chat/Voice Widget', href: '/features/website-chat-voice-widget' },
-    { label: 'Lead Reactivation', href: '/features/lead-reactivation' },
+    { label: 'AI Receptionist', href: '/features/ai-receptionist', icon: Phone },
+    { label: 'Instant Form Reply', href: '/features/instant-form-reply', icon: Zap },
+    { label: 'SMS Booking Assistant', href: '/features/sms-booking-assistant', icon: MessageSquare },
+    { label: 'Automated Reminders', href: '/features/automated-reminders', icon: Bell },
+    { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system', icon: Target },
+    { label: 'Website Chat/Voice Widget', href: '/features/website-chat-voice-widget', icon: Globe },
+    { label: 'Lead Reactivation', href: '/features/lead-reactivation', icon: RotateCw },
   ];
 
   const resourcesItems = [
@@ -37,9 +37,9 @@ const Header: React.FC = () => {
   ];
 
   const freeToolsItems = [
-    { label: 'SEO Audit', href: '/seo-analyzer' },
-    { label: 'Speed Test', href: '/speed-test' },
-    { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai' },
+    { label: 'SEO Audit', href: '/seo-analyzer', icon: Search },
+    { label: 'Speed Test', href: '/speed-test', icon: Gauge },
+    { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai', icon: Calculator },
   ];
 
   const handleNavClick = (href: string) => {
@@ -287,54 +287,61 @@ const Header: React.FC = () => {
                 />
               </motion.button>
               
-              {isFeaturesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className={`absolute top-full left-0 pt-2 w-64 rounded-lg shadow-xl border ${
-                    isOverBlueBackground 
-                      ? 'bg-gray-800 border-gray-700' 
-                      : 'bg-white border-gray-200'
-                  } pb-2 z-50`}
-                >
-                  {featuresItems.map((item) => (
-                    <motion.div
-                      key={item.href}
-                      className="relative group"
-                      whileHover="hover"
-                      initial="initial"
-                    >
-                      <Link
-                        to={item.href}
-                        onClick={() => {
-                          setIsFeaturesOpen(false);
-                          setIsMenuOpen(false);
-                        }}
-                        className={`block px-4 py-2 text-sm transition-colors relative ${
-                          isOverBlueBackground
-                            ? 'text-gray-300 hover:text-white'
-                            : 'text-gray-700 hover:text-gray-900'
-                        }`}
-                      >
-                        <span className="relative inline-block pb-1">
-                          {item.label}
-                          <motion.div
-                            className={`absolute -bottom-1 left-0 h-0.5 ${
-                              isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                            }`}
-                            variants={{
-                              initial: { width: 0, opacity: 0 },
-                              hover: { width: "100%", opacity: 1 }
+              <AnimatePresence>
+                {isFeaturesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className={`absolute top-full left-0 pt-2 w-64 rounded-lg shadow-xl border ${
+                      isOverBlueBackground 
+                        ? 'bg-gray-800 border-gray-700' 
+                        : 'bg-white border-gray-200'
+                    } pb-2 z-50`}
+                  >
+                    {featuresItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <motion.div
+                          key={item.href}
+                          className="relative group"
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link
+                            to={item.href}
+                            onClick={() => {
+                              setIsFeaturesOpen(false);
+                              setIsMenuOpen(false);
                             }}
-                            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                          />
-                        </span>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
+                            className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
+                              isOverBlueBackground
+                                ? 'text-gray-300 hover:text-white'
+                                : 'text-gray-700 hover:text-gray-900'
+                            }`}
+                          >
+                            <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
+                            <span className="relative inline-block pb-1">
+                              {item.label}
+                              <motion.div
+                                className={`absolute -bottom-1 left-0 h-0.5 ${
+                                  isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                                }`}
+                                variants={{
+                                  initial: { width: 0, opacity: 0 },
+                                  hover: { width: "100%", opacity: 1 }
+                                }}
+                                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                              />
+                            </span>
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {navItems.map((item) => (
@@ -389,20 +396,22 @@ const Header: React.FC = () => {
                 />
               </motion.button>
               
-              {isResourcesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className={`absolute top-full left-0 pt-2 w-56 rounded-lg shadow-xl border ${
-                    isOverBlueBackground 
-                      ? 'bg-gray-800 border-gray-700' 
-                      : 'bg-white border-gray-200'
-                  } pb-2 z-50`}
-                >
+              <AnimatePresence>
+                {isResourcesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className={`absolute top-full left-0 pt-2 w-56 rounded-lg shadow-xl border ${
+                      isOverBlueBackground 
+                        ? 'bg-gray-800 border-gray-700' 
+                        : 'bg-white border-gray-200'
+                    } pb-2 z-50`}
+                  >
                   {/* Content Section */}
                   <div className="px-4 py-1">
-                    <h3 className={`text-xs font-semibold uppercase tracking-wider ${
+                    <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                       isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                     }`}>
                       Content
@@ -452,50 +461,55 @@ const Header: React.FC = () => {
                   
                   {/* Free Tools Section */}
                   <div className="px-4 py-1">
-                    <h3 className={`text-xs font-semibold uppercase tracking-wider ${
+                    <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                       isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                     }`}>
                       Free Tools
                     </h3>
                   </div>
                   
-                  {freeToolsItems.map((item) => (
-                    <motion.div
-                      key={item.href}
-                      className="relative group"
-                      whileHover="hover"
-                      initial="initial"
-                    >
-                      <Link
-                        to={item.href}
-                        onClick={() => {
-                          setIsResourcesOpen(false);
-                          setIsMenuOpen(false);
-                        }}
-                        className={`block px-4 py-2 text-sm transition-colors relative ${
-                          isOverBlueBackground
-                            ? 'text-gray-300 hover:text-white'
-                            : 'text-gray-700 hover:text-gray-900'
-                        }`}
+                  {freeToolsItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <motion.div
+                        key={item.href}
+                        className="relative group"
+                        whileHover="hover"
+                        initial="initial"
                       >
-                        <span className="relative inline-block pb-1">
-                          {item.label}
-                          <motion.div
-                            className={`absolute -bottom-1 left-0 h-0.5 ${
-                              isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                            }`}
-                            variants={{
-                              initial: { width: 0, opacity: 0 },
-                              hover: { width: "100%", opacity: 1 }
-                            }}
-                            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                          />
-                        </span>
-                      </Link>
-                    </motion.div>
-                  ))}
+                        <Link
+                          to={item.href}
+                          onClick={() => {
+                            setIsResourcesOpen(false);
+                            setIsMenuOpen(false);
+                          }}
+                          className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
+                            isOverBlueBackground
+                              ? 'text-gray-300 hover:text-white'
+                              : 'text-gray-700 hover:text-gray-900'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className="relative inline-block pb-1">
+                            {item.label}
+                            <motion.div
+                              className={`absolute -bottom-1 left-0 h-0.5 ${
+                                isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                              }`}
+                              variants={{
+                                initial: { width: 0, opacity: 0 },
+                                hover: { width: "100%", opacity: 1 }
+                              }}
+                              transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                            />
+                          </span>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
-              )}
+                )}
+              </AnimatePresence>
             </div>
           </nav>
 
@@ -513,14 +527,30 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link 
-                  to="/login" 
-                  className={`transition-colors font-medium hover:text-brand-blue ${
-                    isOverBlueBackground ? 'text-white' : 'text-text-muted'
-                  }`}
+                <motion.div
+                  className="relative"
+                  whileHover="hover"
+                  initial="initial"
                 >
-                  Login
-                </Link>
+                  <Link 
+                    to="/login" 
+                    className={`relative font-medium py-2 transition-colors duration-300 ${
+                      isOverBlueBackground ? 'text-white' : 'text-text-muted'
+                    }`}
+                  >
+                    Login
+                    <motion.div
+                      className={`absolute bottom-0 left-0 h-0.5 ${
+                        isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
+                      }`}
+                      variants={{
+                        initial: { width: 0, opacity: 0 },
+                        hover: { width: "100%", opacity: 1 }
+                      }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    />
+                  </Link>
+                </motion.div>
                 <div style={{ 
                   display: 'inline-block',
                   color: '#475569 !important'

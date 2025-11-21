@@ -32,12 +32,14 @@ import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
+import { Banner } from '../ui/banner';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
@@ -597,6 +599,19 @@ const DashboardLayout: React.FC = () => {
               </div>
 
             </nav>
+            
+            {/* Banner at Bottom */}
+            <div className="px-2 mt-auto pt-4">
+              <Banner
+                show={showBanner}
+                variant="info"
+                size="sm"
+                title="New Feature Available"
+                description="Check out our latest updates"
+                closable={true}
+                onHide={() => setShowBanner(false)}
+              />
+            </div>
             
           </div>
         </aside>
