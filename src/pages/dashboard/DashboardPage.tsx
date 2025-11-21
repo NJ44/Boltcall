@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, HelpCircle, X, Send, CheckCircle, ChevronRight } from 'lucide-react';
+import { AlertTriangle, HelpCircle, X, Send, ChevronRight } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -80,7 +80,7 @@ const DashboardPage: React.FC = () => {
           <p className="text-sm text-gray-600 mt-1">Follow these steps to get your AI assistant up and running</p>
         </div>
         
-        <div className="p-6 bg-gray-900">
+        <div className="p-6">
           <div className="space-y-3 max-w-5xl mx-auto">
             {[
               { id: 1, title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents', completed: true },
@@ -90,15 +90,18 @@ const DashboardPage: React.FC = () => {
               { id: 5, title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', completed: false, timeEstimate: 'About 1 min' },
               { id: 6, title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents', completed: false, timeEstimate: 'About 1 min' },
             ].map((step) => (
-              <div
+              <Link
                 key={step.id}
-                className="bg-gray-800 rounded-lg p-4 flex items-center gap-4 hover:bg-gray-750 transition-colors"
+                to={step.link}
+                className="block bg-gray-50 rounded-lg p-4 flex items-center gap-4 hover:bg-gray-100 transition-colors border border-gray-200"
               >
                 {/* Icon */}
                 <div className="flex-shrink-0">
                   {step.completed ? (
                     <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                      <CheckCircle className="w-4 h-4 text-white" />
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
                   ) : (
                     <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -107,26 +110,33 @@ const DashboardPage: React.FC = () => {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className={`${step.completed ? 'text-gray-400' : 'text-white'} font-medium`}>
+                  <div className={`${step.completed ? 'text-gray-500' : 'text-gray-900'} font-medium`}>
                     {step.title}
-                            </div>
+                  </div>
                   {!step.completed && step.timeEstimate && (
                     <div className="text-sm text-gray-500 mt-0.5">
                       {step.timeEstimate}
-                        </div>
-                        )}
-              </div>
+                    </div>
+                  )}
+                </div>
 
                 {/* Action Button */}
                 {!step.completed && (
-                          <Link
-                            to={step.link}
-                    className="flex-shrink-0 px-4 py-2 bg-amber-700 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
-                          >
-                    Earn 10 credits
-                          </Link>
-                        )}
-              </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                    className="flex-shrink-0"
+                  >
+                    <Link
+                      to={step.link}
+                      className="inline-block px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+                    >
+                      Earn 10 credits
+                    </Link>
+                  </div>
+                )}
+              </Link>
             ))}
           </div>
         </div>
