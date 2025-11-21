@@ -33,7 +33,7 @@ export function HeroScrollDemo() {
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
       animation: '/statistics_on_tab.lottie',
-      title: 'Instant Ads/Forms Reply',
+      title: 'Instant Forms Reply',
       description: 'Capture and convert leads instantly with automated responses that engage prospects the moment they show interest.',
       layout: 'new-layout',
       features: [
@@ -117,7 +117,7 @@ export function HeroScrollDemo() {
               }}
             >
               <Megaphone className={`w-5 h-5 ${activeTab === 'speed-to-lead' ? 'text-blue-500' : 'text-gray-700'}`} />
-              <span className="whitespace-nowrap">Instant Ads replies</span>
+              <span className="whitespace-nowrap">Instant Forms replies</span>
             </button>
             <button
               onClick={() => setActiveTab('sms-whatsapp')}
@@ -179,7 +179,7 @@ export function HeroScrollDemo() {
                   <ul className="space-y-3">
                     {currentContent.features?.map((feature, index) => (
                       <li key={index} className="flex items-center gap-3 text-white">
-                        <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-5 h-5 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         <span>{feature}</span>

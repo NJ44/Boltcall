@@ -670,10 +670,14 @@ const DashboardLayout: React.FC = () => {
           
               {/* Right side - Free Trial, Location switcher, Notifications */}
               <div className="flex items-center gap-3">
-                 {/* Free Trial Indicator */}
-                 <div className="px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700">
-                   Free Trial
-                 </div>
+                 {/* Gift Card Announcement */}
+                 <Link 
+                   to="/gift-card-demo"
+                   className="px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                 >
+                   <Crown className="w-4 h-4" />
+                   <span>Gift Cards 90% Off</span>
+                 </Link>
                 <LocationSwitcher />
                  
                  {/* Notification Dropdown */}

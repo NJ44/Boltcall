@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { label: 'Pricing', href: '#pricing' },
+    { label: 'Pricing', href: '/pricing' },
     { label: 'Contact', href: '/contact' },
   ];
 
@@ -241,24 +241,26 @@ const Header: React.FC = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 -ml-4">
-        <div className="flex items-center h-16">
-          {/* Logo */}
-          <Link to="/">
-            <motion.div
-              className="flex items-center cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-            >
-              <img 
-                src="/boltcall_full_logo.png" 
-                alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
-                className="h-16 w-auto -translate-y-[3.1px]"
-              />
-            </motion.div>
-          </Link>
+      <div className="w-full px-2 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between h-16 max-w-7xl mx-auto">
+          {/* Left Side - Logo and Navigation */}
+          <div className="flex items-center">
+            {/* Logo */}
+            <Link to="/">
+              <motion.div
+                className="flex items-center cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+              >
+                <img 
+                  src="/boltcall_full_logo.png" 
+                  alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
+                  className="h-16 w-auto -translate-y-[3.1px]"
+                />
+              </motion.div>
+            </Link>
 
-          {/* Desktop Navigation - Moved to left */}
-          <nav className="hidden md:flex items-center space-x-8 ml-4">
+            {/* Desktop Navigation - Moved to left */}
+            <nav className="hidden md:flex items-center space-x-8 ml-4">
             {/* Features Dropdown */}
             <div 
               ref={featuresRef} 
@@ -511,10 +513,11 @@ const Header: React.FC = () => {
                 )}
               </AnimatePresence>
             </div>
-          </nav>
+            </nav>
+          </div>
 
-          {/* Auth Buttons - pushed to right */}
-          <div className="hidden md:flex items-center space-x-4 ml-auto">
+          {/* Right Side - Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
                 <Button

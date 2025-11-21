@@ -79,6 +79,7 @@ import FileUploadDemo from '../pages/FileUploadDemo';
 import MagneticDemo from '../pages/MagneticDemo';
 import CreditCardPage from '../pages/CreditCardPage';
 import GiftCardPage from '../pages/GiftCardPage';
+import PricingPage from '../pages/PricingPage';
 import LampDemo from '../pages/LampDemo';
 import HeroDemoPage from '../pages/HeroDemoPage';
 import OfferPage from '../pages/OfferPage';
@@ -96,6 +97,7 @@ import SEOAnalyzer from '../pages/SEOAnalyzer';
 import DockDemoPage from '../pages/DockDemoPage';
 import StepperDemoPage from '../pages/StepperDemoPage';
 import BannerDemoPage from '../pages/BannerDemoPage';
+import WavePathDemoPage from '../pages/WavePathDemoPage';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 import AIReceptionistPage from '../pages/features/AIReceptionistPage';
@@ -248,7 +250,9 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/dock-demo" element={<DockDemoPage />} />
             <Route path="/stepper-demo" element={<StepperDemoPage />} />
             <Route path="/banner-demo" element={<BannerDemoPage />} />
+            <Route path="/wave-path-demo" element={<WavePathDemoPage />} />
             <Route path="/website-ignite" element={<OfferPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/the-new-reality-for-local-businesses" element={<Blog />} />

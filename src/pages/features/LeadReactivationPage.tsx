@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RotateCw, TrendingUp, DollarSign, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
 const LeadReactivationPage: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />

@@ -6,4 +6,5 @@ export * from "./file-upload";
 export * from "./file-upload-demo";
 export * from "./banner";
 export * from "./banner-demo";
+export * from "./wave-path";
 

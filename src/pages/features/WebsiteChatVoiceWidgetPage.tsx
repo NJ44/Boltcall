@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle, Globe, Users, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
 const WebsiteChatVoiceWidgetPage: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -47,7 +50,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What is Website Chat/Voice Widget?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              What is Website Chat/Voice Widget?
+            </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
               Website Chat/Voice Widget is an intelligent AI assistant that appears on your website, 
               allowing visitors to chat via text or speak via voice. It answers questions, provides information, 
@@ -70,7 +76,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Why Website Widget is Critical</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              Why Website Widget is Critical
+            </h2>
             
             <div className="space-y-6">
               <div className="bg-white rounded-lg p-6 border border-gray-200">
@@ -79,7 +88,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
                     <Globe className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Website Visitors Want Instant Help</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                      Website Visitors Want Instant Help
+                    </h3>
                     <p className="text-gray-600">
                       <strong>79% of website visitors prefer live chat</strong> over phone or email for quick questions. 
                       A chat widget provides instant answers, reducing bounce rates and increasing engagement. 
@@ -95,7 +107,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
                     <Users className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Capture Leads on Every Page</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                      Capture Leads on Every Page
+                    </h3>
                     <p className="text-gray-600">
                       Not all visitors will fill out a contact form, but many will chat. The widget captures 
                       leads from every page of your site, even from visitors who weren't planning to contact you. 
@@ -111,7 +126,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
                     <MessageCircle className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Reduce Bounce Rate</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                      Reduce Bounce Rate
+                    </h3>
                     <p className="text-gray-600">
                       When visitors have questions, they often leave. A chat widget provides instant answers, 
                       keeping visitors engaged and on your site longer. This improves SEO rankings and conversion rates.
@@ -133,13 +151,19 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">How Website Widget Helps Your Business</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              How Website Widget Helps Your Business
+            </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">24/7 Availability</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    24/7 Availability
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Engage visitors anytime, even when your business is closed. 
@@ -150,7 +174,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Instant Answers</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    Instant Answers
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Provide immediate answers to common questions, reducing support burden 
@@ -161,7 +188,10 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Lead Qualification</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    Lead Qualification
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Automatically qualify leads through conversation, asking the right questions 

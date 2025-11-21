@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone, MessageSquare, CheckCircle, TrendingUp, Zap, Users } from 'lucide-react';
@@ -7,6 +7,9 @@ import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 
 const BlogAIReceptionistComparison: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const tools = [
     {
       name: 'Boltcall',

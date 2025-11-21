@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, TrendingUp, Zap } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import { WavePath } from '../components/ui/wave-path';
 
 const Blog: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -58,6 +62,27 @@ const Blog: React.FC = () => {
             What worked yesterday won't work tomorrow. And the businesses that are thriving? 
             They're the ones that embraced AI services early.
           </p>
+        </motion.div>
+
+        {/* Wave Path Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="my-16"
+        >
+          <div className="flex w-[70vw] max-w-2xl flex-col">
+            <WavePath className="mb-8 text-blue-600" />
+            <div className="flex w-full flex-col">
+              <div className="flex">
+                <p className="text-gray-500 text-sm mt-2">The transformation is happening now</p>
+                <p className="text-gray-800 ml-8 w-3/4 text-lg md:text-xl">
+                  The shift to AI-powered business solutions isn't coming—it's already here. 
+                  Businesses that adapt now will lead the market.
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Section 1 */}

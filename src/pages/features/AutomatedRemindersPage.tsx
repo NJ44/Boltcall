@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Calendar, TrendingDown, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
 const AutomatedRemindersPage: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -47,7 +50,10 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What are Automated Reminders?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              What are Automated Reminders?
+            </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
               Automated Reminders automatically send personalized messages to customers before their appointments, 
               reducing no-shows and ensuring better schedule utilization. You can customize when reminders are sent 
@@ -70,7 +76,10 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Why Automated Reminders are Critical</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              Why Automated Reminders are Critical
+            </h2>
             
             <div className="space-y-6">
               <div className="bg-white rounded-lg p-6 border border-gray-200">
@@ -79,7 +88,10 @@ const AutomatedRemindersPage: React.FC = () => {
                     <TrendingDown className="w-6 h-6 text-red-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">The Cost of No-Shows</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                      The Cost of No-Shows
+                    </h3>
                     <p className="text-gray-600">
                       The average no-show rate is <strong>20-30%</strong> for most businesses. For a business with 
                       100 appointments per month at $150 per appointment, that's $3,000-$4,500 in lost revenue monthly— 
@@ -95,7 +107,10 @@ const AutomatedRemindersPage: React.FC = () => {
                     <Calendar className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Better Schedule Management</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                      Better Schedule Management
+                    </h3>
                     <p className="text-gray-600">
                       When customers cancel or reschedule in advance (thanks to reminders), you have time to fill 
                       those slots. This maximizes your schedule utilization and revenue potential.
@@ -110,7 +125,10 @@ const AutomatedRemindersPage: React.FC = () => {
                     <Bell className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Customer Satisfaction</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                      Customer Satisfaction
+                    </h3>
                     <p className="text-gray-600">
                       Customers appreciate reminders. They show professionalism and care, and help customers 
                       prepare for appointments. <strong>85% of customers prefer businesses that send reminders</strong>.
@@ -132,13 +150,19 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">How Automated Reminders Help Your Business</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              How Automated Reminders Help Your Business
+            </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Reduce No-Shows</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    Reduce No-Shows
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Cut no-show rates by up to 70% with timely, personalized reminders. 
@@ -149,7 +173,10 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Save Time</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    Save Time
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Automate reminder sending completely. No more manual calls or emails— 
@@ -160,7 +187,10 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Easy Rescheduling</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    Easy Rescheduling
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Include rescheduling links in reminders. Customers can change appointments 
@@ -171,7 +201,10 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Professional Image</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    Professional Image
+                  </h3>
                 </div>
                 <p className="text-gray-600">
                   Show customers you're organized and care about their time. 
@@ -181,7 +214,10 @@ const AutomatedRemindersPage: React.FC = () => {
             </div>
 
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-8 text-white text-center">
-              <h3 className="text-2xl font-bold mb-4">Start Reducing No-Shows Today</h3>
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                <div className="w-1 h-10 bg-blue-600 rounded-full"></div>
+                Start Reducing No-Shows Today
+              </h3>
               <p className="text-blue-100 mb-6">
                 Protect your revenue and improve customer satisfaction with automated reminders.
               </p>

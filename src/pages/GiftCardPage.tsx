@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import GiftCard from '../components/ui/gift-card';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import GiveawayBar from '../components/GiveawayBar';
 import { ShoppingCart, Sparkles, Gift, ArrowRight, X } from 'lucide-react';
 
 const GiftCardPage: React.FC = () => {
@@ -33,10 +30,7 @@ const GiftCardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
-      <GiveawayBar />
-      <Header />
-      
-      <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+      <div className="pt-16 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <motion.div
@@ -45,13 +39,13 @@ const GiftCardPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-red-600/20 border border-red-500/50 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4 text-red-400" />
-              <span className="text-red-400 font-semibold text-sm">BLACK FRIDAY SPECIAL</span>
+            <div className="inline-flex items-center gap-2 bg-blue-600/20 border border-blue-500/50 px-4 py-2 rounded-full mb-6">
+              <Sparkles className="w-4 h-4 text-blue-400" />
+              <span className="text-blue-400 font-semibold text-sm">BLACK FRIDAY SPECIAL</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Gift Cards at <span className="text-red-500">90% Off</span>
+              Gift Cards at <span className="text-blue-500">90% Off</span>
             </h1>
             
             <p className="text-xl text-gray-300 mb-4 max-w-2xl mx-auto">
@@ -74,7 +68,7 @@ const GiftCardPage: React.FC = () => {
               <div className="flex items-baseline gap-3">
                 <span className="text-gray-400 line-through text-2xl">${cardValue}</span>
                 <span className="text-4xl font-bold text-white">${finalPrice.toFixed(2)}</span>
-                <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   -90%
                 </span>
               </div>
@@ -94,14 +88,14 @@ const GiftCardPage: React.FC = () => {
                 <div 
                   className={`relative cursor-pointer transition-all duration-300 ${
                     selectedCards.includes(index) 
-                      ? 'ring-4 ring-red-500 ring-offset-4 ring-offset-gray-900 scale-105' 
+                      ? 'ring-4 ring-blue-500 ring-offset-4 ring-offset-gray-900 scale-105' 
                       : 'hover:scale-[1.02]'
                   }`}
                   onClick={() => handleCardSelect(index)}
                 >
                   <div className="absolute -top-2 -right-2 z-10">
                     {selectedCards.includes(index) ? (
-                      <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                         <X className="w-5 h-5 text-white" />
                       </div>
                     ) : (
@@ -122,9 +116,9 @@ const GiftCardPage: React.FC = () => {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="absolute inset-0 flex items-center justify-center bg-red-600/20 rounded-2xl"
+                      className="absolute inset-0 flex items-center justify-center bg-blue-600/20 rounded-2xl"
                     >
-                      <div className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2">
+                      <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2">
                         <Gift className="w-4 h-4" />
                         Selected
                       </div>
@@ -147,7 +141,7 @@ const GiftCardPage: React.FC = () => {
               disabled={selectedCards.length !== 2}
               className={`px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center gap-3 mx-auto ${
                 selectedCards.length === 2
-                  ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/50'
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/50'
                   : 'bg-gray-800 text-gray-500 cursor-not-allowed'
               }`}
             >
@@ -211,7 +205,7 @@ const GiftCardPage: React.FC = () => {
                   value={recipientEmails[0]}
                   onChange={(e) => setRecipientEmails([e.target.value, recipientEmails[1]])}
                   placeholder="friend1@example.com"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
@@ -224,7 +218,7 @@ const GiftCardPage: React.FC = () => {
                   value={recipientEmails[1]}
                   onChange={(e) => setRecipientEmails([recipientEmails[0], e.target.value])}
                   placeholder="friend2@example.com"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -245,7 +239,7 @@ const GiftCardPage: React.FC = () => {
               disabled={!recipientEmails[0] || !recipientEmails[1]}
               className={`w-full py-3 rounded-lg font-semibold transition-colors ${
                 recipientEmails[0] && recipientEmails[1]
-                  ? 'bg-red-600 hover:bg-red-700 text-white'
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
                   : 'bg-gray-700 text-gray-500 cursor-not-allowed'
               }`}
             >
@@ -254,8 +248,6 @@ const GiftCardPage: React.FC = () => {
           </motion.div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 };
