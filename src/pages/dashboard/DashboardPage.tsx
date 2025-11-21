@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, HelpCircle, X, Send, Check, LoaderCircle, CheckCircle, ChevronRight } from 'lucide-react';
+import { AlertTriangle, HelpCircle, X, Send, CheckCircle, ChevronRight } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
-import {
-  Stepper,
-  StepperDescription,
-  StepperIndicator,
-  StepperItem,
-  StepperNav,
-  StepperSeparator,
-  StepperTitle,
-  StepperTrigger,
-} from '../../components/ui/stepper';
 const DashboardPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showHelpChat, setShowHelpChat] = useState(false);
@@ -119,23 +109,23 @@ const DashboardPage: React.FC = () => {
                 <div className="flex-1 min-w-0">
                   <div className={`${step.completed ? 'text-gray-400' : 'text-white'} font-medium`}>
                     {step.title}
-                  </div>
+                            </div>
                   {!step.completed && step.timeEstimate && (
                     <div className="text-sm text-gray-500 mt-0.5">
                       {step.timeEstimate}
-                    </div>
-                  )}
-                </div>
+                        </div>
+                        )}
+              </div>
 
                 {/* Action Button */}
                 {!step.completed && (
-                  <Link
-                    to={step.link}
+                          <Link
+                            to={step.link}
                     className="flex-shrink-0 px-4 py-2 bg-amber-700 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
-                  >
+                          >
                     Earn 10 credits
-                  </Link>
-                )}
+                          </Link>
+                        )}
               </div>
             ))}
           </div>
