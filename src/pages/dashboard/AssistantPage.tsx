@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Sparkles, Settings, CheckCircle, X } from 'lucide-react';
+import { Mail, Sparkles, Settings, X } from 'lucide-react';
 
 const AssistantPage: React.FC = () => {
   const [emailAssistantEnabled, setEmailAssistantEnabled] = useState(false);
