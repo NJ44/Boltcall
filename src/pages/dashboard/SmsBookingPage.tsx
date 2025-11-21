@@ -23,7 +23,6 @@ interface SmsBooking {
 }
 
 const SmsBookingPage: React.FC = () => {
-  const { user } = useAuth();
   const [phoneNumbers, setPhoneNumbers] = useState<Array<{ id: string; number: string }>>([]);
   const [agents, setAgents] = useState<Array<{ id: string; name: string }>>([]);
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
@@ -78,9 +77,39 @@ const SmsBookingPage: React.FC = () => {
   ]);
 
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<SmsBooking | null>(null);
   const [editingBooking, setEditingBooking] = useState<Partial<SmsBooking>>({});
+
+  // Fetch phone numbers and agents
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch phone numbers
+        const { data: phoneData, error: phoneError } = await supabase
+          .from('phone_numbers')
+          .select('id, phone_number');
+
+        if (!phoneError && phoneData) {
+          setPhoneNumbers(phoneData.map(p => ({ id: p.id, number: p.phone_number || '' })));
+        }
+
+        // Fetch agents
+        const { data: agentData, error: agentError } = await supabase
+          .from('agents')
+          .select('id, name');
+
+        if (!agentError && agentData) {
+          setAgents(agentData.map(a => ({ id: a.id, name: a.name || '' })));
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleDeleteBooking = (id: string) => {
     setSmsBookings(smsBookings.filter(booking => booking.id !== id));

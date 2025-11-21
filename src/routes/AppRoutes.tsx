@@ -97,6 +97,13 @@ import DockDemoPage from '../pages/DockDemoPage';
 import StepperDemoPage from '../pages/StepperDemoPage';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
+import AIReceptionistPage from '../pages/features/AIReceptionistPage';
+import InstantFormReplyPage from '../pages/features/InstantFormReplyPage';
+import SMSBookingAssistantPage from '../pages/features/SMSBookingAssistantPage';
+import AutomatedRemindersPage from '../pages/features/AutomatedRemindersPage';
+import AIFollowUpSystemPage from '../pages/features/AIFollowUpSystemPage';
+import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidgetPage';
+import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
 
 const NavigationWrapper: React.FC = () => {
   // Initialize Lenis smooth scrolling
@@ -252,6 +259,14 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/calculator/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/how-much-you-can-earn-with-ai" element={<AIRevenueAudit />} />
         <Route path="/seo-analyzer" element={<SEOAnalyzer />} />
+        {/* Feature Pages */}
+        <Route path="/features/ai-receptionist" element={<AIReceptionistPage />} />
+        <Route path="/features/instant-form-reply" element={<InstantFormReplyPage />} />
+        <Route path="/features/sms-booking-assistant" element={<SMSBookingAssistantPage />} />
+        <Route path="/features/automated-reminders" element={<AutomatedRemindersPage />} />
+        <Route path="/features/ai-follow-up-system" element={<AIFollowUpSystemPage />} />
+        <Route path="/features/website-chat-voice-widget" element={<WebsiteChatVoiceWidgetPage />} />
+        <Route path="/features/lead-reactivation" element={<LeadReactivationFeaturePage />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

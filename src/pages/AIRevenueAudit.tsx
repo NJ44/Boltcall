@@ -278,6 +278,27 @@ const AIRevenueAudit: React.FC = () => {
           {/* Progress Bar */}
           <section className="pt-32 pb-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
+              {/* Step Titles Above Progress Bar */}
+              <div className="mb-4">
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className={`text-center ${currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
+                    <div className="text-sm font-semibold mb-1">1</div>
+                    <div className="text-sm font-medium">Business Profile</div>
+                    <div className="text-xs text-gray-500 mt-1">Tell us about your business</div>
+                  </div>
+                  <div className={`text-center ${currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
+                    <div className="text-sm font-semibold mb-1">2</div>
+                    <div className="text-sm font-medium">Current Performance</div>
+                    <div className="text-xs text-gray-500 mt-1">Your current lead and booking metrics</div>
+                  </div>
+                  <div className={`text-center ${currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
+                    <div className="text-sm font-semibold mb-1">3</div>
+                    <div className="text-sm font-medium">Costs & Staffing</div>
+                    <div className="text-xs text-gray-500 mt-1">Your current operational costs</div>
+                  </div>
+                </div>
+              </div>
+              
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-medium text-gray-700">

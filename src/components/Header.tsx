@@ -10,14 +10,25 @@ const Header: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
   const resourcesRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const navItems = [
-    { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'Contact', href: '/contact' },
+  ];
+
+  const featuresItems = [
+    { label: 'AI Receptionist', href: '/features/ai-receptionist' },
+    { label: 'Instant Form Reply', href: '/features/instant-form-reply' },
+    { label: 'SMS Booking Assistant', href: '/features/sms-booking-assistant' },
+    { label: 'Automated Reminders', href: '/features/automated-reminders' },
+    { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system' },
+    { label: 'Website Chat/Voice Widget', href: '/features/website-chat-voice-widget' },
+    { label: 'Lead Reactivation', href: '/features/lead-reactivation' },
   ];
 
   const resourcesItems = [
@@ -201,16 +212,19 @@ const Header: React.FC = () => {
       if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) {
         setIsResourcesOpen(false);
       }
+      if (featuresRef.current && !featuresRef.current.contains(event.target as Node)) {
+        setIsFeaturesOpen(false);
+      }
     };
 
-    if (isResourcesOpen) {
+    if (isResourcesOpen || isFeaturesOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isResourcesOpen]);
+  }, [isResourcesOpen, isFeaturesOpen]);
 
   return (
     <motion.header
@@ -239,6 +253,78 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation - Moved to left */}
           <nav className="hidden md:flex items-center space-x-8 ml-4">
+            {/* Features Dropdown */}
+            <div ref={featuresRef} className="relative">
+              <motion.button
+                onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
+                className={`relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
+                  isOverBlueBackground ? 'text-white' : 'text-text-muted'
+                }`}
+                whileHover="hover"
+                initial="initial"
+              >
+                Features
+                <ChevronDown className={`w-4 h-4 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                <motion.div
+                  className={`absolute bottom-0 left-0 h-0.5 ${
+                    isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
+                  }`}
+                  variants={{
+                    initial: { width: 0, opacity: 0 },
+                    hover: { width: "100%", opacity: 1 }
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </motion.button>
+              
+              {isFeaturesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className={`absolute top-full left-0 mt-2 w-64 rounded-lg shadow-xl border ${
+                    isOverBlueBackground 
+                      ? 'bg-gray-800 border-gray-700' 
+                      : 'bg-white border-gray-200'
+                  } py-2 z-50`}
+                >
+                  {featuresItems.map((item) => (
+                    <motion.div
+                      key={item.href}
+                      className="relative group"
+                      whileHover="hover"
+                      initial="initial"
+                    >
+                      <Link
+                        to={item.href}
+                        onClick={() => {
+                          setIsFeaturesOpen(false);
+                          setIsMenuOpen(false);
+                        }}
+                        className={`block px-4 py-2 text-sm transition-colors relative ${
+                          isOverBlueBackground
+                            ? 'text-gray-300 hover:text-white'
+                            : 'text-gray-700 hover:text-gray-900'
+                        }`}
+                      >
+                        {item.label}
+                        <motion.div
+                          className={`absolute bottom-0 left-4 right-4 h-0.5 ${
+                            isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                          }`}
+                          variants={{
+                            initial: { width: 0, opacity: 0 },
+                            hover: { width: "calc(100% - 2rem)", opacity: 1 }
+                          }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                        />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </div>
+
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
@@ -299,21 +385,37 @@ const Header: React.FC = () => {
                   } py-2 z-50`}
                 >
                   {resourcesItems.map((item) => (
-                    <Link
+                    <motion.div
                       key={item.href}
-                      to={item.href}
-                      onClick={() => {
-                        setIsResourcesOpen(false);
-                        setIsMenuOpen(false);
-                      }}
-                      className={`block px-4 py-2 text-sm transition-colors ${
-                        isOverBlueBackground
-                          ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                          : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                      }`}
+                      className="relative group"
+                      whileHover="hover"
+                      initial="initial"
                     >
-                      {item.label}
-                    </Link>
+                      <Link
+                        to={item.href}
+                        onClick={() => {
+                          setIsResourcesOpen(false);
+                          setIsMenuOpen(false);
+                        }}
+                        className={`block px-4 py-2 text-sm transition-colors relative ${
+                          isOverBlueBackground
+                            ? 'text-gray-300 hover:text-white'
+                            : 'text-gray-700 hover:text-gray-900'
+                        }`}
+                      >
+                        {item.label}
+                        <motion.div
+                          className={`absolute bottom-0 left-4 right-4 h-0.5 ${
+                            isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                          }`}
+                          variants={{
+                            initial: { width: 0, opacity: 0 },
+                            hover: { width: "calc(100% - 2rem)", opacity: 1 }
+                          }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                        />
+                      </Link>
+                    </motion.div>
                   ))}
                 </motion.div>
               )}
@@ -401,6 +503,33 @@ const Header: React.FC = () => {
           >
             <div className="flex flex-col items-center justify-center h-full px-8">
               <nav className="flex flex-col space-y-8 text-center">
+                {/* Features in Mobile Menu */}
+                <motion.div
+                  className="flex flex-col space-y-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0 }}
+                >
+                  <div className="text-2xl font-medium text-text-muted mb-2">Features</div>
+                  {featuresItems.map((item, index) => (
+                    <motion.button
+                      key={item.href}
+                      onClick={() => {
+                        handleNavClick(item.href);
+                        setIsMenuOpen(false);
+                      }}
+                      className="text-lg text-gray-600 hover:text-brand-blue transition-colors duration-300 py-2"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {item.label}
+                    </motion.button>
+                  ))}
+                </motion.div>
+
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.label}
@@ -408,7 +537,7 @@ const Header: React.FC = () => {
                     className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    transition={{ duration: 0.4, delay: (featuresItems.length + index) * 0.1 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >

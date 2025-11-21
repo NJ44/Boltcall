@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, CheckCircle, TrendingUp, Zap, Users, HelpCircle, Clock as ClockIcon, AlertCircle, Globe } from 'lucide-react';
+import { Calendar, Clock, CheckCircle, TrendingUp, Zap, Users, HelpCircle, Clock as ClockIcon, AlertCircle, Globe } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
