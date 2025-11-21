@@ -9,10 +9,8 @@ import Button from '../components/ui/Button';
 
 interface AuditInputs {
   // Step A - Business Profile
-  businessName: string;
   industry: string;
-  location: string;
-  teamSize: number;
+  whoTalksWithCustomers: string;
   
   // Step B - Current Performance
   avgMonthlyLeads: number;
@@ -89,12 +87,11 @@ const AIRevenueAudit: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [noReceptionist, setNoReceptionist] = useState(false);
   
   const [inputs, setInputs] = useState<AuditInputs>({
-    businessName: '',
     industry: '',
-    location: '',
-    teamSize: 3,
+    whoTalksWithCustomers: '',
     avgMonthlyLeads: 200,
     avgLeadToBookingRate: 10,
     avgBookingValue: 150,
@@ -278,27 +275,6 @@ const AIRevenueAudit: React.FC = () => {
           {/* Progress Bar */}
           <section className="pt-32 pb-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-              {/* Step Titles Above Progress Bar */}
-              <div className="mb-4">
-                <div className="grid grid-cols-3 gap-4 mb-4">
-                  <div className={`text-center ${currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
-                    <div className="text-sm font-semibold mb-1">1</div>
-                    <div className="text-sm font-medium">Business Profile</div>
-                    <div className="text-xs text-gray-500 mt-1">Tell us about your business</div>
-                  </div>
-                  <div className={`text-center ${currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
-                    <div className="text-sm font-semibold mb-1">2</div>
-                    <div className="text-sm font-medium">Current Performance</div>
-                    <div className="text-xs text-gray-500 mt-1">Your current lead and booking metrics</div>
-                  </div>
-                  <div className={`text-center ${currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
-                    <div className="text-sm font-semibold mb-1">3</div>
-                    <div className="text-sm font-medium">Costs & Staffing</div>
-                    <div className="text-xs text-gray-500 mt-1">Your current operational costs</div>
-                  </div>
-                </div>
-              </div>
-              
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-medium text-gray-700">
@@ -378,48 +354,32 @@ const AIRevenueAudit: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">Business Profile</h3>
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Business Name (Optional)</label>
-                        <input
-                          type="text"
-                          value={inputs.businessName}
-                          onChange={(e) => handleInputChange('businessName', e.target.value)}
-                          placeholder="Your Business Name"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Industry *</label>
                         <select
                           value={inputs.industry}
                           onChange={(e) => handleInputChange('industry', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                           required
                         >
                           <option value="">Select your industry</option>
                           {industries.map(industry => (
-                            <option key={industry} value={industry}>{industry}</option>
+                            <option key={industry} value={industry} className="text-gray-900">{industry}</option>
                           ))}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Location (Optional)</label>
-                        <input
-                          type="text"
-                          value={inputs.location}
-                          onChange={(e) => handleInputChange('location', e.target.value)}
-                          placeholder="City, State"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Team Size</label>
-                        <input
-                          type="number"
-                          value={inputs.teamSize}
-                          onChange={(e) => handleInputChange('teamSize', parseInt(e.target.value) || 3)}
-                          min="1"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Who talks with the customers</label>
+                        <select
+                          value={inputs.whoTalksWithCustomers}
+                          onChange={(e) => handleInputChange('whoTalksWithCustomers', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                        >
+                          <option value="">Select an option</option>
+                          <option value="me" className="text-gray-900">Me</option>
+                          <option value="i-have-a-receptionist" className="text-gray-900">I have a receptionist</option>
+                          <option value="team-members" className="text-gray-900">Team members</option>
+                          <option value="mixed" className="text-gray-900">Mixed (me and others)</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -521,29 +481,49 @@ const AIRevenueAudit: React.FC = () => {
                   <div className="bg-white rounded-xl border border-gray-200 p-8">
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">Costs & Staffing</h3>
                     <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Salary (Receptionist)</label>
-                          <input
-                            type="number"
-                            value={inputs.hourlySalaryReceptionist}
-                            onChange={(e) => handleInputChange('hourlySalaryReceptionist', parseFloat(e.target.value) || 0)}
-                            min="0"
-                            step="0.01"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Receptionist Hours</label>
-                          <input
-                            type="number"
-                            value={inputs.monthlyReceptionistHours}
-                            onChange={(e) => handleInputChange('monthlyReceptionistHours', parseInt(e.target.value) || 0)}
-                            min="0"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          />
-                        </div>
+                      <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <input
+                          type="checkbox"
+                          id="noReceptionist"
+                          checked={noReceptionist}
+                          onChange={(e) => {
+                            setNoReceptionist(e.target.checked);
+                            if (e.target.checked) {
+                              handleInputChange('hourlySalaryReceptionist', 0);
+                              handleInputChange('monthlyReceptionistHours', 0);
+                            }
+                          }}
+                          className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label htmlFor="noReceptionist" className="text-sm font-medium text-gray-700 cursor-pointer">
+                          I do all the calls, I don't have a receptionist
+                        </label>
                       </div>
+                      {!noReceptionist && (
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Salary (Receptionist)</label>
+                            <input
+                              type="number"
+                              value={inputs.hourlySalaryReceptionist}
+                              onChange={(e) => handleInputChange('hourlySalaryReceptionist', parseFloat(e.target.value) || 0)}
+                              min="0"
+                              step="0.01"
+                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Receptionist Hours</label>
+                            <input
+                              type="number"
+                              value={inputs.monthlyReceptionistHours}
+                              onChange={(e) => handleInputChange('monthlyReceptionistHours', parseInt(e.target.value) || 0)}
+                              min="0"
+                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
+                        </div>
+                      )}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Tool Spend (Optional)</label>
                         <input

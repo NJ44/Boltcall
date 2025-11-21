@@ -244,7 +244,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/file-upload-demo" element={<FileUploadDemo />} />
             <Route path="/magnetic-demo" element={<MagneticDemo />} />
             <Route path="/credit-card-demo" element={<CreditCardPage />} />
-            <Route path="/gift-card-demo" element={<GiftCardPage />} />
+            <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
             <Route path="/lamp-demo" element={<LampDemo />} />
             <Route path="/hero-demo" element={<HeroDemoPage />} />
             <Route path="/dock-demo" element={<DockDemoPage />} />

@@ -50,8 +50,7 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               What is AI Receptionist?
             </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
@@ -98,8 +97,7 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
               Why AI Receptionist is Critical
             </h2>
             
@@ -153,8 +151,7 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
               How AI Receptionist Helps Your Business
             </h2>
             
