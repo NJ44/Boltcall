@@ -197,6 +197,9 @@ const SEOAnalyzer: React.FC = () => {
                   )}
                 </button>
               </div>
+              <p className="text-sm text-gray-500 mt-2">
+                We'll send your SEO audit report to this email address
+              </p>
             </div>
 
             {/* Error Message */}

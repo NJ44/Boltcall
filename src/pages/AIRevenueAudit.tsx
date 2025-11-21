@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, Clock, CheckCircle, Mail, Download, Phone, Zap } from 'lucide-react';
+import Confetti from 'react-confetti';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -88,6 +89,8 @@ const AIRevenueAudit: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [noReceptionist, setNoReceptionist] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   
   const [inputs, setInputs] = useState<AuditInputs>({
     industry: '',
@@ -108,6 +111,32 @@ const AIRevenueAudit: React.FC = () => {
     contactEmail: '',
     contactPhone: ''
   });
+
+  // Set window size for confetti
+  useEffect(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Show confetti when email is sent
+  useEffect(() => {
+    if (emailSent) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 5000);
+    }
+  }, [emailSent]);
 
   const calculateAudit = (): AuditResults => {
     // Variables
@@ -241,6 +270,16 @@ const AIRevenueAudit: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Confetti */}
+      {showConfetti && (
+        <Confetti
+          width={windowSize.width}
+          height={windowSize.height}
+          recycle={false}
+          numberOfPieces={500}
+          gravity={0.3}
+        />
+      )}
       <GiveawayBar />
       <Header />
       

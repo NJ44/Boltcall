@@ -80,14 +80,14 @@ const HowItWorks: React.FC = () => {
           </div>
 
           {/* Sticky Cards */}
-          <ContainerScroll className="space-y-11 py-11 ml-4 md:ml-16" style={{ minHeight: '100vh' }}>
+          <ContainerScroll className="space-y-11 py-4 ml-4 md:ml-16" style={{ minHeight: '100vh' }}>
             {PROCESS_PHASES.map((phase, index) => (
               <CardSticky
                 key={phase.id}
                 index={index + 2}
                 incrementY={14}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-[280px] md:max-w-[440px]"
-                style={{ top: '128px', bottom: 'auto', minHeight: '280px' }}
+                style={{ top: '64px', bottom: 'auto', minHeight: '280px' }}
               >
                 <div className="p-4 md:p-7 h-full">
                   {/* Full width content */}
