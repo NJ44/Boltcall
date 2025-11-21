@@ -36,6 +36,12 @@ const Header: React.FC = () => {
     { label: 'Blog', href: '/blog' },
   ];
 
+  const freeToolsItems = [
+    { label: 'SEO Audit', href: '/seo-analyzer' },
+    { label: 'Speed Test', href: '/speed-test' },
+    { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai' },
+  ];
+
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
       // Handle hash links (scroll to section)
@@ -307,17 +313,19 @@ const Header: React.FC = () => {
                             : 'text-gray-700 hover:text-gray-900'
                         }`}
                       >
-                        {item.label}
-                        <motion.div
-                          className={`absolute bottom-0 left-4 right-4 h-0.5 ${
-                            isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                          }`}
-                          variants={{
-                            initial: { width: 0, opacity: 0 },
-                            hover: { width: "calc(100% - 2rem)", opacity: 1 }
-                          }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                        />
+                        <span className="relative inline-block pb-1">
+                          {item.label}
+                          <motion.div
+                            className={`absolute -bottom-1 left-0 h-0.5 ${
+                              isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                            }`}
+                            variants={{
+                              initial: { width: 0, opacity: 0 },
+                              hover: { width: "100%", opacity: 1 }
+                            }}
+                            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                          />
+                        </span>
                       </Link>
                     </motion.div>
                   ))}
@@ -403,17 +411,69 @@ const Header: React.FC = () => {
                             : 'text-gray-700 hover:text-gray-900'
                         }`}
                       >
-                        {item.label}
-                        <motion.div
-                          className={`absolute bottom-0 left-4 right-4 h-0.5 ${
-                            isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                          }`}
-                          variants={{
-                            initial: { width: 0, opacity: 0 },
-                            hover: { width: "calc(100% - 2rem)", opacity: 1 }
-                          }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                        />
+                        <span className="relative inline-block pb-1">
+                          {item.label}
+                          <motion.div
+                            className={`absolute -bottom-1 left-0 h-0.5 ${
+                              isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                            }`}
+                            variants={{
+                              initial: { width: 0, opacity: 0 },
+                              hover: { width: "100%", opacity: 1 }
+                            }}
+                            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                          />
+                        </span>
+                      </Link>
+                    </motion.div>
+                  ))}
+                  
+                  {/* Separator */}
+                  <div className={`border-t my-2 ${
+                    isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
+                  }`} />
+                  
+                  {/* Free Tools Section */}
+                  <div className="px-4 py-1">
+                    <h3 className={`text-xs font-semibold uppercase tracking-wider ${
+                      isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                    }`}>
+                      Free Tools
+                    </h3>
+                  </div>
+                  
+                  {freeToolsItems.map((item) => (
+                    <motion.div
+                      key={item.href}
+                      className="relative group"
+                      whileHover="hover"
+                      initial="initial"
+                    >
+                      <Link
+                        to={item.href}
+                        onClick={() => {
+                          setIsResourcesOpen(false);
+                          setIsMenuOpen(false);
+                        }}
+                        className={`block px-4 py-2 text-sm transition-colors relative ${
+                          isOverBlueBackground
+                            ? 'text-gray-300 hover:text-white'
+                            : 'text-gray-700 hover:text-gray-900'
+                        }`}
+                      >
+                        <span className="relative inline-block pb-1">
+                          {item.label}
+                          <motion.div
+                            className={`absolute -bottom-1 left-0 h-0.5 ${
+                              isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                            }`}
+                            variants={{
+                              initial: { width: 0, opacity: 0 },
+                              hover: { width: "100%", opacity: 1 }
+                            }}
+                            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                          />
+                        </span>
                       </Link>
                     </motion.div>
                   ))}

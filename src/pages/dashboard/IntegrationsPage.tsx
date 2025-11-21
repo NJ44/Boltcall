@@ -7,8 +7,6 @@ const IntegrationsPage: React.FC = () => {
   const [isEmailPanelOpen, setIsEmailPanelOpen] = useState(false);
   const [isMicrosoftPanelOpen, setIsMicrosoftPanelOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [microsoftAccount, setMicrosoftAccount] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [isEmailConnected, setIsEmailConnected] = useState(false);
   const [isMicrosoftConnected, setIsMicrosoftConnected] = useState(false);
@@ -29,14 +27,14 @@ const IntegrationsPage: React.FC = () => {
   };
 
   const handleEmailConnect = () => {
-    console.log('Connecting email:', emailAddress);
+    console.log('Connecting email with Google');
     // Implementation for connecting email
     setIsEmailConnected(true);
     setIsEmailPanelOpen(false);
   };
 
   const handleMicrosoftConnect = () => {
-    console.log('Connecting Microsoft account:', microsoftAccount);
+    console.log('Connecting Microsoft account');
     // Implementation for connecting Microsoft
     setIsMicrosoftConnected(true);
     setIsMicrosoftPanelOpen(false);
@@ -77,27 +75,27 @@ const IntegrationsPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl"
       >
         {/* Cal.com Integration */}
         <div 
-          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
           onClick={isConnected ? undefined : handleContainerClick}
         >
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-3 mb-3">
             {/* Cal.com Logo */}
             <img 
               src="/cal.com_logo.png" 
               alt="Cal.com" 
-              className="w-12 h-12"
+              className="w-10 h-10"
             />
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Cal.com</h3>
-              <p className="text-sm text-gray-500">Calendar & Scheduling</p>
+              <h3 className="text-base font-semibold text-gray-900">Cal.com</h3>
+              <p className="text-xs text-gray-500">Calendar & Scheduling</p>
             </div>
           </div>
           
-          <p className="text-gray-600 mb-4">
+          <p className="text-sm text-gray-600 mb-3">
             Connect Cal.com to automatically schedule appointments and sync your availability. 
             Your AI receptionist can book meetings directly into your calendar.
           </p>
@@ -114,23 +112,23 @@ const IntegrationsPage: React.FC = () => {
 
         {/* WhatsApp Integration */}
         <div 
-          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
           onClick={handleContainerClick}
         >
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-3 mb-3">
             {/* WhatsApp Logo */}
-            <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+              <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">WhatsApp</h3>
-              <p className="text-sm text-gray-500">Messaging & Communication</p>
+              <h3 className="text-base font-semibold text-gray-900">WhatsApp</h3>
+              <p className="text-xs text-gray-500">Messaging & Communication</p>
             </div>
           </div>
           
-          <p className="text-gray-600">
+          <p className="text-sm text-gray-600">
             Connect WhatsApp Business to enable messaging with your customers. 
             Your AI receptionist can handle WhatsApp conversations and provide instant support.
           </p>
@@ -138,41 +136,56 @@ const IntegrationsPage: React.FC = () => {
 
         {/* Email Integration */}
         <div 
-          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
           onClick={() => setIsEmailPanelOpen(true)}
         >
-          <div className="flex items-center gap-4 mb-4">
-            {/* Email Icon */}
-            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
-              <Mail className="w-8 h-8 text-white" />
+          <div className="flex items-center gap-3 mb-3">
+            {/* Gmail Logo */}
+            <img 
+              src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" 
+              alt="Gmail" 
+              className="w-10 h-10"
+              onError={(e) => {
+                // Fallback to SVG if image fails to load
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling as HTMLElement;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+            <div 
+              className="w-10 h-10 bg-gradient-to-br from-red-500 via-red-600 to-red-700 rounded-lg flex items-center justify-center"
+              style={{ display: 'none' }}
+            >
+              <Mail className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Email</h3>
-              <p className="text-sm text-gray-500">Email Integration</p>
+              <h3 className="text-base font-semibold text-gray-900">Email</h3>
+              <p className="text-xs text-gray-500">Email Integration</p>
             </div>
           </div>
           
-          <p className="text-gray-600">
+          <p className="text-sm text-gray-600">
             Connect your email account to enable email notifications and automated email responses. 
             Your AI receptionist can send and receive emails on your behalf.
           </p>
 
           {isEmailConnected && (
             <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-green-700">Email connected: {emailAddress}</p>
+              <p className="text-sm text-green-700">Email connected</p>
             </div>
           )}
         </div>
 
         {/* Microsoft Integration */}
         <div 
-          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
           onClick={() => setIsMicrosoftPanelOpen(true)}
         >
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-3 mb-3">
             {/* Microsoft Logo */}
-            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border-2 border-gray-300">
-              <svg className="w-8 h-8" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border-2 border-gray-300">
+              <svg className="w-7 h-7" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 0H11V11H0V0Z" fill="#F25022"/>
                 <path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
                 <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/>
@@ -180,19 +193,19 @@ const IntegrationsPage: React.FC = () => {
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Microsoft</h3>
-              <p className="text-sm text-gray-500">Office 365 & Teams</p>
+              <h3 className="text-base font-semibold text-gray-900">Microsoft</h3>
+              <p className="text-xs text-gray-500">Office 365 & Teams</p>
             </div>
           </div>
           
-          <p className="text-gray-600">
+          <p className="text-sm text-gray-600">
             Connect your Microsoft account to sync with Office 365, Outlook, and Microsoft Teams. 
             Your AI receptionist can access your calendar and send emails through your Microsoft account.
           </p>
 
           {isMicrosoftConnected && (
             <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-green-700">Microsoft connected: {microsoftAccount}</p>
+              <p className="text-sm text-green-700">Microsoft connected</p>
             </div>
           )}
         </div>
@@ -244,8 +257,7 @@ const IntegrationsPage: React.FC = () => {
                 <div className="mb-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-3">How it works</h3>
                   <p className="text-gray-600 mb-4">
-                    Connect your email account to enable automated email responses and notifications. 
-                    Your AI receptionist can handle email inquiries and send automated follow-ups.
+                    Connect your email account to enable automated email responses and notifications.
                   </p>
                 </div>
 
@@ -254,32 +266,15 @@ const IntegrationsPage: React.FC = () => {
 
                 {/* Connect section */}
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Email</h3>
-                  <p className="text-gray-600 mb-6">
-                    Enter your email address to get started
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        value={emailAddress}
-                        onChange={(e) => setEmailAddress(e.target.value)}
-                        placeholder="your@email.com"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <button
-                      onClick={handleEmailConnect}
-                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      Connect Email
-                    </button>
-                  </div>
+                  <button
+                    onClick={handleEmailConnect}
+                    className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.636H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#4285F4"/>
+                    </svg>
+                    Sign in with Google
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -338,18 +333,8 @@ const IntegrationsPage: React.FC = () => {
                 <div className="mb-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-3">How it works</h3>
                   <p className="text-gray-600 mb-4">
-                    Connect your Microsoft account to sync with Office 365, Outlook calendar, and Microsoft Teams. 
-                    Your AI receptionist can access your calendar, send emails, and manage appointments through your Microsoft account.
+                    Connect your Microsoft account to sync with Office 365, Outlook, and Microsoft Teams.
                   </p>
-                  <a 
-                    href="https://www.microsoft.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-700 flex items-center gap-2"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Visit Microsoft website
-                  </a>
                 </div>
 
                 {/* Separator */}
@@ -357,32 +342,18 @@ const IntegrationsPage: React.FC = () => {
 
                 {/* Connect section */}
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Microsoft</h3>
-                  <p className="text-gray-600 mb-6">
-                    Enter your Microsoft account email to get started
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Microsoft Account Email
-                      </label>
-                      <input
-                        type="email"
-                        value={microsoftAccount}
-                        onChange={(e) => setMicrosoftAccount(e.target.value)}
-                        placeholder="your@outlook.com or your@microsoft.com"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <button
-                      onClick={handleMicrosoftConnect}
-                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      Connect Microsoft
-                    </button>
-                  </div>
+                  <button
+                    onClick={handleMicrosoftConnect}
+                    className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 0H11V11H0V0Z" fill="#F25022"/>
+                      <path d="M12 0H23V11H12V0Z" fill="#7FBA00"/>
+                      <path d="M0 12H11V23H0V12Z" fill="#00A4EF"/>
+                      <path d="M12 12H23V23H12V12Z" fill="#FFB900"/>
+                    </svg>
+                    Sign in with Microsoft
+                  </button>
                 </div>
               </div>
             </motion.div>

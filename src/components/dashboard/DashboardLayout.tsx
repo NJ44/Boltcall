@@ -284,33 +284,33 @@ const DashboardLayout: React.FC = () => {
   }, []);
 
   const navItemsGroup1 = [
-    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
-    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-4 h-4" /> },
+    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-3.5 h-3.5" /> },
   ];
 
   const navItemsGroup2 = [
-    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-4 h-4" /> },
-    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-4 h-4" /> },
-    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-4 h-4" /> },
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-4 h-4" /> },
-    { to: '/dashboard/assistant', label: 'Assistant', icon: <HelpCircle className="w-4 h-4" /> },
+    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/assistant', label: 'Assistant', icon: <HelpCircle className="w-3.5 h-3.5" /> },
   ];
 
   // Dropdown items
   const callsItems = [
-    { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-4 h-4" /> },
-    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-4 h-4" /> },
-    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-4 h-4" /> },
-    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-4 h-4" /> },
+    { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-3.5 h-3.5" /> },
   ];
 
   const messagingItems = [
-    { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-4 h-4" /> },
-    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-4 h-4" /> },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-4 h-4" /> },
-    { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-4 h-4" /> },
-    { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-4 h-4" /> },
-    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-4 h-4" /> },
+    { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-3.5 h-3.5" /> },
   ];
 
   const navItemsBottom: Array<{ to: string; label: string; icon: React.ReactNode }> = [];
