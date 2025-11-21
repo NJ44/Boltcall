@@ -10,18 +10,6 @@ const AssistantPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="mb-8"
-      >
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Assistants</h1>
-        <p className="text-gray-600">
-          Configure and manage your AI assistants to automate your business workflows.
-        </p>
-      </motion.div>
 
       {/* Assistants Grid */}
       <motion.div

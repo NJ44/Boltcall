@@ -243,7 +243,7 @@ const AIRevenueAudit: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
+    <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
       
@@ -256,7 +256,7 @@ const AIRevenueAudit: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                 How Much Can You <span className="text-blue-600">Earn</span> with AI?
               </h1>
               
@@ -593,7 +593,7 @@ const AIRevenueAudit: React.FC = () => {
               transition={{ duration: 0.6 }}
             >
               {/* Instant Summary */}
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white mb-8">
+              <div className="bg-blue-600 rounded-2xl p-8 md:p-12 text-white mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8">Your AI Revenue Audit Results</h2>
                 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -742,7 +742,7 @@ const AIRevenueAudit: React.FC = () => {
 
               {/* Email Capture for Full Audit */}
               {!emailSent ? (
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border-2 border-blue-200 p-8">
+                <div className="bg-blue-50 rounded-xl border-2 border-blue-200 p-8">
                   <div className="flex items-center gap-3 mb-4">
                     <Mail className="w-6 h-6 text-blue-600" />
                     <h3 className="text-2xl font-bold text-gray-900">Get Your Full Personalized Audit</h3>

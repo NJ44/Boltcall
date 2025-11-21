@@ -260,9 +260,13 @@ const Header: React.FC = () => {
           {/* Desktop Navigation - Moved to left */}
           <nav className="hidden md:flex items-center space-x-8 ml-4">
             {/* Features Dropdown */}
-            <div ref={featuresRef} className="relative">
+            <div 
+              ref={featuresRef} 
+              className="relative"
+              onMouseEnter={() => setIsFeaturesOpen(true)}
+              onMouseLeave={() => setIsFeaturesOpen(false)}
+            >
               <motion.button
-                onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
                 className={`relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
                   isOverBlueBackground ? 'text-white' : 'text-text-muted'
                 }`}
@@ -288,11 +292,11 @@ const Header: React.FC = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className={`absolute top-full left-0 mt-2 w-64 rounded-lg shadow-xl border ${
+                  className={`absolute top-full left-0 pt-2 w-64 rounded-lg shadow-xl border ${
                     isOverBlueBackground 
                       ? 'bg-gray-800 border-gray-700' 
                       : 'bg-white border-gray-200'
-                  } py-2 z-50`}
+                  } pb-2 z-50`}
                 >
                   {featuresItems.map((item) => (
                     <motion.div
@@ -358,9 +362,13 @@ const Header: React.FC = () => {
             ))}
             
             {/* Resources Dropdown */}
-            <div ref={resourcesRef} className="relative">
+            <div 
+              ref={resourcesRef} 
+              className="relative"
+              onMouseEnter={() => setIsResourcesOpen(true)}
+              onMouseLeave={() => setIsResourcesOpen(false)}
+            >
               <motion.button
-                onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                 className={`relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
                   isOverBlueBackground ? 'text-white' : 'text-text-muted'
                 }`}
@@ -386,12 +394,21 @@ const Header: React.FC = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className={`absolute top-full left-0 mt-2 w-56 rounded-lg shadow-xl border ${
+                  className={`absolute top-full left-0 pt-2 w-56 rounded-lg shadow-xl border ${
                     isOverBlueBackground 
                       ? 'bg-gray-800 border-gray-700' 
                       : 'bg-white border-gray-200'
-                  } py-2 z-50`}
+                  } pb-2 z-50`}
                 >
+                  {/* Content Section */}
+                  <div className="px-4 py-1">
+                    <h3 className={`text-xs font-semibold uppercase tracking-wider ${
+                      isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                    }`}>
+                      Content
+                    </h3>
+                  </div>
+                  
                   {resourcesItems.map((item) => (
                     <motion.div
                       key={item.href}

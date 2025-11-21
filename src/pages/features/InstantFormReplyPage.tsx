@@ -72,52 +72,31 @@ const InstantFormReplyPage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Why Instant Form Reply is Critical</h2>
             
             <div className="space-y-6">
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-6 h-6 text-red-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">The 60-Second Rule</h3>
-                    <p className="text-gray-600">
-                      Research shows that <strong>responding within 60 seconds increases conversion by 391%</strong>. 
-                      Most businesses take hours or days to respond to form submissions, losing potential customers 
-                      to competitors who respond faster. Instant Form Reply ensures you're always first.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">The 60-Second Rule</h3>
+                <p className="text-gray-600">
+                  Research shows that <strong>responding within 60 seconds increases conversion by 391%</strong>. 
+                  Most businesses take hours or days to respond to form submissions, losing potential customers 
+                  to competitors who respond faster. Instant Form Reply ensures you're always first.
+                </p>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Form Abandonment is Real</h3>
-                    <p className="text-gray-600">
-                      When customers submit a form and don't hear back quickly, they assume you're not interested 
-                      or too busy. <strong>68% of customers will move on to a competitor</strong> if they don't receive 
-                      a response within 24 hours. Instant Form Reply eliminates this risk entirely.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Form Abandonment is Real</h3>
+                <p className="text-gray-600">
+                  When customers submit a form and don't hear back quickly, they assume you're not interested 
+                  or too busy. <strong>68% of customers will move on to a competitor</strong> if they don't receive 
+                  a response within 24 hours. Instant Form Reply eliminates this risk entirely.
+                </p>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Professional First Impression</h3>
-                    <p className="text-gray-600">
-                      An instant, personalized response shows professionalism and attention to detail. 
-                      It sets the tone for your entire customer relationship and demonstrates that you value 
-                      their time and business.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Professional First Impression</h3>
+                <p className="text-gray-600">
+                  An instant, personalized response shows professionalism and attention to detail. 
+                  It sets the tone for your entire customer relationship and demonstrates that you value 
+                  their time and business.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -135,45 +114,33 @@ const InstantFormReplyPage: React.FC = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">How Instant Form Reply Helps Your Business</h2>
             
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Instant Engagement</h3>
-                </div>
+            <div className="space-y-6 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant Engagement</h3>
                 <p className="text-gray-600">
                   Respond to every form submission within seconds, keeping leads engaged and moving them 
                   through your sales funnel immediately.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Lead Qualification</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Lead Qualification</h3>
                 <p className="text-gray-600">
                   Automatically ask qualifying questions to determine lead quality and buying intent, 
                   so you focus on the most promising opportunities.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Automatic Booking</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Automatic Booking</h3>
                 <p className="text-gray-600">
                   Book appointments directly from form submissions without any manual intervention. 
                   The AI handles scheduling and sends confirmations automatically.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">24/7 Coverage</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Coverage</h3>
                 <p className="text-gray-600">
                   Forms are submitted at all hours. Instant Form Reply ensures every submission gets 
                   immediate attention, even on weekends and holidays.

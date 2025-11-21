@@ -73,52 +73,31 @@ const SMSBookingAssistantPage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Why SMS Booking is Critical</h2>
             
             <div className="space-y-6">
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MessageSquare className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">SMS is Preferred</h3>
-                    <p className="text-gray-600">
-                      <strong>98% of text messages are opened</strong>, compared to just 20% of emails. 
-                      Customers prefer SMS for quick, convenient communication. By offering SMS booking, 
-                      you're meeting customers where they already are.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">SMS is Preferred</h3>
+                <p className="text-gray-600">
+                  <strong>98% of text messages are opened</strong>, compared to just 20% of emails. 
+                  Customers prefer SMS for quick, convenient communication. By offering SMS booking, 
+                  you're meeting customers where they already are.
+                </p>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Reduce No-Shows</h3>
-                    <p className="text-gray-600">
-                      SMS reminders have a <strong>45% higher response rate</strong> than phone calls or emails. 
-                      Automated SMS reminders significantly reduce no-shows, protecting your revenue and 
-                      ensuring better schedule utilization.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Reduce No-Shows</h3>
+                <p className="text-gray-600">
+                  SMS reminders have a <strong>45% higher response rate</strong> than phone calls or emails. 
+                  Automated SMS reminders significantly reduce no-shows, protecting your revenue and 
+                  ensuring better schedule utilization.
+                </p>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Save Time</h3>
-                    <p className="text-gray-600">
-                      Eliminate back-and-forth phone calls and emails. Customers can book in seconds via text, 
-                      and you save hours of administrative work. <strong>Automate 80% of your booking process</strong> 
-                      with SMS Booking Assistant.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Save Time</h3>
+                <p className="text-gray-600">
+                  Eliminate back-and-forth phone calls and emails. Customers can book in seconds via text, 
+                  and you save hours of administrative work. <strong>Automate 80% of your booking process</strong> 
+                  with SMS Booking Assistant.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -136,45 +115,33 @@ const SMSBookingAssistantPage: React.FC = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">How SMS Booking Helps Your Business</h2>
             
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">24/7 Booking</h3>
-                </div>
+            <div className="space-y-6 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Booking</h3>
                 <p className="text-gray-600">
                   Customers can book appointments anytime, even when your business is closed. 
                   No more missed opportunities due to limited hours.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Instant Confirmations</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant Confirmations</h3>
                 <p className="text-gray-600">
                   Send immediate booking confirmations via SMS. Customers get instant peace of mind, 
                   and you reduce confusion and cancellations.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Automated Reminders</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Automated Reminders</h3>
                 <p className="text-gray-600">
                   Reduce no-shows with automated SMS reminders sent before appointments. 
                   Customers can confirm, reschedule, or cancel with a simple text reply.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Calendar Sync</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Calendar Sync</h3>
                 <p className="text-gray-600">
                   All bookings automatically sync with your calendar system. No double-booking, 
                   no manual entry, no scheduling conflicts.

@@ -72,52 +72,31 @@ const AIReceptionistPage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Why AI Receptionist is Critical</h2>
             
             <div className="space-y-6">
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-red-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">The Cost of Missed Calls</h3>
-                    <p className="text-gray-600">
-                      Studies show that <strong>75% of customers won't call back</strong> if their first call goes unanswered. 
-                      For a business receiving 100 calls per month, that's potentially 75 lost opportunities. 
-                      At an average customer value of $500, that's $37,500 in lost revenue monthly—$450,000 annually.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">The Cost of Missed Calls</h3>
+                <p className="text-gray-600">
+                  Studies show that <strong>75% of customers won't call back</strong> if their first call goes unanswered. 
+                  For a business receiving 100 calls per month, that's potentially 75 lost opportunities. 
+                  At an average customer value of $500, that's $37,500 in lost revenue monthly—$450,000 annually.
+                </p>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Availability Matters</h3>
-                    <p className="text-gray-600">
-                      Your customers don't only call during business hours. <strong>40% of inquiries happen after hours</strong>, 
-                      on weekends, or during holidays. An AI receptionist ensures every call is answered immediately, 
-                      regardless of when it comes in, capturing leads that would otherwise be lost.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Availability Matters</h3>
+                <p className="text-gray-600">
+                  Your customers don't only call during business hours. <strong>40% of inquiries happen after hours</strong>, 
+                  on weekends, or during holidays. An AI receptionist ensures every call is answered immediately, 
+                  regardless of when it comes in, capturing leads that would otherwise be lost.
+                </p>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Users className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Competitive Advantage</h3>
-                    <p className="text-gray-600">
-                      While competitors rely on voicemail or limited hours, you provide instant, professional service. 
-                      This creates a <strong>significant competitive advantage</strong> and positions your business as modern, 
-                      responsive, and customer-focused.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Competitive Advantage</h3>
+                <p className="text-gray-600">
+                  While competitors rely on voicemail or limited hours, you provide instant, professional service. 
+                  This creates a <strong>significant competitive advantage</strong> and positions your business as modern, 
+                  responsive, and customer-focused.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -135,45 +114,33 @@ const AIReceptionistPage: React.FC = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">How AI Receptionist Helps Your Business</h2>
             
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Capture Every Lead</h3>
-                </div>
+            <div className="space-y-6 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Capture Every Lead</h3>
                 <p className="text-gray-600">
                   Never lose a potential customer again. Every call is answered, every inquiry is handled, 
                   and every lead is captured and qualified automatically.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Instant Response</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Instant Response</h3>
                 <p className="text-gray-600">
                   Respond to customers in seconds, not hours. Research shows that responding within 60 seconds 
                   increases conversion rates by 391%.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Automatic Scheduling</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Automatic Scheduling</h3>
                 <p className="text-gray-600">
                   Book appointments directly into your calendar without any manual work. The AI handles 
                   availability checks and confirms appointments instantly.
                 </p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
-                  <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900">Cost Savings</h3>
-                </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Cost Savings</h3>
                 <p className="text-gray-600">
                   Replace expensive call center staff or receptionists. An AI receptionist costs a fraction 
                   while providing better coverage and consistency.

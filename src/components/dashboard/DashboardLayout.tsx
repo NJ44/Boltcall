@@ -339,7 +339,7 @@ const DashboardLayout: React.FC = () => {
               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
         }`}
       >
-        <span className="flex items-center -mt-0.5">
+        <span className="flex items-center -mt-[3px]">
           {item.icon}
         </span>
         <span className="relative pb-1">
@@ -772,7 +772,7 @@ const DashboardLayout: React.FC = () => {
                   <div className="flex items-center gap-3">
                              <Users className="w-4 h-4 text-blue-600" />
                     <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>AI Receptionist</div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Assistants</div>
                                <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Automated call handling</div>
                       {services.aiReceptionist && (
                         <div className="flex items-center gap-2 mt-1">
