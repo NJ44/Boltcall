@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Share2, Check } from 'lucide-react';
+import { Facebook, Check } from 'lucide-react';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { motion } from 'framer-motion';
 
@@ -146,12 +146,7 @@ const GiveawayPage: React.FC = () => {
 
               <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
 
-              <div className="text-sm opacity-90">Share it with a friend. if either of you wins, you both win the big prize!</div>
-              <div className="mt-4 flex items-center justify-center gap-4">
-                <a href="https://twitter.com/intent/tweet" target="_blank" rel="noopener noreferrer" className="bg-white/20 hover:bg-white/25 px-3 py-2 rounded-md">
-                  <Share2 className="w-4 h-4" />
-                </a>
-              </div>
+              <div className="text-sm opacity-90">Send the post to this email: <a href="mailto:noamj@boltcall.org" className="underline hover:opacity-80">noamj@boltcall.org</a></div>
 
               <p className="mt-10 text-xs text-white/80">©{new Date().getFullYear()} Boltcall</p>
             </div>

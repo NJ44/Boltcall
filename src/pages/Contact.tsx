@@ -111,7 +111,7 @@ const Contact: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="w-full max-w-lg"
             >
-              <Card className="p-6 bg-white shadow-2xl border-0">
+              <Card className="p-4 bg-white shadow-2xl border-0">
                 {/* Header */}
 
                 {/* Success Message */}
@@ -137,7 +137,7 @@ const Contact: React.FC = () => {
                   </motion.div>
                 )}
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
                   {/* Full Name */}
                   <div>
                     <StyledInput
@@ -194,7 +194,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   {/* Phone Number */}
-                  <div className="mb-6">
+                  <div className="mb-3">
                     <StyledInput
                       {...register('phoneNumber')}
                       type="tel"

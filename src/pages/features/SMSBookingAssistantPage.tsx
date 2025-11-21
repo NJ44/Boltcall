@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, Calendar, Clock, CheckCircle, ArrowRight } from 'lucide-react';
+import { MessageSquare, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';

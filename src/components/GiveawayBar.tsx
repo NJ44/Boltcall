@@ -44,7 +44,7 @@ const GiveawayBar: React.FC = () => {
               {/* Left side - Announcement content */}
               <div className="flex items-center space-x-1 sm:space-x-3">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className="font-bold text-xs sm:text-lg">🎉 MEGA GIVEAWAY! 🎉</span>
+                  <span className="font-bold text-xs sm:text-lg">🛍️ Black Friday Giveaway 🛍️</span>
                   <span className="text-[10px] sm:text-sm lg:text-base opacity-90">
                     Win a <strong>6 months Pro subscription</strong>
                   </span>

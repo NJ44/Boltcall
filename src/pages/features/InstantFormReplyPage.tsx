@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileText, Zap, TrendingUp, CheckCircle, ArrowRight } from 'lucide-react';
+import { FileText, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
