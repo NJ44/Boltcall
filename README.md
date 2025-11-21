@@ -86,6 +86,30 @@ const plans = [
 - Features: `src/components/FeaturesTabs.tsx`
 - Testimonials: `src/components/Testimonials.tsx`
 
+## 🔧 Environment Setup
+
+### Required Environment Variables
+
+Create a `.env` file in your project root with the following variables:
+
+```env
+# Supabase Configuration
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Google PageSpeed Insights API (for speed test feature)
+VITE_PAGESPEED_API_KEY=your_pagespeed_api_key_here
+```
+
+### Setup Guides
+
+- **Supabase Setup**: See `SUPABASE_SETUP.md` for detailed instructions
+- **PageSpeed Insights Setup**: See `PAGESPEED_SETUP.md` for API key setup
+- **Twilio Setup**: See `TWILIO_SETUP.md` for phone number integration
+- **ChatKit Setup**: See `CHATKIT_SETUP.md` for OpenAI ChatKit integration
+
+**Important**: Never commit your `.env` file to version control. It's already in `.gitignore`.
+
 ## 🔧 Supabase Integration
 
 ### Current Setup
@@ -94,15 +118,6 @@ The project is now integrated with Supabase for authentication and database oper
 - **Authentication**: User signup, login, and session management
 - **Database**: Lead submissions and user profiles
 - **Real-time**: Auth state changes and session persistence
-
-### Environment Setup
-
-Create a `.env` file in your project root with your Supabase credentials:
-
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
 
 ### Database Schema
 

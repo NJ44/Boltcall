@@ -27,7 +27,7 @@ export async function runSpeedTest(
   
   // Require API key - no mock data fallback
   if (!API_KEY) {
-    throw new Error('PageSpeed Insights API key not found. Please add VITE_PAGESPEED_API_KEY to your .env file and restart your dev server.');
+    throw new Error('PageSpeed Insights API key not found. Please create a .env file in the project root with VITE_PAGESPEED_API_KEY=your_api_key_here and restart your dev server. See PAGESPEED_SETUP.md for detailed instructions.');
   }
 
   console.log('Starting speed test for:', url);

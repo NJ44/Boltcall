@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, HelpCircle, X, Send, Check, LoaderCircle } from 'lucide-react';
+import { AlertTriangle, HelpCircle, X, Send, Check, LoaderCircle, CheckCircle, ChevronRight } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -90,117 +90,54 @@ const DashboardPage: React.FC = () => {
           <p className="text-sm text-gray-600 mt-1">Follow these steps to get your AI assistant up and running</p>
         </div>
         
-        <div className="p-6">
-          <div className="bg-gray-100 rounded-lg p-6 max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Left Column - Steps 1-3 */}
-              <div className="flex-1">
-                <Stepper
-                  className="flex flex-col items-start justify-center gap-6"
-                  defaultValue={1}
-                  orientation="vertical"
-                  indicators={{
-                    completed: <Check className="size-4" />,
-                    loading: <LoaderCircle className="size-4 animate-spin" />,
-                  }}
-                >
-                  <StepperNav>
-                    {[
-                      { title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents' },
-                      { title: 'Connect Cal.com', description: 'Link your calendar', link: '/dashboard/calcom' },
-                      { title: 'Setup AI Receptionist', description: 'Configure your receptionist', link: '/dashboard/agents' },
-                    ].map((step, index) => (
-                      <StepperItem
-                        key={index}
-                        step={index + 1}
-                        loading={index === 2}
-                        className="relative items-start not-last:flex-1"
-                      >
-                        <div className="flex items-start gap-4 w-full">
-                          <StepperTrigger className="items-start pb-4 last:pb-0 gap-2.5 text-black flex-1">
-                            <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=completed]:text-white data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:text-gray-500">
-                              {index + 1}
-                            </StepperIndicator>
-                            <div className="mt-0.5 text-left">
-                              <StepperTitle className="text-black">
-                                {index === 1 || index === 2 ? (
-                                  <Link to={step.link} className="hover:underline text-blue-600">
-                                    {step.title}
-                                  </Link>
-                                ) : (
-                                  step.title
-                                )}
-                              </StepperTitle>
-                              <StepperDescription className="text-black text-sm">{step.description}</StepperDescription>
-                            </div>
-                          </StepperTrigger>
-                          <Link
-                            to={step.link}
-                            className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium whitespace-nowrap mt-0.5"
-                          >
-                            Go
-                          </Link>
-                        </div>
-                        {index < 2 && (
-                          <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 m-0 -translate-x-1/2 group-data-[orientation=vertical]/stepper-nav:h-[calc(100%-1rem)] group-data-[state=completed]/step:bg-green-500" />
-                        )}
-                      </StepperItem>
-                    ))}
-                  </StepperNav>
-                </Stepper>
-              </div>
+        <div className="p-6 bg-gray-900">
+          <div className="space-y-3 max-w-5xl mx-auto">
+            {[
+              { id: 1, title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents', completed: true },
+              { id: 2, title: 'Connect Cal.com', description: 'Link your calendar', link: '/dashboard/calcom', completed: true },
+              { id: 3, title: 'Setup AI Receptionist', description: 'Configure your receptionist', link: '/dashboard/agents', completed: true },
+              { id: 4, title: 'Configure Phone Numbers', description: 'Set up your phone numbers', link: '/dashboard/phone-numbers', completed: true },
+              { id: 5, title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', completed: false, timeEstimate: 'About 1 min' },
+              { id: 6, title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents', completed: false, timeEstimate: 'About 1 min' },
+            ].map((step) => (
+              <div
+                key={step.id}
+                className="bg-gray-800 rounded-lg p-4 flex items-center gap-4 hover:bg-gray-750 transition-colors"
+              >
+                {/* Icon */}
+                <div className="flex-shrink-0">
+                  {step.completed ? (
+                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                    </div>
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  )}
+                </div>
 
-              {/* Right Column - Steps 4-6 */}
-              <div className="flex-1">
-                <Stepper
-                  className="flex flex-col items-start justify-center gap-6"
-                  defaultValue={4}
-                  orientation="vertical"
-                  indicators={{
-                    completed: <Check className="size-4" />,
-                    loading: <LoaderCircle className="size-4 animate-spin" />,
-                  }}
-                >
-                  <StepperNav>
-                    {[
-                      { title: 'Configure Phone Numbers', description: 'Set up your phone numbers', link: '/dashboard/phone-numbers' },
-                      { title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base' },
-                      { title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents' },
-                    ].map((step, index) => (
-                      <StepperItem
-                        key={index}
-                        step={index + 4}
-                        loading={index === 2}
-                        className="relative items-start not-last:flex-1"
-                      >
-                        <div className="flex items-start gap-4 w-full">
-                          <StepperTrigger className="items-start pb-4 last:pb-0 gap-2.5 text-black flex-1">
-                            <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=completed]:text-white data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:text-gray-500">
-                              {index + 4}
-                            </StepperIndicator>
-                            <div className="mt-0.5 text-left">
-                              <StepperTitle className="text-black">
-                                {step.title}
-                              </StepperTitle>
-                              <StepperDescription className="text-black text-sm">{step.description}</StepperDescription>
-                            </div>
-                          </StepperTrigger>
-                          <Link
-                            to={step.link}
-                            className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium whitespace-nowrap mt-0.5"
-                          >
-                            Go
-                          </Link>
-                        </div>
-                        {index < 2 && (
-                          <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 m-0 -translate-x-1/2 group-data-[orientation=vertical]/stepper-nav:h-[calc(100%-1rem)] group-data-[state=completed]/step:bg-green-500" />
-                        )}
-                      </StepperItem>
-                    ))}
-                  </StepperNav>
-                </Stepper>
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className={`${step.completed ? 'text-gray-400' : 'text-white'} font-medium`}>
+                    {step.title}
+                  </div>
+                  {!step.completed && step.timeEstimate && (
+                    <div className="text-sm text-gray-500 mt-0.5">
+                      {step.timeEstimate}
+                    </div>
+                  )}
+                </div>
+
+                {/* Action Button */}
+                {!step.completed && (
+                  <Link
+                    to={step.link}
+                    className="flex-shrink-0 px-4 py-2 bg-amber-700 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+                  >
+                    Earn 10 credits
+                  </Link>
+                )}
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
