@@ -5,7 +5,7 @@ import Confetti from 'react-confetti';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
-import { Stepper, StepperItem, StepperTrigger, StepperIndicator, StepperSeparator, StepperTitle, StepperDescription, StepperNav, StepperPanel, StepperContent } from '../components/ui/stepper';
+import { Stepper, StepperPanel, StepperContent } from '../components/ui/stepper';
 import Button from '../components/ui/Button';
 
 interface AuditInputs {

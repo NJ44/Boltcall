@@ -109,7 +109,6 @@ const SpeedTestLanding: React.FC = () => {
                   className="flex flex-col items-center gap-3 mt-4"
                 >
                   <div className="flex items-center gap-2 text-blue-600">
-                    <Loader2 className="w-5 h-5 animate-spin" />
                     <span className="text-sm font-medium">{progressMessage}</span>
                   </div>
                   <div className="w-64 h-1.5 bg-gray-200 rounded-full overflow-hidden">
