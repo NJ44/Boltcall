@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Facebook, Check, ArrowRight } from 'lucide-react';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const GiveawayPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showSurvey, setShowSurvey] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [referralLink, setReferralLink] = useState('');
+  const [referrerId, setReferrerId] = useState<string | null>(null);
   const [surveyData, setSurveyData] = useState({
+    name: '',
     email: '',
     companyName: '',
     website: '',
     whyChoose: ''
   });
+  const [allowNotifications, setAllowNotifications] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
-  const generateReferralLink = (email: string) => {
-    // Generate a unique referral code based on email and timestamp
-    const timestamp = Date.now();
-    const emailHash = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
-    const referralCode = `${emailHash}-${timestamp.toString(36)}`;
+  // Get referral ID from URL on mount
+  useEffect(() => {
+    const refParam = searchParams.get('ref');
+    if (refParam) {
+      setReferrerId(refParam);
+    }
+  }, [searchParams]);
+
+  const generateReferralLink = (userId: string) => {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://boltcall.org';
-    return `${baseUrl}/giveaway?ref=${referralCode}`;
+    return `${baseUrl}/giveaway?ref=${userId}`;
   };
   const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://boltcall.com/giveaway';
   const shareText = encodeURIComponent("I'm entering Boltcall's giveaway — if either of us wins, we both win! Join here:");
@@ -67,12 +75,10 @@ const GiveawayPage: React.FC = () => {
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
-              <div className="mb-3">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-white flex items-center gap-3 flex-wrap">
                 <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-400 rounded-full">
                   Limited Time Black Friday
                 </span>
-              </div>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-white">
                 <span className="text-white">3 Months</span> <span className="text-blue-500">Pro Plan</span> <span className="text-white">+</span> <span className="text-blue-500">smart website</span> <span className="text-white">package</span>
               </h1>
 
@@ -189,8 +195,6 @@ const GiveawayPage: React.FC = () => {
                   className="h-full flex flex-col"
                 >
                   <div className="flex-1">
-                    <h2 className="text-2xl font-bold mb-6">Enter the Giveaway</h2>
-                    
                     {currentStep === 1 && (
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
@@ -198,20 +202,30 @@ const GiveawayPage: React.FC = () => {
                         className="space-y-4"
                       >
                         <div>
-                          <label className="block text-sm font-medium mb-2">Email Address</label>
+                          <label className="block text-sm font-medium mb-2 text-white">Name</label>
+                          <input
+                            type="text"
+                            value={surveyData.name}
+                            onChange={(e) => setSurveyData({ ...surveyData, name: e.target.value })}
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                            placeholder="Your full name"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2 text-white">Email Address</label>
                           <input
                             type="email"
                             value={surveyData.email}
                             onChange={(e) => setSurveyData({ ...surveyData, email: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="your@email.com"
                           />
                         </div>
                         <button
                           onClick={() => {
-                            if (surveyData.email) setCurrentStep(2);
+                            if (surveyData.email && surveyData.name) setCurrentStep(2);
                           }}
-                          disabled={!surveyData.email}
+                          disabled={!surveyData.email || !surveyData.name}
                           className="mt-6 w-full px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                           Continue
@@ -285,6 +299,18 @@ const GiveawayPage: React.FC = () => {
                                 placeholder="Tell us why you should win..."
                               />
                             </div>
+                            <div className="flex items-start gap-3 mt-4 p-4 bg-white/5 rounded-lg border border-white/20">
+                              <input
+                                type="checkbox"
+                                id="allowNotifications"
+                                checked={allowNotifications}
+                                onChange={(e) => setAllowNotifications(e.target.checked)}
+                                className="mt-0.5 w-5 h-5 rounded border-2 border-white/40 bg-white/10 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent cursor-pointer transition-all checked:bg-blue-600 checked:border-blue-600"
+                              />
+                              <label htmlFor="allowNotifications" className="text-sm text-white/95 cursor-pointer leading-relaxed flex-1">
+                                I allow you to send me notifications about the giveaway
+                              </label>
+                            </div>
                             <div className="flex gap-3 mt-6">
                               <button
                                 onClick={() => setCurrentStep(2)}
@@ -293,13 +319,50 @@ const GiveawayPage: React.FC = () => {
                                 Back
                               </button>
                               <button
-                                onClick={() => {
+                                onClick={async () => {
                                   if (surveyData.whyChoose) {
-                                    const link = generateReferralLink(surveyData.email);
-                                    setReferralLink(link);
-                                    setIsSubmitted(true);
-                                    // Here you would typically send the data to your backend
-                                    console.log('Survey submitted:', surveyData);
+                                    try {
+                                      // Prepare data to send to webhook
+                                      const referralId = referrerId || '0';
+                                      const payload = {
+                                        name: surveyData.name,
+                                        email: surveyData.email,
+                                        companyName: surveyData.companyName,
+                                        website: surveyData.website,
+                                        whyChoose: surveyData.whyChoose,
+                                        allowNotifications: allowNotifications,
+                                        referralId: referralId
+                                      };
+
+                                      // Call webhook
+                                      const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
+                                        method: 'POST',
+                                        headers: {
+                                          'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(payload),
+                                      });
+
+                                      if (!response.ok) {
+                                        throw new Error('Failed to submit form');
+                                      }
+
+                                      // Get the returned ID from webhook
+                                      const result = await response.json();
+                                      const userId = result.id || result.userId || result.user_id;
+
+                                      if (userId) {
+                                        // Generate referral link using the ID from webhook
+                                        const link = generateReferralLink(userId);
+                                        setReferralLink(link);
+                                        setIsSubmitted(true);
+                                      } else {
+                                        throw new Error('No user ID returned from webhook');
+                                      }
+                                    } catch (error) {
+                                      console.error('Error submitting form:', error);
+                                      alert('Failed to submit form. Please try again.');
+                                    }
                                   }
                                 }}
                                 disabled={!surveyData.whyChoose}
@@ -346,8 +409,8 @@ const GiveawayPage: React.FC = () => {
                               Copy
                             </button>
                           </div>
-                          <p className="text-xs text-white/70 mt-2">
-                            Share this link with others to increase your chances of winning!
+                          <p className="text-base text-white/90 mt-2 font-medium">
+                            Share this link with a friend. If one of you wins, you both win a prize
                           </p>
                         </div>
                       </motion.div>

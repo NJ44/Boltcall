@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import GiveawayBar from '../../components/GiveawayBar';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import Button from '../../components/ui/Button';
 import { useSpeedTestStore } from '../../stores/speedTestStore';
 import { runSpeedTest } from '../../lib/speedTest';
@@ -123,6 +124,7 @@ const SpeedTestLanding: React.FC = () => {
             </form>
           </motion.div>
         </main>
+        <Footer />
       </div>
     </div>
   );

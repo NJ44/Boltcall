@@ -335,8 +335,8 @@ const AIRevenueAudit: React.FC = () => {
                 </div>
               </div>
               
-              <div className="mb-8">
-                <div className="flex justify-between items-center mb-2">
+              <div className="mb-4">
+                <div className="flex justify-between items-center mb-1.5">
                   <span className="text-sm font-medium text-gray-700">
                     Step {currentStep} of 3
                   </span>
@@ -344,9 +344,9 @@ const AIRevenueAudit: React.FC = () => {
                     {Math.round((currentStep / 3) * 100)}%
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-1">
                   <motion.div
-                    className="bg-blue-600 h-2 rounded-full"
+                    className="bg-blue-600 h-1 rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${(currentStep / 3) * 100}%` }}
                     transition={{ duration: 0.3 }}
@@ -358,7 +358,7 @@ const AIRevenueAudit: React.FC = () => {
 
           {/* Form Section */}
           {!showResults && (
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+            <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white">
               <div className="max-w-4xl mx-auto">
                 <Stepper
                   defaultValue={currentStep}
