@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Facebook, Check, ArrowRight } from 'lucide-react';
+import { Facebook, Check, ArrowRight, Loader2 } from 'lucide-react';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -20,6 +20,7 @@ const GiveawayPage: React.FC = () => {
   });
   const [allowNotifications, setAllowNotifications] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Get referral ID from URL on mount
   useEffect(() => {
@@ -241,22 +242,22 @@ const GiveawayPage: React.FC = () => {
                         className="space-y-4"
                       >
                         <div>
-                          <label className="block text-sm font-medium mb-2">Company Name</label>
+                          <label className="block text-sm font-medium mb-2 text-white">Company Name</label>
                           <input
                             type="text"
                             value={surveyData.companyName}
                             onChange={(e) => setSurveyData({ ...surveyData, companyName: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="Your Company Name"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-2">Website</label>
+                          <label className="block text-sm font-medium mb-2 text-white">Website</label>
                           <input
                             type="url"
                             value={surveyData.website}
                             onChange={(e) => setSurveyData({ ...surveyData, website: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="https://yourwebsite.com"
                           />
                         </div>
@@ -290,23 +291,37 @@ const GiveawayPage: React.FC = () => {
                             className="space-y-4"
                           >
                             <div>
-                              <label className="block text-sm font-medium mb-2">Why do you think we need to choose you?</label>
+                              <label className="block text-sm font-medium mb-2 text-white">Why do you think we need to choose you?</label>
                               <textarea
                                 value={surveyData.whyChoose}
                                 onChange={(e) => setSurveyData({ ...surveyData, whyChoose: e.target.value })}
                                 rows={6}
-                                className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent resize-none"
+                                className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                                 placeholder="Tell us why you should win..."
                               />
                             </div>
                             <div className="flex items-start gap-3 mt-4 p-4 bg-white/5 rounded-lg border border-white/20">
-                              <input
-                                type="checkbox"
-                                id="allowNotifications"
-                                checked={allowNotifications}
-                                onChange={(e) => setAllowNotifications(e.target.checked)}
-                                className="mt-0.5 w-5 h-5 rounded border-2 border-white/40 bg-white/10 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-transparent cursor-pointer transition-all checked:bg-blue-600 checked:border-blue-600"
-                              />
+                              <div className="relative mt-0.5">
+                                <input
+                                  type="checkbox"
+                                  id="allowNotifications"
+                                  checked={allowNotifications}
+                                  onChange={(e) => setAllowNotifications(e.target.checked)}
+                                  className="sr-only"
+                                />
+                                <label
+                                  htmlFor="allowNotifications"
+                                  className={`flex items-center justify-center w-5 h-5 rounded border-2 cursor-pointer transition-all ${
+                                    allowNotifications
+                                      ? 'bg-blue-600 border-blue-600'
+                                      : 'bg-white/10 border-white/40'
+                                  }`}
+                                >
+                                  {allowNotifications && (
+                                    <Check className="w-3.5 h-3.5 text-white" />
+                                  )}
+                                </label>
+                              </div>
                               <label htmlFor="allowNotifications" className="text-sm text-white/95 cursor-pointer leading-relaxed flex-1">
                                 I allow you to send me notifications about the giveaway
                               </label>
@@ -321,6 +336,7 @@ const GiveawayPage: React.FC = () => {
                               <button
                                 onClick={async () => {
                                   if (surveyData.whyChoose) {
+                                    setIsSubmitting(true);
                                     try {
                                       // Prepare data to send to webhook
                                       const referralId = referrerId || '0';
@@ -347,28 +363,37 @@ const GiveawayPage: React.FC = () => {
                                         throw new Error('Failed to submit form');
                                       }
 
-                                      // Get the returned ID from webhook
-                                      const result = await response.json();
-                                      const userId = result.id || result.userId || result.user_id;
-
-                                      if (userId) {
-                                        // Generate referral link using the ID from webhook
-                                        const link = generateReferralLink(userId);
+                                      // Get the referral ID from response header
+                                      const referralIdFromHeader = response.headers.get('referal_id');
+                                      
+                                      if (referralIdFromHeader) {
+                                        // Generate referral link using the ID from header: ref={referralIdFromHeader}
+                                        const link = generateReferralLink(referralIdFromHeader);
                                         setReferralLink(link);
                                         setIsSubmitted(true);
                                       } else {
-                                        throw new Error('No user ID returned from webhook');
+                                        console.error('No referal_id in response headers');
+                                        throw new Error('No referral ID returned from webhook');
                                       }
                                     } catch (error) {
                                       console.error('Error submitting form:', error);
                                       alert('Failed to submit form. Please try again.');
+                                    } finally {
+                                      setIsSubmitting(false);
                                     }
                                   }
                                 }}
-                                disabled={!surveyData.whyChoose}
-                                className="flex-1 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={!surveyData.whyChoose || isSubmitting}
+                                className="flex-1 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                               >
-                                Submit
+                                {isSubmitting ? (
+                                  <>
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                    <span>Submitting...</span>
+                                  </>
+                                ) : (
+                                  'Submit'
+                                )}
                               </button>
                             </div>
                           </motion.div>
