@@ -491,7 +491,7 @@ const Header: React.FC = () => {
                               : 'text-gray-700 hover:text-gray-900'
                           }`}
                         >
-                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <Icon className="w-4 h-4 flex-shrink-0 -mt-[4px]" />
                           <span className="relative inline-block pb-1">
                             {item.label}
                             <motion.div

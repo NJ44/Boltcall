@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
+import { AppleStyleDock } from '../../components/ui/dock-demo';
 const DashboardPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showHelpChat, setShowHelpChat] = useState(false);
@@ -76,8 +77,7 @@ const DashboardPage: React.FC = () => {
       {/* Setup Guide Section */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="bg-gray-50 border-b border-gray-200 p-6">
-          <h2 className="text-xl font-semibold text-gray-900">Setup Guide</h2>
-          <p className="text-sm text-gray-600 mt-1">Follow these steps to get your AI assistant up and running</p>
+          <h2 className="text-3xl font-semibold text-gray-900">Setup Guide</h2>
         </div>
         
         <div className="p-6">
@@ -145,8 +145,7 @@ const DashboardPage: React.FC = () => {
       {/* Alerts Section */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="bg-gray-50 border-b border-gray-200 p-6">
-          <h2 className="text-xl font-semibold text-gray-900">Alerts</h2>
-          <p className="text-sm text-gray-600 mt-1">Important notifications and system alerts</p>
+          <h2 className="text-3xl font-semibold text-gray-900">Alerts</h2>
         </div>
         
         <div className="p-6 space-y-4">
@@ -258,6 +257,11 @@ const DashboardPage: React.FC = () => {
           </>
         )}
       </AnimatePresence>
+
+      {/* Dock Component - Fixed at bottom middle */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50">
+        <AppleStyleDock />
+      </div>
     </div>
   );
 };

@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Check } from 'lucide-react';
+import { Facebook, Check, ArrowRight } from 'lucide-react';
 import { AuroraBackground } from '@/components/ui/aurora-background';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const GiveawayPage: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [showSurvey, setShowSurvey] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [referralLink, setReferralLink] = useState('');
+  const [surveyData, setSurveyData] = useState({
+    email: '',
+    companyName: '',
+    website: '',
+    whyChoose: ''
+  });
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const generateReferralLink = (email: string) => {
+    // Generate a unique referral code based on email and timestamp
+    const timestamp = Date.now();
+    const emailHash = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+    const referralCode = `${emailHash}-${timestamp.toString(36)}`;
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://boltcall.org';
+    return `${baseUrl}/giveaway?ref=${referralCode}`;
+  };
   const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://boltcall.com/giveaway';
   const shareText = encodeURIComponent("I'm entering Boltcall's giveaway — if either of us wins, we both win! Join here:");
   const encodedUrl = encodeURIComponent(shareUrl);
@@ -48,6 +67,11 @@ const GiveawayPage: React.FC = () => {
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
+              <div className="mb-3">
+                <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-400 rounded-full">
+                  Limited Time Black Friday
+                </span>
+              </div>
               <h1 className="text-3xl md:text-4xl font-extrabold text-white">
                 <span className="text-white">3 Months</span> <span className="text-blue-500">Pro Plan</span> <span className="text-white">+</span> <span className="text-blue-500">smart website</span> <span className="text-white">package</span>
               </h1>
@@ -86,70 +110,252 @@ const GiveawayPage: React.FC = () => {
 
           {/* Right: brand panel */}
           <div className="bg-gradient-to-b from-brand-blue to-brand-sky text-white p-10 md:p-12">
-            <div className="text-center">
-              <p className="uppercase tracking-widest text-xs text-white/80">Giveaway ends in:</p>
-              <div className="mt-4 flex items-center justify-center gap-6">
-                {[
-                  { label: 'days', value: timeLeft.days },
-                  { label: 'hours', value: timeLeft.hours },
-                  { label: 'mins', value: timeLeft.minutes },
-                  { label: 'secs', value: timeLeft.seconds },
-                ].map((t) => (
-                  <div key={t.label} className="text-center">
-                    <div className="text-3xl font-extrabold leading-none">{t.value}</div>
-                    <div className="text-[10px] uppercase tracking-widest opacity-80">{t.label}</div>
+            <AnimatePresence mode="wait">
+              {!showSurvey ? (
+                <motion.div
+                  key="countdown"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center"
+                >
+                  <p className="uppercase tracking-widest text-xs text-white/80">Giveaway ends in:</p>
+                  <div className="mt-4 flex items-center justify-center gap-6">
+                    {[
+                      { label: 'days', value: timeLeft.days },
+                      { label: 'hours', value: timeLeft.hours },
+                      { label: 'mins', value: timeLeft.minutes },
+                      { label: 'secs', value: timeLeft.seconds },
+                    ].map((t) => (
+                      <div key={t.label} className="text-center">
+                        <div className="text-3xl font-extrabold leading-none">{t.value}</div>
+                        <div className="text-[10px] uppercase tracking-widest opacity-80">{t.label}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              <a
-                href="https://form.typeform.com/to/tmB4QfSf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center justify-center px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors"
-              >
-                Enter Giveaway
-              </a>
+                  <button
+                    onClick={() => setShowSurvey(true)}
+                    className="mt-8 inline-flex items-center justify-center px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors"
+                  >
+                    Enter Giveaway
+                  </button>
 
-              <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
+                  <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
 
-              <div className="text-sm md:text-base opacity-90">Share the giveaway on your socials for a higher chance to win!</div>
-              <div className="mt-4 flex items-center justify-center gap-2.5 px-2">
-                <a
-                  href={twitterHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Share on X (Twitter)"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                  <div className="text-sm md:text-base opacity-90">Share the giveaway on your socials for a higher chance to win!</div>
+                  <div className="mt-4 flex items-center justify-center gap-2.5 px-2">
+                    <a
+                      href={twitterHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Share on X (Twitter)"
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z"/></svg>
+                    </a>
+                    <a
+                      href={facebookHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Share on Facebook"
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                    >
+                      <Facebook className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={linkedinHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Share on LinkedIn"
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M4.983 3.5C4.983 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.483 1.12 2.483 2.5zM.25 8.25h4.5v15.5H.25zM8.75 8.25h4.31v2.12h.06c.6-1.14 2.06-2.34 4.24-2.34 4.53 0 5.37 2.98 5.37 6.85v7.88h-4.5v-6.98c0-1.66-.03-3.8-2.31-3.8-2.31 0-2.67 1.8-2.67 3.66v7.12h-4.5z"/></svg>
+                    </a>
+                  </div>
+
+                  <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
+
+                  <div className="text-sm opacity-90">Send the post to this email: <a href="mailto:noamj@boltcall.org" className="underline hover:opacity-80">noamj@boltcall.org</a></div>
+
+                  <p className="mt-10 text-xs text-white/80">©{new Date().getFullYear()} Boltcall</p>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="survey"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="h-full flex flex-col"
                 >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z"/></svg>
-                </a>
-                <a
-                  href={facebookHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Share on Facebook"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
-                >
-                  <Facebook className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href={linkedinHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Share on LinkedIn"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M4.983 3.5C4.983 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.483 1.12 2.483 2.5zM.25 8.25h4.5v15.5H.25zM8.75 8.25h4.31v2.12h.06c.6-1.14 2.06-2.34 4.24-2.34 4.53 0 5.37 2.98 5.37 6.85v7.88h-4.5v-6.98c0-1.66-.03-3.8-2.31-3.8-2.31 0-2.67 1.8-2.67 3.66v7.12h-4.5z"/></svg>
-                </a>
-              </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold mb-6">Enter the Giveaway</h2>
+                    
+                    {currentStep === 1 && (
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="space-y-4"
+                      >
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Email Address</label>
+                          <input
+                            type="email"
+                            value={surveyData.email}
+                            onChange={(e) => setSurveyData({ ...surveyData, email: e.target.value })}
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                            placeholder="your@email.com"
+                          />
+                        </div>
+                        <button
+                          onClick={() => {
+                            if (surveyData.email) setCurrentStep(2);
+                          }}
+                          disabled={!surveyData.email}
+                          className="mt-6 w-full px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        >
+                          Continue
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </motion.div>
+                    )}
 
-              <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
+                    {currentStep === 2 && (
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="space-y-4"
+                      >
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Company Name</label>
+                          <input
+                            type="text"
+                            value={surveyData.companyName}
+                            onChange={(e) => setSurveyData({ ...surveyData, companyName: e.target.value })}
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                            placeholder="Your Company Name"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Website</label>
+                          <input
+                            type="url"
+                            value={surveyData.website}
+                            onChange={(e) => setSurveyData({ ...surveyData, website: e.target.value })}
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                            placeholder="https://yourwebsite.com"
+                          />
+                        </div>
+                        <div className="flex gap-3 mt-6">
+                          <button
+                            onClick={() => setCurrentStep(1)}
+                            className="flex-1 px-6 py-3 bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
+                          >
+                            Back
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (surveyData.companyName && surveyData.website) setCurrentStep(3);
+                            }}
+                            disabled={!surveyData.companyName || !surveyData.website}
+                            className="flex-1 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          >
+                            Continue
+                            <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
 
-              <div className="text-sm opacity-90">Send the post to this email: <a href="mailto:noamj@boltcall.org" className="underline hover:opacity-80">noamj@boltcall.org</a></div>
+                    {!isSubmitted ? (
+                      <>
+                        {currentStep === 3 && (
+                          <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="space-y-4"
+                          >
+                            <div>
+                              <label className="block text-sm font-medium mb-2">Why do you think we need to choose you?</label>
+                              <textarea
+                                value={surveyData.whyChoose}
+                                onChange={(e) => setSurveyData({ ...surveyData, whyChoose: e.target.value })}
+                                rows={6}
+                                className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent resize-none"
+                                placeholder="Tell us why you should win..."
+                              />
+                            </div>
+                            <div className="flex gap-3 mt-6">
+                              <button
+                                onClick={() => setCurrentStep(2)}
+                                className="flex-1 px-6 py-3 bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
+                              >
+                                Back
+                              </button>
+                              <button
+                                onClick={() => {
+                                  if (surveyData.whyChoose) {
+                                    const link = generateReferralLink(surveyData.email);
+                                    setReferralLink(link);
+                                    setIsSubmitted(true);
+                                    // Here you would typically send the data to your backend
+                                    console.log('Survey submitted:', surveyData);
+                                  }
+                                }}
+                                disabled={!surveyData.whyChoose}
+                                className="flex-1 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </>
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-center space-y-6"
+                      >
+                        <div className="mb-4">
+                          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Check className="w-8 h-8 text-white" />
+                          </div>
+                          <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
+                          <p className="text-white/90">
+                            Your entry has been submitted successfully. We'll be in touch soon!
+                          </p>
+                        </div>
 
-              <p className="mt-10 text-xs text-white/80">©{new Date().getFullYear()} Boltcall</p>
-            </div>
+                        <div className="bg-white/10 rounded-lg p-4 border border-white/30">
+                          <p className="text-sm font-medium mb-3">Your Referral Link</p>
+                          <div className="flex items-center gap-2 mb-3">
+                            <input
+                              type="text"
+                              readOnly
+                              value={referralLink}
+                              className="flex-1 px-3 py-2 rounded-md bg-white/10 border border-white/30 text-white text-sm focus:outline-none"
+                            />
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(referralLink);
+                                // You could add a toast notification here
+                              }}
+                              className="px-4 py-2 bg-white text-brand-blue font-semibold rounded-md hover:bg-gray-50 transition-colors text-sm whitespace-nowrap"
+                            >
+                              Copy
+                            </button>
+                          </div>
+                          <p className="text-xs text-white/70 mt-2">
+                            Share this link with others to increase your chances of winning!
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         </motion.div>

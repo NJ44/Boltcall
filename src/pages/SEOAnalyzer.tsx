@@ -122,7 +122,7 @@ const SEOAnalyzer: React.FC = () => {
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Analyze Your Website's SEO
+              Analyze Your Website's <span className="text-blue-600">SEO</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Get a comprehensive SEO analysis of any website. Enter a URL below to get started.
@@ -132,29 +132,29 @@ const SEOAnalyzer: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-2xl border border-gray-200 shadow-xl p-8 md:p-12"
+          className="bg-white rounded-2xl border border-gray-200 shadow-xl p-6 md:p-8"
         >
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* URL Input */}
             <div>
-              <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="url" className="block text-xs font-medium text-gray-700 mb-1">
                 Website URL
               </label>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <div className="flex-1 relative">
-                  <Globe className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="text"
                     id="url"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="https://example.com"
-                    className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                    className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     disabled={isAnalyzing}
                   />
                 </div>
@@ -163,41 +163,41 @@ const SEOAnalyzer: React.FC = () => {
 
             {/* Email Input */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
                 Email Address
               </label>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <div className="flex-1 relative">
-                  <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your.email@example.com"
-                    className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                    className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     disabled={isAnalyzing}
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isAnalyzing || !url.trim() || !email.trim()}
-                  className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2 font-semibold text-lg"
+                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2 font-semibold text-sm"
                 >
                   {isAnalyzing ? (
                     <>
-                      <Loader className="w-5 h-5 animate-spin" />
+                      <Loader className="w-4 h-4 animate-spin" />
                       Analyzing...
                     </>
                   ) : (
                     <>
-                      <Search className="w-5 h-5" />
+                      <Search className="w-4 h-4" />
                       Analyze
                     </>
                   )}
                 </button>
               </div>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="text-xs text-gray-500 mt-1.5">
                 We'll send your SEO audit report to this email address
               </p>
             </div>

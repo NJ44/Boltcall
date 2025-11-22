@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useLenis } from '../hooks/useLenis';
 import { AuthProvider } from '../contexts/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -59,7 +59,6 @@ import SpeedTestReport from '../pages/speed-test/SpeedTestReport';
 import SpeedTestOffer from '../pages/speed-test/SpeedTestOffer';
 import SidebarDemoPage from '../pages/SidebarDemoPage';
 import SkeletonDemoPage from '../pages/SkeletonDemoPage';
-import OrbitingSkillsDemo from '../pages/OrbitingSkillsDemo';
 import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
 import TiltDemo from '../pages/TiltDemo';
@@ -109,6 +108,19 @@ import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidget
 import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
 
 const NavigationWrapper: React.FC = () => {
+  const location = useLocation();
+  
+  // Scroll to top on route change
+  useEffect(() => {
+    // Scroll window to top
+    window.scrollTo(0, 0);
+    
+    // Also handle Lenis smooth scroll if it exists
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    }
+  }, [location.pathname]);
+  
   // Initialize Lenis smooth scrolling
   useLenis();
   
@@ -227,7 +239,6 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
         <Route path="/sidebar-demo" element={<SidebarDemoPage />} />
         <Route path="/skeleton-demo" element={<SkeletonDemoPage />} />
-        <Route path="/orbiting-skills-demo" element={<OrbitingSkillsDemo />} />
         <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
         <Route path="/tilt-demo" element={<TiltDemo />} />

@@ -366,49 +366,7 @@ const AIRevenueAudit: React.FC = () => {
                   onValueChange={setCurrentStep}
                   orientation="vertical"
                 >
-                  <StepperNav>
-                    <StepperItem step={1} completed={currentStep > 1}>
-                      <StepperTrigger className="items-start pb-6 gap-3">
-                        <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
-                          {currentStep > 1 ? <CheckCircle className="w-4 h-4 text-white" /> : '1'}
-                        </StepperIndicator>
-                        <div className="text-left">
-                          <StepperTitle className="text-lg font-semibold">Business Profile</StepperTitle>
-                          <StepperDescription>Tell us about your business</StepperDescription>
-                        </div>
-                      </StepperTrigger>
-                      <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
-                    </StepperItem>
-
-                    <StepperItem step={2} completed={currentStep > 2}>
-                      <StepperTrigger className="items-start pb-6 gap-3">
-                        <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
-                          {currentStep > 2 ? <CheckCircle className="w-4 h-4 text-white" /> : '2'}
-                        </StepperIndicator>
-                        <div className="text-left">
-                          <StepperTitle className="text-lg font-semibold">Current Performance</StepperTitle>
-                          <StepperDescription>Your current lead and booking metrics</StepperDescription>
-                        </div>
-                      </StepperTrigger>
-                      <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
-                    </StepperItem>
-
-                    <StepperItem step={3} completed={currentStep > 3}>
-                  <StepperTrigger className="items-start pb-6 gap-3">
-                    <StepperIndicator className="data-[state=completed]:bg-green-500 data-[state=active]:bg-blue-600">
-                      {currentStep > 3 ? <CheckCircle className="w-4 h-4 text-white" /> : '3'}
-                    </StepperIndicator>
-                    <div className="text-left">
-                      <StepperTitle className="text-lg font-semibold">Costs & Staffing</StepperTitle>
-                      <StepperDescription>Your current operational costs</StepperDescription>
-                    </div>
-                  </StepperTrigger>
-                  <StepperSeparator className="absolute inset-y-0 top-7 left-3 -order-1 h-[calc(100%-1.5rem)]" />
-                </StepperItem>
-
-              </StepperNav>
-
-              <StepperPanel className="mt-8">
+              <StepperPanel>
                 <StepperContent value={1}>
                   <div className="bg-white rounded-xl border border-gray-200 p-8">
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">Business Profile</h3>

@@ -286,40 +286,40 @@ const DashboardLayout: React.FC = () => {
   }, []);
 
   const navItemsGroup1 = [
-    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-3.5 h-3.5" /> },
+    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const navItemsGroup2 = [
-    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/assistant', label: 'Assistant', icon: <HelpCircle className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/assistant', label: 'Assistant', icon: <HelpCircle className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // Dropdown items
   const callsItems = [
-    { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const messagingItems = [
-    { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-3.5 h-3.5" /> },
-    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-3.5 h-3.5" /> },
+    { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const navItemsBottom: Array<{ to: string; label: string; icon: React.ReactNode }> = [];
 
   const navItemsFooter = [
-    { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
-    { to: '/help-center', label: 'Help Center', icon: <HelpCircle className="w-5 h-5" /> },
+    { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5 scale-[0.95]" /> },
+    { to: '/help-center', label: 'Help Center', icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
   ];
 
 
@@ -341,7 +341,7 @@ const DashboardLayout: React.FC = () => {
               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
         }`}
       >
-        <span className="flex items-center -mt-[3px]">
+        <span className="flex items-center -mt-[5px]">
           {item.icon}
         </span>
         <span className="relative pb-1">
