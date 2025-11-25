@@ -258,6 +258,30 @@ button:active,
     color: #f9fafb !important;
   }
   
+  /* White text for giveaway form inputs - override global input styles */
+  .giveaway-form input[type="text"],
+  .giveaway-form input[type="email"],
+  .giveaway-form input[type="url"],
+  .giveaway-form textarea {
+    color: white !important;
+  }
+  
+  /* Override autofill styles for giveaway form */
+  .giveaway-form input:-webkit-autofill,
+  .giveaway-form input:-webkit-autofill:hover,
+  .giveaway-form input:-webkit-autofill:focus,
+  .giveaway-form input:-webkit-autofill:active {
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.1) inset !important;
+    color: white !important;
+  }
+  
+  /* Override dark mode input styles for giveaway form */
+  .dark .giveaway-form input,
+  .dark .giveaway-form textarea {
+    color: white !important;
+  }
+  
   :root {
     --background: 221.2 83.2% 53.3%;
     --foreground: 210 40% 98%;

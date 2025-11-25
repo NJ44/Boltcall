@@ -34,6 +34,7 @@ const Header: React.FC = () => {
   const resourcesItems = [
     { label: 'AI Agent Comparison', href: '/ai-agent-comparison' },
     { label: 'Blog', href: '/blog' },
+    { label: 'Newsletter', href: '/newsletter' },
   ];
 
   const freeToolsItems = [

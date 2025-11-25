@@ -90,6 +90,7 @@ import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import BlogSEO from '../pages/BlogSEO';
 import BlogAIGuide from '../pages/BlogAIGuide';
 import BlogAIReceptionistComparison from '../pages/BlogAIReceptionistComparison';
+import Newsletter from '../pages/Newsletter';
 import AIAgentComparison from '../pages/AIAgentComparison';
 import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
@@ -266,6 +267,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
+        <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/the-new-reality-for-local-businesses" element={<Blog />} />
         <Route path="/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
         <Route path="/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />

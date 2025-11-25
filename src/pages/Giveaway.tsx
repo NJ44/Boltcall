@@ -195,7 +195,7 @@ const GiveawayPage: React.FC = () => {
                   exit={{ opacity: 0, y: -20 }}
                   className="h-full flex flex-col"
                 >
-                  <div className="flex-1">
+                  <div className="flex-1 giveaway-form">
                     {currentStep === 1 && (
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
@@ -210,6 +210,7 @@ const GiveawayPage: React.FC = () => {
                             onChange={(e) => setSurveyData({ ...surveyData, name: e.target.value })}
                             className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="Your full name"
+                            style={{ color: '#ffffff' }}
                           />
                         </div>
                         <div>
@@ -220,6 +221,7 @@ const GiveawayPage: React.FC = () => {
                             onChange={(e) => setSurveyData({ ...surveyData, email: e.target.value })}
                             className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="your@email.com"
+                            style={{ color: '#ffffff' }}
                           />
                         </div>
                         <button
@@ -249,6 +251,7 @@ const GiveawayPage: React.FC = () => {
                             onChange={(e) => setSurveyData({ ...surveyData, companyName: e.target.value })}
                             className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="Your Company Name"
+                            style={{ color: '#ffffff' }}
                           />
                         </div>
                         <div>
@@ -259,6 +262,7 @@ const GiveawayPage: React.FC = () => {
                             onChange={(e) => setSurveyData({ ...surveyData, website: e.target.value })}
                             className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                             placeholder="https://yourwebsite.com"
+                            style={{ color: '#ffffff' }}
                           />
                         </div>
                         <div className="flex gap-3 mt-6">
@@ -298,9 +302,10 @@ const GiveawayPage: React.FC = () => {
                                 rows={6}
                                 className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                                 placeholder="Tell us why you should win..."
+                                style={{ color: '#ffffff' }}
                               />
                             </div>
-                            <div className="flex items-start gap-3 mt-4 p-4 bg-white/5 rounded-lg border border-white/20">
+                            <div className="flex items-start gap-3 mt-4">
                               <div className="relative mt-0.5">
                                 <input
                                   type="checkbox"
@@ -350,6 +355,8 @@ const GiveawayPage: React.FC = () => {
                                         referralId: referralId
                                       };
 
+                                      console.log('Submitting form with payload:', payload);
+
                                       // Call webhook
                                       const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
                                         method: 'POST',
@@ -359,25 +366,85 @@ const GiveawayPage: React.FC = () => {
                                         body: JSON.stringify(payload),
                                       });
 
+                                      console.log('Response status:', response.status);
+                                      
+                                      // Get response body first (can only read once)
+                                      const responseText = await response.text();
+                                      console.log('Response text:', responseText);
+                                      
+                                      // Check if response is ok
                                       if (!response.ok) {
-                                        throw new Error('Failed to submit form');
+                                        console.error('Response error:', responseText);
+                                        throw new Error(`Failed to submit form: ${response.status} ${response.statusText}`);
                                       }
 
-                                      // Get the referral ID from response header
-                                      const referralIdFromHeader = response.headers.get('referal_id');
+                                      // Try to get referral ID from response header (may be blocked by CORS)
+                                      let referralIdFromHeader = null;
+                                      try {
+                                        referralIdFromHeader = response.headers.get('referal_id') || response.headers.get('referral_id');
+                                        console.log('Referral ID from header:', referralIdFromHeader);
+                                        console.log('All response headers:', Array.from(response.headers.entries()));
+                                      } catch (e) {
+                                        console.log('Could not access response headers (CORS):', e);
+                                      }
                                       
-                                      if (referralIdFromHeader) {
-                                        // Generate referral link using the ID from header: ref={referralIdFromHeader}
-                                        const link = generateReferralLink(referralIdFromHeader);
+                                      // Parse response body - handle UUID string directly
+                                      let responseData = null;
+                                      let finalReferralId = referralIdFromHeader;
+                                      
+                                      if (!finalReferralId && responseText) {
+                                        const trimmedText = responseText.trim();
+                                        
+                                        // Check if response is a UUID string (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+                                        const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+                                        if (uuidPattern.test(trimmedText)) {
+                                          // Response is directly the UUID
+                                          finalReferralId = trimmedText;
+                                          console.log('Response is UUID string:', trimmedText);
+                                        } else {
+                                          // Try to parse as JSON
+                                          try {
+                                            responseData = JSON.parse(trimmedText);
+                                            console.log('Response body (parsed as JSON):', responseData);
+                                            // Try to extract ID from JSON object
+                                            finalReferralId = responseData?.id || 
+                                                              responseData?.referal_id || 
+                                                              responseData?.referral_id ||
+                                                              responseData?.userId ||
+                                                              responseData?.user_id;
+                                          } catch (e) {
+                                            // If it's not JSON and not UUID, check if it's a plain number/string ID
+                                            if (trimmedText) {
+                                              finalReferralId = trimmedText;
+                                              console.log('Response is plain text ID:', trimmedText);
+                                            } else {
+                                              console.log('Response is empty or invalid');
+                                            }
+                                          }
+                                        }
+                                      }
+                                      
+                                      console.log('Final referral ID found:', finalReferralId);
+                                      
+                                      if (finalReferralId) {
+                                        // Generate referral link using the ID: ref={finalReferralId}
+                                        const link = generateReferralLink(String(finalReferralId));
                                         setReferralLink(link);
                                         setIsSubmitted(true);
                                       } else {
-                                        console.error('No referal_id in response headers');
-                                        throw new Error('No referral ID returned from webhook');
+                                        console.error('No referral ID found in headers or body');
+                                        console.error('Response status:', response.status);
+                                        console.error('Response text:', responseText);
+                                        console.error('Response data:', responseData);
+                                        // Still show success but without referral link
+                                        setReferralLink('');
+                                        setIsSubmitted(true);
+                                        alert('Form submitted successfully, but no referral ID was returned. Please contact support.');
                                       }
                                     } catch (error) {
                                       console.error('Error submitting form:', error);
-                                      alert('Failed to submit form. Please try again.');
+                                      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.';
+                                      alert(errorMessage);
                                     } finally {
                                       setIsSubmitting(false);
                                     }
