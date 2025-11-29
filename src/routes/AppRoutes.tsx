@@ -90,14 +90,17 @@ import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import BlogSEO from '../pages/BlogSEO';
 import BlogAIGuide from '../pages/BlogAIGuide';
 import BlogAIReceptionistComparison from '../pages/BlogAIReceptionistComparison';
+import BlogAIReceptionistHowItWorks from '../pages/BlogAIReceptionistHowItWorks';
 import Newsletter from '../pages/Newsletter';
 import AIAgentComparison from '../pages/AIAgentComparison';
 import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
+import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
 import DockDemoPage from '../pages/DockDemoPage';
 import StepperDemoPage from '../pages/StepperDemoPage';
 import BannerDemoPage from '../pages/BannerDemoPage';
 import WavePathDemoPage from '../pages/WavePathDemoPage';
+import HoverImagePreviewDemo from '../pages/HoverImagePreviewDemo';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 import AIReceptionistPage from '../pages/features/AIReceptionistPage';
@@ -263,6 +266,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/stepper-demo" element={<StepperDemoPage />} />
             <Route path="/banner-demo" element={<BannerDemoPage />} />
             <Route path="/wave-path-demo" element={<WavePathDemoPage />} />
+            <Route path="/hover-image-preview-demo" element={<HoverImagePreviewDemo />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
@@ -274,10 +278,12 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/complete-guide-to-seo" element={<BlogSEO />} />
         <Route path="/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
         <Route path="/best-ai-receptionist-tools-for-small-businesses" element={<BlogAIReceptionistComparison />} />
+        <Route path="/how-does-an-ai-receptionist-work" element={<BlogAIReceptionistHowItWorks />} />
         <Route path="/ai-agent-comparison" element={<AIAgentComparison />} />
         <Route path="/calculator/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/how-much-you-can-earn-with-ai" element={<AIRevenueAudit />} />
         <Route path="/seo-analyzer" element={<SEOAnalyzer />} />
+        <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         {/* Feature Pages */}
         <Route path="/features/ai-receptionist" element={<AIReceptionistPage />} />
         <Route path="/features/instant-form-reply" element={<InstantFormReplyPage />} />

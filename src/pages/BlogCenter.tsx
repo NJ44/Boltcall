@@ -64,6 +64,14 @@ const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Tool Comparison'
   },
+  {
+    title: 'How Does an <span class="text-blue-600">AI Receptionist</span> Work? A Complete Technical Guide',
+    slug: '/how-does-an-ai-receptionist-work',
+    excerpt: 'Discover the technology behind AI receptionists: speech recognition, natural language understanding, large language models, and how they learn your business to provide intelligent customer service.',
+    date: 'February 10, 2025',
+    readTime: '5 min read',
+    category: 'AI Technology'
+  },
   // Add more blog posts here as they are created
 ];
 

@@ -10,7 +10,7 @@ const FAQ: React.FC = () => {
   const faqs = [
     {
       question: 'What exactly Boltcall offers?',
-      answer: 'It answers calls and messages, qualifies leads, books appointments on your calendar, and notifies you. If no one picks up, it still captures the lead and books when possible.'
+      answer: 'Boltcall gives local businesses a complete AI system that handles all the stuff that keeps slipping through the cracks. It replies to new leads in seconds, answers calls and messages, books appointments directly on your calendar, and follows up automatically so no one gets forgotten. It also sends reminders, updates you in real time, and keeps conversations moving even when you\'re busy or closed.'
     },
     {
       question: 'Can it transfer the call to a real person?',

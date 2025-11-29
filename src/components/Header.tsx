@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -41,6 +41,7 @@ const Header: React.FC = () => {
     { label: 'SEO Audit', href: '/seo-analyzer', icon: Search },
     { label: 'Speed Test', href: '/speed-test', icon: Gauge },
     { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai', icon: Calculator },
+    { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },
   ];
 
   const handleNavClick = (href: string) => {
