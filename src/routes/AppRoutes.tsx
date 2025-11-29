@@ -96,6 +96,7 @@ import BlogHowToMakeAIReceptionist from '../pages/BlogHowToMakeAIReceptionist';
 import BlogWillReceptionistsBeReplacedByAI from '../pages/BlogWillReceptionistsBeReplacedByAI';
 import BlogWhatDoesInstantLeadReplyMean from '../pages/BlogWhatDoesInstantLeadReplyMean';
 import BlogHowToSetUpInstantLeadReply from '../pages/BlogHowToSetUpInstantLeadReply';
+import BlogHowDoesInstantLeadReplyWork from '../pages/BlogHowDoesInstantLeadReplyWork';
 import Newsletter from '../pages/Newsletter';
 import AIAgentComparison from '../pages/AIAgentComparison';
 import Comparisons from '../pages/Comparisons';
@@ -295,6 +296,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
         <Route path="/what-does-instant-lead-reply-mean" element={<BlogWhatDoesInstantLeadReplyMean />} />
         <Route path="/how-to-set-up-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
+        <Route path="/how-does-instant-lead-reply-work" element={<BlogHowDoesInstantLeadReplyWork />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />

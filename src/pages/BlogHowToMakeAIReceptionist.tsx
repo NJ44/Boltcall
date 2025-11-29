@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Code, Zap, CheckCircle, XCircle, ArrowRight, Phone, Brain, Settings, Database, Mic, MessageSquare, Globe, DollarSign } from 'lucide-react';
+import { Calendar, Clock, Code, Zap, CheckCircle, XCircle, ArrowRight, Phone, Brain, Database, Mic, MessageSquare } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';

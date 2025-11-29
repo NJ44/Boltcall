@@ -1,26 +1,13 @@
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Activity,
-  Calendar,
   ChevronRight,
-  Files,
-  Folder,
   Globe,
-  Image,
-  LayoutGrid,
   Mail,
-  MessageSquare,
-  Music,
   Search,
-  Settings,
-  StickyNote,
-  Terminal,
-  Twitter,
   BookOpen,
   TrendingUp,
   Zap,
-  Users,
   Phone
 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
