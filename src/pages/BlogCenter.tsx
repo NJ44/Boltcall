@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import { AppleSpotlight } from '../components/ui/apple-spotlight';
 
 interface BlogPost {
   title: string;
@@ -72,13 +73,68 @@ const blogPosts: BlogPost[] = [
     readTime: '5 min read',
     category: 'AI Technology'
   },
+  {
+    title: 'Is an <span class="text-blue-600">AI Receptionist</span> Worth It? A Complete Cost-Benefit Analysis',
+    slug: '/is-ai-receptionist-worth-it',
+    excerpt: 'Every business owner faces the same question: Should I invest in an AI receptionist? This guide breaks down the real costs, benefits, and ROI to help you determine if an AI receptionist is worth it for your business.',
+    date: 'February 15, 2025',
+    readTime: '8 min read',
+    category: 'Business Analysis'
+  },
+  {
+    title: 'How to Make an <span class="text-blue-600">AI Receptionist</span>: A Complete Step-by-Step Guide',
+    slug: '/how-to-make-ai-receptionist',
+    excerpt: 'Building an AI receptionist from scratch requires combining multiple technologies. This guide walks you through the complete process, from choosing the right tools to deploying your AI receptionist.',
+    date: 'February 20, 2025',
+    readTime: '10 min read',
+    category: 'Technical Guide'
+  },
+  {
+    title: 'Will <span class="text-blue-600">Receptionists</span> Be Replaced by AI? The Future of Front Desk Work',
+    slug: '/will-receptionists-be-replaced-by-ai',
+    excerpt: 'It\'s the question on every receptionist\'s mind: Will AI replace my job? While AI receptionists are transforming how businesses handle calls, they\'re not eliminating human receptionists entirely—they\'re changing the role.',
+    date: 'February 25, 2025',
+    readTime: '9 min read',
+    category: 'Industry Analysis'
+  },
+  {
+    title: 'What Does <span class="text-blue-600">Instant Lead Reply</span> Mean? A Complete Guide',
+    slug: '/what-does-instant-lead-reply-mean',
+    excerpt: 'Instant lead reply means responding to potential customers within seconds of them showing interest. This guide explains what it is, why it matters, and how it works.',
+    date: 'March 1, 2025',
+    readTime: '6 min read',
+    category: 'Lead Generation'
+  },
+  {
+    title: 'How to Set Up <span class="text-blue-600">Instant Lead Reply</span> in Your Website/Ads with Boltcall',
+    slug: '/how-to-set-up-instant-lead-reply',
+    excerpt: 'Setting up instant lead reply with Boltcall is straightforward and can be done in 1-2 hours. This step-by-step guide walks you through connecting your website forms, Facebook Ads, Google Ads, and other lead sources.',
+    date: 'March 1, 2025',
+    readTime: '8 min read',
+    category: 'Setup Guide'
+  },
   // Add more blog posts here as they are created
 ];
 
 const BlogCenter: React.FC = () => {
+  const [isSpotlightOpen, setIsSpotlightOpen] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Escape to close
+      if (e.key === 'Escape') {
+        setIsSpotlightOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -94,9 +150,18 @@ const BlogCenter: React.FC = () => {
             className="text-center mb-8"
           >
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Boltcall Blog
+              <span className="text-blue-600">Boltcall</span> Blog
             </h1>
           </motion.div>
+          
+          {/* Search Spotlight */}
+          <div className="flex justify-center">
+            <AppleSpotlight 
+              isOpen={isSpotlightOpen} 
+              handleClose={() => setIsSpotlightOpen(false)}
+              blogPosts={blogPosts}
+            />
+          </div>
         </div>
       </section>
 

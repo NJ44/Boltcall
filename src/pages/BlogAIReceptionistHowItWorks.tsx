@@ -18,7 +18,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <article className="w-full px-4 sm:px-6 lg:px-8 py-16">
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

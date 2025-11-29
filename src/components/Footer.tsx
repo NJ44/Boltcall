@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
       { label: 'Lead Reactivation', href: '/features/lead-reactivation' },
     ],
     resources: [
-      { label: 'AI Agent Comparison', href: '/ai-agent-comparison' },
+      { label: 'Comparisons', href: '/comparisons' },
       { label: 'Blog', href: '/blog' },
       { label: 'SEO Audit', href: '/seo-analyzer' },
       { label: 'Speed Test', href: '/speed-test' },

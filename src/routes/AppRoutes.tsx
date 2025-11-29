@@ -91,8 +91,19 @@ import BlogSEO from '../pages/BlogSEO';
 import BlogAIGuide from '../pages/BlogAIGuide';
 import BlogAIReceptionistComparison from '../pages/BlogAIReceptionistComparison';
 import BlogAIReceptionistHowItWorks from '../pages/BlogAIReceptionistHowItWorks';
+import BlogIsAIReceptionistWorthIt from '../pages/BlogIsAIReceptionistWorthIt';
+import BlogHowToMakeAIReceptionist from '../pages/BlogHowToMakeAIReceptionist';
+import BlogWillReceptionistsBeReplacedByAI from '../pages/BlogWillReceptionistsBeReplacedByAI';
+import BlogWhatDoesInstantLeadReplyMean from '../pages/BlogWhatDoesInstantLeadReplyMean';
+import BlogHowToSetUpInstantLeadReply from '../pages/BlogHowToSetUpInstantLeadReply';
 import Newsletter from '../pages/Newsletter';
 import AIAgentComparison from '../pages/AIAgentComparison';
+import Comparisons from '../pages/Comparisons';
+import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
+import ReceptionistVsBoltcall from '../pages/comparisons/ReceptionistVsBoltcall';
+import VoicemailVsBoltcall from '../pages/comparisons/VoicemailVsBoltcall';
+import AnsweringServicesVsBoltcall from '../pages/comparisons/AnsweringServicesVsBoltcall';
+import CRMInstantLeadReplyVsBoltcall from '../pages/comparisons/CRMInstantLeadReplyVsBoltcall';
 import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
@@ -279,7 +290,18 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
         <Route path="/best-ai-receptionist-tools-for-small-businesses" element={<BlogAIReceptionistComparison />} />
         <Route path="/how-does-an-ai-receptionist-work" element={<BlogAIReceptionistHowItWorks />} />
-        <Route path="/ai-agent-comparison" element={<AIAgentComparison />} />
+        <Route path="/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />
+        <Route path="/how-to-make-ai-receptionist" element={<BlogHowToMakeAIReceptionist />} />
+        <Route path="/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
+        <Route path="/what-does-instant-lead-reply-mean" element={<BlogWhatDoesInstantLeadReplyMean />} />
+        <Route path="/how-to-set-up-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
+        <Route path="/comparisons" element={<Comparisons />} />
+        <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
+        <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
+        <Route path="/comparisons/voicemail-vs-boltcall" element={<VoicemailVsBoltcall />} />
+        <Route path="/comparisons/answering-services-vs-boltcall" element={<AnsweringServicesVsBoltcall />} />
+        <Route path="/comparisons/crm-instant-lead-reply-vs-boltcall" element={<CRMInstantLeadReplyVsBoltcall />} />
+        <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/calculator/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/how-much-you-can-earn-with-ai" element={<AIRevenueAudit />} />
         <Route path="/seo-analyzer" element={<SEOAnalyzer />} />

@@ -32,7 +32,7 @@ const Header: React.FC = () => {
   ];
 
   const resourcesItems = [
-    { label: 'AI Agent Comparison', href: '/ai-agent-comparison' },
+    { label: 'Comparisons', href: '/comparisons' },
     { label: 'Blog', href: '/blog' },
     { label: 'Newsletter', href: '/newsletter' },
   ];
