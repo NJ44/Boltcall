@@ -98,7 +98,6 @@ import BlogWhatDoesInstantLeadReplyMean from '../pages/BlogWhatDoesInstantLeadRe
 import BlogHowToSetUpInstantLeadReply from '../pages/BlogHowToSetUpInstantLeadReply';
 import BlogHowDoesInstantLeadReplyWork from '../pages/BlogHowDoesInstantLeadReplyWork';
 import Newsletter from '../pages/Newsletter';
-import AIAgentComparison from '../pages/AIAgentComparison';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
 import ReceptionistVsBoltcall from '../pages/comparisons/ReceptionistVsBoltcall';
@@ -284,19 +283,19 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/newsletter" element={<Newsletter />} />
-        <Route path="/the-new-reality-for-local-businesses" element={<Blog />} />
-        <Route path="/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
-        <Route path="/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
-        <Route path="/complete-guide-to-seo" element={<BlogSEO />} />
-        <Route path="/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
-        <Route path="/best-ai-receptionist-tools-for-small-businesses" element={<BlogAIReceptionistComparison />} />
-        <Route path="/how-does-an-ai-receptionist-work" element={<BlogAIReceptionistHowItWorks />} />
-        <Route path="/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />
-        <Route path="/how-to-make-ai-receptionist" element={<BlogHowToMakeAIReceptionist />} />
-        <Route path="/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
-        <Route path="/what-does-instant-lead-reply-mean" element={<BlogWhatDoesInstantLeadReplyMean />} />
-        <Route path="/how-to-set-up-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
-        <Route path="/how-does-instant-lead-reply-work" element={<BlogHowDoesInstantLeadReplyWork />} />
+        <Route path="/blog/the-new-reality-for-local-businesses" element={<Blog />} />
+        <Route path="/blog/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
+        <Route path="/blog/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
+        <Route path="/blog/complete-guide-to-seo" element={<BlogSEO />} />
+        <Route path="/blog/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
+        <Route path="/blog/best-ai-receptionist-tools-for-small-businesses" element={<BlogAIReceptionistComparison />} />
+        <Route path="/blog/how-does-an-ai-receptionist-work" element={<BlogAIReceptionistHowItWorks />} />
+        <Route path="/blog/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />
+        <Route path="/blog/how-to-make-ai-receptionist" element={<BlogHowToMakeAIReceptionist />} />
+        <Route path="/blog/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
+        <Route path="/blog/what-does-instant-lead-reply-mean" element={<BlogWhatDoesInstantLeadReplyMean />} />
+        <Route path="/blog/how-to-set-up-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
+        <Route path="/blog/how-does-instant-lead-reply-work" element={<BlogHowDoesInstantLeadReplyWork />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />

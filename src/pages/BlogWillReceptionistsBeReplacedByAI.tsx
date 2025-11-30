@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Users, TrendingUp, CheckCircle, XCircle, Phone, Brain, ArrowRight, MessageSquare, Zap, AlertCircle, Building2 } from 'lucide-react';
+import { Calendar, Clock, Users, TrendingUp, CheckCircle, XCircle, Brain, ArrowRight, MessageSquare, AlertCircle, Building2 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';

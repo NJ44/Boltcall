@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Globe, BarChart3, AlertCircle, CheckCircle, Loader, Mail, X } from 'lucide-react';
+import { TrendingUp, Globe, AlertCircle, CheckCircle, Loader, Mail, X } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';

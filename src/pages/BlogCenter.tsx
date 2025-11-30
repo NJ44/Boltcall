@@ -19,7 +19,7 @@ interface BlogPost {
 const blogPosts: BlogPost[] = [
   {
     title: 'Why <span class="text-blue-600">AI Services</span> Are No Longer Optional',
-    slug: '/the-new-reality-for-local-businesses',
+    slug: '/blog/the-new-reality-for-local-businesses',
     excerpt: 'The local business landscape has transformed dramatically. What worked yesterday won\'t work tomorrow. And the businesses that are thriving? They\'re the ones that embraced AI services early.',
     date: 'January 15, 2025',
     readTime: '8 min read',
@@ -27,7 +27,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'The <span class="text-blue-600">391%</span> Advantage: Responding in 60 Seconds',
-    slug: '/why-speed-matters-391-percent-advantage',
+    slug: '/blog/why-speed-matters-391-percent-advantage',
     excerpt: 'Research shows that contacting a lead within 60 seconds increases conversion rates by 391%. Discover why speed is the ultimate competitive advantage in lead generation.',
     date: 'January 20, 2025',
     readTime: '6 min read',
@@ -35,7 +35,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'Why <span class="text-blue-600">Website Speed</span> Is Everything',
-    slug: '/why-website-speed-is-everything',
+    slug: '/blog/why-website-speed-is-everything',
     excerpt: '53% of users abandon sites that take longer than 3 seconds to load. Discover why website speed is critical and how it impacts your bottom line.',
     date: 'January 25, 2025',
     readTime: '7 min read',
@@ -43,7 +43,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'Why <span class="text-blue-600">SEO</span> Can\'t Be Ignored',
-    slug: '/complete-guide-to-seo',
+    slug: '/blog/complete-guide-to-seo',
     excerpt: '75% of users never go beyond the first page of search results. Discover why SEO is critical for your business and how to get started with a free SEO audit.',
     date: 'January 30, 2025',
     readTime: '9 min read',
@@ -51,7 +51,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'The Complete Guide to <span class="text-blue-600">AI for Local Businesses</span>',
-    slug: '/complete-guide-to-ai-for-local-businesses',
+    slug: '/blog/complete-guide-to-ai-for-local-businesses',
     excerpt: 'Discover what AI can automate for service businesses, understand the costs vs benefits, and learn where to start. A comprehensive guide to transforming your local business with AI.',
     date: 'February 1, 2025',
     readTime: '12 min read',
@@ -59,7 +59,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'Best <span class="text-blue-600">AI Receptionist Tools</span> for Small Businesses (Top 5 Compared)',
-    slug: '/best-ai-receptionist-tools-for-small-businesses',
+    slug: '/blog/best-ai-receptionist-tools-for-small-businesses',
     excerpt: 'Compare the top 5 AI receptionist tools for small businesses. Detailed reviews of Boltcall, Smith.ai, Numa, Creovai, and OpenPhone AI Receptionist to help you choose the right solution.',
     date: 'February 5, 2025',
     readTime: '10 min read',
@@ -67,7 +67,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'How Does an <span class="text-blue-600">AI Receptionist</span> Work? A Complete Technical Guide',
-    slug: '/how-does-an-ai-receptionist-work',
+    slug: '/blog/how-does-an-ai-receptionist-work',
     excerpt: 'Discover the technology behind AI receptionists: speech recognition, natural language understanding, large language models, and how they learn your business to provide intelligent customer service.',
     date: 'February 10, 2025',
     readTime: '5 min read',
@@ -75,7 +75,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'Is an <span class="text-blue-600">AI Receptionist</span> Worth It? A Complete Cost-Benefit Analysis',
-    slug: '/is-ai-receptionist-worth-it',
+    slug: '/blog/is-ai-receptionist-worth-it',
     excerpt: 'Every business owner faces the same question: Should I invest in an AI receptionist? This guide breaks down the real costs, benefits, and ROI to help you determine if an AI receptionist is worth it for your business.',
     date: 'February 15, 2025',
     readTime: '8 min read',
@@ -83,7 +83,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'How to Make an <span class="text-blue-600">AI Receptionist</span>: A Complete Step-by-Step Guide',
-    slug: '/how-to-make-ai-receptionist',
+    slug: '/blog/how-to-make-ai-receptionist',
     excerpt: 'Building an AI receptionist from scratch requires combining multiple technologies. This guide walks you through the complete process, from choosing the right tools to deploying your AI receptionist.',
     date: 'February 20, 2025',
     readTime: '10 min read',
@@ -91,7 +91,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'Will <span class="text-blue-600">Receptionists</span> Be Replaced by AI? The Future of Front Desk Work',
-    slug: '/will-receptionists-be-replaced-by-ai',
+    slug: '/blog/will-receptionists-be-replaced-by-ai',
     excerpt: 'It\'s the question on every receptionist\'s mind: Will AI replace my job? While AI receptionists are transforming how businesses handle calls, they\'re not eliminating human receptionists entirely—they\'re changing the role.',
     date: 'February 25, 2025',
     readTime: '9 min read',
@@ -99,7 +99,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'What Does <span class="text-blue-600">Instant Lead Reply</span> Mean? A Complete Guide',
-    slug: '/what-does-instant-lead-reply-mean',
+    slug: '/blog/what-does-instant-lead-reply-mean',
     excerpt: 'Instant lead reply means responding to potential customers within seconds of them showing interest. This guide explains what it is, why it matters, and how it works.',
     date: 'March 1, 2025',
     readTime: '6 min read',
@@ -107,7 +107,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'How to Set Up <span class="text-blue-600">Instant Lead Reply</span> in Your Website/Ads with Boltcall',
-    slug: '/how-to-set-up-instant-lead-reply',
+    slug: '/blog/how-to-set-up-instant-lead-reply',
     excerpt: 'Setting up instant lead reply with Boltcall is straightforward and can be done in 1-2 hours. This step-by-step guide walks you through connecting your website forms, Facebook Ads, Google Ads, and other lead sources.',
     date: 'March 1, 2025',
     readTime: '8 min read',
@@ -115,7 +115,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'How Does <span class="text-blue-600">Instant Lead Reply</span> Work? The Technology Behind the Magic',
-    slug: '/how-does-instant-lead-reply-work',
+    slug: '/blog/how-does-instant-lead-reply-work',
     excerpt: 'You submit a form on a website and receive a reply within seconds. How is that possible? This guide breaks down exactly how the technology works—from webhooks to AI processing to multi-channel delivery.',
     date: 'March 2, 2025',
     readTime: '7 min read',

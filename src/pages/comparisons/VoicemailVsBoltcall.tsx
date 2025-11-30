@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, CheckCircle, TrendingUp, Zap, Phone, HelpCircle, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, TrendingUp, Zap, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';

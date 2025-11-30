@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, CheckCircle, XCircle, TrendingUp, Zap, MessageSquare, ArrowLeft, Clock as ClockIcon } from 'lucide-react';
+import { Calendar, Clock, CheckCircle, XCircle, TrendingUp, Zap, ArrowLeft, Clock as ClockIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';

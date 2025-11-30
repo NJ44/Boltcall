@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Code, CheckCircle, ArrowRight, Settings, Zap, MessageSquare, Phone, Globe, Link as LinkIcon, Webhook } from 'lucide-react';
+import { Calendar, Clock, CheckCircle, ArrowRight, Settings, Zap, MessageSquare, Phone, Globe } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';

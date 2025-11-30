@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, MessageSquare, Zap, CheckCircle, ArrowRight, Clock as ClockIcon, TrendingUp, Phone, Mail } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, Zap, CheckCircle, ArrowRight, Clock as ClockIcon } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -354,7 +354,7 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           <p className="text-blue-100 mb-6 text-lg">
             Learn how to set up instant lead reply for your website and ads with Boltcall.
           </p>
-          <Link to="/how-to-set-up-instant-lead-reply">
+          <Link to="/blog/how-to-set-up-instant-lead-reply">
             <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors inline-flex items-center gap-2">
               View Setup Guide
               <ArrowRight className="w-5 h-5" />
