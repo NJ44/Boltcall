@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, CheckCircle, Calendar, ArrowRight } from 'lucide-react';
+import { Mail, CheckCircle, ArrowRight, Zap, Target, TrendingUp } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import { CategoryList } from '../components/ui/category-list';
 
 const Newsletter: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -69,57 +70,52 @@ const Newsletter: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-                  Past Newsletters
-                </h2>
-                <div className="space-y-4">
-                  {[
+                <CategoryList
+                  title="Past"
+                  subtitle="Newsletters"
+                  headerIcon={<Mail className="w-8 h-8" />}
+                  categories={[
                     {
+                      id: 1,
                       title: 'AI Receptionist Best Practices',
-                      date: 'January 15, 2025',
-                      description: 'Learn how to maximize your AI receptionist performance and boost customer satisfaction.',
+                      subtitle: 'January 15, 2025 • Learn how to maximize your AI receptionist performance and boost customer satisfaction.',
+                      icon: <ArrowRight className="w-8 h-8" />,
+                      onClick: () => {
+                        // Navigate to newsletter or open it
+                        console.log('Opening: AI Receptionist Best Practices');
+                      },
+                      featured: true,
                     },
                     {
+                      id: 2,
                       title: 'Speed to Lead: The 391% Advantage',
-                      date: 'January 8, 2025',
-                      description: 'Discover why responding to leads within 5 minutes can increase conversion rates by 391%.',
+                      subtitle: 'January 8, 2025 • Discover why responding to leads within 5 minutes can increase conversion rates by 391%.',
+                      icon: <Zap className="w-8 h-8" />,
+                      onClick: () => {
+                        console.log('Opening: Speed to Lead');
+                      },
                     },
                     {
+                      id: 3,
                       title: 'Automated Follow-Ups That Convert',
-                      date: 'January 1, 2025',
-                      description: 'Master the art of automated follow-ups and turn more leads into customers.',
+                      subtitle: 'January 1, 2025 • Master the art of automated follow-ups and turn more leads into customers.',
+                      icon: <Target className="w-8 h-8" />,
+                      onClick: () => {
+                        console.log('Opening: Automated Follow-Ups');
+                      },
                     },
                     {
+                      id: 4,
                       title: '2025 Trends in AI for Local Businesses',
-                      date: 'December 25, 2024',
-                      description: 'Stay ahead with the latest AI trends and technologies for local businesses.',
+                      subtitle: 'December 25, 2024 • Stay ahead with the latest AI trends and technologies for local businesses.',
+                      icon: <TrendingUp className="w-8 h-8" />,
+                      onClick: () => {
+                        console.log('Opening: 2025 Trends in AI');
+                      },
                     },
-                  ].map((newsletter, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                      className="border-b border-gray-200 pb-4 hover:bg-gray-50 transition-colors rounded-lg p-4 -mx-4"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                            <Calendar className="w-4 h-4" />
-                            <span>{newsletter.date}</span>
-                          </div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                            {newsletter.title}
-                          </h3>
-                          <p className="text-gray-600 text-sm">
-                            {newsletter.description}
-                          </p>
-                        </div>
-                        <ArrowRight className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+                  ]}
+                  className="bg-white"
+                />
               </motion.div>
             </div>
 

@@ -99,6 +99,7 @@ import SEOAnalyzer from '../pages/SEOAnalyzer';
 import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
 import DockDemoPage from '../pages/DockDemoPage';
 import HoverImagePreviewDemo from '../pages/HoverImagePreviewDemo';
+import CategoryListDemo from '../pages/CategoryListDemo';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 import AIReceptionistPage from '../pages/features/AIReceptionistPage';
@@ -252,6 +253,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/lamp-demo" element={<LampDemo />} />
             <Route path="/dock-demo" element={<DockDemoPage />} />
             <Route path="/hover-image-preview-demo" element={<HoverImagePreviewDemo />} />
+            <Route path="/category-list-demo" element={<CategoryListDemo />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />

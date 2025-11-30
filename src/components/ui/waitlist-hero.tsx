@@ -1,4 +1,5 @@
-import { useState, useRef, FormEvent } from "react";
+import { useState, useRef } from "react";
+import type { FormEvent } from "react";
 import { Phone, MessageSquare, Mail, Video, Calendar, Camera } from "lucide-react";
 
 export const WaitlistHero = () => {

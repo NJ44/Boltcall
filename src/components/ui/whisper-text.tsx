@@ -49,7 +49,7 @@ const WhisperText: React.FC<WhisperTextProps> = ({
     if (!isLoaded || !gsap || !ScrollTrigger) return;
 
     const ctx = gsap.context(() => {
-      const targets = gsap.utils.toArray<HTMLElement>("[data-word]");
+      const targets = gsap.utils.toArray("[data-word]") as HTMLElement[];
 
       gsap.set(targets, { opacity: 0, x, y });
 

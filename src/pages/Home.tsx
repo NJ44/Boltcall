@@ -35,7 +35,7 @@ const Home: React.FC = () => {
           
           <div className="relative -top-[500px] z-[100] pointer-events-none">
             <Suspense fallback={<div className="h-[600px] w-full" />}>
-              <HeroScrollDemo />
+            <HeroScrollDemo />
             </Suspense>
           </div>
           
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
           
           <div className="relative -top-[500px]">
             <Suspense fallback={<div className="h-[400px] w-full" />}>
-              <StickyScrollSection />
+            <StickyScrollSection />
             </Suspense>
           </div>
           

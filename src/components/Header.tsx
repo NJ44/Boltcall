@@ -88,6 +88,28 @@ const Header: React.FC = () => {
           return;
         }
       }
+
+      // Check if we're over the FAQ section - it has white background, navbar should be black
+      const faqSection = document.getElementById('faq');
+      if (faqSection) {
+        const faqRect = faqSection.getBoundingClientRect();
+        // Check if header is over or near the FAQ section (with some padding)
+        if (headerRect.bottom >= faqRect.top - 50 && headerRect.top <= faqRect.bottom + 50) {
+          setIsOverBlueBackground(false);
+          return;
+        }
+      }
+
+      // Check if we're over the contact/FinalCTA section - it has white background, navbar should be black
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        const contactRect = contactSection.getBoundingClientRect();
+        // Check if header is over or near the contact section (with some padding)
+        if (headerRect.bottom >= contactRect.top - 50 && headerRect.top <= contactRect.bottom + 50) {
+          setIsOverBlueBackground(false);
+          return;
+        }
+      }
       const headerCenterY = headerRect.top + headerRect.height / 2;
       const headerCenterX = window.innerWidth / 2;
 
@@ -119,6 +141,56 @@ const Header: React.FC = () => {
             break;
           }
 
+          // Skip FAQ section - it has white background, navbar should be black
+          // Check for FAQ section more aggressively - look for parent sections too
+          if (id === 'faq' || className.includes('faq') || className.includes('FAQ')) {
+            foundLightBackground = true;
+            break;
+          }
+
+          // Skip contact/FinalCTA section - it has white background, navbar should be black
+          if (id === 'contact' || className.includes('contact') || className.includes('Contact') || className.includes('FinalCTA') || className.includes('final-cta')) {
+            foundLightBackground = true;
+            break;
+          }
+          
+          // Also check if we're inside a section that contains FAQ
+          // Look for the Section component with id="faq" in the parent tree
+          let parentCheck: HTMLElement | null = currentElement;
+          while (parentCheck && parentCheck !== document.documentElement) {
+            if (parentCheck.id === 'faq') {
+              foundLightBackground = true;
+              break;
+            }
+            parentCheck = parentCheck.parentElement;
+          }
+          if (foundLightBackground) break;
+
+          // If we find a section with id="faq", check its actual background
+          // The FAQ section uses Section component with background="white"
+          if (tagName === 'section' && id === 'faq') {
+            // Check the actual computed background of the section
+            const sectionBg = computedStyle.backgroundColor;
+            if (sectionBg) {
+              const rgbMatch = sectionBg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+              if (rgbMatch) {
+                const r = parseInt(rgbMatch[1]);
+                const g = parseInt(rgbMatch[2]);
+                const b = parseInt(rgbMatch[3]);
+                // If it's a light background (white or light gray), don't turn navbar white
+                if (r > 240 && g > 240 && b > 240) {
+                  foundLightBackground = true;
+                  break;
+                }
+              }
+            }
+            // Also check for white background class
+            if (className.includes('bg-white')) {
+              foundLightBackground = true;
+              break;
+            }
+          }
+
           // Check for light background classes that should prevent white text
           const hasLightClass = 
             className.includes('bg-white') ||
@@ -133,10 +205,12 @@ const Header: React.FC = () => {
           }
 
           // Check for blue background classes - be more specific, exclude gradients with white
+          // But ignore small elements (like buttons) that are inside white sections
+          const isSmallElement = tagName === 'button' || tagName === 'div' && (currentElement.offsetWidth < 100 || currentElement.offsetHeight < 100);
           const hasBlueClass = 
-            className.includes('bg-blue-600') || 
-            className.includes('bg-blue-700') ||
-            className.includes('bg-blue-800') ||
+            (!isSmallElement && className.includes('bg-blue-600')) || 
+            (!isSmallElement && className.includes('bg-blue-700')) ||
+            (!isSmallElement && className.includes('bg-blue-800')) ||
             (className.includes('bg-gradient') && className.includes('blue') && !className.includes('white') && !className.includes('light-blue')) ||
             className.includes('bg-brand-blue') ||
             className.includes('bg-muted') ||
@@ -178,6 +252,18 @@ const Header: React.FC = () => {
 
           // Check if we've reached a section or main container
           if (tagName === 'section' || tagName === 'main') {
+            // Skip FAQ section entirely - it has white background
+            if (id === 'faq') {
+              foundLightBackground = true;
+              break;
+            }
+            
+            // Skip contact/FinalCTA section entirely - it has white background
+            if (id === 'contact') {
+              foundLightBackground = true;
+              break;
+            }
+            
             // If this section has white text, it likely has a dark background
             // But also check if background is light - if so, don't turn white
             const textColor = computedStyle.color;
