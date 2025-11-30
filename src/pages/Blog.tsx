@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, TrendingUp, Zap } from 'lucide-react';
+import { Calendar, Clock, TrendingUp, Zap, Users, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import ReadingProgress from '../components/ReadingProgress';
 import { WavePath } from '../components/ui/wave-path';
 
 const Blog: React.FC = () => {
@@ -15,15 +16,16 @@ const Blog: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
+      <ReadingProgress />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
+      <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-left mb-12"
+            className="text-left mb-4"
           >
             <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
               <TrendingUp className="w-4 h-4" />
@@ -49,7 +51,7 @@ const Blog: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -287,20 +289,31 @@ const Blog: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 md:p-12 rounded-2xl text-center"
+          className="my-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            See how AI can help you capture more leads, book more appointments, and grow your revenue.
-          </p>
-          <Link
-            to="/"
-            className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
-          >
-            Get Started Free
-          </Link>
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
+              <div className="flex justify-center isolate">
+                <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                  <Users className="w-6 h-6 text-blue-500" />
+                </div>
+                <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                  <Phone className="w-6 h-6 text-blue-500" />
+                </div>
+                <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                  <Calendar className="w-6 h-6 text-blue-500" />
+                </div>
+              </div>
+              <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+              <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
+              <Link
+                to="/setup"
+                className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
+              >
+                Start the free setup
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </article>
 

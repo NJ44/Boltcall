@@ -153,149 +153,117 @@ const TraditionalCallCentersVsBoltcall: React.FC = () => {
             Pros and Cons
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Boltcall */}
+          <div className="space-y-6 text-gray-700 leading-relaxed">
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-blue-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900">Boltcall</h3>
-              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Boltcall</h3>
               
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  Pros
-                </h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Instant response (0-5 seconds)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>24/7 availability, never closes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Affordable ($99-200/month)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Handles multiple channels (calls, SMS, forms)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Consistent quality, never tired or stressed</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Automated follow-ups and reminders</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Quick setup (30 minutes)</span>
-                  </li>
-                </ul>
-              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Pros</h4>
+              <ul className="space-y-2 text-gray-700 ml-4">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Instant response (0-5 seconds)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>24/7 availability, never closes</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Affordable ($99-200/month)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Handles multiple channels (calls, SMS, forms)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Consistent quality, never tired or stressed</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Automated follow-ups and reminders</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Quick setup (30 minutes)</span>
+                </li>
+              </ul>
               
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-red-600" />
-                  Cons
-                </h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>May struggle with very complex, multi-step sales processes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Less personal touch than human agents</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Requires initial setup and configuration</span>
-                  </li>
-                </ul>
-              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Cons</h4>
+              <ul className="space-y-2 text-gray-700 ml-4">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>May struggle with very complex, multi-step sales processes</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Less personal touch than human agents</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Requires initial setup and configuration</span>
+                </li>
+              </ul>
             </div>
 
-            {/* Call Centers */}
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-gray-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900">Call Centers</h3>
-              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Call Centers</h3>
               
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  Pros
-                </h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Human touch and empathy</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Can handle very complex sales processes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Good for long qualification calls</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2 mt-1">•</span>
-                    <span>Can adapt to unique situations</span>
-                  </li>
-                </ul>
-              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Pros</h4>
+              <ul className="space-y-2 text-gray-700 ml-4">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Human touch and empathy</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Can handle very complex sales processes</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Good for long qualification calls</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Can adapt to unique situations</span>
+                </li>
+              </ul>
               
-              <div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-red-600" />
-                  Cons
-                </h4>
-                <ul className="space-y-2 text-gray-700">
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Expensive ($2,000-5,000/month + per-minute fees)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Business hours only (misses after-hours leads)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Wait times (2-5 minutes average)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>High missed-call rate (30-50% during peak)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Quality varies by agent and training</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Long setup time (2-4 weeks)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Phone calls only (no SMS, forms, or automated follow-ups)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2 mt-1">•</span>
-                    <span>Agent turnover affects consistency</span>
-                  </li>
-                </ul>
-              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Cons</h4>
+              <ul className="space-y-2 text-gray-700 ml-4">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Expensive ($2,000-5,000/month + per-minute fees)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Business hours only (misses after-hours leads)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Wait times (2-5 minutes average)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>High missed-call rate (30-50% during peak)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Quality varies by agent and training</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Long setup time (2-4 weeks)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Phone calls only (no SMS, forms, or automated follow-ups)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Agent turnover affects consistency</span>
+                </li>
+              </ul>
             </div>
           </div>
         </motion.section>

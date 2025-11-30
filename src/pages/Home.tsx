@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import { HeroScrollDemo } from '../components/HeroScrollDemo';
 import HowItWorks from '../components/HowItWorks';
 import FreeSetup from '../components/FreeSetup';
 import Pricing from '../components/Pricing';
 import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Footer from '../components/Footer';
-import StickyScrollSection from '../components/StickyScrollSection';
+
+// Lazy load heavy components that aren't above the fold
+const HeroScrollDemo = lazy(() => import('../components/HeroScrollDemo').then(module => ({ default: module.HeroScrollDemo })));
+const StickyScrollSection = lazy(() => import('../components/StickyScrollSection').then(module => ({ default: module.StickyScrollSection })));
 
 const Home: React.FC = () => {
   // Add smooth-scroll class to body for homepage
@@ -32,7 +34,9 @@ const Home: React.FC = () => {
           <Hero />
           
           <div className="relative -top-[500px] z-[100] pointer-events-none">
-            <HeroScrollDemo />
+            <Suspense fallback={<div className="h-[600px] w-full" />}>
+              <HeroScrollDemo />
+            </Suspense>
           </div>
           
           <div className="relative -top-[600px]">
@@ -40,7 +44,9 @@ const Home: React.FC = () => {
           </div>
           
           <div className="relative -top-[500px]">
-            <StickyScrollSection />
+            <Suspense fallback={<div className="h-[400px] w-full" />}>
+              <StickyScrollSection />
+            </Suspense>
           </div>
           
           <div className="relative -top-[555px]">

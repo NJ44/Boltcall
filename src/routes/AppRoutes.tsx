@@ -58,11 +58,7 @@ import SpeedTestLogin from '../pages/speed-test/SpeedTestLogin';
 import SpeedTestReport from '../pages/speed-test/SpeedTestReport';
 import SpeedTestOffer from '../pages/speed-test/SpeedTestOffer';
 import SidebarDemoPage from '../pages/SidebarDemoPage';
-import SkeletonDemoPage from '../pages/SkeletonDemoPage';
-import LightningDemo from '../pages/LightningDemo';
 import RuixenStatsDemo from '../pages/RuixenStatsDemo';
-import TiltDemo from '../pages/TiltDemo';
-import AnimatedCardChartDemo from '../pages/AnimatedCardChartDemo';
 import CardsStackDemo from '../pages/CardsStackDemo';
 import FeatureSectionDemo from '../pages/FeatureSectionDemo';
 import MultipleSelectDemo from '../pages/MultipleSelectDemo';
@@ -71,16 +67,10 @@ import LineChartDemo from '../pages/LineChartDemo';
 import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
 import EmptyStateDemo from '../pages/EmptyStateDemo';
 import DatabaseWithRestApiDemo from '../pages/DatabaseWithRestApiDemo';
-import NewAccordionDemo from '../pages/NewAccordionDemo';
-import Accordion05Demo from '../pages/Accordion05Demo';
-import DotPatternDemo from '../pages/DotPatternDemo';
-import FileUploadDemo from '../pages/FileUploadDemo';
-import MagneticDemo from '../pages/MagneticDemo';
 import CreditCardPage from '../pages/CreditCardPage';
 import GiftCardPage from '../pages/GiftCardPage';
 import PricingPage from '../pages/PricingPage';
 import LampDemo from '../pages/LampDemo';
-import HeroDemoPage from '../pages/HeroDemoPage';
 import OfferPage from '../pages/OfferPage';
 import Documentation from '../pages/Documentation';
 import Blog from '../pages/Blog';
@@ -108,9 +98,6 @@ import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
 import DockDemoPage from '../pages/DockDemoPage';
-import StepperDemoPage from '../pages/StepperDemoPage';
-import BannerDemoPage from '../pages/BannerDemoPage';
-import WavePathDemoPage from '../pages/WavePathDemoPage';
 import HoverImagePreviewDemo from '../pages/HoverImagePreviewDemo';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
@@ -253,30 +240,17 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/line-chart-demo" element={<LineChartDemo />} />
         <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
         <Route path="/sidebar-demo" element={<SidebarDemoPage />} />
-        <Route path="/skeleton-demo" element={<SkeletonDemoPage />} />
-        <Route path="/lightning-demo" element={<LightningDemo />} />
         <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
-        <Route path="/tilt-demo" element={<TiltDemo />} />
-        <Route path="/animated-card-chart-demo" element={<AnimatedCardChartDemo />} />
         <Route path="/cards-stack-demo" element={<CardsStackDemo />} />
         <Route path="/feature-section-demo" element={<FeatureSectionDemo />} />
         <Route path="/multiple-select-demo" element={<MultipleSelectDemo />} />
         <Route path="/custom-checkbox-demo" element={<CustomCheckboxDemo />} />
         <Route path="/empty-state-demo" element={<EmptyStateDemo />} />
         <Route path="/database-with-rest-api-demo" element={<DatabaseWithRestApiDemo />} />
-        <Route path="/new-accordion-demo" element={<NewAccordionDemo />} />
-        <Route path="/accordion-05-demo" element={<Accordion05Demo />} />
-        <Route path="/dot-pattern-demo" element={<DotPatternDemo />} />
-        <Route path="/file-upload-demo" element={<FileUploadDemo />} />
-            <Route path="/magnetic-demo" element={<MagneticDemo />} />
             <Route path="/credit-card-demo" element={<CreditCardPage />} />
             <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
             <Route path="/lamp-demo" element={<LampDemo />} />
-            <Route path="/hero-demo" element={<HeroDemoPage />} />
             <Route path="/dock-demo" element={<DockDemoPage />} />
-            <Route path="/stepper-demo" element={<StepperDemoPage />} />
-            <Route path="/banner-demo" element={<BannerDemoPage />} />
-            <Route path="/wave-path-demo" element={<WavePathDemoPage />} />
             <Route path="/hover-image-preview-demo" element={<HoverImagePreviewDemo />} />
             <Route path="/website-ignite" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />

@@ -152,73 +152,59 @@ const ReceptionistVsBoltcall: React.FC = () => {
             Cost Comparison
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-              <div className="flex items-center gap-3 mb-4">
-                <DollarSign className="w-6 h-6 text-blue-600" />
-                <h3 className="text-xl font-bold text-gray-900">Boltcall</h3>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-3xl font-bold text-blue-600 mb-1">$99-200/month</p>
-                  <p className="text-sm text-gray-600">No additional costs</p>
-                </div>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>No salary, benefits, or payroll taxes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>No training costs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>No equipment or office space needed</span>
-                  </li>
-                </ul>
-              </div>
+          <div className="space-y-6 text-gray-700 leading-relaxed">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Boltcall</h3>
+              <p className="text-xl font-bold text-blue-600 mb-2">$99-200/month</p>
+              <p className="text-gray-600 mb-4">No additional costs</p>
+              <ul className="space-y-2 text-gray-700 ml-4">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>No salary, benefits, or payroll taxes</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>No training costs</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>No equipment or office space needed</span>
+                </li>
+              </ul>
             </div>
 
-            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-              <div className="flex items-center gap-3 mb-4">
-                <Users className="w-6 h-6 text-gray-600" />
-                <h3 className="text-xl font-bold text-gray-900">Human Receptionist</h3>
-              </div>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-3xl font-bold text-gray-900 mb-1">$2,500-4,000/month</p>
-                  <p className="text-sm text-gray-600">Plus benefits, taxes, equipment</p>
-                </div>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  <li className="flex items-start">
-                    <AlertCircle className="w-4 h-4 text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Salary: $30,000-48,000/year</span>
-                  </li>
-                  <li className="flex items-start">
-                    <AlertCircle className="w-4 h-4 text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Benefits: $5,000-8,000/year</span>
-                  </li>
-                  <li className="flex items-start">
-                    <AlertCircle className="w-4 h-4 text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Training: $1,000-2,000 initial</span>
-                  </li>
-                  <li className="flex items-start">
-                    <AlertCircle className="w-4 h-4 text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Equipment/space: $2,000-5,000/year</span>
-                  </li>
-                </ul>
-              </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Human Receptionist</h3>
+              <p className="text-xl font-bold text-gray-900 mb-2">$2,500-4,000/month</p>
+              <p className="text-gray-600 mb-4">Plus benefits, taxes, equipment</p>
+              <ul className="space-y-2 text-gray-700 ml-4">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Salary: $30,000-48,000/year</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Benefits: $5,000-8,000/year</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Training: $1,000-2,000 initial</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Equipment/space: $2,000-5,000/year</span>
+                </li>
+              </ul>
             </div>
-          </div>
 
-          <div className="mt-8 bg-green-50 rounded-xl p-6 border border-green-200">
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Annual Savings with Boltcall</h3>
-            <p className="text-2xl font-bold text-green-600 mb-2">$25,000 - $40,000+ per year</p>
-            <p className="text-gray-700">
-              By switching from a human receptionist to Boltcall, you save on salary, benefits, training, equipment, 
-              and office space—while getting 24/7 coverage and never missing a call.
-            </p>
+            <div className="mt-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Annual Savings with Boltcall</h3>
+              <p className="text-2xl font-bold text-blue-600 mb-2">$25,000 - $40,000+ per year</p>
+              <p>
+                By switching from a human receptionist to Boltcall, you save on salary, benefits, training, equipment, 
+                and office space—while getting 24/7 coverage and never missing a call.
+              </p>
+            </div>
           </div>
         </motion.section>
 
@@ -234,69 +220,41 @@ const ReceptionistVsBoltcall: React.FC = () => {
             Why Boltcall Beats a Human Receptionist
           </h2>
           
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Globe className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">24/7 Coverage</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    A human receptionist works 40 hours a week. Boltcall works 168 hours a week—that's 4x more coverage. 
-                    Your AI never takes lunch breaks, never calls in sick, and never goes on vacation. Every call, every 
-                    day, every hour gets answered.
-                  </p>
-                </div>
-              </div>
+          <div className="space-y-6 text-gray-700 leading-relaxed">
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mt-8 mb-2">24/7 Coverage</h3>
+              <p>
+                A human receptionist works 40 hours a week. Boltcall works 168 hours a week—that's 4x more coverage. 
+                Your AI never takes lunch breaks, never calls in sick, and never goes on vacation. Every call, every 
+                day, every hour gets answered.
+              </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Never Misses a Call</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Even the best receptionist misses calls—when they're on another call, at lunch, in the bathroom, or 
-                    overwhelmed. Boltcall handles unlimited simultaneous calls. While a receptionist can only answer one 
-                    call at a time, Boltcall answers them all instantly.
-                  </p>
-                </div>
-              </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mt-8 mb-2">Never Misses a Call</h3>
+              <p>
+                Even the best receptionist misses calls—when they're on another call, at lunch, in the bathroom, or 
+                overwhelmed. Boltcall handles unlimited simultaneous calls. While a receptionist can only answer one 
+                call at a time, Boltcall answers them all instantly.
+              </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Consistent Quality</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Human receptionists have good days and bad days. They get tired, stressed, or distracted. Boltcall 
-                    is always professional, always friendly, and always accurate. Every customer gets the same high-quality 
-                    experience, every single time.
-                  </p>
-                </div>
-              </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mt-8 mb-2">Consistent Quality</h3>
+              <p>
+                Human receptionists have good days and bad days. They get tired, stressed, or distracted. Boltcall 
+                is always professional, always friendly, and always accurate. Every customer gets the same high-quality 
+                experience, every single time.
+              </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-6 h-6 text-orange-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Handles More Than Calls</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    A receptionist primarily handles phone calls. Boltcall handles calls, SMS messages, form submissions, 
-                    website chat, automated follow-ups, and reminders—all automatically. It's like having a receptionist, 
-                    customer service rep, and follow-up specialist all in one.
-                  </p>
-                </div>
-              </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mt-8 mb-2">Handles More Than Calls</h3>
+              <p>
+                A receptionist primarily handles phone calls. Boltcall handles calls, SMS messages, form submissions, 
+                website chat, automated follow-ups, and reminders—all automatically. It's like having a receptionist, 
+                customer service rep, and follow-up specialist all in one.
+              </p>
             </div>
           </div>
         </motion.section>

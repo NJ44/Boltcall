@@ -1,8 +1,19 @@
-import React, { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+// Lazy load GSAP to reduce initial bundle size
+let gsap: any;
+let ScrollTrigger: any;
+let gsapLoaded = false;
+
+const loadGSAP = async () => {
+  if (gsapLoaded) return;
+  const gsapModule = await import("gsap");
+  const scrollTriggerModule = await import("gsap/ScrollTrigger");
+  gsap = gsapModule.gsap;
+  ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+  gsap.registerPlugin(ScrollTrigger);
+  gsapLoaded = true;
+};
 
 interface WhisperTextProps {
   text: string;
@@ -28,8 +39,15 @@ const WhisperText: React.FC<WhisperTextProps> = ({
   wordStyles = {},
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    loadGSAP().then(() => setIsLoaded(true));
+  }, []);
 
   useLayoutEffect(() => {
+    if (!isLoaded || !gsap || !ScrollTrigger) return;
+
     const ctx = gsap.context(() => {
       const targets = gsap.utils.toArray<HTMLElement>("[data-word]");
 
@@ -52,7 +70,7 @@ const WhisperText: React.FC<WhisperTextProps> = ({
     }, containerRef);
 
     return () => ctx.revert();
-  }, [text, delay, duration, x, y, triggerStart]);
+  }, [text, delay, duration, x, y, triggerStart, isLoaded]);
 
   const renderWords = () =>
     text.split(" ").map((word, i) => (

@@ -17,9 +17,31 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: undefined,
+        manualChunks: (id) => {
+          // Split heavy libraries into separate chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('framer-motion')) {
+              return 'framer-motion';
+            }
+            if (id.includes('gsap')) {
+              return 'gsap';
+            }
+            if (id.includes('@lottiefiles') || id.includes('lottie')) {
+              return 'lottie';
+            }
+            if (id.includes('three') || id.includes('@react-three')) {
+              return 'three';
+            }
+            if (id.includes('@splinetool')) {
+              return 'spline';
+            }
+            // Other node_modules
+            return 'vendor';
+          }
+        },
       },
     },
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     proxy: {

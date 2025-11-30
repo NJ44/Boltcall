@@ -1,8 +1,10 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+
+// Lazy load Lottie to reduce initial bundle size
+const DotLottieReact = lazy(() => import("@lottiefiles/dotlottie-react").then(module => ({ default: module.DotLottieReact })));
 
 interface ContentData {
   image: string;
@@ -189,12 +191,14 @@ export function HeroScrollDemo() {
                 </div>
                 <div className="flex justify-center">
                   {currentContent.animation ? (
-                    <DotLottieReact
-                      src={currentContent.animation}
-                      loop
-                      autoplay
-                      className="w-[300px] h-[300px]"
-                    />
+                    <Suspense fallback={<div className="w-[300px] h-[300px] bg-gray-200/20 rounded-lg animate-pulse" />}>
+                      <DotLottieReact
+                        src={currentContent.animation}
+                        loop
+                        autoplay
+                        className="w-[300px] h-[300px]"
+                      />
+                    </Suspense>
                   ) : (
                     <img
                       src={currentContent.image}
