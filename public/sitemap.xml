@@ -3,7 +3,7 @@
   <!-- Homepage - Highest Priority -->
   <url>
     <loc>https://boltcall.org/</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,66 +11,165 @@
   <!-- Blog Center - High Priority for Content -->
   <url>
     <loc>https://boltcall.org/blog</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
+  <!-- Newsletter - High Priority -->
+  <url>
+    <loc>https://boltcall.org/newsletter</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Blog Posts - High Priority for SEO -->
   <url>
-    <loc>https://boltcall.org/the-new-reality-for-local-businesses</loc>
+    <loc>https://boltcall.org/blog/the-new-reality-for-local-businesses</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://boltcall.org/why-speed-matters-391-percent-advantage</loc>
+    <loc>https://boltcall.org/blog/why-speed-matters-391-percent-advantage</loc>
     <lastmod>2025-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://boltcall.org/why-website-speed-is-everything</loc>
+    <loc>https://boltcall.org/blog/why-website-speed-is-everything</loc>
     <lastmod>2025-01-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://boltcall.org/complete-guide-to-seo</loc>
+    <loc>https://boltcall.org/blog/complete-guide-to-seo</loc>
     <lastmod>2025-01-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://boltcall.org/complete-guide-to-ai-for-local-businesses</loc>
+    <loc>https://boltcall.org/blog/complete-guide-to-ai-for-local-businesses</loc>
     <lastmod>2025-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://boltcall.org/best-ai-receptionist-tools-for-small-businesses</loc>
+    <loc>https://boltcall.org/blog/best-ai-receptionist-tools-for-small-businesses</loc>
     <lastmod>2025-02-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/how-does-an-ai-receptionist-work</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/is-ai-receptionist-worth-it</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/how-to-make-ai-receptionist</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/will-receptionists-be-replaced-by-ai</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/what-does-instant-lead-reply-mean</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/how-to-set-up-instant-lead-reply</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/blog/how-does-instant-lead-reply-work</loc>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <!-- Comparison Pages - High Priority for SEO -->
   <url>
-    <loc>https://boltcall.org/ai-agent-comparison</loc>
+    <loc>https://boltcall.org/comparisons</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/comparisons/traditional-call-centers-vs-boltcall</loc>
     <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
-  <!-- SEO Tools - High Priority for Lead Generation -->
+  <url>
+    <loc>https://boltcall.org/comparisons/receptionist-vs-boltcall</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/comparisons/voicemail-vs-boltcall</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/comparisons/answering-services-vs-boltcall</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/comparisons/crm-instant-lead-reply-vs-boltcall</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Free Tools - High Priority for Lead Generation -->
   <url>
     <loc>https://boltcall.org/seo-analyzer</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://boltcall.org/conversion-rate-optimizer</loc>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -82,6 +181,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  
   <url>
     <loc>https://boltcall.org/how-much-you-can-earn-with-ai</loc>
     <lastmod>2025-02-10</lastmod>
@@ -92,7 +192,7 @@
   <!-- Setup/Onboarding - High Priority for Conversions -->
   <url>
     <loc>https://boltcall.org/setup</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -100,7 +200,7 @@
   <!-- Help Center - Important for SEO and User Support -->
   <url>
     <loc>https://boltcall.org/help-center</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -108,7 +208,7 @@
   <!-- Contact Page - Important for Business -->
   <url>
     <loc>https://boltcall.org/contact</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -116,7 +216,7 @@
   <!-- Speed Test Landing - Marketing Tool -->
   <url>
     <loc>https://boltcall.org/speed-test</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -124,7 +224,7 @@
   <!-- Documentation - If Public -->
   <url>
     <loc>https://boltcall.org/documentation</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -132,7 +232,7 @@
   <!-- Website Ignite/Offer Page - Marketing -->
   <url>
     <loc>https://boltcall.org/website-ignite</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -140,7 +240,7 @@
   <!-- Giveaway Page - Marketing -->
   <url>
     <loc>https://boltcall.org/giveaway</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -148,7 +248,7 @@
   <!-- Signup - Conversion Page -->
   <url>
     <loc>https://boltcall.org/signup</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -156,7 +256,7 @@
   <!-- Login - Lower Priority -->
   <url>
     <loc>https://boltcall.org/login</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -164,14 +264,14 @@
   <!-- Legal Pages - Lower Priority, Rarely Change -->
   <url>
     <loc>https://boltcall.org/privacy-policy</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://boltcall.org/terms-of-service</loc>
-    <lastmod>2025-02-01</lastmod>
+    <lastmod>2025-02-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

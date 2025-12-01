@@ -31,10 +31,15 @@ const Hero: React.FC = () => {
       <Section id="hero" background="gray" className="relative -mt-24 pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}>
         
         <div className="relative z-10 text-center pt-16 lg:pt-20">
-        {/* Main Headline */}
+        {/* SEO H1 Header - Hidden visually but present for SEO */}
+        <h1 className="sr-only">
+          AI Receptionist & Lead Capture System for Local Businesses
+        </h1>
+        
+        {/* Animated Headline */}
         <div className="flex justify-center mb-6 relative z-10">
           <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-2 flex-nowrap ml-48 md:ml-56">
+            <div className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-2 flex-nowrap ml-48 md:ml-56">
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -80,7 +85,7 @@ const Hero: React.FC = () => {
                   </motion.span>
                 ))}
               </span>
-        </h1>
+        </div>
           </div>
         </div>
 

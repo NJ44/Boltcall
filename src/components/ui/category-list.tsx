@@ -30,18 +30,18 @@ export const CategoryList = ({
   const [hoveredItem, setHoveredItem] = useState<string | number | null>(null);
 
   return (
-    <div className={cn("w-full bg-background text-foreground p-8", className)}>
+    <div className={cn("w-full p-8 bg-white", className)}>
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12 md:mb-16">
           {headerIcon && (
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary/80 to-primary mb-6 text-primary-foreground">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/80 to-blue-600 mb-6 text-white">
               {headerIcon}
             </div>
           )}
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight">{title}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight text-gray-900">{title}</h1>
           {subtitle && (
-            <h2 className="text-4xl md:text-5xl font-bold text-muted-foreground">{subtitle}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-600">{subtitle}</h2>
           )}
         </div>
 
@@ -57,23 +57,23 @@ export const CategoryList = ({
             >
               <div
                 className={cn(
-                  "relative overflow-hidden border bg-card transition-all duration-300 ease-in-out cursor-pointer",
+                  "relative overflow-hidden border bg-white transition-all duration-300 ease-in-out cursor-pointer",
                   // Hover state styles
                   hoveredItem === category.id
-                    ? 'h-32 border-primary shadow-lg shadow-primary/20 bg-primary/5'
-                    : 'h-24 border-border hover:border-primary/50'
+                    ? 'h-32 border-blue-600 shadow-lg shadow-blue-600/20 bg-blue-50'
+                    : 'h-24 border-gray-200 hover:border-blue-500/50'
                 )}
               >
-                {/* Corner brackets that appear on hover */}
+                    {/* Corner brackets that appear on hover */}
                 {hoveredItem === category.id && (
                   <>
                     <div className="absolute top-3 left-3 w-6 h-6">
-                      <div className="absolute top-0 left-0 w-4 h-0.5 bg-primary" />
-                      <div className="absolute top-0 left-0 w-0.5 h-4 bg-primary" />
+                      <div className="absolute top-0 left-0 w-4 h-0.5 bg-blue-600" />
+                      <div className="absolute top-0 left-0 w-0.5 h-4 bg-blue-600" />
                     </div>
                     <div className="absolute bottom-3 right-3 w-6 h-6">
-                      <div className="absolute bottom-0 right-0 w-4 h-0.5 bg-primary" />
-                      <div className="absolute bottom-0 right-0 w-0.5 h-4 bg-primary" />
+                      <div className="absolute bottom-0 right-0 w-4 h-0.5 bg-blue-600" />
+                      <div className="absolute bottom-0 right-0 w-0.5 h-4 bg-blue-600" />
                     </div>
                   </>
                 )}
@@ -85,7 +85,7 @@ export const CategoryList = ({
                       className={cn(
                         "font-bold transition-colors duration-300",
                         category.featured ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl',
-                        hoveredItem === category.id ? 'text-primary' : 'text-foreground'
+                        hoveredItem === category.id ? 'text-blue-600' : 'text-gray-900'
                       )}
                     >
                       {category.title}
@@ -94,7 +94,7 @@ export const CategoryList = ({
                       <p
                         className={cn(
                           "mt-1 transition-colors duration-300 text-sm md:text-base",
-                           hoveredItem === category.id ? 'text-foreground/90' : 'text-muted-foreground'
+                           hoveredItem === category.id ? 'text-gray-700' : 'text-gray-600'
                         )}
                       >
                         {category.subtitle}
@@ -102,9 +102,9 @@ export const CategoryList = ({
                     )}
                   </div>
 
-                  {/* Icon appears on the right on hover */}
-                  {category.icon && hoveredItem === category.id && (
-                    <div className="text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {/* Icon always visible on the right */}
+                  {category.icon && (
+                    <div className="text-blue-600 transition-opacity duration-300">
                       {category.icon}
                     </div>
                   )}

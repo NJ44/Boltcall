@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, TrendingUp, Zap, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -25,18 +25,14 @@ const ReceptionistVsBoltcall: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-left mb-12"
           >
-            <Link 
-              to="/comparisons" 
-              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Comparisons</span>
-            </Link>
-
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <TrendingUp className="w-4 h-4" />
-              <span className="font-semibold">Comparison Guide</span>
-            </div>
+            {/* Breadcrumb */}
+            <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6" aria-label="Breadcrumb">
+              <Link to="/comparisons" className="hover:text-blue-600 transition-colors">
+                Comparisons
+              </Link>
+              <span>/</span>
+              <span className="text-gray-900">Human Receptionist vs Boltcall</span>
+            </nav>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               Human Receptionist vs <span className="text-blue-600">Boltcall</span>
