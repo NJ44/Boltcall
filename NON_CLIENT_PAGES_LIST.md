@@ -56,7 +56,7 @@ This document lists all pages that Boltcall clients (users with dashboard access
 - `/auth/callback` - Auth Callback
 
 ### Free Tools
-- `/seo-analyzer` - SEO Analyzer Tool
+- `/seo-audit` - SEO Audit Tool
 - `/conversion-rate-optimizer` - Website Optimiser Tool
 - `/speed-test` - Speed Test Landing
 - `/speed-test/login` - Speed Test Login

@@ -61,7 +61,7 @@ const Newsletter: React.FC = () => {
             <p className="text-xl text-blue-100 mb-6">
               Stay updated with the latest news, tips, and updates from Boltcall
             </p>
-            
+
             {/* Subscribe Form */}
             {!isSubscribed ? (
               <motion.div
@@ -73,45 +73,45 @@ const Newsletter: React.FC = () => {
                 <form onSubmit={handleSubmit} className="flex gap-2">
                   <div className="relative flex-1">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input
-                      type="email"
-                      id="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
+                          <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
                       className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="your@email.com"
-                    />
-                  </div>
- 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || !email}
+                            placeholder="your@email.com"
+                          />
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting || !email}
                     className="px-4 py-2 text-sm bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                  >
-                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                  </button>
-                </form>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                      >
+                        {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                      </button>
+                    </form>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
                 className="text-center max-w-md mx-auto"
-              >
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
-                </div>
+                  >
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-8 h-8 text-green-600" />
+                    </div>
                 <h2 className="text-2xl font-bold text-white mb-2">
-                  Thank You!
-                </h2>
+                      Thank You!
+                    </h2>
                 <p className="text-blue-100">
-                  You've successfully subscribed to our newsletter. Check your email for a confirmation message.
-                </p>
-              </motion.div>
-            )}
+                      You've successfully subscribed to our newsletter. Check your email for a confirmation message.
+                    </p>
+                  </motion.div>
+                )}
           </motion.div>
-        </div>
+              </div>
       </section>
 
       <main className="pb-16 px-4 sm:px-6 lg:px-8">

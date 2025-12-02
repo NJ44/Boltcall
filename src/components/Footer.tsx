@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
     resources: [
       { label: 'Comparisons', href: '/comparisons' },
       { label: 'Blog', href: '/blog' },
-      { label: 'SEO Audit', href: '/seo-analyzer' },
+      { label: 'SEO Audit', href: '/seo-audit' },
       { label: 'Speed Test', href: '/speed-test' },
       { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai' },
     ],

@@ -51,7 +51,7 @@
 - `/website-ignite` - Offer Page
 
 ### Free Tools
-- `/seo-analyzer` - SEO Analyzer
+- `/seo-audit` - SEO Audit
 - `/conversion-rate-optimizer` - Website Optimiser
 - `/speed-test` - Speed Test Landing
 - `/speed-test/login` - Speed Test Login

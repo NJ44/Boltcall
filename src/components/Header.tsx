@@ -38,7 +38,7 @@ const Header: React.FC = () => {
   ];
 
   const freeToolsItems = [
-    { label: 'SEO Audit', href: '/seo-analyzer', icon: Search },
+    { label: 'SEO Audit', href: '/seo-audit', icon: Search },
     { label: 'Speed Test', href: '/speed-test', icon: Gauge },
     { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai', icon: Calculator },
     { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },

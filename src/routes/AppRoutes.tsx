@@ -281,7 +281,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/calculator/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/how-much-you-can-earn-with-ai" element={<AIRevenueAudit />} />
-        <Route path="/seo-analyzer" element={<SEOAnalyzer />} />
+        <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         {/* Feature Pages */}
         <Route path="/features/ai-receptionist" element={<AIReceptionistPage />} />
