@@ -26,6 +26,7 @@ const Footer: React.FC = () => {
       { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system' },
       { label: 'Website Chat/Voice Widget', href: '/features/website-chat-voice-widget' },
       { label: 'Lead Reactivation', href: '/features/lead-reactivation' },
+      { label: 'Smart Website', href: '/features/smart-website' },
     ],
     resources: [
       { label: 'Comparisons', href: '/comparisons' },

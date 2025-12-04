@@ -9,21 +9,21 @@ const PROCESS_PHASES = [
     id: "process-1",
     title: "Capture the lead",
     description:
-      "Your AI receptionist captures leads 24/7 from calls, forms, and ads, ensuring no opportunity is missed with instant response times.",
+      "Your AI receptionist captures leads 24/7 from phone calls, website forms, social media ads, and email inquiries. With instant response capabilities, every potential customer receives immediate attention, ensuring no opportunity slips through the cracks. The system intelligently routes inquiries and captures essential contact information automatically.",
     animationUrl: "/AI_assistant.lottie"
   },
   {
     id: "process-2",
     title: "Qualify & Nurture",
     description:
-      "Our AI intelligently qualifies each lead through personalized conversations, understanding their needs and determining their buying intent.",
+      "Our AI engages each lead through natural, personalized conversations that feel authentic and human-like. It asks intelligent qualifying questions to understand their specific needs, budget, timeline, and pain points. The system analyzes conversation patterns and engagement levels to accurately determine buying intent and prioritize high-value prospects.",
     animationUrl: "/statistics_on_tab.lottie"
   },
   {
     id: "process-3",
     title: "Book appointments",
     description:
-      "Convert qualified leads into booked appointments with automated scheduling, reminders, and seamless calendar integration.",
+      "Once a lead is qualified and ready, the AI seamlessly transitions them into the booking phase. It presents available time slots based on your calendar, handles scheduling conflicts intelligently, and confirms appointments with both parties. Automated reminder systems ensure low no-show rates through SMS and email notifications sent at strategic intervals.",
     animationUrl: "/sms_agent.lottie"
   },
 ];
@@ -102,7 +102,7 @@ const HowItWorks: React.FC = () => {
                         </span>
                       </div>
                     </div>
-                    <p className="text-sm md:text-lg text-gray-600 leading-relaxed mb-5">{phase.description}</p>
+                    <p className="text-xs md:text-sm text-gray-600 leading-relaxed mb-5">{phase.description}</p>
                   </div>
                   
                   {/* Right side - Animation removed */}

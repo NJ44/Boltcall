@@ -109,6 +109,7 @@ import AutomatedRemindersPage from '../pages/features/AutomatedRemindersPage';
 import AIFollowUpSystemPage from '../pages/features/AIFollowUpSystemPage';
 import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidgetPage';
 import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
+import SmartWebsitePage from '../pages/features/SmartWebsitePage';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -291,6 +292,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/ai-follow-up-system" element={<AIFollowUpSystemPage />} />
         <Route path="/features/website-chat-voice-widget" element={<WebsiteChatVoiceWidgetPage />} />
         <Route path="/features/lead-reactivation" element={<LeadReactivationFeaturePage />} />
+        <Route path="/features/smart-website" element={<SmartWebsitePage />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

@@ -23,45 +23,45 @@ export function HeroScrollDemo() {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
       animation: '/AI_assistant.lottie',
       title: 'AI Receptionist',
-      description: 'Transform every call into an opportunity with intelligent conversation handling and seamless customer experience.',
+      description: 'Transform every call into an opportunity with intelligent conversation handling and seamless customer experience. Our AI receptionist works around the clock, answering calls professionally, qualifying leads through natural conversations, and scheduling appointments automatically. It understands context, handles complex inquiries, and provides personalized responses that make every caller feel valued and heard.',
       layout: 'new-layout',
       features: [
-        '24/7 call answering',
-        'Lead qualification',
-        'Appointment scheduling',
-        'Call transcription'
+        '24/7 call answering with natural conversation flow',
+        'Intelligent lead qualification through smart questioning',
+        'Automated appointment scheduling with calendar sync',
+        'Complete call transcription and detailed analytics'
       ]
     },
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
       animation: '/statistics_on_tab.lottie',
       title: 'Instant Forms Reply',
-      description: 'Capture and convert leads instantly with automated responses that engage prospects the moment they show interest.',
+      description: 'Capture and convert leads instantly with automated responses that engage prospects the moment they show interest. When someone fills out your contact form or responds to your ads, our system immediately sends personalized SMS or makes a call within seconds. This instant engagement dramatically increases conversion rates by reaching prospects when they\'re most interested, before they move on to competitors.',
       layout: 'new-layout',
       features: [
-        'Instant response to ads',
-        'Personalized messaging',
-        'Lead capture forms',
-        'Follow-up automation'
+        'Instant response to form submissions and ad clicks',
+        'Personalized messaging based on lead source and data',
+        'Multi-channel lead capture from all your forms',
+        'Automated follow-up sequences to nurture prospects'
       ]
     },
     'sms-whatsapp': {
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
       animation: '/sms_agent.lottie',
       title: 'SMS Booking Agent',
-      description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow.',
+      description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow. Our AI booking agent handles text conversations naturally, answers questions about your services, checks availability in real-time, and books appointments directly through messaging. It works 24/7, never misses a message, and provides a modern, convenient booking experience that today\'s customers prefer.',
       layout: 'new-layout',
       features: [
-        'SMS lead capture',
-        'Automated scheduling',
-        'Appointment reminders',
-        'Calendar integration'
+        'SMS and WhatsApp lead capture and engagement',
+        'Automated scheduling with real-time availability',
+        'Smart appointment reminders to reduce no-shows',
+        'Seamless calendar integration with all major platforms'
       ]
     },
     'dashboard-analytics': {
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop',
       title: 'Dashboard Analytics',
-      description: 'Track all your key metrics, monitor performance, and gain valuable insights into your business with our comprehensive analytics dashboard.',
+      description: 'Track all your key metrics, monitor performance, and gain valuable insights into your business with our comprehensive analytics dashboard. Get real-time visibility into call volumes, lead sources, conversion rates, appointment bookings, and revenue attribution. Make data-driven decisions with detailed reports, visual charts, and actionable insights that help you optimize your marketing spend and improve your sales process.',
       layout: 'features'
     }
   };
@@ -174,17 +174,17 @@ export function HeroScrollDemo() {
                   <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 whitespace-nowrap">
                     {currentContent.title}
                   </h2>
-                  <p className="text-base md:text-lg text-white mb-6">
+                  <p className="text-sm md:text-base text-white mb-6 leading-relaxed">
                     {currentContent.description}
                   </p>
                   {/* V sign list */}
                   <ul className="space-y-3">
                     {currentContent.features?.map((feature, index) => (
                       <li key={index} className="flex items-center gap-3 text-white">
-                        <svg className="w-5 h-5 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
-                        <span>{feature}</span>
+                        <span className="text-xs md:text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -217,7 +217,7 @@ export function HeroScrollDemo() {
                   <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
                     {currentContent.title}
                   </h2>
-                  <p className="text-sm text-white mb-4">
+                  <p className="text-xs md:text-sm text-white mb-4 leading-relaxed">
                     {currentContent.description}
                   </p>
                   <ul className="space-y-0 py-4">
@@ -271,7 +271,7 @@ export function HeroScrollDemo() {
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             {currentContent.title}
           </h2>
-                <p className="text-base md:text-lg text-white max-w-xl mx-auto">
+                <p className="text-sm md:text-base text-white max-w-xl mx-auto leading-relaxed">
             {currentContent.description}
           </p>
               </>

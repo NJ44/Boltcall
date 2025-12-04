@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -29,6 +29,7 @@ const Header: React.FC = () => {
     { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system', icon: Target },
     { label: 'Website Chat/Voice Widget', href: '/features/website-chat-voice-widget', icon: Globe },
     { label: 'Lead Reactivation', href: '/features/lead-reactivation', icon: RotateCw },
+    { label: 'Smart Website', href: '/features/smart-website', icon: Sparkles },
   ];
 
   const resourcesItems = [
