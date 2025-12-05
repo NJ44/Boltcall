@@ -40,9 +40,7 @@ import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
-import Features10Demo from '../pages/Features10Demo';
 import Giveaway from '../pages/Giveaway';
-import RadialOrbitalTimelineDemo from '../pages/RadialOrbitalTimelineDemo';
 import GeneralPage from '../pages/dashboard/settings/GeneralPage';
 import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
 import MembersPage from '../pages/dashboard/settings/MembersPage';
@@ -52,25 +50,12 @@ import UsagePage from '../pages/dashboard/settings/UsagePage';
 import NotificationPage from '../pages/dashboard/settings/NotificationPage';
 import NotificationPreferencesPage from '../pages/dashboard/settings/NotificationPreferencesPage';
 import ServicesPage from '../pages/dashboard/settings/ServicesPage';
-import UpgradeBannerDemo from '../pages/UpgradeBannerDemo';
 import SpeedTestLanding from '../pages/speed-test/SpeedTestLanding';
 import SpeedTestLogin from '../pages/speed-test/SpeedTestLogin';
 import SpeedTestReport from '../pages/speed-test/SpeedTestReport';
 import SpeedTestOffer from '../pages/speed-test/SpeedTestOffer';
-import SidebarDemoPage from '../pages/SidebarDemoPage';
-import RuixenStatsDemo from '../pages/RuixenStatsDemo';
-import CardsStackDemo from '../pages/CardsStackDemo';
-import FeatureSectionDemo from '../pages/FeatureSectionDemo';
-import MultipleSelectDemo from '../pages/MultipleSelectDemo';
-import InteractiveCheckoutDemo from '../pages/InteractiveCheckoutDemo';
-import LineChartDemo from '../pages/LineChartDemo';
-import CustomCheckboxDemo from '../pages/CustomCheckboxDemo';
-import EmptyStateDemo from '../pages/EmptyStateDemo';
-import DatabaseWithRestApiDemo from '../pages/DatabaseWithRestApiDemo';
-import CreditCardPage from '../pages/CreditCardPage';
 import GiftCardPage from '../pages/GiftCardPage';
 import PricingPage from '../pages/PricingPage';
-import LampDemo from '../pages/LampDemo';
 import OfferPage from '../pages/OfferPage';
 import Documentation from '../pages/Documentation';
 import Blog from '../pages/Blog';
@@ -104,9 +89,6 @@ import CRMInstantLeadReplyVsBoltcall from '../pages/comparisons/CRMInstantLeadRe
 import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
-import DockDemoPage from '../pages/DockDemoPage';
-import HoverImagePreviewDemo from '../pages/HoverImagePreviewDemo';
-import CategoryListDemo from '../pages/CategoryListDemo';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 import AIReceptionistPage from '../pages/features/AIReceptionistPage';
@@ -242,27 +224,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/speed-test/offer" element={<SpeedTestOffer />} />
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
-        <Route path="/features-10-demo" element={<Features10Demo />} />
         <Route path="/giveaway" element={<Giveaway />} />
-        <Route path="/radial-orbital-timeline-demo" element={<RadialOrbitalTimelineDemo />} />
-        <Route path="/interactive-checkout-demo" element={<InteractiveCheckoutDemo />} />
-        <Route path="/line-chart-demo" element={<LineChartDemo />} />
-        <Route path="/upgrade-banner-demo" element={<UpgradeBannerDemo />} />
-        <Route path="/sidebar-demo" element={<SidebarDemoPage />} />
-        <Route path="/ruixen-stats-demo" element={<RuixenStatsDemo />} />
-        <Route path="/cards-stack-demo" element={<CardsStackDemo />} />
-        <Route path="/feature-section-demo" element={<FeatureSectionDemo />} />
-        <Route path="/multiple-select-demo" element={<MultipleSelectDemo />} />
-        <Route path="/custom-checkbox-demo" element={<CustomCheckboxDemo />} />
-        <Route path="/empty-state-demo" element={<EmptyStateDemo />} />
-        <Route path="/database-with-rest-api-demo" element={<DatabaseWithRestApiDemo />} />
-            <Route path="/credit-card-demo" element={<CreditCardPage />} />
-            <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
-            <Route path="/lamp-demo" element={<LampDemo />} />
-            <Route path="/dock-demo" element={<DockDemoPage />} />
-            <Route path="/hover-image-preview-demo" element={<HoverImagePreviewDemo />} />
-            <Route path="/category-list-demo" element={<CategoryListDemo />} />
-            <Route path="/smart-website" element={<OfferPage />} />
+        <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
+        <Route path="/smart-website" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
