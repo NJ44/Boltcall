@@ -28,14 +28,26 @@ const FeaturesTabs: React.FC = () => {
             viewport={{ once: true }}
             className="flex justify-center items-center"
           >
-            <div className="w-[540px] h-[540px] md:w-[720px] md:h-[720px] lg:w-[900px] lg:h-[900px]">
+            <div 
+              className="w-[540px] h-[540px] md:w-[720px] md:h-[720px] lg:w-[900px] lg:h-[900px]"
+              style={{
+                imageRendering: 'crisp-edges',
+                WebkitImageRendering: 'crisp-edges',
+                willChange: 'transform',
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden'
+              }}
+            >
               <DotLottieReact
                 src="/Clean_tooth.lottie"
                 loop
                 autoplay
                 style={{
                   width: '100%',
-                  height: '100%'
+                  height: '100%',
+                  imageRendering: 'auto',
+                  WebkitImageRendering: 'auto'
                 }}
               />
             </div>

@@ -660,3 +660,34 @@ body {
     offset-distance: 100%;
   }
 }
+
+/* Lottie Animation Quality Improvements */
+/* Fix pixelation in Lottie/DotLottie animations */
+canvas,
+svg {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve rendering for DotLottie containers */
+[data-dotlottie-container],
+.dotlottie-container {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure Lottie animations render at high quality */
+canvas[data-dotlottie-canvas] {
+  image-rendering: auto !important;
+  -webkit-image-rendering: auto !important;
+  image-rendering: crisp-edges !important;
+  will-change: transform;
+  transform: translateZ(0);
+}

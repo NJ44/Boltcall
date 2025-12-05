@@ -87,6 +87,8 @@ import BlogWillReceptionistsBeReplacedByAI from '../pages/BlogWillReceptionistsB
 import BlogWhatDoesInstantLeadReplyMean from '../pages/BlogWhatDoesInstantLeadReplyMean';
 import BlogHowToSetUpInstantLeadReply from '../pages/BlogHowToSetUpInstantLeadReply';
 import BlogHowDoesInstantLeadReplyWork from '../pages/BlogHowDoesInstantLeadReplyWork';
+import BlogHowToScheduleText from '../pages/BlogHowToScheduleText';
+import BlogAutomaticGoogleReviews from '../pages/BlogAutomaticGoogleReviews';
 import Newsletter from '../pages/Newsletter';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
@@ -273,6 +275,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/what-does-instant-lead-reply-mean" element={<BlogWhatDoesInstantLeadReplyMean />} />
         <Route path="/blog/how-to-set-up-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
         <Route path="/blog/how-does-instant-lead-reply-work" element={<BlogHowDoesInstantLeadReplyWork />} />
+        <Route path="/blog/how-to-schedule-text" element={<BlogHowToScheduleText />} />
+        <Route path="/blog/automatic-google-reviews" element={<BlogAutomaticGoogleReviews />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />

@@ -23,45 +23,45 @@ export function HeroScrollDemo() {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
       animation: '/AI_assistant.lottie',
       title: 'AI Receptionist',
-      description: 'Transform every call into an opportunity with intelligent conversation handling and seamless customer experience. Our AI receptionist works around the clock, answering calls professionally, qualifying leads through natural conversations, and scheduling appointments automatically. It understands context, handles complex inquiries, and provides personalized responses that make every caller feel valued and heard.',
+      description: 'Transform every call into an opportunity with intelligent conversation handling. Our AI works 24/7, answering calls professionally, qualifying leads through natural conversations, and scheduling appointments automatically.',
       layout: 'new-layout',
       features: [
-        '24/7 call answering with natural conversation flow',
-        'Intelligent lead qualification through smart questioning',
-        'Automated appointment scheduling with calendar sync',
-        'Complete call transcription and detailed analytics'
+        '24/7 call answering',
+        'Intelligent lead qualification',
+        'Automated appointment scheduling',
+        'Call transcription & analytics'
       ]
     },
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
       animation: '/statistics_on_tab.lottie',
       title: 'Instant Forms Reply',
-      description: 'Capture and convert leads instantly with automated responses that engage prospects the moment they show interest. When someone fills out your contact form or responds to your ads, our system immediately sends personalized SMS or makes a call within seconds. This instant engagement dramatically increases conversion rates by reaching prospects when they\'re most interested, before they move on to competitors.',
+      description: 'Capture and convert leads instantly with automated responses. When someone fills out your form or responds to ads, our system immediately sends personalized SMS or calls within seconds, dramatically increasing conversion rates.',
       layout: 'new-layout',
       features: [
-        'Instant response to form submissions and ad clicks',
-        'Personalized messaging based on lead source and data',
-        'Multi-channel lead capture from all your forms',
-        'Automated follow-up sequences to nurture prospects'
+        'Instant response to forms and ads',
+        'Personalized messaging',
+        'Multi-channel lead capture',
+        'Automated follow-up sequences'
       ]
     },
     'sms-whatsapp': {
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
       animation: '/sms_agent.lottie',
       title: 'SMS Booking Agent',
-      description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses and seamless conversation flow. Our AI booking agent handles text conversations naturally, answers questions about your services, checks availability in real-time, and books appointments directly through messaging. It works 24/7, never misses a message, and provides a modern, convenient booking experience that today\'s customers prefer.',
+      description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses. Our AI booking agent handles conversations naturally, checks availability in real-time, and books appointments directly through messaging.',
       layout: 'new-layout',
       features: [
-        'SMS and WhatsApp lead capture and engagement',
-        'Automated scheduling with real-time availability',
-        'Smart appointment reminders to reduce no-shows',
-        'Seamless calendar integration with all major platforms'
+        'SMS and WhatsApp engagement',
+        'Real-time availability checking',
+        'Smart appointment reminders',
+        'Calendar integration'
       ]
     },
     'dashboard-analytics': {
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop',
       title: 'Dashboard Analytics',
-      description: 'Track all your key metrics, monitor performance, and gain valuable insights into your business with our comprehensive analytics dashboard. Get real-time visibility into call volumes, lead sources, conversion rates, appointment bookings, and revenue attribution. Make data-driven decisions with detailed reports, visual charts, and actionable insights that help you optimize your marketing spend and improve your sales process.',
+      description: 'Track key metrics and gain valuable insights with our comprehensive analytics dashboard. Get real-time visibility into call volumes, lead sources, conversion rates, and revenue attribution to make data-driven decisions.',
       layout: 'features'
     }
   };
@@ -192,12 +192,29 @@ export function HeroScrollDemo() {
                 <div className="flex justify-center">
                   {currentContent.animation ? (
                     <Suspense fallback={<div className="w-[300px] h-[300px] bg-gray-200/20 rounded-lg animate-pulse" />}>
-                      <DotLottieReact
-                        src={currentContent.animation}
-                        loop
-                        autoplay
+                      <div 
                         className="w-[300px] h-[300px]"
-                      />
+                        style={{
+                          imageRendering: 'crisp-edges',
+                          WebkitImageRendering: 'crisp-edges',
+                          willChange: 'transform',
+                          transform: 'translateZ(0)',
+                          backfaceVisibility: 'hidden',
+                          WebkitBackfaceVisibility: 'hidden'
+                        }}
+                      >
+                        <DotLottieReact
+                          src={currentContent.animation}
+                          loop
+                          autoplay
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            imageRendering: 'auto',
+                            WebkitImageRendering: 'auto'
+                          }}
+                        />
+                      </div>
                     </Suspense>
                   ) : (
                     <img

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Globe, Zap, CheckCircle, ArrowRight, TrendingUp, Shield } from 'lucide-react';
+import { Sparkles, Globe, Zap, CheckCircle, ArrowRight, TrendingUp } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
