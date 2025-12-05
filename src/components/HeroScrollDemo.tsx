@@ -201,7 +201,7 @@ export function HeroScrollDemo() {
                           transform: 'translateZ(0)',
                           backfaceVisibility: 'hidden',
                           WebkitBackfaceVisibility: 'hidden'
-                        }}
+                        } as React.CSSProperties & Record<string, string>}
                       >
                         <DotLottieReact
                           src={currentContent.animation}
@@ -212,7 +212,7 @@ export function HeroScrollDemo() {
                             height: '100%',
                             imageRendering: 'auto',
                             WebkitImageRendering: 'auto'
-                          }}
+                          } as React.CSSProperties & Record<string, string>}
                         />
                       </div>
                     </Suspense>

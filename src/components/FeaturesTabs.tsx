@@ -37,7 +37,7 @@ const FeaturesTabs: React.FC = () => {
                 transform: 'translateZ(0)',
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden'
-              }}
+              } as React.CSSProperties & Record<string, string>}
             >
               <DotLottieReact
                 src="/Clean_tooth.lottie"
@@ -48,7 +48,7 @@ const FeaturesTabs: React.FC = () => {
                   height: '100%',
                   imageRendering: 'auto',
                   WebkitImageRendering: 'auto'
-                }}
+                } as React.CSSProperties & Record<string, string>}
               />
             </div>
           </motion.div>
