@@ -50,7 +50,7 @@ This document lists all pages that Boltcall clients (users with dashboard access
 - `/privacy-policy` - Privacy Policy
 - `/terms-of-service` - Terms of Service
 - `/admin` - Admin Panel
-- `/website-ignite` - Offer Page
+- `/smart-website` - Offer Page
 - `/giveaway` - Giveaway Page
 - `/black-friday-gift-cards` - Gift Card Page
 - `/auth/callback` - Auth Callback

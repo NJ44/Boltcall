@@ -257,7 +257,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/dock-demo" element={<DockDemoPage />} />
             <Route path="/hover-image-preview-demo" element={<HoverImagePreviewDemo />} />
             <Route path="/category-list-demo" element={<CategoryListDemo />} />
-            <Route path="/website-ignite" element={<OfferPage />} />
+            <Route path="/smart-website" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />

@@ -211,34 +211,35 @@ const OfferPage: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-sm text-gray-600 leading-relaxed space-y-2 list-none"
+                className="text-gray-600 leading-relaxed space-y-2 list-none"
+                style={{ fontSize: 'calc(0.875rem * 1.05)' }}
               >
                 <li className="flex items-start">
                   <Check className="w-4 h-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-900">Loads in under 2 seconds</div>
-                    <div className="text-xs text-gray-600 mt-0.5">Customers won't wait. Your site won't make them.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.05)' }}>Loads in under 2 seconds</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.05)' }}>Customers won't wait. Your site won't make them.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <Check className="w-4 h-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-900">Google finds you first</div>
-                    <div className="text-xs text-gray-600 mt-0.5">When people search for what you do, your name shows up at the top.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.05)' }}>Google finds you first</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.05)' }}>When people search for what you do, your name shows up at the top.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <Check className="w-4 h-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-900">AI talks to visitors 24/7</div>
-                    <div className="text-xs text-gray-600 mt-0.5">Even at 3am, someone is answering questions and booking appointments.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.05)' }}>AI talks to visitors 24/7</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.05)' }}>Even at 3am, someone is answering questions and booking appointments.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
                   <Check className="w-4 h-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold text-sm text-gray-900">Every lead gets a text or call in seconds</div>
-                    <div className="text-xs text-gray-600 mt-0.5">No more checking your email hours later to find out you missed a customer.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.05)' }}>Every lead gets a text or call in seconds</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.05)' }}>No more checking your email hours later to find out you missed a customer.</div>
                   </div>
                 </li>
               </motion.ul>
@@ -274,9 +275,6 @@ const OfferPage: React.FC = () => {
                       <h2 className="text-3xl font-bold text-gray-900 mb-2">
                         Claim Your Free Website
                       </h2>
-                      <p className="text-sm text-gray-600 mt-2">
-                        Fill out the form below. We'll review your business and get back to you within 24 hours to start building your site.
-                      </p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">

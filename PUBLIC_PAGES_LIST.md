@@ -48,7 +48,7 @@
 - `/privacy-policy` - Privacy Policy
 - `/terms-of-service` - Terms of Service
 - `/admin` - Admin Panel
-- `/website-ignite` - Offer Page
+- `/smart-website` - Offer Page
 
 ### Free Tools
 - `/seo-audit` - SEO Audit
