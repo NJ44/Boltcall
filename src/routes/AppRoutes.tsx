@@ -89,6 +89,10 @@ import BlogHowToSetUpInstantLeadReply from '../pages/BlogHowToSetUpInstantLeadRe
 import BlogHowDoesInstantLeadReplyWork from '../pages/BlogHowDoesInstantLeadReplyWork';
 import BlogHowToScheduleText from '../pages/BlogHowToScheduleText';
 import BlogAutomaticGoogleReviews from '../pages/BlogAutomaticGoogleReviews';
+import BlogOutsourcedReceptionServices from '../pages/BlogOutsourcedReceptionServices';
+import BlogEffectivePhoneCallScripts from '../pages/BlogEffectivePhoneCallScripts';
+import BlogLiveAnsweringServiceCosts from '../pages/BlogLiveAnsweringServiceCosts';
+import BlogProfessionalTelephoneEtiquette from '../pages/BlogProfessionalTelephoneEtiquette';
 import Newsletter from '../pages/Newsletter';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
@@ -277,6 +281,10 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/how-does-instant-lead-reply-work" element={<BlogHowDoesInstantLeadReplyWork />} />
         <Route path="/blog/how-to-schedule-text" element={<BlogHowToScheduleText />} />
         <Route path="/blog/automatic-google-reviews" element={<BlogAutomaticGoogleReviews />} />
+        <Route path="/blog/benefits-of-outsourced-reception-services" element={<BlogOutsourcedReceptionServices />} />
+        <Route path="/blog/effective-phone-call-scripts-for-receptionists" element={<BlogEffectivePhoneCallScripts />} />
+        <Route path="/blog/understanding-live-answering-service-costs" element={<BlogLiveAnsweringServiceCosts />} />
+        <Route path="/blog/tips-for-professional-telephone-etiquette" element={<BlogProfessionalTelephoneEtiquette />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
