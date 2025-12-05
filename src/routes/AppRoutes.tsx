@@ -93,6 +93,7 @@ import BlogOutsourcedReceptionServices from '../pages/BlogOutsourcedReceptionSer
 import BlogEffectivePhoneCallScripts from '../pages/BlogEffectivePhoneCallScripts';
 import BlogLiveAnsweringServiceCosts from '../pages/BlogLiveAnsweringServiceCosts';
 import BlogProfessionalTelephoneEtiquette from '../pages/BlogProfessionalTelephoneEtiquette';
+import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringServiceAppointmentScheduling';
 import Newsletter from '../pages/Newsletter';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
@@ -285,6 +286,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/effective-phone-call-scripts-for-receptionists" element={<BlogEffectivePhoneCallScripts />} />
         <Route path="/blog/understanding-live-answering-service-costs" element={<BlogLiveAnsweringServiceCosts />} />
         <Route path="/blog/tips-for-professional-telephone-etiquette" element={<BlogProfessionalTelephoneEtiquette />} />
+        <Route path="/blog/benefits-of-answering-service-appointment-scheduling" element={<BlogAnsweringServiceAppointmentScheduling />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
