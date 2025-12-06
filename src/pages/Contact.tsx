@@ -48,9 +48,19 @@ const Contact: React.FC = () => {
     try {
       setIsLoading(true);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      // POST to n8n webhook
+      const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9073ec26-3576-4fd4-9b63-a65c1d73250e', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
       console.log('Contact form submitted:', data);
       setIsSubmitted(true);
       reset();
@@ -60,6 +70,7 @@ const Contact: React.FC = () => {
       setTimeout(() => setIsSubmitted(false), 3000);
     } catch (error) {
       console.error('Error submitting contact form:', error);
+      // You might want to show an error message to the user here
     } finally {
       setIsLoading(false);
     }
