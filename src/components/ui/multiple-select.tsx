@@ -73,7 +73,7 @@ export const MultipleSelect = ({
                 className={'bg-white shadow'}
               >
                 <div className='flex items-center gap-2'>
-                  <motion.span layout className={'text-nowrap'}>
+                  <motion.span layout className={'text-nowrap text-black'}>
                     {item?.name}
                   </motion.span>
                   <button className={''} onClick={() => onDeselect(item)}>
@@ -97,7 +97,7 @@ export const MultipleSelect = ({
                   {customTag ? (
                     customTag(item)
                   ) : (
-                    <motion.span layout className={'text-nowrap'}>
+                    <motion.span layout className={'text-nowrap text-black'}>
                       {item?.name}
                     </motion.span>
                   )}
@@ -123,7 +123,7 @@ export const Tag = ({ children, className, name, onClick }: TagProps) => {
       layoutId={name}
       onClick={onClick}
       className={(
-        `cursor-pointer rounded-md bg-gray-200 px-2 py-1 text-sm ${className}`
+        `cursor-pointer rounded-md bg-gray-200 px-2 py-1 text-sm text-black ${className}`
       )}
     >
       {children}

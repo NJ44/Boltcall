@@ -12,11 +12,11 @@ import { MultipleSelect } from '../components/ui/multiple-select';
 import type { TTag } from '../components/ui/multiple-select';
 
 const contactSchema = z.object({
-  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
-  workEmail: z.string().email('Please enter a valid work email address'),
-  companyWebsite: z.string().url('Please enter a valid URL').optional().or(z.literal('')),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  phoneNumber: z.string().min(10, 'Please enter a valid phone number'),
   interests: z.array(z.any()).min(1, 'Please select at least one option'),
-  phoneNumber: z.string().min(10, 'Please enter a valid phone number')
+  message: z.string().min(10, 'Message must be at least 10 characters')
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -149,43 +149,44 @@ const Contact: React.FC = () => {
                 )}
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-                  {/* Full Name */}
+                  {/* Name */}
                   <div>
                     <StyledInput
-                      {...register('fullName')}
-                      placeholder="Full Name"
-                      name="fullName"
+                      {...register('name')}
+                      placeholder="Name"
+                      name="name"
                       required
                     />
-                    {errors.fullName && (
-                      <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
+                    {errors.name && (
+                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
                     )}
                   </div>
 
-                  {/* Work Email */}
+                  {/* Email */}
                   <div>
                     <StyledInput
-                      {...register('workEmail')}
+                      {...register('email')}
                       type="email"
-                      placeholder="Work Email"
-                      name="workEmail"
+                      placeholder="Email"
+                      name="email"
                       required
                     />
-                    {errors.workEmail && (
-                      <p className="mt-1 text-sm text-red-600">{errors.workEmail.message}</p>
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
                     )}
                   </div>
 
-                  {/* Company Website */}
+                  {/* Phone Number */}
                   <div>
                     <StyledInput
-                      {...register('companyWebsite')}
-                      type="url"
-                      placeholder="Company Website (optional)"
-                      name="companyWebsite"
+                      {...register('phoneNumber')}
+                      type="tel"
+                      placeholder="Phone Number"
+                      name="phoneNumber"
+                      required
                     />
-                    {errors.companyWebsite && (
-                      <p className="mt-1 text-sm text-red-600">{errors.companyWebsite.message}</p>
+                    {errors.phoneNumber && (
+                      <p className="mt-1 text-sm text-red-600">{errors.phoneNumber.message}</p>
                     )}
                   </div>
 
@@ -204,17 +205,18 @@ const Contact: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Phone Number */}
+                  {/* Message */}
                   <div className="mb-3">
-                    <StyledInput
-                      {...register('phoneNumber')}
-                      type="tel"
-                      placeholder="Phone Number"
-                      name="phoneNumber"
+                    <textarea
+                      {...register('message')}
+                      placeholder="Message"
+                      name="message"
                       required
+                      rows={4}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     />
-                    {errors.phoneNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phoneNumber.message}</p>
+                    {errors.message && (
+                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
                     )}
                   </div>
 
