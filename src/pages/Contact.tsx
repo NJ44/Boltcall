@@ -15,7 +15,7 @@ const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   phoneNumber: z.string().min(10, 'Please enter a valid phone number'),
-  interests: z.array(z.any()).min(1, 'Please select at least one option'),
+  interests: z.array(z.any()).optional(),
   message: z.string().min(10, 'Message must be at least 10 characters')
 });
 
@@ -213,7 +213,7 @@ const Contact: React.FC = () => {
                       name="message"
                       required
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-black"
                     />
                     {errors.message && (
                       <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
