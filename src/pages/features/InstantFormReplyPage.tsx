@@ -266,6 +266,334 @@ const InstantFormReplyPage: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How Instant Form Reply Works
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Form Submission Detection
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system monitors your website forms in real-time. The moment a form is submitted, 
+                  Instant Form Reply is triggered. There's no delay, no waiting period—the response 
+                  happens within seconds of submission. This immediate detection ensures customers receive 
+                  acknowledgment while they're still on your website, maintaining engagement and momentum.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system works with any form platform: contact forms, quote request forms, consultation 
+                  booking forms, newsletter signups, and more. It can integrate via webhooks, API connections, 
+                  or form plugins, ensuring compatibility with your existing website infrastructure.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Instant Analysis & Personalization
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI instantly analyzes the form submission, extracting key information like name, 
+                  contact details, inquiry type, and any specific questions or requirements. It then 
+                  personalizes the response based on this information, addressing the customer by name 
+                  and referencing their specific inquiry.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The personalization goes beyond just using the customer's name. The AI can reference 
+                  specific services they inquired about, acknowledge their location if provided, and 
+                  tailor the message tone based on the type of inquiry. This creates a more meaningful 
+                  connection and shows that you're paying attention to their specific needs.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Multi-Channel Response
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system sends responses via multiple channels simultaneously: SMS text message and 
+                  email. This ensures the customer receives the response on their preferred channel and 
+                  increases the likelihood they'll see it immediately. The response includes a personalized 
+                  greeting, acknowledgment of their inquiry, and next steps.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  SMS messages are particularly effective because 98% of text messages are opened, compared 
+                  to just 20% of emails. By sending both, you maximize the chances of immediate engagement. 
+                  The messages can include links to schedule appointments, request more information, or 
+                  continue the conversation.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: Lead Qualification & Engagement
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI can continue the conversation through SMS, asking qualifying questions to better 
+                  understand the customer's needs, budget, timeline, and decision-making authority. This 
+                  two-way conversation happens in real-time, keeping the customer engaged and moving them 
+                  through your sales funnel.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The qualification process is conversational and natural, not like filling out another form. 
+                  The AI asks questions one at a time, responds to answers, and adapts based on the customer's 
+                  responses. This approach feels more like talking to a helpful salesperson than being 
+                  interrogated, leading to higher engagement and more honest responses.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 5: Automatic Appointment Booking
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  If the customer is ready to schedule, the AI can book appointments directly from the 
+                  conversation. It checks your calendar availability, suggests optimal times, and confirms 
+                  the appointment—all through text message. The customer never has to leave the conversation 
+                  or wait for email responses.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  This seamless booking process eliminates friction and reduces the time between inquiry 
+                  and appointment. Customers can book immediately while they're still engaged and interested, 
+                  rather than waiting hours or days for a response and potentially losing interest or choosing 
+                  a competitor.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Use Cases
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">E-commerce Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  An online retailer receives 500 form submissions per month from their "Contact Us" form. 
+                  Before Instant Form Reply, they responded to inquiries within 24-48 hours, losing 40% of 
+                  potential customers to competitors who responded faster. After implementation, every form 
+                  submission receives an instant response within 10 seconds.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The instant response includes order status information, product recommendations based on 
+                  their inquiry, and links to schedule a call with a sales representative. This resulted in 
+                  a 35% increase in conversions and a 50% reduction in customer service workload, as many 
+                  questions are answered automatically.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Service-Based Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A home cleaning service uses Instant Form Reply for their quote request form. When customers 
+                  submit a form requesting a quote, they immediately receive a text message acknowledging their 
+                  request and asking a few qualifying questions about their needs. The AI can provide instant 
+                  price estimates for standard services and schedule in-home consultations for custom quotes.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  This instant engagement keeps customers interested and prevents them from submitting multiple 
+                  quote requests to competitors. The business saw a 60% increase in consultation bookings and 
+                  a 45% improvement in quote-to-booking conversion rates, as customers received immediate 
+                  attention and felt valued.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Professional Services</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A consulting firm uses Instant Form Reply for their consultation request form. When potential 
+                  clients submit the form, they receive an instant response that acknowledges their inquiry, 
+                  provides information about the consultation process, and offers to schedule a call immediately. 
+                  The AI can check consultant availability and book consultations directly.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  This professional, instant response creates a strong first impression and demonstrates the 
+                  firm's efficiency and attention to detail. The firm converted 30% more form submissions into 
+                  consultations and reduced the time between inquiry and consultation from an average of 5 days 
+                  to same-day or next-day scheduling.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Integration Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Easy Integration with Your Forms
+            </h2>
+            
+            <div className="space-y-6">
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Instant Form Reply works with virtually any form platform. Whether you use WordPress forms, 
+                Wix forms, Squarespace forms, custom HTML forms, or form builders like Typeform or JotForm, 
+                the system can integrate seamlessly. Integration typically takes just a few minutes and requires 
+                no coding knowledge.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-white rounded-lg p-5 border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">Webhook Integration</h3>
+                  <p className="text-gray-600 text-sm">
+                    Most modern form platforms support webhooks. Simply add the webhook URL to your form 
+                    settings, and submissions will be sent instantly to Instant Form Reply.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-5 border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">API Integration</h3>
+                  <p className="text-gray-600 text-sm">
+                    For custom forms or advanced integrations, use our REST API to send form submissions 
+                    programmatically. Full API documentation is available.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-5 border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">Plugin Integration</h3>
+                  <p className="text-gray-600 text-sm">
+                    For popular platforms like WordPress, we offer plugins that make integration as simple 
+                    as installing and activating.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-5 border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-2">Email Integration</h3>
+                  <p className="text-gray-600 text-sm">
+                    For forms that send email notifications, we can monitor your email inbox and respond 
+                    to form submissions automatically.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ROI Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              The Financial Impact
+            </h2>
+            
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                Consider a business that receives 200 form submissions per month. Research shows that 
+                responding within 60 seconds increases conversion rates by 391%. If your current 
+                conversion rate is 5% (10 customers from 200 submissions), responding instantly could 
+                increase that to 19.5% (39 customers).
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                That's 29 additional customers per month. At an average customer value of $300, that's 
+                $8,700 in additional monthly revenue ($104,400 annually). Even if the improvement is more 
+                conservative at 200% (doubling conversions), that's still $3,000 monthly ($36,000 annually) 
+                in additional revenue.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Additionally, you save time on manual follow-ups. If responding to each form submission 
+                takes 5 minutes, that's 1,000 minutes (16.7 hours) per month saved. At $50 per hour, 
+                that's $835 in time savings monthly ($10,020 annually). Combined with increased revenue, 
+                the total benefit is substantial.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Will customers know they're talking to AI?</h3>
+                <p className="text-gray-600">
+                  The AI can be transparent about being an AI assistant, or you can configure it to present 
+                  as a team member. Many businesses find that being transparent builds trust, while others 
+                  prefer a more human-like presentation. The choice is yours, and you can change it at any time.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What if a customer needs to speak to a human?</h3>
+                <p className="text-gray-600">
+                  The AI can seamlessly transfer conversations to human team members when needed. It can 
+                  also schedule callbacks, take detailed messages, or escalate urgent matters. The system 
+                  ensures customers always get the help they need, whether from AI or human agents.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize the responses?</h3>
+                <p className="text-gray-600">
+                  Absolutely. You can customize response templates, tone, messaging, and even create different 
+                  responses for different types of forms or inquiries. The system learns from your preferences 
+                  and can be trained on your specific business language and terminology.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How quickly does it respond?</h3>
+                <p className="text-gray-600">
+                  Responses are sent within 5-10 seconds of form submission. This instant response is crucial 
+                  for maintaining customer engagement and maximizing conversion rates. The speed is consistent 
+                  regardless of time of day or volume of submissions.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

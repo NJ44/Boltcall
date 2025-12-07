@@ -10,7 +10,7 @@ const FAQ: React.FC = () => {
   const faqs = [
     {
       question: 'What exactly Boltcall offers?',
-      answer: 'Boltcall helps your business. It talks to new customers right away. It answers your phone calls. It answers your messages. It books appointments for you. It talks to people again so they don't forget. It sends reminders. It tells you what is happening. It works even when you are busy or closed.'
+      answer: 'Boltcall helps your business. It talks to new customers right away. It answers your phone calls. It answers your messages. It books appointments for you. It talks to people again so they don\'t forget. It sends reminders. It tells you what is happening. It works even when you are busy or closed.'
     },
     {
       question: 'Can it transfer the call to a real person?',

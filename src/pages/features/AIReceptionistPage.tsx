@@ -267,6 +267,340 @@ const AIReceptionistPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Use Cases
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Dental Practice</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A dental practice receives 200 calls per month. Before implementing an AI receptionist, 
+                  they missed 30% of calls during peak hours and after hours. The AI now answers every call, 
+                  schedules appointments, sends reminders, and handles insurance questions. Result: 100% call 
+                  answer rate, 25% increase in new patient bookings, and $15,000 saved annually on receptionist costs.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI handles common questions about services, insurance acceptance, office hours, and 
+                  appointment availability. It can also provide directions to the office, explain preparation 
+                  requirements for procedures, and send post-appointment follow-up messages. This comprehensive 
+                  coverage ensures patients always get the information they need, when they need it.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Legal Firm</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A small law firm was losing potential clients because calls went to voicemail after hours. 
+                  The AI receptionist now answers calls 24/7, qualifies leads by asking about case type and 
+                  urgency, and schedules consultations. The firm saw a 40% increase in consultation bookings 
+                  and converted 15% more leads into clients.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI can handle initial intake questions, explain the consultation process, provide 
+                  information about practice areas, and even collect basic case information before routing 
+                  to an attorney. For urgent matters, it can immediately connect callers to the on-call 
+                  attorney or schedule same-day consultations when available.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Home Services Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A home services company was missing calls during service appointments when staff were 
+                  on-site. The AI receptionist now handles all incoming calls, schedules service appointments, 
+                  provides quotes, and even handles emergency calls. This resulted in 50% more bookings and 
+                  eliminated the need for a dedicated call center.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The system can provide service area information, explain different service packages, 
+                  schedule appointments based on technician availability, and send confirmation messages 
+                  with service details. For emergency calls, it can immediately route to the appropriate 
+                  technician or schedule urgent appointments.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How AI Receptionist Works
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Call Reception
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When a call comes in, the AI receptionist answers immediately with a professional greeting. 
+                  It identifies itself and your business name, creating a welcoming first impression. The system 
+                  uses natural language processing to understand the caller's intent, whether they're looking to 
+                  schedule an appointment, ask a question, or speak with someone specific.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The AI can recognize different types of calls: new customer inquiries, existing customer 
+                  questions, appointment requests, billing inquiries, and more. It adapts its approach based 
+                  on the call type, ensuring each caller receives appropriate and relevant assistance.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Intelligent Conversation
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI engages in natural conversation, asking relevant questions to understand the caller's 
+                  needs. It can answer frequently asked questions, provide information about your services, 
+                  explain pricing, and handle common inquiries without human intervention. The conversation feels 
+                  natural and human-like, not robotic.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  Advanced natural language understanding allows the AI to handle complex queries, understand 
+                  context, and maintain conversation flow. It can remember information mentioned earlier in the 
+                  conversation, follow up on previous points, and adapt its responses based on the caller's 
+                  responses and tone.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Lead Qualification
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  For potential customers, the AI asks qualifying questions to determine buying intent, budget, 
+                  timeline, and specific needs. This information is automatically logged in your CRM, helping 
+                  you prioritize follow-ups and focus on the most promising leads. The qualification process 
+                  is conversational and non-intrusive, gathering information naturally during the conversation.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system can score leads based on their responses, identifying high-value prospects that 
+                  need immediate attention. It can also identify low-quality leads or spam calls, saving your 
+                  team time and resources. All qualification data is stored and accessible for your sales team 
+                  to review and act upon.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: Appointment Scheduling
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When a caller wants to schedule an appointment, the AI checks your calendar in real-time, 
+                  identifies available time slots, and offers options that work for both you and the customer. 
+                  It can handle rescheduling requests, cancellations, and even suggest alternative times if 
+                  the preferred slot isn't available.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The scheduling process is seamless and efficient. The AI confirms appointment details, sends 
+                  automatic confirmation messages via SMS or email, and adds the appointment to your calendar. 
+                  It can also send reminder messages before appointments to reduce no-shows and ensure customers 
+                  are prepared.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 5: Call Routing & Escalation
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  For calls that require human attention, the AI can intelligently route to the right person 
+                  or department. It can also take detailed messages, schedule callbacks, or escalate urgent 
+                  matters. The system learns from your preferences and routing rules, improving its routing 
+                  decisions over time.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The AI can determine when a call should be transferred based on complexity, customer request, 
+                  or predefined rules. It provides context to the human agent when transferring, ensuring a 
+                  smooth handoff and avoiding the need for customers to repeat information. This creates a 
+                  seamless experience that combines the efficiency of AI with the personal touch of human 
+                  interaction when needed.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features & Capabilities Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Key Features & Capabilities
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Natural Language Understanding</h3>
+                <p className="text-gray-600 text-sm">
+                  Understands context, intent, and nuance in conversations. Handles complex queries and 
+                  maintains natural conversation flow.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Multi-Language Support</h3>
+                <p className="text-gray-600 text-sm">
+                  Communicate with customers in multiple languages, expanding your reach and serving 
+                  diverse customer bases.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">CRM Integration</h3>
+                <p className="text-gray-600 text-sm">
+                  Automatically syncs call data, lead information, and appointment details with your 
+                  existing CRM system.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Call Transcription</h3>
+                <p className="text-gray-600 text-sm">
+                  Every call is transcribed and stored, providing a searchable record of all customer 
+                  interactions for review and analysis.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Analytics & Insights</h3>
+                <p className="text-gray-600 text-sm">
+                  Detailed analytics on call volume, call duration, conversion rates, and customer 
+                  satisfaction help you optimize your operations.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Customizable Voice & Tone</h3>
+                <p className="text-gray-600 text-sm">
+                  Choose from different voice options and customize the tone to match your brand 
+                  personality and industry standards.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ROI Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Return on Investment
+            </h2>
+            
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                Let's calculate the ROI for a typical business. Assume you receive 150 calls per month, 
+                with an average customer value of $400. Before implementing an AI receptionist, you were 
+                missing 25% of calls (37.5 calls per month), resulting in $15,000 in lost revenue monthly 
+                ($180,000 annually).
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                With an AI receptionist answering 100% of calls, you capture all those leads. Even if only 
+                30% convert (11.25 customers), that's $4,500 in additional monthly revenue ($54,000 annually). 
+                Additionally, you save $35,000 annually on receptionist costs. Total benefit: $89,000 per year.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                The AI receptionist pays for itself many times over, while providing better service coverage 
+                than a human receptionist could ever provide. The investment is minimal compared to the returns, 
+                making it one of the highest-ROI investments you can make for your business.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can the AI handle complex questions?</h3>
+                <p className="text-gray-600">
+                  Yes. The AI uses advanced natural language processing to understand context and handle 
+                  complex queries. For questions it can't answer, it can take detailed messages, schedule 
+                  callbacks, or route to a human agent with full context.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What if a customer wants to speak to a real person?</h3>
+                <p className="text-gray-600">
+                  The AI can transfer calls to human agents at any time. You can set rules for when transfers 
+                  should happen (e.g., during business hours, for urgent matters, or when requested). The AI 
+                  provides context to the human agent, ensuring smooth handoffs.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How does it integrate with my existing systems?</h3>
+                <p className="text-gray-600">
+                  The AI receptionist integrates with popular calendar systems (Google Calendar, Outlook), 
+                  CRM platforms (Salesforce, HubSpot), and phone systems. It can also integrate with custom 
+                  systems via API, ensuring seamless workflow integration.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Is it difficult to set up?</h3>
+                <p className="text-gray-600">
+                  Not at all. Setup takes about 5 minutes. You provide basic information about your business, 
+                  connect your calendar, and customize the AI's responses. No technical expertise required. 
+                  The system is ready to start answering calls immediately after setup.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

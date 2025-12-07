@@ -236,6 +236,236 @@ const AutomatedRemindersPage: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How Automated Reminders Work
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Appointment Scheduling
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When an appointment is scheduled (through any channel—phone, website, SMS, or in-person), 
+                  the automated reminder system is immediately activated. The system captures all relevant 
+                  details: customer name, appointment date and time, service type, location, and any special 
+                  instructions. This information is stored and used to create personalized reminder messages.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system integrates seamlessly with your existing scheduling system, whether it's a 
+                  calendar app, booking software, or custom solution. There's no need to manually enter 
+                  appointment information—the reminders are set up automatically for every appointment.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Reminder Timing Configuration
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  You configure when reminders are sent based on your business needs. Common configurations 
+                  include reminders 48 hours before, 24 hours before, and 2 hours before the appointment. 
+                  You can customize these timings for different appointment types or services. For example, 
+                  medical procedures might need earlier reminders with preparation instructions, while 
+                  simple consultations might only need a 24-hour reminder.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system is intelligent about timing—it won't send reminders in the middle of the night 
+                  or at inappropriate times. Reminders are sent during reasonable hours based on the 
+                  customer's time zone, ensuring they're seen and acted upon.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Personalized Message Delivery
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Reminders are sent via SMS, email, or both, depending on customer preferences and your 
+                  configuration. Each message is personalized with the customer's name, appointment details, 
+                  location, and any relevant instructions. The tone is friendly and professional, creating 
+                  a positive experience that reinforces your brand.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  Messages can include links to confirm, reschedule, or cancel the appointment, making it 
+                  easy for customers to manage their appointments without calling. This convenience reduces 
+                  friction and encourages customers to take action if they need to make changes.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: Response Handling
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When customers respond to reminders (confirming, rescheduling, or cancelling), the system 
+                  handles these responses automatically. Confirmations are logged, rescheduling requests are 
+                  processed with calendar availability checks, and cancellations free up the time slot. 
+                  You're notified of any changes, but the system handles the administrative work.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  If a customer needs to reschedule, the AI can suggest alternative times based on your 
+                  availability, making it easy to find a new appointment time that works for both parties. 
+                  This proactive approach helps fill cancelled slots and maintains customer relationships 
+                  even when they need to change plans.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Impact
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Healthcare Practice</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A medical practice with 500 appointments per month had a 25% no-show rate, costing 
+                  $18,750 monthly in lost revenue. After implementing automated reminders with 24-hour 
+                  and 2-hour notifications, no-shows dropped to 8%. This saved $12,750 monthly ($153,000 
+                  annually) and improved patient satisfaction significantly.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The reminders also included preparation instructions (like fasting requirements or 
+                  bringing insurance cards), which reduced confusion and improved appointment quality. 
+                  Patients appreciated the proactive communication, and the practice saw improved patient 
+                  retention and referrals.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Service Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A home services company reduced no-shows from 30% to 10% with automated reminders. 
+                  The reminders included service details, what to expect, and preparation requirements. 
+                  This not only reduced no-shows but also improved customer satisfaction because customers 
+                  were better prepared for their appointments.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The company also used the reminder system to send follow-up messages after service, 
+                  asking for feedback and offering additional services. This created additional revenue 
+                  opportunities and improved customer relationships beyond just reducing no-shows.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ROI Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Calculate Your Savings
+            </h2>
+            
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                Let's calculate the impact for a typical business. If you have 200 appointments per month 
+                at $150 per appointment, and your no-show rate is 20% (40 no-shows), you're losing $6,000 
+                monthly ($72,000 annually) in revenue.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                Automated reminders typically reduce no-shows by 50-70%. If reminders reduce your no-show 
+                rate to 10% (20 no-shows), you save 20 appointments per month. That's $3,000 monthly 
+                ($36,000 annually) in recovered revenue. Additionally, you save time on manual reminder 
+                calls and reduce staff workload.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                The cost of automated reminders is minimal compared to the revenue protection and time 
+                savings. For most businesses, the system pays for itself many times over in the first 
+                month of use.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize reminder messages?</h3>
+                <p className="text-gray-600">
+                  Yes. You can customize message templates, tone, content, and timing. You can create 
+                  different messages for different appointment types, services, or customer segments. 
+                  The system allows full customization while maintaining professional standards.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What if a customer doesn't want reminders?</h3>
+                <p className="text-gray-600">
+                  Customers can opt out of reminders at any time. The system respects preferences and 
+                  won't send reminders to customers who have opted out. You can also configure opt-out 
+                  options in your reminder settings.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How do customers reschedule via reminders?</h3>
+                <p className="text-gray-600">
+                  Reminder messages include links or instructions for rescheduling. Customers can click 
+                  a link to see available times and select a new appointment, or they can reply to the 
+                  text/email with their preferred new time. The AI handles the rescheduling automatically.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can reminders include special instructions?</h3>
+                <p className="text-gray-600">
+                  Absolutely. Reminders can include preparation instructions, what to bring, directions, 
+                  parking information, or any other relevant details. You can customize these instructions 
+                  per appointment type or service.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

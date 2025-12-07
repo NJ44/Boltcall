@@ -237,6 +237,281 @@ const AIFollowUpSystemPage: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How AI Follow-Up System Works
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Lead Capture & Analysis
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When a new lead is captured (from forms, calls, website interactions, or any source), 
+                  the AI Follow-Up System immediately analyzes the lead's information, behavior, and 
+                  engagement history. It determines the lead's stage in the sales funnel, buying intent, 
+                  and optimal follow-up strategy. This analysis happens instantly, ensuring no time is 
+                  wasted before beginning the nurturing process.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system considers multiple factors: how the lead found you, what information they 
+                  provided, their engagement level, previous interactions, and industry-specific signals. 
+                  This comprehensive analysis ensures follow-ups are relevant, timely, and effective.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Personalized Message Creation
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI creates personalized follow-up messages based on the lead's profile, needs, 
+                  and stage in the buyer's journey. Each message is tailored to address specific 
+                  pain points, provide relevant value, and move the lead closer to a purchase decision. 
+                  The personalization goes beyond just using the lead's name—it includes industry-specific 
+                  insights, relevant case studies, and targeted offers.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  Messages are crafted to feel natural and human, not like automated marketing emails. 
+                  The AI uses conversational language, addresses the lead's specific situation, and 
+                  provides genuine value in each communication. This approach builds trust and maintains 
+                  engagement throughout the nurturing process.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Optimal Timing Determination
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system uses machine learning to determine the optimal time to send each follow-up. 
+                  It analyzes the lead's engagement patterns, response times, and behavior to identify 
+                  when they're most likely to be receptive. This timing optimization significantly 
+                  increases open rates, response rates, and conversion rates compared to generic 
+                  follow-up schedules.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The AI considers factors like time of day, day of week, time since last interaction, 
+                  and lead activity patterns. It adapts in real-time, sending follow-ups when the 
+                  lead is most engaged rather than following a rigid schedule. This intelligent timing 
+                  ensures your messages are seen and acted upon.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: Multi-Channel Delivery
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Follow-ups are sent via the lead's preferred channel—SMS, email, or both. The system 
+                  tracks which channels get the best response for each lead and adjusts accordingly. 
+                  Multi-channel follow-ups ensure your message reaches the lead even if they're not 
+                  checking one channel regularly.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system maintains conversation continuity across channels, ensuring the lead 
+                  experiences a cohesive journey regardless of which channel they use. This integrated 
+                  approach prevents confusion and maintains engagement throughout the nurturing process.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 5: Response Tracking & Adaptation
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system tracks every interaction: opens, clicks, responses, and engagement levels. 
+                  Based on this data, it adapts the follow-up strategy in real-time. If a lead shows 
+                  high engagement, it may accelerate the sequence or offer more direct calls-to-action. 
+                  If engagement is low, it may adjust the messaging or timing to re-engage.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  When a lead responds or shows buying signals, the system can automatically notify your 
+                  sales team, schedule a call, or move the lead to a different nurturing track. This 
+                  intelligent routing ensures hot leads get immediate attention while warm leads continue 
+                  to be nurtured appropriately.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Results
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">B2B Service Company</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A B2B service company was losing 70% of leads because they couldn't follow up consistently. 
+                  After implementing AI Follow-Up System, they saw a 45% increase in lead conversion rates. 
+                  The system automatically nurtured leads for weeks, providing value and building relationships 
+                  until leads were ready to buy.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The company's sales team now focuses on hot leads while the AI handles nurturing for 
+                  warm and cold leads. This division of labor increased overall sales productivity by 60% 
+                  and reduced the sales cycle length by 30%, as leads were better qualified and more 
+                  engaged when they reached the sales team.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">E-commerce Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  An e-commerce business used AI Follow-Up System to re-engage customers who abandoned 
+                  shopping carts. The system sent personalized follow-ups with product recommendations, 
+                  special offers, and helpful information. Cart abandonment recovery increased from 5% 
+                  to 18%, generating $45,000 in additional monthly revenue.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The follow-ups weren't just promotional—they provided value through product tips, 
+                  usage guides, and customer success stories. This value-first approach built trust and 
+                  encouraged purchases without feeling pushy or salesy.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Best Practices Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Best Practices for Follow-Up Success
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Provide Value First</h3>
+                <p className="text-gray-600">
+                  Every follow-up should provide value to the lead, whether it's helpful information, 
+                  industry insights, case studies, or useful resources. Leads are more likely to engage 
+                  with content that helps them rather than just promotional messages.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Vary Your Messages</h3>
+                <p className="text-gray-600">
+                  Don't send the same message repeatedly. Vary the content, format, and approach to 
+                  keep leads engaged. Mix educational content, case studies, special offers, and direct 
+                  calls-to-action to maintain interest.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Respect Opt-Outs</h3>
+                <p className="text-gray-600">
+                  Always provide easy opt-out options and respect them immediately. Maintaining a 
+                  positive relationship with leads who aren't ready is important—they may become 
+                  customers in the future or refer others.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Track & Optimize</h3>
+                <p className="text-gray-600">
+                  Monitor which follow-ups get the best response and optimize your sequences accordingly. 
+                  The AI system learns from results and improves over time, but you can also manually 
+                  adjust based on your insights and business goals.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How many follow-ups should I send?</h3>
+                <p className="text-gray-600">
+                  Research shows that 80% of sales require 5 follow-ups, yet most businesses give up 
+                  after 2. The AI Follow-Up System can continue nurturing leads for as long as needed, 
+                  adapting the frequency and content based on engagement levels. The system will 
+                  automatically reduce frequency if a lead isn't engaging and increase it if they show 
+                  interest.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Will leads know it's automated?</h3>
+                <p className="text-gray-600">
+                  The messages are designed to feel natural and human-like. However, you can choose to 
+                  be transparent about using AI assistance or present it as your team. Many businesses 
+                  find that being transparent builds trust, while others prefer a more human presentation. 
+                  The choice is yours.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize follow-up sequences?</h3>
+                <p className="text-gray-600">
+                  Yes. You can create custom follow-up sequences for different lead types, industries, 
+                  or stages in the buyer's journey. The system allows full customization while providing 
+                  AI-powered optimization suggestions based on best practices and your results.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What happens when a lead responds?</h3>
+                <p className="text-gray-600">
+                  When a lead responds or shows buying signals, the system can automatically notify your 
+                  sales team, schedule a call, move the lead to a different nurturing track, or continue 
+                  the conversation via AI. You configure how different types of responses are handled based 
+                  on your sales process.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

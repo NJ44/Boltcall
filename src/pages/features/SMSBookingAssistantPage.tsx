@@ -250,6 +250,292 @@ const SMSBookingAssistantPage: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How SMS Booking Works
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Customer Initiates Booking
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  A customer sends a text message to your business number requesting an appointment. 
+                  They can use natural language like "I need an appointment next week" or "Can I book 
+                  for Tuesday afternoon?" The AI understands the intent and responds immediately, 
+                  starting the booking conversation.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system works with any phone number—you can use your existing business number or 
+                  get a dedicated SMS number. Customers don't need to download apps, create accounts, 
+                  or navigate websites. They simply text from their phone, using the communication 
+                  method they're most comfortable with.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Availability Check
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI checks your calendar in real-time to find available time slots that match 
+                  the customer's preferences. It considers your business hours, existing appointments, 
+                  blocked time, and any scheduling rules you've set (like buffer times between appointments). 
+                  The system presents available options in a conversational, easy-to-understand format.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  If the customer's preferred time isn't available, the AI suggests alternative times 
+                  that work for both parties. It can offer multiple options, explain why certain times 
+                  aren't available, and help find the best alternative. This flexibility ensures customers 
+                  can find a time that works for them, increasing booking completion rates.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Appointment Confirmation
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Once the customer selects a time, the AI confirms the appointment details, including 
+                  date, time, location, and any special instructions. The confirmation message is clear 
+                  and comprehensive, ensuring the customer has all the information they need. The 
+                  appointment is immediately added to your calendar, and you receive a notification.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The confirmation can include additional helpful information like directions to your 
+                  location, what to bring, preparation requirements, or cancellation policies. This 
+                  upfront information reduces confusion and helps ensure customers are prepared for 
+                  their appointment, improving the overall experience.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: Automated Reminders
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system automatically sends reminder messages before the appointment—typically 
+                  24 hours and 2 hours before. These reminders include appointment details and easy 
+                  options to confirm, reschedule, or cancel. This reduces no-shows and gives you 
+                  advance notice if someone needs to reschedule.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  If a customer needs to reschedule, they can simply reply to the reminder text with 
+                  their new preferred time. The AI handles the rescheduling automatically, finding 
+                  alternative times and updating the calendar. This convenience encourages customers to 
+                  reschedule rather than simply not showing up, protecting your schedule and revenue.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 5: Ongoing Management
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Customers can manage their appointments anytime via text. They can reschedule, cancel, 
+                  or ask questions about their upcoming appointment. The AI handles all these interactions 
+                  automatically, freeing you from administrative tasks while providing customers with 
+                  convenient self-service options.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The system maintains a complete history of all text conversations and appointment 
+                  changes, providing you with a clear record of customer interactions. This information 
+                  can be valuable for understanding customer preferences, identifying patterns, and 
+                  improving your service offerings.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Use Cases
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Medical Practice</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A medical practice implemented SMS booking to reduce phone call volume and improve 
+                  patient convenience. Patients can now text to book appointments, receive reminders, 
+                  and reschedule if needed—all without calling the office. This reduced phone call volume 
+                  by 60%, allowing staff to focus on in-person patient care.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The practice saw a 30% reduction in no-shows thanks to automated reminders and easy 
+                  rescheduling options. Patients appreciate the convenience of texting, especially for 
+                  routine appointments. The system can also handle appointment types, insurance 
+                  verification questions, and preparation instructions, making the entire process smoother.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Beauty Salon</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A beauty salon uses SMS booking to manage appointments for multiple stylists. Customers 
+                  can text to book with their preferred stylist, see available times, and manage their 
+                  appointments. The system handles different service types (haircuts, color, treatments) 
+                  and appointment durations automatically.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The salon increased bookings by 40% because customers could book anytime, even when the 
+                  salon was closed. The automated reminders reduced no-shows by 50%, and the easy 
+                  rescheduling feature helped fill cancelled appointments quickly. Staff spend less time 
+                  on the phone and more time with clients.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Fitness Studio</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A fitness studio uses SMS booking for class reservations. Members can text to book 
+                  classes, see availability, and get on waitlists if classes are full. The system sends 
+                  reminders before classes and can handle cancellations, helping manage class capacity 
+                  effectively.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The studio reduced no-shows by 45% and improved class utilization. Members appreciate 
+                  the convenience of booking via text, especially when they're on the go. The system can 
+                  also send motivational messages, class updates, and special offers, enhancing member 
+                  engagement beyond just booking.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Benefits Deep Dive Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Additional Benefits
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Reduced Phone Call Volume</h3>
+                <p className="text-gray-600 text-sm">
+                  SMS booking reduces phone calls by 60-80%, freeing staff to focus on in-person 
+                  customer service and other important tasks. This improves productivity and reduces 
+                  staffing needs.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Better Customer Experience</h3>
+                <p className="text-gray-600 text-sm">
+                  Customers can book appointments on their terms, without waiting on hold or being 
+                  limited to business hours. This convenience improves satisfaction and loyalty.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Increased Booking Rates</h3>
+                <p className="text-gray-600 text-sm">
+                  24/7 availability means you capture bookings from customers who research and decide 
+                  outside business hours, increasing overall booking volume by 30-50%.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Data Collection</h3>
+                <p className="text-gray-600 text-sm">
+                  Every text interaction provides valuable data about customer preferences, booking 
+                  patterns, and peak times, helping you optimize your schedule and services.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Do customers need to download an app?</h3>
+                <p className="text-gray-600">
+                  No. SMS booking works with any phone that can send text messages. Customers simply 
+                  text your business number—no apps, accounts, or downloads required. This makes it 
+                  accessible to everyone, regardless of their technical comfort level.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">What if a customer wants to speak to someone?</h3>
+                <p className="text-gray-600">
+                  The AI can transfer customers to a phone call or schedule a callback if they prefer 
+                  to speak with a human. The system is flexible and can adapt to customer preferences, 
+                  ensuring everyone gets the service they want.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can it handle complex scheduling rules?</h3>
+                <p className="text-gray-600">
+                  Yes. The system can handle buffer times between appointments, different appointment 
+                  durations, multiple service providers, recurring appointments, and more. You can 
+                  configure complex scheduling rules to match your business needs.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How does it prevent double-booking?</h3>
+                <p className="text-gray-600">
+                  The system checks your calendar in real-time before confirming any appointment. It 
+                  respects existing appointments, blocked time, and business hours, ensuring every 
+                  booking is valid and conflict-free. If a time slot becomes unavailable between 
+                  when it's offered and when it's confirmed, the system will notify the customer 
+                  and suggest alternatives.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

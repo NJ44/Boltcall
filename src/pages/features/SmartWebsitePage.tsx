@@ -238,6 +238,291 @@ const SmartWebsitePage: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How Smart Website Optimization Works
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Comprehensive Website Analysis
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system performs a deep analysis of your website, examining performance metrics, 
+                  user behavior, conversion funnels, technical SEO factors, mobile responsiveness, 
+                  and more. This analysis identifies bottlenecks, optimization opportunities, and areas 
+                  for improvement across all aspects of your site.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The analysis goes beyond surface-level metrics to understand user journeys, identify 
+                  drop-off points, analyze heatmaps and scroll depth, and examine conversion paths. 
+                  This comprehensive understanding forms the foundation for targeted optimizations that 
+                  deliver real results.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Performance Optimization
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system automatically optimizes page speed through image compression, code 
+                  minification, caching strategies, CDN optimization, and resource prioritization. 
+                  These technical optimizations improve load times, which directly impacts user 
+                  experience, bounce rates, and search engine rankings.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  Performance optimization is ongoing—the system continuously monitors and adjusts as 
+                  your website evolves. It identifies new optimization opportunities as content is 
+                  added, traffic patterns change, or new technologies emerge. This ensures your 
+                  website maintains peak performance over time.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Conversion Rate Optimization
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI tests different page elements, layouts, headlines, CTAs, forms, and user 
+                  flows to identify what converts best. It runs A/B tests automatically, analyzes 
+                  results, and implements winning variations. This data-driven approach continuously 
+                  improves conversion rates without requiring guesswork or manual testing.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The optimization process is systematic and scientific. The system tests hypotheses, 
+                  measures results, and learns from outcomes. Over time, it builds a deep understanding 
+                  of what works for your specific audience and business, enabling increasingly effective 
+                  optimizations.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: SEO Enhancement
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system improves search engine optimization through technical fixes, meta tag 
+                  optimization, structured data implementation, internal linking improvements, and 
+                  content optimization. These enhancements improve search rankings, organic traffic, 
+                  and visibility.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  SEO optimization is comprehensive, addressing both technical and content aspects. 
+                  The system ensures your website meets search engine best practices while also 
+                  optimizing content for target keywords and user intent. This dual approach maximizes 
+                  search visibility and organic traffic growth.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 5: Continuous Monitoring & Improvement
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The system continuously monitors your website's performance, user behavior, and 
+                  conversion metrics. It identifies new optimization opportunities, tests improvements, 
+                  and implements changes that deliver measurable results. This ongoing optimization 
+                  ensures your website keeps improving over time.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  You receive regular reports on improvements, metrics, and ROI. The system provides 
+                  transparency into what's being optimized and why, giving you confidence that your 
+                  website is continuously improving and delivering better results.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Results
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">E-commerce Store</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  An e-commerce store implemented Smart Website optimization and saw dramatic improvements. 
+                  Page load time decreased from 4.2 seconds to 1.8 seconds, mobile conversion rate 
+                  increased by 35%, and overall conversion rate improved by 28%. These improvements 
+                  generated an additional $180,000 in annual revenue.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The optimizations included image optimization, mobile responsiveness improvements, 
+                  checkout flow optimization, and A/B testing of product pages. The AI identified 
+                  specific bottlenecks that were hurting conversions and systematically addressed them, 
+                  resulting in measurable improvements across all key metrics.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Service Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A service business saw their website traffic increase by 45% and conversion rate 
+                  improve by 32% after Smart Website optimization. The improvements came from SEO 
+                  enhancements, page speed optimization, and conversion rate optimization of key pages 
+                  like the contact form and service pages.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The system identified that the contact form was too long and intimidating, causing 
+                  high abandonment rates. It tested shorter forms, better CTAs, and improved messaging, 
+                  resulting in a 40% increase in form completions. Combined with SEO improvements that 
+                  brought more qualified traffic, the business saw significant growth in leads and revenue.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Key Features Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Key Optimization Features
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Image & Media Optimization</h3>
+                <p className="text-gray-600 text-sm">
+                  Automatically compresses and optimizes images, videos, and other media files to reduce 
+                  load times without sacrificing quality. Supports modern formats like WebP and AVIF for 
+                  maximum efficiency.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Mobile Optimization</h3>
+                <p className="text-gray-600 text-sm">
+                  Ensures your website is fully responsive and optimized for mobile devices. Improves 
+                  mobile page speed, touch interactions, and mobile-specific conversion elements.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Caching & CDN</h3>
+                <p className="text-gray-600 text-sm">
+                  Implements intelligent caching strategies and CDN optimization to serve content faster 
+                  to users worldwide. Reduces server load and improves performance for all visitors.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Form Optimization</h3>
+                <p className="text-gray-600 text-sm">
+                  Optimizes forms for better conversion rates through field reduction, better validation, 
+                  progress indicators, and improved UX. Tests different form layouts and lengths to find 
+                  what converts best.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">CTA Optimization</h3>
+                <p className="text-gray-600 text-sm">
+                  Tests different call-to-action buttons, colors, text, placement, and designs to maximize 
+                  clicks and conversions. Uses data to identify the most effective CTAs for your audience.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Content Optimization</h3>
+                <p className="text-gray-600 text-sm">
+                  Analyzes content performance and suggests improvements to headlines, copy, structure, 
+                  and formatting. Optimizes content for both users and search engines.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Will optimizations break my website?</h3>
+                <p className="text-gray-600">
+                  No. All optimizations are tested thoroughly before implementation. The system creates 
+                  backups and can roll back changes if needed. Optimizations are implemented gradually 
+                  and monitored to ensure they improve performance without causing issues.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">How long until I see results?</h3>
+                <p className="text-gray-600">
+                  Some improvements are immediate (like page speed optimizations), while others take 
+                  time to show results (like SEO improvements or A/B test outcomes). Typically, you'll 
+                  see measurable improvements within 2-4 weeks, with continued improvements over time 
+                  as the system learns and optimizes.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I control what gets optimized?</h3>
+                <p className="text-gray-600">
+                  Yes. You can approve or reject optimization suggestions, set boundaries for what can 
+                  be changed, and maintain control over critical elements. The system provides 
+                  transparency and gives you final approval on significant changes.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Does it work with any website platform?</h3>
+                <p className="text-gray-600">
+                  Yes. Smart Website optimization works with any website platform: WordPress, Shopify, 
+                  Squarespace, custom HTML, or any other platform. The optimizations are implemented 
+                  at the code and content level, making them platform-agnostic.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

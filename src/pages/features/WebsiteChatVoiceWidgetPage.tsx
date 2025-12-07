@@ -231,6 +231,273 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              How Website Chat/Voice Widget Works
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 1: Easy Installation
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Installing the widget is simple—just add a small code snippet to your website. The 
+                  widget appears on all pages automatically, ready to engage visitors. It works on any 
+                  website platform: WordPress, Shopify, Squarespace, custom HTML, or any other platform. 
+                  No technical expertise required—just copy and paste the code.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The widget is lightweight and won't slow down your website. It loads asynchronously, 
+                  so it doesn't impact page speed or SEO. Once installed, it works immediately, engaging 
+                  visitors and capturing leads 24/7 without any additional configuration needed.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 2: Visitor Engagement
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When a visitor lands on your website, the widget can proactively engage them with a 
+                  friendly greeting or wait for them to initiate conversation. You can configure when 
+                  and how the widget engages visitors—immediately, after a delay, on specific pages, or 
+                  only when visitors click the chat icon.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The widget can detect visitor behavior and engage at optimal moments. For example, it 
+                  might engage visitors who spend time on a pricing page, visitors who scroll to the 
+                  bottom of a page (indicating interest), or visitors who are about to leave. This 
+                  intelligent engagement maximizes conversion opportunities.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 3: Intelligent Conversations
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  The AI handles conversations naturally, answering questions, providing information, 
+                  and guiding visitors through your website. It can answer FAQs, explain services, 
+                  provide pricing information, and help visitors find what they're looking for. The 
+                  conversation feels natural and helpful, not robotic or scripted.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The AI understands context and can reference information from your website, previous 
+                  messages in the conversation, and visitor behavior. It can handle complex queries, 
+                  provide detailed explanations, and even make recommendations based on the visitor's 
+                  needs and interests.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 4: Lead Capture & Qualification
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  During conversations, the AI naturally collects visitor information: name, email, 
+                  phone number, and specific needs. This information is captured seamlessly as part 
+                  of the conversation, not through intrusive forms. The AI can also qualify leads by 
+                  asking relevant questions about budget, timeline, and requirements.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  All captured leads are automatically logged in your CRM with full conversation history. 
+                  This provides your sales team with complete context when following up, enabling more 
+                  effective and personalized outreach. The qualification data helps prioritize leads and 
+                  allocate resources effectively.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  Step 5: Appointment Booking & Actions
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  When visitors are ready to take action, the AI can book appointments, schedule calls, 
+                  send quotes, or direct them to specific pages or forms. This seamless action-taking 
+                  keeps visitors engaged and converts them while they're still on your website, rather 
+                  than requiring them to navigate elsewhere or wait for email responses.
+                </p>
+                <p className="text-gray-600 leading-relaxed mt-3">
+                  The widget can also handle post-conversation actions like sending follow-up emails, 
+                  adding visitors to email lists, or triggering other marketing automation workflows. 
+                  This integration ensures every visitor interaction is maximized and no opportunities 
+                  are lost.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Real-World Results
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">E-commerce Store</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  An online store added the chat widget to help customers find products and answer 
+                  questions. The widget handled 80% of customer inquiries automatically, reducing 
+                  support workload by 60%. More importantly, visitors who chatted were 3x more likely 
+                  to make a purchase than those who didn't.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The widget helped customers find the right products, answered sizing questions, 
+                  explained shipping policies, and handled returns inquiries. This improved customer 
+                  satisfaction and reduced cart abandonment, as customers got immediate answers to 
+                  questions that might have prevented purchases.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Service Business</h3>
+                <p className="text-gray-600 leading-relaxed mb-3">
+                  A service business used the widget to capture leads and book consultations directly 
+                  from their website. The widget engaged visitors, answered questions about services, 
+                  and booked appointments without requiring visitors to call or fill out forms. This 
+                  increased lead capture by 50% and consultation bookings by 35%.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  The conversational booking process felt more natural and less intimidating than 
+                  filling out forms, encouraging more visitors to book consultations. The widget also 
+                  handled common questions, freeing up staff time while providing better customer 
+                  service.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Customization Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Customization Options
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Brand Matching</h3>
+                <p className="text-gray-600 text-sm">
+                  Customize colors, fonts, and styling to match your brand perfectly. The widget 
+                  can blend seamlessly into your website design or stand out as a call-to-action.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Positioning</h3>
+                <p className="text-gray-600 text-sm">
+                  Choose where the widget appears: bottom-right corner, bottom-left, or custom 
+                  positioning. You can also configure it to appear on specific pages only.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Greeting Messages</h3>
+                <p className="text-gray-600 text-sm">
+                  Customize greeting messages for different pages, visitor types, or times of day. 
+                  Create personalized experiences that match your brand voice and customer expectations.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Voice Options</h3>
+                <p className="text-gray-600 text-sm">
+                  Choose from different voice options for voice interactions, or configure text-only 
+                  chat. The widget supports both text and voice conversations, giving visitors choice 
+                  in how they want to interact.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Will it slow down my website?</h3>
+                <p className="text-gray-600">
+                  No. The widget is lightweight and loads asynchronously, so it doesn't impact your 
+                  website's speed or performance. It's designed to be fast and efficient, ensuring 
+                  your site remains fast while providing enhanced functionality.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can visitors still contact me directly?</h3>
+                <p className="text-gray-600">
+                  Yes. The widget can transfer conversations to human agents when needed, or visitors 
+                  can use your existing contact methods. The widget enhances your communication options 
+                  without replacing them.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Does it work on mobile devices?</h3>
+                <p className="text-gray-600">
+                  Yes. The widget is fully responsive and works perfectly on mobile devices, tablets, 
+                  and desktops. It adapts to different screen sizes and provides an optimal experience 
+                  on all devices.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I see conversation transcripts?</h3>
+                <p className="text-gray-600">
+                  Yes. All conversations are logged and accessible in your dashboard. You can review 
+                  transcripts, analyze visitor questions, and use insights to improve your website 
+                  content and customer service.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
