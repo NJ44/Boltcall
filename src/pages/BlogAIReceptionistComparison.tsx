@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone, MessageSquare, CheckCircle, TrendingUp, Zap, Users } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogAIReceptionistComparison: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Best AI Receptionist Tools for Small Businesses | Boltcall';
+    updateMetaDescription('Compare best AI receptionist tools for small businesses. See features, pricing, and find the right solution.');
   }, []);
   const tools = [
     {

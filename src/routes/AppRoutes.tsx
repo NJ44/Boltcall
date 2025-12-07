@@ -99,6 +99,7 @@ import AIFollowUpSystemPage from '../pages/features/AIFollowUpSystemPage';
 import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidgetPage';
 import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
 import SmartWebsitePage from '../pages/features/SmartWebsitePage';
+import FeatureSectionWithHoverEffectsDemo from '../pages/FeatureSectionWithHoverEffectsDemo';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -225,7 +226,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/giveaway" element={<Giveaway />} />
-        <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
+            <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
         <Route path="/smart-website" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
@@ -271,6 +272,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/website-chat-voice-widget" element={<WebsiteChatVoiceWidgetPage />} />
         <Route path="/features/lead-reactivation" element={<LeadReactivationFeaturePage />} />
         <Route path="/features/smart-website" element={<SmartWebsitePage />} />
+        {/* Demo Pages */}
+        <Route path="/feature-section-with-hover-effects-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

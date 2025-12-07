@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Zap, Users, Phone } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogSpeed: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'The 391% Advantage: Responding to Leads in 60 Seconds | Boltcall';
+    updateMetaDescription('The 391% advantage: responding to leads in 60 seconds. Learn why speed dramatically increases conversion rates.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

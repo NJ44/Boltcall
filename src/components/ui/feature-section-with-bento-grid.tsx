@@ -89,7 +89,7 @@ function Feature() {
               <div className="flex flex-col text-left max-w-xs">
                 <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Increased closing rates</h3>
                 <p className="text-muted-foreground text-base mb-4">
-                  Answering a lead within 60 seconds or less makes you 391% more likely to close the deal. Speed is everything in lead conversion.
+                  If you talk to a new customer in 60 seconds, you get 4 times more customers. Being fast is very important.
                 </p>
               </div>
 
@@ -156,7 +156,7 @@ function Feature() {
                   <CardBody>
                     <CardTitle>Increased Revenue</CardTitle>
                     <CardDescription>
-                      Faster responses capture more opportunities, boosting conversions and revenue.
+                      When you answer fast, you get more customers. This makes you more money.
                     </CardDescription>
                   </CardBody>
                 </AnimatedCard>
@@ -184,7 +184,7 @@ function Feature() {
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
                 <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">Save time</h3>
                 <p className="text-muted-foreground text-base max-w-xs">
-                  BoltCall handles the repetitive work so you can focus on growing your business.
+                  BoltCall does the boring work for you. You can focus on making your business bigger.
                 </p>
               </div>
             </motion.div>
@@ -204,7 +204,7 @@ function Feature() {
               <div className="flex flex-col text-left max-w-sm">
                 <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Customer satisfaction</h3>
                 <p className="text-muted-foreground text-base">
-                  Deliver exceptional customer experiences with instant responses and personalized interactions that build trust and loyalty.
+                  Make your customers happy. Answer them right away. Talk to them in a nice way. They will trust you and come back.
                 </p>
               </div>
               <div className="flex-1 flex items-center justify-center">

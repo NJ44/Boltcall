@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
@@ -10,6 +11,11 @@ const Newsletter: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Newsletter - Subscribe for AI Business Tips | Boltcall';
+    updateMetaDescription('Subscribe to Boltcall newsletter for AI business tips, guides, and updates. Learn how to grow your business with AI.');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

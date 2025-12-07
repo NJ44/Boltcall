@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Search, Globe, BarChart3, AlertCircle, CheckCircle, Loader, Mail, X } from 'lucide-react';
 import Header from '../components/Header';
@@ -11,6 +12,11 @@ const SEOAnalyzer: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState('');
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Free SEO Audit Tool - Analyze Your Website SEO | Boltcall';
+    updateMetaDescription('Free SEO audit tool analyzes your website SEO. Get detailed report on rankings, keywords, and optimization opportunities.');
+  }, []);
 
   const validateUrl = (urlString: string): boolean => {
     try {

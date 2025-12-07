@@ -23,45 +23,45 @@ export function HeroScrollDemo() {
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=500&fit=crop',
       animation: '/AI_assistant.lottie',
       title: 'AI Receptionist',
-      description: 'Transform every call into an opportunity with intelligent conversation handling. Our AI works 24/7, answering calls professionally, qualifying leads through natural conversations, and scheduling appointments automatically.',
+      description: 'Your helper answers every phone call. It works all day and all night. It talks to people nicely. It asks them questions. It books appointments for you.',
       layout: 'new-layout',
       features: [
-        '24/7 call answering',
-        'Intelligent lead qualification',
-        'Automated appointment scheduling',
-        'Call transcription & analytics'
+        'Answers calls all day and night',
+        'Asks people questions',
+        'Books appointments for you',
+        'Saves what people say'
       ]
     },
     'speed-to-lead': {
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=500&fit=crop',
       animation: '/statistics_on_tab.lottie',
       title: 'Instant Forms Reply',
-      description: 'Capture and convert leads instantly with automated responses. When someone fills out your form or responds to ads, our system immediately sends personalized SMS or calls within seconds, dramatically increasing conversion rates.',
+      description: 'When someone fills out a form on your website, we talk to them right away. We send them a text message or call them in seconds. This helps you get more customers.',
       layout: 'new-layout',
       features: [
-        'Instant response to forms and ads',
-        'Personalized messaging',
-        'Multi-channel lead capture',
-        'Automated follow-up sequences'
+        'Talks to people right away',
+        'Sends them nice messages',
+        'Gets people from many places',
+        'Keeps talking to them'
       ]
     },
     'sms-whatsapp': {
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&h=500&fit=crop',
       animation: '/sms_agent.lottie',
       title: 'SMS Booking Agent',
-      description: 'Engage with leads through SMS and WhatsApp with intelligent automated responses. Our AI booking agent handles conversations naturally, checks availability in real-time, and books appointments directly through messaging.',
+      description: 'Your helper talks to people through text messages. It talks like a real person. It looks at your calendar. It books appointments through text messages.',
       layout: 'new-layout',
       features: [
-        'SMS and WhatsApp engagement',
-        'Real-time availability checking',
-        'Smart appointment reminders',
-        'Calendar integration'
+        'Talks through text messages',
+        'Checks your calendar right away',
+        'Sends reminders to people',
+        'Works with your calendar'
       ]
     },
     'dashboard-analytics': {
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=500&fit=crop',
       title: 'Dashboard Analytics',
-      description: 'Track key metrics and gain valuable insights with our comprehensive analytics dashboard. Get real-time visibility into call volumes, lead sources, conversion rates, and revenue attribution to make data-driven decisions.',
+      description: 'See how many people called you. See where they came from. See how many became customers. See how much money you made. This helps you make good choices.',
       layout: 'features'
     }
   };

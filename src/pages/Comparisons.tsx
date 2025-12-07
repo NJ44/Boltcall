@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Clock, ArrowRight, Calendar } from 'lucide-react';
@@ -9,6 +10,8 @@ import GiveawayBar from '../components/GiveawayBar';
 const Comparisons: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'AI Receptionist Comparisons & Alternatives | Boltcall';
+    updateMetaDescription('Compare AI receptionist services and alternatives. See how Boltcall compares to competitors and traditional solutions.');
   }, []);
 
   const comparisons = [

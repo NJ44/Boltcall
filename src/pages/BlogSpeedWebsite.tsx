@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Gauge, Users, Phone } from 'lucide-react';
@@ -10,6 +12,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogSpeedWebsite: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Why Website Speed Is Everything for Business Success | Boltcall';
+    updateMetaDescription('Why website speed is everything for business success. Learn how fast sites improve conversions and customer satisfaction.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

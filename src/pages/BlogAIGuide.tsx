@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone, MessageSquare, RotateCw, Bell, CheckCircle, Zap, Globe, TrendingUp, HelpCircle, Users } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogAIGuide: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Complete Guide to AI for Local Businesses | Boltcall';
+    updateMetaDescription('Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

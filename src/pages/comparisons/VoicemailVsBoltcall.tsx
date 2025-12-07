@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,8 @@ import GiveawayBar from '../../components/GiveawayBar';
 const VoicemailVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Voicemail vs Boltcall AI Receptionist | Boltcall';
+    updateMetaDescription('Voicemail vs Boltcall AI receptionist. Compare features and see why AI answers calls better than voicemail.');
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Facebook, Check, ArrowRight, Loader2 } from 'lucide-react';
 import { AuroraBackground } from '@/components/ui/aurora-background';
@@ -9,6 +10,11 @@ const GiveawayPage: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showSurvey, setShowSurvey] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Giveaway - Win Free AI Receptionist Services | Boltcall';
+    updateMetaDescription('Enter Boltcall giveaway to win free AI receptionist services. Participate in our contest and get Boltcall for free.');
+  }, []);
   const [referralLink, setReferralLink] = useState('');
   const [referrerId, setReferrerId] = useState<string | null>(null);
   const [surveyData, setSurveyData] = useState({

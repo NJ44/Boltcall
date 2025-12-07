@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,6 +24,11 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { login, signInWithGoogle, signInWithMicrosoft } = useAuth();
+
+  useEffect(() => {
+    document.title = 'Login to Your Boltcall Account | Boltcall';
+    updateMetaDescription('Login to your Boltcall account. Access your AI receptionist dashboard, manage settings, and view analytics.');
+  }, []);
   const navigate = useNavigate();
   const location = useLocation();
   

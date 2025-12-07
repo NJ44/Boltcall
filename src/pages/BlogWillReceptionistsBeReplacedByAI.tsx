@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Users, TrendingUp, CheckCircle, XCircle, Brain, MessageSquare, AlertCircle, Building2, Phone } from 'lucide-react';
@@ -10,7 +11,9 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'Will Receptionists Be Replaced by AI? The Future of Front Desk Work | Boltcall';
+    updateMetaDescription('Will receptionists be replaced by AI? Explore the future of front desk work and human-AI collaboration.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

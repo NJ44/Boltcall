@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,6 +25,11 @@ const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
+
+  useEffect(() => {
+    document.title = 'Sign Up for Boltcall - Start Your Free Trial | Boltcall';
+    updateMetaDescription('Sign up for Boltcall and start your free trial. Get AI receptionist with free setup in 5 minutes. No credit card required.');
+  }, []);
   const navigate = useNavigate();
   const location = useLocation();
   

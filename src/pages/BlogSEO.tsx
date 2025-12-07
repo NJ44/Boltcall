@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Search, TrendingUp, BarChart3, CheckCircle, Users, Phone } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogSEO: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Complete Guide to SEO for Local Businesses | Boltcall';
+    updateMetaDescription('Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

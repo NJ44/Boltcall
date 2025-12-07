@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MessageSquare, Zap, CheckCircle, Clock as ClockIcon, Users, Phone } from 'lucide-react';
@@ -10,7 +11,9 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'What Does Instant Lead Reply Mean? Complete Guide | Boltcall';
+    updateMetaDescription('What does instant lead reply mean? Complete guide to responding to leads within seconds for better conversions.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

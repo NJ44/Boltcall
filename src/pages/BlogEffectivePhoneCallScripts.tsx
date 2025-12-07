@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone, MessageSquare, CheckCircle, Users, Headphones, BookOpen, Zap } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogEffectivePhoneCallScripts: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Effective Phone Call Scripts for Receptionists | Boltcall';
+    updateMetaDescription('Effective phone call scripts for receptionists. Learn proven scripts for handling calls professionally and converting leads.');
   }, []);
 
   return (

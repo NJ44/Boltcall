@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { TrendingUp, DollarSign, Clock, CheckCircle, Mail, Download, Phone, Zap } from 'lucide-react';
 import Confetti from 'react-confetti';
@@ -83,6 +84,10 @@ const industries = [
 ];
 
 const AIRevenueAudit: React.FC = () => {
+  useEffect(() => {
+    document.title = 'AI Revenue Audit Calculator - Calculate Your Potential Earnings | Boltcall';
+    updateMetaDescription('AI revenue audit calculator: calculate your potential earnings with AI receptionist. Free revenue analysis tool.');
+  }, []);
   const [surveyStarted, setSurveyStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [showResults, setShowResults] = useState(false);

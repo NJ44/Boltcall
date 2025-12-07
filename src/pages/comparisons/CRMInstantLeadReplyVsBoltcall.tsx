@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, CheckCircle, XCircle, Zap, Clock as ClockIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,8 @@ import GiveawayBar from '../../components/GiveawayBar';
 const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'CRM Instant Lead Reply vs Boltcall | Boltcall';
+    updateMetaDescription('CRM instant lead reply vs Boltcall. Compare features, pricing, and see which solution works better for your business.');
   }, []);
 
   return (

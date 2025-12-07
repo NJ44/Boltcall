@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Star, CheckCircle, Zap, TrendingUp, MessageSquare, BarChart3, Shield, Users } from 'lucide-react';
@@ -12,7 +14,9 @@ import { ArrowRight } from 'lucide-react';
 const BlogAutomaticGoogleReviews: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'Automatic Google Reviews: How to Get More Reviews Without Asking | Boltcall';
+    updateMetaDescription('Automatic Google reviews: how to get more reviews without asking. Learn automated review generation strategies.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

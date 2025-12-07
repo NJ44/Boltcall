@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, DollarSign, Phone, Users, Clock as ClockIcon, Settings, TrendingUp, CheckCircle, Zap } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogLiveAnsweringServiceCosts: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Understanding Live Answering Service Costs | Boltcall';
+    updateMetaDescription('Understanding live answering service costs. Compare pricing models, features, and find the best value for your business.');
   }, []);
 
   return (

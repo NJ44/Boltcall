@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Check, Zap, Database, Image, Globe, Server, Star, Phone, User, Mail } from 'lucide-react';
 import GiveawayBar from '../../components/GiveawayBar';
@@ -13,6 +14,11 @@ const SpeedTestOffer: React.FC = () => {
     phone: '',
     email: '',
   });
+
+  React.useEffect(() => {
+    document.title = 'Website Speed Optimization Offer | Boltcall';
+    updateMetaDescription('Special offer for website speed optimization. Get your site faster and improve conversions with our services.');
+  }, []);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

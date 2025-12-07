@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Sparkles, Globe, Zap, CheckCircle, ArrowRight, TrendingUp } from 'lucide-react';
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import Button from '../../components/ui/Button';
 const SmartWebsitePage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Smart Website Optimization & AI-Powered Lead Generation | Boltcall';
+    updateMetaDescription('Smart website optimization improves speed and conversions automatically. AI optimizes performance, enhances user experience.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

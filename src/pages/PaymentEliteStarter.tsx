@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Check, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PaymentEliteStarter: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Elite Starter Plan Payment | Boltcall';
+    updateMetaDescription('Complete payment for Boltcall Elite Starter plan. Secure payment for AI receptionist Elite subscription.');
+  }, []);
+
   useEffect(() => {
     // Load PayPal SDK
     const script = document.createElement('script');

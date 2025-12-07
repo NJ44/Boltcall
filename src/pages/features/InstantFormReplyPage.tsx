@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { FileText, Users, Phone, Calendar } from 'lucide-react';
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import { WavePath } from '../../components/ui/wave-path';
 const InstantFormReplyPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Instant Lead Response System for Small Businesses | Boltcall';
+    updateMetaDescription('Automatically respond to form submissions in seconds. Qualify leads instantly, book appointments from website forms and ads.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

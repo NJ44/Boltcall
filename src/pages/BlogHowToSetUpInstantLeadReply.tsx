@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, CheckCircle, Settings, Zap, MessageSquare, Phone, Globe, Users } from 'lucide-react';
@@ -10,7 +11,9 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogHowToSetUpInstantLeadReply: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'How to Set Up Instant Lead Reply in Your Website/Ads | Boltcall';
+    updateMetaDescription('How to set up instant lead reply in your website and ads. Step-by-step guide to automate lead responses.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

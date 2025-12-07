@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import GiftCard from '../components/ui/gift-card';
 import { ShoppingCart, Sparkles, Gift, ArrowRight, X } from 'lucide-react';
@@ -7,6 +8,11 @@ const GiftCardPage: React.FC = () => {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [showCheckout, setShowCheckout] = useState(false);
   const [recipientEmails, setRecipientEmails] = useState(['', '']);
+
+  React.useEffect(() => {
+    document.title = 'Gift Cards - Give the Gift of AI Receptionist | Boltcall';
+    updateMetaDescription('Buy Boltcall gift cards. Give the gift of AI receptionist services. Perfect gift for business owners.');
+  }, []);
 
   const cardValue = 997;
   const discount = 0.90;

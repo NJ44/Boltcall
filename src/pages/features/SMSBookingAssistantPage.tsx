@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { MessageSquare, Users, Phone, Calendar } from 'lucide-react';
 import Header from '../../components/Header';
@@ -9,6 +10,8 @@ import { Link } from 'react-router-dom';
 const SMSBookingAssistantPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'SMS Booking Assistant for Appointments | Boltcall';
+    updateMetaDescription('SMS booking assistant lets customers book appointments via text. AI handles availability checks and confirms appointments.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

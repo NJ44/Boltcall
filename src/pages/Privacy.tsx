@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Shield, Lock, Eye, FileText, Globe, Mail, Phone, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Privacy: React.FC = () => {
+  React.useEffect(() => {
+    document.title = 'Privacy Policy | Boltcall';
+    updateMetaDescription('Boltcall privacy policy explains how we collect, use, and protect your data. Read our complete privacy terms and practices.');
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Header */}

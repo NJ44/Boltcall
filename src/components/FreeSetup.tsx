@@ -85,7 +85,7 @@ const FreeSetup: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              Get your AI assistant up and running in minutes with our completely free setup process. No hidden fees, no credit card required.
+              Get your helper ready in just a few minutes. It is free to set up. You don't need a credit card.
             </motion.p>
             <motion.button
               onClick={() => navigate('/setup')}

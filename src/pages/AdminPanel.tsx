@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { 
   Database, 
@@ -22,6 +23,10 @@ interface TableData {
 }
 
 const AdminPanel: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Admin Panel | Boltcall';
+    updateMetaDescription('Boltcall admin panel for system administrators. Manage users, view analytics, and configure system settings.');
+  }, []);
   const [user, setUser] = useState<any>(null);
   const [tables, setTables] = useState<TableData[]>([]);
   const [selectedTable, setSelectedTable] = useState<string>('');

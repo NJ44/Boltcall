@@ -1,4 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
@@ -20,6 +21,10 @@ const Home: React.FC = () => {
     return () => {
       document.body.classList.remove('smooth-scroll');
     };
+  }, []);
+
+  useEffect(() => {
+    updateMetaDescription('AI receptionist for dental clinics. Answers calls 24/7, books appointments, sends reminders. Never miss a lead. Free setup.');
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { useNavigate } from 'react-router-dom';
 import WizardShell from '../components/setup/WizardShell';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -9,6 +10,11 @@ import PageLoader from '../components/PageLoader';
 const SetupContent: React.FC = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
+
+  useEffect(() => {
+    document.title = 'Setup Your Boltcall Account | Boltcall';
+    updateMetaDescription('Setup your Boltcall account in 5 minutes. Free setup process, no credit card required. Get started today.');
+  }, []);
 
   const handleError = (error: Error) => {
     // Log error for debugging

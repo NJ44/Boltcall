@@ -91,8 +91,7 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          24/7 lead capture via calls, forms, and chat. Instant SMS/call <br />
-          follow-up and auto-booking.
+          We answer your phone calls all day and all night. We talk to people who visit your website. We send them messages right away. We book their appointments for you.
         </motion.p>
 
 

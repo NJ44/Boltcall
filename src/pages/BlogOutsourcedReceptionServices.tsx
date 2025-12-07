@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, DollarSign, Users, Clock as ClockIcon, Globe, Zap, Shield, Settings, Phone } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogOutsourcedReceptionServices: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Benefits of Outsourced Reception Services for Businesses | Boltcall';
+    updateMetaDescription('Benefits of outsourced reception services for businesses. Save costs, improve coverage, enhance customer service.');
   }, []);
 
   return (

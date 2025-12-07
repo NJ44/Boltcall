@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MessageSquare, CheckCircle, Zap, Smartphone, Clock3, CalendarClock, Sparkles } from 'lucide-react';
@@ -12,7 +13,9 @@ import { ArrowRight } from 'lucide-react';
 const BlogHowToScheduleText: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'How to Schedule a Text: Complete Guide to SMS Scheduling | Boltcall';
+    updateMetaDescription('How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

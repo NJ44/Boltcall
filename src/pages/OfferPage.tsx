@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -32,6 +33,11 @@ const OfferPage: React.FC = () => {
   const [remainingPlaces, setRemainingPlaces] = useState(INITIAL_PLACES);
   const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [countdownTarget] = useState(getCountdownTarget());
+
+  useEffect(() => {
+    document.title = 'Get a Website That Brings You Customers | Boltcall';
+    updateMetaDescription('Get a smart website that brings you customers. Fast loading, AI-powered, books appointments automatically.');
+  }, []);
 
   const {
     register,

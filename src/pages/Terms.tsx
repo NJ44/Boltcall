@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Scale } from 'lucide-react';
 
 const Terms: React.FC = () => {
+  React.useEffect(() => {
+    document.title = 'Terms of Service | Boltcall';
+    updateMetaDescription('Boltcall terms of service outline the rules and regulations for using our AI receptionist platform. Read full terms.');
+  }, []);
+
   return (
     <div className="min-h-screen bg-zinc-50">
               {/* Header */}

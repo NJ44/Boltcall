@@ -10,19 +10,19 @@ const FAQ: React.FC = () => {
   const faqs = [
     {
       question: 'What exactly Boltcall offers?',
-      answer: 'Boltcall gives local businesses a complete AI system that handles all the stuff that keeps slipping through the cracks. It replies to new leads in seconds, answers calls and messages, books appointments directly on your calendar, and follows up automatically so no one gets forgotten. It also sends reminders, updates you in real time, and keeps conversations moving even when you\'re busy or closed.'
+      answer: 'Boltcall helps your business. It talks to new customers right away. It answers your phone calls. It answers your messages. It books appointments for you. It talks to people again so they don't forget. It sends reminders. It tells you what is happening. It works even when you are busy or closed.'
     },
     {
       question: 'Can it transfer the call to a real person?',
-      answer: 'Yes. Set live-transfer rules (e.g., during business hours, hot leads only). If no one answers, it books or takes a voicemail and alerts you.'
+      answer: 'Yes. You can tell it to give the call to a real person. You can say to do this during work hours. Or only for important customers. If no one answers, it books an appointment or takes a message. Then it tells you.'
     },
     {
       question: 'How good is the call quality and voice?',
-      answer: 'Natural and clear. You pick a voice and tone (friendly, calm, formal). We keep replies short so calls feel human, not robotic.'
+      answer: 'It sounds like a real person. You choose how it talks. You can make it friendly. You can make it calm. You can make it formal. It talks in short sentences. It does not sound like a robot.'
     },
     {
       question: 'Can it use my current phone number?',
-      answer: 'Yes. You can forward your existing number to your AI receptionist, or buy a new number inside the app and start fresh.'
+      answer: 'Yes. You can use your phone number that you have now. Or you can get a new phone number in the app. Then you can start using it.'
     }
   ];
 

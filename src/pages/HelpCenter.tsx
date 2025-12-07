@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Search, BookOpen, AlertTriangle, Phone, HelpCircle, ArrowRight, FileText, Clock, Users } from 'lucide-react';
 
@@ -14,6 +15,11 @@ interface HelpCategory {
 
 const HelpCenter: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    document.title = 'Help Center - Support & Documentation | Boltcall';
+    updateMetaDescription('Boltcall help center: find answers, tutorials, and support. Learn how to use AI receptionist features effectively.');
+  }, []);
 
   const helpCategories: HelpCategory[] = [
     {

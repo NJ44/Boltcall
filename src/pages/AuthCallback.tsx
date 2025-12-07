@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 const AuthCallback: React.FC = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'Authentication Callback | Boltcall';
+    updateMetaDescription('Authentication callback page. Processing your login. Redirecting to your Boltcall dashboard.');
+  }, []);
 
   useEffect(() => {
     const handleAuthCallback = async () => {

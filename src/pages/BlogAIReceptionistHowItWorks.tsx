@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Brain, Zap, CheckCircle, Mic, TrendingUp, Users, Phone } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogAIReceptionistHowItWorks: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'How Does an AI Receptionist Work? Complete Technical Guide | Boltcall';
+    updateMetaDescription('How does an AI receptionist work? Complete technical guide explaining natural language processing and automation.');
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, TrendingUp, Zap, Users, Phone } from 'lucide-react';
@@ -11,6 +12,8 @@ import { WavePath } from '../components/ui/wave-path';
 const Blog: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Why AI Services Are No Longer Optional for Local Businesses | Boltcall';
+    updateMetaDescription('Why AI services are essential for local businesses. Learn how AI helps you compete and grow your business today.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

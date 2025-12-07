@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -6,6 +7,11 @@ import { Home } from 'lucide-react';
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    document.title = 'Page Not Found - 404 | Boltcall';
+    updateMetaDescription('Page not found - 404 error. Return to Boltcall homepage to find AI receptionist services and solutions.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">

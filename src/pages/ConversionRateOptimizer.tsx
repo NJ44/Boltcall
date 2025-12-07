@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { TrendingUp, Globe, AlertCircle, CheckCircle, Loader, Mail, X } from 'lucide-react';
 import Header from '../components/Header';
@@ -11,6 +12,11 @@ const ConversionRateOptimizer: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState('');
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Conversion Rate Optimizer - Improve Your Website Conversions | Boltcall';
+    updateMetaDescription('Free conversion rate optimizer analyzes your website. Get recommendations to improve conversions and get more customers.');
+  }, []);
 
   const validateUrl = (urlString: string): boolean => {
     try {

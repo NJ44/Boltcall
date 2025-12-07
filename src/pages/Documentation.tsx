@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { 
   BookOpen, 
@@ -22,6 +23,11 @@ import {
 
 const Documentation: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.title = 'Documentation - API & Integration Guides | Boltcall';
+    updateMetaDescription('Boltcall API documentation and integration guides. Learn how to connect Boltcall to your apps and automate workflows.');
+  }, []);
 
   const toggleSection = (sectionId: string) => {
     setExpandedSection(expandedSection === sectionId ? null : sectionId);

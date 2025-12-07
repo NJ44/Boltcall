@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Zap, CheckCircle, MessageSquare, Brain, Webhook, Database, Phone, Mail, Users } from 'lucide-react';
@@ -10,7 +11,9 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'How Does Instant Lead Reply Work? Technology Behind the Magic | Boltcall';
+    updateMetaDescription('How does instant lead reply work? Learn the technology behind automated lead response systems and APIs.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

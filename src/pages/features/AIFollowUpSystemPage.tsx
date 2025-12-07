@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { RefreshCw, TrendingUp, Target, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import Button from '../../components/ui/Button';
 const AIFollowUpSystemPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'AI Follow-Up System for Lead Nurturing | Boltcall';
+    updateMetaDescription('AI follow-up system sends personalized messages automatically. Nurture leads, move prospects through sales funnel.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

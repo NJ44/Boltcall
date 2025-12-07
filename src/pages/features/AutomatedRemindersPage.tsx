@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Bell, Calendar, TrendingDown, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import Button from '../../components/ui/Button';
 const AutomatedRemindersPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Automated Appointment Reminders System | Boltcall';
+    updateMetaDescription('Automated appointment reminders via SMS and calls. Reduce no-shows, improve attendance rates, save time.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

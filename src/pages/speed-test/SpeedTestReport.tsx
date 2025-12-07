@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TrendingDown, Clock, Smartphone, Monitor, AlertCircle, Zap } from 'lucide-react';
@@ -10,6 +11,11 @@ import { useSpeedTestStore } from '../../stores/speedTestStore';
 const SpeedTestReport: React.FC = () => {
   const navigate = useNavigate();
   const { url, results } = useSpeedTestStore();
+
+  useEffect(() => {
+    document.title = 'Website Speed Test Report - Performance Analysis | Boltcall';
+    updateMetaDescription('View your website speed test report with detailed performance analysis, scores, and optimization recommendations.');
+  }, []);
 
   // Redirect if no results
   useEffect(() => {

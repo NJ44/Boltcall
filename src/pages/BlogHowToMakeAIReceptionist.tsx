@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Code, Zap, CheckCircle, XCircle, Phone, Brain, Database, Mic, MessageSquare, Users } from 'lucide-react';
@@ -10,7 +11,9 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogHowToMakeAIReceptionist: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'How to Make an AI Receptionist: Complete Step-by-Step Guide | Boltcall';
+    updateMetaDescription('How to make an AI receptionist: complete step-by-step guide. Learn to build and deploy your own AI assistant.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

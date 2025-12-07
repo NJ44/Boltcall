@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Check, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PaymentPro: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Pro Plan Payment | Boltcall';
+    updateMetaDescription('Complete payment for Boltcall Pro plan. Secure payment processing for AI receptionist Pro subscription.');
+  }, []);
+
   useEffect(() => {
     // Load PayPal SDK
     const script = document.createElement('script');

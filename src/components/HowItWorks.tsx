@@ -8,22 +8,22 @@ const PROCESS_PHASES = [
   {
     id: "process-1",
     title: "Capture the lead",
-    description:
-      "Your AI receptionist captures leads 24/7 from phone calls, website forms, social media ads, and email inquiries. With instant response capabilities, every potential customer receives immediate attention, ensuring no opportunity slips through the cracks. The system intelligently routes inquiries and captures essential contact information automatically.",
+      description:
+        "Your helper answers the phone all day and all night. It talks to people who call you. It talks to people who fill out forms on your website. It talks to people who see your ads. It gets their name and phone number. It never misses anyone.",
     animationUrl: "/AI_assistant.lottie"
   },
   {
     id: "process-2",
     title: "Qualify & Nurture",
-    description:
-      "Our AI engages each lead through natural, personalized conversations that feel authentic and human-like. It asks intelligent qualifying questions to understand their specific needs, budget, timeline, and pain points. The system analyzes conversation patterns and engagement levels to accurately determine buying intent and prioritize high-value prospects.",
+      description:
+        "Your helper talks to people like a real person. It asks them questions. It finds out what they need. It finds out how much money they have. It finds out when they want help. It figures out who really wants to buy from you.",
     animationUrl: "/statistics_on_tab.lottie"
   },
   {
     id: "process-3",
     title: "Book appointments",
-    description:
-      "Once a lead is qualified and ready, the AI seamlessly transitions them into the booking phase. It presents available time slots based on your calendar, handles scheduling conflicts intelligently, and confirms appointments with both parties. Automated reminder systems ensure low no-show rates through SMS and email notifications sent at strategic intervals.",
+      description:
+        "When someone wants to meet with you, your helper books them. It looks at your calendar. It finds a time that works. It tells them when to come. It sends them a reminder so they don't forget.",
     animationUrl: "/sms_agent.lottie"
   },
 ];
@@ -75,7 +75,7 @@ const HowItWorks: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              24/7 AI captures leads, responds instantly, and books appointments automatically—so you never miss an opportunity.
+              Your helper works all day and all night. It talks to people right away. It books appointments for you. You never miss a chance to get a new customer.
             </motion.p>
           </div>
 

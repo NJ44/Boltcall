@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Phone, Users, Calendar } from 'lucide-react';
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import { WavePath } from '../../components/ui/wave-path';
 const AIReceptionistPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'AI Receptionist for Calls & Messages | Boltcall';
+    updateMetaDescription('AI receptionist answers phone calls 24/7. Handles customer questions, schedules appointments automatically, never misses a call.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

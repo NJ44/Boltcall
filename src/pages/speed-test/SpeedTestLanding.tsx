@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
@@ -13,6 +14,11 @@ const SpeedTestLanding: React.FC = () => {
   const navigate = useNavigate();
   const { setUrl, setResults } = useSpeedTestStore();
   const [websiteUrl, setWebsiteUrl] = useState('');
+
+  React.useEffect(() => {
+    document.title = 'Free Website Speed Test - Analyze Your Site Performance | Boltcall';
+    updateMetaDescription('Free website speed test analyzes your site performance. Get detailed report on loading times and optimization tips.');
+  }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('Testing your website speed...');

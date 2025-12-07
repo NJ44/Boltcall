@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,6 +26,11 @@ const Contact: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState<TTag[]>([]);
+
+  useEffect(() => {
+    document.title = 'Contact Us - Get in Touch with Boltcall | Boltcall';
+    updateMetaDescription('Contact Boltcall for AI receptionist support. Get help, ask questions, or start your free setup. We are here to help.');
+  }, []);
 
   const {
     register,

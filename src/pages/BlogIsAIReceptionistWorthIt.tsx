@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, TrendingUp, CheckCircle, XCircle, Calculator, Users, Clock as ClockIcon, Zap, Phone } from 'lucide-react';
@@ -10,7 +11,9 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogIsAIReceptionistWorthIt: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+    document.title = 'Is an AI Receptionist Worth It? Complete Cost-Benefit Analysis | Boltcall';
+    updateMetaDescription('Is an AI receptionist worth it? Complete cost-benefit analysis comparing AI vs traditional receptionist services.');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

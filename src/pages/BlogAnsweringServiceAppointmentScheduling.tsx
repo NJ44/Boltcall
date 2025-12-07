@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, DollarSign, Phone, Users, CheckCircle, Zap, Settings, TrendingUp, Shield, MessageSquare } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Benefits of Using an Answering Service for Appointment Scheduling | Boltcall';
+    updateMetaDescription('Benefits of using an answering service for appointment scheduling. Improve booking rates and reduce no-shows.');
   }, []);
 
   return (

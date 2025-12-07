@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Zap, Clock as ClockIcon, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,8 @@ import GiveawayBar from '../../components/GiveawayBar';
 const TraditionalCallCentersVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Traditional Call Centers vs Boltcall AI Receptionist | Boltcall';
+    updateMetaDescription('Traditional call centers vs Boltcall AI receptionist. Compare costs, features, and service quality. See why AI wins.');
   }, []);
 
   return (

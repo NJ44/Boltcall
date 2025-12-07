@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { MessageCircle, Globe, Users, CheckCircle, ArrowRight } from 'lucide-react';
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import Button from '../../components/ui/Button';
 const WebsiteChatVoiceWidgetPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Website Chat & Voice Widget for Customer Engagement | Boltcall';
+    updateMetaDescription('Website chat and voice widget engages visitors 24/7. Answer questions, book appointments directly from your site.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,8 @@ import GiveawayBar from '../../components/GiveawayBar';
 const ReceptionistVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Human Receptionist vs Boltcall AI Receptionist | Boltcall';
+    updateMetaDescription('Human receptionist vs Boltcall AI receptionist. Compare costs, availability, and capabilities. See the differences.');
   }, []);
 
   return (

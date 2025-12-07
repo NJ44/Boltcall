@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Phone, MessageSquare, Headphones, Users, CheckCircle, Zap, Settings, Globe } from 'lucide-react';
@@ -10,6 +11,8 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogProfessionalTelephoneEtiquette: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Tips for Professional Telephone Etiquette | Boltcall';
+    updateMetaDescription('Tips for professional telephone etiquette. Learn best practices for phone communication and customer service.');
   }, []);
 
   return (

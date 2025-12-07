@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -7,6 +8,8 @@ import Pricing from '../components/Pricing';
 const PricingPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Pricing Plans for AI Receptionist Services | Boltcall';
+    updateMetaDescription('Boltcall pricing plans for AI receptionist services. Compare plans, features, and pricing. Free setup included.');
   }, []);
 
   return (
