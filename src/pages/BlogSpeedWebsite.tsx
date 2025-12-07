@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
-import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Gauge, Users, Phone } from 'lucide-react';

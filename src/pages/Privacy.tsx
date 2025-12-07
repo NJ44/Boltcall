@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Shield, Lock, Eye, FileText, Globe, Mail, Phone, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';

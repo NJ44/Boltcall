@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
-import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Star, CheckCircle, Zap, TrendingUp, MessageSquare, BarChart3, Shield, Users } from 'lucide-react';

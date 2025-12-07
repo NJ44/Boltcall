@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { updateMetaDescription } from '../../lib/utils';
 import { motion } from 'framer-motion';
 import { Check, Zap, Database, Image, Globe, Server, Star, Phone, User, Mail } from 'lucide-react';
