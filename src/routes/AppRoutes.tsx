@@ -89,6 +89,7 @@ import CRMInstantLeadReplyVsBoltcall from '../pages/comparisons/CRMInstantLeadRe
 import AIRevenueAudit from '../pages/AIRevenueAudit';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
+import AIVisibilityCheck from '../pages/AIVisibilityCheck';
 import NotFound from '../pages/NotFound';
 import AdminPanel from '../pages/AdminPanel';
 import AIReceptionistPage from '../pages/features/AIReceptionistPage';
@@ -263,6 +264,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-revenue-calculator" element={<AIRevenueAudit />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
+        <Route path="/ai-visibility-check" element={<AIVisibilityCheck />} />
         {/* Feature Pages */}
         <Route path="/features/ai-receptionist" element={<AIReceptionistPage />} />
         <Route path="/features/instant-form-reply" element={<InstantFormReplyPage />} />

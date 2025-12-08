@@ -34,6 +34,7 @@ const Footer: React.FC = () => {
       { label: 'SEO Audit', href: '/seo-audit' },
       { label: 'Speed Test', href: '/speed-test' },
       { label: 'AI Revenue Audit', href: '/ai-revenue-calculator' },
+      { label: 'AI Visibility Check', href: '/ai-visibility-check' },
     ],
     company: [
       { label: 'Contact', href: '/contact' },

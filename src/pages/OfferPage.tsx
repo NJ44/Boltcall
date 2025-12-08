@@ -218,34 +218,34 @@ const OfferPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
                 className="text-gray-600 leading-relaxed space-y-2 list-none"
-                style={{ fontSize: 'calc(0.875rem * 1.10)' }}
+                style={{ fontSize: 'calc(0.875rem * 1.166)' }}
               >
                 <li className="flex items-start">
-                  <Check className="w-4 h-4 text-blue-500 mr-2 mt-0 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" style={{ marginTop: '5px' }} />
                   <div>
-                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.10)' }}>Loads in under 2 seconds</div>
-                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.10)' }}>Customers won't wait. Your site won't make them.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.166)' }}>Loads in under 2 seconds</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.166)' }}>Customers won't wait. Your site won't make them.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <Check className="w-4 h-4 text-blue-500 mr-2 mt-0 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" style={{ marginTop: '5px' }} />
                   <div>
-                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.10)' }}>Google finds you first</div>
-                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.10)' }}>When people search for what you do, your name shows up at the top.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.166)' }}>Google finds you first</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.166)' }}>When people search for what you do, your name shows up at the top.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <Check className="w-4 h-4 text-blue-500 mr-2 mt-0 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" style={{ marginTop: '5px' }} />
                   <div>
-                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.10)' }}>AI talks to visitors 24/7</div>
-                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.10)' }}>Even at 3am, someone is answering questions and booking appointments.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.166)' }}>AI talks to visitors 24/7</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.166)' }}>Even at 3am, someone is answering questions and booking appointments.</div>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <Check className="w-4 h-4 text-blue-500 mr-2 mt-0 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" style={{ marginTop: '5px' }} />
                   <div>
-                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.10)' }}>Every lead gets a text or call in seconds</div>
-                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.10)' }}>No more checking your email hours later to find out you missed a customer.</div>
+                    <div className="font-semibold text-gray-900" style={{ fontSize: 'calc(0.875rem * 1.166)' }}>Every lead gets a text or call in seconds</div>
+                    <div className="text-gray-600 mt-0.5" style={{ fontSize: 'calc(0.75rem * 1.166)' }}>No more checking your email hours later to find out you missed a customer.</div>
                   </div>
                 </li>
               </motion.ul>
