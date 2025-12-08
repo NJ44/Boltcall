@@ -32,9 +32,8 @@ const AIReceptionistPage: React.FC = () => {
               <span className="font-semibold">AI Receptionist</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight flex items-center justify-center gap-3">
-              <div className="w-1 h-16 bg-blue-600 rounded-full"></div>
-              <span>Never Miss a Call with <span className="text-blue-600">AI Receptionist</span></span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Never Miss a Call with <span className="text-blue-600">AI Receptionist</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -53,8 +52,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              What is AI Receptionist?
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>What is AI Receptionist?</span>
             </h2>
             <div className="space-y-6 text-gray-700 leading-relaxed">
               <p className="text-lg">
@@ -114,8 +114,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Why AI Receptionist is Critical
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Why AI Receptionist is Critical</span>
             </h2>
             
             <div className="space-y-6">
@@ -185,8 +186,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How AI Receptionist Helps Your Business
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How AI Receptionist Helps Your Business</span>
             </h2>
             
             <div className="space-y-6 mb-8">
@@ -276,8 +278,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Real-World Use Cases
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Real-World Use Cases</span>
             </h2>
             
             <div className="space-y-8">
@@ -342,8 +345,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How AI Receptionist Works
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How AI Receptionist Works</span>
             </h2>
             
             <div className="space-y-6">
@@ -455,8 +459,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Key Features & Capabilities
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Key Features & Capabilities</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6">
@@ -521,8 +526,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Return on Investment
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Return on Investment</span>
             </h2>
             
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
@@ -556,8 +562,9 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Frequently Asked Questions
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Frequently Asked Questions</span>
             </h2>
             
             <div className="space-y-6">

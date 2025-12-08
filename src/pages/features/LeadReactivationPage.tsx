@@ -53,7 +53,10 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">What is Lead Reactivation?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>What is Lead Reactivation?</span>
+            </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
               Lead Reactivation automatically re-engages with past leads who didn't convert initially. 
               It sends personalized messages, special offers, and targeted campaigns to bring cold leads 
@@ -76,7 +79,10 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Why Lead Reactivation is Critical</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Why Lead Reactivation is Critical</span>
+            </h2>
             
             <div className="space-y-6">
               <div className="bg-white rounded-lg p-6 border border-gray-200">
@@ -139,7 +145,10 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">How Lead Reactivation Helps Your Business</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How Lead Reactivation Helps Your Business</span>
+            </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
@@ -216,8 +225,9 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How Lead Reactivation Works
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How Lead Reactivation Works</span>
             </h2>
             
             <div className="space-y-6">
@@ -327,8 +337,9 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Real-World Success Stories
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Real-World Success Stories</span>
             </h2>
             
             <div className="space-y-8">
@@ -376,8 +387,9 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Best Practices for Lead Reactivation
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Best Practices for Lead Reactivation</span>
             </h2>
             
             <div className="space-y-6">
@@ -430,8 +442,9 @@ const LeadReactivationPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Frequently Asked Questions
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Frequently Asked Questions</span>
             </h2>
             
             <div className="space-y-6">

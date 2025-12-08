@@ -31,9 +31,8 @@ const SMSBookingAssistantPage: React.FC = () => {
               <span className="font-semibold">SMS Booking Assistant</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight flex items-center justify-center gap-3">
-              <div className="w-1 h-16 bg-blue-600 rounded-full"></div>
-              <span>Book Appointments via <span className="text-blue-600">SMS</span></span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Book Appointments via <span className="text-blue-600">SMS</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -53,8 +52,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              What is SMS Booking Assistant?
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>What is SMS Booking Assistant?</span>
             </h2>
             <div className="space-y-6 text-gray-700 leading-relaxed">
               <p className="text-lg">
@@ -93,8 +93,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Why SMS Booking is Critical
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Why SMS Booking is Critical</span>
             </h2>
             
             <div className="space-y-6">
@@ -166,8 +167,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How SMS Booking Helps Your Business
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How SMS Booking Helps Your Business</span>
             </h2>
             
             <div className="space-y-6 mb-8">
@@ -259,8 +261,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How SMS Booking Works
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How SMS Booking Works</span>
             </h2>
             
             <div className="space-y-6">
@@ -372,8 +375,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Real-World Use Cases
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Real-World Use Cases</span>
             </h2>
             
             <div className="space-y-8">
@@ -438,8 +442,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Additional Benefits
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Additional Benefits</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6">
@@ -489,8 +494,9 @@ const SMSBookingAssistantPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Frequently Asked Questions
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Frequently Asked Questions</span>
             </h2>
             
             <div className="space-y-6">

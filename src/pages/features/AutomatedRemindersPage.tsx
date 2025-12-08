@@ -53,8 +53,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              What are Automated Reminders?
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>What are Automated Reminders?</span>
             </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
               Automated Reminders automatically send personalized messages to customers before their appointments, 
@@ -78,8 +79,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Why Automated Reminders are Critical
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Why Automated Reminders are Critical</span>
             </h2>
             
             <div className="space-y-6">
@@ -151,8 +153,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How Automated Reminders Help Your Business
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How Automated Reminders Help Your Business</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -245,8 +248,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How Automated Reminders Work
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How Automated Reminders Work</span>
             </h2>
             
             <div className="space-y-6">
@@ -337,8 +341,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Real-World Impact
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Real-World Impact</span>
             </h2>
             
             <div className="space-y-8">
@@ -386,8 +391,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Calculate Your Savings
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Calculate Your Savings</span>
             </h2>
             
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
@@ -421,8 +427,9 @@ const AutomatedRemindersPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Frequently Asked Questions
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Frequently Asked Questions</span>
             </h2>
             
             <div className="space-y-6">

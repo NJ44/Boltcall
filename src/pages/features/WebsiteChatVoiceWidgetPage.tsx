@@ -53,8 +53,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              What is Website Chat/Voice Widget?
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>What is Website Chat/Voice Widget?</span>
             </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
               Website Chat/Voice Widget is an intelligent AI assistant that appears on your website, 
@@ -78,8 +79,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Why Website Widget is Critical
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Why Website Widget is Critical</span>
             </h2>
             
             <div className="space-y-6">
@@ -152,8 +154,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How Website Widget Helps Your Business
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How Website Widget Helps Your Business</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -240,8 +243,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              How Website Chat/Voice Widget Works
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>How Website Chat/Voice Widget Works</span>
             </h2>
             
             <div className="space-y-6">
@@ -352,8 +356,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Real-World Results
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Real-World Results</span>
             </h2>
             
             <div className="space-y-8">
@@ -402,8 +407,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Customization Options
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Customization Options</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6">
@@ -453,8 +459,9 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Frequently Asked Questions
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <span>Frequently Asked Questions</span>
             </h2>
             
             <div className="space-y-6">
