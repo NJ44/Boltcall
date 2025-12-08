@@ -38,8 +38,8 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
           
-          <div className="relative -top-[500px] z-[100] pointer-events-none">
-            <Suspense fallback={<div className="h-[600px] w-full" />}>
+          <div className="relative -top-[500px] z-[100] pointer-events-none" style={{ minHeight: '600px', contain: 'layout' }}>
+            <Suspense fallback={<div className="h-[600px] w-full" style={{ contain: 'layout' }} />}>
             <HeroScrollDemo />
             </Suspense>
           </div>
@@ -48,8 +48,8 @@ const Home: React.FC = () => {
             <HowItWorks />
           </div>
           
-          <div className="relative -top-[500px]">
-            <Suspense fallback={<div className="h-[400px] w-full" />}>
+          <div className="relative -top-[500px]" style={{ minHeight: '400px', contain: 'layout' }}>
+            <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
             <StickyScrollSection />
             </Suspense>
           </div>

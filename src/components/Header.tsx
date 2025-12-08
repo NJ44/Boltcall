@@ -27,7 +27,7 @@ const Header: React.FC = () => {
     { label: 'SMS Booking Assistant', href: '/features/sms-booking-assistant', icon: MessageSquare },
     { label: 'Automated Reminders', href: '/features/automated-reminders', icon: Bell },
     { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system', icon: Target },
-    { label: 'Website Chat/Voice Widget', href: '/features/website-chat-voice-widget', icon: Globe },
+      { label: 'Website Chat/Voice Widget', href: '/features/website-widget', icon: Globe },
     { label: 'Lead Reactivation', href: '/features/lead-reactivation', icon: RotateCw },
     { label: 'Smart Website', href: '/features/smart-website', icon: Sparkles },
   ];
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
   const freeToolsItems = [
     { label: 'SEO Audit', href: '/seo-audit', icon: Search },
     { label: 'Speed Test', href: '/speed-test', icon: Gauge },
-    { label: 'AI Revenue Audit', href: '/how-much-you-can-earn-with-ai', icon: Calculator },
+    { label: 'AI Revenue Audit', href: '/ai-revenue-calculator', icon: Calculator },
     { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },
   ];
 
@@ -323,15 +323,16 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible ${
         isSticky ? 'top-0' : 'top-[43px]'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      style={{ contain: 'layout style' }}
     >
-      <div className="w-full px-2 sm:px-4 lg:px-6">
-        <div className="flex items-center justify-between h-16 max-w-7xl mx-auto">
+      <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
+        <div className="flex items-center justify-between h-16 max-w-7xl mx-auto overflow-visible">
           {/* Left Side - Logo and Navigation */}
           <div className="flex items-center">
             {/* Logo */}
@@ -344,6 +345,9 @@ const Header: React.FC = () => {
                   src="/boltcall_full_logo.png" 
                   alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
                   className="h-16 w-auto -translate-y-[3.1px]"
+                  width="200"
+                  height="64"
+                  loading="eager"
                 />
               </motion.div>
             </Link>
@@ -353,7 +357,7 @@ const Header: React.FC = () => {
             {/* Features Dropdown */}
             <div 
               ref={featuresRef} 
-              className="relative"
+              className="relative overflow-visible"
               onMouseEnter={() => setIsFeaturesOpen(true)}
               onMouseLeave={() => setIsFeaturesOpen(false)}
             >
@@ -385,11 +389,11 @@ const Header: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`absolute top-full left-0 pt-2 w-64 rounded-lg shadow-xl border ${
+                    className={`absolute top-full left-0 mt-1 w-64 rounded-lg shadow-xl border ${
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } pb-2 z-50`}
+                    } pb-2 z-[120]`}
                   >
                     {featuresItems.map((item) => {
                       const Icon = item.icon;
@@ -462,7 +466,7 @@ const Header: React.FC = () => {
             {/* Resources Dropdown */}
             <div 
               ref={resourcesRef} 
-              className="relative"
+              className="relative overflow-visible"
               onMouseEnter={() => setIsResourcesOpen(true)}
               onMouseLeave={() => setIsResourcesOpen(false)}
             >
@@ -494,11 +498,11 @@ const Header: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`absolute top-full left-0 pt-2 w-56 rounded-lg shadow-xl border ${
+                    className={`absolute top-full left-0 mt-1 w-56 rounded-lg shadow-xl border ${
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } pb-2 z-50`}
+                    } pb-2 z-[120]`}
                   >
                   {/* Content Section */}
                   <div className="px-4 py-1">

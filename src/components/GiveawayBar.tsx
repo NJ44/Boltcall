@@ -37,10 +37,10 @@ const GiveawayBar: React.FC = () => {
 
   return (
     <Link to="/giveaway" className="block">
-      <div className="relative bg-blue-600 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none">
+      <div className="relative bg-blue-600 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none" style={{ minHeight: '43px', contain: 'layout style' }}>
         <div className="relative z-10">
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-            <div className="flex flex-col sm:flex-row items-center justify-between py-0.5 sm:py-2 gap-0.5 sm:gap-0">
+            <div className="flex flex-col sm:flex-row items-center justify-between py-0.5 sm:py-2 gap-0.5 sm:gap-0" style={{ minHeight: '43px' }}>
               {/* Left side - Announcement content */}
               <div className="flex items-center space-x-1 sm:space-x-3">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
@@ -54,21 +54,21 @@ const GiveawayBar: React.FC = () => {
               {/* Right side - Giveaway Countdown */}
               <div className="flex items-center space-x-1 sm:space-x-3 text-[10px] sm:text-sm">
                 <span className="font-medium hidden sm:inline">Until giveaway:</span>
-                <div className="bg-white/20 px-1.5 sm:px-3 py-0.5 sm:py-1.5 rounded-lg">
+                <div className="bg-white/20 px-1.5 sm:px-3 py-0.5 sm:py-1.5 rounded-lg min-w-[120px] sm:min-w-[140px]">
                   <div className="flex items-center space-x-0.5 sm:space-x-2 text-[10px] sm:text-sm font-bold">
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center">
+                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
                       {timeLeft.days}d
                     </span>
                     <span className="text-white/60">:</span>
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center">
+                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
                       {timeLeft.hours}h
                     </span>
                     <span className="text-white/60">:</span>
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center">
+                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
                       {timeLeft.minutes}m
                     </span>
                     <span className="text-white/60">:</span>
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center">
+                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
                       {timeLeft.seconds}s
                     </span>
                   </div>

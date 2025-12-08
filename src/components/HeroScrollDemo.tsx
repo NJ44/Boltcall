@@ -278,11 +278,14 @@ export function HeroScrollDemo() {
             ) : (
               // Default Layout - Centered
               <>
-            <div className="mb-6">
+            <div className="mb-6" style={{ minHeight: '200px', width: '200px', margin: '0 auto' }}>
             <img
               src={currentContent.image}
               alt={currentContent.title}
               className="w-[200px] h-[200px] rounded-lg shadow-lg object-cover mx-auto"
+              width="200"
+              height="200"
+              loading="lazy"
             />
           </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">

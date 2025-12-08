@@ -358,6 +358,23 @@ button:active,
     --accordion-shadow: var(--accordion-box-shadow-x) var(--accordion-box-shadow-y) 0px 0px var(--accordion-border);
   }
 
+/* Prevent layout shift from font loading */
+@font-face {
+  font-family: 'Poppins';
+  font-display: optional;
+}
+
+/* Prevent layout shift from images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent layout shift from dynamic content */
+[data-animate-presence] {
+  contain: layout style paint;
+}
+
 html {
   /* Smooth scrolling will be handled by Lenis on specific pages */
   overflow-x: hidden;
@@ -690,4 +707,170 @@ canvas[data-dotlottie-canvas] {
   image-rendering: crisp-edges !important;
   will-change: transform;
   transform: translateZ(0);
+}
+
+/* Rocker Switch Component Styles */
+.rocker {
+  display: inline-block;
+  position: relative;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  color: #888;
+  width: 7em;
+  height: 4em;
+  overflow: hidden;
+  border-bottom: 0.5em solid #eee;
+}
+
+.rocker::before {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #999;
+  border: 0.5em solid #eee;
+  border-bottom: 0;
+}
+
+.rocker input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-left,
+.switch-right {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  width: 3em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.switch-left {
+  height: 1.8em;
+  width: 2.75em;
+  left: 0.85em;
+  bottom: 0.5em;
+  background-color: #ddd;
+  transform: rotate(10deg) skewX(10deg);
+}
+
+.switch-right {
+  right: 0.5em;
+  bottom: 0;
+  background-color: #bd5757;
+  color: #fff;
+}
+
+.switch-left::before,
+.switch-right::before {
+  content: "";
+  position: absolute;
+  width: 0.4em;
+  height: 1.85em;
+  bottom: -0.35em;
+  background-color: #ccc;
+  transform: skewY(-65deg);
+}
+
+.switch-left::before {
+  left: -0.4em;
+}
+
+.switch-right::before {
+  right: -0.375em;
+  background-color: transparent;
+  transform: skewY(65deg);
+}
+
+input:checked + .switch-left {
+  background-color: #0084d0;
+  color: #fff;
+  bottom: 0.1em;
+  left: 0.5em;
+  height: 1.8em;
+  width: 2.75em;
+  transform: rotate(0deg) skewX(0deg);
+}
+
+input:checked + .switch-left + .switch-right {
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.5em;
+  right: 0.7em;
+  height: 1.8em;
+  width: 2.75em;
+  transform: rotate(-8deg) skewX(-8deg);
+}
+
+input:checked + .switch-left::before {
+  background-color: transparent;
+  width: 3.0833em;
+}
+
+input:checked + .switch-left + .switch-right::before {
+  background-color: #ccc;
+}
+
+/* Focus styles */
+.rocker input:focus + .switch-left {
+  color: #333;
+}
+
+.rocker input:checked:focus + .switch-left {
+  color: #fff;
+}
+
+.rocker input:focus + .switch-left + .switch-right {
+  color: #fff;
+}
+
+.rocker input:checked:focus + .switch-left + .switch-right {
+  color: #333;
+}
+
+/* Small variant */
+.rocker-small {
+  font-size: 1.5em;
+  width: 5.25em;
+  height: 3em;
+}
+
+.rocker-small .switch-left,
+.rocker-small .switch-right {
+  height: 1.4em;
+  width: 2.25em;
+}
+
+.rocker-small .switch-left {
+  left: 0.65em;
+  bottom: 0.35em;
+  height: 1.3em;
+}
+
+.rocker-small .switch-right {
+  right: 0.4em;
+  bottom: 0.35em;
+}
+
+.rocker-small input:checked + .switch-left {
+  left: 0.4em;
+  bottom: 0.2em;
+  height: 1.3em;
+}
+
+.rocker-small input:checked + .switch-left + .switch-right {
+  right: 0.5em;
+  bottom: 0.2em;
+  height: 1.3em;
+  transform: rotate(-8deg) skewX(-8deg);
 }

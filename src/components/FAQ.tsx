@@ -65,7 +65,7 @@ const FAQ: React.FC = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <div className="group bg-white rounded-xl border border-gray-200/50 overflow-hidden shadow-sm transition-all duration-300">
+              <div className="group bg-white rounded-xl border border-gray-200/50 overflow-hidden shadow-sm transition-all duration-300" style={{ contain: 'layout style' }}>
                 <button
                   onClick={() => toggleFAQ(index)}
                   className="w-full px-7 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-all duration-300 focus:outline-none rounded-t-xl"
@@ -77,6 +77,7 @@ const FAQ: React.FC = () => {
                   </span>
                   <motion.div 
                     className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center shadow-sm transition-shadow duration-300"
+                    style={{ minWidth: '36px', minHeight: '36px' }}
                   >
                     {openIndex === index ? (
                       <Minus className="w-5 h-5 text-white" />
@@ -99,6 +100,7 @@ const FAQ: React.FC = () => {
                         type: "spring"
                       }}
                       className="overflow-hidden"
+                      style={{ willChange: 'height, opacity' }}
                     >
                       <div className="px-7 pb-5 bg-white">
                         <p className="text-gray-700 leading-relaxed text-lg">

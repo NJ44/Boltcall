@@ -18,7 +18,7 @@ const Comparisons: React.FC = () => {
     {
       title: 'Traditional Call Centers vs <span class="text-blue-600">Boltcall</span>',
       description: 'Compare costs, response times, availability, and quality between traditional call centers and Boltcall\'s AI solution.',
-      href: '/comparisons/traditional-call-centers-vs-boltcall',
+      href: '/comparisons/call-centers-vs-boltcall',
       category: 'Call Centers',
       date: 'February 10, 2025',
       readTime: '8 min read'
@@ -50,7 +50,7 @@ const Comparisons: React.FC = () => {
     {
       title: 'CRM Instant Lead Reply vs <span class="text-blue-600">Boltcall</span>',
       description: 'Compare regular CRM automated responses with Boltcall\'s AI-powered instant lead reply system.',
-      href: '/comparisons/crm-instant-lead-reply-vs-boltcall',
+      href: '/comparisons/crm-vs-boltcall',
       category: 'Lead Response',
       date: 'February 25, 2025',
       readTime: '7 min read'

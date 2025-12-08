@@ -226,41 +226,41 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/giveaway" element={<Giveaway />} />
-            <Route path="/black-friday-gift-cards" element={<GiftCardPage />} />
+            <Route path="/gift-cards" element={<GiftCardPage />} />
         <Route path="/smart-website" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/blog/the-new-reality-for-local-businesses" element={<Blog />} />
-        <Route path="/blog/why-speed-matters-391-percent-advantage" element={<BlogSpeed />} />
+        <Route path="/blog/why-speed-matters" element={<BlogSpeed />} />
         <Route path="/blog/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
         <Route path="/blog/complete-guide-to-seo" element={<BlogSEO />} />
-        <Route path="/blog/complete-guide-to-ai-for-local-businesses" element={<BlogAIGuide />} />
-        <Route path="/blog/best-ai-receptionist-tools-for-small-businesses" element={<BlogAIReceptionistComparison />} />
-        <Route path="/blog/how-does-an-ai-receptionist-work" element={<BlogAIReceptionistHowItWorks />} />
+        <Route path="/blog/ai-guide-for-businesses" element={<BlogAIGuide />} />
+        <Route path="/blog/best-ai-receptionist-tools" element={<BlogAIReceptionistComparison />} />
+        <Route path="/blog/how-ai-receptionist-works" element={<BlogAIReceptionistHowItWorks />} />
         <Route path="/blog/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />
         <Route path="/blog/how-to-make-ai-receptionist" element={<BlogHowToMakeAIReceptionist />} />
         <Route path="/blog/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
-        <Route path="/blog/what-does-instant-lead-reply-mean" element={<BlogWhatDoesInstantLeadReplyMean />} />
-        <Route path="/blog/how-to-set-up-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
-        <Route path="/blog/how-does-instant-lead-reply-work" element={<BlogHowDoesInstantLeadReplyWork />} />
+        <Route path="/blog/instant-lead-reply-guide" element={<BlogWhatDoesInstantLeadReplyMean />} />
+        <Route path="/blog/setup-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
+        <Route path="/blog/how-instant-lead-reply-works" element={<BlogHowDoesInstantLeadReplyWork />} />
         <Route path="/blog/how-to-schedule-text" element={<BlogHowToScheduleText />} />
         <Route path="/blog/automatic-google-reviews" element={<BlogAutomaticGoogleReviews />} />
         <Route path="/blog/benefits-of-outsourced-reception-services" element={<BlogOutsourcedReceptionServices />} />
-        <Route path="/blog/effective-phone-call-scripts-for-receptionists" element={<BlogEffectivePhoneCallScripts />} />
+        <Route path="/blog/phone-call-scripts" element={<BlogEffectivePhoneCallScripts />} />
         <Route path="/blog/understanding-live-answering-service-costs" element={<BlogLiveAnsweringServiceCosts />} />
         <Route path="/blog/tips-for-professional-telephone-etiquette" element={<BlogProfessionalTelephoneEtiquette />} />
-        <Route path="/blog/benefits-of-answering-service-appointment-scheduling" element={<BlogAnsweringServiceAppointmentScheduling />} />
+        <Route path="/blog/answering-service-scheduling" element={<BlogAnsweringServiceAppointmentScheduling />} />
         <Route path="/comparisons" element={<Comparisons />} />
-        <Route path="/comparisons/traditional-call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
+        <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
         <Route path="/comparisons/voicemail-vs-boltcall" element={<VoicemailVsBoltcall />} />
         <Route path="/comparisons/answering-services-vs-boltcall" element={<AnsweringServicesVsBoltcall />} />
-        <Route path="/comparisons/crm-instant-lead-reply-vs-boltcall" element={<CRMInstantLeadReplyVsBoltcall />} />
+        <Route path="/comparisons/crm-vs-boltcall" element={<CRMInstantLeadReplyVsBoltcall />} />
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
-        <Route path="/calculator/ai-revenue-audit" element={<AIRevenueAudit />} />
-        <Route path="/how-much-you-can-earn-with-ai" element={<AIRevenueAudit />} />
+        <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
+        <Route path="/ai-revenue-calculator" element={<AIRevenueAudit />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         {/* Feature Pages */}
@@ -269,11 +269,11 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/sms-booking-assistant" element={<SMSBookingAssistantPage />} />
         <Route path="/features/automated-reminders" element={<AutomatedRemindersPage />} />
         <Route path="/features/ai-follow-up-system" element={<AIFollowUpSystemPage />} />
-        <Route path="/features/website-chat-voice-widget" element={<WebsiteChatVoiceWidgetPage />} />
+        <Route path="/features/website-widget" element={<WebsiteChatVoiceWidgetPage />} />
         <Route path="/features/lead-reactivation" element={<LeadReactivationFeaturePage />} />
         <Route path="/features/smart-website" element={<SmartWebsitePage />} />
         {/* Demo Pages */}
-        <Route path="/feature-section-with-hover-effects-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
+        <Route path="/feature-section-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />
