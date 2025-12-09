@@ -14,6 +14,56 @@ const Blog: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Why AI Services Are No Longer Optional for Local Businesses | Boltcall';
     updateMetaDescription('Why AI services are essential for local businesses. Learn how AI helps you compete and grow your business today.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Why AI Services Are No Longer Optional for Local Businesses",
+      "description": "Why AI services are essential for local businesses. Learn how AI helps you compete and grow your business today.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-01-15",
+      "dateModified": "2025-01-15",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/the-new-reality-for-local-businesses"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    // Remove existing schema if any
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) {
+      existingScript.remove();
+    }
+
+    // Add new schema script
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) {
+        scriptToRemove.remove();
+      }
+    };
   }, []);
   return (
     <div className="min-h-screen bg-white">
