@@ -13,6 +13,50 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'How Does Instant Lead Reply Work? Technology Behind the Magic | Boltcall';
     updateMetaDescription('How does instant lead reply work? Learn the technology behind automated lead response systems and APIs.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How Does Instant Lead Reply Work? The Technology Behind the Magic",
+      "description": "How does instant lead reply work? Learn the technology behind automated lead response systems and APIs.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-03-02",
+      "dateModified": "2025-03-02",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/how-instant-lead-reply-works"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

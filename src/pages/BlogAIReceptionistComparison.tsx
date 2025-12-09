@@ -13,6 +13,50 @@ const BlogAIReceptionistComparison: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Best AI Receptionist Tools for Small Businesses | Boltcall';
     updateMetaDescription('Compare best AI receptionist tools for small businesses. See features, pricing, and find the right solution.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Best AI Receptionist Tools for Small Businesses (Top 5 Compared)",
+      "description": "Compare best AI receptionist tools for small businesses. See features, pricing, and find the right solution.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-05",
+      "dateModified": "2025-02-05",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/best-ai-receptionist-tools"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
   const tools = [
     {

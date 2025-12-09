@@ -13,6 +13,50 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'What Does Instant Lead Reply Mean? Complete Guide | Boltcall';
     updateMetaDescription('What does instant lead reply mean? Complete guide to responding to leads within seconds for better conversions.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "What Does Instant Lead Reply Mean? A Complete Guide",
+      "description": "What does instant lead reply mean? Complete guide to responding to leads within seconds for better conversions.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-03-01",
+      "dateModified": "2025-03-01",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/instant-lead-reply-guide"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

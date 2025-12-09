@@ -13,6 +13,50 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Benefits of Using an Answering Service for Appointment Scheduling | Boltcall';
     updateMetaDescription('Benefits of using an answering service for appointment scheduling. Improve booking rates and reduce no-shows.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Benefits of Using an Answering Service for Appointment Scheduling",
+      "description": "Benefits of using an answering service for appointment scheduling. Improve booking rates and reduce no-shows.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-10",
+      "dateModified": "2025-02-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/answering-service-scheduling"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

@@ -13,6 +13,50 @@ const BlogSpeedWebsite: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Why Website Speed Is Everything for Business Success | Boltcall';
     updateMetaDescription('Why website speed is everything for business success. Learn how fast sites improve conversions and customer satisfaction.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Why Website Speed Is Everything",
+      "description": "Why website speed is everything for business success. Learn how fast sites improve conversions and customer satisfaction.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-01-25",
+      "dateModified": "2025-01-25",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/why-website-speed-is-everything"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
   return (
     <div className="min-h-screen bg-white">

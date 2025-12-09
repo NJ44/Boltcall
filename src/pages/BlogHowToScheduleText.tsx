@@ -15,6 +15,50 @@ const BlogHowToScheduleText: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'How to Schedule a Text: Complete Guide to SMS Scheduling | Boltcall';
     updateMetaDescription('How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Schedule a Text: Complete Guide to SMS Scheduling Options",
+      "description": "How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-15",
+      "dateModified": "2025-02-15",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/how-to-schedule-text"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

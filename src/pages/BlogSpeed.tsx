@@ -13,6 +13,50 @@ const BlogSpeed: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'The 391% Advantage: Responding to Leads in 60 Seconds | Boltcall';
     updateMetaDescription('The 391% advantage: responding to leads in 60 seconds. Learn why speed dramatically increases conversion rates.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The 391% Advantage: Responding in 60 Seconds",
+      "description": "The 391% advantage: responding to leads in 60 seconds. Learn why speed dramatically increases conversion rates.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-01-20",
+      "dateModified": "2025-01-20",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/why-speed-matters"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
   return (
     <div className="min-h-screen bg-white">

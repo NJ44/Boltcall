@@ -13,6 +13,50 @@ const BlogSEO: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Complete Guide to SEO for Local Businesses | Boltcall';
     updateMetaDescription('Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Why SEO Can't Be Ignored",
+      "description": "Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-01-30",
+      "dateModified": "2025-01-30",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/complete-guide-to-seo"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
   return (
     <div className="min-h-screen bg-white">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { Eye, Globe, BarChart3, AlertCircle, CheckCircle, Loader, Mail, X } from 'lucide-react';
+import { Eye, Globe, AlertCircle, CheckCircle, Loader, Mail, X } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';

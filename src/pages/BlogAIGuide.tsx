@@ -13,6 +13,50 @@ const BlogAIGuide: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Complete Guide to AI for Local Businesses | Boltcall';
     updateMetaDescription('Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Complete Guide to AI for Local Businesses",
+      "description": "Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-01",
+      "dateModified": "2025-02-01",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/ai-guide-for-businesses"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
   return (
     <div className="min-h-screen bg-white">

@@ -13,6 +13,50 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Will Receptionists Be Replaced by AI? The Future of Front Desk Work | Boltcall';
     updateMetaDescription('Will receptionists be replaced by AI? Explore the future of front desk work and human-AI collaboration.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Will Receptionists Be Replaced by AI? The Future of Front Desk Work",
+      "description": "Will receptionists be replaced by AI? Explore the future of front desk work and human-AI collaboration.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-25",
+      "dateModified": "2025-02-25",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/will-receptionists-be-replaced-by-ai"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

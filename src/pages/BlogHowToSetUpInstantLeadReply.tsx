@@ -13,6 +13,50 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'How to Set Up Instant Lead Reply in Your Website/Ads | Boltcall';
     updateMetaDescription('How to set up instant lead reply in your website and ads. Step-by-step guide to automate lead responses.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Set Up Instant Lead Reply in Your Website/Ads with Boltcall",
+      "description": "How to set up instant lead reply in your website and ads. Step-by-step guide to automate lead responses.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-03-01",
+      "dateModified": "2025-03-01",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/setup-instant-lead-reply"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

@@ -15,6 +15,50 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Automatic Google Reviews: How to Get More Reviews Without Asking | Boltcall';
     updateMetaDescription('Automatic Google reviews: how to get more reviews without asking. Learn automated review generation strategies.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Automatic Google Reviews: How to Get More Reviews Without Asking",
+      "description": "Automatic Google reviews: how to get more reviews without asking. Learn automated review generation strategies.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-20",
+      "dateModified": "2025-02-20",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/automatic-google-reviews"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (

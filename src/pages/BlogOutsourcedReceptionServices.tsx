@@ -13,6 +13,50 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Benefits of Outsourced Reception Services for Businesses | Boltcall';
     updateMetaDescription('Benefits of outsourced reception services for businesses. Save costs, improve coverage, enhance customer service.');
+    
+    // Add Article schema markup
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Benefits of Outsourced Reception Services for Businesses",
+      "description": "Benefits of outsourced reception services for businesses. Save costs, improve coverage, enhance customer service.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/boltcall_full_logo.png"
+        }
+      },
+      "datePublished": "2025-02-10",
+      "dateModified": "2025-02-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/benefits-of-outsourced-reception-services"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg"
+      }
+    };
+
+    const existingScript = document.getElementById('article-schema');
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement('script');
+    script.id = 'article-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptToRemove = document.getElementById('article-schema');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, []);
 
   return (
