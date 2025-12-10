@@ -440,6 +440,28 @@ const Header: React.FC = () => {
               </AnimatePresence>
             </div>
 
+            {/* About Link */}
+            <motion.button
+              onClick={() => handleNavClick('/about')}
+              className={`relative font-medium py-2 transition-colors duration-300 ${
+                isOverBlueBackground ? 'text-white' : 'text-text-muted'
+              }`}
+              whileHover="hover"
+              initial="initial"
+            >
+              About
+              <motion.div
+                className={`absolute bottom-0 left-0 h-0.5 ${
+                  isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
+                }`}
+                variants={{
+                  initial: { width: 0, opacity: 0 },
+                  hover: { width: "100%", opacity: 1 }
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              />
+            </motion.button>
+
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
@@ -734,6 +756,28 @@ const Header: React.FC = () => {
                   ))}
                 </motion.div>
 
+                {/* About in Mobile Menu */}
+                <motion.button
+                  onClick={() => {
+                    handleNavClick('/about');
+                    setIsMenuOpen(false);
+                  }}
+                  className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: featuresItems.length * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  About
+                  <motion.div
+                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-brand-blue rounded-full"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  />
+                </motion.button>
+
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.label}
@@ -741,7 +785,7 @@ const Header: React.FC = () => {
                     className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: (featuresItems.length + index) * 0.1 }}
+                    transition={{ duration: 0.4, delay: (featuresItems.length + 1 + index) * 0.1 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >

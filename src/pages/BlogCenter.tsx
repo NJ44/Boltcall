@@ -122,6 +122,14 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Technology'
   },
+  {
+    title: 'Top 10 <span class="text-blue-600">AI Receptionist Agencies</span>: Complete Comparison Guide',
+    slug: '/blog/top-10-ai-receptionist-agencies',
+    excerpt: 'Compare the top 10 AI receptionist agencies. Find features, pricing, and choose the best AI receptionist service for your business. Comprehensive guide with detailed comparisons.',
+    date: 'March 15, 2025',
+    readTime: '15 min read',
+    category: 'Tool Comparison'
+  },
   // Add more blog posts here as they are created
 ];
 

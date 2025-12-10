@@ -36,6 +36,7 @@ import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
+import About from '../pages/About';
 import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
@@ -79,6 +80,7 @@ import BlogEffectivePhoneCallScripts from '../pages/BlogEffectivePhoneCallScript
 import BlogLiveAnsweringServiceCosts from '../pages/BlogLiveAnsweringServiceCosts';
 import BlogProfessionalTelephoneEtiquette from '../pages/BlogProfessionalTelephoneEtiquette';
 import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringServiceAppointmentScheduling';
+import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
 import Newsletter from '../pages/Newsletter';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
@@ -218,6 +220,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         
         {/* Speed Test Funnel */}
         <Route path="/speed-test" element={<SpeedTestLanding />} />
@@ -253,6 +256,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/understanding-live-answering-service-costs" element={<BlogLiveAnsweringServiceCosts />} />
         <Route path="/blog/tips-for-professional-telephone-etiquette" element={<BlogProfessionalTelephoneEtiquette />} />
         <Route path="/blog/answering-service-scheduling" element={<BlogAnsweringServiceAppointmentScheduling />} />
+        <Route path="/blog/top-10-ai-receptionist-agencies" element={<BlogTop10AIReceptionistAgencies />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />

@@ -65,7 +65,7 @@ const ReadingProgress: React.FC = () => {
 
   return (
     <div 
-      className="fixed left-0 right-0 h-1 bg-blue-200/30 z-[111]"
+      className="fixed left-0 right-0 h-1 bg-blue-200/30 z-[100]"
       style={{ 
         top: `${headerBottom}px` // Stuck to the bottom of the header
       }}
