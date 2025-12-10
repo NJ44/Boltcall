@@ -121,8 +121,7 @@ const AIReceptionistPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   The Cost of Missed Calls
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -138,8 +137,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   24/7 Availability Matters
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -156,8 +154,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Competitive Advantage
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -193,8 +190,7 @@ const AIReceptionistPage: React.FC = () => {
             
             <div className="space-y-6 mb-8">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Capture Every Lead
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -211,8 +207,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Instant Response
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -229,8 +224,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Automatic Scheduling
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -246,8 +240,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Cost Savings
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -352,8 +345,7 @@ const AIReceptionistPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Call Reception
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -370,8 +362,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Intelligent Conversation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -389,8 +380,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Lead Qualification
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -408,8 +398,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Appointment Scheduling
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -427,8 +416,7 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Call Routing & Escalation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

@@ -91,8 +91,7 @@ const AutomatedRemindersPage: React.FC = () => {
                     <TrendingDown className="w-6 h-6 text-red-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       The Cost of No-Shows
                     </h3>
                     <p className="text-gray-600">
@@ -110,8 +109,7 @@ const AutomatedRemindersPage: React.FC = () => {
                     <Calendar className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Better Schedule Management
                     </h3>
                     <p className="text-gray-600">
@@ -128,8 +126,7 @@ const AutomatedRemindersPage: React.FC = () => {
                     <Bell className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Customer Satisfaction
                     </h3>
                     <p className="text-gray-600">
@@ -162,8 +159,7 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Reduce No-Shows
                   </h3>
                 </div>
@@ -176,8 +172,7 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Save Time
                   </h3>
                 </div>
@@ -190,8 +185,7 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Easy Rescheduling
                   </h3>
                 </div>
@@ -204,8 +198,7 @@ const AutomatedRemindersPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Professional Image
                   </h3>
                 </div>
@@ -217,8 +210,7 @@ const AutomatedRemindersPage: React.FC = () => {
             </div>
 
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-8 text-white text-center">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <div className="w-1 h-10 bg-blue-600 rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-4">
                 Start Reducing No-Shows Today
               </h3>
               <p className="text-blue-100 mb-6">
@@ -255,8 +247,7 @@ const AutomatedRemindersPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Appointment Scheduling
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -273,8 +264,7 @@ const AutomatedRemindersPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Reminder Timing Configuration
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -292,8 +282,7 @@ const AutomatedRemindersPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Personalized Message Delivery
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -310,8 +299,7 @@ const AutomatedRemindersPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Response Handling
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

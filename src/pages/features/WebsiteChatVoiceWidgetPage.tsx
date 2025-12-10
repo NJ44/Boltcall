@@ -110,8 +110,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
                     <Users className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Capture Leads on Every Page
                     </h3>
                     <p className="text-gray-600">
@@ -129,8 +128,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
                     <MessageCircle className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Reduce Bounce Rate
                     </h3>
                     <p className="text-gray-600">
@@ -163,8 +161,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     24/7 Availability
                   </h3>
                 </div>
@@ -177,8 +174,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Instant Answers
                   </h3>
                 </div>
@@ -191,8 +187,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Lead Qualification
                   </h3>
                 </div>
@@ -250,8 +245,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Easy Installation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -268,8 +262,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Visitor Engagement
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -287,8 +280,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Intelligent Conversations
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -306,8 +298,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Lead Capture & Qualification
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -325,8 +316,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Appointment Booking & Actions
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

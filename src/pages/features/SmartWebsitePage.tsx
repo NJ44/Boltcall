@@ -93,8 +93,7 @@ const SmartWebsitePage: React.FC = () => {
                     <Zap className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Speed Directly Impacts Revenue
                     </h3>
                     <p className="text-gray-600">
@@ -113,8 +112,7 @@ const SmartWebsitePage: React.FC = () => {
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Conversion Rate Optimization
                     </h3>
                     <p className="text-gray-600">
@@ -132,8 +130,7 @@ const SmartWebsitePage: React.FC = () => {
                     <Globe className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Mobile-First Experience
                     </h3>
                     <p className="text-gray-600">
@@ -167,8 +164,7 @@ const SmartWebsitePage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Automatic Performance Optimization
                   </h3>
                 </div>
@@ -181,8 +177,7 @@ const SmartWebsitePage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     AI-Powered A/B Testing
                   </h3>
                 </div>
@@ -195,8 +190,7 @@ const SmartWebsitePage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     SEO Enhancement
                   </h3>
                 </div>
@@ -209,8 +203,7 @@ const SmartWebsitePage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Security & Compliance
                   </h3>
                 </div>
@@ -257,8 +250,7 @@ const SmartWebsitePage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Comprehensive Website Analysis
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -276,8 +268,7 @@ const SmartWebsitePage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Performance Optimization
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -295,8 +286,7 @@ const SmartWebsitePage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Conversion Rate Optimization
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -314,8 +304,7 @@ const SmartWebsitePage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: SEO Enhancement
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -333,8 +322,7 @@ const SmartWebsitePage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Continuous Monitoring & Improvement
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

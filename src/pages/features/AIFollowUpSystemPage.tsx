@@ -91,8 +91,7 @@ const AIFollowUpSystemPage: React.FC = () => {
                     <Target className="w-6 h-6 text-red-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Most Sales Require Follow-Up
                     </h3>
                     <p className="text-gray-600">
@@ -110,8 +109,7 @@ const AIFollowUpSystemPage: React.FC = () => {
                     <TrendingUp className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Timing is Everything
                     </h3>
                     <p className="text-gray-600">
@@ -129,8 +127,7 @@ const AIFollowUpSystemPage: React.FC = () => {
                     <RefreshCw className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       Keep Conversations Warm
                     </h3>
                     <p className="text-gray-600">
@@ -163,8 +160,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Increase Conversions
                   </h3>
                 </div>
@@ -177,8 +173,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Personalized Messaging
                   </h3>
                 </div>
@@ -191,8 +186,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Multi-Channel Follow-Ups
                   </h3>
                 </div>
@@ -205,8 +199,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
                 <div className="flex items-center gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-                    <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Save Time
                   </h3>
                 </div>
@@ -218,8 +211,7 @@ const AIFollowUpSystemPage: React.FC = () => {
             </div>
 
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-8 text-white text-center">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <div className="w-1 h-10 bg-blue-600 rounded-full"></div>
+              <h3 className="text-2xl font-bold mb-4">
                 Start Nurturing Leads Automatically
               </h3>
               <p className="text-blue-100 mb-6">
@@ -256,8 +248,7 @@ const AIFollowUpSystemPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Lead Capture & Analysis
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -275,8 +266,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Personalized Message Creation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -295,8 +285,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Optimal Timing Determination
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -315,8 +304,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Multi-Channel Delivery
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -333,8 +321,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Response Tracking & Adaptation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

@@ -232,8 +232,7 @@ const LeadReactivationPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Lead List Upload
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -250,8 +249,7 @@ const LeadReactivationPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Campaign Creation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -269,8 +267,7 @@ const LeadReactivationPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Multi-Touch Campaign Execution
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -288,8 +285,7 @@ const LeadReactivationPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Response Tracking & Lead Scoring
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -306,8 +302,7 @@ const LeadReactivationPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Conversion & Re-engagement
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

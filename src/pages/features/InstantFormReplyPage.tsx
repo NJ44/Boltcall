@@ -194,8 +194,7 @@ const InstantFormReplyPage: React.FC = () => {
             
             <div className="space-y-6 mb-8">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Instant Engagement
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -211,8 +210,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Lead Qualification
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -228,8 +226,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Automatic Booking
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -246,8 +243,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   24/7 Coverage
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -284,8 +280,7 @@ const InstantFormReplyPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Form Submission Detection
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -302,8 +297,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Instant Analysis & Personalization
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -321,8 +315,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Multi-Channel Response
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -340,8 +333,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Lead Qualification & Engagement
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -359,8 +351,7 @@ const InstantFormReplyPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Automatic Appointment Booking
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

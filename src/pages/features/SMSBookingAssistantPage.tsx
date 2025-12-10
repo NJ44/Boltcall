@@ -100,8 +100,7 @@ const SMSBookingAssistantPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   SMS is Preferred
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -118,8 +117,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Reduce No-Shows
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -136,8 +134,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Save Time
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -174,8 +171,7 @@ const SMSBookingAssistantPage: React.FC = () => {
             
             <div className="space-y-6 mb-8">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   24/7 Booking
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -193,8 +189,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Instant Confirmations
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -211,8 +206,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Automated Reminders
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -230,8 +224,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Calendar Sync
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -268,8 +261,7 @@ const SMSBookingAssistantPage: React.FC = () => {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 1: Customer Initiates Booking
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -287,8 +279,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 2: Availability Check
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -306,8 +297,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 3: Appointment Confirmation
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -325,8 +315,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 4: Automated Reminders
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -344,8 +333,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   Step 5: Ongoing Management
                 </h3>
                 <p className="text-gray-600 leading-relaxed">

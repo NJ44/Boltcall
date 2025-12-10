@@ -105,7 +105,7 @@ const Contact: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="text-center mt-16"
             >
-              <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET IN TOUCH</h1>
+              <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET IN <span className="text-blue-600">TOUCH</span></h1>
               <div className="w-96 h-96 mt-16">
                 <DotLottieReact
                   src="/Email.lottie"
