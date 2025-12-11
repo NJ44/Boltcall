@@ -37,7 +37,6 @@ import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
-import Setup from '../pages/Setup';
 import ComingSoon from '../pages/ComingSoon';
 import Sitemap from '../pages/Sitemap';
 import AuthCallback from '../pages/AuthCallback';
