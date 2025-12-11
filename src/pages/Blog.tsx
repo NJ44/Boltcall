@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { WavePath } from '../components/ui/wave-path';
 
 const Blog: React.FC = () => {
@@ -74,6 +75,11 @@ const Blog: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Why AI Services Are No Longer Optional', href: '/blog/the-new-reality-for-local-businesses' }
+          ]} />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -643,6 +649,54 @@ const Blog: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Related Posts Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            Related Articles
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link
+              to="/blog/why-speed-matters"
+              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+            >
+              <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                The 391% Advantage: Responding in 60 Seconds
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Research shows that contacting a lead within 60 seconds increases conversion rates by 391%.
+              </p>
+            </Link>
+            <Link
+              to="/blog/ai-guide-for-businesses"
+              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+            >
+              <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                Complete Guide to AI for Local Businesses
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Discover what AI can automate for service businesses and learn where to start.
+              </p>
+            </Link>
+            <Link
+              to="/blog/complete-guide-to-seo"
+              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+            >
+              <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                Why SEO Can't Be Ignored
+              </h3>
+              <p className="text-gray-600 text-sm">
+                75% of users never go beyond the first page of search results. Discover why SEO is critical.
+              </p>
+            </Link>
+          </div>
+        </motion.section>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -666,7 +720,7 @@ const Blog: React.FC = () => {
               <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
               <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
           <Link
-                to="/setup"
+                to="/coming-soon"
                 className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
           >
                 Start the free setup

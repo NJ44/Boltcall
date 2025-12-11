@@ -88,7 +88,7 @@ const FreeSetup: React.FC = () => {
               Get your helper ready in just a few minutes. It is free to set up. You don't need a credit card.
             </motion.p>
             <motion.button
-              onClick={() => navigate('/setup')}
+              onClick={() => navigate('/coming-soon')}
               className="bg-white text-blue-600 px-4 py-2 rounded-lg text-lg font-medium hover:bg-gray-50 transition-colors"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

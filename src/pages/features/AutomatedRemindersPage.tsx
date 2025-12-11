@@ -216,7 +216,7 @@ const AutomatedRemindersPage: React.FC = () => {
               <p className="text-blue-100 mb-6">
                 Protect your revenue and improve customer satisfaction with automated reminders.
               </p>
-              <Link to="/setup">
+              <Link to="/coming-soon">
                 <Button
                   variant="primary"
                   size="lg"

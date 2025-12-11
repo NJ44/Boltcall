@@ -110,7 +110,7 @@ const Pricing: React.FC = () => {
           defaultInterval="monthly"
           onPlanSelect={(plan) => {
             console.log("Selected plan:", plan);
-            navigate('/setup');
+            navigate('/coming-soon');
           }}
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"

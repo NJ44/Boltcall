@@ -38,6 +38,8 @@ const Footer: React.FC = () => {
     ],
     company: [
       { label: 'Contact', href: '/contact' },
+      { label: 'About', href: '/about' },
+      { label: 'Sitemap', href: '/sitemap' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms of Service', href: '/terms-of-service' }
     ],

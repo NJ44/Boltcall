@@ -6,6 +6,7 @@ import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { AppleSpotlight } from '../components/ui/apple-spotlight';
 
 interface BlogPost {
@@ -188,6 +189,10 @@ const BlogCenter: React.FC = () => {
 
       {/* Blog Posts Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Blog', href: '/blog' }
+        ]} />
         {blogPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => (

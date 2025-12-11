@@ -219,7 +219,7 @@ const SmartWebsitePage: React.FC = () => {
               <p className="text-blue-100 mb-6">
                 Let AI optimize your website automatically and watch your conversions grow.
               </p>
-              <Link to="/setup">
+              <Link to="/coming-soon">
                 <Button
                   variant="primary"
                   size="lg"

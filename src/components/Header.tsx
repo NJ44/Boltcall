@@ -699,7 +699,7 @@ const Header: React.FC = () => {
                   </style>
                   <div className="start-now-button">
                     <Button
-                      onClick={() => handleNavClick('/setup')}
+                      onClick={() => handleNavClick('/coming-soon')}
                       variant="primary"
                       size="sm"
                       className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-75 font-bold px-6 py-2 rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40"
@@ -896,7 +896,7 @@ const Header: React.FC = () => {
                           </style>
                           <Button
                             onClick={() => {
-                              handleNavClick('/setup');
+                              handleNavClick('/coming-soon');
                               setIsMenuOpen(false);
                             }}
                             variant="primary"

@@ -85,7 +85,7 @@ const PricingSection: React.FC = () => {
   ];
 
   const handlePlanSelect = () => {
-    navigate('/setup');
+    navigate('/coming-soon');
   };
 
   return (

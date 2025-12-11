@@ -621,7 +621,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               <p className="text-blue-100 mb-6 text-lg">
                 Boltcall makes it easy to set up automatic Google review requests as part of a comprehensive AI-powered business automation platform. Get started in 5 minutes and start collecting more reviews automatically.
               </p>
-              <Link to="/setup">
+              <Link to="/coming-soon">
                 <Button
                   variant="primary"
                   size="lg"

@@ -5,6 +5,7 @@ import { Phone, Users, Calendar } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
 import { Link } from 'react-router-dom';
 import { WavePath } from '../../components/ui/wave-path';
 
@@ -21,12 +22,18 @@ const AIReceptionistPage: React.FC = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+        <div className="max-w-4xl mx-auto">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Features', href: '/features' },
+            { label: 'AI Receptionist', href: '/features/ai-receptionist' }
+          ]} />
+          <div className="text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
             <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
               <Phone className="w-4 h-4" />
               <span className="font-semibold">AI Receptionist</span>
@@ -40,6 +47,7 @@ const AIReceptionistPage: React.FC = () => {
               Your AI receptionist answers calls 24/7, schedules appointments, and provides instant support—so you never miss an opportunity.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
@@ -620,7 +628,7 @@ const AIReceptionistPage: React.FC = () => {
             <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
             <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
             <Link
-              to="/setup"
+              to="/coming-soon"
               className="inline-block mt-6 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
               Start the free setup

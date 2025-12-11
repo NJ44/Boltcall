@@ -8,6 +8,14 @@
     <priority>1.0</priority>
   </url>
   
+  <!-- HTML Sitemap - High Priority -->
+  <url>
+    <loc>https://boltcall.org/sitemap</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
   <!-- Blog Center - High Priority for Content -->
   <url>
     <loc>https://boltcall.org/blog</loc>

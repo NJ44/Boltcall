@@ -38,6 +38,8 @@ import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
 import Setup from '../pages/Setup';
+import ComingSoon from '../pages/ComingSoon';
+import Sitemap from '../pages/Sitemap';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
@@ -219,11 +221,13 @@ const NavigationWrapper: React.FC = () => {
             </SettingsLayout>
           } />
         </Route>
-        <Route path="/setup" element={<Setup />} />
+        <Route path="/setup" element={<ComingSoon />} />
+        <Route path="/coming-soon" element={<ComingSoon />} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/sitemap" element={<Sitemap />} />
         
         {/* Speed Test Funnel */}
         <Route path="/speed-test" element={<SpeedTestLanding />} />

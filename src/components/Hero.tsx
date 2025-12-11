@@ -118,7 +118,7 @@ const Hero: React.FC = () => {
             Learn more
           </Button>
           <Button
-            onClick={() => navigate('/setup')}
+            onClick={() => navigate('/coming-soon')}
             variant="primary"
             size="md"
             className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white transition-all duration-75"

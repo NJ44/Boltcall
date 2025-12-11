@@ -786,7 +786,7 @@ const AIRevenueAudit: React.FC = () => {
                   </p>
                   {results.totals.annualUplift > 10000 && (
                     <Button
-                      onClick={() => window.location.href = '/setup'}
+                      onClick={() => window.location.href = '/coming-soon'}
                       className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 mx-auto"
                     >
                       <Phone className="w-5 h-5" />
