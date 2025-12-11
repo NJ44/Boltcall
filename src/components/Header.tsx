@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Eye } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Eye, Scale, BookOpen, Book, Mail } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -33,9 +33,10 @@ const Header: React.FC = () => {
   ];
 
   const resourcesItems = [
-    { label: 'Comparisons', href: '/comparisons' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Newsletter', href: '/newsletter' },
+    { label: 'Comparisons', href: '/comparisons', icon: Scale },
+    { label: 'Blog', href: '/blog', icon: BookOpen },
+    { label: 'AI Guide for Businesses', href: '/blog/ai-guide-for-businesses', icon: Book },
+    { label: 'Newsletter', href: '/newsletter', icon: Mail },
   ];
 
   const freeToolsItems = [
@@ -521,110 +522,118 @@ const Header: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`absolute top-full left-0 mt-1 w-56 rounded-lg shadow-xl border ${
+                    className={`absolute top-full left-0 mt-1 rounded-lg shadow-xl border ${
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } pb-2 z-[120]`}
+                    } py-3 px-2 z-[120] flex`}
                   >
                   {/* Content Section */}
-                  <div className="px-4 py-1">
-                    <h3 className={`text-sm font-semibold uppercase tracking-wider ${
-                      isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
-                    }`}>
-                      Content
-                    </h3>
+                  <div className="flex-1 min-w-[198px]">
+                    <div className="px-4 py-2">
+                      <h3 className={`text-sm font-semibold uppercase tracking-wider ${
+                        isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                      }`}>
+                        Content
+                      </h3>
+                    </div>
+                    
+                    {resourcesItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <motion.div
+                          key={item.href}
+                          className="relative group"
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link
+                            to={item.href}
+                            onClick={() => {
+                              setIsResourcesOpen(false);
+                              setIsMenuOpen(false);
+                            }}
+                            className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
+                              isOverBlueBackground
+                                ? 'text-gray-300 hover:text-white'
+                                : 'text-gray-700 hover:text-gray-900'
+                            }`}
+                          >
+                            <Icon className="w-4 h-4 flex-shrink-0 -mt-[4px]" />
+                            <span className="relative inline-block pb-1">
+                              {item.label}
+                              <motion.div
+                                className={`absolute -bottom-1 left-0 h-0.5 ${
+                                  isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                                }`}
+                                variants={{
+                                  initial: { width: 0, opacity: 0 },
+                                  hover: { width: "100%", opacity: 1 }
+                                }}
+                                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                              />
+                            </span>
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                   
-                  {resourcesItems.map((item) => (
-                    <motion.div
-                      key={item.href}
-                      className="relative group"
-                      whileHover="hover"
-                      initial="initial"
-                    >
-                      <Link
-                        to={item.href}
-                        onClick={() => {
-                          setIsResourcesOpen(false);
-                          setIsMenuOpen(false);
-                        }}
-                        className={`block px-4 py-2 text-sm transition-colors relative ${
-                          isOverBlueBackground
-                            ? 'text-gray-300 hover:text-white'
-                            : 'text-gray-700 hover:text-gray-900'
-                        }`}
-                      >
-                        <span className="relative inline-block pb-1">
-                          {item.label}
-                          <motion.div
-                            className={`absolute -bottom-1 left-0 h-0.5 ${
-                              isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                            }`}
-                            variants={{
-                              initial: { width: 0, opacity: 0 },
-                              hover: { width: "100%", opacity: 1 }
-                            }}
-                            transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                          />
-                        </span>
-                      </Link>
-                    </motion.div>
-                  ))}
-                  
-                  {/* Separator */}
-                  <div className={`border-t my-2 ${
+                  {/* Vertical Separator */}
+                  <div className={`border-l ${
                     isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
                   }`} />
                   
                   {/* Free Tools Section */}
-                  <div className="px-4 py-1">
-                    <h3 className={`text-sm font-semibold uppercase tracking-wider ${
-                      isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
-                    }`}>
-                      Free Tools
-                    </h3>
-                  </div>
-                  
-                  {freeToolsItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <motion.div
-                        key={item.href}
-                        className="relative group"
-                        whileHover="hover"
-                        initial="initial"
-                      >
-                        <Link
-                          to={item.href}
-                          onClick={() => {
-                            setIsResourcesOpen(false);
-                            setIsMenuOpen(false);
-                          }}
-                          className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
-                            isOverBlueBackground
-                              ? 'text-gray-300 hover:text-white'
-                              : 'text-gray-700 hover:text-gray-900'
-                          }`}
+                  <div className="flex-1 min-w-[198px]">
+                    <div className="px-4 py-2">
+                      <h3 className={`text-sm font-semibold uppercase tracking-wider ${
+                        isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                      }`}>
+                        Free Tools
+                      </h3>
+                    </div>
+                    
+                    {freeToolsItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <motion.div
+                          key={item.href}
+                          className="relative group"
+                          whileHover="hover"
+                          initial="initial"
                         >
-                          <Icon className="w-4 h-4 flex-shrink-0 -mt-[4px]" />
-                          <span className="relative inline-block pb-1">
-                            {item.label}
-                            <motion.div
-                              className={`absolute -bottom-1 left-0 h-0.5 ${
-                                isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                              }`}
-                              variants={{
-                                initial: { width: 0, opacity: 0 },
-                                hover: { width: "100%", opacity: 1 }
-                              }}
-                              transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                            />
-                          </span>
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
+                          <Link
+                            to={item.href}
+                            onClick={() => {
+                              setIsResourcesOpen(false);
+                              setIsMenuOpen(false);
+                            }}
+                            className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
+                              isOverBlueBackground
+                                ? 'text-gray-300 hover:text-white'
+                                : 'text-gray-700 hover:text-gray-900'
+                            }`}
+                          >
+                            <Icon className="w-4 h-4 flex-shrink-0 -mt-[4px]" />
+                            <span className="relative inline-block pb-1">
+                              {item.label}
+                              <motion.div
+                                className={`absolute -bottom-1 left-0 h-0.5 ${
+                                  isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
+                                }`}
+                                variants={{
+                                  initial: { width: 0, opacity: 0 },
+                                  hover: { width: "100%", opacity: 1 }
+                                }}
+                                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                              />
+                            </span>
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </motion.div>
                 )}
               </AnimatePresence>

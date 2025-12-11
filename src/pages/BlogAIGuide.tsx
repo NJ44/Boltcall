@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, MessageSquare, RotateCw, Bell, CheckCircle, Zap, Globe, TrendingUp, HelpCircle, Users } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, BookOpen, CheckCircle, Zap, TrendingUp, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -12,52 +12,77 @@ const BlogAIGuide: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Complete Guide to AI for Local Businesses | Boltcall';
-    updateMetaDescription('Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations.');
+    updateMetaDescription('Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations in 3 simple steps.');
     
-    // Add Article schema markup
-    const articleSchema = {
+    // Add CollectionPage schema markup
+    const collectionSchema = {
       "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "The Complete Guide to AI for Local Businesses",
-      "description": "Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations.",
-      "author": {
-        "@type": "Organization",
-        "name": "Boltcall"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Boltcall",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://boltcall.org/boltcall_full_logo.png"
-        }
-      },
-      "datePublished": "2025-02-01",
-      "dateModified": "2025-02-01",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://boltcall.org/blog/ai-guide-for-businesses"
-      },
-      "image": {
-        "@type": "ImageObject",
-        "url": "https://boltcall.org/og-image.jpg"
-      }
+      "@type": "CollectionPage",
+      "name": "The Complete Guide to AI for Local Businesses",
+      "description": "Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations in 3 simple steps.",
+      "url": "https://boltcall.org/blog/ai-guide-for-businesses"
     };
 
-    const existingScript = document.getElementById('article-schema');
+    const existingScript = document.getElementById('collection-schema');
     if (existingScript) existingScript.remove();
 
     const script = document.createElement('script');
-    script.id = 'article-schema';
+    script.id = 'collection-schema';
     script.type = 'application/ld+json';
-    script.text = JSON.stringify(articleSchema);
+    script.text = JSON.stringify(collectionSchema);
     document.head.appendChild(script);
 
     return () => {
-      const scriptToRemove = document.getElementById('article-schema');
+      const scriptToRemove = document.getElementById('collection-schema');
       if (scriptToRemove) scriptToRemove.remove();
     };
   }, []);
+
+  const steps = [
+    {
+      number: 1,
+      title: 'Understanding AI for Local Businesses',
+      description: 'Learn what AI can automate for your business, the real benefits, and how it transforms daily operations.',
+      href: '/blog/ai-guide-for-businesses/step-1-understanding-ai',
+      icon: BookOpen,
+      color: 'blue',
+      topics: [
+        'What AI can automate (calls, SMS, follow-ups)',
+        'Real benefits explained simply',
+        'Cost vs. value analysis',
+        'Real business case studies'
+      ]
+    },
+    {
+      number: 2,
+      title: 'Choosing the Right AI Tools',
+      description: 'Discover the essential AI tools for local businesses and how to evaluate which ones fit your needs.',
+      href: '/blog/ai-guide-for-businesses/step-2-choosing-ai-tools',
+      icon: CheckCircle,
+      color: 'green',
+      topics: [
+        'Essential AI tools for service businesses',
+        'Feature comparisons',
+        'Pricing considerations',
+        'Integration requirements'
+      ]
+    },
+    {
+      number: 3,
+      title: 'Getting Started with AI',
+      description: 'Step-by-step guide to implementing AI in your business, from setup to going live in under 30 minutes.',
+      href: '/blog/ai-guide-for-businesses/step-3-getting-started',
+      icon: Zap,
+      color: 'purple',
+      topics: [
+        '30-minute setup process',
+        'Customization best practices',
+        'Common FAQs answered',
+        'Implementation tips'
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -65,13 +90,13 @@ const BlogAIGuide: React.FC = () => {
       <ReadingProgress />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
+      <section className="relative pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-left mb-4"
+            className="text-center"
           >
             <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
               <TrendingUp className="w-4 h-4" />
@@ -82,444 +107,151 @@ const BlogAIGuide: React.FC = () => {
               The Complete Guide to <span className="text-blue-600">AI for Local Businesses</span>
             </h1>
             
-            <div className="flex items-center gap-6 text-sm text-gray-600">
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Learn how artificial intelligence can transform your business operations in 3 simple steps. 
+              From understanding what AI can do to implementing it in your business.
+            </p>
+            
+            <div className="flex items-center justify-center gap-6 text-sm text-gray-600">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 <span>January 20, 2025</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                <span>12 min read</span>
+                <span>3-Part Series</span>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
-        {/* Key Points Summary */}
+      {/* Steps Overview */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid md:grid-cols-3 gap-8">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            const colorClasses = {
+              blue: 'bg-blue-100 text-blue-600 border-blue-200',
+              green: 'bg-green-100 text-green-600 border-green-200',
+              purple: 'bg-purple-100 text-purple-600 border-purple-200'
+            };
+
+            return (
+              <motion.div
+                key={step.number}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
+              >
+                <Link to={step.href} className="block h-full">
+                  <div className="p-6 h-full flex flex-col">
+                    {/* Step Number & Icon */}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center border-2 ${colorClasses[step.color as keyof typeof colorClasses]}`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div className="text-3xl font-bold text-gray-300">0{step.number}</div>
+                    </div>
+                    
+                    {/* Title */}
+                    <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                      {step.title}
+                    </h2>
+                    
+                    {/* Description */}
+                    <p className="text-gray-600 mb-6 flex-grow">
+                      {step.description}
+                    </p>
+                    
+                    {/* Topics List */}
+                    <ul className="space-y-2 mb-6">
+                      {step.topics.map((topic, topicIndex) => (
+                        <li key={topicIndex} className="flex items-start gap-2 text-sm text-gray-600">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span>{topic}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    {/* Read More */}
+                    <div className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
+                      <span>Read Article</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Quick Summary */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-16"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">Key Points Summary</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h3 className="font-semibold text-lg mb-1.5">What AI Can Automate</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Calls, SMS, follow-ups, reminders, and lead qualification</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-1.5">Costs vs Benefits</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Small monthly investment saves hours daily and captures more leads</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-1.5">Where to Start</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Begin with AI receptionist or SMS booking—setup takes under 30 minutes</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* What AI Can Automate */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
-            What AI Can Automate for Service Businesses
-          </h2>
-          
-          <div className="space-y-8">
-            {/* Calls */}
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">Calls</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    AI receptionists answer every call, 24/7. They handle inquiries, schedule appointments, 
-                    answer common questions, and transfer complex issues to your team. No more missed calls, 
-                    no more voicemails that never get returned. Your AI receptionist works around the clock, 
-                    ensuring every customer gets immediate attention.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* SMS */}
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MessageSquare className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">SMS</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Automated SMS booking lets customers schedule appointments via text message. 
-                    Your AI agent handles the entire conversation, confirms availability, books the slot, 
-                    and sends reminders—all without you lifting a finger. Perfect for customers who prefer 
-                    texting over calling.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Follow-ups */}
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <RotateCw className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">Follow-ups</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Keep conversations warm with automated follow-up sequences. Your AI reaches out to leads 
-                    at the perfect time, nurtures relationships, and moves prospects through your sales funnel. 
-                    Set up multi-touch campaigns that engage leads via SMS, email, or phone—all automatically.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Reminders */}
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Bell className="w-6 h-6 text-orange-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">Reminders</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Reduce no-shows by up to 90% with automated appointment reminders. Your AI sends personalized 
-                    reminders via SMS or email, confirming appointments and reducing last-minute cancellations. 
-                    Customize timing and messaging to match your business needs.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Lead Qualification */}
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-6 h-6 text-indigo-600" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">Lead Qualification</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Instantly qualify leads as they come in. Your AI asks the right questions, determines 
-                    urgency, identifies budget, and routes qualified leads directly to your calendar. 
-                    No more wasting time on tire-kickers or unqualified inquiries.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Benefits Explained Simply */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
-            Benefits Explained Simply
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div>
-              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
-                <Clock className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1.5">Save Time</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Automate repetitive tasks and free up 10-15 hours per week. Focus on what you do best 
-                while AI handles the routine work.
-              </p>
-            </div>
-
-            <div>
-              <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
-                <Phone className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1.5">Stop Missing Leads</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Answer every call, respond to every message instantly. Never lose a lead because you 
-                were too busy or it was after hours.
-              </p>
-            </div>
-
-            <div>
-              <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
-                <Calendar className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1.5">Book More Appointments</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Convert more leads into booked appointments with instant responses and automated follow-ups. 
-                Studies show businesses that respond in under 60 seconds book 391% more appointments.
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Case Study Style Mini-Stories */}
-        <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-16"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
-            Real Results from Real Businesses
-          </h2>
-          
-          <div className="space-y-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">What You'll Learn</h2>
+          <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                <strong className="text-gray-900">Dental Practice, Chicago:</strong> "We were losing 3-4 patients 
-                per week to missed calls. After implementing Boltcall's AI receptionist, we haven't missed a single 
-                call in 6 months. Our appointment bookings increased by 28%."
+              <h3 className="font-semibold text-lg mb-2">Step 1: Understanding</h3>
+              <p className="text-blue-50">
+                Discover what AI can automate for your business and the real-world benefits you'll see.
               </p>
             </div>
-
             <div>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                <strong className="text-gray-900">HVAC Company, Dallas:</strong> "The SMS booking feature changed 
-                everything. Our customers love being able to text us at any time. We've reduced no-shows by 85% 
-                thanks to automated reminders, and our team saves 12 hours per week on scheduling."
+              <h3 className="font-semibold text-lg mb-2">Step 2: Choosing</h3>
+              <p className="text-blue-50">
+                Learn which AI tools are essential and how to evaluate what fits your business needs.
               </p>
             </div>
-
             <div>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                <strong className="text-gray-900">Auto Repair Shop, Phoenix:</strong> "Before AI, we'd get 20-30 
-                calls per day and miss about 40% of them. Now our AI handles everything, qualifies leads, and 
-                books appointments. We've increased revenue by $15,000 per month just from capturing leads we 
-                used to miss."
+              <h3 className="font-semibold text-lg mb-2">Step 3: Implementing</h3>
+              <p className="text-blue-50">
+                Get step-by-step instructions to set up AI in your business in under 30 minutes.
               </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Boltcall's AI Suite */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
-            Boltcall's AI Suite
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">AI Receptionist</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                24/7 call handling, appointment scheduling, and customer support. Never miss a call again.
-              </p>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                  <MessageSquare className="w-5 h-5 text-green-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">SMS Agent</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                Automated SMS conversations that book appointments, answer questions, and engage customers.
-              </p>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <RotateCw className="w-5 h-5 text-purple-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Multi-channel Follow-ups</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                Automated follow-up sequences across SMS, email, and phone to nurture leads and close more deals.
-              </p>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-orange-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Instant Form Replies</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                Automatically respond to form submissions within seconds, qualifying leads and booking appointments instantly.
-              </p>
-            </div>
-
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-                  <Globe className="w-5 h-5 text-indigo-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900">Website Widget</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed">
-                AI chat widget for your website that answers visitor questions, captures leads, and books appointments 
-                directly from your site—24/7.
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* FAQ */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
-            Frequently Asked Questions
-          </h2>
-          
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    Is AI too complicated for small businesses?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Not at all. Modern AI tools like Boltcall are designed specifically for small businesses. 
-                    You don't need technical knowledge or IT support. Setup takes under 30 minutes, and our 
-                    team provides free onboarding to get you started. Most business owners are up and running 
-                    the same day they sign up.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    How fast can I set it up?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Most businesses are fully operational within 30 minutes. Here's what you'll do: 
-                    (1) Create your AI agent with our simple setup wizard, (2) Connect your calendar 
-                    (Cal.com, Google Calendar, etc.), (3) Customize your greeting and responses, 
-                    (4) Go live. Our team offers free setup assistance if you need help, and we have 
-                    industry-specific templates to speed things up even more.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    Will customers know they're talking to AI?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Our AI is designed to sound natural and professional. Many customers can't tell the 
-                    difference, and those who do appreciate the instant response and 24/7 availability. 
-                    You can customize the greeting to be transparent about using AI, or keep it natural—it's 
-                    your choice. Either way, customers value the immediate service.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    What if I need to make changes later?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Everything is fully customizable and can be updated anytime. Change your greeting, 
-                    update responses, modify business hours, or adjust settings—all from your dashboard 
-                    in minutes. No need to call support or wait for updates.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="my-16"
-        >
-          <div className="flex flex-col items-center justify-center text-center">
-            <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
-              <div className="flex justify-center isolate">
-                <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Users className="w-6 h-6 text-blue-500" />
-                </div>
-                <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Phone className="w-6 h-6 text-blue-500" />
-                </div>
-                <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Calendar className="w-6 h-6 text-blue-500" />
-                </div>
-              </div>
-              <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
-              <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
-          <Link
-                to="/setup"
-                className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
-          >
-                Start the free setup
-          </Link>
             </div>
           </div>
         </motion.div>
-      </article>
+      </section>
+
+      {/* CTA Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"
+      >
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
+            <div className="flex justify-center isolate">
+              <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                <Users className="w-6 h-6 text-blue-500" />
+              </div>
+              <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                <Zap className="w-6 h-6 text-blue-500" />
+              </div>
+              <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                <CheckCircle className="w-6 h-6 text-blue-500" />
+              </div>
+            </div>
+            <h2 className="text-gray-900 font-medium mt-4 text-4xl">Ready to Get Started?</h2>
+            <p className="text-base text-gray-600 mt-2">Start with Step 1 to understand how AI can transform your business.</p>
+            <Link
+              to="/blog/ai-guide-for-businesses/step-1-understanding-ai"
+              className="mt-6 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
+            >
+              Start Reading Step 1
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
+        </div>
+      </motion.div>
 
       <Footer />
     </div>
@@ -527,4 +259,3 @@ const BlogAIGuide: React.FC = () => {
 };
 
 export default BlogAIGuide;
-

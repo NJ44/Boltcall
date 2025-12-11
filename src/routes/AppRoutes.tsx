@@ -65,6 +65,9 @@ import BlogSpeed from '../pages/BlogSpeed';
 import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
 import BlogSEO from '../pages/BlogSEO';
 import BlogAIGuide from '../pages/BlogAIGuide';
+import BlogAIGuideStep1 from '../pages/BlogAIGuideStep1';
+import BlogAIGuideStep2 from '../pages/BlogAIGuideStep2';
+import BlogAIGuideStep3 from '../pages/BlogAIGuideStep3';
 import BlogAIReceptionistComparison from '../pages/BlogAIReceptionistComparison';
 import BlogAIReceptionistHowItWorks from '../pages/BlogAIReceptionistHowItWorks';
 import BlogIsAIReceptionistWorthIt from '../pages/BlogIsAIReceptionistWorthIt';
@@ -241,6 +244,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
         <Route path="/blog/complete-guide-to-seo" element={<BlogSEO />} />
         <Route path="/blog/ai-guide-for-businesses" element={<BlogAIGuide />} />
+        <Route path="/blog/ai-guide-for-businesses/step-1-understanding-ai" element={<BlogAIGuideStep1 />} />
+        <Route path="/blog/ai-guide-for-businesses/step-2-choosing-ai-tools" element={<BlogAIGuideStep2 />} />
+        <Route path="/blog/ai-guide-for-businesses/step-3-getting-started" element={<BlogAIGuideStep3 />} />
         <Route path="/blog/best-ai-receptionist-tools" element={<BlogAIReceptionistComparison />} />
         <Route path="/blog/how-ai-receptionist-works" element={<BlogAIReceptionistHowItWorks />} />
         <Route path="/blog/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />

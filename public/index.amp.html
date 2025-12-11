@@ -1,0 +1,562 @@
+<!doctype html>
+<html ⚡ lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    
+    <title>Boltcall: Smart AI System for Dental Clinics</title>
+    <link rel="canonical" href="https://boltcall.org/">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content="AI receptionist for dental clinics and local businesses. 24/7 appointment booking, lead capture, automated reminders, SMS booking assistant. Never miss a call or lead. Free setup.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Boltcall: Smart AI System for Dental Clinics">
+    <meta property="og:description" content="AI receptionist for dental clinics and local businesses. 24/7 appointment booking, lead capture, automated reminders, SMS booking assistant. Never miss a call or lead. Free setup.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boltcall.org/">
+    <meta property="og:image" content="https://boltcall.org/og-image.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Boltcall: Smart AI System for Dental Clinics">
+    <meta name="twitter:description" content="AI receptionist for dental clinics and local businesses. 24/7 appointment booking, lead capture, automated reminders, SMS booking assistant. Never miss a call or lead. Free setup.">
+    <meta name="twitter:image" content="https://boltcall.org/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/boltcall_icon.png">
+    
+    <!-- AMP Boilerplate -->
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    
+    <!-- Custom Styles -->
+    <style amp-custom>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
+        color: #1f2937;
+        background-color: #ffffff;
+      }
+      
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      /* Header */
+      header {
+        background: #ffffff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 1rem 0;
+      }
+      
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .logo {
+        height: 40px;
+        width: auto;
+      }
+      
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      
+      .nav-links a {
+        color: #1f2937;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      
+      .nav-links a:hover {
+        color: #2563eb;
+      }
+      
+      .cta-button {
+        background: #2563eb;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+        transition: background 0.2s;
+      }
+      
+      .cta-button:hover {
+        background: #1d4ed8;
+      }
+      
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #eff6ff 100%);
+        padding: 4rem 0;
+        text-align: center;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+      
+      .hero h1 .highlight {
+        color: #2563eb;
+      }
+      
+      .hero p {
+        font-size: 1.25rem;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      
+      .btn-primary {
+        background: #2563eb;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+      }
+      
+      .btn-secondary {
+        background: white;
+        color: #2563eb;
+        border: 2px solid #2563eb;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+      }
+      
+      /* Features Section */
+      .features {
+        padding: 4rem 0;
+        background: white;
+      }
+      
+      .section-title,
+      h2 {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+      }
+      
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+      
+      .feature-card {
+        background: #f9fafb;
+        padding: 2rem;
+        border-radius: 0.75rem;
+        text-align: center;
+      }
+      
+      .feature-icon {
+        width: 64px;
+        height: 64px;
+        background: #dbeafe;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2rem;
+      }
+      
+      .feature-card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      
+      .feature-card p {
+        color: #6b7280;
+      }
+      
+      /* How It Works */
+      .how-it-works {
+        padding: 4rem 0;
+        background: #f9fafb;
+      }
+      
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      
+      .step {
+        text-align: center;
+      }
+      
+      .step-number {
+        width: 48px;
+        height: 48px;
+        background: #2563eb;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin: 0 auto 1rem;
+      }
+      
+      .step h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      
+      .step p {
+        color: #6b7280;
+      }
+      
+      /* CTA Section */
+      .cta-section {
+        padding: 4rem 0;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        text-align: center;
+      }
+      
+      .cta-section h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      
+      .cta-section p {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+      
+      /* FAQ Section */
+      .faq {
+        padding: 4rem 0;
+        background: white;
+      }
+      
+      .faq-item {
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        overflow: hidden;
+      }
+      
+      .faq-question {
+        background: #f9fafb;
+        padding: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      
+      .faq-answer {
+        padding: 1rem;
+        color: #6b7280;
+      }
+      
+      /* Footer */
+      footer {
+        background: #1f2937;
+        color: white;
+        padding: 3rem 0 1rem;
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-section h4 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      
+      .footer-section ul {
+        list-style: none;
+      }
+      
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-section a {
+        color: #d1d5db;
+        text-decoration: none;
+      }
+      
+      .footer-section a:hover {
+        color: white;
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid #374151;
+        color: #9ca3af;
+      }
+      
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+        
+        .nav-links {
+          display: none;
+        }
+        
+        .hero-buttons {
+          flex-direction: column;
+        }
+        
+        .btn-primary,
+        .btn-secondary {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Boltcall",
+      "url": "https://boltcall.org",
+      "logo": "https://boltcall.org/boltcall_full_logo.png",
+      "description": "Boltcall provides AI receptionist services, automated follow-ups, and appointment reminders. Never miss a lead again with Boltcall's 24/7 AI-powered lead capture system."
+    }
+    </script>
+    
+    <!-- AMP Analytics -->
+    <amp-analytics type="gtag" data-credentials="include">
+      <script type="application/json">
+      {
+        "vars": {
+          "gtag_id": "G-LY9H4ZQW81",
+          "config": {
+            "G-LY9H4ZQW81": {
+              "groups": "default"
+            }
+          }
+        }
+      }
+      </script>
+    </amp-analytics>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-content">
+        <a href="/">
+          <amp-img src="/boltcall_full_logo.png" alt="Boltcall" class="logo" width="150" height="40" layout="fixed"></amp-img>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </nav>
+        <a href="/setup" class="cta-button">Get Started</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>AI Receptionist for Dental Clinics: Never Miss a Call or Lead</h1>
+        <p>AI receptionist for dental clinics and local businesses. 24/7 appointment booking, lead capture, automated reminders, SMS booking assistant. Never miss a call or lead. Free setup.</p>
+        <div class="hero-buttons">
+          <a href="/setup" class="btn-primary">Start Free Setup</a>
+          <a href="/pricing" class="btn-secondary">View Pricing</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <h2>Everything You Need to Never Miss a Lead</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📞</div>
+            <h3>AI Receptionist</h3>
+            <p>24/7 call handling that answers every call, books appointments, and handles inquiries automatically.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>SMS Booking Assistant</h3>
+            <p>Let customers book appointments via text message. Your AI handles the entire conversation.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⏰</div>
+            <h3>Automated Reminders</h3>
+            <p>Reduce no-shows by up to 90% with personalized appointment reminders sent automatically.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3>Follow-Up System</h3>
+            <p>Automated follow-ups that nurture leads and move prospects through your sales funnel.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Instant Form Reply</h3>
+            <p>Respond to form submissions within seconds, qualifying leads and booking appointments instantly.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Website Widget</h3>
+            <p>AI chat widget for your website that answers questions and books appointments 24/7.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+      <div class="container">
+        <h2>How Our AI Receptionist Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Create Your AI Agent</h3>
+            <p>Set up your AI receptionist in under 30 minutes with our simple setup wizard.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Connect Your Calendar</h3>
+            <p>Link your existing calendar (Google Calendar, Cal.com, etc.) for automatic booking.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Go Live</h3>
+            <p>Your AI starts answering calls and messages immediately, 24/7.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Never Miss a Lead Again?</h2>
+        <p>Join thousands of businesses using Boltcall to capture every opportunity.</p>
+        <a href="/setup" class="btn-primary" style="background: white; color: #2563eb;">Start Free Setup</a>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+      <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <amp-accordion>
+          <section>
+            <h3 class="faq-question">What exactly does Boltcall offer?</h3>
+            <div class="faq-answer">
+              Boltcall gives local businesses a complete AI system that handles all the stuff that keeps slipping through the cracks. It replies to new leads in seconds, answers calls and messages, books appointments directly on your calendar, and follows up automatically so no one gets forgotten.
+            </div>
+          </section>
+          <section>
+            <h3 class="faq-question">Can it transfer the call to a real person?</h3>
+            <div class="faq-answer">
+              Yes. Set live-transfer rules (e.g., during business hours, hot leads only). If no one answers, it books or takes a voicemail and alerts you.
+            </div>
+          </section>
+          <section>
+            <h3 class="faq-question">How good is the call quality and voice?</h3>
+            <div class="faq-answer">
+              Natural and clear. You pick a voice and tone (friendly, calm, formal). We keep replies short so calls feel human, not robotic.
+            </div>
+          </section>
+          <section>
+            <h3 class="faq-question">Can it use my current phone number?</h3>
+            <div class="faq-answer">
+              Yes. You can forward your existing number to your AI receptionist, or buy a new number inside the app and start fresh.
+            </div>
+          </section>
+        </amp-accordion>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="/features/ai-receptionist">AI Receptionist</a></li>
+              <li><a href="/features/sms-booking-assistant">SMS Booking</a></li>
+              <li><a href="/features/automated-reminders">Reminders</a></li>
+              <li><a href="/pricing">Pricing</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/comparisons">Comparisons</a></li>
+              <li><a href="/help-center">Help Center</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/terms-of-service">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Boltcall. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
