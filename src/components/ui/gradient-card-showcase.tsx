@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -40,7 +39,7 @@ export default function GradientCardShowcase({ cards = defaultCards, showLinks =
   return (
     <>
       <div className="flex justify-center items-center flex-nowrap gap-8 py-10 min-h-[600px]">
-        {cards.map(({ title, desc, gradientFrom, gradientTo, href }, idx) => (
+        {cards.map(({ title, gradientFrom, gradientTo, href }, idx) => (
           <div
             key={idx}
             className="group relative w-[320px] h-[400px] flex-shrink-0 transition-all duration-500"
