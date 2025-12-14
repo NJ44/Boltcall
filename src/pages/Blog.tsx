@@ -153,8 +153,8 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Shifting Economy: What Changed?
           </h2>
           
@@ -236,8 +236,8 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Traditional Methods Are Failing
           </h2>
           
@@ -265,7 +265,7 @@ const Blog: React.FC = () => {
             
             <p>
               <strong>The Time Problem:</strong> You can't be everywhere at once. When you're with a customer, you miss calls. 
-              When you're on a call, you miss walk-ins. When you're closed, you miss everything. 
+              When you're on a call, you miss walk-ins. When you're closed, you miss everything.
               This creates a constant tension between serving existing customers and capturing new ones. 
               Every missed call is a potential customer walking away to a competitor who answered.
             </p>
@@ -308,8 +308,8 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why AI Services Are Critical Now
           </h2>
           
@@ -473,8 +473,8 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Real-World Success Stories
           </h2>
           
@@ -569,8 +569,8 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Choice Is Yours
           </h2>
           
@@ -657,7 +657,7 @@ const Blog: React.FC = () => {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Related Articles
           </h2>
           <div className="grid md:grid-cols-3 gap-6">

@@ -118,8 +118,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             What Is Instant Lead Reply?
           </h2>
           
@@ -164,8 +164,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Instant Lead Reply Matters
           </h2>
           
@@ -209,8 +209,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How Instant Lead Reply Works
           </h2>
           
@@ -296,8 +296,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Types of Instant Lead Reply</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Types of Instant Lead Reply</h2>
           
           <h3 className="text-2xl font-bold text-gray-900 mb-4">1. Email-Based Reply</h3>
           <p>
@@ -327,8 +327,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>What Makes It "Instant"?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>What Makes It "Instant"?</h2>
           
           <p>
             True instant lead reply means responding within 0-60 seconds. Here's the breakdown:
@@ -365,8 +365,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Common Misconceptions About Instant Lead Reply</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Common Misconceptions About Instant Lead Reply</h2>
           
           <h3 className="text-2xl font-bold text-gray-900 mb-4">Myth 1: "A quick email template is instant lead reply"</h3>
           <p>
@@ -396,8 +396,8 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Bottom Line</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Bottom Line</h2>
           
           <p>
             Instant lead reply means responding to potential customers within 0-60 seconds of them showing interest. It's not just about speed—it's about engaging leads when they're most interested, answering their questions immediately, and converting them before they move on to competitors.

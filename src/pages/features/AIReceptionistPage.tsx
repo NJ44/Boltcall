@@ -29,11 +29,11 @@ const AIReceptionistPage: React.FC = () => {
             { label: 'AI Receptionist', href: '/features/ai-receptionist' }
           ]} />
           <div className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
               <Phone className="w-4 h-4" />
               <span className="font-semibold">AI Receptionist</span>
@@ -60,8 +60,8 @@ const AIReceptionistPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>What is AI Receptionist?</span>
             </h2>
             <div className="space-y-6 text-gray-700 leading-relaxed">
@@ -123,7 +123,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Why AI Receptionist is Critical</span>
             </h2>
             
@@ -192,7 +192,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>How AI Receptionist Helps Your Business</span>
             </h2>
             
@@ -280,7 +280,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Real-World Use Cases</span>
             </h2>
             
@@ -347,7 +347,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>How AI Receptionist Works</span>
             </h2>
             
@@ -456,7 +456,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Key Features & Capabilities</span>
             </h2>
             
@@ -523,7 +523,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Return on Investment</span>
             </h2>
             
@@ -559,7 +559,7 @@ const AIReceptionistPage: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Frequently Asked Questions</span>
             </h2>
             

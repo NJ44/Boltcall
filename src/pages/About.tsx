@@ -11,7 +11,7 @@ import Button from '../components/ui/Button';
 const About: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'About Us - Boltcall | AI-Powered Business Communication';
+    document.title = 'About';
     updateMetaDescription('Learn about Boltcall - revolutionizing business communication with AI. Our mission, values, and commitment to helping local businesses thrive.');
   }, []);
 
@@ -49,8 +49,8 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Our Mission</span>
             </h2>
             
@@ -151,8 +151,8 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>What We Do</span>
             </h2>
             
@@ -206,8 +206,8 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Why We Started</span>
             </h2>
             

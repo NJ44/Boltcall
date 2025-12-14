@@ -118,8 +118,8 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Reality: What's Actually Happening</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Reality: What's Actually Happening</h2>
           
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-8">
             <h3 className="text-2xl font-bold mb-6">Key Statistics</h3>
@@ -151,12 +151,12 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>What AI Receptionists Excel At</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>What AI Receptionists Excel At</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-green-600" />
                 <h3 className="text-xl font-bold text-gray-900">24/7 Availability</h3>
               </div>
@@ -180,7 +180,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-green-600" />
                 <h3 className="text-xl font-bold text-gray-900">Routine Task Automation</h3>
               </div>
@@ -204,7 +204,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-green-600" />
                 <h3 className="text-xl font-bold text-gray-900">Cost Efficiency</h3>
               </div>
@@ -228,7 +228,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-green-600" />
                 <h3 className="text-xl font-bold text-gray-900">Speed and Consistency</h3>
               </div>
@@ -260,12 +260,12 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Where Human Receptionists Still Excel</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Where Human Receptionists Still Excel</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Users className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Emotional Intelligence</h3>
               </div>
@@ -289,7 +289,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Brain className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Complex Problem Solving</h3>
               </div>
@@ -313,7 +313,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Building2 className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Physical Presence</h3>
               </div>
@@ -337,7 +337,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <MessageSquare className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">High-Value Relationship Management</h3>
               </div>
@@ -369,8 +369,8 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Future: Hybrid AI + Human Model</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Future: Hybrid AI + Human Model</h2>
           
           <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8 border-2 border-purple-200 mb-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">How Most Businesses Are Using Both</h3>
@@ -434,12 +434,12 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Job Market Reality</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Job Market Reality</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <AlertCircle className="w-6 h-6 text-yellow-600" />
                 <h3 className="text-xl font-bold text-gray-900">What's Changing</h3>
               </div>
@@ -460,7 +460,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
             </div>
 
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <TrendingUp className="w-6 h-6 text-green-600" />
                 <h3 className="text-xl font-bold text-gray-900">What's Growing</h3>
               </div>
@@ -503,8 +503,8 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>What Receptionists Should Do to Stay Relevant</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>What Receptionists Should Do to Stay Relevant</h2>
           
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-8">
             <h3 className="text-2xl font-bold mb-6">Skills to Develop</h3>
@@ -556,8 +556,8 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Bottom Line</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Bottom Line</h2>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-lg text-gray-700 leading-relaxed mb-4">

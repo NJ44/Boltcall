@@ -122,8 +122,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Cost Savings and Financial Benefits
           </h2>
           
@@ -177,8 +177,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Simplified Management and Operations
           </h2>
           
@@ -205,8 +205,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Enhanced Customer Service and Professional Image
           </h2>
           
@@ -284,8 +284,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Focus on Core Business Activities
           </h2>
           
@@ -348,8 +348,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Access to Advanced Technology
           </h2>
           
@@ -419,8 +419,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Customization and Flexibility
           </h2>
           
@@ -477,8 +477,8 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Embracing Outsourced Reception Services
           </h2>
           
@@ -494,7 +494,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
             </p>
             
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-8 rounded-2xl my-8">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+              <h3 className="text-2xl font-bold mb-4 flex items-start gap-3">
                 <Phone className="w-6 h-6" />
                 How Boltcall Transforms Reception Services
               </h3>

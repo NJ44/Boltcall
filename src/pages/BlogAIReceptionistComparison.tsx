@@ -213,8 +213,8 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Quick Comparison Overview
           </h2>
           
@@ -247,8 +247,8 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Detailed Tool Reviews
           </h2>
           
@@ -268,7 +268,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-start gap-3 mb-2">
                       <h3 className="text-2xl font-bold text-gray-900">{tool.name}</h3>
                       {index === 0 && (
                         <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
@@ -327,8 +327,8 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Boltcall Stands Out for Local Businesses
           </h2>
           
@@ -372,8 +372,8 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How to Choose the Right Tool
           </h2>
           
@@ -429,8 +429,8 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.0 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Final Thoughts
           </h2>
           

@@ -53,8 +53,8 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>What is Website Chat/Voice Widget?</span>
             </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
@@ -79,8 +79,8 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Why Website Widget is Critical</span>
             </h2>
             
@@ -152,14 +152,14 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>How Website Widget Helps Your Business</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     24/7 Availability
@@ -172,7 +172,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     Instant Answers
@@ -185,7 +185,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     Lead Qualification
@@ -198,7 +198,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Direct Booking</h3>
                 </div>
@@ -238,8 +238,8 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>How Website Chat/Voice Widget Works</span>
             </h2>
             
@@ -346,8 +346,8 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Real-World Results</span>
             </h2>
             
@@ -397,8 +397,8 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Customization Options</span>
             </h2>
             
@@ -449,8 +449,8 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Frequently Asked Questions</span>
             </h2>
             

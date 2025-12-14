@@ -180,6 +180,13 @@
     <priority>0.8</priority>
   </url>
   
+  <url>
+    <loc>https://boltcall.org/blog/create-gemini-gem-business-assistant</loc>
+    <lastmod>2025-02-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Feature Pages - High Priority for SEO -->
   <url>
     <loc>https://boltcall.org/features/ai-receptionist</loc>

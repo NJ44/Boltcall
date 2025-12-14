@@ -131,6 +131,14 @@ const blogPosts: BlogPost[] = [
     readTime: '15 min read',
     category: 'Tool Comparison'
   },
+  {
+    title: 'How to Create a <span class="text-blue-600">Gemini Gem</span> Business Assistant (Marketing, Social Media & More)',
+    slug: '/blog/create-gemini-gem-business-assistant',
+    excerpt: 'Learn how to create a Gemini gem that acts as your business assistant. Step-by-step guide for marketing assistants, social media assistants, content creators, and more.',
+    date: 'February 15, 2025',
+    readTime: '12 min read',
+    category: 'AI Tools Guide'
+  },
   // Add more blog posts here as they are created
 ];
 

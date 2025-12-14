@@ -53,8 +53,8 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>What is AI Follow-Up System?</span>
             </h2>
             <p className="text-lg text-gray-600 mb-4 leading-relaxed">
@@ -79,8 +79,8 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Why AI Follow-Ups are Critical</span>
             </h2>
             
@@ -151,14 +151,14 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>How AI Follow-Ups Help Your Business</span>
             </h2>
             
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     Increase Conversions
@@ -171,7 +171,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     Personalized Messaging
@@ -184,7 +184,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     Multi-Channel Follow-Ups
@@ -197,7 +197,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">
                     Save Time
@@ -241,8 +241,8 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>How AI Follow-Up System Works</span>
             </h2>
             
@@ -351,8 +351,8 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Real-World Results</span>
             </h2>
             
@@ -401,8 +401,8 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Best Practices for Follow-Up Success</span>
             </h2>
             
@@ -456,8 +456,8 @@ const AIFollowUpSystemPage: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+              <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
               <span>Frequently Asked Questions</span>
             </h2>
             

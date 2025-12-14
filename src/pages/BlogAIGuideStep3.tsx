@@ -2,23 +2,21 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, HelpCircle, TrendingUp, ArrowLeft, CheckCircle, Zap, Users } from 'lucide-react';
+import { Calendar, Clock, HelpCircle, ArrowLeft, CheckCircle, Zap, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
-import ReadingProgress from '../components/ReadingProgress';
-
 const BlogAIGuideStep3: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Step 3: Getting Started with AI | Boltcall';
+    document.title = 'Level 3: Getting Started with AI | Boltcall';
     updateMetaDescription('Step-by-step guide to implementing AI in your business, from setup to going live in under 30 minutes.');
     
     // Add Article schema markup
     const articleSchema = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Step 3: Getting Started with AI",
+      "headline": "Level 3: Getting Started with AI",
       "description": "Step-by-step guide to implementing AI in your business, from setup to going live in under 30 minutes.",
       "author": {
         "@type": "Organization",
@@ -36,7 +34,7 @@ const BlogAIGuideStep3: React.FC = () => {
       "dateModified": "2025-02-01",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://boltcall.org/blog/ai-guide-for-businesses/step-3-getting-started"
+        "@id": "https://boltcall.org/ai-guide-for-businesses/level-3-getting-started"
       },
       "image": {
         "@type": "ImageObject",
@@ -63,7 +61,6 @@ const BlogAIGuideStep3: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      <ReadingProgress />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
@@ -82,11 +79,6 @@ const BlogAIGuideStep3: React.FC = () => {
               <span>Back to Guide Overview</span>
             </Link>
 
-            <div className="inline-flex items-center gap-2 text-sm text-purple-600 bg-purple-50 px-4 py-2 rounded-full mb-6">
-              <TrendingUp className="w-4 h-4" />
-              <span className="font-semibold">Step 3 of 3</span>
-            </div>
-            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Getting Started with <span className="text-purple-600">AI</span>
             </h1>
@@ -127,13 +119,13 @@ const BlogAIGuideStep3: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-purple-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-purple-600 rounded-full"></div>
             The 30-Minute Setup Process
           </h2>
           
           <div className="space-y-8">
-            {/* Step 1 */}
+            {/* Level 1 */}
             <div className="flex gap-6">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xl">
@@ -170,7 +162,7 @@ const BlogAIGuideStep3: React.FC = () => {
               </div>
             </div>
 
-            {/* Step 2 */}
+            {/* Level 2 */}
             <div className="flex gap-6">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xl">
@@ -210,7 +202,7 @@ const BlogAIGuideStep3: React.FC = () => {
               </div>
             </div>
 
-            {/* Step 3 */}
+            {/* Level 3 */}
             <div className="flex gap-6">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xl">
@@ -294,8 +286,8 @@ const BlogAIGuideStep3: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-purple-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-purple-600 rounded-full"></div>
             Implementation Best Practices
           </h2>
           
@@ -344,8 +336,8 @@ const BlogAIGuideStep3: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-purple-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-purple-600 rounded-full"></div>
             Frequently Asked Questions
           </h2>
           
@@ -459,11 +451,11 @@ const BlogAIGuideStep3: React.FC = () => {
         >
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <Link 
-              to="/blog/ai-guide-for-businesses/step-2-choosing-ai-tools" 
+              to="/ai-guide-for-businesses/level-2-choosing-ai-tools" 
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Previous: Step 2 - Choosing AI Tools</span>
+              <span>Previous: Level 2 - Choosing AI Tools</span>
             </Link>
             <Link 
               to="/blog/ai-guide-for-businesses" 

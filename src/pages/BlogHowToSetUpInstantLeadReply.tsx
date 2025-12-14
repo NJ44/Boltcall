@@ -118,8 +118,8 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>What You'll Need</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>What You'll Need</h2>
           
           <ul className="space-y-3 text-lg text-gray-700 mb-8">
             <li className="flex items-start">
@@ -417,8 +417,8 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Common Setup Issues and Solutions</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Common Setup Issues and Solutions</h2>
           
           <h3 className="text-2xl font-bold text-gray-900 mb-4">Issue: Webhook Not Receiving Data</h3>
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
@@ -443,8 +443,8 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.55 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Best Practices for Instant Lead Reply</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Best Practices for Instant Lead Reply</h2>
           
           <ul className="space-y-4 text-lg text-gray-700 mb-8">
             <li className="flex items-start">
@@ -481,8 +481,8 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>You're All Set!</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>You're All Set!</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Setting up instant lead reply with Boltcall typically takes 1-2 hours from start to finish. Once configured, every lead from your website, Facebook Ads, Google Ads, or other sources will receive an instant reply within seconds.

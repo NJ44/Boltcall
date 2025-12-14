@@ -2,23 +2,21 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, MessageSquare, RotateCw, Zap, Globe, TrendingUp, ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { Calendar, Clock, Phone, MessageSquare, RotateCw, Zap, Globe, ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
-import ReadingProgress from '../components/ReadingProgress';
-
 const BlogAIGuideStep2: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Step 2: Choosing the Right AI Tools | Boltcall';
+    document.title = 'Level 2: Choosing the Right AI Tools | Boltcall';
     updateMetaDescription('Discover the essential AI tools for local businesses and how to evaluate which ones fit your needs.');
     
     // Add Article schema markup
     const articleSchema = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Step 2: Choosing the Right AI Tools",
+      "headline": "Level 2: Choosing the Right AI Tools",
       "description": "Discover the essential AI tools for local businesses and how to evaluate which ones fit your needs.",
       "author": {
         "@type": "Organization",
@@ -36,7 +34,7 @@ const BlogAIGuideStep2: React.FC = () => {
       "dateModified": "2025-02-01",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://boltcall.org/blog/ai-guide-for-businesses/step-2-choosing-ai-tools"
+        "@id": "https://boltcall.org/ai-guide-for-businesses/level-2-choosing-ai-tools"
       },
       "image": {
         "@type": "ImageObject",
@@ -63,7 +61,6 @@ const BlogAIGuideStep2: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      <ReadingProgress />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
@@ -82,11 +79,6 @@ const BlogAIGuideStep2: React.FC = () => {
               <span>Back to Guide Overview</span>
             </Link>
 
-            <div className="inline-flex items-center gap-2 text-sm text-green-600 bg-green-50 px-4 py-2 rounded-full mb-6">
-              <TrendingUp className="w-4 h-4" />
-              <span className="font-semibold">Step 2 of 3</span>
-            </div>
-            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Choosing the Right <span className="text-green-600">AI Tools</span>
             </h1>
@@ -128,8 +120,8 @@ const BlogAIGuideStep2: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-green-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-green-600 rounded-full"></div>
             Essential AI Tools for Service Businesses
           </h2>
           
@@ -274,8 +266,8 @@ const BlogAIGuideStep2: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-green-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-green-600 rounded-full"></div>
             What to Look For When Choosing AI Tools
           </h2>
           
@@ -332,8 +324,8 @@ const BlogAIGuideStep2: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-green-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-green-600 rounded-full"></div>
             Pricing Considerations
           </h2>
           
@@ -390,17 +382,17 @@ const BlogAIGuideStep2: React.FC = () => {
         >
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <Link 
-              to="/blog/ai-guide-for-businesses/step-1-understanding-ai" 
+              to="/ai-guide-for-businesses/level-1-understanding-ai" 
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Previous: Step 1 - Understanding AI</span>
+              <span>Previous: Level 1 - Understanding AI</span>
             </Link>
             <Link 
-              to="/blog/ai-guide-for-businesses/step-3-getting-started" 
+              to="/ai-guide-for-businesses/level-3-getting-started" 
               className="flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold transition-colors"
             >
-              <span>Next: Step 3 - Getting Started</span>
+              <span>Next: Level 3 - Getting Started</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

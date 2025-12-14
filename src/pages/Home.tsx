@@ -24,6 +24,7 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    document.title = 'AI Receptionist | 24/7 Appointment Booking, Lead Capture & Automated Reminders | Boltcall';
     updateMetaDescription('AI receptionist for dental clinics. Answers calls 24/7, books appointments, sends reminders. Never miss a lead. Free setup.');
   }, []);
 

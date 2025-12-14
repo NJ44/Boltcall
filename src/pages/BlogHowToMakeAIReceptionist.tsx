@@ -118,35 +118,35 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>What You'll Need to Build an AI Receptionist</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>What You'll Need to Build an AI Receptionist</h2>
           
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-8">
             <h3 className="text-2xl font-bold mb-6">Core Components</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white/10 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-start gap-3 mb-2">
                   <Mic className="w-6 h-6" />
                   <h4 className="font-semibold text-lg">Speech Recognition (ASR)</h4>
                 </div>
                 <p className="text-blue-100 text-sm">Converts spoken words to text in real-time</p>
               </div>
               <div className="bg-white/10 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-start gap-3 mb-2">
                   <Brain className="w-6 h-6" />
                   <h4 className="font-semibold text-lg">Natural Language Understanding</h4>
                 </div>
                 <p className="text-blue-100 text-sm">Understands intent and context from text</p>
               </div>
               <div className="bg-white/10 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-start gap-3 mb-2">
                   <MessageSquare className="w-6 h-6" />
                   <h4 className="font-semibold text-lg">Conversation Management</h4>
                 </div>
                 <p className="text-blue-100 text-sm">Manages dialogue flow and state</p>
               </div>
               <div className="bg-white/10 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-start gap-3 mb-2">
                   <Phone className="w-6 h-6" />
                   <h4 className="font-semibold text-lg">Text-to-Speech (TTS)</h4>
                 </div>
@@ -424,7 +424,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Calendar className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Calendar Integration</h3>
               </div>
@@ -440,7 +440,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Database className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">CRM Integration</h3>
               </div>
@@ -456,7 +456,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <MessageSquare className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Notification System</h3>
               </div>
@@ -472,7 +472,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Phone className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Phone Number Setup</h3>
               </div>
@@ -554,8 +554,8 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Alternative: Use a Ready-Made Platform</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Alternative: Use a Ready-Made Platform</h2>
           
           <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200 rounded-2xl p-8">
             <p className="text-lg text-gray-800 mb-6">
@@ -617,8 +617,8 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Conclusion</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Conclusion</h2>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-lg text-gray-700 leading-relaxed mb-4">

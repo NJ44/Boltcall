@@ -96,6 +96,7 @@ const config: Config = {
         spotlight: "spotlight 2s ease .75s 1 forwards",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        blob: "blob 2s ease-in-out infinite",
       },
       keyframes: {
         aurora: {
@@ -123,6 +124,10 @@ const config: Config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
+        },
+        blob: {
+          "0%, 100%": { transform: "translateY(10px)" },
+          "50%": { transform: "translate(-10px)" },
         },
       },
     }

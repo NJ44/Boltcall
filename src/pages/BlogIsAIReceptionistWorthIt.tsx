@@ -118,12 +118,12 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Real Cost Comparison</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Real Cost Comparison</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-red-50 border-2 border-red-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <XCircle className="w-6 h-6 text-red-600" />
                 <h3 className="text-xl font-bold text-gray-900">Human Receptionist</h3>
               </div>
@@ -152,7 +152,7 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </div>
 
             <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <CheckCircle className="w-6 h-6 text-green-600" />
                 <h3 className="text-xl font-bold text-gray-900">AI Receptionist</h3>
               </div>
@@ -195,8 +195,8 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>ROI Analysis: When It Makes Financial Sense</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>ROI Analysis: When It Makes Financial Sense</h2>
           
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-8">
             <h3 className="text-2xl font-bold mb-6">Real-World ROI Example</h3>
@@ -257,12 +257,12 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Key Benefits Beyond Cost Savings</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Key Benefits Beyond Cost Savings</h2>
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <ClockIcon className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">24/7 Availability</h3>
               </div>
@@ -272,7 +272,7 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Zap className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Instant Response</h3>
               </div>
@@ -282,7 +282,7 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <Users className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Consistent Service</h3>
               </div>
@@ -292,7 +292,7 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </div>
 
             <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-start gap-3 mb-4">
                 <TrendingUp className="w-6 h-6 text-blue-600" />
                 <h3 className="text-xl font-bold text-gray-900">Scalable Growth</h3>
               </div>
@@ -310,8 +310,8 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>When an AI Receptionist Might NOT Be Worth It</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>When an AI Receptionist Might NOT Be Worth It</h2>
           
           <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg mb-6">
             <p className="text-gray-800 mb-4">
@@ -345,8 +345,8 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Decision Framework: Is It Worth It for You?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Decision Framework: Is It Worth It for You?</h2>
           
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Quick Assessment</h3>
@@ -403,8 +403,8 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Bottom Line</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Bottom Line</h2>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-lg text-gray-700 leading-relaxed mb-4">

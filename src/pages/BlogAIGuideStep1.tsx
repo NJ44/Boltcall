@@ -2,23 +2,21 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, MessageSquare, RotateCw, Bell, CheckCircle, Zap, TrendingUp, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, Phone, MessageSquare, RotateCw, Bell, Zap, ArrowLeft, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
-import ReadingProgress from '../components/ReadingProgress';
-
 const BlogAIGuideStep1: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Step 1: Understanding AI for Local Businesses | Boltcall';
+    document.title = 'Level 1: Understanding AI for Local Businesses | Boltcall';
     updateMetaDescription('Learn what AI can automate for your business, the real benefits, and how it transforms daily operations.');
     
     // Add Article schema markup
     const articleSchema = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Step 1: Understanding AI for Local Businesses",
+      "headline": "Level 1: Understanding AI for Local Businesses",
       "description": "Learn what AI can automate for your business, the real benefits, and how it transforms daily operations.",
       "author": {
         "@type": "Organization",
@@ -36,7 +34,7 @@ const BlogAIGuideStep1: React.FC = () => {
       "dateModified": "2025-02-01",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://boltcall.org/blog/ai-guide-for-businesses/step-1-understanding-ai"
+        "@id": "https://boltcall.org/ai-guide-for-businesses/level-1-understanding-ai"
       },
       "image": {
         "@type": "ImageObject",
@@ -63,7 +61,6 @@ const BlogAIGuideStep1: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      <ReadingProgress />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
@@ -82,11 +79,6 @@ const BlogAIGuideStep1: React.FC = () => {
               <span>Back to Guide Overview</span>
             </Link>
 
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <TrendingUp className="w-4 h-4" />
-              <span className="font-semibold">Step 1 of 3</span>
-            </div>
-            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Understanding AI for <span className="text-blue-600">Local Businesses</span>
             </h1>
@@ -107,47 +99,6 @@ const BlogAIGuideStep1: React.FC = () => {
 
       {/* Main Content */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
-        {/* Key Points Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-16"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">Key Points Summary</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h3 className="font-semibold text-lg mb-1.5">What AI Can Automate</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Calls, SMS, follow-ups, reminders, and lead qualification</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-1.5">Costs vs Benefits</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Small monthly investment saves hours daily and captures more leads</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-1.5">Real Results</h3>
-                <ul className="space-y-2 text-blue-50">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Businesses see 28% more bookings and 85% fewer no-shows</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
         {/* What AI Can Automate */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -155,8 +106,8 @@ const BlogAIGuideStep1: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             What AI Can Automate for Service Businesses
           </h2>
           
@@ -257,8 +208,8 @@ const BlogAIGuideStep1: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Benefits Explained Simply
           </h2>
           
@@ -305,8 +256,8 @@ const BlogAIGuideStep1: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Real Results from Real Businesses
           </h2>
           
@@ -354,10 +305,10 @@ const BlogAIGuideStep1: React.FC = () => {
               <span>Back to Guide Overview</span>
             </Link>
             <Link 
-              to="/blog/ai-guide-for-businesses/step-2-choosing-ai-tools" 
+              to="/ai-guide-for-businesses/level-2-choosing-ai-tools" 
               className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors"
             >
-              <span>Next: Step 2 - Choosing the Right AI Tools</span>
+              <span>Next: Level 2 - Choosing the Right AI Tools</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

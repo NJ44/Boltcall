@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Eye, Scale, BookOpen, Book, Mail } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
 
 const Header: React.FC = () => {
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
@@ -63,6 +64,11 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
+    // Force white text on AI guide page
+    if (location.pathname === '/blog/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
+      setIsOverBlueBackground(true);
+    }
+    
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // When scrolled past the announcement bar (64px), make header stick to top
@@ -194,6 +200,17 @@ const Header: React.FC = () => {
             }
           }
 
+          // Check for dark background classes that should show white text (check this first)
+          const hasDarkClass = 
+            className.includes('bg-gray-900') ||
+            className.includes('bg-gray-800') ||
+            (className.includes('bg-gradient') && (className.includes('gray-900') || className.includes('gray-800')));
+          
+          if (hasDarkClass) {
+            foundBlueBackground = true;
+            break;
+          }
+
           // Check for light background classes that should prevent white text
           const hasLightClass = 
             className.includes('bg-white') ||
@@ -297,11 +314,19 @@ const Header: React.FC = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    // Don't check on initial load - start with black links
-    // handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Force white text on AI guide page
+    if (location.pathname === '/blog/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
+      setIsOverBlueBackground(true);
+    } else {
+      // Only run scroll detection if not on AI guide page
+      window.addEventListener('scroll', handleScroll);
+      // Don't check on initial load - start with black links
+      // handleScroll();
+    }
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [location.pathname]);
 
   // Close Resources dropdown when clicking outside
   useEffect(() => {
@@ -395,7 +420,7 @@ const Header: React.FC = () => {
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } pb-2 z-[120]`}
+                    } py-3 px-2 z-[120]`}
                   >
                     {featuresItems.map((item) => {
                       const Icon = item.icon;

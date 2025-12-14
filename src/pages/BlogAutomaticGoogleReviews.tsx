@@ -120,8 +120,8 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Google Reviews Are Critical for Your Business
           </h2>
           
@@ -132,7 +132,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
             
             <div className="grid md:grid-cols-2 gap-6 my-8">
               <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <TrendingUp className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Search Ranking Impact</h3>
                 </div>
@@ -142,7 +142,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </div>
               
               <div className="bg-green-50 rounded-lg p-6 border border-green-200">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Users className="w-6 h-6 text-green-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Customer Trust</h3>
                 </div>
@@ -152,7 +152,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </div>
               
               <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <BarChart3 className="w-6 h-6 text-purple-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Revenue Impact</h3>
                 </div>
@@ -162,7 +162,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </div>
               
               <div className="bg-orange-50 rounded-lg p-6 border border-orange-200">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Star className="w-6 h-6 text-orange-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Competitive Advantage</h3>
                 </div>
@@ -202,8 +202,8 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             What Are Automatic Google Review Requests?
           </h2>
           
@@ -271,15 +271,15 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Benefits of Automatic Review Requests
           </h2>
           
           <div className="space-y-6 text-gray-700 leading-relaxed">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white rounded-lg p-6 border-2 border-blue-200 shadow-sm">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Zap className="w-6 h-6 text-blue-600" />
                   <h3 className="text-xl font-semibold text-gray-900">3-5x More Reviews</h3>
                 </div>
@@ -289,7 +289,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg p-6 border-2 border-green-200 shadow-sm">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Clock className="w-6 h-6 text-green-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Perfect Timing</h3>
                 </div>
@@ -299,7 +299,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg p-6 border-2 border-purple-200 shadow-sm">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <MessageSquare className="w-6 h-6 text-purple-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Personalized Messages</h3>
                 </div>
@@ -309,7 +309,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </div>
               
               <div className="bg-white rounded-lg p-6 border-2 border-orange-200 shadow-sm">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Shield className="w-6 h-6 text-orange-600" />
                   <h3 className="text-xl font-semibold text-gray-900">Compliance & Safety</h3>
                 </div>
@@ -335,8 +335,8 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Best Practices for Automatic Review Requests
           </h2>
           
@@ -402,8 +402,8 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How Boltcall Automates Google Review Requests
           </h2>
           
@@ -417,7 +417,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               
               <div className="space-y-6">
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-start gap-3 mb-2">
                     <CheckCircle className="w-5 h-5" />
                     <h4 className="font-semibold text-lg">Calendar Integration</h4>
                   </div>
@@ -427,7 +427,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
                 </div>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-start gap-3 mb-2">
                     <CheckCircle className="w-5 h-5" />
                     <h4 className="font-semibold text-lg">Smart Timing</h4>
                   </div>
@@ -437,7 +437,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
                 </div>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-start gap-3 mb-2">
                     <CheckCircle className="w-5 h-5" />
                     <h4 className="font-semibold text-lg">Personalized Messages</h4>
                   </div>
@@ -447,7 +447,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
                 </div>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-start gap-3 mb-2">
                     <CheckCircle className="w-5 h-5" />
                     <h4 className="font-semibold text-lg">One-Click Review Links</h4>
                   </div>
@@ -457,7 +457,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
                 </div>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-start gap-3 mb-2">
                     <CheckCircle className="w-5 h-5" />
                     <h4 className="font-semibold text-lg">Automatic Follow-Ups</h4>
                   </div>
@@ -467,7 +467,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
                 </div>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-start gap-3 mb-2">
                     <CheckCircle className="w-5 h-5" />
                     <h4 className="font-semibold text-lg">Multi-Channel Support</h4>
                   </div>
@@ -512,8 +512,8 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Common Mistakes to Avoid
           </h2>
           
@@ -579,8 +579,8 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Start Getting More Reviews Automatically
           </h2>
           

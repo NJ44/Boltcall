@@ -118,8 +118,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Complete Flow: From Lead to Reply</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Complete Flow: From Lead to Reply</h2>
           
           <ol className="space-y-6 mb-8">
             <li className="flex items-start">
@@ -209,8 +209,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Webhooks: The Instant Connection</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Webhooks: The Instant Connection</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Webhooks are the secret to instant lead reply. Think of a webhook as a phone call between two systems: when something happens (like a form submission), your form builder "calls" Boltcall's server immediately with the data.
@@ -257,8 +257,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>AI Processing: Making Responses Intelligent</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>AI Processing: Making Responses Intelligent</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Once the lead data is received, AI processes it to create a personalized, intelligent response. Here's what happens:
@@ -306,8 +306,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Multi-Channel Delivery: Reaching Leads Where They Are</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Multi-Channel Delivery: Reaching Leads Where They Are</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Once the AI generates the response, it's sent via the configured channels. Here's how each channel works:
@@ -369,8 +369,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>Two-Way Conversation: The Advanced Feature</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>Two-Way Conversation: The Advanced Feature</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Basic instant lead reply sends a one-time message. Advanced systems like Boltcall enable two-way conversations:
@@ -413,8 +413,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Speed Breakdown: How 0-5 Seconds Is Possible</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Speed Breakdown: How 0-5 Seconds Is Possible</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Here's exactly where the time goes in an instant lead reply:
@@ -465,8 +465,8 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>The Bottom Line</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>The Bottom Line</h2>
           
           <p className="text-lg text-gray-700 leading-relaxed mb-6">
             Instant lead reply works through a combination of webhooks (for instant data transfer), AI processing (for intelligent responses), and automated multi-channel delivery (for reaching leads where they are). The entire process happens in 3-5 seconds, which is only possible because every step is automated and optimized.

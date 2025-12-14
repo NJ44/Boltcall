@@ -122,8 +122,8 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Understanding Answering Services
           </h2>
           
@@ -183,8 +183,8 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Role of Answering Services in Appointment Scheduling
           </h2>
           
@@ -196,7 +196,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
             
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Clock className="w-8 h-8 text-blue-600" />
                   <h3 className="text-xl font-bold text-gray-900">24/7 Availability</h3>
                 </div>
@@ -208,7 +208,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
               </div>
               
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                   <h3 className="text-xl font-bold text-gray-900">Reduced No-shows</h3>
                 </div>
@@ -219,7 +219,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
               </div>
               
               <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-start gap-3 mb-3">
                   <Zap className="w-8 h-8 text-purple-600" />
                   <h3 className="text-xl font-bold text-gray-900">Efficient Call Handling</h3>
                 </div>
@@ -239,8 +239,8 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Benefits of Using an Answering Service
           </h2>
           
@@ -312,8 +312,8 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How Virtual Receptionist Services Work
           </h2>
           
@@ -378,8 +378,8 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Choosing the Right Answering Service
           </h2>
           
@@ -442,8 +442,8 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-center gap-3">
-            <div className="w-1 h-12 bg-blue-600 rounded-full"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Transforming Appointment Scheduling
           </h2>
           
@@ -461,7 +461,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
             </p>
             
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-8 rounded-2xl my-8">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+              <h3 className="text-2xl font-bold mb-4 flex items-start gap-3">
                 <Zap className="w-6 h-6" />
                 How Boltcall Revolutionizes Appointment Scheduling
               </h3>

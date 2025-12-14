@@ -85,6 +85,7 @@ import BlogLiveAnsweringServiceCosts from '../pages/BlogLiveAnsweringServiceCost
 import BlogProfessionalTelephoneEtiquette from '../pages/BlogProfessionalTelephoneEtiquette';
 import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringServiceAppointmentScheduling';
 import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
+import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssistant';
 import Newsletter from '../pages/Newsletter';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
@@ -107,6 +108,7 @@ import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidget
 import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
 import SmartWebsitePage from '../pages/features/SmartWebsitePage';
 import FeatureSectionWithHoverEffectsDemo from '../pages/FeatureSectionWithHoverEffectsDemo';
+import GradientCardShowcaseDemo from '../pages/GradientCardShowcaseDemo';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -247,9 +249,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
         <Route path="/blog/complete-guide-to-seo" element={<BlogSEO />} />
         <Route path="/blog/ai-guide-for-businesses" element={<BlogAIGuide />} />
-        <Route path="/blog/ai-guide-for-businesses/step-1-understanding-ai" element={<BlogAIGuideStep1 />} />
-        <Route path="/blog/ai-guide-for-businesses/step-2-choosing-ai-tools" element={<BlogAIGuideStep2 />} />
-        <Route path="/blog/ai-guide-for-businesses/step-3-getting-started" element={<BlogAIGuideStep3 />} />
+        <Route path="/ai-guide-for-businesses/level-1-understanding-ai" element={<BlogAIGuideStep1 />} />
+        <Route path="/ai-guide-for-businesses/level-2-choosing-ai-tools" element={<BlogAIGuideStep2 />} />
+        <Route path="/ai-guide-for-businesses/level-3-getting-started" element={<BlogAIGuideStep3 />} />
         <Route path="/blog/best-ai-receptionist-tools" element={<BlogAIReceptionistComparison />} />
         <Route path="/blog/how-ai-receptionist-works" element={<BlogAIReceptionistHowItWorks />} />
         <Route path="/blog/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />
@@ -266,6 +268,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/tips-for-professional-telephone-etiquette" element={<BlogProfessionalTelephoneEtiquette />} />
         <Route path="/blog/answering-service-scheduling" element={<BlogAnsweringServiceAppointmentScheduling />} />
         <Route path="/blog/top-10-ai-receptionist-agencies" element={<BlogTop10AIReceptionistAgencies />} />
+        <Route path="/blog/create-gemini-gem-business-assistant" element={<BlogGeminiGemBusinessAssistant />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
@@ -289,6 +292,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/smart-website" element={<SmartWebsitePage />} />
         {/* Demo Pages */}
         <Route path="/feature-section-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
+        <Route path="/gradient-card-showcase-demo" element={<GradientCardShowcaseDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />
