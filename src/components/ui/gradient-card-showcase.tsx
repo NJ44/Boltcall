@@ -38,7 +38,7 @@ const defaultCards: Card[] = [
 export default function GradientCardShowcase({ cards = defaultCards, showLinks = false }: GradientCardShowcaseProps) {
   return (
     <>
-      <div className="flex justify-center items-center flex-nowrap gap-8 py-10 min-h-[600px]">
+      <div className="flex justify-center items-center flex-nowrap gap-16 py-10 min-h-[600px]">
         {cards.map(({ title, gradientFrom, gradientTo, href }, idx) => (
           <div
             key={idx}

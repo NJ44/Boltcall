@@ -72,7 +72,7 @@ const BlogAIGuideStep1: React.FC = () => {
             className="text-left mb-4"
           >
             <Link 
-              to="/blog/ai-guide-for-businesses" 
+              to="/ai-guide-for-businesses" 
               className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -298,7 +298,7 @@ const BlogAIGuideStep1: React.FC = () => {
         >
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <Link 
-              to="/blog/ai-guide-for-businesses" 
+              to="/ai-guide-for-businesses" 
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />

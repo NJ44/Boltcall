@@ -36,7 +36,7 @@ const Header: React.FC = () => {
   const resourcesItems = [
     { label: 'Comparisons', href: '/comparisons', icon: Scale },
     { label: 'Blog', href: '/blog', icon: BookOpen },
-    { label: 'AI Guide for Businesses', href: '/blog/ai-guide-for-businesses', icon: Book },
+    { label: 'AI Guide for Businesses', href: '/ai-guide-for-businesses', icon: Book },
     { label: 'Newsletter', href: '/newsletter', icon: Mail },
   ];
 
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     // Force white text on AI guide page
-    if (location.pathname === '/blog/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
+    if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
       setIsOverBlueBackground(true);
     }
     
@@ -315,7 +315,7 @@ const Header: React.FC = () => {
     };
 
     // Force white text on AI guide page
-    if (location.pathname === '/blog/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
+    if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
       setIsOverBlueBackground(true);
     } else {
       // Only run scroll detection if not on AI guide page

@@ -38,7 +38,6 @@ import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
 import ComingSoon from '../pages/ComingSoon';
-import Sitemap from '../pages/Sitemap';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
@@ -228,7 +227,6 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-        <Route path="/sitemap" element={<Sitemap />} />
         
         {/* Speed Test Funnel */}
         <Route path="/speed-test" element={<SpeedTestLanding />} />
@@ -248,7 +246,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/why-speed-matters" element={<BlogSpeed />} />
         <Route path="/blog/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
         <Route path="/blog/complete-guide-to-seo" element={<BlogSEO />} />
-        <Route path="/blog/ai-guide-for-businesses" element={<BlogAIGuide />} />
+        <Route path="/ai-guide-for-businesses" element={<BlogAIGuide />} />
         <Route path="/ai-guide-for-businesses/level-1-understanding-ai" element={<BlogAIGuideStep1 />} />
         <Route path="/ai-guide-for-businesses/level-2-choosing-ai-tools" element={<BlogAIGuideStep2 />} />
         <Route path="/ai-guide-for-businesses/level-3-getting-started" element={<BlogAIGuideStep3 />} />

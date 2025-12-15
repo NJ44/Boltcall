@@ -18,7 +18,7 @@ const BlogAIGuide: React.FC = () => {
       "@type": "CollectionPage",
       "name": "The Complete Guide to AI for Local Businesses",
       "description": "Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations in 3 simple steps.",
-      "url": "https://boltcall.org/blog/ai-guide-for-businesses"
+      "url": "https://boltcall.org/ai-guide-for-businesses"
     };
 
     const existingScript = document.getElementById('collection-schema');
@@ -104,7 +104,7 @@ const BlogAIGuide: React.FC = () => {
       </section>
 
       {/* Steps Overview */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-[200px] bg-transparent">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 -mt-[200px] bg-transparent">
         <GradientCardShowcase 
           cards={levels.map((level, index) => {
             const gradients = [

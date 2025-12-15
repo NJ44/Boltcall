@@ -53,7 +53,7 @@ const blogPosts: BlogPost[] = [
   },
   {
     title: 'The Complete Guide to <span class="text-blue-600">AI for Local Businesses</span>',
-    slug: '/blog/ai-guide-for-businesses',
+    slug: '/ai-guide-for-businesses',
     excerpt: 'Discover what AI can automate for service businesses, understand the costs vs benefits, and learn where to start. A comprehensive guide to transforming your local business with AI.',
     date: 'February 1, 2025',
     readTime: '12 min read',

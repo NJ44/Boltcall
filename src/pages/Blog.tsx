@@ -673,7 +673,7 @@ const Blog: React.FC = () => {
               </p>
             </Link>
             <Link
-              to="/blog/ai-guide-for-businesses"
+              to="/ai-guide-for-businesses"
               className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
             >
               <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">

@@ -37,7 +37,7 @@ const HowItWorks: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
-          <div className="left-0 md:sticky ml-4 pt-0 pr-2" style={{ top: '64px', height: 'fit-content' }}>
+          <div className="left-0 md:sticky ml-4 pt-0 pr-2" style={{ top: '150px', height: 'fit-content' }}>
             <motion.h5 
               className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
               initial={{ opacity: 0, y: 20 }}
@@ -87,7 +87,7 @@ const HowItWorks: React.FC = () => {
                 index={index + 2}
                 incrementY={14}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-[280px] md:max-w-[440px]"
-                style={{ top: '14px', bottom: 'auto', minHeight: '280px' }}
+                style={{ top: '150px', bottom: 'auto', minHeight: '280px' }}
               >
                 <div className="p-4 md:p-7 h-full">
                   {/* Full width content */}
