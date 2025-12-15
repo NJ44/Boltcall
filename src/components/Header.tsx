@@ -28,7 +28,7 @@ const Header: React.FC = () => {
     { label: 'SMS Booking Assistant', href: '/features/sms-booking-assistant', icon: MessageSquare },
     { label: 'Automated Reminders', href: '/features/automated-reminders', icon: Bell },
     { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system', icon: Target },
-      { label: 'Website Chat/Voice Widget', href: '/features/website-widget', icon: Globe },
+      { label: 'Website Widget', href: '/features/website-widget', icon: Globe },
     { label: 'Lead Reactivation', href: '/features/lead-reactivation', icon: RotateCw },
     { label: 'Smart Website', href: '/features/smart-website', icon: Sparkles },
   ];
@@ -389,7 +389,7 @@ const Header: React.FC = () => {
               onMouseLeave={() => setIsFeaturesOpen(false)}
             >
               <motion.button
-                className={`relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
+                className={`group relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
                   isOverBlueBackground ? 'text-white' : 'text-text-muted'
                 }`}
                 whileHover="hover"
@@ -402,10 +402,10 @@ const Header: React.FC = () => {
                     isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
                   }`}
                   variants={{
-                    initial: { width: 0, opacity: 0 },
-                    hover: { width: "100%", opacity: 1 }
+                    initial: { width: 0 },
+                    hover: { width: "100%" }
                   }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={{ duration: 0.576, ease: "easeInOut" }}
                 />
               </motion.button>
               
@@ -451,10 +451,10 @@ const Header: React.FC = () => {
                                   isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
                                 }`}
                                 variants={{
-                                  initial: { width: 0, opacity: 0 },
-                                  hover: { width: "100%", opacity: 1 }
+                                  initial: { width: 0 },
+                                  hover: { width: "100%" }
                                 }}
-                                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                               />
                             </span>
                           </Link>
@@ -469,7 +469,7 @@ const Header: React.FC = () => {
             {/* About Link */}
             <motion.button
               onClick={() => handleNavClick('/about')}
-              className={`relative font-medium py-2 transition-colors duration-300 ${
+              className={`group relative font-medium py-2 transition-colors duration-300 ${
                 isOverBlueBackground ? 'text-white' : 'text-text-muted'
               }`}
               whileHover="hover"
@@ -481,10 +481,10 @@ const Header: React.FC = () => {
                   isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
                 }`}
                 variants={{
-                  initial: { width: 0, opacity: 0 },
-                  hover: { width: "100%", opacity: 1 }
+                  initial: { width: 0 },
+                  hover: { width: "100%" }
                 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.576, ease: "easeInOut" }}
               />
             </motion.button>
 
@@ -492,7 +492,7 @@ const Header: React.FC = () => {
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item.href)}
-                className={`relative font-medium py-2 transition-colors duration-300 ${
+                className={`group relative font-medium py-2 transition-colors duration-300 ${
                   isOverBlueBackground ? 'text-white' : 'text-text-muted'
                 }`}
                 whileHover="hover"
@@ -504,10 +504,10 @@ const Header: React.FC = () => {
                     isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
                   }`}
                   variants={{
-                    initial: { width: 0, opacity: 0 },
-                    hover: { width: "100%", opacity: 1 }
+                    initial: { width: 0 },
+                    hover: { width: "100%" }
                   }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={{ duration: 0.576, ease: "easeInOut" }}
                 />
               </motion.button>
             ))}
@@ -520,7 +520,7 @@ const Header: React.FC = () => {
               onMouseLeave={() => setIsResourcesOpen(false)}
             >
               <motion.button
-                className={`relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
+                className={`group relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${
                   isOverBlueBackground ? 'text-white' : 'text-text-muted'
                 }`}
                 whileHover="hover"
@@ -533,10 +533,10 @@ const Header: React.FC = () => {
                     isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
                   }`}
                   variants={{
-                    initial: { width: 0, opacity: 0 },
-                    hover: { width: "100%", opacity: 1 }
+                    initial: { width: 0 },
+                    hover: { width: "100%" }
                   }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  transition={{ duration: 0.576, ease: "easeInOut" }}
                 />
               </motion.button>
               
@@ -592,10 +592,10 @@ const Header: React.FC = () => {
                                   isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
                                 }`}
                                 variants={{
-                                  initial: { width: 0, opacity: 0 },
-                                  hover: { width: "100%", opacity: 1 }
+                                  initial: { width: 0 },
+                                  hover: { width: "100%" }
                                 }}
-                                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                               />
                             </span>
                           </Link>
@@ -648,10 +648,10 @@ const Header: React.FC = () => {
                                   isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
                                 }`}
                                 variants={{
-                                  initial: { width: 0, opacity: 0 },
-                                  hover: { width: "100%", opacity: 1 }
+                                  initial: { width: 0 },
+                                  hover: { width: "100%" }
                                 }}
-                                transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
+                                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                               />
                             </span>
                           </Link>

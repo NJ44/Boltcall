@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
       { label: 'SMS Booking Assistant', href: '/features/sms-booking-assistant' },
       { label: 'Automated Reminders', href: '/features/automated-reminders' },
       { label: 'AI Follow-Up System', href: '/features/ai-follow-up-system' },
-      { label: 'Website Chat/Voice Widget', href: '/features/website-widget' },
+      { label: 'Website Widget', href: '/features/website-widget' },
       { label: 'Lead Reactivation', href: '/features/lead-reactivation' },
       { label: 'Smart Website', href: '/features/smart-website' },
     ],
