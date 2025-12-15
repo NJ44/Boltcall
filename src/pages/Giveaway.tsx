@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Facebook, Check, ArrowRight, Loader2 } from 'lucide-react';
-import { AuroraBackground } from '@/components/ui/aurora-background';
+import { Facebook, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GiveawayMultiStepForm } from '@/components/ui/giveaway-multistep-form';
 
 const GiveawayPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -25,7 +25,6 @@ const GiveawayPage: React.FC = () => {
     whyChoose: ''
   });
   const [allowNotifications, setAllowNotifications] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Get referral ID from URL on mount
@@ -66,7 +65,7 @@ const GiveawayPage: React.FC = () => {
   }, []);
 
   return (
-    <AuroraBackground className="min-h-screen h-auto items-start justify-start bg-white">
+    <div className="min-h-screen h-auto items-start justify-start bg-white">
       <header className="w-full py-8">
         <div className="max-w-4xl mx-auto px-4 flex justify-center">
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -82,15 +81,19 @@ const GiveawayPage: React.FC = () => {
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
             <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold text-white flex items-center gap-3 flex-wrap">
-                <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-400 rounded-full">
-                  Limited Time Black Friday
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-400 rounded-full -ml-[8px]">
+                  Limited Time Offer
                 </span>
-                <span className="text-white">3 Months</span> <span className="text-blue-500">Pro Plan</span> <span className="text-white">+</span> <span className="text-blue-500">smart website</span> <span className="text-white">package</span>
-              </h1>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-white leading-tight">
+                  <span className="text-white">3 Months</span> <span className="text-blue-500">Pro Plan</span>
+                  <br />
+                  <span className="text-white">+</span> <span className="text-blue-500">Smart Website</span>
+                </h1>
+              </div>
 
               <p className="mt-10 text-white text-base md:text-lg leading-6 max-w-md">
-                We're rewarding one lucky winner with <span className="text-blue-500">3 months</span> of our <span className="text-blue-500">Pro plan</span> plus a complete <span className="text-blue-500">website package</span>.
+                We're rewarding one lucky winner with <span className="text-blue-500">3 months</span> of our <span className="text-blue-500">Pro plan</span> plus a complete <span className="text-blue-500">Smart Website</span>.
               </p>
 
               {/* Prize highlights */}
@@ -202,276 +205,124 @@ const GiveawayPage: React.FC = () => {
                   className="h-full flex flex-col"
                 >
                   <div className="flex-1 giveaway-form">
-                    {currentStep === 1 && (
-                      <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-4"
-                      >
-                        <div>
-                          <label className="block text-sm font-medium mb-2 text-white">Name</label>
-                          <input
-                            type="text"
-                            value={surveyData.name}
-                            onChange={(e) => setSurveyData({ ...surveyData, name: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                            placeholder="Your full name"
-                            style={{ color: '#ffffff' }}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2 text-white">Email Address</label>
-                          <input
-                            type="email"
-                            value={surveyData.email}
-                            onChange={(e) => setSurveyData({ ...surveyData, email: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                            placeholder="your@email.com"
-                            style={{ color: '#ffffff' }}
-                          />
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (surveyData.email && surveyData.name) setCurrentStep(2);
-                          }}
-                          disabled={!surveyData.email || !surveyData.name}
-                          className="mt-6 w-full px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                        >
-                          Continue
-                          <ArrowRight className="w-4 h-4" />
-                        </button>
-                      </motion.div>
-                    )}
-
-                    {currentStep === 2 && (
-                      <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-4"
-                      >
-                        <div>
-                          <label className="block text-sm font-medium mb-2 text-white">Company Name</label>
-                          <input
-                            type="text"
-                            value={surveyData.companyName}
-                            onChange={(e) => setSurveyData({ ...surveyData, companyName: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                            placeholder="Your Company Name"
-                            style={{ color: '#ffffff' }}
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2 text-white">Website</label>
-                          <input
-                            type="url"
-                            value={surveyData.website}
-                            onChange={(e) => setSurveyData({ ...surveyData, website: e.target.value })}
-                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                            placeholder="https://yourwebsite.com"
-                            style={{ color: '#ffffff' }}
-                          />
-                        </div>
-                        <div className="flex gap-3 mt-6">
-                          <button
-                            onClick={() => setCurrentStep(1)}
-                            className="flex-1 px-6 py-3 bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
-                          >
-                            Back
-                          </button>
-                          <button
-                            onClick={() => {
-                              if (surveyData.companyName && surveyData.website) setCurrentStep(3);
-                            }}
-                            disabled={!surveyData.companyName || !surveyData.website}
-                            className="flex-1 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                          >
-                            Continue
-                            <ArrowRight className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-
                     {!isSubmitted ? (
-                      <>
-                        {currentStep === 3 && (
-                          <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="space-y-4"
-                          >
-                            <div>
-                              <label className="block text-sm font-medium mb-2 text-white">Why do you think we need to choose you?</label>
-                              <textarea
-                                value={surveyData.whyChoose}
-                                onChange={(e) => setSurveyData({ ...surveyData, whyChoose: e.target.value })}
-                                rows={6}
-                                className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
-                                placeholder="Tell us why you should win..."
-                                style={{ color: '#ffffff' }}
-                              />
-                            </div>
-                            <div className="flex items-start gap-3 mt-4">
-                              <div className="relative mt-0.5">
-                                <input
-                                  type="checkbox"
-                                  id="allowNotifications"
-                                  checked={allowNotifications}
-                                  onChange={(e) => setAllowNotifications(e.target.checked)}
-                                  className="sr-only"
-                                />
-                                <label
-                                  htmlFor="allowNotifications"
-                                  className={`flex items-center justify-center w-5 h-5 rounded border-2 cursor-pointer transition-all ${
-                                    allowNotifications
-                                      ? 'bg-blue-600 border-blue-600'
-                                      : 'bg-white/10 border-white/40'
-                                  }`}
-                                >
-                                  {allowNotifications && (
-                                    <Check className="w-3.5 h-3.5 text-white" />
-                                  )}
-                                </label>
-                              </div>
-                              <label htmlFor="allowNotifications" className="text-sm text-white/95 cursor-pointer leading-relaxed flex-1">
-                                I allow you to send me notifications about the giveaway
-                              </label>
-                            </div>
-                            <div className="flex gap-3 mt-6">
-                              <button
-                                onClick={() => setCurrentStep(2)}
-                                className="flex-1 px-6 py-3 bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
-                              >
-                                Back
-                              </button>
-                              <button
-                                onClick={async () => {
-                                  if (surveyData.whyChoose) {
-                                    setIsSubmitting(true);
-                                    try {
-                                      // Prepare data to send to webhook
-                                      const referralId = referrerId || '0';
-                                      const payload = {
-                                        name: surveyData.name,
-                                        email: surveyData.email,
-                                        companyName: surveyData.companyName,
-                                        website: surveyData.website,
-                                        whyChoose: surveyData.whyChoose,
-                                        allowNotifications: allowNotifications,
-                                        referralId: referralId
-                                      };
+                      <GiveawayMultiStepForm
+                        formData={surveyData}
+                        setFormData={setSurveyData}
+                        allowNotifications={allowNotifications}
+                        setAllowNotifications={setAllowNotifications}
+                        onSubmit={async () => {
+                          setIsSubmitting(true);
+                          try {
+                            // Prepare data to send to webhook
+                            const referralId = referrerId || '0';
+                            const payload = {
+                              name: surveyData.name,
+                              email: surveyData.email,
+                              companyName: surveyData.companyName,
+                              website: surveyData.website,
+                              whyChoose: surveyData.whyChoose,
+                              allowNotifications: allowNotifications,
+                              referralId: referralId
+                            };
 
-                                      console.log('Submitting form with payload:', payload);
+                            console.log('Submitting form with payload:', payload);
 
-                                      // Call webhook
-                                      const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
-                                        method: 'POST',
-                                        headers: {
-                                          'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify(payload),
-                                      });
+                            // Call webhook
+                            const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify(payload),
+                            });
 
-                                      console.log('Response status:', response.status);
-                                      
-                                      // Get response body first (can only read once)
-                                      const responseText = await response.text();
-                                      console.log('Response text:', responseText);
-                                      
-                                      // Check if response is ok
-                                      if (!response.ok) {
-                                        console.error('Response error:', responseText);
-                                        throw new Error(`Failed to submit form: ${response.status} ${response.statusText}`);
-                                      }
+                            console.log('Response status:', response.status);
+                            
+                            // Get response body first (can only read once)
+                            const responseText = await response.text();
+                            console.log('Response text:', responseText);
+                            
+                            // Check if response is ok
+                            if (!response.ok) {
+                              console.error('Response error:', responseText);
+                              throw new Error(`Failed to submit form: ${response.status} ${response.statusText}`);
+                            }
 
-                                      // Try to get referral ID from response header (may be blocked by CORS)
-                                      let referralIdFromHeader = null;
-                                      try {
-                                        referralIdFromHeader = response.headers.get('referal_id') || response.headers.get('referral_id');
-                                        console.log('Referral ID from header:', referralIdFromHeader);
-                                        console.log('All response headers:', Array.from(response.headers.entries()));
-                                      } catch (e) {
-                                        console.log('Could not access response headers (CORS):', e);
-                                      }
-                                      
-                                      // Parse response body - handle UUID string directly
-                                      let responseData = null;
-                                      let finalReferralId = referralIdFromHeader;
-                                      
-                                      if (!finalReferralId && responseText) {
-                                        const trimmedText = responseText.trim();
-                                        
-                                        // Check if response is a UUID string (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
-                                        const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-                                        if (uuidPattern.test(trimmedText)) {
-                                          // Response is directly the UUID
-                                          finalReferralId = trimmedText;
-                                          console.log('Response is UUID string:', trimmedText);
-                                        } else {
-                                          // Try to parse as JSON
-                                          try {
-                                            responseData = JSON.parse(trimmedText);
-                                            console.log('Response body (parsed as JSON):', responseData);
-                                            // Try to extract ID from JSON object
-                                            finalReferralId = responseData?.id || 
-                                                              responseData?.referal_id || 
-                                                              responseData?.referral_id ||
-                                                              responseData?.userId ||
-                                                              responseData?.user_id;
-                                          } catch (e) {
-                                            // If it's not JSON and not UUID, check if it's a plain number/string ID
-                                            if (trimmedText) {
-                                              finalReferralId = trimmedText;
-                                              console.log('Response is plain text ID:', trimmedText);
-                                            } else {
-                                              console.log('Response is empty or invalid');
-                                            }
-                                          }
-                                        }
-                                      }
-                                      
-                                      console.log('Final referral ID found:', finalReferralId);
-                                      
-                                      if (finalReferralId) {
-                                        // Generate referral link using the ID: ref={finalReferralId}
-                                        const link = generateReferralLink(String(finalReferralId));
-                                        setReferralLink(link);
-                                        setIsSubmitted(true);
-                                      } else {
-                                        console.error('No referral ID found in headers or body');
-                                        console.error('Response status:', response.status);
-                                        console.error('Response text:', responseText);
-                                        console.error('Response data:', responseData);
-                                        // Still show success but without referral link
-                                        setReferralLink('');
-                                        setIsSubmitted(true);
-                                        alert('Form submitted successfully, but no referral ID was returned. Please contact support.');
-                                      }
-                                    } catch (error) {
-                                      console.error('Error submitting form:', error);
-                                      const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.';
-                                      alert(errorMessage);
-                                    } finally {
-                                      setIsSubmitting(false);
-                                    }
+                            // Try to get referral ID from response header (may be blocked by CORS)
+                            let referralIdFromHeader = null;
+                            try {
+                              referralIdFromHeader = response.headers.get('referal_id') || response.headers.get('referral_id');
+                              console.log('Referral ID from header:', referralIdFromHeader);
+                              console.log('All response headers:', Array.from(response.headers.entries()));
+                            } catch (e) {
+                              console.log('Could not access response headers (CORS):', e);
+                            }
+                            
+                            // Parse response body - handle UUID string directly
+                            let responseData = null;
+                            let finalReferralId = referralIdFromHeader;
+                            
+                            if (!finalReferralId && responseText) {
+                              const trimmedText = responseText.trim();
+                              
+                              // Check if response is a UUID string (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+                              const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+                              if (uuidPattern.test(trimmedText)) {
+                                // Response is directly the UUID
+                                finalReferralId = trimmedText;
+                                console.log('Response is UUID string:', trimmedText);
+                              } else {
+                                // Try to parse as JSON
+                                try {
+                                  responseData = JSON.parse(trimmedText);
+                                  console.log('Response body (parsed as JSON):', responseData);
+                                  // Try to extract ID from JSON object
+                                  finalReferralId = responseData?.id || 
+                                                    responseData?.referal_id || 
+                                                    responseData?.referral_id ||
+                                                    responseData?.userId ||
+                                                    responseData?.user_id;
+                                } catch (e) {
+                                  // If it's not JSON and not UUID, check if it's a plain number/string ID
+                                  if (trimmedText) {
+                                    finalReferralId = trimmedText;
+                                    console.log('Response is plain text ID:', trimmedText);
+                                  } else {
+                                    console.log('Response is empty or invalid');
                                   }
-                                }}
-                                disabled={!surveyData.whyChoose || isSubmitting}
-                                className="flex-1 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                              >
-                                {isSubmitting ? (
-                                  <>
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                    <span>Submitting...</span>
-                                  </>
-                                ) : (
-                                  'Submit'
-                                )}
-                              </button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </>
+                                }
+                              }
+                            }
+                            
+                            console.log('Final referral ID found:', finalReferralId);
+                            
+                            if (finalReferralId) {
+                              // Generate referral link using the ID: ref={finalReferralId}
+                              const link = generateReferralLink(String(finalReferralId));
+                              setReferralLink(link);
+                              setIsSubmitted(true);
+                            } else {
+                              console.error('No referral ID found in headers or body');
+                              console.error('Response status:', response.status);
+                              console.error('Response text:', responseText);
+                              console.error('Response data:', responseData);
+                              // Still show success but without referral link
+                              setReferralLink('');
+                              setIsSubmitted(true);
+                              alert('Form submitted successfully, but no referral ID was returned. Please contact support.');
+                            }
+                          } catch (error) {
+                            console.error('Error submitting form:', error);
+                            const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.';
+                            alert(errorMessage);
+                          } finally {
+                            setIsSubmitting(false);
+                          }
+                        }}
+                        isSubmitting={isSubmitting}
+                        isSubmitted={isSubmitted}
+                      />
                     ) : (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -520,7 +371,7 @@ const GiveawayPage: React.FC = () => {
           </div>
         </div>
         </motion.div>
-    </AuroraBackground>
+    </div>
   );
 };
 
