@@ -11,7 +11,7 @@ const VoicemailVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Voicemail vs Boltcall AI Receptionist Comparison';
-    updateMetaDescription('Voicemail vs Boltcall AI receptionist. Compare features and see why AI answers calls better than voicemail.');
+    updateMetaDescription('Voicemail vs Boltcall AI receptionist. Compare features and see why AI answers calls better than voicemail. Discover more.');
   }, []);
 
   return (

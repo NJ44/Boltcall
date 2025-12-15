@@ -12,7 +12,7 @@ const SmartWebsitePage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Smart Website Optimization & AI Lead Generation';
-    updateMetaDescription('Smart website optimization improves speed and conversions automatically. AI optimizes performance, enhances user experience.');
+    updateMetaDescription('Smart website optimization improves speed and conversions automatically. AI optimizes performance, enhances UX. Get started now.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

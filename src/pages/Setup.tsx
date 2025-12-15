@@ -13,7 +13,7 @@ const SetupContent: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Setup Your Boltcall Account - Quick Setup Guide';
-    updateMetaDescription('Setup your Boltcall account in 5 minutes. Free setup process, no credit card required. Get started today.');
+    updateMetaDescription('Setup your Boltcall account in 5 minutes. Free setup process, no credit card required. Get started today. Begin now.');
   }, []);
 
   const handleError = (error: Error) => {

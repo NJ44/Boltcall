@@ -86,7 +86,7 @@ const industries = [
 const AIRevenueAudit: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Revenue Audit Calculator - Calculate Earnings | Boltcall';
-    updateMetaDescription('AI revenue audit calculator: calculate your potential earnings with AI receptionist. Free revenue analysis tool.');
+    updateMetaDescription('AI revenue audit calculator: calculate your potential earnings with AI receptionist. Free revenue analysis tool. Try now.');
   }, []);
   const [surveyStarted, setSurveyStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);

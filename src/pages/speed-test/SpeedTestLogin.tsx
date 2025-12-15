@@ -17,7 +17,7 @@ const SpeedTestLogin: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Login for Website Speed Test - Access Your Report';
-    updateMetaDescription('Login to access your website speed test results. View detailed performance analysis and recommendations.');
+    updateMetaDescription('Login to access your website speed test results. View detailed performance analysis and recommendations. Sign in now.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');

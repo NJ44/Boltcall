@@ -18,7 +18,7 @@ const HelpCenter: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Help Center - Support & Documentation | Boltcall';
-    updateMetaDescription('Boltcall help center: find answers, tutorials, and support. Learn how to use AI receptionist features effectively.');
+    updateMetaDescription('Boltcall help center with support articles, FAQs, and documentation. Find answers to common questions about AI receptionist. Get help.');
   }, []);
 
   const helpCategories: HelpCategory[] = [

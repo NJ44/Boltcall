@@ -14,7 +14,7 @@ const BlogHowToScheduleText: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How to Schedule a Text: Complete SMS Scheduling Guide';
-    updateMetaDescription('How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems.');
+    updateMetaDescription('How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems. Learn more.');
     
     // Add Article schema markup
     const articleSchema = {

@@ -12,7 +12,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Professional Telephone Etiquette Tips & Best Practices';
-    updateMetaDescription('Tips for professional telephone etiquette. Learn best practices for phone communication and customer service.');
+    updateMetaDescription('Professional telephone etiquette tips. Learn best practices for phone communication and customer service. Improve now.');
     
     // Add Article schema markup
     const articleSchema = {

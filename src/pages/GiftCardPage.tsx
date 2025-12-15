@@ -11,7 +11,7 @@ const GiftCardPage: React.FC = () => {
 
   React.useEffect(() => {
     document.title = 'Gift Cards - Give the Gift of AI Receptionist';
-    updateMetaDescription('Buy Boltcall gift cards. Give the gift of AI receptionist services. Perfect gift for business owners.');
+    updateMetaDescription('Buy Boltcall gift cards. Give the gift of AI receptionist services. Perfect gift for business owners. Purchase now.');
   }, []);
 
   const cardValue = 997;

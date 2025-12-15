@@ -12,7 +12,7 @@ const InstantFormReplyPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Instant Lead Response System for Small Businesses';
-    updateMetaDescription('Automatically respond to form submissions in seconds. Qualify leads instantly, book appointments from website forms and ads.');
+    updateMetaDescription('Automatically respond to form submissions in seconds. Qualify leads instantly, book appointments from forms and ads. Get started now.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

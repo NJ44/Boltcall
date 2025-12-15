@@ -13,7 +13,7 @@ const AIReceptionistPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'AI Receptionist for Calls & Messages | Boltcall';
-    updateMetaDescription('AI receptionist answers phone calls 24/7. Handles customer questions, schedules appointments automatically, never misses a call.');
+    updateMetaDescription('AI receptionist handles calls and messages 24/7. Never miss a call, book appointments automatically, capture leads. Start free today.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

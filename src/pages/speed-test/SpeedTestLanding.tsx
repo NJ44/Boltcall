@@ -17,7 +17,7 @@ const SpeedTestLanding: React.FC = () => {
 
   React.useEffect(() => {
     document.title = 'Free Website Speed Test - Analyze Site Performance';
-    updateMetaDescription('Free website speed test analyzes your site performance. Get detailed report on loading times and optimization tips.');
+    updateMetaDescription('Free website speed test analyzes your site performance. Get detailed report on loading times and optimization tips. Test now.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);

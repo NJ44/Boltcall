@@ -12,7 +12,7 @@ const BlogSpeedWebsite: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Why Website Speed Is Everything for Business | Boltcall';
-    updateMetaDescription('Why website speed is everything for business success. Learn how fast sites improve conversions and customer satisfaction.');
+    updateMetaDescription('Why website speed is everything for business success. Learn how fast sites improve conversions and boost customer satisfaction.');
     
     // Add Article schema markup
     const articleSchema = {

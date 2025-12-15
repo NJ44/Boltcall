@@ -12,7 +12,7 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How to Set Up Instant Lead Reply for Website/Ads';
-    updateMetaDescription('How to set up instant lead reply in your website and ads. Step-by-step guide to automate lead responses.');
+    updateMetaDescription('How to set up instant lead reply in your website and ads. Step-by-step guide to automate lead responses. Start now.');
     
     // Add Article schema markup
     const articleSchema = {

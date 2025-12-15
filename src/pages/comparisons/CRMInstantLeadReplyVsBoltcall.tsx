@@ -11,7 +11,7 @@ const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'CRM Instant Lead Reply vs Boltcall Comparison';
-    updateMetaDescription('CRM instant lead reply vs Boltcall. Compare features, pricing, and see which solution works better for your business.');
+    updateMetaDescription('CRM instant lead reply vs Boltcall. Compare features, pricing, and see which solution works better for your business. View now.');
   }, []);
 
   return (

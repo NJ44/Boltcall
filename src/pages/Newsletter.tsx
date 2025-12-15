@@ -14,7 +14,7 @@ const Newsletter: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Newsletter - Subscribe for AI Business Tips | Boltcall';
-    updateMetaDescription('Subscribe to Boltcall newsletter for AI business tips, guides, and updates. Learn how to grow your business with AI.');
+    updateMetaDescription('Subscribe to Boltcall newsletter for AI business tips, updates, and exclusive offers. Stay informed about AI receptionist news. Join now.');
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -12,7 +12,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Best AI Receptionist Tools for Small Businesses';
-    updateMetaDescription('Compare best AI receptionist tools for small businesses. See features, pricing, and find the right solution.');
+    updateMetaDescription('Compare best AI receptionist tools for small businesses. See features, pricing, and find the right solution for you. View now.');
     
     // Add Article schema markup
     const articleSchema = {

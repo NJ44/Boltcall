@@ -13,7 +13,7 @@ const GiveawayPage: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Win Free AI Receptionist Services - Giveaway | Boltcall';
-    updateMetaDescription('Enter Boltcall giveaway to win free AI receptionist services. Participate in our contest and get Boltcall for free.');
+    updateMetaDescription('Win 3 months free AI receptionist plus smart website package. Enter our giveaway now - limited time offer. Join today.');
   }, []);
   const [referralLink, setReferralLink] = useState('');
   const [referrerId, setReferrerId] = useState<string | null>(null);
@@ -26,6 +26,14 @@ const GiveawayPage: React.FC = () => {
   });
   const [allowNotifications, setAllowNotifications] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Wrapper function to handle partial form data updates
+  const handleFormDataUpdate = (data: Record<string, string>) => {
+    setSurveyData(prev => ({
+      ...prev,
+      ...data,
+    }));
+  };
 
   // Get referral ID from URL on mount
   useEffect(() => {
@@ -208,7 +216,7 @@ const GiveawayPage: React.FC = () => {
                     {!isSubmitted ? (
                       <GiveawayMultiStepForm
                         formData={surveyData}
-                        setFormData={setSurveyData}
+                        setFormData={handleFormDataUpdate}
                         allowNotifications={allowNotifications}
                         setAllowNotifications={setAllowNotifications}
                         onSubmit={async () => {

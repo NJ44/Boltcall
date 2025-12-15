@@ -12,7 +12,7 @@ const BlogSpeed: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = '391% Advantage: Responding to Leads in 60 Seconds';
-    updateMetaDescription('The 391% advantage: responding to leads in 60 seconds. Learn why speed dramatically increases conversion rates.');
+    updateMetaDescription('391% advantage: respond to leads in 60 seconds. Learn why speed dramatically increases conversion rates. Discover more.');
     
     // Add Article schema markup
     const articleSchema = {

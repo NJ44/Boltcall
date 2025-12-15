@@ -12,7 +12,7 @@ const LeadReactivationPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Lead Reactivation System for Cold Leads | Boltcall';
-    updateMetaDescription('Lead reactivation system re-engages cold leads automatically. Send personalized messages, bring back lost customers.');
+    updateMetaDescription('Reactivate cold leads automatically. Send personalized follow-ups, re-engage old prospects, convert more customers. Learn more.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

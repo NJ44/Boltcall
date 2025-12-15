@@ -11,7 +11,7 @@ const Comparisons: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'AI Receptionist Comparisons & Alternatives | Boltcall';
-    updateMetaDescription('Compare AI receptionist services and alternatives. See how Boltcall compares to competitors and traditional solutions.');
+    updateMetaDescription('Compare Boltcall AI receptionist with alternatives. See how Boltcall compares to traditional answering services. View now.');
   }, []);
 
   const comparisons = [

@@ -12,7 +12,7 @@ const About: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'About Boltcall - AI Receptionist Solutions | Boltcall';
-    updateMetaDescription('Learn about Boltcall - revolutionizing business communication with AI. Our mission, values, and commitment to helping local businesses thrive.');
+    updateMetaDescription('Discover Boltcall: AI-powered solutions helping local businesses thrive. Learn our mission, values, and how we revolutionize customer communication.');
   }, []);
 
   return (

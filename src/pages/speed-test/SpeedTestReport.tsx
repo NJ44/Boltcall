@@ -14,7 +14,7 @@ const SpeedTestReport: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Website Speed Test Report - Performance Analysis';
-    updateMetaDescription('View your website speed test report with detailed performance analysis, scores, and optimization recommendations.');
+    updateMetaDescription('View your website speed test report with detailed performance analysis, scores, and optimization recommendations. See report.');
   }, []);
 
   // Redirect if no results

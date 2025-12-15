@@ -29,7 +29,7 @@ const Contact: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Contact Boltcall - Get in Touch with Our Team';
-    updateMetaDescription('Contact Boltcall for AI receptionist support. Get help, ask questions, or start your free setup. We are here to help.');
+    updateMetaDescription('Get in touch with Boltcall. Contact our team for AI receptionist support, sales questions, or general inquiries. We\'re here to help.');
   }, []);
 
   const {

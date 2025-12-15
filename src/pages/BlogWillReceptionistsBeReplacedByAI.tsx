@@ -12,7 +12,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Will Receptionists Be Replaced by AI? Future Outlook';
-    updateMetaDescription('Will receptionists be replaced by AI? Explore the future of front desk work and human-AI collaboration.');
+    updateMetaDescription('Will receptionists be replaced by AI? Explore the future of front desk work and human-AI collaboration. Discover more.');
     
     // Add Article schema markup
     const articleSchema = {

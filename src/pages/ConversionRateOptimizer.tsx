@@ -15,7 +15,7 @@ const ConversionRateOptimizer: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Conversion Rate Optimizer - Improve Website Conversions';
-    updateMetaDescription('Free conversion rate optimizer analyzes your website. Get recommendations to improve conversions and get more customers.');
+    updateMetaDescription('Free conversion rate optimizer analyzes your website. Get recommendations to improve conversions and get more customers. Try free.');
   }, []);
 
   const validateUrl = (urlString: string): boolean => {

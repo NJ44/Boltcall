@@ -26,7 +26,7 @@ const Documentation: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Documentation - API & Integration Guides | Boltcall';
-    updateMetaDescription('Boltcall API documentation and integration guides. Learn how to connect Boltcall to your apps and automate workflows.');
+    updateMetaDescription('Boltcall documentation and API guides. Learn how to integrate Boltcall AI receptionist with your website and apps. View docs.');
   }, []);
 
   const toggleSection = (sectionId: string) => {

@@ -12,7 +12,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How Does an AI Receptionist Work? Technical Guide';
-    updateMetaDescription('How does an AI receptionist work? Complete technical guide explaining natural language processing and automation.');
+    updateMetaDescription('How does an AI receptionist work? Complete technical guide explaining natural language processing and automation. Learn more.');
     
     // Add Article schema markup
     const articleSchema = {

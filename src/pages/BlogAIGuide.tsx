@@ -10,7 +10,7 @@ const BlogAIGuide: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Complete AI Guide for Local Businesses | Boltcall';
-    updateMetaDescription('Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations in 3 simple steps.');
+    updateMetaDescription('Complete AI guide for local businesses. Transform operations in 3 simple steps. Learn how AI can revolutionize your business today.');
     
     // Add CollectionPage schema markup
     const collectionSchema = {

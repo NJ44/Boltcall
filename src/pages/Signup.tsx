@@ -28,7 +28,7 @@ const Signup: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Sign Up for Boltcall - Start Your Free Trial Today';
-    updateMetaDescription('Sign up for Boltcall and start your free trial. Get AI receptionist with free setup in 5 minutes. No credit card required.');
+    updateMetaDescription('Sign up for Boltcall and start your free trial. Get AI receptionist with free setup in 5 minutes. No credit card required. Join now.');
   }, []);
   const navigate = useNavigate();
   const location = useLocation();

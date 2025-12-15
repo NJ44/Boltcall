@@ -25,7 +25,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     document.title = 'AI Receptionist: 24/7 Booking & Lead Capture | Boltcall';
-    updateMetaDescription('AI receptionist for dental clinics. Answers calls 24/7, books appointments, sends reminders. Never miss a lead. Free setup.');
+    updateMetaDescription('Never miss a call or lead. AI receptionist answers 24/7, books appointments instantly, captures leads automatically. Start free today.');
   }, []);
 
   return (

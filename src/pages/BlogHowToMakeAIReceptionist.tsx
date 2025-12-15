@@ -12,7 +12,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How to Make an AI Receptionist: Step-by-Step Guide';
-    updateMetaDescription('How to make an AI receptionist: complete step-by-step guide. Learn to build and deploy your own AI assistant.');
+    updateMetaDescription('How to make an AI receptionist: complete step-by-step guide. Learn to build and deploy your own AI assistant today.');
     
     // Add Article schema markup
     const articleSchema = {

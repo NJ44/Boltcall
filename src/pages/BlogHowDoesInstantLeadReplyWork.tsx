@@ -12,7 +12,7 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How Does Instant Lead Reply Work? Technology Guide';
-    updateMetaDescription('How does instant lead reply work? Learn the technology behind automated lead response systems and APIs.');
+    updateMetaDescription('How does instant lead reply work? Learn the technology behind automated lead response systems and APIs. Discover more.');
     
     // Add Article schema markup
     const articleSchema = {

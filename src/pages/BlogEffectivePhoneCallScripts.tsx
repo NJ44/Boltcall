@@ -12,7 +12,7 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Effective Phone Call Scripts for Receptionists Guide';
-    updateMetaDescription('Effective phone call scripts for receptionists. Learn proven scripts for handling calls professionally and converting leads.');
+    updateMetaDescription('Effective phone call scripts for receptionists. Learn proven scripts for handling calls professionally and converting leads. Get started.');
     
     // Add Article schema markup
     const articleSchema = {

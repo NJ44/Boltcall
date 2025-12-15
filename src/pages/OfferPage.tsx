@@ -36,7 +36,7 @@ const OfferPage: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Get a Website That Brings You Customers | Boltcall';
-    updateMetaDescription('Get a smart website that brings you customers. Fast loading, AI-powered, books appointments automatically.');
+    updateMetaDescription('Get a smart website that brings you customers. Fast loading, AI-powered, books appointments automatically. Get started now.');
   }, []);
 
   const {

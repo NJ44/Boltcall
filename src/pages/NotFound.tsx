@@ -10,7 +10,7 @@ const NotFound: React.FC = () => {
 
   React.useEffect(() => {
     document.title = 'Page Not Found - 404 Error | Boltcall';
-    updateMetaDescription('Page not found - 404 error. Return to Boltcall homepage to find AI receptionist services and solutions.');
+    updateMetaDescription('Page not found - 404 error. Return to Boltcall homepage to find AI receptionist services and solutions. Go home now.');
   }, []);
 
   return (

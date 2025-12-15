@@ -15,7 +15,7 @@ const SEOAnalyzer: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Free SEO Audit Tool - Analyze Your Website SEO';
-    updateMetaDescription('Free SEO audit tool analyzes your website SEO. Get detailed report on rankings, keywords, and optimization opportunities.');
+    updateMetaDescription('Free SEO audit tool analyzes your website SEO. Get detailed report on rankings, keywords, and optimization opportunities. Try free.');
   }, []);
 
   const validateUrl = (urlString: string): boolean => {

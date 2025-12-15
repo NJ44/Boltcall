@@ -9,7 +9,7 @@ const PricingPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Boltcall Pricing - AI Receptionist Plans & Pricing';
-    updateMetaDescription('Boltcall pricing plans for AI receptionist services. Compare plans, features, and pricing. Free setup included.');
+    updateMetaDescription('Compare Boltcall pricing plans. Choose the perfect AI receptionist plan for your business. Free setup included. View plans now.');
   }, []);
 
   return (

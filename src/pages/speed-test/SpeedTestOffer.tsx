@@ -17,7 +17,7 @@ const SpeedTestOffer: React.FC = () => {
 
   React.useEffect(() => {
     document.title = 'Website Speed Optimization Offer - Improve Performance';
-    updateMetaDescription('Special offer for website speed optimization. Get your site faster and improve conversions with our services.');
+    updateMetaDescription('Special offer for website speed optimization. Get your site faster and improve conversions with our services. Get started.');
   }, []);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

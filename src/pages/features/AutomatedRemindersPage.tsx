@@ -12,7 +12,7 @@ const AutomatedRemindersPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Automated Appointment Reminders System | Boltcall';
-    updateMetaDescription('Automated appointment reminders via SMS and calls. Reduce no-shows, improve attendance rates, save time.');
+    updateMetaDescription('Automated appointment reminders reduce no-shows. Send SMS and email reminders automatically before appointments. Start now.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

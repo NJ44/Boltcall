@@ -12,7 +12,7 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'What Does Instant Lead Reply Mean? Complete Guide';
-    updateMetaDescription('What does instant lead reply mean? Complete guide to responding to leads within seconds for better conversions.');
+    updateMetaDescription('What does instant lead reply mean? Complete guide to responding to leads within seconds for better conversions. Learn now.');
     
     // Add Article schema markup
     const articleSchema = {

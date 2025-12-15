@@ -12,7 +12,7 @@ const BlogSEO: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Complete SEO Guide for Local Businesses | Boltcall';
-    updateMetaDescription('Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.');
+    updateMetaDescription('Complete SEO guide for local businesses. Learn how to rank higher on Google, attract more customers, and grow online. Start now.');
     
     // Add Article schema markup
     const articleSchema = {

@@ -11,7 +11,7 @@ const SMSBookingAssistantPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'SMS Booking Assistant for Appointments | Boltcall';
-    updateMetaDescription('SMS booking assistant lets customers book appointments via text. AI handles availability checks and confirms appointments.');
+    updateMetaDescription('SMS booking assistant handles appointment scheduling via text. Customers book appointments by texting your business. Try free.');
   }, []);
   return (
     <div className="min-h-screen bg-white">

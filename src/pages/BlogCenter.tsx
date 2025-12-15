@@ -145,7 +145,7 @@ const blogPosts: BlogPost[] = [
 const BlogCenter: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Business Tips & Guides Blog | Boltcall';
-    updateMetaDescription('Boltcall blog: AI business tips, guides, and insights. Learn how to grow your business with artificial intelligence.');
+    updateMetaDescription('AI business tips and guides to grow your business. Learn proven strategies, best practices, and AI insights. Explore articles now.');
   }, []);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(true);
 

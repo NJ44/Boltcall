@@ -10,7 +10,7 @@ const BlogAIGuideStep1: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Level 1: Understanding AI for Local Businesses';
-    updateMetaDescription('Learn what AI can automate for your business, the real benefits, and how it transforms daily operations.');
+    updateMetaDescription('Level 1: Understanding AI for local businesses. Discover what AI can do, how it works, and why it matters. Start learning now.');
     
     // Add Article schema markup
     const articleSchema = {

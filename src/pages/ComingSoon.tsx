@@ -15,7 +15,7 @@ const ComingSoon: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Coming Soon - Join the Boltcall Waitlist Today';
-    updateMetaDescription('Join the Boltcall waitlist and be the first to know when we launch. Get early access to our AI receptionist platform.');
+    updateMetaDescription('Join the Boltcall waitlist. Be first to access new AI receptionist features and exclusive offers. Sign up now.');
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
