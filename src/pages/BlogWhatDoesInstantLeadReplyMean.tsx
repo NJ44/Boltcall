@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'What Does Instant Lead Reply Mean? Complete Guide | Boltcall';
+    document.title = 'What Does Instant Lead Reply Mean? Complete Guide';
     updateMetaDescription('What does instant lead reply mean? Complete guide to responding to leads within seconds for better conversions.');
     
     // Add Article schema markup

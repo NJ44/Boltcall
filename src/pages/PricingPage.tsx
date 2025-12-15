@@ -8,7 +8,7 @@ import Pricing from '../components/Pricing';
 const PricingPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Pricing';
+    document.title = 'Boltcall Pricing - AI Receptionist Plans & Pricing';
     updateMetaDescription('Boltcall pricing plans for AI receptionist services. Compare plans, features, and pricing. Free setup included.');
   }, []);
 

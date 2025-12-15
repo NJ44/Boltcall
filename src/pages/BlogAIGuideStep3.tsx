@@ -9,7 +9,7 @@ import GiveawayBar from '../components/GiveawayBar';
 const BlogAIGuideStep3: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Level 3: Getting Started with AI | Boltcall';
+    document.title = 'Level 3: Getting Started with AI Tools | Boltcall';
     updateMetaDescription('Step-by-step guide to implementing AI in your business, from setup to going live in under 30 minutes.');
     
     // Add Article schema markup

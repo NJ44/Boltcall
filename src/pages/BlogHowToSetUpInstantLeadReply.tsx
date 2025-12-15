@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogHowToSetUpInstantLeadReply: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How to Set Up Instant Lead Reply in Your Website/Ads | Boltcall';
+    document.title = 'How to Set Up Instant Lead Reply for Website/Ads';
     updateMetaDescription('How to set up instant lead reply in your website and ads. Step-by-step guide to automate lead responses.');
     
     // Add Article schema markup

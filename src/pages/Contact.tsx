@@ -28,7 +28,7 @@ const Contact: React.FC = () => {
   const [selectedInterests, setSelectedInterests] = useState<TTag[]>([]);
 
   useEffect(() => {
-    document.title = 'Contact Us - Get in Touch with Boltcall | Boltcall';
+    document.title = 'Contact Boltcall - Get in Touch with Our Team';
     updateMetaDescription('Contact Boltcall for AI receptionist support. Get help, ask questions, or start your free setup. We are here to help.');
   }, []);
 

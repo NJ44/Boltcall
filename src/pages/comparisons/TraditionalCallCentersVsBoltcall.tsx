@@ -10,7 +10,7 @@ import GiveawayBar from '../../components/GiveawayBar';
 const TraditionalCallCentersVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Traditional Call Centers vs Boltcall AI Receptionist | Boltcall';
+    document.title = 'Traditional Call Centers vs Boltcall AI Receptionist';
     updateMetaDescription('Traditional call centers vs Boltcall AI receptionist. Compare costs, features, and service quality. See why AI wins.');
   }, []);
 

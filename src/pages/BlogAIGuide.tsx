@@ -9,7 +9,7 @@ import GradientCardShowcase from '../components/ui/gradient-card-showcase';
 const BlogAIGuide: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Complete Guide to AI for Local Businesses | Boltcall';
+    document.title = 'Complete AI Guide for Local Businesses | Boltcall';
     updateMetaDescription('Complete guide to AI for local businesses. Learn how artificial intelligence can transform your business operations in 3 simple steps.');
     
     // Add CollectionPage schema markup

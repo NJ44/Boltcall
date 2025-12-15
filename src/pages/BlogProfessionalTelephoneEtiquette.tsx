@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogProfessionalTelephoneEtiquette: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Tips for Professional Telephone Etiquette | Boltcall';
+    document.title = 'Professional Telephone Etiquette Tips & Best Practices';
     updateMetaDescription('Tips for professional telephone etiquette. Learn best practices for phone communication and customer service.');
     
     // Add Article schema markup

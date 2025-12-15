@@ -16,7 +16,7 @@ const SpeedTestLanding: React.FC = () => {
   const [websiteUrl, setWebsiteUrl] = useState('');
 
   React.useEffect(() => {
-    document.title = 'Free Website Speed Test - Analyze Your Site Performance | Boltcall';
+    document.title = 'Free Website Speed Test - Analyze Site Performance';
     updateMetaDescription('Free website speed test analyzes your site performance. Get detailed report on loading times and optimization tips.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);

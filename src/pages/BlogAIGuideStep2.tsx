@@ -9,7 +9,7 @@ import GiveawayBar from '../components/GiveawayBar';
 const BlogAIGuideStep2: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Level 2: Choosing the Right AI Tools | Boltcall';
+    document.title = 'Level 2: Choosing Right AI Tools | Boltcall';
     updateMetaDescription('Discover the essential AI tools for local businesses and how to evaluate which ones fit your needs.');
     
     // Add Article schema markup

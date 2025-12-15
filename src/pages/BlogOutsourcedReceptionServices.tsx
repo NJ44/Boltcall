@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogOutsourcedReceptionServices: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Benefits of Outsourced Reception Services for Businesses | Boltcall';
+    document.title = 'Benefits of Outsourced Reception Services | Boltcall';
     updateMetaDescription('Benefits of outsourced reception services for businesses. Save costs, improve coverage, enhance customer service.');
     
     // Add Article schema markup

@@ -11,7 +11,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 const BlogGeminiGemBusinessAssistant: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How to Create a Gemini Gem: Your Business Assistant (Marketing, Social Media & More) | Boltcall';
+    document.title = 'How to Create a Gemini Gem Business Assistant | Boltcall';
     updateMetaDescription('Learn how to create a Gemini gem that acts as your business assistant. Step-by-step guide for marketing assistants, social media assistants, and more.');
     
     // Add Article schema markup

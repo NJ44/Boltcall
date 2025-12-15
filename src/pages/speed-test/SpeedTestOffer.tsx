@@ -16,7 +16,7 @@ const SpeedTestOffer: React.FC = () => {
   });
 
   React.useEffect(() => {
-    document.title = 'Website Speed Optimization Offer | Boltcall';
+    document.title = 'Website Speed Optimization Offer - Improve Performance';
     updateMetaDescription('Special offer for website speed optimization. Get your site faster and improve conversions with our services.');
   }, []);
   const [isSubmitted, setIsSubmitted] = useState(false);

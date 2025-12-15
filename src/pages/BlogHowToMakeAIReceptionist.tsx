@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogHowToMakeAIReceptionist: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How to Make an AI Receptionist: Complete Step-by-Step Guide | Boltcall';
+    document.title = 'How to Make an AI Receptionist: Step-by-Step Guide';
     updateMetaDescription('How to make an AI receptionist: complete step-by-step guide. Learn to build and deploy your own AI assistant.');
     
     // Add Article schema markup

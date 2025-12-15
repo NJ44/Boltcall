@@ -16,7 +16,7 @@ const SpeedTestLogin: React.FC = () => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    document.title = 'Login for Website Speed Test | Boltcall';
+    document.title = 'Login for Website Speed Test - Access Your Report';
     updateMetaDescription('Login to access your website speed test results. View detailed performance analysis and recommendations.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);

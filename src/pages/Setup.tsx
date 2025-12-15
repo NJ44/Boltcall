@@ -12,7 +12,7 @@ const SetupContent: React.FC = () => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    document.title = 'Setup Your Boltcall Account | Boltcall';
+    document.title = 'Setup Your Boltcall Account - Quick Setup Guide';
     updateMetaDescription('Setup your Boltcall account in 5 minutes. Free setup process, no credit card required. Get started today.');
   }, []);
 

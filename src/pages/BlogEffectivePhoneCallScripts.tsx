@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogEffectivePhoneCallScripts: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Effective Phone Call Scripts for Receptionists | Boltcall';
+    document.title = 'Effective Phone Call Scripts for Receptionists Guide';
     updateMetaDescription('Effective phone call scripts for receptionists. Learn proven scripts for handling calls professionally and converting leads.');
     
     // Add Article schema markup

@@ -27,7 +27,7 @@ const Signup: React.FC = () => {
   const { signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
 
   useEffect(() => {
-    document.title = 'Sign Up for Boltcall - Start Your Free Trial | Boltcall';
+    document.title = 'Sign Up for Boltcall - Start Your Free Trial Today';
     updateMetaDescription('Sign up for Boltcall and start your free trial. Get AI receptionist with free setup in 5 minutes. No credit card required.');
   }, []);
   const navigate = useNavigate();

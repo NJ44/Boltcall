@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogAIReceptionistHowItWorks: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How Does an AI Receptionist Work? Complete Technical Guide | Boltcall';
+    document.title = 'How Does an AI Receptionist Work? Technical Guide';
     updateMetaDescription('How does an AI receptionist work? Complete technical guide explaining natural language processing and automation.');
     
     // Add Article schema markup

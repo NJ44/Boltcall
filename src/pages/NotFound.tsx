@@ -9,7 +9,7 @@ const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    document.title = 'Page Not Found - 404 | Boltcall';
+    document.title = 'Page Not Found - 404 Error | Boltcall';
     updateMetaDescription('Page not found - 404 error. Return to Boltcall homepage to find AI receptionist services and solutions.');
   }, []);
 

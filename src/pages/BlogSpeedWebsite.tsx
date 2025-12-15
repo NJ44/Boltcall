@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogSpeedWebsite: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Why Website Speed Is Everything for Business Success | Boltcall';
+    document.title = 'Why Website Speed Is Everything for Business | Boltcall';
     updateMetaDescription('Why website speed is everything for business success. Learn how fast sites improve conversions and customer satisfaction.');
     
     // Add Article schema markup

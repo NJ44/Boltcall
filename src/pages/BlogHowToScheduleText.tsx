@@ -13,7 +13,7 @@ import { ArrowRight } from 'lucide-react';
 const BlogHowToScheduleText: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How to Schedule a Text: Complete Guide to SMS Scheduling | Boltcall';
+    document.title = 'How to Schedule a Text: Complete SMS Scheduling Guide';
     updateMetaDescription('How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems.');
     
     // Add Article schema markup

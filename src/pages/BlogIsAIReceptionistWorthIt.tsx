@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogIsAIReceptionistWorthIt: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Is an AI Receptionist Worth It? Complete Cost-Benefit Analysis | Boltcall';
+    document.title = 'Is AI Receptionist Worth It? Cost-Benefit Analysis';
     updateMetaDescription('Is an AI receptionist worth it? Complete cost-benefit analysis comparing AI vs traditional receptionist services.');
     
     // Add Article schema markup

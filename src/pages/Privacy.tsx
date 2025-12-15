@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const Privacy: React.FC = () => {
   React.useEffect(() => {
-    document.title = 'Privacy Policy | Boltcall';
+    document.title = 'Privacy Policy - Boltcall Data Protection & Privacy';
     updateMetaDescription('Boltcall privacy policy explains how we collect, use, and protect your data. Read our complete privacy terms and practices.');
   }, []);
 

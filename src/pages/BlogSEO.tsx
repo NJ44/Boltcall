@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogSEO: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Complete Guide to SEO for Local Businesses | Boltcall';
+    document.title = 'Complete SEO Guide for Local Businesses | Boltcall';
     updateMetaDescription('Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.');
     
     // Add Article schema markup

@@ -12,7 +12,7 @@ import { WavePath } from '../components/ui/wave-path';
 const BlogTop10AIReceptionistAgencies: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Top 10 AI Receptionist Agencies: Complete Comparison Guide | Boltcall';
+    document.title = 'Top 10 AI Receptionist Agencies Comparison | Boltcall';
     updateMetaDescription('Compare the top 10 AI receptionist agencies. Find features, pricing, and choose the best AI receptionist service for your business.');
     
     // Add Article schema markup

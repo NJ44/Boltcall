@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Benefits of Using an Answering Service for Appointment Scheduling | Boltcall';
+    document.title = 'Answering Service Benefits for Appointment Scheduling';
     updateMetaDescription('Benefits of using an answering service for appointment scheduling. Improve booking rates and reduce no-shows.');
     
     // Add Article schema markup

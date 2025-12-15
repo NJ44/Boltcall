@@ -14,7 +14,7 @@ const ConversionRateOptimizer: React.FC = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    document.title = 'Conversion Rate Optimizer - Improve Your Website Conversions | Boltcall';
+    document.title = 'Conversion Rate Optimizer - Improve Website Conversions';
     updateMetaDescription('Free conversion rate optimizer analyzes your website. Get recommendations to improve conversions and get more customers.');
   }, []);
 

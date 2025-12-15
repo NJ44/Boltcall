@@ -11,7 +11,7 @@ import { WavePath } from '../../components/ui/wave-path';
 const InstantFormReplyPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Instant Lead Response System for Small Businesses | Boltcall';
+    document.title = 'Instant Lead Response System for Small Businesses';
     updateMetaDescription('Automatically respond to form submissions in seconds. Qualify leads instantly, book appointments from website forms and ads.');
   }, []);
   return (

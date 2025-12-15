@@ -14,7 +14,7 @@ const ComingSoon: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Coming Soon - Join the Waitlist | Boltcall';
+    document.title = 'Coming Soon - Join the Boltcall Waitlist Today';
     updateMetaDescription('Join the Boltcall waitlist and be the first to know when we launch. Get early access to our AI receptionist platform.');
   }, []);
 

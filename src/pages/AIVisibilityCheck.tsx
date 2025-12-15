@@ -14,7 +14,7 @@ const AIVisibilityCheck: React.FC = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    document.title = 'Free AI Visibility Check - Analyze Your AI Presence | Boltcall';
+    document.title = 'Free AI Visibility Check - Analyze Your AI Presence';
     updateMetaDescription('Free AI visibility check analyzes your website AI presence. Get detailed report on AI visibility, optimization opportunities, and recommendations.');
   }, []);
 

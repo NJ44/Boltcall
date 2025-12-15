@@ -11,7 +11,7 @@ import ReadingProgress from '../components/ReadingProgress';
 const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How Does Instant Lead Reply Work? Technology Behind the Magic | Boltcall';
+    document.title = 'How Does Instant Lead Reply Work? Technology Guide';
     updateMetaDescription('How does instant lead reply work? Learn the technology behind automated lead response systems and APIs.');
     
     // Add Article schema markup

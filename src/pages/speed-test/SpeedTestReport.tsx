@@ -13,7 +13,7 @@ const SpeedTestReport: React.FC = () => {
   const { url, results } = useSpeedTestStore();
 
   useEffect(() => {
-    document.title = 'Website Speed Test Report - Performance Analysis | Boltcall';
+    document.title = 'Website Speed Test Report - Performance Analysis';
     updateMetaDescription('View your website speed test report with detailed performance analysis, scores, and optimization recommendations.');
   }, []);
 

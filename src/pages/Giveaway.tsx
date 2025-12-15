@@ -12,7 +12,7 @@ const GiveawayPage: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    document.title = 'Giveaway - Win Free AI Receptionist Services | Boltcall';
+    document.title = 'Win Free AI Receptionist Services - Giveaway | Boltcall';
     updateMetaDescription('Enter Boltcall giveaway to win free AI receptionist services. Participate in our contest and get Boltcall for free.');
   }, []);
   const [referralLink, setReferralLink] = useState('');

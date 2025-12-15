@@ -10,7 +10,7 @@ import GiveawayBar from '../../components/GiveawayBar';
 const AnsweringServicesVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Answering Services vs Boltcall AI Receptionist | Boltcall';
+    document.title = 'Answering Services vs Boltcall AI Receptionist';
     updateMetaDescription('Answering services vs Boltcall AI receptionist. Compare pricing, features, and service quality side by side.');
   }, []);
 

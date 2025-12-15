@@ -10,7 +10,7 @@ import GiveawayBar from '../../components/GiveawayBar';
 const ReceptionistVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Human Receptionist vs Boltcall AI Receptionist | Boltcall';
+    document.title = 'Human Receptionist vs Boltcall AI Receptionist';
     updateMetaDescription('Human receptionist vs Boltcall AI receptionist. Compare costs, availability, and capabilities. See the differences.');
   }, []);
 
