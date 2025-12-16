@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Facebook, Check } from 'lucide-react';
+import { Facebook, Check, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GiveawayMultiStepForm } from '@/components/ui/giveaway-multistep-form';
 
@@ -107,23 +107,23 @@ const GiveawayPage: React.FC = () => {
               {/* Prize highlights */}
               <ul className="mt-6 space-y-3 text-white/90 text-sm">
                 <li className="flex items-start gap-3">
-                  <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
+                  <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
                   <span>AI Receptionist</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
+                  <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
                   <span>SMS messaging</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
+                  <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
                   <span>Instant form replies</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
+                  <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
                   <span>Instant follow-ups</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Check className="w-4 h-4 mt-0.5 text-brand-blue" />
+                  <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
                   <span>Plus more bonuses</span>
                 </li>
               </ul>
@@ -176,7 +176,7 @@ const GiveawayPage: React.FC = () => {
                       aria-label="Share on X (Twitter)"
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor" strokeWidth={2.5}><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z"/></svg>
                     </a>
                     <a
                       href={facebookHref}
@@ -185,7 +185,7 @@ const GiveawayPage: React.FC = () => {
                       aria-label="Share on Facebook"
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                     >
-                      <Facebook className="w-3.5 h-3.5" />
+                      <Facebook className="w-3 h-3" strokeWidth={2.5} />
                     </a>
                     <a
                       href={linkedinHref}
@@ -194,7 +194,7 @@ const GiveawayPage: React.FC = () => {
                       aria-label="Share on LinkedIn"
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor"><path d="M4.983 3.5C4.983 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.483 1.12 2.483 2.5zM.25 8.25h4.5v15.5H.25zM8.75 8.25h4.31v2.12h.06c.6-1.14 2.06-2.34 4.24-2.34 4.53 0 5.37 2.98 5.37 6.85v7.88h-4.5v-6.98c0-1.66-.03-3.8-2.31-3.8-2.31 0-2.67 1.8-2.67 3.66v7.12h-4.5z"/></svg>
+                      <Linkedin className="w-3 h-3" strokeWidth={2.5} />
                     </a>
                   </div>
 
@@ -339,7 +339,7 @@ const GiveawayPage: React.FC = () => {
                       >
                         <div className="mb-4">
                           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Check className="w-8 h-8 text-white" />
+                            <Check className="w-7 h-7 text-white" strokeWidth={2.5} />
                           </div>
                           <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
                           <p className="text-white/90">

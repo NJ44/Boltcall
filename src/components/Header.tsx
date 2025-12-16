@@ -396,7 +396,7 @@ const Header: React.FC = () => {
                 initial="initial"
               >
                 Features
-                <ChevronDown className={`w-4 h-4 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
                 <motion.div
                   className={`absolute bottom-0 left-0 h-0.5 ${
                     isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
@@ -443,7 +443,7 @@ const Header: React.FC = () => {
                                 : 'text-gray-700 hover:text-gray-900'
                             }`}
                           >
-                            <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
+                            <Icon className="w-3 h-3 flex-shrink-0 -mt-[4px]" />
                             <span className="relative inline-block pb-1">
                               {item.label}
                               <motion.div
@@ -527,7 +527,7 @@ const Header: React.FC = () => {
                 initial="initial"
               >
                 Resources
-                <ChevronDown className={`w-4 h-4 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
                 <motion.div
                   className={`absolute bottom-0 left-0 h-0.5 ${
                     isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
@@ -584,7 +584,7 @@ const Header: React.FC = () => {
                                 : 'text-gray-700 hover:text-gray-900'
                             }`}
                           >
-                            <Icon className="w-4 h-4 flex-shrink-0 -mt-[4px]" />
+                            <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
                             <span className="relative inline-block pb-1">
                               {item.label}
                               <motion.div
@@ -640,7 +640,7 @@ const Header: React.FC = () => {
                                 : 'text-gray-700 hover:text-gray-900'
                             }`}
                           >
-                            <Icon className="w-4 h-4 flex-shrink-0 -mt-[4px]" />
+                            <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
                             <span className="relative inline-block pb-1">
                               {item.label}
                               <motion.div
@@ -747,7 +747,7 @@ const Header: React.FC = () => {
               animate={{ rotate: isMenuOpen ? 90 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMenuOpen ? <X size={18} strokeWidth={2.5} /> : <Menu size={18} strokeWidth={2.5} />}
             </motion.div>
           </button>
         </div>

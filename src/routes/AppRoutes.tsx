@@ -108,6 +108,7 @@ import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage'
 import SmartWebsitePage from '../pages/features/SmartWebsitePage';
 import FeatureSectionWithHoverEffectsDemo from '../pages/FeatureSectionWithHoverEffectsDemo';
 import GradientCardShowcaseDemo from '../pages/GradientCardShowcaseDemo';
+import FloatingIconsHeroDemo from '../pages/FloatingIconsHeroDemo';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -291,6 +292,7 @@ const NavigationWrapper: React.FC = () => {
         {/* Demo Pages */}
         <Route path="/feature-section-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
         <Route path="/gradient-card-showcase-demo" element={<GradientCardShowcaseDemo />} />
+        <Route path="/floating-icons-hero-demo" element={<FloatingIconsHeroDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

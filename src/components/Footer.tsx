@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
 
-// X (formerly Twitter) Logo Component
-const XLogo: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) => (
+// X (formerly Twitter) Logo Component - Custom SVG since lucide-react doesn't have X icon
+const XLogo: React.FC<{ className?: string; strokeWidth?: number }> = ({ className = "w-4 h-4", strokeWidth = 2.5 }) => (
   <svg
     viewBox="0 0 24 24"
     className={className}
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
+    strokeWidth={strokeWidth}
   >
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
@@ -198,7 +199,7 @@ const Footer: React.FC = () => {
                 className="text-gray-600 hover:text-brand-blue transition-colors"
                 aria-label="Boltcall on Facebook"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-4 h-4" strokeWidth={2.5} />
               </a>
               <a
                 href="https://x.com/boltcallteam"
@@ -207,7 +208,7 @@ const Footer: React.FC = () => {
                 className="text-gray-600 hover:text-brand-blue transition-colors"
                 aria-label="Boltcall on X"
               >
-                <XLogo className="w-5 h-5" />
+                <XLogo className="w-4 h-4" strokeWidth={2.5} />
               </a>
               <a
                 href="https://www.linkedin.com/company/boltcall"
@@ -216,7 +217,7 @@ const Footer: React.FC = () => {
                 className="text-gray-600 hover:text-brand-blue transition-colors"
                 aria-label="Boltcall on LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-4 h-4" strokeWidth={2.5} />
               </a>
             </motion.div>
           </div>

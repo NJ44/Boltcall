@@ -69,7 +69,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
             className="inline-flex items-center bg-gradient-to-r from-brand-blue to-brand-sky text-white px-4 py-1 text-sm font-medium rounded-full"
             aria-hidden="true"
           >
-            <Star className="w-3 h-3 mr-1 fill-current" />
+            <Star className="w-2.5 h-2.5 mr-1 fill-current" strokeWidth={2.5} />
             Most Popular
           </span>
         </div>
@@ -106,7 +106,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
               transition={{ duration: 0.3, delay: index * 0.05 }}
             >
               <div className="flex-shrink-0 mt-0.5">
-                <Check className="w-4 h-4 text-green-500" />
+                <Check className="w-3.5 h-3.5 text-green-500" strokeWidth={2.5} />
               </div>
               <span className="text-sm text-gray-700 leading-relaxed">{feature}</span>
             </motion.li>

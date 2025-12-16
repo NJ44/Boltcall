@@ -285,9 +285,9 @@ const PricingSection: React.FC = () => {
                 <div className="text-center">
                   {typeof feature.starter === 'boolean' ? (
                     feature.starter ? (
-                      <Check className="w-6 h-6 text-green-500 mx-auto" />
+                      <Check className="w-5 h-5 text-green-500 mx-auto" strokeWidth={2.5} />
                     ) : (
-                      <X className="w-6 h-6 text-red-400 mx-auto" />
+                      <X className="w-5 h-5 text-red-400 mx-auto" strokeWidth={2.5} />
                     )
                   ) : (
                     <span className="text-gray-900">{feature.starter}</span>
@@ -297,9 +297,9 @@ const PricingSection: React.FC = () => {
                 <div className="text-center">
                   {typeof feature.pro === 'boolean' ? (
                     feature.pro ? (
-                      <Check className="w-6 h-6 text-green-500 mx-auto" />
+                      <Check className="w-5 h-5 text-green-500 mx-auto" strokeWidth={2.5} />
                     ) : (
-                      <X className="w-6 h-6 text-red-400 mx-auto" />
+                      <X className="w-5 h-5 text-red-400 mx-auto" strokeWidth={2.5} />
                     )
                   ) : (
                     <span className="text-gray-900">{feature.pro}</span>
@@ -309,9 +309,9 @@ const PricingSection: React.FC = () => {
                 <div className="text-center">
                   {typeof feature.elite === 'boolean' ? (
                     feature.elite ? (
-                      <Check className="w-6 h-6 text-green-500 mx-auto" />
+                      <Check className="w-5 h-5 text-green-500 mx-auto" strokeWidth={2.5} />
                     ) : (
-                      <X className="w-6 h-6 text-red-400 mx-auto" />
+                      <X className="w-5 h-5 text-red-400 mx-auto" strokeWidth={2.5} />
                     )
                   ) : (
                     <span className="text-gray-900">{feature.elite}</span>

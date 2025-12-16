@@ -1,11 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { Mail, CheckCircle, ArrowRight } from 'lucide-react';
+import { Mail, CheckCircle, ArrowRight, Phone, Calendar, MessageSquare, Bell, Zap, Users, Target, CheckCircle as CheckCircleIcon, Clock } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import { CategoryList } from '../components/ui/category-list';
+import { FloatingIconsHero, type FloatingIconsHeroProps } from '../components/ui/floating-icons-hero-section';
+
+// Business-related icon components using lucide-react
+const IconPhone = (props: React.SVGProps<SVGSVGElement>) => <Phone {...props} strokeWidth={2.5} />;
+const IconCalendar = (props: React.SVGProps<SVGSVGElement>) => <Calendar {...props} strokeWidth={2.5} />;
+const IconSMS = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
+const IconBell = (props: React.SVGProps<SVGSVGElement>) => <Bell {...props} strokeWidth={2.5} />;
+const IconZap = (props: React.SVGProps<SVGSVGElement>) => <Zap {...props} strokeWidth={2.5} />;
+const IconUsers = (props: React.SVGProps<SVGSVGElement>) => <Users {...props} strokeWidth={2.5} />;
+const IconTarget = (props: React.SVGProps<SVGSVGElement>) => <Target {...props} strokeWidth={2.5} />;
+const IconCheckCircle = (props: React.SVGProps<SVGSVGElement>) => <CheckCircleIcon {...props} strokeWidth={2.5} />;
+const IconClock = (props: React.SVGProps<SVGSVGElement>) => <Clock {...props} strokeWidth={2.5} />;
+
+// Define the icons with their unique positions
+const newsletterIcons: FloatingIconsHeroProps['icons'] = [
+  { id: 1, icon: IconPhone, className: 'top-[10%] left-[10%]' },
+  { id: 2, icon: IconCalendar, className: 'top-[20%] right-[8%]' },
+  { id: 3, icon: IconSMS, className: 'top-[70%] left-[10%]' },
+  { id: 4, icon: IconBell, className: 'top-[5%] left-[30%]' },
+  { id: 5, icon: IconZap, className: 'top-[5%] right-[30%]' },
+  { id: 6, icon: IconUsers, className: 'top-[40%] left-[15%]' },
+  { id: 7, icon: IconTarget, className: 'top-[65%] right-[25%]' },
+  { id: 8, icon: IconCheckCircle, className: 'top-[50%] right-[5%]' },
+  { id: 9, icon: IconClock, className: 'top-[55%] left-[5%]' },
+];
 
 const Newsletter: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -52,75 +77,67 @@ const Newsletter: React.FC = () => {
       <GiveawayBar />
       <Header />
       
-      {/* Blue Background Header Section - Full Width */}
-      <section className="pt-32 pb-16 bg-blue-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Boltcall Newsletter
-            </h1>
-            <p className="text-xl text-blue-100 mb-6">
-              Stay updated with the latest news, tips, and updates from Boltcall
-            </p>
-
-            {/* Subscribe Form */}
+      {/* Floating Icons Hero Section */}
+      <div className="relative">
+        <FloatingIconsHero
+          title="AI Insights Weekly"
+          subtitle="Stay updated with the latest news, tips, and updates from Boltcall"
+          icons={newsletterIcons}
+          className="bg-white"
+        >
+          {/* Newsletter Form */}
+          <div className="max-w-md mx-auto px-4">
             {!isSubscribed ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="max-w-md mx-auto"
+                className="bg-white rounded-lg shadow-lg p-6 border border-gray-200"
               >
                 <form onSubmit={handleSubmit} className="flex gap-2">
                   <div className="relative flex-1">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                          <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" strokeWidth={2.5} />
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
                       className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            placeholder="your@email.com"
-                          />
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={isSubmitting || !email}
-                    className="px-4 py-2 text-sm bg-white text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                      >
-                        {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                      </button>
-                    </form>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                className="text-center max-w-md mx-auto"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !email}
+                    className="px-4 py-2 text-sm bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                   >
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="w-8 h-8 text-green-600" />
-                    </div>
-                <h2 className="text-2xl font-bold text-white mb-2">
-                      Thank You!
-                    </h2>
-                <p className="text-blue-100">
-                      You've successfully subscribed to our newsletter. Check your email for a confirmation message.
-                    </p>
-                  </motion.div>
-                )}
-          </motion.div>
-              </div>
-      </section>
+                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                  </button>
+                </form>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 border border-gray-200"
+              >
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-8 h-8 text-green-600" strokeWidth={2.5} />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Thank You!
+                </h2>
+                <p className="text-gray-600">
+                  You've successfully subscribed to our newsletter. Check your email for a confirmation message.
+                </p>
+              </motion.div>
+            )}
+          </div>
+        </FloatingIconsHero>
+      </div>
 
-      <main className="pb-16 px-4 sm:px-6 lg:px-8">
+      <main className="pb-16 px-4 sm:px-6 lg:px-8 -mt-32">
         <div className="max-w-7xl mx-auto">
 
           {/* Past Newsletters Section - Centered */}

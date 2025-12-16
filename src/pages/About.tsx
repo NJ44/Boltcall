@@ -80,68 +80,6 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">
-              Our Values
-            </h2>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Heart className="w-6 h-6 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Customer First</h3>
-                <p className="text-gray-600">
-                  Every decision we make starts with our customers' success. Your growth is our 
-                  success.
-                </p>
-              </div>
-              
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="w-6 h-6 text-green-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Simplicity</h3>
-                <p className="text-gray-600">
-                  Complex problems deserve simple solutions. We make powerful technology easy to 
-                  use and understand.
-                </p>
-              </div>
-              
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <Target className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Innovation</h3>
-                <p className="text-gray-600">
-                  We continuously push the boundaries of what's possible with AI, always staying 
-                  ahead of the curve.
-                </p>
-              </div>
-              
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                  <Award className="w-6 h-6 text-orange-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Excellence</h3>
-                <p className="text-gray-600">
-                  We're committed to delivering the highest quality solutions and support to 
-                  every customer.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* What We Do Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
@@ -159,7 +97,7 @@ const About: React.FC = () => {
             <div className="space-y-8">
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <Phone className="w-6 h-6 text-blue-600" />
+                  <Phone className="w-5 h-5 text-blue-600" strokeWidth={2.5} />
                   AI Receptionist Services
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
@@ -171,7 +109,7 @@ const About: React.FC = () => {
               
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <Zap className="w-6 h-6 text-blue-600" />
+                  <Zap className="w-5 h-5 text-blue-600" strokeWidth={2.5} />
                   Instant Lead Response
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
@@ -183,7 +121,7 @@ const About: React.FC = () => {
               
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <TrendingUp className="w-6 h-6 text-blue-600" />
+                  <TrendingUp className="w-5 h-5 text-blue-600" strokeWidth={2.5} />
                   Business Growth Tools
                 </h3>
                 <p className="text-gray-700 leading-relaxed">
@@ -255,13 +193,13 @@ const About: React.FC = () => {
           <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
             <div className="flex justify-center isolate">
               <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                <Users className="w-6 h-6 text-blue-500" />
+                <Users className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
               <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                <Phone className="w-6 h-6 text-blue-500" />
+                <Phone className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
               <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                <Globe className="w-6 h-6 text-blue-500" />
+                <Globe className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
             </div>
             <h2 className="text-gray-900 font-medium mt-4 text-4xl">Ready to Get Started?</h2>

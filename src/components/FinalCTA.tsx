@@ -13,13 +13,13 @@ const FinalCTA: React.FC = () => {
           <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
             <div className="flex justify-center isolate">
               <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                <Users className="w-6 h-6 text-blue-500" />
+                <Users className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
               <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                <Phone className="w-6 h-6 text-blue-500" />
+                <Phone className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
               <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                <Calendar className="w-6 h-6 text-blue-500" />
+                <Calendar className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
             </div>
             <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>

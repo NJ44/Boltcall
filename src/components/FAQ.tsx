@@ -97,9 +97,9 @@ const FAQ: React.FC = () => {
                     style={{ minWidth: '36px', minHeight: '36px' }}
                   >
                     {openIndex === index ? (
-                      <Minus className="w-5 h-5 text-white" />
+                      <Minus className="w-5 h-5 text-white" strokeWidth={2.5} />
                     ) : (
-                      <Plus className="w-5 h-5 text-white" />
+                      <Plus className="w-5 h-5 text-white" strokeWidth={2.5} />
                     )}
                   </motion.div>
                 </button>
