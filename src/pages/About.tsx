@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { Phone, Zap, Users, Target, TrendingUp, Heart, Award, Globe } from 'lucide-react';
+import { Phone, Zap, Users, TrendingUp, Globe } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';

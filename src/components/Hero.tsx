@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Phone, Calendar, MessageSquare, Bell, Zap, Users, Target, CheckCircle, Clock } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, Users, Target, CheckCircle, Clock } from 'lucide-react';
 import Button from './ui/Button';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
@@ -10,8 +10,6 @@ import { cn } from '../lib/utils';
 const IconPhone = (props: React.SVGProps<SVGSVGElement>) => <Phone {...props} strokeWidth={2.5} />;
 const IconCalendar = (props: React.SVGProps<SVGSVGElement>) => <Calendar {...props} strokeWidth={2.5} />;
 const IconSMS = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
-const IconBell = (props: React.SVGProps<SVGSVGElement>) => <Bell {...props} strokeWidth={2.5} />;
-const IconZap = (props: React.SVGProps<SVGSVGElement>) => <Zap {...props} strokeWidth={2.5} />;
 const IconUsers = (props: React.SVGProps<SVGSVGElement>) => <Users {...props} strokeWidth={2.5} />;
 const IconTarget = (props: React.SVGProps<SVGSVGElement>) => <Target {...props} strokeWidth={2.5} />;
 const IconCheckCircle = (props: React.SVGProps<SVGSVGElement>) => <CheckCircle {...props} strokeWidth={2.5} />;
