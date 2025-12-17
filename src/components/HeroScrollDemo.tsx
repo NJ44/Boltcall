@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect, lazy, Suspense } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ContainerScroll } from "./ui/container-scroll-animation";
 import { Phone, Megaphone, MessageSquare, BarChart3 } from "lucide-react";
 
@@ -155,18 +154,10 @@ export function HeroScrollDemo() {
             </button>
           </div>
 
-          {/* Semi-transparent container for flipping screen content */}
+          {/* Semi-transparent container for screen content */}
           <div className="flex-1 bg-white/87 backdrop-blur-sm rounded-3xl p-10 mx-2 mt-4 mb-6">
             <div className="h-full flex flex-col items-center justify-center px-4">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="w-full"
-                >
+              <div key={activeTab} className="w-full">
               {currentContent.layout === 'new-layout' ? (
               // New Layout - Header/Text on left, Animation on right
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-center">
@@ -296,8 +287,7 @@ export function HeroScrollDemo() {
           </p>
               </>
             )}
-                </motion.div>
-              </AnimatePresence>
+              </div>
             </div>
           </div>
         </div>

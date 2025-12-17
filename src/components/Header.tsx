@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Eye, Scale, BookOpen, Book, Mail } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Eye, Scale, BookOpen, Book, Mail, Trophy, ArrowRight } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -47,6 +47,7 @@ const Header: React.FC = () => {
     { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },
     { label: 'AI Visibility Check', href: '/ai-visibility-check', icon: Eye },
   ];
+
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
@@ -547,11 +548,11 @@ const Header: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`absolute top-full left-0 mt-1 rounded-lg shadow-xl border ${
+                    className={`absolute top-full left-[calc(50%-300px)] transform -translate-x-1/2 mt-1 rounded-lg shadow-xl border ${
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } py-3 px-2 z-[120] flex`}
+                    } py-3 px-2 z-[120] flex items-stretch`}
                   >
                   {/* Content Section */}
                   <div className="flex-1 min-w-[198px]">
@@ -658,6 +659,51 @@ const Header: React.FC = () => {
                         </motion.div>
                       );
                     })}
+                  </div>
+                  
+                  {/* Vertical Separator */}
+                  <div className={`border-l ${
+                    isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
+                  }`} />
+                  
+                  {/* Challenge Card Section */}
+                  <div className="flex-1 min-w-[320px] px-3 flex">
+                    <Link
+                      to="/challenge"
+                      onClick={() => {
+                        setIsResourcesOpen(false);
+                        setIsMenuOpen(false);
+                      }}
+                      className="block w-full"
+                    >
+                      <div
+                        className={`h-full rounded-2xl p-5 border transition-all hover:translate-y-[-2px] hover:shadow-2xl ${
+                          isOverBlueBackground
+                            ? 'bg-gradient-to-br from-blue-500/80 via-blue-600/80 to-blue-800/80 border-white/15 shadow-lg shadow-blue-900/30'
+                            : 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 border-blue-400/50 shadow-lg shadow-blue-500/20'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/15 border border-white/20">
+                            <Trophy className="w-4.5 h-4.5 text-white" strokeWidth={2.5} />
+                          </div>
+                          <span className="font-semibold text-sm uppercase tracking-wide text-white/90">
+                            Unshakable Receptionist
+                          </span>
+                        </div>
+
+                        <p className="text-sm leading-snug text-white/90 mb-4">
+                          Try to break our AI in 2 minutes and see how it protects sensitive info, keeps the brand tone, and handles tough callers without slipping.
+                        </p>
+
+                        <div className="mt-auto flex justify-end">
+                          <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white text-blue-700 text-sm font-semibold shadow-sm w-full justify-center">
+                            Start challenge
+                            <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
                   </div>
                 </motion.div>
                 )}
@@ -858,6 +904,31 @@ const Header: React.FC = () => {
                       {item.label}
                     </motion.button>
                   ))}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: (navItems.length + resourcesItems.length) * 0.1 }}
+                    className="mt-4"
+                  >
+                    <Link
+                      to="/challenge"
+                      onClick={() => {
+                        handleNavClick('/challenge');
+                        setIsMenuOpen(false);
+                      }}
+                      className="block rounded-xl p-4 bg-gradient-to-br from-green-500 to-green-600 border-2 border-green-600"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <Trophy className="w-5 h-5 text-white" strokeWidth={2.5} />
+                        <span className="font-bold text-sm text-white">
+                          Unshakable Receptionist
+                        </span>
+                      </div>
+                      <p className="text-xs leading-tight text-white/90">
+                        Try to break our AI in 2 minutes. Win 3 months free!
+                      </p>
+                    </Link>
+                  </motion.div>
                 </motion.div>
                 
                 {/* Auth buttons with smooth animations */}

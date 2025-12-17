@@ -1,39 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import AnimatedNumberCountdownCompact from '@/components/ui/countdown-number-compact';
 
 const GiveawayBar: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    // Halloween 2025 is October 31st
-    const halloween2025 = new Date('2025-10-31T23:59:59').getTime();
-    
-    const updateTimer = () => {
-      const now = new Date().getTime();
-      const difference = halloween2025 - now;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // Calculate end date (14 days from now, matching giveaway page)
+  const endDate = new Date();
+  endDate.setDate(endDate.getDate() + 14);
 
   return (
     <Link to="/giveaway" className="block">
@@ -55,23 +27,10 @@ const GiveawayBar: React.FC = () => {
               <div className="flex items-center space-x-1 sm:space-x-3 text-[10px] sm:text-sm">
                 <span className="font-medium hidden sm:inline">Until giveaway:</span>
                 <div className="bg-white/20 px-1.5 sm:px-3 py-0.5 sm:py-1.5 rounded-lg min-w-[120px] sm:min-w-[140px]">
-                  <div className="flex items-center space-x-0.5 sm:space-x-2 text-[10px] sm:text-sm font-bold">
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
-                      {timeLeft.days}d
-                    </span>
-                    <span className="text-white/60">:</span>
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
-                      {timeLeft.hours}h
-                    </span>
-                    <span className="text-white/60">:</span>
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
-                      {timeLeft.minutes}m
-                    </span>
-                    <span className="text-white/60">:</span>
-                    <span className="min-w-[1.5rem] sm:min-w-[2rem] text-center tabular-nums">
-                      {timeLeft.seconds}s
-                    </span>
-                  </div>
+                  <AnimatedNumberCountdownCompact
+                    endDate={endDate}
+                    className="text-white [&_span]:text-white"
+                  />
                 </div>
               </div>
             </div>

@@ -4,12 +4,19 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Facebook, Check, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GiveawayMultiStepForm } from '@/components/ui/giveaway-multistep-form';
+import AnimatedNumberCountdown from '@/components/ui/countdown-number';
 
 const GiveawayPage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showSurvey, setShowSurvey] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  // Calculate end date (14 days from now)
+  const [endDate] = useState(() => {
+    const endsAt = new Date();
+    endsAt.setDate(endsAt.getDate() + 14);
+    return endsAt;
+  });
 
   useEffect(() => {
     document.title = 'Win Free AI Receptionist Services - Giveaway | Boltcall';
@@ -54,23 +61,6 @@ const GiveawayPage: React.FC = () => {
   const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
   const linkedinHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
 
-  useEffect(() => {
-    const endsAt = new Date();
-    endsAt.setDate(endsAt.getDate() + 14); // 14 days from now
-    const target = endsAt.getTime();
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const diff = Math.max(target - now, 0);
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="min-h-screen h-auto items-start justify-start bg-white">
@@ -143,19 +133,12 @@ const GiveawayPage: React.FC = () => {
                   exit={{ opacity: 0 }}
                   className="text-center"
                 >
-                  <p className="uppercase tracking-widest text-xs text-white/80">Giveaway ends in:</p>
-                  <div className="mt-4 flex items-center justify-center gap-6">
-                    {[
-                      { label: 'days', value: timeLeft.days },
-                      { label: 'hours', value: timeLeft.hours },
-                      { label: 'mins', value: timeLeft.minutes },
-                      { label: 'secs', value: timeLeft.seconds },
-                    ].map((t) => (
-                      <div key={t.label} className="text-center">
-                        <div className="text-3xl font-extrabold leading-none">{t.value}</div>
-                        <div className="text-[10px] uppercase tracking-widest opacity-80">{t.label}</div>
-                      </div>
-                    ))}
+                  <p className="uppercase tracking-widest text-xs text-white/80 mb-4">Giveaway ends in:</p>
+                  <div className="mt-4 scale-[0.87]">
+                    <AnimatedNumberCountdown
+                      endDate={endDate}
+                      className="[&_span]:text-white/80 [&_div]:text-white"
+                    />
                   </div>
 
                   <button

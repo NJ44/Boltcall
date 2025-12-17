@@ -419,6 +419,14 @@
     <priority>0.7</priority>
   </url>
   
+  <!-- Challenge Page - Marketing -->
+  <url>
+    <loc>https://boltcall.org/challenge</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Signup - Conversion Page -->
   <url>
     <loc>https://boltcall.org/signup</loc>

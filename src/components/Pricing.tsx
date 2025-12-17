@@ -64,8 +64,8 @@ const Pricing: React.FC = () => {
     <>
       <Section id="pricing" background="white" roundedTop={true}>
       {/* Pricing Header */}
-      <div className="text-center -mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 -mb-14">
+      <div className="text-center mb-10">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-[1.2]">
           <WhisperText
             text="Pricing That"
             className="text-4xl md:text-5xl font-bold text-gray-900 inline-block"

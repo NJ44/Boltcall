@@ -69,7 +69,7 @@ const FreeSetup: React.FC = () => {
             </motion.div>
             <motion.h2 
               className="font-bold text-white mb-6" 
-              style={{ fontSize: '54px', lineHeight: '0.9' }}
+              style={{ fontSize: '54px', lineHeight: '1.25' }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}

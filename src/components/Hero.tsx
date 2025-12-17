@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Phone, Calendar, MessageSquare, Users, Target, CheckCircle, Clock } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
 import Button from './ui/Button';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
@@ -12,7 +12,7 @@ const IconCalendar = (props: React.SVGProps<SVGSVGElement>) => <Calendar {...pro
 const IconSMS = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
 const IconUsers = (props: React.SVGProps<SVGSVGElement>) => <Users {...props} strokeWidth={2.5} />;
 const IconTarget = (props: React.SVGProps<SVGSVGElement>) => <Target {...props} strokeWidth={2.5} />;
-const IconCheckCircle = (props: React.SVGProps<SVGSVGElement>) => <CheckCircle {...props} strokeWidth={2.5} />;
+const IconSMS2 = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
 const IconClock = (props: React.SVGProps<SVGSVGElement>) => <Clock {...props} strokeWidth={2.5} />;
 
 interface IconData {
@@ -28,7 +28,7 @@ const heroIcons: IconData[] = [
   { id: 3, icon: IconSMS, className: 'top-[70%] left-[10%]' },
   { id: 6, icon: IconUsers, className: 'top-[40%] left-[15%]' },
   { id: 7, icon: IconTarget, className: 'top-[65%] right-[25%]' },
-  { id: 8, icon: IconCheckCircle, className: 'top-[50%] right-[5%]' },
+  { id: 8, icon: IconSMS2, className: 'top-[50%] right-[5%]' },
   { id: 9, icon: IconClock, className: 'top-[55%] left-[5%]' },
 ];
 

@@ -30,8 +30,10 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative">
-      {/* Giveaway Bar */}
-      <GiveawayBar />
+      {/* Giveaway Bar (hidden on mobile) */}
+      <div className="hidden md:block">
+        <GiveawayBar />
+      </div>
       
       {/* Content */}
       <div className="relative z-10 pt-32">
@@ -39,9 +41,9 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
           
-          <div className="relative -top-[500px] z-[100] pointer-events-none" style={{ minHeight: '600px', contain: 'layout' }}>
+          <div className="relative -top-[500px] z-[100] pointer-events-none hidden md:block" style={{ minHeight: '600px', contain: 'layout' }}>
             <Suspense fallback={<div className="h-[600px] w-full" style={{ contain: 'layout' }} />}>
-            <HeroScrollDemo />
+              <HeroScrollDemo />
             </Suspense>
           </div>
           

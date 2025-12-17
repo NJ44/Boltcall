@@ -11,6 +11,7 @@ import Card from '../components/ui/Card';
 import StyledInput from '../components/ui/StyledInput';
 import Button from '../components/ui/Button';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { OTPVerification } from '../components/ui/otp-verify';
 
 const signupSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -25,6 +26,8 @@ const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
+  const [showOtp, setShowOtp] = useState(false);
+  const [signedUpEmail, setSignedUpEmail] = useState<string>('');
 
   useEffect(() => {
     document.title = 'Sign Up for Boltcall - Start Your Free Trial Today';
@@ -64,13 +67,18 @@ const Signup: React.FC = () => {
         company: '' // Default empty company
       });
       console.log('Signup successful, navigating to:', redirectTo);
-      navigate(redirectTo);
+      setSignedUpEmail(data.email);
+      setShowOtp(true);
     } catch (error) {
       console.error('Signup error:', error);
       setError(error instanceof Error ? error.message : 'Failed to create account. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleOtpVerified = async () => {
+    navigate(redirectTo);
   };
 
   const handleGoogleLogin = async () => {
@@ -104,6 +112,10 @@ const Signup: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  if (showOtp) {
+    return <OTPVerification email={signedUpEmail} onVerified={handleOtpVerified} />;
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50">

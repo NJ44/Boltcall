@@ -109,6 +109,11 @@ import SmartWebsitePage from '../pages/features/SmartWebsitePage';
 import FeatureSectionWithHoverEffectsDemo from '../pages/FeatureSectionWithHoverEffectsDemo';
 import GradientCardShowcaseDemo from '../pages/GradientCardShowcaseDemo';
 import FloatingIconsHeroDemo from '../pages/FloatingIconsHeroDemo';
+import CountdownDemo from '../pages/CountdownDemo';
+import Icon3DHoverDemo from '../pages/Icon3DHoverDemo';
+import ChallengeCardDemo from '../pages/ChallengeCardDemo';
+import Challenge from '../pages/Challenge';
+import OtpDemo from '../pages/OtpDemo';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -293,6 +298,11 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/feature-section-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
         <Route path="/gradient-card-showcase-demo" element={<GradientCardShowcaseDemo />} />
         <Route path="/floating-icons-hero-demo" element={<FloatingIconsHeroDemo />} />
+        <Route path="/countdown-demo" element={<CountdownDemo />} />
+        <Route path="/icon-3d-hover-demo" element={<Icon3DHoverDemo />} />
+        <Route path="/challenge-card-demo" element={<ChallengeCardDemo />} />
+        <Route path="/challenge" element={<Challenge />} />
+        <Route path="/otp-demo" element={<OtpDemo />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

@@ -47,7 +47,7 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px', lineHeight: '0.9' }}>
+            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px', lineHeight: '1.2' }}>
               <WhisperText
                 text="Close leads in "
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
