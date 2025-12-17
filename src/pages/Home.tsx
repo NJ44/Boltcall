@@ -47,7 +47,7 @@ const Home: React.FC = () => {
             </Suspense>
           </div>
           
-          <div className="relative -top-[600px]">
+          <div className="relative mt-[400px] md:mt-0 md:-top-[600px]">
             <HowItWorks />
           </div>
           

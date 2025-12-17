@@ -67,8 +67,8 @@ export function OTPVerification({
           <div className="text-center mb-6">
             <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-xl bg-blue-50 border border-blue-100">
               <img
-                src="/boltcall_full_logo.png"
-                alt="Boltcall logo"
+                src="/boltcall_icon.png"
+                alt="Boltcall icon"
                 className="w-8 h-8 object-contain"
                 loading="lazy"
               />
