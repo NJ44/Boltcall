@@ -785,7 +785,7 @@ const Header: React.FC = () => {
 
           {/* Mobile menu button - Fixed to top right */}
           <button
-            className="md:hidden fixed top-4 right-4 z-[120] p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200"
+            className="md:hidden fixed top-4 right-4 z-[120] p-3 bg-white backdrop-blur-sm rounded-full shadow-xl border-2 border-gray-300 hover:bg-gray-50 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -793,7 +793,11 @@ const Header: React.FC = () => {
               animate={{ rotate: isMenuOpen ? 90 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              {isMenuOpen ? <X size={18} strokeWidth={2.5} /> : <Menu size={18} strokeWidth={2.5} />}
+              {isMenuOpen ? (
+                <X size={20} strokeWidth={2.5} className="text-gray-800" />
+              ) : (
+                <Menu size={20} strokeWidth={2.5} className="text-gray-800" />
+              )}
             </motion.div>
           </button>
         </div>

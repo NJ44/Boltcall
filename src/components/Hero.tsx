@@ -126,10 +126,21 @@ const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const navigate = useNavigate();
   const [titleNumber, setTitleNumber] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Refs to track the raw mouse position
   const mouseX = useRef(0);
   const mouseY = useRef(0);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const titles = useMemo(
     () => ["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"],
@@ -162,7 +173,7 @@ const Hero: React.FC = () => {
       >
         {/* Container for the background floating icons */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
-          {heroIcons.map((iconData, index) => (
+          {heroIcons.slice(0, isMobile ? 3 : heroIcons.length).map((iconData, index) => (
             <FloatingIcon
               key={iconData.id}
               mouseX={mouseX}
