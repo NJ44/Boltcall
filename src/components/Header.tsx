@@ -360,7 +360,7 @@ const Header: React.FC = () => {
       style={{ contain: 'layout style' }}
     >
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
-        <div className="flex items-center justify-between h-16 max-w-7xl mx-auto overflow-visible">
+        <div className="flex items-center justify-between h-14 max-w-7xl mx-auto overflow-visible">
           {/* Left Side - Logo and Navigation */}
           <div className="flex items-center">
             {/* Logo */}
@@ -372,9 +372,9 @@ const Header: React.FC = () => {
                 <img 
                   src="/boltcall_full_logo.png" 
                   alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
-                  className="h-16 w-auto -translate-y-[3.1px]"
-                  width="200"
-                  height="64"
+                  className="h-14 w-auto -translate-y-[2.8px]"
+                  width="180"
+                  height="56"
                   loading="eager"
                 />
               </motion.div>

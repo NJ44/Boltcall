@@ -189,7 +189,7 @@ const Hero: React.FC = () => {
         {/* Animated Headline */}
         <div className="flex justify-center mb-6 relative z-10">
           <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-2 flex-nowrap md:ml-56">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap md:ml-56">
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -212,7 +212,7 @@ const Hero: React.FC = () => {
                 A
               </motion.span>
 
-              <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[240px] md:min-w-[380px] h-[1.2em] min-h-[1.2em] ml-[2px]" style={{ contain: 'layout style paint' }}>
+              <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[180px] md:min-w-[380px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
                 {titles.map((title, index) => (
                   <motion.span
                     key={index}

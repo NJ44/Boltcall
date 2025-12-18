@@ -47,17 +47,17 @@ const Home: React.FC = () => {
             </Suspense>
           </div>
           
-          <div className="relative mt-[270px] md:mt-0 md:-top-[600px]">
+          <div className="relative mt-[170px] md:mt-0 md:-top-[600px]">
             <HowItWorks />
           </div>
           
-          <div className="relative -top-[500px]" style={{ minHeight: '400px', contain: 'layout' }}>
+          <div className="relative -top-[60px]" style={{ minHeight: '400px', contain: 'layout' }}>
             <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
             <StickyScrollSection />
             </Suspense>
           </div>
           
-          <div className="relative -top-[555px]">
+          <div className="relative -top-[115px]">
             <FreeSetup />
           </div>
           
