@@ -189,7 +189,7 @@ const Hero: React.FC = () => {
         {/* Animated Headline */}
         <div className="flex justify-center mb-6 relative z-10">
           <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-2 flex-nowrap ml-48 md:ml-56">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-2 flex-nowrap md:ml-56">
               <motion.span
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
