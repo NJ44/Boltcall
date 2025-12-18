@@ -803,9 +803,10 @@ const Header: React.FC = () => {
         </div>
 
         {/* Mobile Navigation - Full screen overlay */}
+        <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md"
+            className="md:hidden fixed inset-0 z-[110] bg-white/95 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -1014,6 +1015,7 @@ const Header: React.FC = () => {
             </div>
           </motion.div>
         )}
+        </AnimatePresence>
       </div>
     </motion.header>
   );
