@@ -51,13 +51,13 @@ const Home: React.FC = () => {
             <HowItWorks />
           </div>
           
-          <div className="relative -top-[60px]" style={{ minHeight: '400px', contain: 'layout' }}>
+          <div className="relative -top-[60px] md:-top-[500px]" style={{ minHeight: '400px', contain: 'layout' }}>
             <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
             <StickyScrollSection />
             </Suspense>
           </div>
           
-          <div className="relative -top-[115px]">
+          <div className="relative -top-[500px] md:-top-[555px]">
             <FreeSetup />
           </div>
           
