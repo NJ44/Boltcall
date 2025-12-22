@@ -12,12 +12,14 @@ interface SpeedTestData {
     keyIssues: string[];
     status: 'slow' | 'average' | 'fast';
   } | null;
+  webhookResults: any | null;
 }
 
 interface SpeedTestStore extends SpeedTestData {
   setUrl: (url: string) => void;
   setCredentials: (email: string, password: string) => void;
   setResults: (results: SpeedTestData['results']) => void;
+  setWebhookResults: (results: any) => void;
   reset: () => void;
 }
 
@@ -26,6 +28,7 @@ const defaultData: SpeedTestData = {
   email: '',
   password: '',
   results: null,
+  webhookResults: null,
 };
 
 export const useSpeedTestStore = create<SpeedTestStore>()(
@@ -35,6 +38,7 @@ export const useSpeedTestStore = create<SpeedTestStore>()(
       setUrl: (url) => set({ url }),
       setCredentials: (email, password) => set({ email, password }),
       setResults: (results) => set({ results }),
+      setWebhookResults: (webhookResults) => set({ webhookResults }),
       reset: () => set(defaultData),
     }),
     {

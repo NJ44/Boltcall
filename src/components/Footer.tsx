@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
       { label: 'Comparisons', href: '/comparisons' },
       { label: 'Blog', href: '/blog' },
       { label: 'SEO Audit', href: '/seo-audit' },
-      { label: 'Speed Test', href: '/speed-test' },
+      { label: 'Website Health Check', href: '/speed-test' },
       { label: 'AI Revenue Audit', href: '/ai-revenue-calculator' },
       { label: 'AI Visibility Check', href: '/ai-visibility-check' },
     ],
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
 
 
   return (
-    <footer className="bg-white text-text-main">
+    <footer className="bg-white text-text-main pt-[100px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Main Footer Content */}

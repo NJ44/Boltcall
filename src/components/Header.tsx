@@ -42,7 +42,7 @@ const Header: React.FC = () => {
 
   const freeToolsItems = [
     { label: 'SEO Audit', href: '/seo-audit', icon: Search },
-    { label: 'Speed Test', href: '/speed-test', icon: Gauge },
+    { label: 'Website Health Check', href: '/speed-test', icon: Gauge },
     { label: 'AI Revenue Audit', href: '/ai-revenue-calculator', icon: Calculator },
     { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },
     { label: 'AI Visibility Check', href: '/ai-visibility-check', icon: Eye },
@@ -552,11 +552,11 @@ const Header: React.FC = () => {
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } py-3 px-2 z-[120] flex items-stretch`}
+                    } py-4 px-3 z-[120] flex items-stretch`}
                   >
                   {/* Content Section */}
-                  <div className="flex-1 min-w-[198px]">
-                    <div className="px-4 py-2">
+                  <div className="flex-1 min-w-[198px] py-4">
+                    <div className="px-4 py-3">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -579,7 +579,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
+                            className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors relative ${
                               isOverBlueBackground
                                 ? 'text-gray-300 hover:text-white'
                                 : 'text-gray-700 hover:text-gray-900'
@@ -611,8 +611,8 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Free Tools Section */}
-                  <div className="flex-1 min-w-[198px]">
-                    <div className="px-4 py-2">
+                  <div className="flex-1 min-w-[198px] py-4">
+                    <div className="px-4 py-3">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -635,7 +635,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${
+                            className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors relative ${
                               isOverBlueBackground
                                 ? 'text-gray-300 hover:text-white'
                                 : 'text-gray-700 hover:text-gray-900'
@@ -667,7 +667,7 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Challenge Card Section */}
-                  <div className="flex-1 min-w-[320px] px-3 flex">
+                  <div className="flex-1 min-w-[320px] px-3 py-4 flex">
                     <Link
                       to="/challenge"
                       onClick={() => {

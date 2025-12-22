@@ -373,15 +373,15 @@ const AIRevenueAudit: React.FC = () => {
                 >
               <StepperPanel>
                 <StepperContent value={1}>
-                  <div className="bg-white rounded-xl border border-gray-200 p-8">
+                  <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">Business Profile</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Industry *</label>
                         <select
                           value={inputs.industry}
                           onChange={(e) => handleInputChange('industry', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base text-gray-900"
                           required
                         >
                           <option value="">Select your industry</option>
@@ -395,7 +395,7 @@ const AIRevenueAudit: React.FC = () => {
                         <select
                           value={inputs.whoTalksWithCustomers}
                           onChange={(e) => handleInputChange('whoTalksWithCustomers', e.target.value)}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base text-gray-900"
                         >
                           <option value="">Select an option</option>
                           <option value="me" className="text-gray-900">Me</option>
@@ -409,9 +409,9 @@ const AIRevenueAudit: React.FC = () => {
                 </StepperContent>
 
                 <StepperContent value={2}>
-                  <div className="bg-white rounded-xl border border-gray-200 p-8">
+                  <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">Current Performance</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Average Monthly Leads</label>
                         <input
@@ -419,9 +419,9 @@ const AIRevenueAudit: React.FC = () => {
                           value={inputs.avgMonthlyLeads}
                           onChange={(e) => handleInputChange('avgMonthlyLeads', parseInt(e.target.value) || 0)}
                           min="0"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                         />
-                        <p className="text-xs text-gray-500 mt-1">Total inbound leads per month (calls + forms)</p>
+                        <p className="text-sm text-gray-500 mt-2">Total inbound leads per month (calls + forms)</p>
                       </div>
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
@@ -433,7 +433,7 @@ const AIRevenueAudit: React.FC = () => {
                             min="0"
                             max="100"
                             step="0.1"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                           />
                         </div>
                         <div>
@@ -444,7 +444,7 @@ const AIRevenueAudit: React.FC = () => {
                             onChange={(e) => handleInputChange('avgBookingValue', parseFloat(e.target.value) || 0)}
                             min="0"
                             step="0.01"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                           />
                         </div>
                       </div>
@@ -455,7 +455,7 @@ const AIRevenueAudit: React.FC = () => {
                           value={inputs.avgMonthlyPhoneCalls}
                           onChange={(e) => handleInputChange('avgMonthlyPhoneCalls', parseInt(e.target.value) || 0)}
                           min="0"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                         />
                       </div>
                       <div className="grid md:grid-cols-2 gap-4">
@@ -468,7 +468,7 @@ const AIRevenueAudit: React.FC = () => {
                             min="0"
                             max="100"
                             step="0.1"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                           />
                         </div>
                         <div>
@@ -480,7 +480,7 @@ const AIRevenueAudit: React.FC = () => {
                             min="0"
                             max="100"
                             step="0.1"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                           />
                         </div>
                       </div>
@@ -492,18 +492,18 @@ const AIRevenueAudit: React.FC = () => {
                           onChange={(e) => handleInputChange('avgCustomerLifetimeValue', parseFloat(e.target.value) || 0)}
                           min="0"
                           step="0.01"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                         />
-                        <p className="text-xs text-gray-500 mt-1">Leave empty to auto-calculate (Booking Value × 3)</p>
+                        <p className="text-sm text-gray-500 mt-2">Leave empty to auto-calculate (Booking Value × 3)</p>
                       </div>
                     </div>
                   </div>
                 </StepperContent>
 
                 <StepperContent value={3}>
-                  <div className="bg-white rounded-xl border border-gray-200 p-8">
+                  <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">Costs & Staffing</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <input
                           type="checkbox"
@@ -532,7 +532,7 @@ const AIRevenueAudit: React.FC = () => {
                               onChange={(e) => handleInputChange('hourlySalaryReceptionist', parseFloat(e.target.value) || 0)}
                               min="0"
                               step="0.01"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                             />
                           </div>
                           <div>
@@ -542,7 +542,7 @@ const AIRevenueAudit: React.FC = () => {
                               value={inputs.monthlyReceptionistHours}
                               onChange={(e) => handleInputChange('monthlyReceptionistHours', parseInt(e.target.value) || 0)}
                               min="0"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                             />
                           </div>
                         </div>
@@ -555,9 +555,9 @@ const AIRevenueAudit: React.FC = () => {
                           onChange={(e) => handleInputChange('monthlyToolSpend', parseFloat(e.target.value) || 0)}
                           min="0"
                           step="0.01"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                         />
-                        <p className="text-xs text-gray-500 mt-1">Current software costs for call handling</p>
+                        <p className="text-sm text-gray-500 mt-2">Current software costs for call handling</p>
                       </div>
                     </div>
                   </div>

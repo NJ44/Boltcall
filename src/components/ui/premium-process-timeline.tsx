@@ -72,7 +72,7 @@ export const QuantumTimeline = ({ steps = DEMO_STEPS, defaultStep }: QuantumTime
   const activeStepData = steps.find(step => step.id === activeStep);
 
   return (
-    <div className="w-full max-w-[calc(62rem+60px)] mx-auto pt-4 px-5 pb-0 -mb-[50px] -mt-[15px] font-sans bg-white dark:bg-black rounded-2xl shadow-2xl">
+    <div className="w-full max-w-[calc(70rem+60px)] mx-auto pt-4 px-5 pb-0 -mb-[100px] -mt-[15px] font-sans bg-white dark:bg-black rounded-2xl shadow-2xl">
       {/* Top Navigation */}
       <TimelineNav steps={steps} activeStep={activeStep} onStepClick={setActiveStep} />
 
