@@ -152,7 +152,7 @@ function LavaLampShader() {
 
 export const LavaLamp = () => {
   return (
-    <div style={{ width: '100%', height: '100%', background: '#000', position: "absolute", top: 0, left: 0, zIndex: 0 }}>
+    <div style={{ width: '100%', height: '100%', background: '#000', position: "fixed", top: 0, left: 0, zIndex: 0 }}>
       <Canvas
         camera={{
           left: -0.5,

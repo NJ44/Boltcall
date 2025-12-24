@@ -143,7 +143,7 @@ const Strike: React.FC = () => {
       {/* Mobile fallback background */}
       <div className="md:hidden fixed inset-0 w-full h-full z-0 bg-black" />
       
-      <div className="relative z-10 flex flex-col h-full">
+      <div className="relative z-10 flex flex-col h-full" style={{ position: 'relative', zIndex: 10 }}>
         <Header />
         
         {/* Black overlay when messages exist */}
@@ -151,10 +151,10 @@ const Strike: React.FC = () => {
           <div className="fixed inset-0 bg-black/80 pointer-events-none" style={{ zIndex: 5 }} />
         )}
         
-        <div className="flex-1 flex flex-col min-h-0 relative z-20 overflow-hidden">
+        <div className="flex-1 flex flex-col min-h-0 relative z-20 overflow-hidden" style={{ position: 'relative', zIndex: 20 }}>
           {/* Hero Section - Only show when no messages */}
           {messages.length === 0 && (
-            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative z-30">
+            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative z-30" style={{ position: 'relative', zIndex: 30 }}>
               <div className="max-w-5xl mx-auto relative">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
