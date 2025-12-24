@@ -96,7 +96,7 @@ export const PromptBox = React.forwardRef<HTMLTextAreaElement, PromptBoxProps>(
 
     return (
       <div className={cn("flex flex-col rounded-[28px] p-2 shadow-lg transition-colors bg-white/10 backdrop-blur-md border border-white/20 cursor-text", className)}>
-        <textarea ref={internalTextareaRef} rows={1} value={value} onChange={handleInputChange} onKeyDown={handleKeyDown} placeholder="Message..." className="custom-scrollbar w-full resize-none border-0 bg-transparent p-3 text-white placeholder:text-white/60 focus:ring-0 focus-visible:outline-none min-h-12" {...props} />
+        <textarea ref={internalTextareaRef} rows={1} value={value} onChange={handleInputChange} onKeyDown={handleKeyDown} placeholder="Ask anything" className="custom-scrollbar w-full resize-none border-0 bg-transparent p-3 text-white placeholder:text-white/60 focus:ring-0 focus-visible:outline-none min-h-12" {...props} />
         
         <div className="mt-0.5 p-1 pt-0">
           <TooltipProvider delayDuration={100}>

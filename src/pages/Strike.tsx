@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
+import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
 import Header from '../components/Header';
 import { PromptBox } from '../components/ui/chatgpt-prompt-input';
 import { LavaLamp } from '../components/ui/fluid-blob';
@@ -20,6 +21,9 @@ const Strike: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [typingProgress, setTypingProgress] = useState<Record<string, number>>({});
+  const [likedMessages, setLikedMessages] = useState<Set<string>>(new Set());
+  const [dislikedMessages, setDislikedMessages] = useState<Set<string>>(new Set());
+  const [copiedMessages, setCopiedMessages] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -139,7 +143,12 @@ const Strike: React.FC = () => {
       <div className="relative z-10 flex flex-col h-full">
         <Header />
         
-        <div className="flex-1 flex flex-col min-h-0">
+        {/* Black overlay when messages exist */}
+        {messages.length > 0 && (
+          <div className="fixed inset-0 bg-black/80 z-[5] pointer-events-none" />
+        )}
+        
+        <div className="flex-1 flex flex-col min-h-0 relative z-10 overflow-hidden">
           {/* Hero Section - Only show when no messages */}
           {messages.length === 0 && (
             <section className="pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative">
@@ -184,27 +193,143 @@ const Strike: React.FC = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
                   className={cn(
-                    "flex",
-                    message.sender === 'user' ? 'justify-end' : 'justify-start'
+                    "flex flex-col",
+                    message.sender === 'user' ? 'items-end' : 'items-start'
                   )}
                 >
-                  <div
-                    className={cn(
-                      "max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-3",
-                      message.sender === 'user'
-                        ? "bg-blue-600 text-white rounded-br-sm"
-                        : "bg-[#1a1a1a] text-white border-2 border-white/30 rounded-bl-sm"
-                    )}
-                  >
-                    <p className="text-sm sm:text-base whitespace-pre-wrap break-words">
-                      {message.sender === 'ai' && typingProgress[message.id] !== undefined
+                  {message.sender === 'user' ? (
+                    <div className="max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-3 bg-gray-600 text-white rounded-br-sm">
+                      <p className="text-sm sm:text-base whitespace-pre-wrap break-words">
+                        {message.text}
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-sm sm:text-base whitespace-pre-wrap break-words text-white max-w-[80%] sm:max-w-[70%]">
+                      {typingProgress[message.id] !== undefined
                         ? message.text.slice(0, typingProgress[message.id])
                         : message.text}
-                      {message.sender === 'ai' && typingProgress[message.id] !== undefined && typingProgress[message.id] < message.text.length && (
+                      {typingProgress[message.id] !== undefined && typingProgress[message.id] < message.text.length && (
                         <span className="animate-pulse">|</span>
                       )}
                     </p>
-                  </div>
+                  )}
+                  {message.sender === 'ai' && (typingProgress[message.id] === undefined || typingProgress[message.id] >= message.text.length) && (
+                    <div className="flex items-center gap-0.5 mt-2 -ml-[7px]">
+                      <button
+                        onClick={() => {
+                          setLikedMessages(prev => {
+                            const newSet = new Set(prev);
+                            if (newSet.has(message.id)) {
+                              newSet.delete(message.id);
+                            } else {
+                              newSet.add(message.id);
+                              setDislikedMessages(prevDis => {
+                                const newDisSet = new Set(prevDis);
+                                newDisSet.delete(message.id);
+                                return newDisSet;
+                              });
+                            }
+                            return newSet;
+                          });
+                        }}
+                        className={cn(
+                          "flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors text-xs",
+                          likedMessages.has(message.id)
+                            ? "text-blue-400 hover:text-blue-300"
+                            : "text-white/60 hover:text-white/80"
+                        )}
+                        title="Like"
+                      >
+                        <ThumbsUp className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setDislikedMessages(prev => {
+                            const newSet = new Set(prev);
+                            if (newSet.has(message.id)) {
+                              newSet.delete(message.id);
+                            } else {
+                              newSet.add(message.id);
+                              setLikedMessages(prevLike => {
+                                const newLikeSet = new Set(prevLike);
+                                newLikeSet.delete(message.id);
+                                return newLikeSet;
+                              });
+                            }
+                            return newSet;
+                          });
+                        }}
+                        className={cn(
+                          "flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors text-xs",
+                          dislikedMessages.has(message.id)
+                            ? "text-red-400 hover:text-red-300"
+                            : "text-white/60 hover:text-white/80"
+                        )}
+                        title="Dislike"
+                      >
+                        <ThumbsDown className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={async () => {
+                          try {
+                            if (navigator.share) {
+                              await navigator.share({
+                                title: 'Strike AI Response',
+                                text: message.text,
+                              });
+                            } else {
+                              // Fallback: copy to clipboard
+                              await navigator.clipboard.writeText(message.text);
+                              setCopiedMessages(prev => new Set(prev).add(message.id));
+                              setTimeout(() => {
+                                setCopiedMessages(prev => {
+                                  const newSet = new Set(prev);
+                                  newSet.delete(message.id);
+                                  return newSet;
+                                });
+                              }, 2000);
+                            }
+                          } catch (err) {
+                            console.error('Error sharing:', err);
+                          }
+                        }}
+                        className="flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors text-xs text-white/60 hover:text-white/80"
+                        title="Share"
+                      >
+                        <Share2 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(message.text);
+                            setCopiedMessages(prev => new Set(prev).add(message.id));
+                            setTimeout(() => {
+                              setCopiedMessages(prev => {
+                                const newSet = new Set(prev);
+                                newSet.delete(message.id);
+                                return newSet;
+                              });
+                            }, 2000);
+                          } catch (err) {
+                            console.error('Error copying:', err);
+                          }
+                        }}
+                        className={cn(
+                          "flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors text-xs",
+                          copiedMessages.has(message.id)
+                            ? "text-green-400 hover:text-green-300"
+                            : "text-white/60 hover:text-white/80"
+                        )}
+                        title="Copy"
+                      >
+                        {copiedMessages.has(message.id) ? (
+                          <Check className="w-3.5 h-3.5" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </motion.div>
               ))}
               
@@ -243,9 +368,9 @@ const Strike: React.FC = () => {
               {messages.length === 0 && (
                 <div className="mt-4 flex flex-wrap gap-2 justify-center">
                   {[
+                    { question: "What's the best marketing strategy for my business?", agentId: 'marketing' },
                     { question: "How can I increase my sales conversion rate?", agentId: 'sales' },
                     { question: "How can I improve my Google search rankings?", agentId: 'google-ranking' },
-                    { question: "What's the best marketing strategy for my business?", agentId: 'marketing' },
                     { question: "How can I accelerate my business growth?", agentId: 'growth' }
                   ].map((item, index) => (
                     <button
@@ -271,7 +396,7 @@ const Strike: React.FC = () => {
                           textareaRef.current.focus();
                         }
                       }}
-                      className="px-4 py-2 text-sm rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-blue-400 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+                      className="px-3 py-1.5 text-xs rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-blue-400 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
                     >
                       {item.question}
                     </button>

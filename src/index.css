@@ -570,6 +570,7 @@ body {
     scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    scroll-behavior: smooth;
   }
   
   .chat-scrollbar::-webkit-scrollbar {

@@ -36,7 +36,7 @@ const Header: React.FC = () => {
   const resourcesItems = [
     { label: 'Comparisons', href: '/comparisons', icon: Scale },
     { label: 'Blog', href: '/blog', icon: BookOpen },
-    { label: 'AI Guide for Businesses', href: '/ai-guide-for-businesses', icon: Book },
+    { label: 'AI Guide', href: '/ai-guide-for-businesses', icon: Book },
     { label: 'Newsletter', href: '/newsletter', icon: Mail },
   ];
 
@@ -560,11 +560,11 @@ const Header: React.FC = () => {
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } py-4 px-3 z-[120] flex items-stretch`}
+                    } py-4 px-6 z-[120] flex items-stretch`}
                   >
                   {/* Content Section */}
                   <div className="flex-1 min-w-[198px] py-4">
-                    <div className="px-4 py-3">
+                    <div className="px-6 py-3">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -587,7 +587,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors relative ${
+                            className={`flex items-center gap-3 px-6 py-2.5 text-sm transition-colors relative ${
                               isOverBlueBackground
                                 ? 'text-gray-300 hover:text-white'
                                 : 'text-gray-700 hover:text-gray-900'
@@ -674,10 +674,10 @@ const Header: React.FC = () => {
                     isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
                   }`} />
                   
-                  {/* Challenge Card Section */}
+                  {/* Strike AI Announcement Section */}
                   <div className="flex-1 min-w-[320px] px-3 py-4 flex">
                     <Link
-                      to="/challenge"
+                      to="/strike-ai"
                       onClick={() => {
                         setIsResourcesOpen(false);
                         setIsMenuOpen(false);
@@ -685,28 +685,33 @@ const Header: React.FC = () => {
                       className="block w-full"
                     >
                       <div
-                        className={`h-full rounded-2xl p-5 border transition-all hover:translate-y-[-2px] hover:shadow-2xl ${
+                        className={`h-full rounded-2xl p-6 border-2 transition-all hover:translate-y-[-2px] hover:shadow-2xl ${
                           isOverBlueBackground
-                            ? 'bg-gradient-to-br from-blue-500/80 via-blue-600/80 to-blue-800/80 border-white/15 shadow-lg shadow-blue-900/30'
-                            : 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 border-blue-400/50 shadow-lg shadow-blue-500/20'
+                            ? 'bg-white border-gray-900 shadow-xl'
+                            : 'bg-white border-gray-900 shadow-xl'
                         }`}
                       >
-                        <div className="flex items-center gap-2 mb-4">
-                          <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/15 border border-white/20">
-                            <Trophy className="w-4.5 h-4.5 text-white" strokeWidth={2.5} />
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
+                            <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
                           </div>
-                          <span className="font-semibold text-sm uppercase tracking-wide text-white/90">
-                            Unshakable Receptionist
-                          </span>
+                          <div>
+                            <span className="font-bold text-sm uppercase tracking-wider text-black block">
+                              New: Strike AI
+                            </span>
+                            <span className="text-xs text-gray-600 block mt-0.5">
+                              Now Available
+                            </span>
+                          </div>
                         </div>
 
-                        <p className="text-sm leading-snug text-white/90 mb-4">
-                          Try to break our AI in 2 minutes and see how it protects sensitive info, keeps the brand tone, and handles tough callers without slipping.
+                        <p className="text-sm leading-relaxed text-gray-700 mb-5">
+                          Strike, our intelligent AI assistant, is now available. Get instant answers and assistance powered by advanced AI.
                         </p>
 
                         <div className="mt-auto flex justify-end">
-                          <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white text-blue-700 text-sm font-semibold shadow-sm w-full justify-center">
-                            Start challenge
+                          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-black text-white text-sm font-semibold shadow-md hover:bg-gray-900 transition-colors w-full justify-center">
+                            Try Strike AI
                             <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                           </div>
                         </div>
@@ -924,21 +929,28 @@ const Header: React.FC = () => {
                     className="mt-4"
                   >
                     <Link
-                      to="/challenge"
+                      to="/strike-ai"
                       onClick={() => {
-                        handleNavClick('/challenge');
+                        handleNavClick('/strike-ai');
                         setIsMenuOpen(false);
                       }}
-                      className="block rounded-xl p-4 bg-gradient-to-br from-green-500 to-green-600 border-2 border-green-600"
+                      className="block rounded-xl p-5 bg-white border-2 border-gray-900 shadow-lg"
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Trophy className="w-5 h-5 text-white" strokeWidth={2.5} />
-                        <span className="font-bold text-sm text-white">
-                          Unshakable Receptionist
-                        </span>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
+                          <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
+                        </div>
+                        <div>
+                          <span className="font-bold text-sm text-black block">
+                            New: Strike AI
+                          </span>
+                          <span className="text-xs text-gray-600 block mt-0.5">
+                            Now Available
+                          </span>
+                        </div>
                       </div>
-                      <p className="text-xs leading-tight text-white/90">
-                        Try to break our AI in 2 minutes. Win 3 months free!
+                      <p className="text-xs leading-relaxed text-gray-700">
+                        Strike, our intelligent AI assistant, is now available. Get instant answers and assistance.
                       </p>
                     </Link>
                   </motion.div>
