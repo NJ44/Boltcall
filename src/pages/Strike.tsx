@@ -151,10 +151,10 @@ const Strike: React.FC = () => {
           <div className="fixed inset-0 bg-black/80 pointer-events-none" style={{ zIndex: 5 }} />
         )}
         
-        <div className="flex-1 flex flex-col min-h-0 relative z-10 overflow-hidden">
+        <div className="flex-1 flex flex-col min-h-0 relative z-20 overflow-hidden">
           {/* Hero Section - Only show when no messages */}
           {messages.length === 0 && (
-            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative z-20">
+            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative z-30">
               <div className="max-w-5xl mx-auto relative">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -162,11 +162,11 @@ const Strike: React.FC = () => {
                   transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                   className="text-center mb-8"
                 >
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight md:mix-blend-exclusion">
-                    Meet <span className="text-blue-400 md:mix-blend-exclusion">Strike</span>
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight">
+                    Meet <span className="text-blue-400">Strike</span>
                   </h1>
                   
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed md:mix-blend-exclusion">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed">
                     Your intelligent AI assistant that helps you accomplish more
                   </p>
                 </motion.div>
@@ -178,7 +178,7 @@ const Strike: React.FC = () => {
           <div 
             ref={chatContainerRef}
             className={cn(
-              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative z-20 min-h-0 chat-scrollbar",
+              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative z-30 min-h-0 chat-scrollbar",
               messages.length > 0 ? "pt-20 md:pt-32" : ""
             )}
             style={{ 
