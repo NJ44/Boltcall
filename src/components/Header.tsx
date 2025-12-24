@@ -8,7 +8,7 @@ import Button from './ui/Button';
 const Header: React.FC = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
+  const [isSticky, setIsSticky] = useState(location.pathname === '/strike-ai');
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
@@ -65,20 +65,28 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    // Force white text on AI guide page
-    if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses')) {
+    // Force white text on AI guide page and Strike page
+    if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses') || location.pathname === '/strike-ai') {
       setIsOverBlueBackground(true);
     }
     
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // When scrolled past the announcement bar (64px), make header stick to top
-      setIsSticky(scrollTop >= 64);
+      // On Strike page, always sticky since there's no announcement bar
+      setIsSticky(location.pathname === '/strike-ai' ? true : scrollTop >= 64);
 
       // Don't check for blue backgrounds until we've scrolled past the hero section
       // This prevents the navbar from turning white immediately on page load
-      if (scrollTop < 300) {
+      // But keep white text on Strike page
+      if (scrollTop < 300 && location.pathname !== '/strike-ai') {
         setIsOverBlueBackground(false);
+        return;
+      }
+      
+      // Keep white text on Strike page
+      if (location.pathname === '/strike-ai') {
+        setIsOverBlueBackground(true);
         return;
       }
 
@@ -352,7 +360,7 @@ const Header: React.FC = () => {
   return (
     <motion.header
       className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible ${
-        isSticky ? 'top-0' : 'top-[43px]'
+        location.pathname === '/strike-ai' ? 'top-0' : (isSticky ? 'top-0' : 'top-[43px]')
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}

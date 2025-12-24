@@ -115,6 +115,7 @@ import ChallengeCardDemo from '../pages/ChallengeCardDemo';
 import Challenge from '../pages/Challenge';
 import OtpDemo from '../pages/OtpDemo';
 import PremiumProcessTimelineDemo from '../pages/PremiumProcessTimelineDemo';
+import Strike from '../pages/Strike';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -305,6 +306,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/otp-demo" element={<OtpDemo />} />
         <Route path="/premium-process-timeline-demo" element={<PremiumProcessTimelineDemo />} />
+        <Route path="/strike-ai" element={<Strike />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

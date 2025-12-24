@@ -13,8 +13,8 @@ const SpeedTestReport: React.FC = () => {
   const { url, results, webhookResults } = useSpeedTestStore();
 
   useEffect(() => {
-    document.title = 'Website Speed Test Report - Performance Analysis';
-    updateMetaDescription('View your website speed test report with detailed performance analysis, scores, and optimization recommendations. See report.');
+    document.title = 'Website Health Check Report - Performance Analysis';
+    updateMetaDescription('View your website health check report with detailed performance analysis, scores, and optimization recommendations. See report.');
   }, []);
 
   // Redirect if no results
@@ -104,7 +104,7 @@ const SpeedTestReport: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="relative min-h-screen bg-white">
       <GiveawayBar />
       <div className="relative z-10 pt-32">
         <Header />

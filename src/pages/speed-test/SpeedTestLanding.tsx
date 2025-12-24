@@ -16,8 +16,8 @@ const SpeedTestLanding: React.FC = () => {
   const [websiteUrl, setWebsiteUrl] = useState('');
 
   React.useEffect(() => {
-    document.title = 'Free Website Speed Test - Analyze Site Performance';
-    updateMetaDescription('Free website speed test analyzes your site performance. Get detailed report on loading times and optimization tips. Test now.');
+    document.title = 'Free Website Health Check - Analyze Site Performance';
+    updateMetaDescription('Free website health check analyzes your site performance. Get detailed report on loading times, health metrics, and optimization tips. Check now.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -35,7 +35,7 @@ const SpeedTestLanding: React.FC = () => {
 
     setIsLoading(true);
     setProgress(0);
-    setProgressMessage('Testing your website speed...');
+    setProgressMessage('Running website health check...');
     setUrl(url);
 
     try {
@@ -68,7 +68,7 @@ const SpeedTestLanding: React.FC = () => {
     } catch (error) {
       console.error('Speed test error:', error);
       // Show error message to user
-      const errorMessage = error instanceof Error ? error.message : 'Failed to run speed test. Please try again.';
+      const errorMessage = error instanceof Error ? error.message : 'Failed to run health check. Please try again.';
       alert(errorMessage);
     } finally {
       // Always reset loading state, even if navigation fails
@@ -78,7 +78,7 @@ const SpeedTestLanding: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="relative min-h-screen bg-white">
       <GiveawayBar />
       <div className="relative z-10 pt-32">
         <Header />
@@ -91,11 +91,11 @@ const SpeedTestLanding: React.FC = () => {
             className="text-center"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Check Your Website Loading Speed
+              Website Health Check
             </h1>
             
             <p className="text-xl text-gray-600 mb-12">
-              Get instant insights into your website's performance
+              Get instant insights into your website's performance and health
             </p>
 
             <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
@@ -121,7 +121,7 @@ const SpeedTestLanding: React.FC = () => {
                       <span>Analyzing...</span>
                     </>
                   ) : (
-                    'Run Speed Test'
+                    'Run Health Check'
                   )}
                 </Button>
               </div>
