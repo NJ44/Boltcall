@@ -19,6 +19,7 @@ const Strike: React.FC = () => {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [typingProgress, setTypingProgress] = useState<Record<string, number>>({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,6 +27,36 @@ const Strike: React.FC = () => {
     updateMetaDescription('Experience the future of AI interaction with Strike. Powerful, intuitive, and designed to help you accomplish more with intelligent assistance.');
   }, []);
 
+  // Typing animation effect
+  useEffect(() => {
+    const typingIntervals: Record<string, NodeJS.Timeout> = {};
+
+    messages.forEach((message) => {
+      if (message.sender === 'ai' && typingProgress[message.id] !== undefined) {
+        const currentProgress = typingProgress[message.id];
+        const fullText = message.text;
+        
+        if (currentProgress < fullText.length && !typingIntervals[message.id]) {
+          typingIntervals[message.id] = setInterval(() => {
+            setTypingProgress((prev) => {
+              const newProgress = (prev[message.id] || 0) + 1;
+              if (newProgress >= fullText.length) {
+                if (typingIntervals[message.id]) {
+                  clearInterval(typingIntervals[message.id]);
+                }
+                return { ...prev, [message.id]: fullText.length };
+              }
+              return { ...prev, [message.id]: newProgress };
+            });
+          }, 5); // Adjust speed here (lower = faster)
+        }
+      }
+    });
+
+    return () => {
+      Object.values(typingIntervals).forEach(interval => clearInterval(interval));
+    };
+  }, [messages, typingProgress]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,6 +107,8 @@ const Strike: React.FC = () => {
         };
         
         setMessages(prev => [...prev, aiMessage]);
+        // Start typing animation
+        setTypingProgress(prev => ({ ...prev, [aiMessage.id]: 0 }));
       }
     } catch (error) {
       console.error('Error calling webhook:', error);
@@ -89,6 +122,8 @@ const Strike: React.FC = () => {
       };
       
       setMessages(prev => [...prev, errorMessage]);
+      // Start typing animation for error message
+      setTypingProgress(prev => ({ ...prev, [errorMessage.id]: 0 }));
     } finally {
       setIsLoading(false);
     }
@@ -115,11 +150,11 @@ const Strike: React.FC = () => {
                   transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                   className="text-center mb-8"
                 >
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight mix-blend-exclusion">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight mix-blend-exclusion">
                     Meet <span className="text-blue-400 mix-blend-exclusion">Strike</span>
                   </h1>
                   
-                  <p className="text-lg md:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed mix-blend-exclusion">
+                  <p className="text-base md:text-lg lg:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed mix-blend-exclusion">
                     Your intelligent AI assistant that helps you accomplish more
                   </p>
                 </motion.div>
@@ -131,9 +166,15 @@ const Strike: React.FC = () => {
           <div 
             ref={chatContainerRef}
             className={cn(
-              "flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-4 relative z-10 min-h-0",
+              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative z-10 min-h-0 chat-scrollbar",
               messages.length > 0 ? "pt-32" : ""
             )}
+            style={{ 
+              WebkitOverflowScrolling: 'touch',
+              overscrollBehavior: 'contain',
+              scrollBehavior: 'smooth'
+            }}
+            tabIndex={-1}
           >
             <div className="max-w-4xl mx-auto space-y-4">
               {messages.map((message) => (
@@ -156,7 +197,12 @@ const Strike: React.FC = () => {
                     )}
                   >
                     <p className="text-sm sm:text-base whitespace-pre-wrap break-words">
-                      {message.text}
+                      {message.sender === 'ai' && typingProgress[message.id] !== undefined
+                        ? message.text.slice(0, typingProgress[message.id])
+                        : message.text}
+                      {message.sender === 'ai' && typingProgress[message.id] !== undefined && typingProgress[message.id] < message.text.length && (
+                        <span className="animate-pulse">|</span>
+                      )}
                     </p>
                   </div>
                 </motion.div>
@@ -189,6 +235,7 @@ const Strike: React.FC = () => {
                   ref={textareaRef}
                   name="message"
                   onAgentChange={setSelectedAgent}
+                  selectedAgentId={selectedAgent}
                 />
               </form>
               
@@ -196,25 +243,26 @@ const Strike: React.FC = () => {
               {messages.length === 0 && (
                 <div className="mt-4 flex flex-wrap gap-2 justify-center">
                   {[
-                    "How can I improve my marketing?",
-                    "What's the best SEO strategy?",
-                    "How to grow my business?",
-                    "Customer support tips",
-                    "Marketing automation ideas",
-                    "SEO best practices"
-                  ].map((question, index) => (
+                    { question: "How can I increase my sales conversion rate?", agentId: 'sales' },
+                    { question: "How can I improve my Google search rankings?", agentId: 'google-ranking' },
+                    { question: "What's the best marketing strategy for my business?", agentId: 'marketing' },
+                    { question: "How can I accelerate my business growth?", agentId: 'growth' }
+                  ].map((item, index) => (
                     <button
                       key={index}
                       type="button"
                       onClick={() => {
                         if (textareaRef.current) {
+                          // Set the selected agent
+                          setSelectedAgent(item.agentId);
+                          
                           // Use React's event system to properly update the value
                           const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
                             window.HTMLTextAreaElement.prototype,
                             'value'
                           )?.set;
                           if (nativeInputValueSetter) {
-                            nativeInputValueSetter.call(textareaRef.current, question);
+                            nativeInputValueSetter.call(textareaRef.current, item.question);
                           }
                           // Create a proper input event that React will recognize
                           const inputEvent = new Event('input', { bubbles: true, cancelable: true });
@@ -225,7 +273,7 @@ const Strike: React.FC = () => {
                       }}
                       className="px-4 py-2 text-sm rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-blue-400 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
                     >
-                      {question}
+                      {item.question}
                     </button>
                   ))}
                 </div>
