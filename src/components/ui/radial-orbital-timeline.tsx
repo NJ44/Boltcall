@@ -169,7 +169,7 @@ export default function RadialOrbitalTimeline({
             const isExpanded = expandedItems[item.id];
             const isRelated = isRelatedToActive(item.id);
             const isPulsing = pulseEffect[item.id];
-            const Icon = item.icon;
+            const Icon = item.icon as React.ComponentType<{ className?: string }>;
 
             const nodeStyle = {
               transform: `translate(${position.x}px, ${position.y}px)`,
@@ -225,7 +225,7 @@ export default function RadialOrbitalTimeline({
                    ${isExpanded ? "scale-150" : ""}
                  `}
                  >
-                   <Icon size={18} />
+                   <Icon className="w-[18px] h-[18px]" />
                  </div>
 
                 <div
