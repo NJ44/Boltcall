@@ -134,24 +134,27 @@ const Strike: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col relative overflow-hidden">
-      {/* LavaLamp Background */}
-      <div className="fixed inset-0 w-full h-full z-0">
+    <div className="h-screen flex flex-col relative overflow-hidden bg-black">
+      {/* LavaLamp Background - Hidden on mobile */}
+      <div className="hidden md:block fixed inset-0 w-full h-full z-0">
         <LavaLamp />
       </div>
+      
+      {/* Mobile fallback background */}
+      <div className="md:hidden fixed inset-0 w-full h-full z-0 bg-black" />
       
       <div className="relative z-10 flex flex-col h-full">
         <Header />
         
         {/* Black overlay when messages exist */}
         {messages.length > 0 && (
-          <div className="fixed inset-0 bg-black/80 z-[5] pointer-events-none" />
+          <div className="fixed inset-0 bg-black/80 pointer-events-none" style={{ zIndex: 5 }} />
         )}
         
         <div className="flex-1 flex flex-col min-h-0 relative z-10 overflow-hidden">
           {/* Hero Section - Only show when no messages */}
           {messages.length === 0 && (
-            <section className="pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative">
+            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative z-20">
               <div className="max-w-5xl mx-auto relative">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -159,11 +162,11 @@ const Strike: React.FC = () => {
                   transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                   className="text-center mb-8"
                 >
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight mix-blend-exclusion">
-                    Meet <span className="text-blue-400 mix-blend-exclusion">Strike</span>
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight md:mix-blend-exclusion">
+                    Meet <span className="text-blue-400 md:mix-blend-exclusion">Strike</span>
                   </h1>
                   
-                  <p className="text-base md:text-lg lg:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed mix-blend-exclusion">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed md:mix-blend-exclusion">
                     Your intelligent AI assistant that helps you accomplish more
                   </p>
                 </motion.div>
@@ -175,8 +178,8 @@ const Strike: React.FC = () => {
           <div 
             ref={chatContainerRef}
             className={cn(
-              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative z-10 min-h-0 chat-scrollbar",
-              messages.length > 0 ? "pt-32" : ""
+              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative z-20 min-h-0 chat-scrollbar",
+              messages.length > 0 ? "pt-20 md:pt-32" : ""
             )}
             style={{ 
               WebkitOverflowScrolling: 'touch',
@@ -353,9 +356,9 @@ const Strike: React.FC = () => {
           </div>
 
           {/* Input at Bottom - Normal flow */}
-          <div className="pt-4 pb-6 px-4 sm:px-6 lg:px-8 relative z-10 flex-shrink-0 -mt-[100px]">
+          <div className="pt-4 pb-6 px-4 sm:px-6 lg:px-8 relative z-30 flex-shrink-0 -mt-[490px]" style={{ pointerEvents: 'auto' }}>
             <div className="max-w-4xl mx-auto">
-              <form onSubmit={handleSubmit} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full" style={{ pointerEvents: 'auto' }}>
                 <PromptBox 
                   ref={textareaRef}
                   name="message"

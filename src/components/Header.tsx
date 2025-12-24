@@ -619,8 +619,8 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Free Tools Section */}
-                  <div className="flex-1 min-w-[198px] py-4">
-                    <div className="px-4 py-3">
+                  <div className="flex-1 min-w-[198px] py-6">
+                    <div className="px-4 py-4">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -643,7 +643,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors relative ${
+                            className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${
                               isOverBlueBackground
                                 ? 'text-gray-300 hover:text-white'
                                 : 'text-gray-700 hover:text-gray-900'
