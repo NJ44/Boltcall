@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
 import Header from '../components/Header';
 import { PromptBox } from '../components/ui/chatgpt-prompt-input';
-import { LavaLamp } from '../components/ui/fluid-blob';
 import { cn } from '../lib/utils';
+
+const LavaLamp = lazy(() => import('../components/ui/fluid-blob').then(module => ({ default: module.LavaLamp })));
 
 interface Message {
   id: string;
@@ -137,7 +138,9 @@ const Strike: React.FC = () => {
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
       {/* LavaLamp Background - Hidden on mobile */}
       <div className="hidden md:block fixed inset-0 w-full h-full" style={{ zIndex: 0 }}>
-        <LavaLamp />
+        <Suspense fallback={<div className="fixed inset-0 bg-black" style={{ zIndex: 0 }} />}>
+          <LavaLamp />
+        </Suspense>
       </div>
       
       {/* Mobile fallback background */}
