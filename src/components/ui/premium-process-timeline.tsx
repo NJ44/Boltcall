@@ -61,6 +61,15 @@ const DEMO_STEPS: ProcessStep[] = [
     duration: "1-2 weeks",
     image: "https://placehold.co/300x600/1e90ff/ffffff?text=Launch",
   },
+  {
+    id: "05",
+    title: "Support & Maintenance",
+    subtitle: "Ongoing Excellence",
+    description: "We provide continuous support, monitoring, and updates to ensure your solution remains optimal and evolves with your business needs.",
+    details: ["24/7 Support", "Regular Updates", "Performance Monitoring", "Feature Enhancements"],
+    duration: "Ongoing",
+    image: "https://placehold.co/300x600/00ff00/ffffff?text=Support",
+  },
 ];
 
 
@@ -72,7 +81,7 @@ export const QuantumTimeline = ({ steps = DEMO_STEPS, defaultStep }: QuantumTime
   const activeStepData = steps.find(step => step.id === activeStep);
 
   return (
-    <div className="w-full max-w-[calc(70rem+60px)] mx-auto pt-4 px-5 pb-0 -mb-[100px] -mt-[15px] font-sans bg-white dark:bg-black rounded-2xl shadow-2xl">
+    <div className="w-full max-w-[calc(70rem+200px)] mx-auto pt-4 px-5 pb-0 -mb-[100px] -mt-[105px] font-sans bg-white dark:bg-black rounded-2xl shadow-2xl" style={{ width: 'calc(100% + 80px)', maxWidth: 'calc(70rem + 200px)', marginLeft: '-40px', marginRight: '-40px' }}>
       {/* Top Navigation */}
       <TimelineNav steps={steps} activeStep={activeStep} onStepClick={setActiveStep} />
 
@@ -99,11 +108,7 @@ export const QuantumTimeline = ({ steps = DEMO_STEPS, defaultStep }: QuantumTime
 // --- Sub-components ---
 
 const TimelineNav = ({ steps, activeStep, onStepClick }: { steps: ProcessStep[], activeStep: string, onStepClick: (id: string) => void }) => (
-  <div className="flex items-center justify-between">
-    <div className="flex items-center gap-4">
-      <div className="w-10 h-10 bg-blue-500/10 dark:bg-blue-500/20 text-blue-500 rounded-full flex items-center justify-center font-bold">Q</div>
-      <span className="text-xl font-bold text-slate-800 dark:text-white">Quantum Process</span>
-    </div>
+  <div className="flex items-center justify-center">
     <div className="hidden md:flex items-center gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-full">
       {steps.map(step => (
         <button
@@ -124,8 +129,7 @@ const TimelineNav = ({ steps, activeStep, onStepClick }: { steps: ProcessStep[],
 );
 
 const TimelineContent = ({ step }: { step: ProcessStep }) => (
-  <div className="text-left">
-    <span className="text-sm font-bold text-blue-500">{step.id}</span>
+  <div className="text-left mt-16">
     <h2 className="text-3xl font-bold mt-2 text-slate-900 dark:text-white">{step.title}</h2>
     <p className="mt-3 text-slate-700 dark:text-slate-300">{step.description}</p>
     <div className="mt-4 grid sm:grid-cols-2 gap-4">
@@ -409,6 +413,59 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
               }}
             />
           ))}
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Support & Maintenance - Animated support elements
+  if (stepId === "05") {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative w-full h-[400px] flex items-center justify-center"
+        >
+          {/* Support Icons */}
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              className="absolute w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg"
+              style={{
+                left: `${25 + i * 25}%`,
+                top: `${30 + i * 20}%`,
+              }}
+              animate={{
+                y: [0, -15, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 2,
+                delay: i * 0.3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              ✓
+            </motion.div>
+          ))}
+          
+          {/* Pulsing Center Circle */}
+          <motion.div
+            className="absolute w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         </motion.div>
       </div>
     );
