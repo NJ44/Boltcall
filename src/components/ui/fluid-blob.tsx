@@ -151,9 +151,32 @@ function LavaLampShader() {
 }
 
 export const LavaLamp = () => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      // Force cleanup of canvas when component unmounts
+      if (containerRef.current) {
+        const canvas = containerRef.current.querySelector('canvas');
+        if (canvas) {
+          const gl = canvas.getContext('webgl') || canvas.getContext('webgl2');
+          if (gl) {
+            const loseContext = (gl as any).getExtension('WEBGL_lose_context');
+            if (loseContext) {
+              loseContext.loseContext();
+            }
+          }
+        }
+      }
+    };
+  }, []);
+
   // Use a container with proper isolation to prevent affecting other pages
+  // This component should ONLY be used within the Strike page component
   return (
     <div 
+      ref={containerRef}
       style={{ 
         width: '100%', 
         height: '100%', 
@@ -162,7 +185,9 @@ export const LavaLamp = () => {
         top: 0, 
         left: 0, 
         zIndex: 0,
-        isolation: 'isolate' // Create new stacking context
+        isolation: 'isolate', // Create new stacking context
+        contain: 'layout style paint', // Further isolate rendering
+        willChange: 'transform' // Optimize for animations
       }}
     >
       <Canvas
@@ -179,12 +204,18 @@ export const LavaLamp = () => {
         gl={{ 
           antialias: true,
           alpha: false, // Ensure no transparency issues
-          preserveDrawingBuffer: false // Don't preserve canvas state
+          preserveDrawingBuffer: false, // Don't preserve canvas state
+          powerPreference: 'high-performance'
         }}
         onCreated={({ gl }) => {
           // Ensure WebGL context is properly scoped
           gl.setClearColor('#000000', 1);
+          gl.domElement.style.display = 'block';
+          gl.domElement.style.position = 'absolute';
+          gl.domElement.style.top = '0';
+          gl.domElement.style.left = '0';
         }}
+        dpr={[1, 2]} // Limit pixel ratio to prevent performance issues
       >
         <LavaLampShader />
       </Canvas>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
+import { useLocation } from 'react-router-dom';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
@@ -16,6 +17,7 @@ interface Message {
 }
 
 const Strike: React.FC = () => {
+  const location = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
@@ -25,6 +27,9 @@ const Strike: React.FC = () => {
   const [likedMessages, setLikedMessages] = useState<Set<string>>(new Set());
   const [dislikedMessages, setDislikedMessages] = useState<Set<string>>(new Set());
   const [copiedMessages, setCopiedMessages] = useState<Set<string>>(new Set());
+  
+  // Only render LavaLamp when we're actually on the /strike-ai route
+  const isStrikePage = location.pathname === '/strike-ai';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -136,19 +141,22 @@ const Strike: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
-      {/* LavaLamp Background - Hidden on mobile, scoped to this component only */}
-      <div 
-        className="hidden md:block fixed inset-0 w-full h-full" 
-        style={{ 
-          zIndex: 0,
-          isolation: 'isolate', // Create isolated stacking context
-          pointerEvents: 'none' // Don't block interactions
-        }}
-      >
-        <Suspense fallback={<div className="fixed inset-0 bg-black" style={{ zIndex: 0 }} />}>
-          <LavaLamp />
-        </Suspense>
-      </div>
+      {/* LavaLamp Background - Only render when on /strike-ai route */}
+      {isStrikePage && (
+        <div 
+          className="hidden md:block fixed inset-0 w-full h-full" 
+          style={{ 
+            zIndex: 0,
+            isolation: 'isolate', // Create isolated stacking context
+            pointerEvents: 'none', // Don't block interactions
+            contain: 'layout style paint' // Further isolate rendering
+          }}
+        >
+          <Suspense fallback={<div className="fixed inset-0 bg-black" style={{ zIndex: 0 }} />}>
+            <LavaLamp />
+          </Suspense>
+        </div>
+      )}
       
       {/* Mobile fallback background */}
       <div className="md:hidden fixed inset-0 w-full h-full bg-black" style={{ zIndex: 0 }} />
