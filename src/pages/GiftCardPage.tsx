@@ -189,13 +189,19 @@ const GiftCardPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-8 max-w-md w-full"
+            className="bg-white border border-gray-300 rounded-2xl p-8 max-w-md w-full -mt-[100px]"
+            style={{ 
+              width: 'calc(100% + 200px)',
+              maxWidth: 'calc(100% + 200px)',
+              marginLeft: '-100px',
+              marginRight: '-100px'
+            }}
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Complete Purchase</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Complete Purchase</h2>
               <button
                 onClick={() => setShowCheckout(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-gray-600 hover:text-gray-900"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -203,7 +209,7 @@ const GiftCardPage: React.FC = () => {
 
             <div className="space-y-4 mb-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Recipient 1 Email *
                 </label>
                 <input
@@ -211,12 +217,12 @@ const GiftCardPage: React.FC = () => {
                   value={recipientEmails[0]}
                   onChange={(e) => setRecipientEmails([e.target.value, recipientEmails[1]])}
                   placeholder="friend1@example.com"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Recipient 2 Email *
                 </label>
                 <input
@@ -224,17 +230,17 @@ const GiftCardPage: React.FC = () => {
                   value={recipientEmails[1]}
                   onChange={(e) => setRecipientEmails([recipientEmails[0], e.target.value])}
                   placeholder="friend2@example.com"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
 
-            <div className="bg-gray-800 rounded-lg p-4 mb-6">
-              <div className="flex justify-between text-gray-300 mb-2">
+            <div className="bg-gray-100 rounded-lg p-4 mb-6">
+              <div className="flex justify-between text-gray-700 mb-2">
                 <span>2 Gift Cards × ${finalPrice.toFixed(2)}</span>
                 <span>${(finalPrice * 2).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-xl font-bold text-white pt-2 border-t border-gray-700">
+              <div className="flex justify-between text-xl font-bold text-gray-900 pt-2 border-t border-gray-300">
                 <span>Total</span>
                 <span>${(finalPrice * 2).toFixed(2)}</span>
               </div>
