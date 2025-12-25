@@ -151,8 +151,20 @@ function LavaLampShader() {
 }
 
 export const LavaLamp = () => {
+  // Use a container with proper isolation to prevent affecting other pages
   return (
-    <div style={{ width: '100%', height: '100%', background: '#000', position: "fixed", top: 0, left: 0, zIndex: 0 }}>
+    <div 
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        background: '#000', 
+        position: "fixed", 
+        top: 0, 
+        left: 0, 
+        zIndex: 0,
+        isolation: 'isolate' // Create new stacking context
+      }}
+    >
       <Canvas
         camera={{
           left: -0.5,
@@ -164,7 +176,15 @@ export const LavaLamp = () => {
           position: [0, 0, 2]
         }}
         orthographic
-        gl={{ antialias: true }}
+        gl={{ 
+          antialias: true,
+          alpha: false, // Ensure no transparency issues
+          preserveDrawingBuffer: false // Don't preserve canvas state
+        }}
+        onCreated={({ gl }) => {
+          // Ensure WebGL context is properly scoped
+          gl.setClearColor('#000000', 1);
+        }}
       >
         <LavaLampShader />
       </Canvas>

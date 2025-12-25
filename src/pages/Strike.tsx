@@ -136,8 +136,15 @@ const Strike: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
-      {/* LavaLamp Background - Hidden on mobile */}
-      <div className="hidden md:block fixed inset-0 w-full h-full" style={{ zIndex: 0 }}>
+      {/* LavaLamp Background - Hidden on mobile, scoped to this component only */}
+      <div 
+        className="hidden md:block fixed inset-0 w-full h-full" 
+        style={{ 
+          zIndex: 0,
+          isolation: 'isolate', // Create isolated stacking context
+          pointerEvents: 'none' // Don't block interactions
+        }}
+      >
         <Suspense fallback={<div className="fixed inset-0 bg-black" style={{ zIndex: 0 }} />}>
           <LavaLamp />
         </Suspense>
