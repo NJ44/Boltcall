@@ -136,14 +136,14 @@ const Strike: React.FC = () => {
   return (
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
       {/* LavaLamp Background - Hidden on mobile */}
-      <div className="hidden md:block fixed inset-0 w-full h-full z-0">
+      <div className="hidden md:block fixed inset-0 w-full h-full" style={{ zIndex: 0 }}>
         <LavaLamp />
       </div>
       
       {/* Mobile fallback background */}
-      <div className="md:hidden fixed inset-0 w-full h-full z-0 bg-black" />
+      <div className="md:hidden fixed inset-0 w-full h-full bg-black" style={{ zIndex: 0 }} />
       
-      <div className="relative z-10 flex flex-col h-full" style={{ position: 'relative', zIndex: 10 }}>
+      <div className="relative flex flex-col h-full" style={{ position: 'relative', zIndex: 100 }}>
         <Header />
         
         {/* Black overlay when messages exist */}
@@ -151,10 +151,10 @@ const Strike: React.FC = () => {
           <div className="fixed inset-0 bg-black/80 pointer-events-none" style={{ zIndex: 5 }} />
         )}
         
-        <div className="flex-1 flex flex-col min-h-0 relative z-20 overflow-hidden" style={{ position: 'relative', zIndex: 20 }}>
+        <div className="flex-1 flex flex-col min-h-0 relative overflow-hidden" style={{ position: 'relative', zIndex: 100 }}>
           {/* Hero Section - Only show when no messages */}
           {messages.length === 0 && (
-            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative z-30" style={{ position: 'relative', zIndex: 30 }}>
+            <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative" style={{ position: 'relative', zIndex: 100 }}>
               <div className="max-w-5xl mx-auto relative">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -178,7 +178,7 @@ const Strike: React.FC = () => {
           <div 
             ref={chatContainerRef}
             className={cn(
-              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative z-30 min-h-0 chat-scrollbar",
+              "flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-4 relative min-h-0 chat-scrollbar",
               messages.length > 0 ? "pt-20 md:pt-32" : ""
             )}
             style={{ 
@@ -356,7 +356,7 @@ const Strike: React.FC = () => {
           </div>
 
           {/* Input at Bottom - Normal flow */}
-          <div className="pt-4 pb-6 px-4 sm:px-6 lg:px-8 relative z-30 flex-shrink-0 -mt-[490px]" style={{ pointerEvents: 'auto' }}>
+          <div className="pt-4 pb-6 px-4 sm:px-6 lg:px-8 relative flex-shrink-0 -mt-[490px]" style={{ pointerEvents: 'auto', position: 'relative', zIndex: 100 }}>
             <div className="max-w-4xl mx-auto">
               <form onSubmit={handleSubmit} className="w-full" style={{ pointerEvents: 'auto' }}>
                 <PromptBox 
