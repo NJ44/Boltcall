@@ -560,11 +560,11 @@ const Header: React.FC = () => {
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } py-4 px-6 z-[120] flex items-stretch`}
+                    } py-2 px-6 z-[120] flex items-stretch`}
                   >
                   {/* Content Section */}
-                  <div className="flex-1 min-w-[198px] py-4">
-                    <div className="px-6 py-3">
+                  <div className="flex-1 min-w-[198px] py-2">
+                    <div className="px-4 py-2">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -587,7 +587,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-6 py-2.5 text-sm transition-colors relative ${
+                            className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${
                               isOverBlueBackground
                                 ? 'text-gray-300 hover:text-white'
                                 : 'text-gray-700 hover:text-gray-900'
@@ -619,8 +619,8 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Free Tools Section */}
-                  <div className="flex-1 min-w-[198px] py-6">
-                    <div className="px-4 py-4">
+                  <div className="flex-1 min-w-[198px] py-2">
+                    <div className="px-4 py-2">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -675,7 +675,7 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Strike AI Announcement Section */}
-                  <div className="flex-1 min-w-[320px] px-3 py-4 flex">
+                  <div className="flex-1 min-w-[320px] px-3 py-2 flex">
                     <Link
                       to="/strike-ai"
                       onClick={() => {
@@ -691,18 +691,13 @@ const Header: React.FC = () => {
                             : 'bg-white border-gray-900 shadow-xl'
                         }`}
                       >
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
-                            <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
-                          </div>
-                          <div>
-                            <span className="font-bold text-sm uppercase tracking-wider text-black block">
-                              New: Strike AI
-                            </span>
-                            <span className="text-xs text-gray-600 block mt-0.5">
-                              Now Available
-                            </span>
-                          </div>
+                        <div className="mb-4">
+                          <span className="inline-block px-2 py-1 text-xs font-semibold uppercase tracking-wider bg-black text-white rounded mb-2">
+                            New
+                          </span>
+                          <h3 className="font-bold text-lg uppercase tracking-wider text-black">
+                            STRIKE AI
+                          </h3>
                         </div>
 
                         <p className="text-sm leading-relaxed text-gray-700 mb-5">
@@ -936,18 +931,13 @@ const Header: React.FC = () => {
                       }}
                       className="block rounded-xl p-5 bg-white border-2 border-gray-900 shadow-lg"
                     >
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
-                          <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
-                        </div>
-                        <div>
-                          <span className="font-bold text-sm text-black block">
-                            New: Strike AI
-                          </span>
-                          <span className="text-xs text-gray-600 block mt-0.5">
-                            Now Available
-                          </span>
-                        </div>
+                      <div className="mb-3">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold uppercase tracking-wider bg-black text-white rounded mb-2">
+                          New
+                        </span>
+                        <h3 className="font-bold text-base uppercase tracking-wider text-black">
+                          STRIKE AI
+                        </h3>
                       </div>
                       <p className="text-xs leading-relaxed text-gray-700">
                         Strike, our intelligent AI assistant, is now available. Get instant answers and assistance.
