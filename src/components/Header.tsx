@@ -560,11 +560,11 @@ const Header: React.FC = () => {
                       isOverBlueBackground 
                         ? 'bg-gray-800 border-gray-700' 
                         : 'bg-white border-gray-200'
-                    } py-2 px-6 z-[120] flex items-stretch`}
+                    } py-4 px-6 z-[120] flex items-stretch`}
                   >
                   {/* Content Section */}
-                  <div className="flex-1 min-w-[198px] py-2">
-                    <div className="px-4 py-2">
+                  <div className="flex-1 min-w-[198px] py-6">
+                    <div className="px-4 py-4">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -619,8 +619,8 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Free Tools Section */}
-                  <div className="flex-1 min-w-[198px] py-2">
-                    <div className="px-4 py-2">
+                  <div className="flex-1 min-w-[198px] py-6">
+                    <div className="px-4 py-4">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                       }`}>
@@ -675,7 +675,7 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Strike AI Announcement Section */}
-                  <div className="flex-1 min-w-[320px] px-3 py-2 flex">
+                  <div className="flex-1 min-w-[320px] px-3 py-4 flex">
                     <Link
                       to="/strike-ai"
                       onClick={() => {

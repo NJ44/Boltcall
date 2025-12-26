@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
 import Header from '../components/Header';
 import { PromptBox } from '../components/ui/chatgpt-prompt-input';
 import { cn } from '../lib/utils';
+import { NeuralNetworkBackground } from '../components/ui/neural-network-background';
 
 interface Message {
   id: string;
@@ -134,6 +135,13 @@ const Strike: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
+      {/* Neural Network Background */}
+      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 0 }}>
+        <Suspense fallback={<div className="fixed inset-0 bg-blue-950" style={{ zIndex: 0 }} />}>
+          <NeuralNetworkBackground />
+        </Suspense>
+      </div>
+      
       <div className="relative flex flex-col h-full" style={{ position: 'relative', zIndex: 100 }}>
         <Header />
         
