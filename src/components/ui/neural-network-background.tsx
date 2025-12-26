@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, extend } from '@react-three/fiber';
 import { shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -166,14 +166,27 @@ function ShaderPlane() {
   const materialRef = useRef<any>(null!);
 
   useFrame((state) => {
-    if (!materialRef.current) return;
-    materialRef.current.iTime = state.clock.elapsedTime;
-    const { width, height } = state.size;
-    materialRef.current.iResolution.set(width, height);
+    if (!materialRef.current) {
+      console.warn('Shader material not initialized');
+      return;
+    }
+    try {
+      materialRef.current.iTime = state.clock.elapsedTime;
+      const { width, height } = state.size;
+      materialRef.current.iResolution.set(width, height);
+    } catch (error) {
+      console.error('Error updating shader:', error);
+    }
   });
 
+  React.useEffect(() => {
+    if (materialRef.current) {
+      console.log('Shader material initialized');
+    }
+  }, []);
+
   return (
-    <mesh ref={meshRef} position={[0, -0.75, -0.5]}>
+    <mesh ref={meshRef} position={[0, 0, -1]}>
       <planeGeometry args={[8, 4]} />
       <cPPNShaderMaterial ref={materialRef} side={THREE.DoubleSide} />
     </mesh>
@@ -182,8 +195,6 @@ function ShaderPlane() {
 
 export function NeuralNetworkBackground() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
-  const [hasError, setHasError] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   
   const camera = useMemo(() => ({ position: [0, 0, 1] as [number, number, number], fov: 75, near: 0.1, far: 1000 }), []);
   
@@ -209,52 +220,24 @@ export function NeuralNetworkBackground() {
     { scope: canvasRef }
   );
   
-  // Check WebGL support on mount
-  React.useEffect(() => {
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('webgl2');
-      if (!gl) {
-        setHasError(true);
-      }
-    } catch (e) {
-      setHasError(true);
-    }
-  }, []);
-  
   return (
-    <div 
-      ref={containerRef}
-      className="bg-blue-950 absolute inset-0 w-full h-full" 
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }} 
-      aria-hidden
-    >
-      {/* Always show background gradient as fallback */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-950" />
-      
-      {/* Canvas with shader - only render if no error */}
-      {!hasError && (
-        <div ref={canvasRef} className="absolute inset-0 w-full h-full">
-          <Canvas
-            camera={camera}
-            gl={{ 
-              antialias: true, 
-              alpha: false,
-              powerPreference: "high-performance",
-              failIfMajorPerformanceCaveat: false
-            }}
-            dpr={[1, 2]}
-            style={{ width: '100%', height: '100%' }}
-            onError={(error) => {
-              console.error('Canvas error:', error);
-              setHasError(true);
-            }}
-          >
-            <ShaderPlane />
-          </Canvas>
-        </div>
-      )}
-      
+    <div className="bg-blue-950 absolute inset-0 w-full h-full" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }} aria-hidden>
+      <div ref={canvasRef} className="absolute inset-0 w-full h-full">
+        <Canvas
+          camera={camera}
+          gl={{ 
+            antialias: false, 
+            alpha: false,
+            powerPreference: "default",
+            failIfMajorPerformanceCaveat: false,
+            preserveDrawingBuffer: false
+          }}
+          dpr={Math.min(window.devicePixelRatio, 2)}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <ShaderPlane />
+        </Canvas>
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-blue-950/30 via-transparent to-blue-950/20" />
     </div>
   );
