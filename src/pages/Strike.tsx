@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
