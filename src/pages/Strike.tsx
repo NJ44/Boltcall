@@ -5,7 +5,6 @@ import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
 import Header from '../components/Header';
 import { PromptBox } from '../components/ui/chatgpt-prompt-input';
 import { cn } from '../lib/utils';
-import { DottedSurface } from '../components/ui/dotted-surface';
 
 interface Message {
   id: string;
@@ -135,9 +134,6 @@ const Strike: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
-      {/* Dotted Surface Background */}
-      <DottedSurface />
-      
       <div className="relative flex flex-col h-full" style={{ position: 'relative', zIndex: 100 }}>
         <Header />
         

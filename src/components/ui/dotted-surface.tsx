@@ -119,10 +119,10 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 				for (let iy = 0; iy < AMOUNTY; iy++) {
 					const index = i * 3;
 
-					// Animate Y position with sine waves - 10% of original movement (5 pixels)
+					// Animate Y position with sine waves
 					positions[index + 1] =
-						Math.sin((ix + count) * 0.3) * 5 +
-						Math.sin((iy + count) * 0.5) * 5;
+						Math.sin((ix + count) * 0.3) * 50 +
+						Math.sin((iy + count) * 0.5) * 50;
 
 					i++;
 				}
@@ -140,7 +140,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 			}
 
 			renderer.render(scene, camera);
-			count += 0.05; // Slower animation speed
+			count += 0.1;
 		};
 
 		// Handle window resize
@@ -197,8 +197,9 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn('pointer-events-none fixed inset-0 z-0', className)}
+			className={cn('pointer-events-none fixed inset-0 -z-10', className)}
 			{...props}
 		/>
 	);
 }
+
