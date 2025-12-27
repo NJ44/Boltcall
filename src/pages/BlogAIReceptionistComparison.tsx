@@ -7,8 +7,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
+import TableOfContents from '../components/TableOfContents';
+import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const BlogAIReceptionistComparison: React.FC = () => {
+  const headings = useTableOfContents();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Best AI Receptionist Tools for Small Businesses';
@@ -160,7 +164,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl px-4 sm:px-6 lg:px-8" style={{ marginLeft: 0 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -171,8 +175,13 @@ const BlogAIReceptionistComparison: React.FC = () => {
               <TrendingUp className="w-4 h-4" />
               <span className="font-semibold">Tool Comparison</span>
             </div>
+            <Breadcrumbs items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'Best AI Receptionist Tools', href: '/blog/ai-receptionist-comparison' }
+            ]} />
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight text-left">
               Best <span className="text-blue-600">AI Receptionist Tools</span> for Small Businesses (Top 5 Compared)
             </h1>
             

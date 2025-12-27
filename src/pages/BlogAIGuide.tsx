@@ -88,14 +88,19 @@ const BlogAIGuide: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl px-4 sm:px-6 lg:px-8" style={{ marginLeft: 0 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center"
+            className="text-left"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            <Breadcrumbs items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'Complete Guide to AI for Local Businesses', href: '/ai-guide-for-businesses' }
+            ]} />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight text-left">
               The Complete Guide to <span className="text-blue-400">AI for Local Businesses</span>
             </h1>
             

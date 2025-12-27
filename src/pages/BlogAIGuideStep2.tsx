@@ -64,13 +64,18 @@ const BlogAIGuideStep2: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl px-4 sm:px-6 lg:px-8" style={{ marginLeft: 0 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
           >
+            <Breadcrumbs items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'Choosing the Right AI Tools', href: '/blog/ai-guide-step-2' }
+            ]} />
             <Link 
               to="/ai-guide-for-businesses" 
               className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 mb-6 transition-colors"
@@ -79,7 +84,7 @@ const BlogAIGuideStep2: React.FC = () => {
               <span>Back to Guide Overview</span>
             </Link>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight text-left">
               Choosing the Right <span className="text-green-600">AI Tools</span>
             </h1>
             

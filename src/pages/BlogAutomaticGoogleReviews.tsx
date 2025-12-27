@@ -9,8 +9,12 @@ import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
 import Button from '../components/ui/Button';
 import { ArrowRight } from 'lucide-react';
+import TableOfContents from '../components/TableOfContents';
+import { useTableOfContents } from '../hooks/useTableOfContents';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 const BlogAutomaticGoogleReviews: React.FC = () => {
+  const headings = useTableOfContents();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Automatic Google Reviews: Get More Reviews Easily';
@@ -69,7 +73,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl px-4 sm:px-6 lg:px-8" style={{ marginLeft: 0 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,8 +84,13 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               <Star className="w-4 h-4" />
               <span className="font-semibold">Reputation Management</span>
             </div>
+            <Breadcrumbs items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'Automatic Google Reviews', href: '/blog/automatic-google-reviews' }
+            ]} />
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight text-left">
               Automatic <span className="text-blue-600">Google Reviews</span>: How to Get More Reviews Without Asking
             </h1>
             
@@ -100,7 +109,9 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+        <div className="flex gap-8">
+          <article className="flex-1 max-w-4xl">
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -634,7 +645,12 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
             </div>
           </div>
         </motion.section>
-      </article>
+          </article>
+          
+          {/* Table of Contents */}
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </div>

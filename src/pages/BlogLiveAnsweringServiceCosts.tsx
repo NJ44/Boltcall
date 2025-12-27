@@ -7,8 +7,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
+import TableOfContents from '../components/TableOfContents';
+import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const BlogLiveAnsweringServiceCosts: React.FC = () => {
+  const headings = useTableOfContents();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Understanding Live Answering Service Costs & Pricing';
@@ -67,7 +71,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl px-4 sm:px-6 lg:px-8" style={{ marginLeft: 0 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,8 +82,13 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
               <DollarSign className="w-4 h-4" />
               <span className="font-semibold">Business Costs</span>
             </div>
+            <Breadcrumbs items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'Live Answering Service Costs', href: '/blog/live-answering-service-costs' }
+            ]} />
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight text-left">
               Understanding <span className="text-blue-600">Live Answering Service Costs</span>
             </h1>
             
@@ -98,7 +107,9 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+        <div className="flex gap-8">
+          <article className="flex-1 max-w-4xl">
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -694,7 +705,12 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      </article>
+          </article>
+          
+          {/* Table of Contents */}
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </div>
