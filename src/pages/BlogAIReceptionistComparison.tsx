@@ -8,11 +8,8 @@ import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
 import Breadcrumbs from '../components/Breadcrumbs';
-import TableOfContents from '../components/TableOfContents';
-import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const BlogAIReceptionistComparison: React.FC = () => {
-  const headings = useTableOfContents();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Best AI Receptionist Tools for Small Businesses';

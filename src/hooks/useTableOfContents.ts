@@ -31,7 +31,7 @@ export const useTableOfContents = (): Heading[] => {
       const h2Elements = Array.from(article.querySelectorAll('h2'));
       const extractedHeadings: Heading[] = [];
 
-      h2Elements.forEach((h2, index) => {
+      h2Elements.forEach((h2) => {
         // Clone the h2 element to extract text without modifying the original
         const clone = h2.cloneNode(true) as HTMLElement;
         // Remove the decorative blue bar div (usually has class 'w-1')

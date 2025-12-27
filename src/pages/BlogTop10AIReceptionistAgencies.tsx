@@ -7,9 +7,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { WavePath } from '../components/ui/wave-path';
+import TableOfContents from '../components/TableOfContents';
+import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const BlogTop10AIReceptionistAgencies: React.FC = () => {
+  const headings = useTableOfContents();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Top 10 AI Receptionist Agencies Comparison | Boltcall';
@@ -348,7 +352,9 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+        <div className="flex gap-8">
+          <article className="flex-1 max-w-4xl">
         {/* Introduction */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -884,7 +890,12 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      </article>
+          </article>
+          
+          {/* Table of Contents */}
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </div>

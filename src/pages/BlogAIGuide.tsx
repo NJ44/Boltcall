@@ -5,6 +5,7 @@ import { BookOpen, CheckCircle, Zap } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import Breadcrumbs from '../components/Breadcrumbs';
 import GradientCardShowcase from '../components/ui/gradient-card-showcase';
 const BlogAIGuide: React.FC = () => {
   useEffect(() => {
