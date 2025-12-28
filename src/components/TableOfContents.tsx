@@ -74,8 +74,15 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
   }
 
   return (
-    <aside className="hidden lg:block w-64 flex-shrink-0" style={{ alignSelf: 'flex-start' }}>
-      <div style={{ position: 'sticky', top: '6rem', zIndex: 10 }}>
+    <aside className="hidden lg:block w-64 flex-shrink-0">
+      <div 
+        className="sticky top-28"
+        style={{
+          position: 'sticky',
+          top: '7rem',
+          zIndex: 10
+        }}
+      >
         <div className="border-l-2 border-gray-200 pl-6">
           <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4">
             On this page

@@ -8,27 +8,30 @@ import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import { Stepper, StepperPanel, StepperContent } from '../components/ui/stepper';
 import Button from '../components/ui/Button';
+import DropdownComponent from '../components/ui/dropdown-01';
 
 interface AuditInputs {
-  // Step A - Business Profile
-  industry: string;
-  whoTalksWithCustomers: string;
+  // Step 1 - Lead Friction Category
+  responseTimeToInquiry: string; // < 5 mins, 30 mins, 2 hours, Next day, We often miss them
+  afterHoursCallHandling: string; // Goes to voicemail, We miss them, Someone answers eventually
   
-  // Step B - Current Performance
+  // Step 2 - Time Leakage Category
+  adminPingPongHours: string; // 0-5, 5-10, 10-20, 20+
+  automatedFollowUpSystem: string; // Yes, No, We try to do it manually
+  
+  // Step 3 - Financial Data Points
+  avgCustomerLifetimeValue: number; // LTV
   avgMonthlyLeads: number;
   avgLeadToBookingRate: number; // percentage
-  avgBookingValue: number;
-  avgMonthlyPhoneCalls: number;
-  avgMissedCallRate: number; // percentage
-  avgFollowUpRate: number; // percentage
-  avgCustomerLifetimeValue: number;
   
-  // Step C - Costs & Staffing
-  hourlySalaryReceptionist: number;
-  monthlyReceptionistHours: number;
+  // Internal calculation fields (derived from above)
+  avgBookingValue: number; // Calculated from LTV
+  avgMonthlyPhoneCalls: number; // Estimated
+  avgMissedCallRate: number; // Derived from responseTimeToInquiry and afterHoursCallHandling
+  avgFollowUpRate: number; // Derived from automatedFollowUpSystem
+  hourlySalaryReceptionist: number; // Estimated
+  monthlyReceptionistHours: number; // Derived from adminPingPongHours
   monthlyToolSpend: number;
-  
-  // Step D - Preferences
   expectedAiCaptureRate: number; // percentage
   automationTargetFollowUps: number; // percentage
   monthlyAiSubscription: number;
@@ -69,18 +72,32 @@ interface AuditResults {
   };
 }
 
-const industries = [
-  'Dentist',
-  'HVAC',
-  'Plumber',
-  'Salon',
-  'Clinic',
-  'Real Estate',
-  'Contractor',
-  'Retail',
-  'Auto Repair',
-  'Legal',
-  'Other'
+// Dropdown options
+const responseTimeOptions = [
+  { value: '< 5 mins', label: '< 5 mins' },
+  { value: '30 mins', label: '30 mins' },
+  { value: '2 hours', label: '2 hours' },
+  { value: 'Next day', label: 'Next day' },
+  { value: 'We often miss them', label: 'We often miss them' },
+];
+
+const afterHoursOptions = [
+  { value: 'Goes to voicemail', label: 'Goes to voicemail' },
+  { value: 'We miss them', label: 'We miss them' },
+  { value: 'Someone answers eventually', label: 'Someone answers eventually' },
+];
+
+const adminPingPongOptions = [
+  { value: '0-5', label: '0-5' },
+  { value: '5-10', label: '5-10' },
+  { value: '10-20', label: '10-20' },
+  { value: '20+', label: '20+' },
+];
+
+const automatedFollowUpOptions = [
+  { value: 'Yes', label: 'Yes' },
+  { value: 'No', label: 'No' },
+  { value: 'We try to do it manually', label: 'We try to do it manually' },
 ];
 
 const AIRevenueAudit: React.FC = () => {
@@ -93,20 +110,28 @@ const AIRevenueAudit: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  const [noReceptionist, setNoReceptionist] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   
   const [inputs, setInputs] = useState<AuditInputs>({
-    industry: '',
-    whoTalksWithCustomers: '',
+    // Step 1 - Lead Friction
+    responseTimeToInquiry: '',
+    afterHoursCallHandling: '',
+    
+    // Step 2 - Time Leakage
+    adminPingPongHours: '',
+    automatedFollowUpSystem: '',
+    
+    // Step 3 - Financial Data Points
+    avgCustomerLifetimeValue: 450,
     avgMonthlyLeads: 200,
     avgLeadToBookingRate: 10,
+    
+    // Internal calculation fields
     avgBookingValue: 150,
     avgMonthlyPhoneCalls: 200,
     avgMissedCallRate: 25,
     avgFollowUpRate: 40,
-    avgCustomerLifetimeValue: 450,
     hourlySalaryReceptionist: 30,
     monthlyReceptionistHours: 160,
     monthlyToolSpend: 0,
@@ -143,18 +168,99 @@ const AIRevenueAudit: React.FC = () => {
     }
   }, [emailSent]);
 
+  // Derive calculation fields from user inputs
+  const deriveCalculationFields = () => {
+    const derived = { ...inputs };
+    
+    // Calculate avgBookingValue from LTV (assume LTV is 3x booking value)
+    if (inputs.avgCustomerLifetimeValue > 0) {
+      derived.avgBookingValue = inputs.avgCustomerLifetimeValue / 3;
+    } else if (!derived.avgBookingValue || derived.avgBookingValue === 0) {
+      derived.avgBookingValue = 150; // Default fallback
+    }
+    
+    // Estimate missed call rate from response time (default to 25% if not set)
+    let baseMissedCallRate = 25;
+    if (inputs.responseTimeToInquiry === '< 5 mins') {
+      baseMissedCallRate = 5;
+    } else if (inputs.responseTimeToInquiry === '30 mins') {
+      baseMissedCallRate = 15;
+    } else if (inputs.responseTimeToInquiry === '2 hours') {
+      baseMissedCallRate = 40; // 80% drop mentioned in logic
+    } else if (inputs.responseTimeToInquiry === 'Next day') {
+      baseMissedCallRate = 60;
+    } else if (inputs.responseTimeToInquiry === 'We often miss them') {
+      baseMissedCallRate = 80;
+    }
+    derived.avgMissedCallRate = baseMissedCallRate;
+    
+    // Adjust missed call rate based on after-hours handling
+    if (inputs.afterHoursCallHandling === 'We miss them') {
+      derived.avgMissedCallRate = Math.min(100, baseMissedCallRate + 20);
+    } else if (inputs.afterHoursCallHandling === 'Goes to voicemail') {
+      derived.avgMissedCallRate = Math.min(100, baseMissedCallRate + 10);
+    }
+    
+    // Estimate follow-up rate from automated system
+    if (inputs.automatedFollowUpSystem === 'Yes') {
+      derived.avgFollowUpRate = 70;
+      derived.automationTargetFollowUps = 90;
+    } else if (inputs.automatedFollowUpSystem === 'We try to do it manually') {
+      derived.avgFollowUpRate = 40;
+      derived.automationTargetFollowUps = 80;
+    } else if (inputs.automatedFollowUpSystem === 'No') {
+      derived.avgFollowUpRate = 10;
+      derived.automationTargetFollowUps = 80;
+    } else {
+      // Default values if not set
+      derived.avgFollowUpRate = derived.avgFollowUpRate || 40;
+      derived.automationTargetFollowUps = derived.automationTargetFollowUps || 80;
+    }
+    
+    // Estimate monthly receptionist hours from admin ping-pong hours
+    if (inputs.adminPingPongHours === '0-5') {
+      derived.monthlyReceptionistHours = 20; // ~5 hours/week * 4 weeks
+    } else if (inputs.adminPingPongHours === '5-10') {
+      derived.monthlyReceptionistHours = 60; // ~7.5 hours/week * 4 weeks
+    } else if (inputs.adminPingPongHours === '10-20') {
+      derived.monthlyReceptionistHours = 120; // ~15 hours/week * 4 weeks
+    } else if (inputs.adminPingPongHours === '20+') {
+      derived.monthlyReceptionistHours = 160; // ~20+ hours/week * 4 weeks
+    } else if (!derived.monthlyReceptionistHours || derived.monthlyReceptionistHours === 0) {
+      derived.monthlyReceptionistHours = 160; // Default fallback
+    }
+    
+    // Estimate phone calls (assume 50% of leads are calls)
+    derived.avgMonthlyPhoneCalls = Math.round((inputs.avgMonthlyLeads || 200) * 0.5);
+    
+    // Ensure other required fields have defaults
+    if (!derived.hourlySalaryReceptionist || derived.hourlySalaryReceptionist === 0) {
+      derived.hourlySalaryReceptionist = 30; // Default fallback
+    }
+    if (!derived.expectedAiCaptureRate || derived.expectedAiCaptureRate === 0) {
+      derived.expectedAiCaptureRate = 70; // Default fallback
+    }
+    if (!derived.monthlyAiSubscription || derived.monthlyAiSubscription === 0) {
+      derived.monthlyAiSubscription = 79; // Default fallback
+    }
+    
+    return derived;
+  };
+
   const calculateAudit = (): AuditResults => {
+    const calcInputs = deriveCalculationFields();
+    
     // Variables
-    const L = inputs.avgMonthlyLeads;
-    const B = inputs.avgLeadToBookingRate / 100; // Convert to decimal
-    const V = inputs.avgBookingValue;
-    const MCR = inputs.avgMissedCallRate / 100;
-    const AiCapture = inputs.expectedAiCaptureRate / 100;
-    const FollowUp = inputs.automationTargetFollowUps / 100;
-    const Salary = inputs.hourlySalaryReceptionist;
-    const Hours = inputs.monthlyReceptionistHours;
-    const AiCost = inputs.monthlyAiSubscription;
-    const CurrentTool = inputs.monthlyToolSpend;
+    const L = calcInputs.avgMonthlyLeads;
+    const B = calcInputs.avgLeadToBookingRate / 100; // Convert to decimal
+    const V = calcInputs.avgBookingValue;
+    const MCR = calcInputs.avgMissedCallRate / 100;
+    const AiCapture = calcInputs.expectedAiCaptureRate / 100;
+    const FollowUp = calcInputs.automationTargetFollowUps / 100;
+    const Salary = calcInputs.hourlySalaryReceptionist;
+    const Hours = calcInputs.monthlyReceptionistHours;
+    const AiCost = calcInputs.monthlyAiSubscription;
+    const CurrentTool = calcInputs.monthlyToolSpend;
     
     // Baseline
     const bookingsPerMonth = L * B;
@@ -324,18 +430,15 @@ const AIRevenueAudit: React.FC = () => {
                 <div className="grid grid-cols-3 gap-4 mb-4">
                   <div className={`text-center ${currentStep >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
                     <div className="text-sm font-semibold mb-1">1</div>
-                    <div className="text-sm font-medium">Business Profile</div>
-                    <div className="text-xs text-gray-500 mt-1">Tell us about your business</div>
+                    <div className="text-sm font-medium">Lead Friction</div>
                   </div>
                   <div className={`text-center ${currentStep >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
                     <div className="text-sm font-semibold mb-1">2</div>
-                    <div className="text-sm font-medium">Current Performance</div>
-                    <div className="text-xs text-gray-500 mt-1">Your current lead and booking metrics</div>
+                    <div className="text-sm font-medium">Time Leakage</div>
                   </div>
                   <div className={`text-center ${currentStep >= 3 ? 'text-blue-600' : 'text-gray-400'}`}>
                     <div className="text-sm font-semibold mb-1">3</div>
-                    <div className="text-sm font-medium">Costs & Staffing</div>
-                    <div className="text-xs text-gray-500 mt-1">Your current operational costs</div>
+                    <div className="text-sm font-medium">Financial Data</div>
                   </div>
                 </div>
               </div>
@@ -374,35 +477,35 @@ const AIRevenueAudit: React.FC = () => {
               <StepperPanel>
                 <StepperContent value={1}>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Business Profile</h3>
-                    <div className="space-y-5">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">The Lead Friction Category</h3>
+                    <div className="space-y-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Industry *</label>
-                        <select
-                          value={inputs.industry}
-                          onChange={(e) => handleInputChange('industry', e.target.value)}
-                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base text-gray-900"
-                          required
-                        >
-                          <option value="">Select your industry</option>
-                          {industries.map(industry => (
-                            <option key={industry} value={industry} className="text-gray-900">{industry}</option>
-                          ))}
-                        </select>
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          How long does your team take to respond to a new inquiry?
+                        </label>
+                        <div className="max-w-md">
+                          <DropdownComponent
+                            options={responseTimeOptions}
+                            value={inputs.responseTimeToInquiry}
+                            onChange={(value) => handleInputChange('responseTimeToInquiry', value)}
+                            placeholder="Select an option"
+                            required
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Who talks with the customers</label>
-                        <select
-                          value={inputs.whoTalksWithCustomers}
-                          onChange={(e) => handleInputChange('whoTalksWithCustomers', e.target.value)}
-                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base text-gray-900"
-                        >
-                          <option value="">Select an option</option>
-                          <option value="me" className="text-gray-900">Me</option>
-                          <option value="i-have-a-receptionist" className="text-gray-900">I have a receptionist</option>
-                          <option value="team-members" className="text-gray-900">Team members</option>
-                          <option value="mixed" className="text-gray-900">Mixed (me and others)</option>
-                        </select>
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          What happens to calls after business hours or when staff is busy?
+                        </label>
+                        <div className="max-w-md">
+                          <DropdownComponent
+                            options={afterHoursOptions}
+                            value={inputs.afterHoursCallHandling}
+                            onChange={(value) => handleInputChange('afterHoursCallHandling', value)}
+                            placeholder="Select an option"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -410,91 +513,35 @@ const AIRevenueAudit: React.FC = () => {
 
                 <StepperContent value={2}>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Current Performance</h3>
-                    <div className="space-y-5">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">The Time Leakage Category</h3>
+                    <div className="space-y-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Average Monthly Leads</label>
-                        <input
-                          type="number"
-                          value={inputs.avgMonthlyLeads}
-                          onChange={(e) => handleInputChange('avgMonthlyLeads', parseInt(e.target.value) || 0)}
-                          min="0"
-                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                        />
-                        <p className="text-sm text-gray-500 mt-2">Total inbound leads per month (calls + forms)</p>
-                      </div>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Lead to Booking Rate (%)</label>
-                          <input
-                            type="number"
-                            value={inputs.avgLeadToBookingRate}
-                            onChange={(e) => handleInputChange('avgLeadToBookingRate', parseFloat(e.target.value) || 0)}
-                            min="0"
-                            max="100"
-                            step="0.1"
-                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Average Booking Value</label>
-                          <input
-                            type="number"
-                            value={inputs.avgBookingValue}
-                            onChange={(e) => handleInputChange('avgBookingValue', parseFloat(e.target.value) || 0)}
-                            min="0"
-                            step="0.01"
-                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          How many hours per week does your staff spend on admin tasks (scheduling, rescheduling, reminders)?
+                        </label>
+                        <div className="max-w-md">
+                          <DropdownComponent
+                            options={adminPingPongOptions}
+                            value={inputs.adminPingPongHours}
+                            onChange={(value) => handleInputChange('adminPingPongHours', value)}
+                            placeholder="Select an option"
+                            required
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Average Monthly Phone Calls</label>
-                        <input
-                          type="number"
-                          value={inputs.avgMonthlyPhoneCalls}
-                          onChange={(e) => handleInputChange('avgMonthlyPhoneCalls', parseInt(e.target.value) || 0)}
-                          min="0"
-                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                        />
-                      </div>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Missed Call Rate (%)</label>
-                          <input
-                            type="number"
-                            value={inputs.avgMissedCallRate}
-                            onChange={(e) => handleInputChange('avgMissedCallRate', parseFloat(e.target.value) || 0)}
-                            min="0"
-                            max="100"
-                            step="0.1"
-                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          Do you have an automated system that follows up with leads who didn't book?
+                        </label>
+                        <div className="max-w-md">
+                          <DropdownComponent
+                            options={automatedFollowUpOptions}
+                            value={inputs.automatedFollowUpSystem}
+                            onChange={(value) => handleInputChange('automatedFollowUpSystem', value)}
+                            placeholder="Select an option"
+                            required
                           />
                         </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Follow-up Rate (%)</label>
-                          <input
-                            type="number"
-                            value={inputs.avgFollowUpRate}
-                            onChange={(e) => handleInputChange('avgFollowUpRate', parseFloat(e.target.value) || 0)}
-                            min="0"
-                            max="100"
-                            step="0.1"
-                            className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Customer Lifetime Value (Optional)</label>
-                        <input
-                          type="number"
-                          value={inputs.avgCustomerLifetimeValue}
-                          onChange={(e) => handleInputChange('avgCustomerLifetimeValue', parseFloat(e.target.value) || 0)}
-                          min="0"
-                          step="0.01"
-                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                        />
-                        <p className="text-sm text-gray-500 mt-2">Leave empty to auto-calculate (Booking Value × 3)</p>
                       </div>
                     </div>
                   </div>
@@ -502,62 +549,56 @@ const AIRevenueAudit: React.FC = () => {
 
                 <StepperContent value={3}>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Costs & Staffing</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">The Financial Data Points</h3>
                     <div className="space-y-5">
-                      <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <input
-                          type="checkbox"
-                          id="noReceptionist"
-                          checked={noReceptionist}
-                          onChange={(e) => {
-                            setNoReceptionist(e.target.checked);
-                            if (e.target.checked) {
-                              handleInputChange('hourlySalaryReceptionist', 0);
-                              handleInputChange('monthlyReceptionistHours', 0);
-                            }
-                          }}
-                          className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        />
-                        <label htmlFor="noReceptionist" className="text-sm font-medium text-gray-700 cursor-pointer">
-                          I do all the calls, I don't have a receptionist
-                        </label>
-                      </div>
-                      {!noReceptionist && (
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Hourly Salary (Receptionist)</label>
-                            <input
-                              type="number"
-                              value={inputs.hourlySalaryReceptionist}
-                              onChange={(e) => handleInputChange('hourlySalaryReceptionist', parseFloat(e.target.value) || 0)}
-                              min="0"
-                              step="0.01"
-                              className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Receptionist Hours</label>
-                            <input
-                              type="number"
-                              value={inputs.monthlyReceptionistHours}
-                              onChange={(e) => handleInputChange('monthlyReceptionistHours', parseInt(e.target.value) || 0)}
-                              min="0"
-                              className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                            />
-                          </div>
-                        </div>
-                      )}
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Tool Spend (Optional)</label>
-                        <input
-                          type="number"
-                          value={inputs.monthlyToolSpend}
-                          onChange={(e) => handleInputChange('monthlyToolSpend', parseFloat(e.target.value) || 0)}
-                          min="0"
-                          step="0.01"
-                          className="w-full px-5 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-                        />
-                        <p className="text-sm text-gray-500 mt-2">Current software costs for call handling</p>
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          What is your Average Customer Value (LTV)?
+                        </label>
+                        <div className="max-w-md">
+                          <input
+                            type="number"
+                            value={inputs.avgCustomerLifetimeValue}
+                            onChange={(e) => handleInputChange('avgCustomerLifetimeValue', parseFloat(e.target.value) || 0)}
+                            min="0"
+                            step="0.01"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          How many new leads do you get per month?
+                        </label>
+                        <div className="max-w-md">
+                          <input
+                            type="number"
+                            value={inputs.avgMonthlyLeads}
+                            onChange={(e) => handleInputChange('avgMonthlyLeads', parseInt(e.target.value) || 0)}
+                            min="0"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-lg font-semibold text-gray-900 mb-3">
+                          What is your current Lead-to-Booking percentage?
+                        </label>
+                        <div className="max-w-md">
+                          <input
+                            type="number"
+                            value={inputs.avgLeadToBookingRate}
+                            onChange={(e) => handleInputChange('avgLeadToBookingRate', parseFloat(e.target.value) || 0)}
+                            min="0"
+                            max="100"
+                            step="0.1"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                            required
+                          />
+                        </div>
+                        <p className="text-sm text-gray-500 mt-2">Enter as a percentage (e.g., 10 for 10%)</p>
                       </div>
                     </div>
                   </div>
@@ -577,6 +618,7 @@ const AIRevenueAudit: React.FC = () => {
                 <Button
                   onClick={handleNext}
                   className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white"
+                  style={{ transition: 'none' }}
                 >
                   {currentStep === 3 ? 'Calculate Results' : 'Next'}
                 </Button>

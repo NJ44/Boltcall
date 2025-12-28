@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
 import Button from '../components/ui/Button';
 import { ArrowRight } from 'lucide-react';
 import TableOfContents from '../components/TableOfContents';

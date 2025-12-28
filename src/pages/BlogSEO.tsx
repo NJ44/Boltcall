@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
 import TableOfContents from '../components/TableOfContents';
 import { useTableOfContents } from '../hooks/useTableOfContents';
 
