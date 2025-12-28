@@ -62,7 +62,7 @@ const DropdownComponent: React.FC<DropdownComponentProps> = ({
         }`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        required={required}
+        aria-required={required}
       >
         <span className="font-medium truncate">
           {selectedOption ? selectedOption.label : placeholder}
