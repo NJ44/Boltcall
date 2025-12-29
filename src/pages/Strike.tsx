@@ -5,6 +5,7 @@ import { ThumbsUp, ThumbsDown, Share2, Copy, Check } from 'lucide-react';
 import Header from '../components/Header';
 import { PromptBox } from '../components/ui/chatgpt-prompt-input';
 import { cn } from '../lib/utils';
+import { HomeLightning } from '../components/HomeLightning';
 
 interface Message {
   id: string;
@@ -134,7 +135,10 @@ const Strike: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col relative overflow-hidden bg-black">
-      {/* Background removed */}
+      {/* Lightning Background Effect */}
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+        <HomeLightning className="w-full h-full opacity-30" />
+      </div>
       
       <div className="relative flex flex-col h-full" style={{ position: 'relative', zIndex: 100 }}>
         <Header />
@@ -155,8 +159,18 @@ const Strike: React.FC = () => {
                   transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                   className="text-center mb-8"
                 >
+                  {/* New Tag */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-600/20 border border-blue-400/30 rounded-full mb-6"
+                  >
+                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">New</span>
+                  </motion.div>
+                  
                   <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight">
-                    Meet <span className="text-blue-400">Strike</span>
+                    <span className="text-blue-400">STRIKE AI</span>
                   </h1>
                   
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed">

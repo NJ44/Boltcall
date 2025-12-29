@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { TrendingUp, DollarSign, Clock, CheckCircle, Mail, Download, Phone, Zap } from 'lucide-react';
-import Confetti from 'react-confetti';
+import { Loader2 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import { Stepper, StepperPanel, StepperContent } from '../components/ui/stepper';
 import Button from '../components/ui/Button';
 import DropdownComponent from '../components/ui/dropdown-01';
+import { useNavigate } from 'react-router-dom';
 
 interface AuditInputs {
   // Step 1 - Lead Friction Category
@@ -107,11 +107,8 @@ const AIRevenueAudit: React.FC = () => {
   }, []);
   const [surveyStarted, setSurveyStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const [showResults, setShowResults] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   const [inputs, setInputs] = useState<AuditInputs>({
     // Step 1 - Lead Friction
@@ -142,31 +139,6 @@ const AIRevenueAudit: React.FC = () => {
     contactPhone: ''
   });
 
-  // Set window size for confetti
-  useEffect(() => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Show confetti when email is sent
-  useEffect(() => {
-    if (emailSent) {
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 5000);
-    }
-  }, [emailSent]);
 
   // Derive calculation fields from user inputs
   const deriveCalculationFields = () => {
@@ -320,7 +292,6 @@ const AIRevenueAudit: React.FC = () => {
     };
   };
 
-  const results = calculateAudit();
 
   const handleInputChange = (field: keyof AuditInputs, value: string | number) => {
     setInputs(prev => ({
@@ -329,12 +300,28 @@ const AIRevenueAudit: React.FC = () => {
     }));
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
-      calculateAudit();
-      setShowResults(true);
+      // Show loading animation
+      setIsLoading(true);
+      
+      // Calculate results
+      const auditResults = calculateAudit();
+      
+      // Simulate processing time for better UX
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Store results in localStorage and navigate
+      const resultsData = {
+        inputs,
+        results: auditResults
+      };
+      localStorage.setItem('aiRevenueAuditResults', JSON.stringify(resultsData));
+      
+      // Navigate to results page
+      navigate('/ai-revenue-calculator/results');
     }
   };
 
@@ -344,53 +331,10 @@ const AIRevenueAudit: React.FC = () => {
     }
   };
 
-  const handleSubmitAudit = async () => {
-    if (!inputs.contactEmail) {
-      alert('Please enter your email to receive the full audit');
-      return;
-    }
 
-    setIsSubmitting(true);
-    
-    // Here you would call your API endpoint to generate and send the PDF
-    // For now, we'll simulate it
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // In production, call: POST /api/audit/send
-      // with inputs and results
-      
-      setEmailSent(true);
-    } catch (error) {
-      console.error('Error sending audit:', error);
-      alert('There was an error sending your audit. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
-  };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Confetti */}
-      {showConfetti && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.3}
-        />
-      )}
       <GiveawayBar />
       <Header />
       
@@ -464,8 +408,56 @@ const AIRevenueAudit: React.FC = () => {
             </div>
           </section>
 
+          {/* Loading Screen */}
+          {isLoading && (
+            <section className="py-32 px-4 sm:px-6 lg:px-8 bg-white">
+              <div className="max-w-4xl mx-auto text-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="space-y-8"
+                >
+                  <div className="flex justify-center">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Loader2 className="w-16 h-16 text-blue-600" />
+                    </motion.div>
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                      Calculating Your Revenue Potential...
+                    </h2>
+                    <p className="text-lg text-gray-600">
+                      Analyzing your data and generating personalized insights
+                    </p>
+                  </div>
+                  <div className="flex justify-center gap-2 pt-4">
+                    <motion.div
+                      className="w-2 h-2 bg-blue-600 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                    />
+                    <motion.div
+                      className="w-2 h-2 bg-blue-600 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                    />
+                    <motion.div
+                      className="w-2 h-2 bg-blue-600 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </section>
+          )}
+
           {/* Form Section */}
-          {!showResults && (
+          {!isLoading && (
             <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white">
               <div className="max-w-4xl mx-auto">
                 <Stepper
@@ -628,219 +620,6 @@ const AIRevenueAudit: React.FC = () => {
         </section>
         )}
 
-        {/* Results Section */}
-        {showResults && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              {/* Instant Summary */}
-              <div className="bg-blue-600 rounded-2xl p-8 md:p-12 text-white mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-8">Your AI Revenue Audit Results</h2>
-                
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      <TrendingUp className="w-6 h-6" />
-                      <span className="text-blue-100 text-sm">Monthly Revenue Increase</span>
-                    </div>
-                    <p className="text-4xl font-bold">{formatCurrency(results.totals.monthlyUplift)}</p>
-                  </div>
-                  
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      <DollarSign className="w-6 h-6" />
-                      <span className="text-blue-100 text-sm">Monthly Net Gain</span>
-                    </div>
-                    <p className="text-4xl font-bold">{formatCurrency(results.totals.monthlyNetGain)}</p>
-                  </div>
-                  
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      <Clock className="w-6 h-6" />
-                      <span className="text-blue-100 text-sm">Payback Period</span>
-                    </div>
-                    <p className="text-4xl font-bold">{results.totals.paybackMonths} months</p>
-                  </div>
-                  
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      <Zap className="w-6 h-6" />
-                      <span className="text-blue-100 text-sm">Additional Bookings/Month</span>
-                    </div>
-                    <p className="text-4xl font-bold">
-                      {results.recovery.recoveredBookings + results.followUp.addedBookings}
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <TrendingUp className="w-6 h-6" />
-                    <span className="text-blue-100 text-sm font-semibold">Annual Revenue Uplift</span>
-                  </div>
-                  <p className="text-5xl font-bold">{formatCurrency(results.totals.annualUplift)}</p>
-                </div>
-              </div>
-
-              {/* Detailed Breakdown */}
-              <div className="bg-white rounded-xl border border-gray-200 p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Detailed Breakdown</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Baseline Metrics</h4>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <p className="text-sm text-gray-600 mb-1">Current Bookings/Month</p>
-                        <p className="text-2xl font-bold text-gray-900">{results.baseline.bookingsPerMonth}</p>
-                      </div>
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <p className="text-sm text-gray-600 mb-1">Current Monthly Revenue</p>
-                        <p className="text-2xl font-bold text-gray-900">{formatCurrency(results.baseline.monthlyRevenue)}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Recovered Revenue from Missed Leads</h4>
-                    <div className="bg-blue-50 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-2">
-                        {results.recovery.missedLeads} missed leads × {Math.round(results.assumptions.aiCaptureRate * 100)}% capture rate = {results.recovery.recoveredLeads} recovered leads
-                      </p>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {results.recovery.recoveredLeads} recovered leads × {inputs.avgLeadToBookingRate}% conversion = {results.recovery.recoveredBookings} additional bookings
-                      </p>
-                      <p className="text-xl font-bold text-blue-600">
-                        +{formatCurrency(results.recovery.recoveredRevenue)}/month
-                      </p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Follow-up Automation Uplift</h4>
-                    <div className="bg-green-50 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-2">
-                        Automated follow-ups increase conversion by 30% on followed-up leads
-                      </p>
-                      <p className="text-xl font-bold text-green-600">
-                        +{formatCurrency(results.followUp.addedRevenue)}/month
-                      </p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Cost Savings</h4>
-                    <div className="bg-purple-50 rounded-lg p-4">
-                      <p className="text-sm text-gray-600 mb-2">
-                        AI reduces receptionist hours by {Math.round(results.assumptions.staffingReductionPct * 100)}%
-                      </p>
-                      <p className="text-xl font-bold text-purple-600">
-                        +{formatCurrency(results.savings.staffingSavings)}/month savings
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Assumptions */}
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Key Assumptions</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• AI capture rate: {Math.round(results.assumptions.aiCaptureRate * 100)}%</li>
-                  <li>• Follow-up conversion uplift: {Math.round(results.assumptions.followUpUpliftPct * 100)}%</li>
-                  <li>• Staffing reduction: {Math.round(results.assumptions.staffingReductionPct * 100)}%</li>
-                  <li>• AI subscription cost: {formatCurrency(inputs.monthlyAiSubscription)}/month</li>
-                </ul>
-              </div>
-
-              {/* Recommendations */}
-              <div className="bg-white rounded-xl border border-gray-200 p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Recommended Next Steps</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Enable AI Receptionist</h4>
-                      <p className="text-gray-600">Answer calls 24/7 and never miss a lead</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Setup SMS Follow-ups</h4>
-                      <p className="text-gray-600">Automate follow-ups for all new leads</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Install Website Widget</h4>
-                      <p className="text-gray-600">Capture leads from your website instantly</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Email Capture for Full Audit */}
-              {!emailSent ? (
-                <div className="bg-blue-50 rounded-xl border-2 border-blue-200 p-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Mail className="w-6 h-6 text-blue-600" />
-                    <h3 className="text-2xl font-bold text-gray-900">Get Your Full Personalized Audit</h3>
-                  </div>
-                  <p className="text-gray-600 mb-6">
-                    Receive a detailed PDF audit with personalized recommendations, charts, and a 30-day implementation plan.
-                  </p>
-                  <div className="space-y-4">
-                    <input
-                      type="email"
-                      value={inputs.contactEmail}
-                      onChange={(e) => handleInputChange('contactEmail', e.target.value)}
-                      placeholder="Enter your email for the full audit"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <Button
-                      onClick={handleSubmitAudit}
-                      disabled={isSubmitting || !inputs.contactEmail}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2"
-                    >
-                      {isSubmitting ? (
-                        <>Sending...</>
-                      ) : (
-                        <>
-                          <Download className="w-5 h-5" />
-                          Send Me the Full Audit (PDF)
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="bg-green-50 border-2 border-green-200 rounded-xl p-8 text-center">
-                  <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Audit Sent!</h3>
-                  <p className="text-gray-600 mb-6">
-                    Check your email ({inputs.contactEmail}) for your personalized PDF audit.
-                  </p>
-                  {results.totals.annualUplift > 10000 && (
-                    <Button
-                      onClick={() => window.location.href = '/coming-soon'}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 mx-auto"
-                    >
-                      <Phone className="w-5 h-5" />
-                      Book a Free 15-Minute Setup Call
-                    </Button>
-                  )}
-                </div>
-              )}
-            </motion.div>
-          </div>
-        </section>
-        )}
         </>
       )}
 

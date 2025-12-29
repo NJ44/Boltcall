@@ -586,7 +586,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-6 py-2 text-sm transition-colors relative ${
+                            className={`flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${
                               isOverBlueBackground
                                 ? 'text-gray-300 hover:text-white'
                                 : 'text-gray-700 hover:text-gray-900'
@@ -618,7 +618,7 @@ const Header: React.FC = () => {
                   }`} />
                   
                   {/* Free Tools Section */}
-                  <div className="flex-1 min-w-[198px] py-4">
+                  <div className="flex-1 min-w-[240px] py-4">
                     <div className="px-4 py-2">
                       <h3 className={`text-sm font-semibold uppercase tracking-wider ${
                         isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
@@ -649,7 +649,7 @@ const Header: React.FC = () => {
                             }`}
                           >
                             <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
-                            <span className="relative inline-block pb-1">
+                            <span className="relative inline-block pb-1 whitespace-nowrap">
                               {item.label}
                               <motion.div
                                 className={`absolute -bottom-1 left-0 h-0.5 ${

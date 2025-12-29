@@ -93,6 +93,7 @@ import VoicemailVsBoltcall from '../pages/comparisons/VoicemailVsBoltcall';
 import AnsweringServicesVsBoltcall from '../pages/comparisons/AnsweringServicesVsBoltcall';
 import CRMInstantLeadReplyVsBoltcall from '../pages/comparisons/CRMInstantLeadReplyVsBoltcall';
 import AIRevenueAudit from '../pages/AIRevenueAudit';
+import AIRevenueResults from '../pages/AIRevenueResults';
 import SEOAnalyzer from '../pages/SEOAnalyzer';
 import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
 import AIVisibilityCheck from '../pages/AIVisibilityCheck';
@@ -284,6 +285,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/ai-revenue-calculator" element={<AIRevenueAudit />} />
+        <Route path="/ai-revenue-calculator/results" element={<AIRevenueResults />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         <Route path="/ai-visibility-check" element={<AIVisibilityCheck />} />
