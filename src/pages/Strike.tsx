@@ -164,9 +164,12 @@ const Strike: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-600/20 border border-blue-400/30 rounded-full mb-6"
+                    className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-800 border border-gray-700 rounded-full mb-6 relative"
+                    style={{
+                      boxShadow: '0 4px 8px rgba(37, 99, 235, 0.4)'
+                    }}
                   >
-                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">New</span>
+                    <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">NEW AGENTS MODE</span>
                   </motion.div>
                   
                   <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight">

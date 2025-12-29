@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { TrendingUp, DollarSign, Clock, CheckCircle, Phone, Zap, ArrowLeft, Sparkles } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, CheckCircle, Phone, Zap, Sparkles } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -41,6 +41,7 @@ interface AuditResults {
     annualUplift: number;
     monthlyNetGain: number;
     paybackMonths: number;
+    monthlyHoursSaved: number;
   };
   assumptions: {
     aiCaptureRate: number;
@@ -76,7 +77,7 @@ const AIRevenueResults: React.FC = () => {
     return null;
   }
 
-  const { inputs, results } = resultsData;
+  const { results } = resultsData;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -88,7 +89,7 @@ const AIRevenueResults: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+    <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
       
@@ -100,16 +101,6 @@ const AIRevenueResults: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Back Button */}
-            <Button
-              onClick={() => navigate('/ai-revenue-calculator')}
-              variant="outline"
-              className="mb-8 flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Calculator
-            </Button>
-
             {/* Main Results Card */}
             <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl p-8 md:p-12 text-white mb-8 shadow-2xl">
               <div className="flex items-center gap-3 mb-6">
@@ -152,9 +143,9 @@ const AIRevenueResults: React.FC = () => {
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <Clock className="w-6 h-6" />
-                    <span className="text-blue-100 text-sm font-medium">Payback Period</span>
+                    <span className="text-blue-100 text-sm font-medium">Time saved</span>
                   </div>
-                  <p className="text-4xl font-bold">{results.totals.paybackMonths} months</p>
+                  <p className="text-4xl font-bold">{results.totals.monthlyHoursSaved} hours/month</p>
                 </motion.div>
                 
                 <motion.div

@@ -64,6 +64,7 @@ interface AuditResults {
     annualUplift: number;
     monthlyNetGain: number;
     paybackMonths: number;
+    monthlyHoursSaved: number;
   };
   assumptions: {
     aiCaptureRate: number;
@@ -254,6 +255,31 @@ const AIRevenueAudit: React.FC = () => {
     const staffingReductionPct = 0.5; // 50% reduction
     const staffingSavings = Salary * (Hours * staffingReductionPct);
     
+    // Calculate total hours saved per month
+    // 1. Receptionist/admin hours saved (from admin ping-pong automation)
+    const adminHoursSaved = Hours * staffingReductionPct;
+    
+    // 2. AI Receptionist handling calls (after-hours and busy times)
+    // Average call handling time: 4 minutes = 0.067 hours
+    const avgCallHandlingTime = 0.067; // hours per call
+    const afterHoursCallRate = MCR > 0.3 ? 0.3 : MCR; // Estimate 30% of calls are after-hours/busy
+    const callsHandledByAI = calcInputs.avgMonthlyPhoneCalls * afterHoursCallRate;
+    const callHandlingHoursSaved = callsHandledByAI * avgCallHandlingTime;
+    
+    // 3. Automated follow-ups time saved (if they don't have automation)
+    let followUpHoursSaved = 0;
+    if (inputs.automatedFollowUpSystem === 'No' || inputs.automatedFollowUpSystem === 'We try to do it manually') {
+      // Manual follow-up takes ~2 minutes per lead = 0.033 hours
+      const leadsNeedingFollowUp = L * (1 - (calcInputs.avgFollowUpRate / 100));
+      const manualFollowUpTime = 0.033; // hours per lead
+      followUpHoursSaved = leadsNeedingFollowUp * manualFollowUpTime;
+    }
+    
+    // 4. Reminders and scheduling automation (already included in admin hours, but add extra for automation)
+    const reminderHoursSaved = Hours * 0.1; // Additional 10% for automated reminders
+    
+    const totalMonthlyHoursSaved = adminHoursSaved + callHandlingHoursSaved + followUpHoursSaved + reminderHoursSaved;
+    
     // Totals
     const monthlyUplift = recoveredRevenue + addedRevenue + staffingSavings - AiCost + CurrentTool;
     const annualUplift = monthlyUplift * 12;
@@ -282,7 +308,8 @@ const AIRevenueAudit: React.FC = () => {
         monthlyUplift: Math.round(monthlyUplift),
         annualUplift: Math.round(annualUplift),
         monthlyNetGain: Math.round(monthlyNetGain),
-        paybackMonths: paybackMonths > 0 ? Number(paybackMonths.toFixed(1)) : 0
+        paybackMonths: paybackMonths > 0 ? Number(paybackMonths.toFixed(1)) : 0,
+        monthlyHoursSaved: Math.round(totalMonthlyHoursSaved)
       },
       assumptions: {
         aiCaptureRate: AiCapture,
@@ -300,7 +327,39 @@ const AIRevenueAudit: React.FC = () => {
     }));
   };
 
+  const validateStep = (step: number): boolean => {
+    if (step === 1) {
+      // Step 1: Lead Friction - requires responseTimeToInquiry and afterHoursCallHandling
+      if (!inputs.responseTimeToInquiry || inputs.responseTimeToInquiry === '' || 
+          !inputs.afterHoursCallHandling || inputs.afterHoursCallHandling === '') {
+        alert('Please answer all questions before continuing.');
+        return false;
+      }
+    } else if (step === 2) {
+      // Step 2: Time Leakage - requires adminPingPongHours and automatedFollowUpSystem
+      if (!inputs.adminPingPongHours || inputs.adminPingPongHours === '' || 
+          !inputs.automatedFollowUpSystem || inputs.automatedFollowUpSystem === '') {
+        alert('Please answer all questions before continuing.');
+        return false;
+      }
+    } else if (step === 3) {
+      // Step 3: Financial Data - requires avgCustomerLifetimeValue, avgMonthlyLeads, and avgLeadToBookingRate
+      if (inputs.avgCustomerLifetimeValue === 0 || !inputs.avgCustomerLifetimeValue || 
+          inputs.avgMonthlyLeads === 0 || !inputs.avgMonthlyLeads || 
+          inputs.avgLeadToBookingRate === 0 || !inputs.avgLeadToBookingRate) {
+        alert('Please answer all questions before continuing.');
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleNext = async () => {
+    // Validate current step before proceeding
+    if (!validateStep(currentStep)) {
+      return;
+    }
+
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -430,9 +489,6 @@ const AIRevenueAudit: React.FC = () => {
                     <h2 className="text-3xl font-bold text-gray-900 mb-4">
                       Calculating Your Revenue Potential...
                     </h2>
-                    <p className="text-lg text-gray-600">
-                      Analyzing your data and generating personalized insights
-                    </p>
                   </div>
                   <div className="flex justify-center gap-2 pt-4">
                     <motion.div
@@ -469,7 +525,7 @@ const AIRevenueAudit: React.FC = () => {
               <StepperPanel>
                 <StepperContent value={1}>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">The Lead Friction Category</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Lead Friction</h3>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-lg font-semibold text-gray-900 mb-3">
@@ -481,7 +537,7 @@ const AIRevenueAudit: React.FC = () => {
                             value={inputs.responseTimeToInquiry}
                             onChange={(value) => handleInputChange('responseTimeToInquiry', value)}
                             placeholder="Select an option"
-                            required
+                          required
                           />
                         </div>
                       </div>
@@ -505,7 +561,7 @@ const AIRevenueAudit: React.FC = () => {
 
                 <StepperContent value={2}>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">The Time Leakage Category</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Time Leakage</h3>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-lg font-semibold text-gray-900 mb-3">
@@ -521,7 +577,7 @@ const AIRevenueAudit: React.FC = () => {
                           />
                         </div>
                       </div>
-                      <div>
+                        <div>
                         <label className="block text-lg font-semibold text-gray-900 mb-3">
                           Do you have an automated system that follows up with leads who didn't book?
                         </label>
@@ -541,9 +597,9 @@ const AIRevenueAudit: React.FC = () => {
 
                 <StepperContent value={3}>
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">The Financial Data Points</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Financial Data</h3>
                     <div className="space-y-5">
-                      <div>
+                        <div>
                         <label className="block text-lg font-semibold text-gray-900 mb-3">
                           What is your Average Customer Value (LTV)?
                         </label>
@@ -573,8 +629,8 @@ const AIRevenueAudit: React.FC = () => {
                             required
                           />
                         </div>
-                      </div>
-                      <div>
+                        </div>
+                        <div>
                         <label className="block text-lg font-semibold text-gray-900 mb-3">
                           What is your current Lead-to-Booking percentage?
                         </label>
