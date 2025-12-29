@@ -406,11 +406,11 @@ const AIRevenueAudit: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-[33px] md:text-[40px] lg:text-[53px] font-bold text-gray-900 mb-6 leading-tight">
                 How Much Can You <span className="text-blue-600">Earn</span> with AI?
               </h1>
               
-              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              <p className="text-[22px] text-gray-600 mb-8 max-w-2xl mx-auto">
                 Get a personalized audit showing your potential revenue increase and cost savings with Boltcall's AI services.
               </p>
               
@@ -418,7 +418,7 @@ const AIRevenueAudit: React.FC = () => {
                 onClick={() => setSurveyStarted(true)}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-lg"
               >
-                Start
+                Start Assessment
               </Button>
             </motion.div>
           </div>
