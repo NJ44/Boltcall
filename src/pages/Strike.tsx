@@ -173,7 +173,34 @@ const Strike: React.FC = () => {
                   </motion.div>
                   
                   <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 text-white leading-tight">
-                    <span className="text-blue-400">STRIKE AI</span>
+                    <span 
+                      className="text-white relative inline-block"
+                      style={{
+                        WebkitTextStroke: '1px #000',
+                        textShadow: `
+                          2px 0 0 #000,
+                          -2px 0 0 #000,
+                          0 2px 0 #000,
+                          0 -2px 0 #000,
+                          1px 1px 0 #000,
+                          -1px -1px 0 #000,
+                          1px -1px 0 #000,
+                          -1px 1px 0 #000,
+                          3px 1px 0 #000,
+                          -3px -1px 0 #000,
+                          1px 3px 0 #000,
+                          -1px -3px 0 #000,
+                          -2px 2px 0 #000,
+                          2px -2px 0 #000,
+                          -4px 0 0 #000,
+                          4px 0 0 #000,
+                          0 -4px 0 #000,
+                          0 4px 0 #000
+                        `
+                      }}
+                    >
+                      STRIKE AI
+                    </span>
                   </h1>
                   
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed">

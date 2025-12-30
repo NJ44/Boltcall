@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { TrendingUp, DollarSign, Clock, CheckCircle, Phone, Zap, Sparkles } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, CheckCircle, Zap, Sparkles, ArrowRight, Phone, MessageSquare, Calendar } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
-import Button from '../components/ui/Button';
 import { updateMetaDescription } from '../lib/utils';
 
 interface AuditInputs {
@@ -77,7 +76,7 @@ const AIRevenueResults: React.FC = () => {
     return null;
   }
 
-  const { results } = resultsData;
+  const { results, inputs } = resultsData;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -145,7 +144,9 @@ const AIRevenueResults: React.FC = () => {
                     <Clock className="w-6 h-6" />
                     <span className="text-blue-100 text-sm font-medium">Time saved</span>
                   </div>
-                  <p className="text-4xl font-bold">{results.totals.monthlyHoursSaved} hours/month</p>
+                  <p className="text-4xl font-bold">
+                    {results.totals.monthlyHoursSaved} <span className="text-2xl">hours/month</span>
+                  </p>
                 </motion.div>
                 
                 <motion.div
@@ -249,34 +250,123 @@ const AIRevenueResults: React.FC = () => {
               </motion.div>
             </div>
 
-            {/* CTA Section */}
+            {/* Suggestions Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-200 text-center"
+              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg border border-blue-200 mb-8"
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Unlock This Revenue?</h3>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Start capturing missed leads and automating follow-ups today. Get your AI receptionist set up in minutes.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  onClick={() => window.location.href = '/pricing'}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold flex items-center justify-center gap-2"
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-blue-600" />
+                Recommended Next Steps
+              </h3>
+              
+              <div className="space-y-4">
+                {/* Suggestion 1: AI Receptionist */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.0 }}
+                  className="bg-white rounded-xl p-6 border border-gray-200 hover:border-blue-300 transition-colors"
                 >
-                  <Phone className="w-5 h-5" />
-                  Get Started
-                </Button>
-                <Button
-                  onClick={() => navigate('/ai-revenue-calculator')}
-                  variant="outline"
-                  className="px-8 py-3"
-                >
-                  Recalculate
-                </Button>
+                  <div className="flex items-start gap-4">
+                    <div className="bg-blue-100 rounded-lg p-3">
+                      <Phone className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-semibold text-gray-900 mb-2">Enable AI Receptionist</h4>
+                      <p className="text-gray-600 mb-3">
+                        Answer calls 24/7 and never miss a lead. Based on your audit, you're missing {Math.round(results.recovery.missedLeads)} leads per month that could be captured by AI.
+                      </p>
+                      <div className="flex items-center gap-2 text-sm text-blue-600 font-medium">
+                        <span>Potential: {formatCurrency(results.recovery.recoveredRevenue)}/month</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Suggestion 2: Automated Follow-ups */}
+                {(inputs.automatedFollowUpSystem === 'No' || inputs.automatedFollowUpSystem === 'We try to do it manually') && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.1 }}
+                    className="bg-white rounded-xl p-6 border border-gray-200 hover:border-green-300 transition-colors"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="bg-green-100 rounded-lg p-3">
+                        <MessageSquare className="w-6 h-6 text-green-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-2">Setup Automated Follow-ups</h4>
+                        <p className="text-gray-600 mb-3">
+                          Automate follow-ups for all new leads. 70% of sales happen between the 5th and 12th contact - don't leave money on the table.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
+                          <span>Potential: {formatCurrency(results.followUp.addedRevenue)}/month</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Suggestion 3: Scheduling Automation */}
+                {(inputs.adminPingPongHours === '5-10' || inputs.adminPingPongHours === '10-20' || inputs.adminPingPongHours === '20+') && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.2 }}
+                    className="bg-white rounded-xl p-6 border border-gray-200 hover:border-purple-300 transition-colors"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="bg-purple-100 rounded-lg p-3">
+                        <Calendar className="w-6 h-6 text-purple-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-2">Automate Scheduling & Reminders</h4>
+                        <p className="text-gray-600 mb-3">
+                          Stop wasting {inputs.adminPingPongHours} hours per week on admin ping-pong. Let AI handle scheduling, rescheduling, and reminders automatically.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-purple-600 font-medium">
+                          <span>Time saved: {results.totals.monthlyHoursSaved} hours/month</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Suggestion 4: Quick Response */}
+                {(inputs.responseTimeToInquiry === '30 mins' || inputs.responseTimeToInquiry === '2 hours' || inputs.responseTimeToInquiry === 'Next day' || inputs.responseTimeToInquiry === 'We often miss them') && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.3 }}
+                    className="bg-white rounded-xl p-6 border border-gray-200 hover:border-orange-300 transition-colors"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="bg-orange-100 rounded-lg p-3">
+                        <Zap className="w-6 h-6 text-orange-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-2">Improve Response Time</h4>
+                        <p className="text-gray-600 mb-3">
+                          Your current response time is {inputs.responseTimeToInquiry}. Leads go cold after 5 minutes - AI can respond instantly to every inquiry.
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-orange-600 font-medium">
+                          <span>Impact: Higher conversion rates</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </motion.div>
+
           </motion.div>
         </div>
       </section>
