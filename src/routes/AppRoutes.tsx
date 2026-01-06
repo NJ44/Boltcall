@@ -42,6 +42,7 @@ import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import Giveaway from '../pages/Giveaway';
+import FreeWebsitePage from '../pages/FreeWebsitePage';
 import GeneralPage from '../pages/dashboard/settings/GeneralPage';
 import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
 import MembersPage from '../pages/dashboard/settings/MembersPage';
@@ -245,6 +246,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/pro" element={<PaymentPro />} />
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/giveaway" element={<Giveaway />} />
+        <Route path="/free-website" element={<FreeWebsitePage />} />
             <Route path="/gift-cards" element={<GiftCardPage />} />
         <Route path="/smart-website" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />

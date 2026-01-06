@@ -53,7 +53,7 @@ const FreeSetup: React.FC = () => {
   // Removed unused timeline and visualization per design update
 
   return (
-    <section className="pt-64 pb-20">
+    <section className="pt-64 pb-20" style={{ marginTop: '150px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Content */}
