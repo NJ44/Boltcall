@@ -22,7 +22,6 @@ const FreeWebsitePage: React.FC = () => {
     document.title = 'Get Your Free Professional Website - Boltcall';
     updateMetaDescription('Fill out our form to get a free professional website for your business. Modern design, fast loading, and SEO optimized. Apply now.');
   }, []);
-  const [referralLink, setReferralLink] = useState('');
   const [referrerId, setReferrerId] = useState<string | null>(null);
   const [surveyData, setSurveyData] = useState({
     name: '',
@@ -49,10 +48,6 @@ const FreeWebsitePage: React.FC = () => {
     }
   }, [searchParams]);
 
-  const generateReferralLink = (userId: string) => {
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://boltcall.org';
-    return `${baseUrl}/free-website?ref=${userId}`;
-  };
 
 
   return (
@@ -247,21 +242,8 @@ const FreeWebsitePage: React.FC = () => {
                             
                             console.log('Final referral ID found:', finalReferralId);
                             
-                            if (finalReferralId) {
-                              // Generate referral link using the ID: ref={finalReferralId}
-                              const link = generateReferralLink(String(finalReferralId));
-                              setReferralLink(link);
-                              setIsSubmitted(true);
-                            } else {
-                              console.error('No referral ID found in headers or body');
-                              console.error('Response status:', response.status);
-                              console.error('Response text:', responseText);
-                              console.error('Response data:', responseData);
-                              // Still show success but without referral link
-                              setReferralLink('');
-                              setIsSubmitted(true);
-                              alert('Form submitted successfully, but no referral ID was returned. Please contact support.');
-                            }
+                            // Form submitted successfully
+                            setIsSubmitted(true);
                           } catch (error) {
                             console.error('Error submitting form:', error);
                             const errorMessage = error instanceof Error ? error.message : 'Failed to submit form. Please try again.';
@@ -277,7 +259,7 @@ const FreeWebsitePage: React.FC = () => {
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="text-center space-y-6"
+                        className="text-center space-y-6 flex flex-col justify-center h-full"
                       >
                         <div className="mb-4">
                           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -287,6 +269,17 @@ const FreeWebsitePage: React.FC = () => {
                           <p className="text-white/90">
                             Thank you for your interest! We'll review your application and get back to you soon.
                           </p>
+                        </div>
+                        <div className="mt-4">
+                          <p className="text-white/90 mb-2">In the meantime...</p>
+                          <a 
+                            href="https://tryboltcall.com/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center px-6 py-3 bg-white text-brand-blue font-semibold rounded-md shadow hover:bg-gray-50 transition-colors"
+                          >
+                            View Demo
+                          </a>
                         </div>
                       </motion.div>
                     )}

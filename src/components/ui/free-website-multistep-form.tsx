@@ -96,36 +96,42 @@ export function FreeWebsiteMultiStepForm({
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full free-website-form">
       <style>{`
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        input:-webkit-autofill:active {
-          -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.1) inset !important;
+        .free-website-form input:-webkit-autofill,
+        .free-website-form input:-webkit-autofill:hover,
+        .free-website-form input:-webkit-autofill:focus,
+        .free-website-form input:-webkit-autofill:active,
+        .free-website-form input:-webkit-autofill:focus-visible {
+          -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset !important;
           -webkit-text-fill-color: #ffffff !important;
           background-color: rgba(255, 255, 255, 0.1) !important;
           background-clip: padding-box !important;
+          transition: background-color 5000s ease-in-out 0s !important;
         }
-        input[type="text"],
-        input[type="email"],
-        input[type="url"] {
+        .free-website-form input[type="text"],
+        .free-website-form input[type="email"],
+        .free-website-form input[type="url"] {
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="url"]:focus,
-        input[type="text"]:active,
-        input[type="email"]:active,
-        input[type="url"]:active {
+        .free-website-form input[type="text"]:focus,
+        .free-website-form input[type="email"]:focus,
+        .free-website-form input[type="url"]:focus,
+        .free-website-form input[type="text"]:active,
+        .free-website-form input[type="email"]:active,
+        .free-website-form input[type="url"]:active,
+        .free-website-form input[type="text"]:focus-visible,
+        .free-website-form input[type="email"]:focus-visible,
+        .free-website-form input[type="url"]:focus-visible {
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
-        .giveaway-form input {
+        .free-website-form input {
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
-        .giveaway-form input:focus,
-        .giveaway-form input:active,
-        .giveaway-form input:hover {
+        .free-website-form input:focus,
+        .free-website-form input:active,
+        .free-website-form input:hover,
+        .free-website-form input:focus-visible {
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
       `}</style>
