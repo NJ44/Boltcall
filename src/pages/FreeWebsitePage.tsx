@@ -11,9 +11,13 @@ const FreeWebsitePage: React.FC = () => {
   const [showSurvey, setShowSurvey] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   
-  // Calculate end date (2 days from now)
+  // Fixed end date (2 days from launch date - doesn't reset on deploy)
+  // Update the launch date below to set when the offer started
   const [endDate] = useState(() => {
-    const endsAt = new Date();
+    // Set the launch date to when the offer started (update this date as needed)
+    // The timer will always show 2 days from this fixed date
+    const launchDate = new Date('2026-01-15T00:00:00Z'); // Update this to your launch date
+    const endsAt = new Date(launchDate);
     endsAt.setDate(endsAt.getDate() + 2);
     return endsAt;
   });
@@ -137,8 +141,6 @@ const FreeWebsitePage: React.FC = () => {
                   </button>
 
                   <div className="my-8 h-px w-40 bg-white/30 mx-auto" />
-
-                  <div className="text-sm opacity-90">Questions? Email us: <a href="mailto:noamj@boltcall.org" className="underline hover:opacity-80">noamj@boltcall.org</a></div>
 
                   <p className="mt-10 text-xs text-white/80">©2026 Boltcall</p>
                 </motion.div>

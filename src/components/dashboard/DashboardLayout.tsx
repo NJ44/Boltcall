@@ -33,6 +33,7 @@ import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
 import { Banner } from '../ui/banner';
+import CinematicSwitch from '../ui/cinematic-glow-toggle';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -667,7 +668,7 @@ const DashboardLayout: React.FC = () => {
                  </div>
                </div>
           
-              {/* Right side - Free Trial, Location switcher, Notifications */}
+              {/* Right side - Free Trial, Toggle, Location switcher, Notifications */}
               <div className="flex items-center gap-3">
                  {/* Gift Card Announcement */}
                  <Link 
@@ -677,6 +678,12 @@ const DashboardLayout: React.FC = () => {
                    <Crown className="w-4 h-4" />
                    <span>Black Friday 90% Gift Cards</span>
                  </Link>
+                 
+                 {/* Cinematic toggle (visual switch for dashboard) */}
+                 <div className="hidden md:block">
+                   <CinematicSwitch className="scale-90" />
+                 </div>
+
                 <LocationSwitcher />
                  
                  {/* Notification Dropdown */}

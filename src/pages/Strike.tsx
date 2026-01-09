@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import { PromptBox } from '../components/ui/chatgpt-prompt-input';
 import { cn } from '../lib/utils';
 import { HomeLightning } from '../components/HomeLightning';
+import { FeedbackWidget } from '../components/ui/feedback-widget';
 
 interface Message {
   id: string;
@@ -225,6 +226,23 @@ const Strike: React.FC = () => {
             }}
             tabIndex={-1}
           >
+            {/* Feedback widget – shown at the top when chat is open (i.e. after first message) */}
+            {messages.length > 0 && (
+              <div className="max-w-4xl mx-auto mb-6 flex justify-center">
+                <FeedbackWidget
+                  label="How is Strike AI doing so far?"
+                  placeholder="Share what's working well or what you'd like improved..."
+                  onSubmit={(data) => {
+                    // For now, just log. Can be wired to n8n / analytics later.
+                    console.log('Strike AI feedback:', {
+                      ...data,
+                      page: window.location.href,
+                    });
+                  }}
+                />
+              </div>
+            )}
+
             <div className="max-w-4xl mx-auto space-y-4">
               {messages.map((message) => (
                 <motion.div
