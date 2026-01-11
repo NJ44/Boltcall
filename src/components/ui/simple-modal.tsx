@@ -13,12 +13,15 @@ const SimpleModal: React.FC<SimpleModalProps> = ({ isOpen, onClose, title, child
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden'; // Lock html as well
         } else {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         }
 
         return () => {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         };
     }, [isOpen]);
 

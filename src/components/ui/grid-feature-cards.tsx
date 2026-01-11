@@ -5,6 +5,7 @@ type FeatureType = {
     title: string;
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     description: string;
+    glowColor?: string;
 };
 
 type FeatureCardPorps = React.ComponentProps<"div"> & {
@@ -16,6 +17,14 @@ export function FeatureCard({ feature, className, ...props }: FeatureCardPorps) 
 
     return (
         <div className={cn("relative overflow-hidden p-6 border border-neutral-800 bg-neutral-900/50 rounded-xl", className)} {...props}>
+            {feature.glowColor && (
+                <div
+                    className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+                    style={{
+                        background: `radial-gradient(400px circle at center, ${feature.glowColor}, transparent 60%)`,
+                    }}
+                />
+            )}
             <div className="pointer-events-none absolute top-0 left-1/2 -mt-2 -ml-20 h-full w-full [mask-image:linear-gradient(white,transparent)]">
                 <div className="from-neutral-800/20 to-neutral-800/5 absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-100">
                     <GridPattern

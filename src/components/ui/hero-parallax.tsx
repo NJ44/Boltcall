@@ -135,7 +135,7 @@ export const HeroHeader = ({ onCtaClick }: { onCtaClick?: () => void }) => {
                 transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
                 className="text-2xl md:text-5xl font-bold text-white pointer-events-auto"
             >
-                The Ultimate <br /> development studio
+                Time To Upgrade <br /> Your Business
             </motion.h1>
             <motion.p
                 initial={{ opacity: 0, y: 30 }}

@@ -21,24 +21,24 @@ type Step = {
 }
 
 const steps: Step[] = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     label: "Personal Information",
     fields: [
       { label: "Name", field: "name", placeholder: "Your full name" },
       { label: "Email", field: "email", placeholder: "your@email.com", type: "email" }
     ]
   },
-  { 
-    id: 2, 
+  {
+    id: 2,
     label: "Company Information",
     fields: [
       { label: "Company Name", field: "companyName", placeholder: "Your Company Name" },
       { label: "Website", field: "website", placeholder: "https://yourwebsite.com", type: "url" }
     ]
   },
-  { 
-    id: 3, 
+  {
+    id: 3,
     label: "Why You",
     fields: [
       { label: "Why do you think you should win?", field: "whyChoose", placeholder: "Tell us why you should win..." }
@@ -82,7 +82,7 @@ export function GiveawayMultiStepForm({
 
   const currentStepData = steps[currentStep]
   const progress = ((currentStep + 1) / steps.length) * 100
-  
+
   // Check if all fields in current step are filled
   const isStepComplete = currentStepData.fields.every(field => formData[field.field]?.trim())
 
@@ -147,7 +147,7 @@ export function GiveawayMultiStepForm({
               {currentStep + 1}/{steps.length}
             </span>
           </div>
-          
+
           <div className="space-y-4">
             {currentStepData.fields.map((field, fieldIndex) => (
               <div key={field.field} className="space-y-2">
@@ -163,8 +163,8 @@ export function GiveawayMultiStepForm({
                       onChange={(e) => handleInputChange(field.field, e.target.value)}
                       autoFocus={fieldIndex === 0}
                       rows={6}
-                      className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-500 resize-none"
-                      style={{ color: '#ffffff' }}
+                      className="w-full px-3 py-2 text-sm rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-500 resize-none"
+                      style={{ color: '#ffffff', opacity: 1 }}
                     />
                   </div>
                 ) : (
@@ -176,15 +176,15 @@ export function GiveawayMultiStepForm({
                       value={formData[field.field] || ""}
                       onChange={(e) => handleInputChange(field.field, e.target.value)}
                       autoFocus={fieldIndex === 0}
-                      className="h-12 text-base transition-all duration-500 border-white/30 bg-white/10 backdrop-blur text-white placeholder-white/60 focus:border-white/50 focus:ring-white/30"
-                      style={{ color: '#ffffff' }}
+                      className="h-10 text-sm transition-all duration-500 border-white/30 bg-white/10 backdrop-blur text-white placeholder-white/60 focus:border-white/50 focus:ring-white/30"
+                      style={{ color: '#ffffff', opacity: 1 }}
                     />
                   </div>
                 )}
               </div>
             ))}
           </div>
-          
+
           {currentStepData.id === 3 && (
             <div className="flex items-start gap-3 mt-4">
               <div className="relative mt-0.5">
@@ -197,11 +197,10 @@ export function GiveawayMultiStepForm({
                 />
                 <label
                   htmlFor="allowNotifications"
-                  className={`flex items-center justify-center w-5 h-5 rounded border-2 cursor-pointer transition-all ${
-                    allowNotifications
-                      ? 'bg-white border-white'
-                      : 'bg-white/10 border-white/40'
-                  }`}
+                  className={`flex items-center justify-center w-5 h-5 rounded border-2 cursor-pointer transition-all ${allowNotifications
+                    ? 'bg-white border-white'
+                    : 'bg-white/10 border-white/40'
+                    }`}
                 >
                   {allowNotifications && (
                     <CheckIcon className="w-3.5 h-3.5 text-brand-blue" strokeWidth={2.5} />
@@ -219,7 +218,7 @@ export function GiveawayMultiStepForm({
           {currentStep > 0 && (
             <button
               onClick={() => setCurrentStep(currentStep - 1)}
-              className="flex-1 px-6 py-3 bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
+              className="flex-1 px-4 py-2 h-10 text-sm bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
             >
               Back
             </button>
@@ -228,7 +227,7 @@ export function GiveawayMultiStepForm({
             onClick={handleNext}
             disabled={!isStepComplete || isSubmitting}
             className={cn(
-              "flex-1 h-12 group relative transition-all duration-300 hover:shadow-lg hover:shadow-white/10",
+              "flex-1 h-10 text-sm group relative transition-all duration-300 hover:shadow-lg hover:shadow-white/10",
               "bg-white text-brand-blue hover:bg-gray-50",
               currentStep === 0 && "w-full"
             )}

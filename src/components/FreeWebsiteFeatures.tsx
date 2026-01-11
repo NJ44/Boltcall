@@ -7,31 +7,37 @@ const features = [
         title: 'Faaast',
         icon: Zap,
         description: 'Blazing fast load times with optimized assets and code.',
+        glowColor: '#06b6d4', // cyan-500
     },
     {
         title: 'Powerful',
         icon: Cpu,
         description: 'Built on modern frameworks that handle complexity with ease.',
+        glowColor: '#8b5cf6', // violet-500
     },
     {
         title: 'Security',
         icon: Fingerprint,
         description: 'Enterprise-grade security best practices out of the box.',
+        glowColor: '#10b981', // emerald-500
     },
     {
         title: 'Customization',
         icon: Pencil,
         description: 'Fully customizable components to match your unique brand.',
+        glowColor: '#f59e0b', // amber-500
     },
     {
         title: 'Control',
         icon: Settings2,
         description: 'Complete control over your data and infrastructure.',
+        glowColor: '#f43f5e', // rose-500
     },
     {
         title: 'Built for AI',
         icon: Sparkles,
         description: 'Ready-to-use integrations for the latest AI models.',
+        glowColor: '#d946ef', // fuchsia-500
     },
 ];
 

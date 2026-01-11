@@ -27,10 +27,10 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
     return (
         <div
             style={{
-                transform: `translate(-40%,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`,
+                transform: `translate(-20%,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`,
             }}
             className={cn(
-                "absolute left-1/4 p-4 -top-1/4 flex -translate-x-1/2 -translate-y-1/2 w-full h-full z-0",
+                "absolute left-1/2 p-4 -top-1/4 flex -translate-x-1/2 -translate-y-1/2 w-full h-full z-0",
                 className
             )}
             {...rest}
@@ -44,13 +44,24 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                         <motion.div
                             whileHover={{
                                 backgroundColor: getRandomColor(),
+                                opacity: 1,
                                 transition: { duration: 0 },
                             }}
                             animate={{
-                                transition: { duration: 2 },
+                                opacity: [0, 1, 0],
+                                transition: {
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatType: "loop",
+                                    delay: Math.random() * 20,
+                                    repeatDelay: Math.random() * 20
+                                }
                             }}
                             key={`col` + j}
-                            className="w-16 h-8 border-r border-t border-neutral-800 relative"
+                            style={{
+                                backgroundColor: getRandomColor()
+                            }}
+                            className="w-16 h-8 border-r border-t border-neutral-800 relative opacity-0"
                         >
                             {j % 2 === 0 && i % 2 === 0 ? (
                                 <svg
