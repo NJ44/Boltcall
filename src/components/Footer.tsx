@@ -65,9 +65,9 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <img 
-                  src="/boltcall_full_logo.png" 
-                  alt="Boltcall - AI Receptionist, Follow Ups, Reminders" 
+                <img
+                  src="/boltcall_full_logo.png"
+                  alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
                   className="h-12 mb-3"
                 />
               </motion.div>

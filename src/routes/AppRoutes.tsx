@@ -43,6 +43,7 @@ import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
 import Giveaway from '../pages/Giveaway';
 import FreeWebsitePage from '../pages/FreeWebsitePage';
+import FreeWebsitePackagePage from '../pages/FreeWebsitePackagePage';
 import GeneralPage from '../pages/dashboard/settings/GeneralPage';
 import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
 import MembersPage from '../pages/dashboard/settings/MembersPage';
@@ -108,55 +109,48 @@ import AIFollowUpSystemPage from '../pages/features/AIFollowUpSystemPage';
 import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidgetPage';
 import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
 import SmartWebsitePage from '../pages/features/SmartWebsitePage';
-import FeatureSectionWithHoverEffectsDemo from '../pages/FeatureSectionWithHoverEffectsDemo';
-import GradientCardShowcaseDemo from '../pages/GradientCardShowcaseDemo';
-import FloatingIconsHeroDemo from '../pages/FloatingIconsHeroDemo';
-import CountdownDemo from '../pages/CountdownDemo';
-import Icon3DHoverDemo from '../pages/Icon3DHoverDemo';
-import ChallengeCardDemo from '../pages/ChallengeCardDemo';
-import Challenge from '../pages/Challenge';
-import OtpDemo from '../pages/OtpDemo';
-import PremiumProcessTimelineDemo from '../pages/PremiumProcessTimelineDemo';
+
 import Strike from '../pages/Strike';
+import Challenge from '../pages/Challenge';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
-  
+
   // Scroll to top on route change
   useEffect(() => {
     // Scroll window to top
     window.scrollTo(0, 0);
-    
+
     // Also handle Lenis smooth scroll if it exists
     if (window.lenis) {
       window.lenis.scrollTo(0, { immediate: true });
     }
   }, [location.pathname]);
-  
+
   // Initialize Lenis smooth scrolling
   useLenis();
-  
+
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/dashboard/*" 
+        <Route
+          path="/dashboard/*"
           element={
             <ProtectedRoute>
               <DashboardLayout />
             </ProtectedRoute>
-          } 
+          }
         >
           <Route index element={<DashboardPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
@@ -237,7 +231,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-        
+
         {/* Speed Test Funnel */}
         <Route path="/speed-test" element={<SpeedTestLanding />} />
         <Route path="/speed-test/login" element={<SpeedTestLogin />} />
@@ -247,7 +241,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/giveaway" element={<Giveaway />} />
         <Route path="/free-website" element={<FreeWebsitePage />} />
-            <Route path="/gift-cards" element={<GiftCardPage />} />
+        <Route path="/free-website-package" element={<FreeWebsitePackagePage />} />
+        <Route path="/gift-cards" element={<GiftCardPage />} />
         <Route path="/smart-website" element={<OfferPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
@@ -301,15 +296,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/lead-reactivation" element={<LeadReactivationFeaturePage />} />
         <Route path="/features/smart-website" element={<SmartWebsitePage />} />
         {/* Demo Pages */}
-        <Route path="/feature-section-demo" element={<FeatureSectionWithHoverEffectsDemo />} />
-        <Route path="/gradient-card-showcase-demo" element={<GradientCardShowcaseDemo />} />
-        <Route path="/floating-icons-hero-demo" element={<FloatingIconsHeroDemo />} />
-        <Route path="/countdown-demo" element={<CountdownDemo />} />
-        <Route path="/icon-3d-hover-demo" element={<Icon3DHoverDemo />} />
-        <Route path="/challenge-card-demo" element={<ChallengeCardDemo />} />
         <Route path="/challenge" element={<Challenge />} />
-        <Route path="/otp-demo" element={<OtpDemo />} />
-        <Route path="/premium-process-timeline-demo" element={<PremiumProcessTimelineDemo />} />
         <Route path="/strike-ai" element={<Strike />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
