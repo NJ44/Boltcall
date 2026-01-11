@@ -10,12 +10,14 @@ import { Link } from "react-router-dom";
 
 export const HeroParallax = ({
     products,
+    onCtaClick,
 }: {
     products: {
         title: string;
         link: string;
         thumbnail: string;
     }[];
+    onCtaClick?: () => void;
 }) => {
     const firstRow = products.slice(0, 5);
     const secondRow = products.slice(5, 10);
@@ -64,7 +66,7 @@ export const HeroParallax = ({
             ref={ref}
             className="h-[250vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
         >
-            <HeroHeader />
+            <HeroHeader onCtaClick={onCtaClick} />
             <motion.div
                 style={{
                     rotateX,
@@ -113,18 +115,18 @@ export const HeroParallax = ({
                 className="w-full py-40 flex flex-col items-center justify-center z-10 relative mt-auto bg-black"
             >
                 <h2 className="text-4xl md:text-7xl font-bold text-white mb-12 text-center">Ready to get started?</h2>
-                <Link
-                    to="/contact"
+                <button
+                    onClick={onCtaClick}
                     className="inline-block px-8 py-4 bg-white text-black font-semibold text-xl rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
                 >
                     Get Your Free Website
-                </Link>
+                </button>
             </motion.div>
         </div >
     );
 };
 
-export const HeroHeader = () => {
+export const HeroHeader = ({ onCtaClick }: { onCtaClick?: () => void }) => {
     return (
         <div className="max-w-7xl relative mx-auto pt-0 pb-20 md:pb-40 px-4 w-full left-0 top-0 z-50 pointer-events-none">
             <motion.h1
@@ -151,12 +153,12 @@ export const HeroHeader = () => {
                 transition={{ duration: 1.2, delay: 1.0, ease: "easeOut" }}
                 className="mt-8 pointer-events-auto"
             >
-                <Link
-                    to="/contact"
+                <button
+                    onClick={onCtaClick}
                     className="inline-block px-6 py-3 bg-white text-black font-semibold text-lg rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
                 >
                     Get Your Free Website
-                </Link>
+                </button>
             </motion.div>
         </div>
     );
@@ -199,10 +201,7 @@ export const ProductCard = ({
                     onError={() => setImgSrc("https://images.unsplash.com/photo-1531297422935-40280f35a96e?auto=format&fit=crop&q=80&w=240&h=192")}
                 />
             </Link>
-            <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
-            <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-                {product.title}
-            </h2>
+
         </motion.div>
     );
 };
