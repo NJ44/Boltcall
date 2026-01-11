@@ -107,21 +107,7 @@ export const HeroParallax = ({
                     ))}
                 </motion.div>
             </motion.div>
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="w-full py-40 flex flex-col items-center justify-center z-10 relative mt-auto bg-black"
-            >
-                <h2 className="text-4xl md:text-7xl font-bold text-white mb-12 text-center">Ready to get started?</h2>
-                <button
-                    onClick={onCtaClick}
-                    className="inline-block px-8 py-4 bg-white text-black font-semibold text-xl rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
-                >
-                    Get Your Free Website
-                </button>
-            </motion.div>
+
         </div >
     );
 };
