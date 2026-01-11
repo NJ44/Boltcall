@@ -4,9 +4,9 @@ import React from "react";
 import { HeroParallax } from "../components/ui/hero-parallax";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import GiveawayBar from "../components/GiveawayBar";
 import { motion } from "framer-motion";
 import FreeWebsiteFeatures from "../components/FreeWebsiteFeatures";
+import { BackgroundBoxesDemo } from "../components/BackgroundBoxesDemo";
 import SimpleModal from "../components/ui/simple-modal";
 import { GiveawayMultiStepForm } from "../components/ui/giveaway-multistep-form";
 
@@ -123,6 +123,7 @@ const FreeWebsitePackagePage: React.FC = () => {
             >
                 <HeroParallax products={products} onCtaClick={handleCtaClick} />
                 <FreeWebsiteFeatures />
+                <BackgroundBoxesDemo onCtaClick={handleCtaClick} />
                 <Footer />
             </motion.div>
 
