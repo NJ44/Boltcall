@@ -94,8 +94,20 @@ export function GiveawayMultiStepForm({
   const currentStepData = steps[currentStep]
   const progress = ((currentStep + 1) / steps.length) * 100
 
-  // Check if all fields in current step are filled
-  const isStepComplete = currentStepData.fields.every(field => formData[field.field]?.trim())
+  // Helper to validate email format
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // Check if all fields in current step are filled and valid
+  const isStepComplete = currentStepData.fields.every(field => {
+    const value = formData[field.field]?.trim();
+    if (!value) return false;
+    if (field.type === 'email') {
+      return isValidEmail(value);
+    }
+    return true;
+  });
 
   if (isSubmitted) {
     return null // Let parent handle success state
