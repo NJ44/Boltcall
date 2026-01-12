@@ -13,7 +13,7 @@ export function BackgroundBoxesDemo({ onCtaClick }: { onCtaClick?: () => void })
                 Upgrade your website
             </h1>
             <p className="text-center mt-4 text-neutral-300 relative z-20 text-xl md:text-2xl">
-                Great website is here
+                Modern, fast, and designed to convert.
             </p>
             <button
                 onClick={onCtaClick}
