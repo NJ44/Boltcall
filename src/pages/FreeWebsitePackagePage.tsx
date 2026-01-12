@@ -34,52 +34,52 @@ export const products = [
     {
         title: "Tech Startup",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-tech-startup.png",
     },
     {
         title: "Fashion Brand",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-fashion-brand.png",
     },
     {
         title: "Design Agency",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-design-agency.png",
     },
     {
         title: "Consulting Firm",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1552581234-26160f608093?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-consulting-firm.png",
     },
     {
         title: "Analytics Dashboard",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-analytics-dashboard.png",
     },
     {
         title: "Lifestyle Shop",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1472851294608-415522f96385?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-lifestyle-shop.png",
     },
     {
         title: "Digital Artist",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80",
+        thumbnail: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80",
     },
     {
         title: "Enterprise Services",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+        thumbnail: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80",
     },
     {
         title: "Cloud Infrastructure",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-cloud-app.png",
     },
     {
         title: "Boutique Store",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80",
+        thumbnail: "https://images.unsplash.com/photo-1472851294608-415522f96385?w=800&q=80",
     },
     {
         title: "Creative Studio",
