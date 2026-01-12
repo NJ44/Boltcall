@@ -34,57 +34,57 @@ export const products = [
     {
         title: "Tech Startup",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-saas.png",
+        thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
     },
     {
         title: "Fashion Brand",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-ecommerce.png",
+        thumbnail: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80",
     },
     {
         title: "Design Agency",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-portfolio.png",
+        thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80",
     },
     {
         title: "Consulting Firm",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-corporate.png",
+        thumbnail: "https://images.unsplash.com/photo-1552581234-26160f608093?w=800&q=80",
     },
     {
         title: "Analytics Dashboard",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-saas.png",
+        thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     },
     {
         title: "Lifestyle Shop",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-ecommerce.png",
+        thumbnail: "https://images.unsplash.com/photo-1472851294608-415522f96385?w=800&q=80",
     },
     {
         title: "Digital Artist",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-portfolio.png",
+        thumbnail: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80",
     },
     {
         title: "Enterprise Services",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-corporate.png",
+        thumbnail: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
     },
     {
         title: "Cloud Infrastructure",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-saas.png",
+        thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
     },
     {
         title: "Boutique Store",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-ecommerce.png",
+        thumbnail: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80",
     },
     {
         title: "Creative Studio",
         link: "#",
-        thumbnail: "/images/hero-examples/hero-portfolio.png",
+        thumbnail: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
     },
 ];
 
