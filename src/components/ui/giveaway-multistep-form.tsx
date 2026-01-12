@@ -163,7 +163,7 @@ export function GiveawayMultiStepForm({
                       onChange={(e) => handleInputChange(field.field, e.target.value)}
                       autoFocus={fieldIndex === 0}
                       rows={6}
-                      className="w-full px-3 py-2 text-sm rounded-md bg-white/10 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-500 resize-none"
+                      className="w-full px-3 py-2 text-sm rounded-md bg-white/10 border border-white/30 !text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-500 resize-none caret-white"
                       style={{ color: '#ffffff', opacity: 1 }}
                     />
                   </div>
@@ -176,7 +176,7 @@ export function GiveawayMultiStepForm({
                       value={formData[field.field] || ""}
                       onChange={(e) => handleInputChange(field.field, e.target.value)}
                       autoFocus={fieldIndex === 0}
-                      className="h-10 text-sm transition-all duration-500 border-white/30 bg-white/10 backdrop-blur text-white placeholder-white/60 focus:border-white/50 focus:ring-white/30"
+                      className="h-10 text-sm transition-all duration-500 border-white/30 bg-white/10 backdrop-blur !text-white placeholder-white/60 focus:border-white/50 focus:ring-white/30 caret-white"
                       style={{ color: '#ffffff', opacity: 1 }}
                     />
                   </div>

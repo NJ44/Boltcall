@@ -115,37 +115,77 @@ export const HeroParallax = ({
 export const HeroHeader = ({ onCtaClick }: { onCtaClick?: () => void }) => {
     return (
         <div className="max-w-7xl relative mx-auto pt-0 pb-20 md:pb-40 px-4 w-full left-0 top-0 z-50 pointer-events-none">
-            <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-                className="text-2xl md:text-5xl font-bold text-white pointer-events-auto"
-            >
-                Time To Upgrade <br /> Your Business
-            </motion.h1>
-            <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
-                className="max-w-2xl text-sm md:text-base mt-8 text-neutral-200 pointer-events-auto"
-            >
-                We build beautiful products with the latest technologies and frameworks.
-                We are a team of passionate developers and designers that love to build
-                amazing products.
-            </motion.p>
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 1.0, ease: "easeOut" }}
-                className="mt-8 pointer-events-auto"
-            >
-                <button
-                    onClick={onCtaClick}
-                    className="inline-block px-6 py-3 bg-white text-black font-semibold text-lg rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
+            <div className="transform scale-110 translate-x-12 md:translate-x-24 origin-top-left max-w-lg">
+                <h1 className="text-2xl md:text-5xl font-bold text-white pointer-events-auto leading-tight">
+                    <motion.span
+                        className="inline-block"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.625, delay: 0.2, ease: "easeOut" }}
+                    >
+                        Time
+                    </motion.span>{" "}
+                    <motion.span
+                        className="inline-block"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.625, delay: 0.3, ease: "easeOut" }}
+                    >
+                        To
+                    </motion.span>{" "}
+                    <motion.span
+                        className="inline-block"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.625, delay: 0.4, ease: "easeOut" }}
+                    >
+                        Upgrade
+                    </motion.span>
+                    <br />
+                    <motion.span
+                        className="inline-block"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.625, delay: 0.5, ease: "easeOut" }}
+                    >
+                        Your
+                    </motion.span>{" "}
+                    <motion.span
+                        className="inline-block"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.625, delay: 0.6, ease: "easeOut" }}
+                    >
+                        Business
+                    </motion.span>
+                </h1>
+                <p className="max-w-2xl text-sm md:text-base mt-8 text-neutral-200 pointer-events-auto leading-relaxed">
+                    {"Get a premium, custom-built website completely free. Limited time offer to upgrade your online presence.".split(" ").map((word, idx) => (
+                        <motion.span
+                            key={idx}
+                            className="inline-block"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.8 + idx * 0.1, ease: "easeOut" }}
+                        >
+                            {word}&nbsp;
+                        </motion.span>
+                    ))}
+                </p>
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 2.2, ease: "easeOut" }} // Delays calculated: 0.8 + 12*0.1 = 2.0. Button at 2.2
+                    className="mt-8 pointer-events-auto"
                 >
-                    Get Your Free Website
-                </button>
-            </motion.div>
+                    <button
+                        onClick={onCtaClick}
+                        className="inline-block px-6 py-3 bg-white text-black font-semibold text-lg rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
+                    >
+                        Get Your Free Website
+                    </button>
+                </motion.div>
+            </div>
         </div>
     );
 };

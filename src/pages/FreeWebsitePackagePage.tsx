@@ -89,6 +89,11 @@ export const products = [
 ];
 
 const FreeWebsitePackagePage: React.FC = () => {
+    // Set page title
+    React.useEffect(() => {
+        document.title = "Get Your Free Website | Boltcall";
+    }, []);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Form state handling
@@ -124,7 +129,7 @@ const FreeWebsitePackagePage: React.FC = () => {
                 <HeroParallax products={products} onCtaClick={handleCtaClick} />
                 <FreeWebsiteFeatures />
                 <BackgroundBoxesDemo onCtaClick={handleCtaClick} />
-                <Footer />
+                <Footer theme="dark" showLogo={false} />
             </motion.div>
 
             <SimpleModal

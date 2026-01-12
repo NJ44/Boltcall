@@ -16,7 +16,20 @@ const XLogo: React.FC<{ className?: string; strokeWidth?: number }> = ({ classNa
   </svg>
 );
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  theme?: 'light' | 'dark';
+  showLogo?: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => {
+  const isDark = theme === 'dark';
+
+  const bgClass = isDark ? 'bg-black' : 'bg-white';
+  const textClass = isDark ? 'text-white' : 'text-neutral-900';
+  const mutedTextClass = isDark ? 'text-neutral-400' : 'text-neutral-500';
+  const hoverTextClass = isDark ? 'hover:text-white' : 'hover:text-neutral-900';
+  const borderClass = isDark ? 'border-neutral-800' : 'border-neutral-200';
+  const logoBgClass = isDark ? 'bg-white/10' : 'bg-neutral-100';
 
   const footerLinks = {
     features: [
@@ -51,7 +64,7 @@ const Footer: React.FC = () => {
 
 
   return (
-    <footer className="bg-black text-white pt-[100px]">
+    <footer className={`${bgClass} ${textClass} pt-[100px]`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Main Footer Content */}
@@ -65,11 +78,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <img
-                  src="/boltcall_full_logo.png"
-                  alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
-                  className="h-12 mb-3 bg-white/10 rounded-lg p-2"
-                />
+                {showLogo && (
+                  <img
+                    src="/boltcall_full_logo.png"
+                    alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
+                    className={`h-12 mb-3 ${logoBgClass} rounded-lg p-2`}
+                  />
+                )}
               </motion.div>
             </div>
 
@@ -81,13 +96,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-base font-semibold mb-3 text-white">Features</h4>
+                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Features</h4>
                 <ul className="space-y-2">
                   {footerLinks.features.map((link, index) => (
                     <li key={index}>
                       <Link
                         to={link.href}
-                        className="text-neutral-400 hover:text-white transition-colors duration-200"
+                        className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
                       >
                         {link.label}
                       </Link>
@@ -105,13 +120,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-base font-semibold mb-3 text-white">Resources</h4>
+                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Resources</h4>
                 <ul className="space-y-2">
                   {footerLinks.resources.map((link, index) => (
                     <li key={index}>
                       <Link
                         to={link.href}
-                        className="text-neutral-400 hover:text-white transition-colors duration-200"
+                        className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
                       >
                         {link.label}
                       </Link>
@@ -129,13 +144,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-base font-semibold mb-3 text-white">Company</h4>
+                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Company</h4>
                 <ul className="space-y-2">
                   {footerLinks.company.map((link, index) => (
                     <li key={index}>
                       <Link
                         to={link.href}
-                        className="text-neutral-400 hover:text-white transition-colors duration-200"
+                        className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
                       >
                         {link.label}
                       </Link>
@@ -153,13 +168,13 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-base font-semibold mb-3 text-white">Support</h4>
+                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Support</h4>
                 <ul className="space-y-2">
                   {footerLinks.support.map((link, index) => (
                     <li key={index}>
                       <a
                         href={link.href}
-                        className="text-neutral-400 hover:text-white transition-colors duration-200"
+                        className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
                       >
                         {link.label}
                       </a>
@@ -172,10 +187,10 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-neutral-800 py-6">
+        <div className={`border-t ${borderClass} py-6`}>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <motion.div
-              className="text-neutral-500 text-sm"
+              className={`${mutedTextClass} text-sm`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -196,7 +211,7 @@ const Footer: React.FC = () => {
                 href="https://www.facebook.com/profile.php?id=61582307818752"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
+                className={`${mutedTextClass} ${hoverTextClass} transition-colors`}
                 aria-label="Boltcall on Facebook"
               >
                 <Facebook className="w-4 h-4" strokeWidth={2.5} />
@@ -205,7 +220,7 @@ const Footer: React.FC = () => {
                 href="https://x.com/boltcallteam"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
+                className={`${mutedTextClass} ${hoverTextClass} transition-colors`}
                 aria-label="Boltcall on X"
               >
                 <XLogo className="w-4 h-4" strokeWidth={2.5} />
@@ -214,7 +229,7 @@ const Footer: React.FC = () => {
                 href="https://www.linkedin.com/company/boltcall"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
+                className={`${mutedTextClass} ${hoverTextClass} transition-colors`}
                 aria-label="Boltcall on LinkedIn"
               >
                 <Linkedin className="w-4 h-4" strokeWidth={2.5} />
