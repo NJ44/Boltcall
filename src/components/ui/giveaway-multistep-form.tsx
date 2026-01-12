@@ -10,8 +10,9 @@ import { CheckIcon, ArrowRightIcon, Loader2 } from "lucide-react"
 type Field = {
   label: string
   field: string
-  placeholder: string
+  placeholder?: string
   type?: string
+  options?: string[]
 }
 
 type Step = {
@@ -39,9 +40,19 @@ const steps: Step[] = [
   },
   {
     id: 3,
-    label: "Why You",
+    label: "Final Step",
     fields: [
-      { label: "Why do you think you should win?", field: "whyChoose", placeholder: "Tell us why you should win..." }
+      {
+        label: "How did you hear about us?",
+        field: "referralSource",
+        type: "radio",
+        options: [
+          "Facebook",
+          "LinkedIn",
+          "Google",
+          "AI Engine"
+        ]
+      }
     ]
   },
 ]
@@ -154,18 +165,27 @@ export function GiveawayMultiStepForm({
                 <Label htmlFor={field.field} className="text-sm font-medium tracking-tight text-white/90">
                   {field.label}
                 </Label>
-                {field.field === "whyChoose" ? (
-                  <div className="relative group">
-                    <textarea
-                      id={field.field}
-                      placeholder={field.placeholder}
-                      value={formData[field.field] || ""}
-                      onChange={(e) => handleInputChange(field.field, e.target.value)}
-                      autoFocus={fieldIndex === 0}
-                      rows={6}
-                      className="w-full px-3 py-2 text-sm rounded-md bg-white/10 border border-white/30 !text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all duration-500 resize-none caret-white"
-                      style={{ color: '#ffffff', opacity: 1 }}
-                    />
+                {field.type === "radio" && field.options ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {field.options.map((option) => (
+                      <div
+                        key={option}
+                        onClick={() => handleInputChange(field.field, option)}
+                        className={cn(
+                          "cursor-pointer rounded-lg border px-4 py-3 text-sm font-medium transition-all duration-200",
+                          formData[field.field] === option
+                            ? "bg-white text-brand-blue border-white shadow-lg"
+                            : "bg-white/5 text-white border-white/20 hover:bg-white/10 hover:border-white/40"
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{option}</span>
+                          {formData[field.field] === option && (
+                            <CheckIcon className="w-4 h-4 text-brand-blue" strokeWidth={3} />
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="relative group">
@@ -208,7 +228,7 @@ export function GiveawayMultiStepForm({
                 </label>
               </div>
               <label htmlFor="allowNotifications" className="text-sm text-white/95 cursor-pointer leading-relaxed flex-1">
-                I allow you to send me notifications about the giveaway
+                I allow you to send me notifications and updates.
               </label>
             </div>
           )}
@@ -256,4 +276,3 @@ export function GiveawayMultiStepForm({
     </div>
   )
 }
-

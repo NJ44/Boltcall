@@ -104,13 +104,42 @@ const FreeWebsitePackagePage: React.FC = () => {
 
     const handleSubmit = async () => {
         setIsSubmitting(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log("Form Data:", formData, "Notifications:", allowNotifications);
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        // Close modal after success message logic if needed, or keep it open with success state
-        // For now let's just show success
+        try {
+            const payload = {
+                ...formData,
+                allowNotifications,
+                // Map the new field to whyChoose if the backend expects it, or just send it as is. 
+                // Sending both to be safe and ensure data capture.
+                whyChoose: formData.referralSource || formData.whyChoose,
+                referralId: '0' // Default to 0 as we don't have referral logic explicitly set up here yet, or we could add it.
+            };
+
+            console.log('Submitting form with payload:', payload);
+
+            // Call webhook
+            const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            console.log('Response status:', response.status);
+
+            if (!response.ok) {
+                const responseText = await response.text();
+                throw new Error(`Failed to submit form: ${response.status} ${responseText}`);
+            }
+
+            console.log("Form submitted successfully");
+            setIsSubmitted(true);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('Failed to submit form. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleCtaClick = () => {

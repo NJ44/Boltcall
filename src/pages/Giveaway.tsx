@@ -10,7 +10,7 @@ const GiveawayPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [showSurvey, setShowSurvey] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
+
   // Calculate end date (14 days from now)
   const [endDate] = useState(() => {
     const endsAt = new Date();
@@ -29,7 +29,8 @@ const GiveawayPage: React.FC = () => {
     email: '',
     companyName: '',
     website: '',
-    whyChoose: ''
+    whyChoose: '',
+    referralSource: ''
   });
   const [allowNotifications, setAllowNotifications] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,7 +75,7 @@ const GiveawayPage: React.FC = () => {
         </div>
       </header>
 
-        <motion.div className="max-w-4xl mx-auto px-4 pb-16" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: 'easeOut', delay: 0.15 }}>
+      <motion.div className="max-w-4xl mx-auto px-4 pb-16" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: 'easeOut', delay: 0.15 }}>
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl overflow-hidden shadow-[0_35px_60px_-12px_rgba(0,0,0,0.6)]">
           {/* Left: dark panel */}
           <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
@@ -159,7 +160,7 @@ const GiveawayPage: React.FC = () => {
                       aria-label="Share on X (Twitter)"
                       className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white hover:bg-white/20 transition"
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor" strokeWidth={2.5}><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z"/></svg>
+                      <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5" fill="currentColor" strokeWidth={2.5}><path d="M18.244 2.25h3.308l-7.227 8.26 8.49 11.24H16.29l-5.486-7.163-6.272 7.163H1.223l7.73-8.833L.75 2.25h6.043l4.957 6.51 6.494-6.51zm-1.158 19.5h1.833L7.01 3.89H5.048l12.038 17.86z" /></svg>
                     </a>
                     <a
                       href={facebookHref}
@@ -212,7 +213,7 @@ const GiveawayPage: React.FC = () => {
                               email: surveyData.email,
                               companyName: surveyData.companyName,
                               website: surveyData.website,
-                              whyChoose: surveyData.whyChoose,
+                              whyChoose: surveyData.whyChoose || surveyData['referralSource'],
                               allowNotifications: allowNotifications,
                               referralId: referralId
                             };
@@ -229,11 +230,11 @@ const GiveawayPage: React.FC = () => {
                             });
 
                             console.log('Response status:', response.status);
-                            
+
                             // Get response body first (can only read once)
                             const responseText = await response.text();
                             console.log('Response text:', responseText);
-                            
+
                             // Check if response is ok
                             if (!response.ok) {
                               console.error('Response error:', responseText);
@@ -249,14 +250,14 @@ const GiveawayPage: React.FC = () => {
                             } catch (e) {
                               console.log('Could not access response headers (CORS):', e);
                             }
-                            
+
                             // Parse response body - handle UUID string directly
                             let responseData = null;
                             let finalReferralId = referralIdFromHeader;
-                            
+
                             if (!finalReferralId && responseText) {
                               const trimmedText = responseText.trim();
-                              
+
                               // Check if response is a UUID string (format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
                               const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
                               if (uuidPattern.test(trimmedText)) {
@@ -269,11 +270,11 @@ const GiveawayPage: React.FC = () => {
                                   responseData = JSON.parse(trimmedText);
                                   console.log('Response body (parsed as JSON):', responseData);
                                   // Try to extract ID from JSON object
-                                  finalReferralId = responseData?.id || 
-                                                    responseData?.referal_id || 
-                                                    responseData?.referral_id ||
-                                                    responseData?.userId ||
-                                                    responseData?.user_id;
+                                  finalReferralId = responseData?.id ||
+                                    responseData?.referal_id ||
+                                    responseData?.referral_id ||
+                                    responseData?.userId ||
+                                    responseData?.user_id;
                                 } catch (e) {
                                   // If it's not JSON and not UUID, check if it's a plain number/string ID
                                   if (trimmedText) {
@@ -285,9 +286,9 @@ const GiveawayPage: React.FC = () => {
                                 }
                               }
                             }
-                            
+
                             console.log('Final referral ID found:', finalReferralId);
-                            
+
                             if (finalReferralId) {
                               // Generate referral link using the ID: ref={finalReferralId}
                               const link = generateReferralLink(String(finalReferralId));
@@ -361,7 +362,7 @@ const GiveawayPage: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
-        </motion.div>
+      </motion.div>
     </div>
   );
 };

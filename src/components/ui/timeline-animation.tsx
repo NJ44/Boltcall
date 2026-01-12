@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import React from "react";
 
 interface TimelineContentProps<T extends React.ElementType> {
