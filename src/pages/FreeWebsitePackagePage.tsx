@@ -79,7 +79,7 @@ export const products = [
     {
         title: "Boutique Store",
         link: "#",
-        thumbnail: "https://images.unsplash.com/photo-1472851294608-415522f96385?w=800&q=80",
+        thumbnail: "/images/hero-examples/hero-boutique-store-v2.png",
     },
     {
         title: "Creative Studio",
