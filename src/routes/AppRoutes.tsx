@@ -113,6 +113,8 @@ import SmartWebsitePage from '../pages/features/SmartWebsitePage';
 
 import Strike from '../pages/Strike';
 import Challenge from '../pages/Challenge';
+import BusinessAuditPage from '../pages/BusinessAuditPage';
+import RankOnGoogleOfferPage from '../pages/RankOnGoogleOfferPage';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -286,6 +288,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-revenue-calculator" element={<AIRevenueAudit />} />
         <Route path="/ai-revenue-calculator/results" element={<AIRevenueResults />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
+        <Route path="/business-audit" element={<BusinessAuditPage />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         <Route path="/ai-visibility-check" element={<AIVisibilityCheck />} />
         {/* Feature Pages */}
@@ -300,6 +303,7 @@ const NavigationWrapper: React.FC = () => {
         {/* Demo Pages */}
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/strike-ai" element={<Strike />} />
+        <Route path="/rank-on-google-offer" element={<RankOnGoogleOfferPage />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

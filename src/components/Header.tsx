@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, TrendingUp, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -44,6 +44,7 @@ const Header: React.FC = () => {
     { label: 'SEO Audit', href: '/seo-audit', icon: Search },
     { label: 'Website Health Check', href: '/speed-test', icon: Gauge },
     { label: 'AI Revenue Audit', href: '/ai-revenue-calculator', icon: Calculator },
+    { label: 'Business Audit', href: '/business-audit', icon: Briefcase },
     { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },
   ];
 
