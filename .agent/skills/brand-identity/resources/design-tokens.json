@@ -1,0 +1,45 @@
+{
+    "meta": {
+        "brand_name": "Boltcall",
+        "description": "Core design tokens for UI implementation."
+    },
+    "colors": {
+        "primary": {
+            "DEFAULT": "#0B1220",
+            "hover": "#1E40AF",
+            "foreground": "#FFFFFF"
+        },
+        "brand": {
+            "blue": "#2563EB",
+            "blueDark": "#1E40AF",
+            "sky": "#93C5FD"
+        },
+        "secondary": {
+            "DEFAULT": "#F4F4F5",
+            "foreground": "#18181B"
+        },
+        "background": "#FFFFFF",
+        "foreground": "#09090B",
+        "muted": "#475569",
+        "accent": "#F4F4F5",
+        "destructive": "#EF4444",
+        "success": "#10B981"
+    },
+    "typography": {
+        "font_family_headings": [
+            "Poppins",
+            "sans-serif"
+        ],
+        "font_family_body": [
+            "Poppins",
+            "sans-serif"
+        ],
+        "font_weight_bold": "700",
+        "font_weight_normal": "400"
+    },
+    "ui": {
+        "border_radius_default": "0.65rem",
+        "border_radius_small": "0.25rem",
+        "spacing_base_unit": "4px"
+    }
+}

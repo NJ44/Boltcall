@@ -45,7 +45,6 @@ const Header: React.FC = () => {
     { label: 'Website Health Check', href: '/speed-test', icon: Gauge },
     { label: 'AI Revenue Audit', href: '/ai-revenue-calculator', icon: Calculator },
     { label: 'Business Audit', href: '/business-audit', icon: Briefcase },
-    { label: 'Website Optimiser', href: '/conversion-rate-optimizer', icon: TrendingUp },
   ];
 
 
@@ -359,7 +358,7 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible ${location.pathname === '/strike-ai' || location.pathname === '/free-website-package' ? 'top-0' : (isSticky ? 'top-0' : 'top-[43px]')
+      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0 ${location.pathname === '/strike-ai' || location.pathname === '/free-website-package' ? 'top-0' : (isSticky ? 'top-0' : 'top-[43px]')
         }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -739,35 +738,13 @@ const Header: React.FC = () => {
                     />
                   </Link>
                 </motion.div>
-                <div style={{
-                  display: 'inline-block',
-                  color: '#475569 !important'
-                } as React.CSSProperties}>
-                  <style>
-                    {`
-                      .start-now-button .button2 {
-                        color: #475569 !important;
-                        box-shadow: none !important;
-                      }
-                      .start-now-button .button2:hover {
-                        color: #475569 !important;
-                      }
-                      .start-now-button .button2:active {
-                        color: #475569 !important;
-                      }
-                    `}
-                  </style>
-                  <div className="start-now-button">
-                    <Button
-                      onClick={() => handleNavClick('/coming-soon')}
-                      variant="primary"
-                      size="sm"
-                      className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-75 font-bold px-6 py-2 rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40"
-                    >
-                      Start now
-                    </Button>
-                  </div>
-                </div>
+                <Button
+                  onClick={() => handleNavClick('/coming-soon')}
+                  variant="squarespace"
+                  size="sm"
+                >
+                  Start Now
+                </Button>
               </>
             )}
           </div>

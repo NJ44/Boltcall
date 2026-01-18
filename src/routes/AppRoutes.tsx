@@ -115,6 +115,7 @@ import Strike from '../pages/Strike';
 import Challenge from '../pages/Challenge';
 import BusinessAuditPage from '../pages/BusinessAuditPage';
 import RankOnGoogleOfferPage from '../pages/RankOnGoogleOfferPage';
+import ButtonDemoPage from '../pages/ButtonDemoPage';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -302,6 +303,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/smart-website" element={<SmartWebsitePage />} />
         {/* Demo Pages */}
         <Route path="/challenge" element={<Challenge />} />
+        <Route path="/button-demo" element={<ButtonDemoPage />} />
         <Route path="/strike-ai" element={<Strike />} />
         <Route path="/rank-on-google-offer" element={<RankOnGoogleOfferPage />} />
         <Route path="/privacy-policy" element={<Privacy />} />

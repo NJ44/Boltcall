@@ -71,6 +71,14 @@ const config: Config = {
         'accordion-ring': 'var(--accordion-ring)',
         'accordion-ring-offset': 'var(--accordion-ring-offset)',
         secondaryBlack: '#212121',
+
+        main: 'var(--main)',
+        overlay: 'var(--overlay)',
+        bg: 'var(--bg)',
+        bw: 'var(--bw)',
+        blank: 'var(--blank)',
+        mtext: 'var(--mtext)',
+        ringOffset: 'var(--ring-offset)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -79,7 +87,8 @@ const config: Config = {
         base: '5px'
       },
       boxShadow: {
-        'accordion-shadow': 'var(--accordion-shadow)'
+        'accordion-shadow': 'var(--accordion-shadow)',
+        shadow: 'var(--shadow)'
       },
       translate: {
         boxShadowX: '4px',

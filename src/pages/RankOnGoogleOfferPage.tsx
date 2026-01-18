@@ -1,8 +1,9 @@
-
 import { AnimatedRoadmap } from "@/components/ui/animated-roadmap";
 import { Button } from "@/components/ui/Button";
+import { ThreeDButton } from "@/components/ui/ThreeDButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import GiveawayBar from "../components/GiveawayBar";
 
 const milestonesData = [
     {
@@ -31,8 +32,6 @@ const milestonesData = [
     },
 ];
 
-import GiveawayBar from "../components/GiveawayBar";
-
 const RankOnGoogleOfferPage = () => {
     return (
         <div className="w-full bg-white text-foreground min-h-screen flex flex-col">
@@ -55,11 +54,7 @@ const RankOnGoogleOfferPage = () => {
                                 Visualize your roadmap, assign tasks, and hit every milestone—faster and smarter.
                             </p>
                             <div className="flex flex-col space-y-4 pt-4">
-                                <Button
-                                    className="w-fit bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 text-white transition-all duration-300 font-bold text-lg px-8 py-6 rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                                >
-                                    Get Your Ranking Offer
-                                </Button>
+                                <ThreeDButton />
 
                                 <div className="space-y-2 mt-4 text-sm text-gray-600">
                                     <div className="flex items-center gap-2">

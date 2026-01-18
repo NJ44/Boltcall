@@ -16,6 +16,7 @@ interface BlogPost {
   date: string;
   readTime: string;
   category: string;
+  image: string;
 }
 
 const blogPosts: BlogPost[] = [
@@ -25,7 +26,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'The local business landscape has transformed dramatically. What worked yesterday won\'t work tomorrow. And the businesses that are thriving? They\'re the ones that embraced AI services early.',
     date: 'January 15, 2025',
     readTime: '8 min read',
-    category: 'Business Strategy'
+    category: 'Business Strategy',
+    image: '/images/blog/ai-services-pro.png'
   },
   {
     title: 'The <span class="text-blue-600">391%</span> Advantage: Responding in 60 Seconds',
@@ -33,7 +35,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Research shows that contacting a lead within 60 seconds increases conversion rates by 391%. Discover why speed is the ultimate competitive advantage in lead generation.',
     date: 'January 20, 2025',
     readTime: '6 min read',
-    category: 'Lead Generation'
+    category: 'Lead Generation',
+    image: '/images/blog/speed-pro.png'
   },
   {
     title: 'Why <span class="text-blue-600">Website Speed</span> Is Everything',
@@ -41,7 +44,8 @@ const blogPosts: BlogPost[] = [
     excerpt: '53% of users abandon sites that take longer than 3 seconds to load. Discover why website speed is critical and how it impacts your bottom line.',
     date: 'January 25, 2025',
     readTime: '7 min read',
-    category: 'Website Performance'
+    category: 'Website Performance',
+    image: '/images/blog/speed-pro.png'
   },
   {
     title: 'Why <span class="text-blue-600">SEO</span> Can\'t Be Ignored',
@@ -49,7 +53,8 @@ const blogPosts: BlogPost[] = [
     excerpt: '75% of users never go beyond the first page of search results. Discover why SEO is critical for your business and how to get started with a free SEO audit.',
     date: 'January 30, 2025',
     readTime: '9 min read',
-    category: 'SEO Strategy'
+    category: 'SEO Strategy',
+    image: '/images/blog/seo.png'
   },
   {
     title: 'The Complete Guide to <span class="text-blue-600">AI for Local Businesses</span>',
@@ -57,7 +62,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Discover what AI can automate for service businesses, understand the costs vs benefits, and learn where to start. A comprehensive guide to transforming your local business with AI.',
     date: 'February 1, 2025',
     readTime: '12 min read',
-    category: 'Complete Guide'
+    category: 'Complete Guide',
+    image: '/images/blog/ai-services-pro.png'
   },
   {
     title: 'Best <span class="text-blue-600">AI Receptionist Tools</span> for Small Businesses (Top 5 Compared)',
@@ -65,7 +71,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Compare the top 5 AI receptionist tools for small businesses. Detailed reviews of Boltcall, Smith.ai, Numa, Creovai, and OpenPhone AI Receptionist to help you choose the right solution.',
     date: 'February 5, 2025',
     readTime: '10 min read',
-    category: 'Tool Comparison'
+    category: 'Tool Comparison',
+    image: '/images/blog/ai-receptionist.png'
   },
   {
     title: 'How Does an <span class="text-blue-600">AI Receptionist</span> Work? A Complete Technical Guide',
@@ -73,7 +80,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Discover the technology behind AI receptionists: speech recognition, natural language understanding, large language models, and how they learn your business to provide intelligent customer service.',
     date: 'February 10, 2025',
     readTime: '5 min read',
-    category: 'AI Technology'
+    category: 'AI Technology',
+    image: '/images/blog/ai-services-pro.png'
   },
   {
     title: 'Is an <span class="text-blue-600">AI Receptionist</span> Worth It? A Complete Cost-Benefit Analysis',
@@ -81,7 +89,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Every business owner faces the same question: Should I invest in an AI receptionist? This guide breaks down the real costs, benefits, and ROI to help you determine if an AI receptionist is worth it for your business.',
     date: 'February 15, 2025',
     readTime: '8 min read',
-    category: 'Business Analysis'
+    category: 'Business Analysis',
+    image: '/images/blog/ai-receptionist.png'
   },
   {
     title: 'How to Make an <span class="text-blue-600">AI Receptionist</span>: A Complete Step-by-Step Guide',
@@ -89,7 +98,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Building an AI receptionist from scratch requires combining multiple technologies. This guide walks you through the complete process, from choosing the right tools to deploying your AI receptionist.',
     date: 'February 20, 2025',
     readTime: '10 min read',
-    category: 'Technical Guide'
+    category: 'Technical Guide',
+    image: '/images/blog/ai-services-pro.png'
   },
   {
     title: 'Will <span class="text-blue-600">Receptionists</span> Be Replaced by AI? The Future of Front Desk Work',
@@ -97,7 +107,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'It\'s the question on every receptionist\'s mind: Will AI replace my job? While AI receptionists are transforming how businesses handle calls, they\'re not eliminating human receptionists entirely—they\'re changing the role.',
     date: 'February 25, 2025',
     readTime: '9 min read',
-    category: 'Industry Analysis'
+    category: 'Industry Analysis',
+    image: '/images/blog/ai-services-pro.png'
   },
   {
     title: 'What Does <span class="text-blue-600">Instant Lead Reply</span> Mean? A Complete Guide',
@@ -105,7 +116,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Instant lead reply means responding to potential customers within seconds of them showing interest. This guide explains what it is, why it matters, and how it works.',
     date: 'March 1, 2025',
     readTime: '6 min read',
-    category: 'Lead Generation'
+    category: 'Lead Generation',
+    image: '/images/blog/speed-pro.png'
   },
   {
     title: 'How to Set Up <span class="text-blue-600">Instant Lead Reply</span> in Your Website/Ads with Boltcall',
@@ -113,7 +125,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Setting up instant lead reply with Boltcall is straightforward and can be done in 1-2 hours. This step-by-step guide walks you through connecting your website forms, Facebook Ads, Google Ads, and other lead sources.',
     date: 'March 1, 2025',
     readTime: '8 min read',
-    category: 'Setup Guide'
+    category: 'Setup Guide',
+    image: '/images/blog/speed-pro.png'
   },
   {
     title: 'How Does <span class="text-blue-600">Instant Lead Reply</span> Work? The Technology Behind the Magic',
@@ -121,7 +134,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'You submit a form on a website and receive a reply within seconds. How is that possible? This guide breaks down exactly how the technology works—from webhooks to AI processing to multi-channel delivery.',
     date: 'March 2, 2025',
     readTime: '7 min read',
-    category: 'Technology'
+    category: 'Technology',
+    image: '/images/blog/speed-pro.png'
   },
   {
     title: 'Top 10 <span class="text-blue-600">AI Receptionist Agencies</span>: Complete Comparison Guide',
@@ -129,7 +143,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Compare the top 10 AI receptionist agencies. Find features, pricing, and choose the best AI receptionist service for your business. Comprehensive guide with detailed comparisons.',
     date: 'March 15, 2025',
     readTime: '15 min read',
-    category: 'Tool Comparison'
+    category: 'Tool Comparison',
+    image: '/images/blog/ai-receptionist.png'
   },
   {
     title: 'How to Create a <span class="text-blue-600">Gemini Gem</span> Business Assistant (Marketing, Social Media & More)',
@@ -137,7 +152,8 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Learn how to create a Gemini gem that acts as your business assistant. Step-by-step guide for marketing assistants, social media assistants, content creators, and more.',
     date: 'February 15, 2025',
     readTime: '12 min read',
-    category: 'AI Tools Guide'
+    category: 'AI Tools Guide',
+    image: '/images/blog/ai-services-pro.png'
   },
   // Add more blog posts here as they are created
 ];
@@ -169,7 +185,7 @@ const BlogCenter: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,11 +199,11 @@ const BlogCenter: React.FC = () => {
               <span className="text-blue-600">Boltcall</span> Blog
             </h1>
           </motion.div>
-          
+
           {/* Search Spotlight */}
           <div className="flex justify-center">
-            <AppleSpotlight 
-              isOpen={isSpotlightOpen} 
+            <AppleSpotlight
+              isOpen={isSpotlightOpen}
               handleClose={() => setIsSpotlightOpen(false)}
               blogPosts={blogPosts}
             />
@@ -209,25 +225,34 @@ const BlogCenter: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
+                className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden group h-full flex flex-col"
               >
-                <Link to={post.slug} className="block h-full">
-                  <div className="p-6 h-full flex flex-col">
+                <Link to={post.slug} className="block flex-grow flex flex-col">
+                  {/* Blog Image */}
+                  <div className="relative h-48 overflow-hidden bg-gray-100">
+                    <img
+                      src={post.image}
+                      alt={post.title.replace(/<[^>]*>/g, '')}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+
+                  <div className="p-6 flex flex-col flex-grow">
                     {/* Category Badge */}
                     <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-4 w-fit">
                       <span className="font-semibold">{post.category}</span>
                     </div>
-                    
+
                     {/* Title */}
                     <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors" dangerouslySetInnerHTML={{ __html: post.title }} />
-                    
+
                     {/* Excerpt */}
                     <p className="text-gray-600 mb-6 flex-grow line-clamp-3">
                       {post.excerpt}
                     </p>
-                    
+
                     {/* Meta Info */}
-                    <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-100">
+                    <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-100 mt-auto">
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
