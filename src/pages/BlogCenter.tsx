@@ -6,7 +6,7 @@ import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
-import Breadcrumbs from '../components/Breadcrumbs';
+
 import { AppleSpotlight } from '../components/ui/apple-spotlight';
 
 interface BlogPost {
