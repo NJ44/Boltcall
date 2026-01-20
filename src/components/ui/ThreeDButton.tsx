@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+
 import './3d-button.css'; // Importing specific CSS for this component
 
 export const ThreeDButton = () => {
-    const [count, setCount] = useState(0);
 
     return (
         <div className={cn("flex flex-col items-center gap-4 p-4 rounded-lg")}>

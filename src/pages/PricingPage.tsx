@@ -16,7 +16,7 @@ const PricingPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      <div className="pt-32">
+      <div className="pt-20">
         <Pricing />
       </div>
       <Footer />
