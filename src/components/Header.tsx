@@ -774,113 +774,159 @@ const Header: React.FC = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden fixed inset-0 z-[110] bg-white/95 backdrop-blur-md"
+              className="md:hidden fixed inset-0 z-[110] bg-gradient-to-br from-white via-blue-50/30 to-white backdrop-blur-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex flex-col items-center justify-center h-full px-8">
-                <nav className="flex flex-col space-y-8 text-center">
-                  {/* Features in Mobile Menu */}
+              {/* Close button at top */}
+              <div className="absolute top-4 right-4 z-10">
+                <motion.button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-lg border border-gray-200"
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X size={20} strokeWidth={2.5} className="text-gray-800" />
+                </motion.button>
+              </div>
+
+              <div className="flex flex-col h-full overflow-y-auto px-6 pt-20 pb-8">
+                <nav className="flex flex-col space-y-6 max-w-md mx-auto w-full">
+                  {/* Main Navigation Items */}
                   <motion.div
-                    className="flex flex-col space-y-4"
+                    className="space-y-2"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                   >
-                    <div className="text-2xl font-medium text-text-muted mb-2">Features</div>
-                    {featuresItems.map((item, index) => (
+                    {navItems.map((item, index) => (
                       <motion.button
-                        key={item.href}
-                        onClick={() => {
-                          handleNavClick(item.href);
-                          setIsMenuOpen(false);
-                        }}
-                        className="text-lg text-gray-600 hover:text-brand-blue transition-colors duration-300 py-2"
+                        key={item.label}
+                        onClick={() => handleNavClick(item.href)}
+                        className="w-full text-left px-4 py-3 rounded-xl bg-white/60 backdrop-blur-sm border border-gray-200/50 hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-300 group"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        {item.label}
+                        <span className="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                          {item.label}
+                        </span>
                       </motion.button>
                     ))}
-                  </motion.div>
-
-                  {/* About in Mobile Menu */}
-                  <motion.button
-                    onClick={() => {
-                      handleNavClick('/about');
-                      setIsMenuOpen(false);
-                    }}
-                    className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: featuresItems.length * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    About
-                    <motion.div
-                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-brand-blue rounded-full"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "100%" }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                    />
-                  </motion.button>
-
-                  {navItems.map((item, index) => (
+                    
                     <motion.button
-                      key={item.label}
-                      onClick={() => handleNavClick(item.href)}
-                      className="relative text-2xl font-medium text-text-muted hover:text-brand-blue transition-colors duration-300 py-4"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: (featuresItems.length + 1 + index) * 0.1 }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {item.label}
-                      <motion.div
-                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-brand-blue rounded-full"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: "100%" }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                      />
-                    </motion.button>
-                  ))}
-
-                  {/* Resources in Mobile Menu */}
-                  <motion.div
-                    className="flex flex-col space-y-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: navItems.length * 0.1 }}
-                  >
-                    <div className="text-2xl font-medium text-text-muted mb-2">Resources</div>
-                    {resourcesItems.map((item, index) => (
-                      <motion.button
-                        key={item.href}
-                        onClick={() => {
-                          handleNavClick(item.href);
-                          setIsMenuOpen(false);
-                        }}
-                        className="text-lg text-gray-600 hover:text-brand-blue transition-colors duration-300 py-2"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3, delay: (navItems.length + index) * 0.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {item.label}
-                      </motion.button>
-                    ))}
-                    <motion.div
+                      onClick={() => {
+                        handleNavClick('/about');
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 rounded-xl bg-white/60 backdrop-blur-sm border border-gray-200/50 hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-300 group"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: (navItems.length + resourcesItems.length) * 0.1 }}
+                      transition={{ duration: 0.3, delay: 0.1 + navItems.length * 0.05 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <span className="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                        About
+                      </span>
+                    </motion.button>
+                  </motion.div>
+
+                  {/* Divider */}
+                  <motion.div
+                    className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-2"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  />
+
+                  {/* Features Section */}
+                  <motion.div
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    <div className="px-4 py-2">
+                      <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Features</h3>
+                    </div>
+                    <div className="space-y-1.5">
+                      {featuresItems.map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                          <motion.button
+                            key={item.href}
+                            onClick={() => {
+                              handleNavClick(item.href);
+                              setIsMenuOpen(false);
+                            }}
+                            className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-white/80 hover:shadow-sm transition-all duration-200 group flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.25 + index * 0.03 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <Icon className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                            <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
+                              {item.label}
+                            </span>
+                          </motion.button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+
+                  {/* Divider */}
+                  <motion.div
+                    className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-2"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.4, delay: 0.5 }}
+                  />
+
+                  {/* Resources Section */}
+                  <motion.div
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  >
+                    <div className="px-4 py-2">
+                      <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Resources</h3>
+                    </div>
+                    <div className="space-y-1.5">
+                      {resourcesItems.map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                          <motion.button
+                            key={item.href}
+                            onClick={() => {
+                              handleNavClick(item.href);
+                              setIsMenuOpen(false);
+                            }}
+                            className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-white/80 hover:shadow-sm transition-all duration-200 group flex items-center gap-3"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.35 + index * 0.03 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <Icon className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0" />
+                            <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
+                              {item.label}
+                            </span>
+                          </motion.button>
+                        );
+                      })}
+                    </div>
+                    
+                    {/* Strike AI Card */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.6 }}
                       className="mt-4"
                     >
                       <Link
@@ -889,99 +935,73 @@ const Header: React.FC = () => {
                           handleNavClick('/strike-ai');
                           setIsMenuOpen(false);
                         }}
-                        className="block rounded-xl p-5 bg-white border-2 border-gray-900 shadow-lg"
+                        className="block rounded-xl p-4 bg-gradient-to-br from-blue-600 to-indigo-700 shadow-xl border border-blue-500/20 hover:shadow-2xl transition-all duration-300 group"
                       >
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
                             <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
                           </div>
                           <div>
-                            <span className="font-bold text-sm text-black block">
+                            <span className="font-bold text-sm text-white block">
                               New: Strike AI
                             </span>
-                            <span className="text-xs text-gray-600 block mt-0.5">
+                            <span className="text-xs text-blue-100 block mt-0.5">
                               Now Available
                             </span>
                           </div>
                         </div>
-                        <p className="text-xs leading-relaxed text-gray-700">
+                        <p className="text-xs leading-relaxed text-blue-50">
                           Strike, our intelligent AI assistant, is now available. Get instant answers and assistance.
                         </p>
                       </Link>
                     </motion.div>
                   </motion.div>
 
-                  {/* Auth buttons with smooth animations */}
+                  {/* Auth buttons */}
                   <motion.div
-                    className="flex flex-col space-y-4 mt-8"
+                    className="flex flex-col space-y-3 pt-4 border-t border-gray-200/50"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
+                    transition={{ duration: 0.4, delay: 0.7 }}
                   >
                     {isAuthenticated ? (
-                      <>
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
+                      <motion.div whileTap={{ scale: 0.98 }}>
+                        <Button
+                          onClick={() => {
+                            handleNavClick('/dashboard');
+                            setIsMenuOpen(false);
+                          }}
+                          variant="primary"
+                          size="md"
+                          className="w-full py-3 text-base font-semibold rounded-xl shadow-lg"
                         >
+                          Go To Dashboard
+                        </Button>
+                      </motion.div>
+                    ) : (
+                      <>
+                        <motion.button
+                          onClick={() => {
+                            handleNavClick('/login');
+                            setIsMenuOpen(false);
+                          }}
+                          className="w-full py-3 px-6 text-center text-gray-700 hover:text-blue-600 transition-colors duration-300 font-semibold text-base rounded-xl hover:bg-gray-50"
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          Login
+                        </motion.button>
+                        <motion.div whileTap={{ scale: 0.98 }}>
                           <Button
                             onClick={() => {
-                              handleNavClick('/dashboard');
+                              handleNavClick('/coming-soon');
                               setIsMenuOpen(false);
                             }}
                             variant="primary"
                             size="md"
-                            className="w-full py-3 text-lg font-medium"
+                            className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-300 font-bold text-base rounded-xl shadow-lg"
                           >
-                            Go To Dashboard
+                            Start now
                           </Button>
-                        </motion.div>
-                      </>
-                    ) : (
-                      <>
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Link
-                            to="/login"
-                            className="block w-full text-center py-3 px-6 text-text-muted hover:text-brand-blue transition-colors duration-300 font-medium text-lg"
-                            onClick={() => setIsMenuOpen(false)}
-                          >
-                            Login
-                          </Link>
-                        </motion.div>
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <div className="start-now-button-mobile">
-                            <style>
-                              {`
-                              .start-now-button-mobile .button2 {
-                                color: #6b7280 !important;
-                                box-shadow: none !important;
-                              }
-                              .start-now-button-mobile .button2:hover {
-                                color: #6b7280 !important;
-                              }
-                              .start-now-button-mobile .button2:active {
-                                color: #6b7280 !important;
-                              }
-                            `}
-                            </style>
-                            <Button
-                              onClick={() => {
-                                handleNavClick('/coming-soon');
-                                setIsMenuOpen(false);
-                              }}
-                              variant="primary"
-                              size="sm"
-                              className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-700 hover:via-blue-800 hover:to-indigo-800 transition-all duration-300 font-bold text-base rounded-2xl border-2 border-blue-500/20 hover:border-blue-400/40 transform hover:scale-105"
-                            >
-                              Start now
-                            </Button>
-                          </div>
                         </motion.div>
                       </>
                     )}
