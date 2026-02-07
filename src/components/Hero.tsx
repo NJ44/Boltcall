@@ -185,11 +185,11 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center pt-16 lg:pt-20">
+          <div className="relative z-10 text-center pt-24 md:pt-16 lg:pt-20">
             {/* Animated Headline */}
             <div className="flex justify-center mb-6 relative z-10">
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap md:ml-56">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap ml-4 md:ml-56">
                   <motion.span
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -267,7 +267,7 @@ const Hero: React.FC = () => {
                 }}
                 variant="squarespace-outline"
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-[85%] sm:w-auto"
               >
                 Learn more
               </Button>
@@ -275,7 +275,7 @@ const Hero: React.FC = () => {
                 onClick={() => navigate('/coming-soon')}
                 variant="squarespace"
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-[85%] sm:w-auto"
               >
                 5-Min Free Setup
               </Button>

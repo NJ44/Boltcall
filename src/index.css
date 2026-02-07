@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -445,6 +447,13 @@ button:active,
   @font-face {
     font-family: 'Poppins';
     font-display: optional;
+    src: local('Poppins');
+  }
+
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    font-display: optional;
+    src: local('IBM Plex Sans');
   }
 
   /* Prevent layout shift from images */

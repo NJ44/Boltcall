@@ -194,7 +194,7 @@ function Feature() {
               ref={(el) => { cardRefs.current[2] = el; }}
               onMouseMove={(e) => handleMouseMove(e, 2)}
               onMouseLeave={() => handleMouseLeave(2)}
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-48 transition-transform duration-300 ease-out cursor-pointer w-full"
+              className="bg-muted rounded-xl lg:col-span-2 p-4 md:p-6 flex items-center shadow-2xl h-48 transition-transform duration-300 ease-out cursor-pointer w-full"
               style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -202,13 +202,13 @@ function Feature() {
               viewport={{ once: true }}
             >
               <div className="flex flex-col text-left max-w-sm">
-                <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Customer satisfaction</h3>
-                <p className="text-muted-foreground text-base">
+                <h3 className="text-lg md:text-2xl font-semibold tracking-tight mb-2 text-black">Customer satisfaction</h3>
+                <p className="text-muted-foreground text-sm md:text-base">
                   Make your customers happy. Answer them right away. Talk to them in a nice way. They will trust you and come back.
                 </p>
               </div>
               <div className="flex-1 flex items-center justify-center">
-                <div className="w-48 h-48">
+                <div className="w-32 h-32 md:w-48 md:h-48">
                   <DotLottieReact
                     src="/costumer_statisfication.lottie"
                     loop
