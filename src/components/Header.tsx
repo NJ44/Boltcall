@@ -365,7 +365,7 @@ const Header: React.FC = () => {
       initial={{ y: 0 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      style={{ contain: 'layout style' }}
+      style={{ contain: 'layout style', transform: 'translateY(0) !important' }}
     >
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
         <div className="flex items-center justify-between h-14 max-w-7xl mx-auto overflow-visible">

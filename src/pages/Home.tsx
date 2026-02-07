@@ -29,16 +29,16 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden md:overflow-x-visible">
       {/* Giveaway Bar (hidden on mobile) */}
       <div className="hidden md:block">
         <GiveawayBar />
       </div>
       
       {/* Content */}
-      <div className="relative z-10 pt-32">
+      <div className="relative z-10 pt-32 overflow-x-hidden md:overflow-x-visible">
         <Header />
-        <main className="pb-0">
+        <main className="pb-0 overflow-x-hidden md:overflow-x-visible">
           <Hero />
           
           <div className="relative -top-[500px] z-[100] pointer-events-none hidden md:block" style={{ minHeight: '600px', contain: 'layout' }}>

@@ -23,13 +23,13 @@ interface IconData {
 
 // Define the icons with their unique positions
 const heroIcons: IconData[] = [
-  { id: 1, icon: IconPhone, className: 'top-[10%] left-[10%]' },
-  { id: 2, icon: IconCalendar, className: 'top-[20%] right-[8%]' },
-  { id: 3, icon: IconSMS, className: 'top-[70%] left-[10%]' },
-  { id: 6, icon: IconUsers, className: 'top-[40%] left-[15%]' },
-  { id: 7, icon: IconTarget, className: 'top-[65%] right-[25%]' },
-  { id: 8, icon: IconSMS2, className: 'top-[50%] right-[5%]' },
-  { id: 9, icon: IconClock, className: 'top-[55%] left-[5%]' },
+  { id: 1, icon: IconPhone, className: 'top-[15%] left-[5%] md:top-[10%] md:left-[10%]' },
+  { id: 2, icon: IconCalendar, className: 'top-[25%] right-[5%] md:top-[20%] md:right-[8%]' },
+  { id: 3, icon: IconSMS, className: 'top-[75%] left-[8%] md:top-[70%] md:left-[10%]' },
+  { id: 6, icon: IconUsers, className: 'top-[45%] left-[10%] md:top-[40%] md:left-[15%]' },
+  { id: 7, icon: IconTarget, className: 'top-[70%] right-[15%] md:top-[65%] md:right-[25%]' },
+  { id: 8, icon: IconSMS2, className: 'top-[55%] right-[3%] md:top-[50%] md:right-[5%]' },
+  { id: 9, icon: IconClock, className: 'top-[60%] left-[2%] md:top-[55%] md:left-[5%]' },
 ];
 
 // A single icon component with its own motion logic
@@ -167,7 +167,7 @@ const Hero: React.FC = () => {
     <>
       <section
         id="hero"
-        className="relative -mt-24 pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1] bg-gradient-to-b from-white to-light-blue dark:from-gray-900 dark:to-gray-800 py-16 lg:py-24"
+        className="relative -mt-24 pb-64 lg:-mt-32 lg:pb-96 overflow-x-hidden md:overflow-visible z-[1] bg-gradient-to-b from-white to-light-blue dark:from-gray-900 dark:to-gray-800 py-16 lg:py-24"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
         onMouseMove={handleMouseMove}
       >
