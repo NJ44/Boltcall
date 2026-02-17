@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
+import { SterlingGateKineticNavigation } from './ui/sterling-gate-kinetic-navigation';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -47,6 +48,19 @@ const Header: React.FC = () => {
     { label: 'Business Audit', href: '/business-audit', icon: Briefcase },
   ];
 
+  /** Flat list for mobile kinetic menu (used only on mobile) */
+  const kineticMenuItems = useMemo(
+    () => [
+      { label: 'About', href: '/about' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Contact', href: '/contact' },
+      ...featuresItems.map((item) => ({ label: item.label, href: item.href })),
+      ...resourcesItems.map((item) => ({ label: item.label, href: item.href, dataMenuFade: item.label === 'Blog' })),
+      ...freeToolsItems.map((item) => ({ label: item.label, href: item.href })),
+      { label: 'Strike AI', href: '/strike-ai' },
+    ],
+    []
+  );
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
@@ -770,11 +784,20 @@ const Header: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation - Full screen overlay */}
+        {/* Mobile only: Sterling Gate kinetic navigation (hamburger menu) */}
+        <div className="md:hidden">
+          <SterlingGateKineticNavigation
+            open={isMenuOpen}
+            onClose={() => setIsMenuOpen(false)}
+            menuItems={kineticMenuItems}
+          />
+        </div>
+
+        {/* Desktop fallback mobile overlay (hidden on mobile; kinetic nav used instead) */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden fixed inset-0 z-[110] bg-gradient-to-br from-white via-blue-50/30 to-white backdrop-blur-lg"
+              className="max-md:hidden fixed inset-0 z-[110] bg-gradient-to-br from-white via-blue-50/30 to-white backdrop-blur-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
