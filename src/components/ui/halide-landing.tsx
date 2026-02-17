@@ -142,6 +142,14 @@ export const HalideLanding: React.FC = () => {
 
         .halide-cta-button:hover { background: var(--halide-accent); transform: translateY(-5px); }
 
+        .halide-lead-copy {
+          font-size: 0.8rem;
+          line-height: 1.4;
+          color: rgba(224, 224, 224, 0.85);
+          max-width: 280px;
+        }
+        .halide-lead-copy p { margin: 0; }
+
         .halide-logo-link {
           display: block;
           pointer-events: auto;
@@ -190,9 +198,8 @@ export const HalideLanding: React.FC = () => {
           <h1 className="halide-hero-title">SILVER<br />SULPHIDE</h1>
 
           <div style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <div style={{ fontFamily: 'monospace', fontSize: '0.75rem' }}>
-              <p>[ ARCHIVE 2024 ]</p>
-              <p>SURFACE TENSION & TOPOGRAPHICAL LIGHT</p>
+            <div className="halide-lead-copy">
+              <p>Free guide: actionable tips to capture more leads and never miss a call. One email, instant access.</p>
             </div>
             <a
               href="#lead-form"
@@ -209,9 +216,9 @@ export const HalideLanding: React.FC = () => {
 
         <div className="halide-viewport">
           <div className="halide-canvas-3d" ref={canvasRef}>
-            <div className="halide-layer halide-layer-1" ref={(el) => (layersRef.current[0] = el!)}></div>
-            <div className="halide-layer halide-layer-2" ref={(el) => (layersRef.current[1] = el!)}></div>
-            <div className="halide-layer halide-layer-3" ref={(el) => (layersRef.current[2] = el!)}></div>
+            <div className="halide-layer halide-layer-1" ref={(el) => { if (el) layersRef.current[0] = el; }}></div>
+            <div className="halide-layer halide-layer-2" ref={(el) => { if (el) layersRef.current[1] = el; }}></div>
+            <div className="halide-layer halide-layer-3" ref={(el) => { if (el) layersRef.current[2] = el; }}></div>
             <div className="halide-contours"></div>
           </div>
         </div>
