@@ -48,7 +48,7 @@ export const HalideLanding: React.FC = () => {
         :root {
           --halide-bg: #0a0a0a;
           --halide-silver: #e0e0e0;
-          --halide-accent: #ff3c00;
+          --halide-accent: #2563EB;
           --halide-grain-opacity: 0.15;
         }
 
@@ -177,6 +177,57 @@ export const HalideLanding: React.FC = () => {
           50% { transform: scaleY(1); transform-origin: top; }
           51% { transform: scaleY(1); transform-origin: bottom; }
         }
+
+        /* Mobile: lead magnet hero */
+        @media (max-width: 767px) {
+          .halide-interface-grid {
+            padding: 1.25rem 1rem 1.5rem;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto 1fr auto;
+            gap: 0.5rem;
+          }
+          .halide-hero-title {
+            font-size: clamp(2rem, 11vw, 3.5rem);
+            line-height: 0.9;
+          }
+          .halide-interface-grid > div:first-child { grid-column: 1; }
+          .halide-interface-grid > div:nth-child(2) { display: none; }
+          .halide-cta-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+            margin-top: 0.5rem;
+          }
+          .halide-lead-copy {
+            font-size: 0.75rem;
+            max-width: 100%;
+          }
+          .halide-cta-button {
+            min-height: 44px;
+            padding: 0.75rem 1.25rem;
+            width: 100%;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          .halide-logo {
+            height: 2.25rem;
+            max-width: 160px;
+          }
+          .halide-logo-link {
+            margin-top: 0;
+          }
+          .halide-canvas-3d {
+            width: 100%;
+            max-width: 95vw;
+            height: 50vmin;
+            min-height: 200px;
+          }
+          .halide-scroll-hint {
+            bottom: 1rem;
+            height: 40px;
+          }
+        }
       `}</style>
 
       <div className="halide-body">
@@ -197,7 +248,7 @@ export const HalideLanding: React.FC = () => {
 
           <h1 className="halide-hero-title">SILVER<br />SULPHIDE</h1>
 
-          <div style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div className="halide-cta-row" style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div className="halide-lead-copy">
               <p>Free guide: actionable tips to capture more leads and never miss a call. One email, instant access.</p>
             </div>

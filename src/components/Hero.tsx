@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
 import Button from './ui/Button';
+import { InteractiveHoverButton } from './ui/interactive-hover-button';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
 
@@ -271,14 +272,13 @@ const Hero: React.FC = () => {
               >
                 Learn more
               </Button>
-              <Button
+              <InteractiveHoverButton
+                text="Start free"
                 onClick={() => navigate('/coming-soon')}
-                variant="squarespace"
-                size="lg"
-                className="w-[85%] sm:w-auto"
-              >
-                5-Min Free Setup
-              </Button>
+                className="min-h-11 w-40 border-gray-300 bg-white text-gray-900 py-2.5 px-4"
+                hoverBgClass="bg-brand-blue"
+                hoverTextClass="text-white"
+              />
             </motion.div>
 
           </div>

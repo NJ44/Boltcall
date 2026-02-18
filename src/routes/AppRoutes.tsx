@@ -118,6 +118,7 @@ import RankOnGoogleOfferPage from '../pages/RankOnGoogleOfferPage';
 import ButtonDemoPage from '../pages/ButtonDemoPage';
 import DrHazakLandingPage from '../pages/DrHazakLandingPage';
 import LeadMagnetPage from '../pages/LeadMagnetPage';
+import LeadMagnetThankYouPage from '../pages/LeadMagnetThankYouPage';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -247,6 +248,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/payment/elite-starter" element={<PaymentEliteStarter />} />
         <Route path="/giveaway" element={<Giveaway />} />
         <Route path="/lead-magnet" element={<LeadMagnetPage />} />
+        <Route path="/lead-magnet/thank-you" element={<LeadMagnetThankYouPage />} />
         <Route path="/free-website" element={<FreeWebsitePage />} />
         <Route path="/free-website-package" element={<FreeWebsitePackagePage />} />
         <Route path="/free-website-package/pricing" element={<FreeWebsitePricingPage />} />

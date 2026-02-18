@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, R
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
+import { InteractiveHoverButton } from './ui/interactive-hover-button';
 import { SterlingGateKineticNavigation } from './ui/sterling-gate-kinetic-navigation';
 
 const Header: React.FC = () => {
@@ -754,13 +755,13 @@ const Header: React.FC = () => {
                     />
                   </Link>
                 </motion.div>
-                <Button
+                <InteractiveHoverButton
+                  text="Start Now"
                   onClick={() => handleNavClick('/coming-soon')}
-                  variant="squarespace"
-                  size="sm"
-                >
-                  Start Now
-                </Button>
+                  className={`!min-h-11 !min-w-[9rem] !w-auto !px-4 !py-2.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
+                  hoverBgClass="bg-brand-blue"
+                  hoverTextClass="text-white"
+                />
               </>
             )}
           </div>
