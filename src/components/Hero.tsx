@@ -268,7 +268,7 @@ const Hero: React.FC = () => {
                 }}
                 variant="squarespace-outline"
                 size="lg"
-                className="w-[85%] sm:w-auto"
+                className="w-[85%] sm:w-auto border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white hover:border-brand-blue"
               >
                 Learn more
               </Button>

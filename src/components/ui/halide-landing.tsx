@@ -91,14 +91,24 @@ export const HalideLanding: React.FC = () => {
           position: absolute;
           inset: 0;
           border: 1px solid rgba(224, 224, 224, 0.1);
-          background-size: cover;
-          background-position: center;
+          overflow: hidden;
           transition: transform 0.5s ease;
         }
 
-        .halide-layer-1 { background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200'); filter: grayscale(1) contrast(1.2) brightness(0.5); }
-        .halide-layer-2 { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1200'); filter: grayscale(1) contrast(1.1) brightness(0.7); opacity: 0.6; mix-blend-mode: screen; }
-        .halide-layer-3 { background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=1200'); filter: grayscale(1) contrast(1.3) brightness(0.8); opacity: 0.4; mix-blend-mode: overlay; }
+        .halide-layer-inner {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 500px;
+          height: 800px;
+          transform: translate(-50%, -50%) rotate(90deg);
+          background-image: url('/Blue%20Illustrative%20Annual%20Report%20Book%20Cover.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
+        .halide-layer-inner-1 { filter: contrast(1.05) brightness(0.92); }
 
         .halide-contours {
           position: absolute;
@@ -123,8 +133,8 @@ export const HalideLanding: React.FC = () => {
         .halide-hero-title {
           grid-column: 1 / -1;
           align-self: center;
-          font-size: clamp(3rem, 10vw, 10rem);
-          line-height: 0.85;
+          font-size: clamp(2rem, 6vw, 5rem);
+          line-height: 0.9;
           letter-spacing: -0.04em;
           mix-blend-mode: difference;
         }
@@ -187,8 +197,8 @@ export const HalideLanding: React.FC = () => {
             gap: 0.5rem;
           }
           .halide-hero-title {
-            font-size: clamp(2rem, 11vw, 3.5rem);
-            line-height: 0.9;
+            font-size: clamp(1.5rem, 7vw, 2.5rem);
+            line-height: 0.95;
           }
           .halide-interface-grid > div:first-child { grid-column: 1; }
           .halide-interface-grid > div:nth-child(2) { display: none; }
@@ -246,7 +256,7 @@ export const HalideLanding: React.FC = () => {
           </a>
           <div />
 
-          <h1 className="halide-hero-title">SILVER<br />SULPHIDE</h1>
+          <h1 className="halide-hero-title">LINKEDIN LEAD MAGNETS<br />LIBRARY</h1>
 
           <div className="halide-cta-row" style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div className="halide-lead-copy">
@@ -267,9 +277,7 @@ export const HalideLanding: React.FC = () => {
 
         <div className="halide-viewport">
           <div className="halide-canvas-3d" ref={canvasRef}>
-            <div className="halide-layer halide-layer-1" ref={(el) => { if (el) layersRef.current[0] = el; }}></div>
-            <div className="halide-layer halide-layer-2" ref={(el) => { if (el) layersRef.current[1] = el; }}></div>
-            <div className="halide-layer halide-layer-3" ref={(el) => { if (el) layersRef.current[2] = el; }}></div>
+            <div className="halide-layer halide-layer-1" ref={(el) => { if (el) layersRef.current[0] = el; }}><div className="halide-layer-inner halide-layer-inner-1" /></div>
             <div className="halide-contours"></div>
           </div>
         </div>
