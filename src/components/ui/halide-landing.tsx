@@ -82,7 +82,7 @@ export const HalideLanding: React.FC = () => {
 
         .halide-canvas-3d {
           position: relative;
-          width: 800px; height: 500px;
+          width: 640px; height: 400px;
           transform-style: preserve-3d;
           transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -99,8 +99,8 @@ export const HalideLanding: React.FC = () => {
           position: absolute;
           left: 50%;
           top: 50%;
-          width: 500px;
-          height: 800px;
+          width: 400px;
+          height: 640px;
           transform: translate(-50%, -50%) rotate(90deg);
           background-image: url('/Blue%20Illustrative%20Annual%20Report%20Book%20Cover.png');
           background-size: cover;
@@ -109,6 +109,26 @@ export const HalideLanding: React.FC = () => {
         }
 
         .halide-layer-inner-1 { filter: contrast(1.05) brightness(0.92); }
+
+        .halide-book-spine {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          width: 24px;
+          height: 400px;
+          background: #0a0a0a;
+          transform: translateY(-50%) rotateY(-90deg) translateZ(-12px);
+          transform-style: preserve-3d;
+          pointer-events: none;
+        }
+
+        .halide-book-shadow {
+          position: absolute;
+          inset: -20px -30px -40px -30px;
+          background: radial-gradient(ellipse 80% 30% at 50% 100%, rgba(0,0,0,0.5) 0%, transparent 70%);
+          transform: translateZ(-30px);
+          pointer-events: none;
+        }
 
         .halide-contours {
           position: absolute;
@@ -133,7 +153,8 @@ export const HalideLanding: React.FC = () => {
         .halide-hero-title {
           grid-column: 1 / -1;
           align-self: center;
-          font-size: clamp(2rem, 6vw, 5rem);
+          font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+          font-size: clamp(1.65rem, 5vw, 4rem);
           line-height: 0.9;
           letter-spacing: -0.04em;
           mix-blend-mode: difference;
@@ -153,26 +174,13 @@ export const HalideLanding: React.FC = () => {
         .halide-cta-button:hover { background: var(--halide-accent); transform: translateY(-5px); }
 
         .halide-lead-copy {
+          font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
           font-size: 0.8rem;
           line-height: 1.4;
           color: rgba(224, 224, 224, 0.85);
           max-width: 280px;
         }
         .halide-lead-copy p { margin: 0; }
-
-        .halide-logo-link {
-          display: block;
-          pointer-events: auto;
-          align-self: start;
-          margin-top: -0.5rem;
-        }
-        .halide-logo {
-          height: 3.25rem;
-          width: auto;
-          max-width: 200px;
-          object-fit: contain;
-          filter: brightness(0) invert(1);
-        }
 
         .halide-scroll-hint {
           position: absolute;
@@ -197,11 +205,9 @@ export const HalideLanding: React.FC = () => {
             gap: 0.5rem;
           }
           .halide-hero-title {
-            font-size: clamp(1.5rem, 7vw, 2.5rem);
+            font-size: clamp(1.25rem, 6vw, 2.1rem);
             line-height: 0.95;
           }
-          .halide-interface-grid > div:first-child { grid-column: 1; }
-          .halide-interface-grid > div:nth-child(2) { display: none; }
           .halide-cta-row {
             flex-direction: column;
             align-items: stretch;
@@ -219,13 +225,6 @@ export const HalideLanding: React.FC = () => {
             text-align: center;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
-          }
-          .halide-logo {
-            height: 2.25rem;
-            max-width: 160px;
-          }
-          .halide-logo-link {
-            margin-top: 0;
           }
           .halide-canvas-3d {
             width: 100%;
@@ -251,11 +250,6 @@ export const HalideLanding: React.FC = () => {
         <div className="halide-grain" style={{ filter: 'url(#halide-grain)' }}></div>
 
         <div className="halide-interface-grid">
-          <a href="/" className="halide-logo-link">
-            <img src="/boltcall_full_logo.png" alt="Boltcall" className="halide-logo" />
-          </a>
-          <div />
-
           <h1 className="halide-hero-title">LINKEDIN LEAD MAGNETS<br />LIBRARY</h1>
 
           <div className="halide-cta-row" style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
@@ -277,6 +271,8 @@ export const HalideLanding: React.FC = () => {
 
         <div className="halide-viewport">
           <div className="halide-canvas-3d" ref={canvasRef}>
+            <div className="halide-book-shadow" />
+            <div className="halide-book-spine" />
             <div className="halide-layer halide-layer-1" ref={(el) => { if (el) layersRef.current[0] = el; }}><div className="halide-layer-inner halide-layer-inner-1" /></div>
             <div className="halide-contours"></div>
           </div>

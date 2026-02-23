@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HalideLanding } from '@/components/ui/halide-landing';
 import { updateMetaDescription } from '@/lib/utils';
-import { Mail, Sparkles, Loader2 } from 'lucide-react';
+import { Mail, Loader2 } from 'lucide-react';
 
 const LeadMagnetPage: React.FC = () => {
   const navigate = useNavigate();
@@ -29,14 +29,10 @@ const LeadMagnetPage: React.FC = () => {
       </section>
 
       {/* Scroll anchor and lead capture section — mobile-optimised */}
-      <section id="lead-form" className="relative z-20 min-h-screen bg-[#0a0a0a] border-t border-white/10 min-h-[100dvh] pb-8">
+      <section id="lead-form" className="lead-magnet-form relative z-20 min-h-screen bg-[#0a0a0a] border-t border-white/10 min-h-[100dvh] pb-8">
         <div className="max-w-2xl mx-auto px-4 py-12 sm:px-6 sm:py-24 flex flex-col items-center gap-8 sm:gap-12">
-          <div className="flex items-center gap-2 text-brand-blue">
-            <Sparkles className="w-5 h-5 flex-shrink-0" />
-            <span className="text-xs sm:text-sm font-mono uppercase tracking-wider">Exclusive Resource</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center font-['Syncopate',sans-serif] tracking-tight px-1">
-            Get the full guide
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center font-sans tracking-tight px-1">
+            Get the resource
           </h2>
 
           <form
@@ -50,7 +46,7 @@ const LeadMagnetPage: React.FC = () => {
                 placeholder="Email"
                 inputMode="email"
                 autoComplete="email"
-                className="w-full min-h-[44px] h-12 pl-12 pr-4 bg-white/5 border border-white/10 rounded-none text-white-smoke placeholder:text-[#e0e0e0]/40 focus:outline-none focus:border-brand-blue transition-colors text-base"
+                className="w-full min-h-[44px] h-12 pl-12 pr-4 bg-white/5 border border-white/10 rounded-none text-white placeholder:text-[#e0e0e0]/40 focus:outline-none focus:border-brand-blue transition-colors text-base"
               />
             </div>
             <button
@@ -61,7 +57,7 @@ const LeadMagnetPage: React.FC = () => {
               {isSubmitting ? (
                 <Loader2 className="w-5 h-5 animate-spin" aria-hidden />
               ) : (
-                'Get guide'
+                'Get resource'
               )}
             </button>
           </form>

@@ -351,6 +351,20 @@ button:active,
     color: white !important;
   }
 
+  /* White text for lead magnet form - override global input styles */
+  .lead-magnet-form input[type="email"],
+  .lead-magnet-form input[type="text"] {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+  }
+  .lead-magnet-form input:-webkit-autofill,
+  .lead-magnet-form input:-webkit-autofill:hover,
+  .lead-magnet-form input:-webkit-autofill:focus,
+  .lead-magnet-form input:-webkit-autofill:active {
+    -webkit-text-fill-color: white !important;
+    color: white !important;
+  }
+
   /* Override autofill styles for giveaway form */
   .giveaway-form input:-webkit-autofill,
   .giveaway-form input:-webkit-autofill:hover,
