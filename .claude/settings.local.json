@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__obsidian-mcp-tools__list-available-vaults",
+      "mcp__obsidian-mcp-tools__create-note",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Asus\\\\Desktop\\\\Boltcall_website\\\\Boltcall\\\\.claude\\\\worktrees\\\\unruffled-villani\\\\.agent\" -Recurse)",
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Asus\\\\.claude\" -Recurse -ErrorAction SilentlyContinue)",
+      "mcp__obsidian-mcp-tools__read-note",
+      "Bash(dir:*)",
+      "Bash(cmd.exe /c \"dir \"\"C:\\\\Users\\\\Asus\\\\Desktop\\\\Boltcall_website\\\\Boltcall\\\\.claude\"\" 2>&1\")",
+      "Bash(cmd.exe /c \"dir /a \"\"C:\\\\Users\\\\Asus\\\\Desktop\\\\Boltcall_website\\\\Boltcall\\\\.claude\"\" 2>&1\")",
+      "Bash(cmd.exe /c \"dir /a \"\"C:\\\\Users\\\\Asus\\\\Desktop\\\\Boltcall_website\\\\Boltcall\\\\.claude\"\"\")",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}

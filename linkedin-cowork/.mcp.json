@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "obsidian-mcp-tools"],
+      "description": "Read/write Obsidian vault. Powers strategy advisor, content ideas, growth playbook reference."
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://figma.com/mcp",
+      "description": "Create carousel frames, cover photos, and high-density value images using Boltcall brand tokens."
+    },
+    "buffer": {
+      "type": "http",
+      "url": "https://mcp.buffer.com",
+      "description": "Schedule posts at optimal times (Tue-Thu 8-10am, 12-1pm). Manage posting queue."
+    },
+    "pdf-tools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "pdf-tools-mcp"],
+      "description": "Read and analyze competitor lead magnets. Extract insights from PDFs."
+    },
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com",
+      "description": "Content calendar database, idea backlog, draft storage, lead magnet library, performance tracking."
+    },
+    "google-calendar": {
+      "type": "http",
+      "url": "https://mcp.googleapis.com/calendar",
+      "description": "Sync content calendar, posting reminders, collaboration deadlines."
+    },
+    "slack": {
+      "type": "http",
+      "url": "https://mcp.slack.com",
+      "auth": {
+        "type": "oauth"
+      },
+      "description": "Team content approval workflow. Share post drafts for review before publishing."
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "description": "Scrape competitor LinkedIn profiles/posts (public data only). Extract post patterns and hook styles."
+    }
+  }
+}

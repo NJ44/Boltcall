@@ -1,0 +1,22 @@
+{
+  "name": "linkedin-cowork",
+  "description": "Autonomous LinkedIn co-worker for Boltcall. Generates posts, carousels, DM sequences, lead magnet analysis, content calendars, profile audits, and strategy — all brand-aware and Obsidian-vault-powered.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Boltcall",
+    "url": "https://boltcall.com"
+  },
+  "keywords": [
+    "linkedin",
+    "content",
+    "personal-brand",
+    "lead-magnet",
+    "carousel",
+    "dm-outreach",
+    "strategy",
+    "analytics",
+    "content-calendar",
+    "profile-optimizer",
+    "repurpose"
+  ]
+}
