@@ -80,8 +80,8 @@ const Newsletter: React.FC = () => {
       {/* Floating Icons Hero Section */}
       <div className="relative">
         <FloatingIconsHero
-          title="AI Insights Weekly"
-          subtitle="Stay updated with the latest news, tips, and updates from Boltcall"
+          title="Automate & Dominate"
+          subtitle="Weekly secrets to implementing AI in your business with zero technical skills."
           icons={newsletterIcons}
           className="bg-white"
         >
