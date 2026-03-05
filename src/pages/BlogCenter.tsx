@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: '5 Signs Your Business Needs an <span class="text-blue-600">AI Receptionist</span>',
+    slug: '/blog/5-signs-you-need-ai-receptionist',
+    excerpt: 'Missing calls, slow responses, and lost leads? Here are 5 clear signs your business needs an AI receptionist — and how to fix it.',
+    date: 'March 5, 2026',
+    readTime: '7 min read',
+    category: 'Business Growth',
+    image: '/images/blog/ai-receptionist.png'
+  },
+  {
     title: 'Why <span class="text-blue-600">AI Services</span> Are No Longer Optional',
     slug: '/blog/the-new-reality-for-local-businesses',
     excerpt: 'The local business landscape has transformed dramatically. What worked yesterday won\'t work tomorrow. And the businesses that are thriving? They\'re the ones that embraced AI services early.',

@@ -88,6 +88,7 @@ import BlogProfessionalTelephoneEtiquette from '../pages/BlogProfessionalTelepho
 import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringServiceAppointmentScheduling';
 import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
 import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssistant';
+import Blog5SignsAIReceptionist from '../pages/Blog5SignsAIReceptionist';
 import Newsletter from '../pages/Newsletter';
 import Comparisons from '../pages/Comparisons';
 import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
@@ -283,6 +284,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/answering-service-scheduling" element={<BlogAnsweringServiceAppointmentScheduling />} />
         <Route path="/blog/top-10-ai-receptionist-agencies" element={<BlogTop10AIReceptionistAgencies />} />
         <Route path="/blog/create-gemini-gem-business-assistant" element={<BlogGeminiGemBusinessAssistant />} />
+        <Route path="/blog/5-signs-you-need-ai-receptionist" element={<Blog5SignsAIReceptionist />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
