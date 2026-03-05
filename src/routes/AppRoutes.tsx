@@ -120,6 +120,11 @@ import ButtonDemoPage from '../pages/ButtonDemoPage';
 import DrHazakLandingPage from '../pages/DrHazakLandingPage';
 import LeadMagnetPage from '../pages/LeadMagnetPage';
 import LeadMagnetThankYouPage from '../pages/LeadMagnetThankYouPage';
+import AIAuditPage from '../pages/AIAuditPage';
+import AIAuditThankYouPage from '../pages/AIAuditThankYouPage';
+import SolarProfitCalculator from '../pages/SolarProfitCalculator';
+import SolarSalesCloser from '../pages/SolarSalesCloser';
+import SolarQuoteGenerator from '../pages/SolarQuoteGenerator';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -297,6 +302,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-revenue-calculator/results" element={<AIRevenueResults />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/business-audit" element={<BusinessAuditPage />} />
+        <Route path="/ai-audit" element={<AIAuditPage />} />
+        <Route path="/ai-audit/thank-you" element={<AIAuditThankYouPage />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         <Route path="/ai-visibility-check" element={<AIVisibilityCheck />} />
         {/* Feature Pages */}
@@ -314,6 +321,10 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/strike-ai" element={<Strike />} />
         <Route path="/drhazak" element={<DrHazakLandingPage />} />
         <Route path="/rank-on-google-offer" element={<RankOnGoogleOfferPage />} />
+        {/* Solar Lead Magnet Tools */}
+        <Route path="/tools/solar-profit-calculator" element={<SolarProfitCalculator />} />
+        <Route path="/tools/solar-sales-closer" element={<SolarSalesCloser />} />
+        <Route path="/tools/solar-quote-generator" element={<SolarQuoteGenerator />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />
