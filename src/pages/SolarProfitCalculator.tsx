@@ -183,7 +183,6 @@ const SolarProfitCalculator: React.FC = () => {
     window.print();
   };
 
-  const marginClass = calc.margin >= 30 ? 'good' : calc.margin >= 15 ? 'warning' : 'danger';
   const marginBadgeBg = calc.margin >= 30
     ? 'bg-emerald-500/15 text-emerald-500'
     : calc.margin >= 15
