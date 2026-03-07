@@ -315,6 +315,19 @@ button:active,
   --color-orange-500: #f97316;
   --color-indigo-500: #6366f1;
   --color-cyan-500: #06b6d4;
+
+  /* Funnel chart palette */
+  --chart-1: var(--color-blue-500);
+  --chart-2: var(--color-teal-500);
+  --chart-3: var(--color-purple-500);
+  --chart-4: var(--color-indigo-500);
+  --chart-5: var(--color-pink-500);
+  --chart-line-primary: color-mix(
+    in srgb,
+    var(--chart-1) 80%,
+    #0f172a 20%
+  );
+  --chart-grid: rgba(148, 163, 184, 0.4);
 }
 
 .dark {

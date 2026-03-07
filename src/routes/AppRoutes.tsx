@@ -125,6 +125,9 @@ import AIAuditThankYouPage from '../pages/AIAuditThankYouPage';
 import SolarProfitCalculator from '../pages/SolarProfitCalculator';
 import SolarSalesCloser from '../pages/SolarSalesCloser';
 import SolarQuoteGenerator from '../pages/SolarQuoteGenerator';
+import VoiceAgentOnboarding from '../pages/VoiceAgentOnboarding';
+import NicheToolPage from '../pages/NicheToolPage';
+import FunnelChartDemoPage from '../pages/FunnelChartDemoPage';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -318,6 +321,7 @@ const NavigationWrapper: React.FC = () => {
         {/* Demo Pages */}
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/button-demo" element={<ButtonDemoPage />} />
+        <Route path="/funnel-chart-demo" element={<FunnelChartDemoPage />} />
         <Route path="/strike-ai" element={<Strike />} />
         <Route path="/drhazak" element={<DrHazakLandingPage />} />
         <Route path="/rank-on-google-offer" element={<RankOnGoogleOfferPage />} />
@@ -325,6 +329,9 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/solar-profit-calculator" element={<SolarProfitCalculator />} />
         <Route path="/tools/solar-sales-closer" element={<SolarSalesCloser />} />
         <Route path="/tools/solar-quote-generator" element={<SolarQuoteGenerator />} />
+        {/* Dynamic niche lead magnet pages - loaded from Supabase */}
+        <Route path="/tools/:slug" element={<NicheToolPage />} />
+        <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />
