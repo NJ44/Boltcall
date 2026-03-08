@@ -6,6 +6,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
+import FeatureHub from '../../components/dashboard/FeatureHub';
 const DashboardPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showHelpChat, setShowHelpChat] = useState(false);
@@ -141,6 +142,9 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Feature Hub */}
+      <FeatureHub />
 
       {/* Alerts Section */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">

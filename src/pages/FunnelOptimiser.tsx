@@ -35,7 +35,25 @@ const FunnelOptimiser = () => {
 
   const handleQuizSubmit = async () => {
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/funnel-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          business_name: surveyData.name?.trim() || 'Your Business',
+          email: surveyData.email?.trim() || '',
+          niche: surveyData.industry || 'General',
+          visitors,
+          v2l: leadsPct,
+          l2q: qualifiedPct,
+          q2c: proposalsPct,
+          deal_value: 2000,
+        }),
+      });
+      if (!response.ok) throw new Error('Webhook failed');
+    } catch (err) {
+      console.error('Funnel report webhook error:', err);
+    }
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
