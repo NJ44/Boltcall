@@ -28,7 +28,6 @@ export default function Slider({
             willChange
             value={value[0]}
             isolate
-            continuous
             opacityTiming={{
               duration: 250,
               easing: 'ease-out',

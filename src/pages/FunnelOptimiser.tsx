@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button-shadcn';
 import { Check, Users } from 'lucide-react';
 import { GiveawayMultiStepForm } from '@/components/ui/giveaway-multistep-form';
 
-const FunnelChartDemoPage = () => {
+const FunnelOptimiser = () => {
   const [visitors, setVisitors] = useState(12400);
   const [leadsPct, setLeadsPct] = useState(55);
   const [qualifiedPct, setQualifiedPct] = useState(50);
@@ -207,4 +207,4 @@ const FunnelChartDemoPage = () => {
   );
 };
 
-export default FunnelChartDemoPage;
+export default FunnelOptimiser;

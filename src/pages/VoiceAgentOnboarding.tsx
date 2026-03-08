@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Bot, Building2, Clock, ArrowRight, ArrowLeft, Loader2, CheckCircle2, Zap, Shield, MessageSquare } from 'lucide-react';
+import { Phone, Bot, Building2, ArrowRight, ArrowLeft, Loader2, CheckCircle2, Zap, Shield, MessageSquare } from 'lucide-react';
 
 // Modal endpoint — update after `modal deploy app.py`
 const MODAL_BASE_URL = import.meta.env.VITE_MODAL_VOICE_URL || '';

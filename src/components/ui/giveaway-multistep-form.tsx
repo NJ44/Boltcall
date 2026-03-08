@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button-shadcn"
 import { Input } from "@/components/ui/input-shadcn"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
-import { CheckIcon, ArrowRightIcon, Loader2 } from "lucide-react"
+import { CheckIcon, ArrowRightIcon, Loader2, ChevronDown } from "lucide-react"
 
 type Field = {
   label: string
@@ -24,37 +24,39 @@ type Step = {
 const steps: Step[] = [
   {
     id: 1,
-    label: "Personal Information",
+    label: "Professional Details",
     fields: [
       { label: "Name", field: "name", placeholder: "Your full name" },
-      { label: "Email", field: "email", placeholder: "your@email.com", type: "email" }
+      { 
+        label: "Industry", 
+        field: "industry", 
+        type: "select",
+        options: [
+          "Real Estate",
+          "Healthcare",
+          "Legal",
+          "E-commerce",
+          "Technology",
+          "Education",
+          "Finance",
+          "Construction",
+          "Other"
+        ]
+      }
     ]
   },
   {
     id: 2,
-    label: "Company Information",
-    fields: [
-      { label: "Company Name", field: "companyName", placeholder: "Your Company Name" },
-      { label: "Website", field: "website", placeholder: "https://yourwebsite.com", type: "url" }
-    ]
+    label: "Funnel Variables",
+    fields: []
   },
   {
     id: 3,
     label: "Final Step",
     fields: [
-      {
-        label: "How did you hear about us?",
-        field: "referralSource",
-        type: "radio",
-        options: [
-          "Facebook",
-          "LinkedIn",
-          "Google",
-          "AI Engine"
-        ]
-      }
+      { label: "Email", field: "email", placeholder: "your@email.com", type: "email" }
     ]
-  },
+  }
 ]
 
 interface GiveawayMultiStepFormProps {
@@ -65,6 +67,8 @@ interface GiveawayMultiStepFormProps {
   onSubmit: () => Promise<void>
   isSubmitting: boolean
   isSubmitted: boolean
+  step2Extras?: React.ReactNode
+  step3Extras?: React.ReactNode
 }
 
 export function GiveawayMultiStepForm({
@@ -74,11 +78,14 @@ export function GiveawayMultiStepForm({
   setAllowNotifications,
   onSubmit,
   isSubmitting,
-  isSubmitted
+  isSubmitted,
+  step2Extras,
+  step3Extras
 }: GiveawayMultiStepFormProps) {
   const [currentStep, setCurrentStep] = useState(0)
 
   const handleNext = async () => {
+    if (!isStepComplete) return
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
     } else {
@@ -199,6 +206,29 @@ export function GiveawayMultiStepForm({
                       </div>
                     ))}
                   </div>
+                ) : field.type === "select" && field.options ? (
+                  <div className="relative group">
+                    <select
+                      id={field.field}
+                      value={formData[field.field] || ""}
+                      onChange={(e) => handleInputChange(field.field, e.target.value)}
+                      className={cn(
+                        "w-full h-10 px-3 text-sm transition-all duration-500 rounded-md border border-white/30 bg-white/10 backdrop-blur text-white focus:border-white/50 focus:ring-white/30 appearance-none cursor-pointer",
+                        !formData[field.field] && "text-white/60"
+                      )}
+                      style={{ color: '#ffffff', backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                    >
+                      <option value="" disabled className="bg-blue-700">Select an industry</option>
+                      {field.options.map(option => (
+                        <option key={option} value={option} className="bg-blue-700 text-white">
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/60">
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                  </div>
                 ) : (
                   <div className="relative group">
                     <Input
@@ -217,9 +247,17 @@ export function GiveawayMultiStepForm({
             ))}
           </div>
 
+          {currentStepData.id === 2 && step2Extras && (
+            <div className="pt-4 border-t border-white/10">
+              {step2Extras}
+            </div>
+          )}
+
           {currentStepData.id === 3 && (
-            <div className="flex items-start gap-3 mt-4">
-              <div className="relative mt-0.5">
+            <div className="space-y-6">
+              {step3Extras}
+              <div className="flex items-start gap-3 mt-4">
+                <div className="relative mt-0.5">
                 <input
                   type="checkbox"
                   id="allowNotifications"
@@ -243,6 +281,7 @@ export function GiveawayMultiStepForm({
                 I allow you to send me notifications and updates.
               </label>
             </div>
+            </div>
           )}
         </div>
 
@@ -257,10 +296,10 @@ export function GiveawayMultiStepForm({
           )}
           <Button
             onClick={handleNext}
-            disabled={!isStepComplete || isSubmitting}
             className={cn(
               "flex-1 h-10 text-sm group relative transition-all duration-300 hover:shadow-lg hover:shadow-white/10",
               "bg-white text-brand-blue hover:bg-gray-50",
+              !isStepComplete && "opacity-60 cursor-not-allowed",
               currentStep === 0 && "w-full"
             )}
           >

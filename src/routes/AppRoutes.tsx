@@ -127,7 +127,8 @@ import SolarSalesCloser from '../pages/SolarSalesCloser';
 import SolarQuoteGenerator from '../pages/SolarQuoteGenerator';
 import VoiceAgentOnboarding from '../pages/VoiceAgentOnboarding';
 import NicheToolPage from '../pages/NicheToolPage';
-import FunnelChartDemoPage from '../pages/FunnelChartDemoPage';
+import FunnelOptimizer from '../pages/FunnelOptimizer';
+import FunnelOptimiser from '../pages/FunnelOptimiser';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -321,7 +322,8 @@ const NavigationWrapper: React.FC = () => {
         {/* Demo Pages */}
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/button-demo" element={<ButtonDemoPage />} />
-        <Route path="/funnel-chart-demo" element={<FunnelChartDemoPage />} />
+        <Route path="/funnel-optimizer" element={<FunnelOptimizer />} />
+        <Route path="/funnel-optimiser" element={<FunnelOptimiser />} />
         <Route path="/strike-ai" element={<Strike />} />
         <Route path="/drhazak" element={<DrHazakLandingPage />} />
         <Route path="/rank-on-google-offer" element={<RankOnGoogleOfferPage />} />
