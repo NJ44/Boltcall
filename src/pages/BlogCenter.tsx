@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Speed to Lead for Local Businesses: Why Response Time Beats Every Marketing Tactic',
+    slug: '/blog/speed-to-lead-local-business',
+    excerpt: 'Fast response times are your secret weapon in local business. Speed to lead transforms curious prospects into paying customers before your competitors',
+    date: 'March 09, 2026',
+    readTime: '8 min read',
+    category: 'Local Business',
+    image: '/images/blog/speed-to-lead-local-business.png'
+  },
+  {
     title: '5 Signs Your Business Needs an <span class="text-blue-600">AI Receptionist</span>',
     slug: '/blog/5-signs-you-need-ai-receptionist',
     excerpt: 'Missing calls, slow responses, and lost leads? Here are 5 clear signs your business needs an AI receptionist — and how to fix it.',

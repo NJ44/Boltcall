@@ -1,0 +1,537 @@
+import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Calendar, Clock, ArrowRight, Zap, Timer, TrendingUp, Phone, MessageCircle, Target } from 'lucide-react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import GiveawayBar from '../components/GiveawayBar';
+import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
+import TableOfContents from '../components/TableOfContents';
+import { useTableOfContents } from '../hooks/useTableOfContents';
+
+const SpeedToLeadGuide: React.FC = () => {
+  const { activeSection, sectionsRef } = useTableOfContents();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Speed to Lead for Local Businesses: Why Response Time Beats Every Marketing Tactic | Boltcall';
+    updateMetaDescription('Learn why speed to lead local business strategies outperform all other tactics. Get proven response time frameworks for 400% more conversions.');
+
+    // JSON-LD Schema
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Speed to Lead for Local Businesses: Why Response Time Beats Every Marketing Tactic",
+      "description": "Learn why speed to lead local business strategies outperform all other tactics. Get proven response time frameworks for 400% more conversions.",
+      "image": "https://boltcall.org/og-image.jpg",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/logo.png"
+        }
+      },
+      "datePublished": "2026-03-09",
+      "dateModified": "2026-03-09",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/speed-to-lead-local-business"
+      }
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schema);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  const sections = [
+    { id: 'why-speed-matters', title: 'Why Speed to Lead Matters More Than Lead Quality' },
+    { id: 'cost-of-slow-response', title: 'The Cost of Slow Response Times' },
+    { id: 'response-time-benchmarks', title: 'How Fast Should Local Businesses Respond?' },
+    { id: 'speed-vs-cost', title: 'Speed to Lead vs. Cost Per Lead' },
+    { id: 'ai-advantage', title: 'Why AI Receptionists Win the Speed Game' },
+    { id: 'industry-benchmarks', title: 'Speed to Lead by Industry' },
+    { id: 'tools-measurement', title: 'Tools to Measure & Improve Response Time' },
+    { id: 'implementation-guide', title: 'Implementing Your Speed to Lead Strategy' },
+    { id: 'faq', title: 'Frequently Asked Questions' }
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      <GiveawayBar />
+      <Header />
+      <ReadingProgress />
+
+      {/* Hero Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100"></div>
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium mb-6">
+              <Target className="w-4 h-4 mr-1" />
+              Local Business
+            </div>
+
+            <Breadcrumbs 
+              items={[
+                { label: 'Home', href: '/' },
+                { label: 'Blog', href: '/blog' },
+                { label: 'Speed to Lead for Local Businesses' }
+              ]} 
+            />
+
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <span className="text-blue-600">Speed to Lead</span> for Local Businesses: Why Response Time Beats Every Marketing Tactic
+            </h1>
+
+            <div className="flex items-center justify-center space-x-6 text-gray-600 mb-8">
+              <div className="flex items-center">
+                <Calendar className="w-4 h-4 mr-2" />
+                <span>March 9, 2026</span>
+              </div>
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 mr-2" />
+                <span>11 min read</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Main Content */}
+          <main className="lg:w-2/3">
+            {/* Direct Answer Block */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-12"
+            >
+              <h2 className="text-lg font-semibold text-blue-900 mb-3">Quick Answer</h2>
+              <p className="text-blue-800">
+                Speed to lead local business strategies deliver 400% higher conversion rates than slow responders. Businesses responding within 5 minutes convert 9x more leads than those responding after 30 minutes, making response time the highest-impact metric for local business growth.
+              </p>
+            </motion.div>
+
+            {/* Introduction */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="prose prose-lg max-w-none mb-12"
+            >
+              <p>
+                In the competitive world of local businesses, every lead counts. But here's what most business owners don't realize: the speed at which you respond to leads matters infinitely more than how much you spend acquiring them. While competitors focus on lowering cost-per-lead, the smartest local businesses are winning by mastering speed to lead.
+              </p>
+
+              <p>
+                Whether you're a plumber racing against three competitors for an emergency call, a dentist competing for a new patient, or an HVAC contractor bidding on a commercial project, the business that responds first wins. Period. This comprehensive guide reveals why <Link to="/blog/speed-to-lead" className="text-blue-600 hover:underline">speed to lead</Link> has become the ultimate competitive advantage for local businesses and how Boltcall's AI receptionist helps businesses achieve instant response times 24/7.
+              </p>
+            </motion.div>
+
+            {/* Why Speed to Lead Matters More Than Lead Quality */}
+            <motion.section
+              ref={(el) => sectionsRef.current[0] = el}
+              id="why-speed-matters"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Why Speed to Lead Matters More Than Lead Quality</h2>
+
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 mb-8">
+                <div className="flex">
+                  <div className="ml-3">
+                    <p className="text-sm text-yellow-700">
+                      <strong>Industry Reality Check:</strong> A Harvard Business Review study found that companies responding to leads within an hour are nearly 7x more likely to qualify the lead than those responding after an hour.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-lg text-gray-700 mb-6">
+                Local businesses often obsess over lead quality metrics—source, demographics, intent signals. But research consistently shows that response time trumps all other factors when it comes to conversion rates.
+              </p>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">The Psychology Behind Speed to Lead</h3>
+
+              <p className="text-gray-700 mb-6">
+                When someone contacts your local business, they're in problem-solving mode. They need a plumber for a burst pipe, a dentist for tooth pain, or a contractor for urgent repairs. Their mindset is simple: "I need help now, and whoever helps me first gets my business."
+              </p>
+
+              <ul className="list-disc pl-6 space-y-3 text-gray-700 mb-8">
+                <li><strong>Urgency Bias:</strong> Customers assume faster response equals better service quality</li>
+                <li><strong>Decision Fatigue:</strong> People want to solve their problem quickly, not research forever</li>
+                <li><strong>Trust Through Availability:</strong> Instant response builds immediate trust and credibility</li>
+                <li><strong>Competitive Preemption:</strong> First contact often becomes last contact—they stop shopping</li>
+              </ul>
+
+              <div className="bg-gray-50 rounded-lg p-6">
+                <h4 className="font-semibold text-gray-900 mb-3">Real-World Example: HVAC Emergency</h4>
+                <p className="text-gray-700">
+                  It's 95°F outside and your customer's AC just died. They submit requests to three HVAC companies at 2:00 PM. Company A responds at 2:03 PM with a call, Company B emails at 4:30 PM, Company C calls tomorrow morning. Who gets the job? Company A—every single time, regardless of price or reviews.
+                </p>
+              </div>
+            </motion.section>
+
+            {/* The Cost of Slow Response Times */}
+            <motion.section
+              ref={(el) => sectionsRef.current[1] = el}
+              id="cost-of-slow-response"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">The Cost of Slow Response Times (Data & Case Studies)</h2>
+
+              <p className="text-lg text-gray-700 mb-8">
+                Slow response times don't just cost you leads—they cost you entire customer relationships, referrals, and long-term revenue. Here's the hard data that should keep every local business owner up at night.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <Timer className="w-6 h-6 text-red-600 mr-3" />
+                    <h3 className="font-semibold text-red-900">Response Time Impact</h3>
+                  </div>
+                  <ul className="space-y-3 text-red-800">
+                    <li>• 5-minute response: 9x more likely to convert</li>
+                    <li>• 10-minute response: 4x more likely to convert</li>
+                    <li>• 30-minute response: Baseline conversion rate</li>
+                    <li>• 60+ minutes: 90% conversion rate drop</li>
+                  </ul>
+                  <p className="text-sm text-red-600 mt-4">Source: InsideSales.com Lead Response Management Study</p>
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <TrendingUp className="w-6 h-6 text-blue-600 mr-3" />
+                    <h3 className="font-semibold text-blue-900">Revenue Impact</h3>
+                  </div>
+                  <ul className="space-y-3 text-blue-800">
+                    <li>• Average local business loses $10K+ annually</li>
+                    <li>• 27% of leads never get contacted at all</li>
+                    <li>• 75% of first-responders win the business</li>
+                    <li>• Instant response = 400% higher conversion</li>
+                  </ul>
+                  <p className="text-sm text-blue-600 mt-4">Source: Velocify Lead Response Report</p>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Case Study: Local Plumbing Company</h3>
+
+              <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                <p className="text-gray-700 mb-4">
+                  <strong>Challenge:</strong> Johnson Plumbing was losing 60% of their leads to competitors despite having excellent reviews and competitive pricing.
+                </p>
+                <p className="text-gray-700 mb-4">
+                  <strong>Problem:</strong> Average response time was 45 minutes during business hours, 4+ hours after hours.
+                </p>
+                <p className="text-gray-700 mb-4">
+                  <strong>Solution:</strong> Implemented AI receptionist for instant lead response 24/7.
+                </p>
+                <p className="text-gray-700">
+                  <strong>Results:</strong> 340% increase in lead conversion, $180K additional annual revenue, became the #1 plumber in their market within 8 months.
+                </p>
+              </div>
+
+              <p className="text-gray-700">
+                The math is brutal but simple: every minute you delay response, your conversion rate drops. Every lead that goes to a competitor costs you not just that job, but all future referrals and repeat business from that customer. For most local businesses, this represents tens of thousands in lost revenue annually—money that could be recovered with better <Link to="/blog/never-miss-a-call-again" className="text-blue-600 hover:underline">lead response systems</Link>.
+              </p>
+            </motion.section>
+
+            {/* How Fast Should Local Businesses Respond to Leads */}
+            <motion.section
+              ref={(el) => sectionsRef.current[2] = el}
+              id="response-time-benchmarks"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">How Fast Should Local Businesses Respond to Leads?</h2>
+
+              <p className="text-lg text-gray-700 mb-8">
+                The gold standard for local businesses isn't "within an hour" or "same day"—it's immediate response. Here are the benchmarks that separate winners from losers in today's competitive landscape.
+              </p>
+
+              <div className="space-y-6 mb-8">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Instant (Under 1 Minute)</h3>
+                    <p className="text-gray-700">The gold standard. AI receptionists and automated systems can achieve this consistently. Conversion rate: 35-50%.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Timer className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Excellent (1-5 Minutes)</h3>
+                    <p className="text-gray-700">Still highly effective, requires dedicated staff or smart automation. Conversion rate: 25-35%.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-yellow-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Good (5-30 Minutes)</h3>
+                    <p className="text-gray-700">Acceptable but not competitive. Most manual processes fall here. Conversion rate: 15-25%.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <ArrowRight className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Poor (30+ Minutes)</h3>
+                    <p className="text-gray-700">Uncompetitive in today's market. Leads are likely already converted by competitors. Conversion rate: 5-15%.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h4 className="font-semibold text-blue-900 mb-3">The 5-5-5 Rule for Local Businesses</h4>
+                <ul className="space-y-2 text-blue-800">
+                  <li>• <strong>5 seconds:</strong> Time to acknowledge the lead (automated confirmation)</li>
+                  <li>• <strong>5 minutes:</strong> Time to make human contact (call or personalized message)</li>
+                  <li>• <strong>5 hours:</strong> Time to provide detailed follow-up or quote</li>
+                </ul>
+              </div>
+            </motion.section>
+
+            {/* Speed to Lead vs. Cost Per Lead */}
+            <motion.section
+              ref={(el) => sectionsRef.current[3] = el}
+              id="speed-vs-cost"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Speed to Lead vs. Cost Per Lead: The Real Metric</h2>
+
+              <p className="text-lg text-gray-700 mb-8">
+                Most local businesses optimize for the wrong metric. They focus on lowering cost-per-lead when they should focus on speed-to-lead. Here's why this mindset shift can transform your business profitability.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div className="border border-gray-200 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Traditional Approach: Low Cost Per Lead</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Cost per lead:</span>
+                      <span className="font-medium">$15</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Monthly leads:</span>
+                      <span className="font-medium">100</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Conversion rate:</span>
+                      <span className="font-medium text-red-600">8%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">New customers:</span>
+                      <span className="font-medium">8</span>
+                    </div>
+                    <div className="flex justify-between border-t pt-2">
+                      <span className="text-gray-600">Cost per customer:</span>
+                      <span className="font-medium">$187.50</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border border-blue-200 bg-blue-50 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-blue-900 mb-4">Speed-Focused Approach</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-blue-700">Cost per lead:</span>
+                      <span className="font-medium">$25</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-blue-700">Monthly leads:</span>
+                      <span className="font-medium">100</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-blue-700">Conversion rate:</span>
+                      <span className="font-medium text-green-600">32%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-blue-700">New customers:</span>
+                      <span className="font-medium">32</span>
+                    </div>
+                    <div className="flex justify-between border-t pt-2">
+                      <span className="text-blue-700">Cost per customer:</span>
+                      <span className="font-medium text-green-600">$78.13</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-gray-700 mb-6">
+                The speed-focused approach delivers 4x more customers at 58% lower cost per customer, despite having higher cost per lead. This is why successful local businesses invest in systems like <Link to="/how-it-works" className="text-blue-600 hover:underline">AI receptionists</Link> rather than just cheaper advertising.
+              </p>
+
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <h4 className="font-semibold text-green-900 mb-3">Key Insight: Return on Response Speed (RORS)</h4>
+                <p className="text-green-800">
+                  Every second you improve your average response time generates measurable ROI. A 10-second improvement in response time can increase conversion rates by 2-5%, which for most local businesses translates to $5,000-$20,000 in additional annual revenue.
+                </p>
+              </div>
+            </motion.section>
+
+            {/* Why AI Receptionists Win the Speed Game */}
+            <motion.section
+              ref={(el) => sectionsRef.current[4] = el}
+              id="ai-advantage"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Why AI Receptionists Win the Speed Game</h2>
+
+              <p className="text-lg text-gray-700 mb-8">
+                Human receptionists can't work 24/7, can't answer multiple calls simultaneously, and can't respond to web forms while on another call. AI receptionists eliminate these limitations while maintaining the personal touch customers expect.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Traditional Reception Limitations</h3>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-3">×</span>
+                      Limited to business hours
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-3">×</span>
+                      One call at a time
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-3">×</span>
+                      Delayed web form responses
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-3">×</span>
+                      Inconsistent response quality
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-3">×</span>
+                      Human sick days/breaks
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-3">×</span>
+                      High ongoing costs
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">AI Receptionist Advantages</h3>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-3">✓</span>
+                      24/7/365 availability
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-3">✓</span>
+                      Unlimited simultaneous conversations
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-3">✓</span>
+                      Instant web form responses
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-3">✓</span>
+                      Perfect consistency every time
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-3">✓</span>
+                      Never takes a day off
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-3">✓</span>
+                      Fixed monthly cost
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Real-World AI Response Times</h3>
+
+              <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">0.3s</div>
+                    <div className="text-gray-700">Average phone answer time</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">1.2s</div>
+                    <div className="text-gray-700">Web form acknowledgment</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">2.4s</div>
+                    <div className="text-gray-700">Chat response time</div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-gray-700">
+                These response times are impossible for human staff to match consistently. More importantly, AI receptionists maintain this speed during peak times, after hours, and during emergencies when leads are most valuable. This is why businesses using <Link to="/blog/ai-vs-answering-service" className="text-blue-600 hover:underline">AI receptionists consistently outperform</Link> those relying on traditional reception methods.
+              </p>
+            </motion.section>
+
+            {/* Speed to Lead by Industry */}
+            <motion.section
+              ref={(el) => sectionsRef.current[5] = el}
+              id="industry-benchmarks"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Speed to Lead by Industry (Dentists, Plumbers, HVAC, etc.)</h2>
+
+              <p className="text-lg text-gray-700 mb-8">
+                Different industries have different speed expectations, but all local businesses benefit from faster response times. Here's how speed to lead impacts various sectors.
+              </p>
+
+              <div className="space-y-8">
+                <div className="border border-gray-200 rounded-lg p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-2xl">🔧</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">Emergency Services (Plumbing, HVAC, Electrical)</h3>
+                      <p className="text-gray
