@@ -1,0 +1,520 @@
+import React, { useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Calendar, Clock, ArrowRight, DollarSign, Calculator, TrendingUp, Phone, Users, Shield } from 'lucide-react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import GiveawayBar from '../components/GiveawayBar';
+import ReadingProgress from '../components/ReadingProgress';
+import Breadcrumbs from '../components/Breadcrumbs';
+import TableOfContents from '../components/TableOfContents';
+import { useTableOfContents } from '../hooks/useTableOfContents';
+
+const AiReceptionistCostPricingGuide: React.FC = () => {
+  const { activeSection, sectionsRef } = useTableOfContents();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "How Much Does an AI Receptionist Cost? 2024 Pricing Guide";
+    updateMetaDescription("Learn AI receptionist pricing models, compare costs vs traditional services, and find the best value for your local business in 2024.");
+
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How Much Does an AI Receptionist Cost? 2024 Pricing Guide for Local Businesses",
+      "description": "Complete guide to AI receptionist pricing models, cost comparisons, and ROI calculations for local businesses in 2024.",
+      "author": {
+        "@type": "Organization",
+        "name": "Boltcall"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/logo.png"
+        }
+      },
+      "datePublished": "2026-03-10",
+      "dateModified": "2026-03-10",
+      "url": "https://boltcall.org/blog/ai-receptionist-cost-pricing",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://boltcall.org/blog/ai-receptionist-cost-pricing"
+      }
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(jsonLd);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  const tocItems = [
+    { id: 'what-is-ai-receptionist', title: 'What is an AI Receptionist and Why Cost Matters' },
+    { id: 'pricing-models', title: 'How AI Receptionist Pricing Works' },
+    { id: 'boltcall-pricing', title: 'Boltcall Pricing Breakdown vs Competitors' },
+    { id: 'ai-vs-traditional', title: 'AI Receptionist Cost vs Traditional Services' },
+    { id: 'roi-calculation', title: 'Real ROI: How Quickly AI Receptionists Pay for Themselves' },
+    { id: 'hidden-costs', title: 'Hidden Costs to Watch Out For' },
+    { id: 'best-value-businesses', title: 'Which Local Businesses Get the Best Value' },
+    { id: 'choosing-budget', title: 'How to Choose the Right AI Receptionist for Your Budget' },
+    { id: 'faq', title: 'Frequently Asked Questions' }
+  ];
+
+  return (
+    <>
+      <GiveawayBar />
+      <Header />
+      <ReadingProgress />
+      
+      <main className="flex-grow bg-white">
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 text-sm font-medium rounded-full mb-6">
+                <DollarSign className="h-4 w-4 mr-2" />
+                AI Receptionist
+              </div>
+              
+              <Breadcrumbs 
+                items={[
+                  { label: 'Blog', href: '/blog' },
+                  { label: 'AI Receptionist', href: '/blog/category/ai-receptionist' },
+                  { label: 'Pricing Guide' }
+                ]} 
+              />
+              
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                <span className="text-blue-600">How Much Does an AI Receptionist Cost?</span> 2024 Pricing Guide for Local Businesses
+              </h1>
+              
+              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Everything you need to know about AI receptionist pricing models, cost comparisons, and finding the best value for your business.
+              </p>
+              
+              <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
+                <div className="flex items-center">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  March 10, 2026
+                </div>
+                <div className="flex items-center">
+                  <Clock className="h-4 w-4 mr-2" />
+                  12 min read
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Content */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+              {/* Main Content */}
+              <div className="lg:col-span-3">
+                {/* Direct Answer Block */}
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-12">
+                  <h3 className="text-lg font-semibold text-blue-800 mb-2">Quick Answer</h3>
+                  <p className="text-gray-700">
+                    AI receptionist pricing typically ranges from $200-$800 per month, depending on features and call volume. Most small businesses pay between $300-$500 monthly for comprehensive AI phone answering services with unlimited calls.
+                  </p>
+                </div>
+
+                {/* Section 1 */}
+                <motion.section
+                  id="what-is-ai-receptionist"
+                  ref={el => sectionsRef.current[0] = el}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">What is an AI Receptionist and Why Cost Matters</h2>
+                  
+                  <p className="text-gray-600 mb-6 text-lg leading-relaxed">
+                    An AI receptionist is a virtual assistant powered by artificial intelligence that handles phone calls, schedules appointments, answers questions, and manages customer interactions 24/7. For local businesses, understanding AI receptionist costs is crucial because it directly impacts your bottom line and customer service quality.
+                  </p>
+                  
+                  <p className="text-gray-600 mb-6">
+                    According to a recent study by <a href="https://smallbiztrends.com" className="text-blue-600 hover:underline">Small Business Trends</a>, 67% of small businesses lose potential customers due to missed calls during business hours. Traditional receptionists cost an average of $35,000-$45,000 annually in salary alone, not including benefits, training, and time off coverage.
+                  </p>
+                  
+                  <div className="bg-gray-50 p-6 rounded-lg mb-6">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Cost Factors to Consider:</h3>
+                    <ul className="space-y-2">
+                      <li className="flex items-start">
+                        <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Monthly subscription fees and pricing models</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Setup and implementation costs</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Integration with existing systems</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Training and customization requirements</span>
+                      </li>
+                      <li className="flex items-start">
+                        <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Ongoing support and maintenance</span>
+                      </li>
+                    </ul>
+                  </div>
+                </motion.section>
+
+                {/* Section 2 */}
+                <motion.section
+                  id="pricing-models"
+                  ref={el => sectionsRef.current[1] = el}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">How AI Receptionist Pricing Works (Per-Minute vs Flat-Fee Models)</h2>
+                  
+                  <p className="text-gray-600 mb-8 text-lg">
+                    Understanding different pricing models helps you choose the most cost-effective option for your business volume and needs.
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-8 mb-8">
+                    <div className="bg-white border-2 border-gray-200 rounded-lg p-6">
+                      <div className="flex items-center mb-4">
+                        <Clock className="h-8 w-8 text-blue-500 mr-3" />
+                        <h3 className="text-xl font-semibold text-gray-900">Per-Minute Pricing</h3>
+                      </div>
+                      <p className="text-gray-600 mb-4">
+                        You pay only for actual call time, typically ranging from $0.10 to $0.50 per minute.
+                      </p>
+                      <div className="space-y-2">
+                        <p className="text-sm text-green-600 font-medium">✓ Good for low-volume businesses</p>
+                        <p className="text-sm text-green-600 font-medium">✓ Predictable costs based on usage</p>
+                        <p className="text-sm text-red-600 font-medium">✗ Can be expensive for busy practices</p>
+                        <p className="text-sm text-red-600 font-medium">✗ Harder to budget monthly expenses</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border-2 border-blue-200 rounded-lg p-6">
+                      <div className="flex items-center mb-4">
+                        <DollarSign className="h-8 w-8 text-blue-500 mr-3" />
+                        <h3 className="text-xl font-semibold text-gray-900">Flat-Fee Pricing</h3>
+                      </div>
+                      <p className="text-gray-600 mb-4">
+                        Fixed monthly fee for unlimited calls, typically $200-$800 per month.
+                      </p>
+                      <div className="space-y-2">
+                        <p className="text-sm text-green-600 font-medium">✓ Predictable monthly budgeting</p>
+                        <p className="text-sm text-green-600 font-medium">✓ Better value for high-volume businesses</p>
+                        <p className="text-sm text-green-600 font-medium">✓ No overage charges</p>
+                        <p className="text-sm text-red-600 font-medium">✗ May pay for unused capacity</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                    <h4 className="font-semibold text-yellow-800 mb-2">Pro Tip:</h4>
+                    <p className="text-yellow-700">
+                      Most successful local businesses prefer flat-fee models for budgeting predictability. If you receive more than 100 minutes of calls per month, flat-fee pricing typically offers better value.
+                    </p>
+                  </div>
+                </motion.section>
+
+                {/* Section 3 */}
+                <motion.section
+                  id="boltcall-pricing"
+                  ref={el => sectionsRef.current[2] = el}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">Boltcall Pricing Breakdown vs Competitors</h2>
+                  
+                  <p className="text-gray-600 mb-8 text-lg">
+                    Here's how Boltcall's pricing compares to other AI receptionist services in the market:
+                  </p>
+
+                  <div className="overflow-x-auto mb-8">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-50">
+                          <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Provider</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Starting Price</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Call Volume</th>
+                          <th className="border border-gray-300 px-4 py-3 text-left font-semibold">Key Features</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="bg-blue-50">
+                          <td className="border border-gray-300 px-4 py-3 font-semibold text-blue-600">Boltcall</td>
+                          <td className="border border-gray-300 px-4 py-3">$389/month</td>
+                          <td className="border border-gray-300 px-4 py-3">Unlimited</td>
+                          <td className="border border-gray-300 px-4 py-3">AI + Website + 24hr setup</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 px-4 py-3">Competitor A</td>
+                          <td className="border border-gray-300 px-4 py-3">$0.45/minute</td>
+                          <td className="border border-gray-300 px-4 py-3">Pay-per-use</td>
+                          <td className="border border-gray-300 px-4 py-3">Basic answering only</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 px-4 py-3">Competitor B</td>
+                          <td className="border border-gray-300 px-4 py-3">$299/month</td>
+                          <td className="border border-gray-300 px-4 py-3">500 minutes</td>
+                          <td className="border border-gray-300 px-4 py-3">No website, setup fees apply</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 px-4 py-3">Competitor C</td>
+                          <td className="border border-gray-300 px-4 py-3">$199/month</td>
+                          <td className="border border-gray-300 px-4 py-3">100 calls</td>
+                          <td className="border border-gray-300 px-4 py-3">Limited integrations</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="bg-blue-50 p-6 rounded-lg mb-6">
+                    <h3 className="text-xl font-semibold text-blue-800 mb-4">What You Get with Boltcall:</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <ul className="space-y-2">
+                        <li className="flex items-start">
+                          <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span>Unlimited AI receptionist calls</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span>Professional website included</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span>24-hour complete setup</span>
+                        </li>
+                      </ul>
+                      <ul className="space-y-2">
+                        <li className="flex items-start">
+                          <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span>Appointment scheduling integration</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span>Custom business knowledge training</span>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-5 w-5 text-blue-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span>No setup or hidden fees</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600">
+                    While Boltcall's starting price may seem higher, the value proposition becomes clear when you consider the included website (worth $2,000+), unlimited calls, and comprehensive setup that competitors charge extra for.
+                  </p>
+                </motion.section>
+
+                {/* Section 4 */}
+                <motion.section
+                  id="ai-vs-traditional"
+                  ref={el => sectionsRef.current[3] = el}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">AI Receptionist Cost vs Traditional Answering Services</h2>
+                  
+                  <p className="text-gray-600 mb-8 text-lg">
+                    Understanding the true cost comparison helps you make an informed decision for your business.
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-8 mb-8">
+                    <div className="bg-white border-2 border-gray-200 rounded-lg p-6">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <Users className="h-6 w-6 text-gray-500 mr-2" />
+                        Traditional Answering Service
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span>Base monthly fee:</span>
+                          <span className="font-semibold">$150-300</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Per-minute charges:</span>
+                          <span className="font-semibold">$0.75-1.50</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Setup fees:</span>
+                          <span className="font-semibold">$50-200</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Integration costs:</span>
+                          <span className="font-semibold">$100-500</span>
+                        </div>
+                        <hr />
+                        <div className="flex justify-between font-bold text-lg">
+                          <span>Monthly total (200 min):</span>
+                          <span className="text-red-600">$450-850</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <Phone className="h-6 w-6 text-blue-500 mr-2" />
+                        AI Receptionist (Boltcall)
+                      </h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span>Base monthly fee:</span>
+                          <span className="font-semibold">$389</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Per-minute charges:</span>
+                          <span className="font-semibold text-green-600">$0 (unlimited)</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Setup fees:</span>
+                          <span className="font-semibold text-green-600">$0</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Website included:</span>
+                          <span className="font-semibold text-green-600">$0 (saves $2000+)</span>
+                        </div>
+                        <hr />
+                        <div className="flex justify-between font-bold text-lg">
+                          <span>Monthly total (unlimited):</span>
+                          <span className="text-green-600">$389</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                    <h4 className="font-semibold text-green-800 mb-2 flex items-center">
+                      <TrendingUp className="h-5 w-5 mr-2" />
+                      Cost Savings Analysis
+                    </h4>
+                    <p className="text-green-700">
+                      Businesses switching from traditional answering services to Boltcall typically save $200-500 monthly while getting unlimited calls, a professional website, and 24/7 availability without human limitations.
+                    </p>
+                  </div>
+                </motion.section>
+
+                {/* Section 5 */}
+                <motion.section
+                  id="roi-calculation"
+                  ref={el => sectionsRef.current[4] = el}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">Real ROI: How Quickly AI Receptionists Pay for Themselves</h2>
+                  
+                  <p className="text-gray-600 mb-8 text-lg">
+                    According to <a href="https://callrail.com" className="text-blue-600 hover:underline">CallRail's research</a>, 85% of customers won't call back after reaching voicemail, and the average local business misses 62% of calls during business hours.
+                  </p>
+
+                  <div className="bg-gray-50 p-6 rounded-lg mb-8">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                      <Calculator className="h-6 w-6 text-blue-500 mr-2" />
+                      ROI Calculation Example
+                    </h3>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Before AI Receptionist:</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li>• Monthly missed calls: 50</li>
+                          <li>• Conversion rate: 20%</li>
+                          <li>• Lost customers: 10/month</li>
+                          <li>• Average customer value: $300</li>
+                          <li className="font-semibold text-red-600">• Monthly lost revenue: $3,000</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">After AI Receptionist:</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li>• Monthly Boltcall cost: $389</li>
+                          <li>• Calls answered: 98%</li>
+                          <li>• Additional customers: 8/month</li>
+                          <li>• Additional revenue: $2,400</li>
+                          <li className="font-semibold text-green-600">• Net monthly gain: $2,011</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-blue-100 rounded-lg">
+                      <p className="text-blue-800 font-semibold">
+                        ROI Calculation: ($2,011 net gain ÷ $389 cost) × 100 = 517% monthly ROI
+                      </p>
+                      <p className="text-blue-700 text-sm mt-1">
+                        Most businesses see their AI receptionist pay for itself within the first week.
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 mb-6">
+                    A study by <a href="https://salesforce.com" className="text-blue-600 hover:underline">Salesforce</a> found that businesses using AI-powered customer service see an average 25% increase in customer satisfaction and 35% improvement in response times. For local businesses, this translates directly to more bookings and revenue.
+                  </p>
+
+                  <Link 
+                    to="/ai-revenue-calculator" 
+                    className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Calculate Your Potential ROI
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </motion.section>
+
+                {/* Section 6 */}
+                <motion.section
+                  id="hidden-costs"
+                  ref={el => sectionsRef.current[5] = el}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="mb-16"
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">Hidden Costs to Watch Out For</h2>
+                  
+                  <p className="text-gray-600 mb-8 text-lg">
+                    Many AI receptionist providers advertise low starting prices but add significant costs through hidden fees and limitations.
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                      <h3 className="text-xl font-semibold text-red-800 mb-4 flex items-center">
+                        <Shield className="h-6 w-6 mr-2" />
+                        Common Hidden Costs
+                      </h3>
+                      <ul className="space-y-2">
+                        <li className="flex items-start">
+                          <ArrowRight className="h-4 w-4 text-red-500 mr-2 mt-1 flex-shrink-0" />
+                          <div>
+                            <span className="font-semibold">Setup fees:</span>
+                            <span className="text-sm text-gray-600 block">$200-$1,000 for initial configuration</span>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <ArrowRight className="h-4 w-4 text-red-500 mr-2 mt-1 flex-shrink-0" />
+                          <div>
+                            <span className="font-semibold">Training costs:</span>
+                            <span className="

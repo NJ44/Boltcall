@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'How Much Does an AI Receptionist Cost? 2024 Pricing Guide for Local Businesses',
+    slug: '/blog/ai-receptionist-cost-pricing',
+    excerpt: 'Discover current AI receptionist pricing options and find the perfect affordable solution for your local business in 2024.',
+    date: 'March 10, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/ai-receptionist-cost-pricing.png'
+  },
+  {
     title: 'Speed to Lead for Local Businesses: Why Response Time Beats Every Marketing Tactic',
     slug: '/blog/speed-to-lead-local-business',
     excerpt: 'Fast response times are your secret weapon in local business. Speed to lead transforms curious prospects into paying customers before your competitors',
