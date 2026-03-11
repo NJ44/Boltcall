@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI vs Human Receptionist: Which is Right for Your Local Business?',
+    slug: '/blog/ai-vs-human-receptionist',
+    excerpt: 'Discover whether an AI receptionist or human staff member best fits your business needs. Learn the pros, cons, and cost differences in our comprehensi',
+    date: 'March 11, 2026',
+    readTime: '8 min read',
+    category: 'Industry Guide',
+    image: '/images/blog/ai-vs-human-receptionist.png'
+  },
+  {
     title: 'How Much Does an AI Receptionist Cost? 2024 Pricing Guide for Local Businesses',
     slug: '/blog/ai-receptionist-cost-pricing',
     excerpt: 'Discover current AI receptionist pricing options and find the perfect affordable solution for your local business in 2024.',
