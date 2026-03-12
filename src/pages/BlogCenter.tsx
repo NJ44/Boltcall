@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'How AI Receptionists Work: A Complete Technical Guide for Local Businesses',
+    slug: '/blog/how-ai-receptionist-works',
+    excerpt: 'Discover how AI receptionists handle calls, schedule appointments, and manage inquiries 24/7 to streamline your local business operations.',
+    date: 'March 12, 2026',
+    readTime: '9 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/how-ai-receptionist-works.png'
+  },
+  {
     title: 'AI vs Human Receptionist: Which is Right for Your Local Business?',
     slug: '/blog/ai-vs-human-receptionist',
     excerpt: 'Discover whether an AI receptionist or human staff member best fits your business needs. Learn the pros, cons, and cost differences in our comprehensi',
