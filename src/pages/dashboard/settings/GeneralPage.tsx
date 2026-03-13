@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, MapPin, Save, RefreshCw, AlertTriangle, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Magnetic } from '../../../components/ui/magnetic';
 import { useToast } from '../../../contexts/ToastContext';
+import { supabase } from '../../../lib/supabase';
 import Button from '../../../components/ui/Button';
 
 const GeneralPage: React.FC = () => {
   const { showToast } = useToast();
+  const navigate = useNavigate();
   const [businessInfo, setBusinessInfo] = useState({
     businessName: 'BoltCall Solutions',
     language: 'en',
@@ -431,16 +434,34 @@ const GeneralPage: React.FC = () => {
 
                   setIsDeleting(true);
                   try {
-                    // TODO: Implement workspace deletion API call
-                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    // Get the current user
+                    const { data: { user } } = await supabase.auth.getUser();
+                    if (!user) throw new Error('Not authenticated');
+
+                    // Delete business profiles for this user
+                    await supabase.from('business_profiles').delete().eq('user_id', user.id);
+
+                    // Delete workspaces for this user
+                    await supabase.from('workspaces').delete().eq('user_id', user.id);
+
+                    // Delete knowledge base files from storage
+                    const { data: files } = await supabase.storage.from('knowledge-base').list(user.id);
+                    if (files?.length) {
+                      const paths = files.map(f => `${user.id}/${f.name}`);
+                      await supabase.storage.from('knowledge-base').remove(paths);
+                    }
+
+                    // Sign out the user
+                    await supabase.auth.signOut();
+
                     showToast({
                       title: 'Workspace Deleted',
                       message: 'Your workspace has been permanently deleted',
                       variant: 'success',
                       duration: 4000
                     });
-                    // TODO: Redirect to home or login page
                     setShowDeleteModal(false);
+                    navigate('/');
                   } catch (error) {
                     showToast({
                       title: 'Deletion Failed',

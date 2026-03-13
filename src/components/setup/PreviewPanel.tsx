@@ -1,30 +1,110 @@
 import React, { useState } from 'react';
-import { Phone, Calendar, Globe, Clock, MessageSquare, Bot, ArrowRight } from 'lucide-react';
+import { Phone, Calendar, Globe, Clock, MessageSquare, Bot, ArrowRight, PhoneOff, CheckCircle } from 'lucide-react';
 import { useSetupStore } from '../../stores/setupStore';
+import { useToast } from '../../contexts/ToastContext';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
+
 const PreviewPanel: React.FC = () => {
   const { account, businessProfile, phone, calendar, callFlow, knowledgeBase } = useSetupStore();
+  const { showToast } = useToast();
   const [isCalling, setIsCalling] = useState(false);
+  const [callActive, setCallActive] = useState(false);
+  const [retellClient, setRetellClient] = useState<any>(null);
   const [isBooking, setIsBooking] = useState(false);
+  const [bookingDone, setBookingDone] = useState(false);
 
   const handleTestCall = async () => {
-    setIsCalling(true);
-    // TODO: Implement test call API
-    setTimeout(() => {
+    // If call is active, end it
+    if (callActive && retellClient) {
+      retellClient.stopCall();
+      setRetellClient(null);
+      setCallActive(false);
       setIsCalling(false);
-      // Show success message
-    }, 2000);
+      showToast({ title: 'Call Ended', message: 'Test call has been disconnected', variant: 'default', duration: 3000 });
+      return;
+    }
+
+    setIsCalling(true);
+    try {
+      // Get the agent ID from the setup store (created during phone step)
+      const agentId = (phone as any).agentId;
+      if (!agentId) {
+        showToast({ title: 'No Agent', message: 'Complete the phone setup step first to create your AI agent', variant: 'error', duration: 4000 });
+        setIsCalling(false);
+        return;
+      }
+
+      // Create a web call via our Netlify function
+      const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_web_call', agent_id: agentId }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.details || err.error || 'Failed to create test call');
+      }
+
+      const { access_token } = await response.json();
+
+      // Dynamically import and start the Retell Web Client
+      const { RetellWebClient } = await import('retell-client-js-sdk');
+      const client = new RetellWebClient();
+
+      client.on('call_started', () => {
+        setCallActive(true);
+        showToast({ title: 'Call Connected', message: 'You are now talking to your AI receptionist', variant: 'success', duration: 3000 });
+      });
+
+      client.on('call_ended', () => {
+        setCallActive(false);
+        setIsCalling(false);
+        setRetellClient(null);
+        showToast({ title: 'Call Ended', message: 'Test call completed', variant: 'default', duration: 3000 });
+      });
+
+      client.on('error', (error: any) => {
+        console.error('Retell call error:', error);
+        setCallActive(false);
+        setIsCalling(false);
+        setRetellClient(null);
+        showToast({ title: 'Call Error', message: 'Something went wrong during the call', variant: 'error', duration: 4000 });
+      });
+
+      await client.startCall({ accessToken: access_token });
+      setRetellClient(client);
+    } catch (error: any) {
+      console.error('Test call error:', error);
+      showToast({ title: 'Test Call Failed', message: error.message || 'Could not start test call', variant: 'error', duration: 4000 });
+      setIsCalling(false);
+    }
   };
 
   const handleCreateBooking = async () => {
     setIsBooking(true);
-    // TODO: Implement dummy booking API
-    setTimeout(() => {
+    try {
+      // Simulate a booking creation with the business data
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setBookingDone(true);
+      showToast({
+        title: 'Dummy Booking Created',
+        message: `Test appointment for ${account.businessName || 'Your Business'} — Tomorrow at 10:00 AM`,
+        variant: 'success',
+        duration: 5000,
+      });
+      // Reset after 3 seconds
+      setTimeout(() => setBookingDone(false), 3000);
+    } catch (error: any) {
+      showToast({ title: 'Booking Failed', message: error.message || 'Could not create dummy booking', variant: 'error', duration: 4000 });
+    } finally {
       setIsBooking(false);
-      // Show success message
-    }, 2000);
+    }
   };
 
   const getBusinessHours = () => {
@@ -183,22 +263,22 @@ const PreviewPanel: React.FC = () => {
         <div className="space-y-3">
           <Button
             onClick={handleTestCall}
-            disabled={isCalling}
+            disabled={isCalling && !callActive}
             variant="outline"
-            className="w-full flex items-center justify-center space-x-2"
+            className={`w-full flex items-center justify-center space-x-2 ${callActive ? 'border-red-500 text-red-600 hover:bg-red-50' : ''}`}
           >
-            <Phone className="w-4 h-4" />
-            <span>{isCalling ? 'Calling...' : 'Call Me Now'}</span>
+            {callActive ? <PhoneOff className="w-4 h-4" /> : <Phone className="w-4 h-4" />}
+            <span>{callActive ? 'End Call' : isCalling ? 'Connecting...' : 'Test Call (In-Browser)'}</span>
           </Button>
-          
+
           <Button
             onClick={handleCreateBooking}
-            disabled={isBooking}
+            disabled={isBooking || bookingDone}
             variant="outline"
             className="w-full flex items-center justify-center space-x-2"
           >
-            <Calendar className="w-4 h-4" />
-            <span>{isBooking ? 'Creating...' : 'Create Dummy Booking'}</span>
+            {bookingDone ? <CheckCircle className="w-4 h-4 text-green-500" /> : <Calendar className="w-4 h-4" />}
+            <span>{bookingDone ? 'Booking Created!' : isBooking ? 'Creating...' : 'Create Dummy Booking'}</span>
           </Button>
         </div>
       </Card>

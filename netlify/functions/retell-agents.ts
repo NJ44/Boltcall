@@ -159,10 +159,30 @@ export const handler: Handler = async (event) => {
         };
       }
 
+      // Create a web call for testing the agent in-browser
+      if (action === 'create_web_call') {
+        if (!body.agent_id) {
+          return { statusCode: 400, headers, body: JSON.stringify({ error: 'agent_id required' }) };
+        }
+        const webCall = await client.call.createWebCall({
+          agent_id: body.agent_id,
+          metadata: body.metadata || {},
+        });
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            call_id: webCall.call_id,
+            access_token: webCall.access_token,
+          }),
+        };
+      }
+
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Invalid action. Use: create_kb, create_agent, or create_full' }),
+        body: JSON.stringify({ error: 'Invalid action. Use: create_kb, create_agent, create_full, or create_web_call' }),
       };
     }
 
