@@ -517,4 +517,52 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                           <ArrowRight className="h-4 w-4 text-red-500 mr-2 mt-1 flex-shrink-0" />
                           <div>
                             <span className="font-semibold">Training costs:</span>
-                            <span className="
+                            <span className="text-sm text-gray-600 block">$500-$2,000 per year for ongoing training</span>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </motion.section>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+      {/* CTA Section */}
+      <motion.div
+        className="py-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200">
+              <DollarSign className="w-6 h-6 text-blue-500" />
+            </div>
+            <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200">
+              <Calendar className="w-6 h-6 text-blue-500" />
+            </div>
+          </div>
+          <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+          <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
+          <Link
+            to="/signup"
+            className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
+          >
+            Start the free setup
+          </Link>
+        </div>
+      </motion.div>
+
+    </main>
+
+    <Footer />
+  </>
+  );
+};
+
+export default AiReceptionistCostPricingGuide;

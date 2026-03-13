@@ -502,4 +502,46 @@ const HowAiReceptionistWorks: React.FC = () => {
                 </h2>
 
                 <p className="mb-6">
-                  To understand the true advantage of modern AI receptionist technology, it's helpful to compare how Boltcall's system works versus traditional alternatives. The differences go far beyond just "robot vs human"—they represent a fundamental
+                  To understand the true advantage of modern AI receptionist technology, it&apos;s helpful to compare how Boltcall&apos;s system works versus traditional alternatives. The differences go far beyond just &quot;robot vs human&quot;&mdash;they represent a fundamental shift in how businesses handle customer communication.
+                </p>
+
+              </motion.section>
+
+            </div>
+          </article>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <motion.div
+        className="py-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200">
+              <Phone className="w-6 h-6 text-blue-500" />
+            </div>
+            <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200">
+              <Calendar className="w-6 h-6 text-blue-500" />
+            </div>
+          </div>
+          <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+          <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
+          <Link
+            to="/signup"
+            className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
+          >
+            Start the free setup
+          </Link>
+        </div>
+      </motion.div>
+
+      <Footer />
+    </>
+  );
+};
+
+export default HowAiReceptionistWorks;

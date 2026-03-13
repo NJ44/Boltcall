@@ -485,3 +485,72 @@ export default function ChatbotVsLiveChatVsPhoneAnswering() {
                       <th className="border border-gray-300 px-4 py-2 text-left font-semibold text-gray-900">Industry</th>
                       <th className="border border-gray-300 px-4 py-2 text-center font-semibold text-gray-900">AI Chatbot</th>
                       <th className="border border-gray-300 px-4 py-2 text-center font-semibold text-gray-900">Live Chat</th>
+                      <th className="border border-gray-300 px-4 py-2 text-center font-semibold text-gray-900">Phone Answering</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-medium">Dental/Medical</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">18%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">12%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center text-green-600 font-semibold">32%</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-medium">Legal Services</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">15%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">10%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center text-green-600 font-semibold">28%</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-medium">Home Services</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center text-green-600 font-semibold">22%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">14%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">20%</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2 font-medium">Real Estate</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">20%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center">16%</td>
+                      <td className="border border-gray-300 px-4 py-2 text-center text-green-600 font-semibold">25%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </motion.section>
+
+          </article>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <motion.div
+        className="py-20 bg-gray-50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200">
+              <MessageCircle className="w-6 h-6 text-blue-500" />
+            </div>
+            <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200">
+              <Calendar className="w-6 h-6 text-blue-500" />
+            </div>
+          </div>
+          <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+          <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
+          <Link
+            to="/signup"
+            className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
+          >
+            Start the free setup
+          </Link>
+        </div>
+      </motion.div>
+
+      <Footer />
+    </>
+  );
+}
