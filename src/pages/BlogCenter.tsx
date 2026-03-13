@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Chatbot vs Live Chat vs Phone Answering: Which Converts More Leads for Local Businesses',
+    slug: '/blog/ai-chatbot-vs-live-chat-phone-answering',
+    excerpt: 'Discover which customer support channel wins the conversion battle: AI chatbots, live chat, or phone answering. We compare conversion rates to help lo',
+    date: 'March 13, 2026',
+    readTime: '9 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/ai-chatbot-vs-live-chat-phone-answering.png'
+  },
+  {
     title: 'How AI Receptionists Work: A Complete Technical Guide for Local Businesses',
     slug: '/blog/how-ai-receptionist-works',
     excerpt: 'Discover how AI receptionists handle calls, schedule appointments, and manage inquiries 24/7 to streamline your local business operations.',
