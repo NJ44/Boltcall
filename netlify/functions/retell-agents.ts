@@ -8,6 +8,55 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+// Legacy fallback prompt — used only when no prompt_config is provided
+function buildAgentPrompt(businessName: string, country?: string): string {
+  const basePrompt = `You are a friendly, professional AI receptionist for ${businessName}. Help callers with scheduling, answering questions, and providing information about the business. Be concise and helpful.`;
+  const needsDisclosure = !country || ['us','ca','gb','uk','au','nz','il','ie','de','fr','es','it','nl','be','at','ch','se','no','dk','fi','pt','pl','cz','gr','ro','hu','bg','hr','sk','si','lt','lv','ee','lu','mt','cy','is','li'].includes(country.toLowerCase());
+  if (needsDisclosure) {
+    return `IMPORTANT: At the very beginning of every call, you MUST introduce yourself by saying: "Hi, thank you for calling ${businessName}. Just so you know, I'm an AI assistant here to help you." Then proceed naturally with the conversation.\n\n${basePrompt}`;
+  }
+  return basePrompt;
+}
+
+// Generate professional prompt via internal HTTP call to the generate-agent-prompt function
+async function generateProfessionalPrompt(promptConfig: any): Promise<{ prompt: string; beginMessage: string }> {
+  // Use the co-located Netlify function via internal URL
+  const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+  const response = await fetch(`${baseUrl}/.netlify/functions/generate-agent-prompt`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(promptConfig),
+  });
+
+  if (!response.ok) {
+    console.error('Prompt generation failed, falling back to legacy prompt');
+    // Fallback: return a basic prompt so agent creation doesn't fail
+    return {
+      prompt: buildAgentPrompt(promptConfig.businessProfile?.businessName || 'this business', promptConfig.businessProfile?.country),
+      beginMessage: `Hi, thanks for calling ${promptConfig.businessProfile?.businessName || 'us'}! How can I help you today?`,
+    };
+  }
+
+  const data = await response.json();
+  return { prompt: data.prompt, beginMessage: data.beginMessage };
+}
+
+// Default agent config — copied from agent_9a4ecdf921de328c9ba0009ff3 (Israel-Outbound)
+// Applied to every new agent for consistent call quality
+function getDefaultAgentConfig(language?: string) {
+  const isHebrew = language?.startsWith('he');
+  return {
+    enable_backchannel: true,
+    backchannel_words: isHebrew ? ['אהה', 'אה-אה'] : ['yeah', 'uh-huh'],
+    interruption_sensitivity: 0.71,
+    end_call_after_silence_ms: 175000,
+    max_call_duration_ms: 481000,
+    begin_message_delay_ms: 3800,
+    allow_user_dtmf: true,
+    post_call_analysis_model: 'gpt-4.1-mini',
+  };
+}
+
 // Build the response_engine param based on what the caller provides
 function buildResponseEngine(body: any) {
   // If caller provides an llm_id, use Retell LLM engine
@@ -33,7 +82,7 @@ export const handler: Handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
-  const apiKey = process.env.RETELL_API_KEY || process.env.VITE_RETELL_API_KEY;
+  const apiKey = process.env.RETELL_API_KEY;
   if (!apiKey) {
     return {
       statusCode: 500,
@@ -87,7 +136,7 @@ export const handler: Handler = async (event) => {
         if (!responseEngine) {
           const llm = await client.llm.create({
             model: 'gpt-4o-mini',
-            general_prompt: body.general_prompt || `You are a helpful AI receptionist for ${body.agent_name || 'this business'}. Be friendly, professional, and concise.`,
+            general_prompt: body.general_prompt || buildAgentPrompt(body.agent_name || 'this business', body.country),
             ...(body.knowledge_base_ids ? { knowledge_base_ids: body.knowledge_base_ids } : {}),
           } as any);
           responseEngine = {
@@ -100,6 +149,7 @@ export const handler: Handler = async (event) => {
           agent_name: body.agent_name,
           voice_id: body.voice_id || '11labs-Adrian',
           response_engine: responseEngine,
+          ...getDefaultAgentConfig(body.language),
         } as any);
 
         return {
@@ -122,7 +172,25 @@ export const handler: Handler = async (event) => {
           knowledge_base_urls: body.website_url ? [body.website_url] : [],
         });
 
-        // Step 2: Determine response engine
+        // Step 2: Generate professional prompt (or use legacy fallback)
+        let generalPrompt: string;
+        let beginMessage: string | undefined;
+
+        if (body.prompt_config) {
+          // Use the professional prompt generator
+          const generated = await generateProfessionalPrompt(body.prompt_config);
+          generalPrompt = generated.prompt;
+          beginMessage = generated.beginMessage;
+        } else if (body.general_prompt) {
+          // Caller provided their own prompt
+          generalPrompt = body.general_prompt;
+          beginMessage = body.begin_message;
+        } else {
+          // Legacy fallback
+          generalPrompt = buildAgentPrompt(body.business_name, body.country);
+        }
+
+        // Step 3: Determine response engine
         let responseEngine;
 
         if (body.llm_id) {
@@ -131,20 +199,25 @@ export const handler: Handler = async (event) => {
           responseEngine = { type: 'custom-llm' as const, llm_websocket_url: body.llm_websocket_url };
         } else {
           // Auto-create a Retell LLM linked to the knowledge base
-          const llm = await client.llm.create({
+          const llmConfig: any = {
             model: 'gpt-4o-mini',
-            general_prompt: `You are a friendly, professional AI receptionist for ${body.business_name}. Help callers with scheduling, answering questions, and providing information about the business. Be concise and helpful.`,
+            general_prompt: generalPrompt,
             knowledge_base_ids: [kb.knowledge_base_id],
-          } as any);
+          };
+          if (beginMessage) {
+            llmConfig.begin_message = beginMessage;
+          }
+          const llm = await client.llm.create(llmConfig);
           responseEngine = { type: 'retell-llm' as const, llm_id: llm.llm_id };
         }
 
-        // Step 3: Create agent with the response engine
+        // Step 4: Create agent with the response engine + default config
         const agent = await client.agent.create({
           agent_name: `${body.business_name} AI Assistant`,
           voice_id: body.voice_id || '11labs-Adrian',
           language: body.language || 'en-US',
           response_engine: responseEngine,
+          ...getDefaultAgentConfig(body.language),
         } as any);
 
         return {
@@ -155,6 +228,7 @@ export const handler: Handler = async (event) => {
             knowledge_base_id: kb.knowledge_base_id,
             agent_id: agent.agent_id,
             agent,
+            prompt_used: body.prompt_config ? 'professional' : body.general_prompt ? 'custom' : 'legacy',
           }),
         };
       }
