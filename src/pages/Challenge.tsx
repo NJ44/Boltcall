@@ -233,7 +233,7 @@ const Challenge: React.FC = () => {
                 </p>
                 <div className="space-y-3">
                   <Button
-                    onClick={() => navigate('/coming-soon')}
+                    onClick={() => navigate('/signup')}
                     variant="primary"
                     size="lg"
                     className="w-full md:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
@@ -269,7 +269,7 @@ const Challenge: React.FC = () => {
                 </div>
                 <div className="space-y-3">
                   <Button
-                    onClick={() => navigate('/coming-soon')}
+                    onClick={() => navigate('/signup')}
                     variant="primary"
                     size="lg"
                     className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white"

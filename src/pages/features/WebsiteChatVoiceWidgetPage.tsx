@@ -214,7 +214,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               <p className="text-blue-100 mb-6">
                 Engage every visitor and capture more leads with an intelligent website widget.
               </p>
-              <Link to="/coming-soon">
+              <Link to="/signup">
                 <Button
                   variant="primary"
                   size="lg"

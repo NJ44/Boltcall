@@ -3,17 +3,23 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Edit, Globe, Settings } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
+import { useAuth } from '../../../contexts/AuthContext';
 import PageLoader from '../../PageLoader';
+
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
 
 const StepReview: React.FC = () => {
   const navigate = useNavigate();
-  const { 
-    account, 
-    businessProfile, 
+  const { user } = useAuth();
+  const {
+    account,
+    businessProfile,
     review,
     updateStep,
     updateReview,
-    complete 
+    complete
   } = useSetupStore();
   
   const [isLaunching, setIsLaunching] = useState(false);
@@ -21,13 +27,13 @@ const StepReview: React.FC = () => {
   const handleLaunch = async () => {
     setIsLaunching(true);
     try {
-      // TODO: Implement launch API
-      await fetch('/api/setup/launch', {
+      await fetch(`${FUNCTIONS_BASE}/setup-launch`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           workspaceId: account.workspaceId,
           isEnabled: review.isEnabled,
+          userId: user?.id,
         }),
       });
       

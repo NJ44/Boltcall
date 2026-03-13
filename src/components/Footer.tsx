@@ -57,8 +57,8 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
       { label: 'Terms of Service', href: '/terms-of-service' }
     ],
     support: [
-      { label: 'Help Center', href: '#' },
-      { label: 'Documentation', href: '#' }
+      { label: 'Help Center', href: '/help-center' },
+      { label: 'Documentation', href: '/documentation' }
     ]
   };
 
@@ -172,12 +172,12 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 <ul className="space-y-2">
                   {footerLinks.support.map((link, index) => (
                     <li key={index}>
-                      <a
-                        href={link.href}
+                      <Link
+                        to={link.href}
                         className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
                       >
                         {link.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -196,7 +196,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              © 2025 Boltcall. All rights reserved.
+              © 2026 Boltcall. All rights reserved.
             </motion.div>
 
             <motion.div

@@ -198,8 +198,58 @@ const SpeedToLeadPage: React.FC = () => {
     setSelectedInstruction(null);
   };
 
+  // Fetch embed token for script banner
+  const [embedToken, setEmbedToken] = useState<string | null>(null);
+  const [scriptCopied, setScriptCopied] = useState(false);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('business_features')
+      .select('embed_token')
+      .eq('user_id', user.id)
+      .single()
+      .then(({ data, error }: { data: any; error: any }) => {
+        if (error) {
+          console.error('Failed to fetch embed token:', error);
+          return;
+        }
+        if (data?.embed_token) setEmbedToken(data.embed_token);
+      });
+  }, [user?.id]);
+
+  const copyEmbedScript = () => {
+    if (!embedToken) return;
+    navigator.clipboard.writeText(`<script src="https://tryboltcall.com/embed.js" data-token="${embedToken}"></script>`);
+    setScriptCopied(true);
+    setTimeout(() => setScriptCopied(false), 2000);
+  };
+
   return (
     <div className="space-y-8">
+      {/* Embed Script Banner */}
+      {embedToken && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg p-5 text-white"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold">Add Speed to Lead to your website</h3>
+              <p className="text-amber-100 text-sm mt-1">Paste this one script to auto-capture all form submissions</p>
+            </div>
+            <button
+              onClick={copyEmbedScript}
+              className="flex-shrink-0 bg-white/20 hover:bg-white/30 rounded-lg px-4 py-2 text-sm font-medium flex items-center gap-2 transition-colors"
+            >
+              {scriptCopied ? <CheckCircle className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {scriptCopied ? 'Copied!' : 'Copy Script'}
+            </button>
+          </div>
+        </motion.div>
+      )}
+
       {/* Current Configuration - Minimal */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-8">

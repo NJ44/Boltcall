@@ -201,7 +201,7 @@ const LeadReactivationPage: React.FC = () => {
               <p className="text-blue-100 mb-6">
                 Turn your past leads into new customers with automated reactivation campaigns.
               </p>
-              <Link to="/coming-soon">
+              <Link to="/signup">
                 <Button
                   variant="primary"
                   size="lg"

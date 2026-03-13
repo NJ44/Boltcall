@@ -274,7 +274,7 @@ const Hero: React.FC = () => {
               </Button>
               <InteractiveHoverButton
                 text="Start free"
-                onClick={() => navigate('/coming-soon')}
+                onClick={() => navigate('/signup')}
                 className="min-h-11 w-40 border-gray-300 bg-white text-gray-900 py-2.5 px-4"
                 hoverBgClass="bg-brand-blue"
                 hoverTextClass="text-white"

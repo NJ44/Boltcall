@@ -217,7 +217,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               <p className="text-blue-100 mb-6">
                 Never lose a lead again with automated, intelligent follow-ups.
               </p>
-              <Link to="/coming-soon">
+              <Link to="/signup">
                 <Button
                   variant="primary"
                   size="lg"

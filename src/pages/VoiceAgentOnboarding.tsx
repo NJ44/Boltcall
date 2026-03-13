@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Bot, Building2, ArrowRight, ArrowLeft, Loader2, CheckCircle2, Zap, Shield, MessageSquare } from 'lucide-react';
 
-// Modal endpoint — update after `modal deploy app.py`
-const MODAL_BASE_URL = import.meta.env.VITE_MODAL_VOICE_URL || '';
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
 
 type FormData = {
   name: string;
@@ -104,33 +105,70 @@ export default function VoiceAgentOnboarding() {
         faq: form.faq.filter(f => f.question),
       };
 
-      // Step 1: Onboard (save to DB)
-      const onboardRes = await fetch(`${MODAL_BASE_URL}/onboard`, {
+      // Step 1: Create knowledge base + agent via Retell
+      const kbText = [
+        `Business: ${payload.name}`,
+        `Industry: ${payload.industry}`,
+        `Location: ${payload.location}`,
+        `Hours: ${payload.hours}`,
+        `Tone: ${payload.tone}`,
+        payload.services.length > 0
+          ? `Services:\n${payload.services.map(s => `- ${s.name}${s.price ? ` ($${s.price})` : ''}${s.description ? `: ${s.description}` : ''}`).join('\n')}`
+          : '',
+        payload.faq.length > 0
+          ? `FAQ:\n${payload.faq.map(f => `Q: ${f.question}\nA: ${f.answer}`).join('\n\n')}`
+          : '',
+        payload.additional_info ? `Additional Info: ${payload.additional_info}` : '',
+      ].filter(Boolean).join('\n\n');
+
+      const agentRes = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          action: 'create_full',
+          business_name: payload.name,
+          website_url: payload.website || undefined,
+          language: 'en-US',
+          knowledge_base_texts: [{ title: `${payload.name} Knowledge Base`, text: kbText }],
+        }),
       });
 
-      if (!onboardRes.ok) throw new Error('Failed to save business info');
-      const onboardData = await onboardRes.json();
-
-      if (onboardData.error) throw new Error(onboardData.error);
+      if (!agentRes.ok) throw new Error('Failed to create AI agent');
+      const agentData = await agentRes.json();
+      if (!agentData.success) throw new Error(agentData.error || 'Agent creation failed');
 
       setStatus('provisioning');
 
-      // Step 2: Provision (create agents + phone number)
-      const provisionRes = await fetch(`${MODAL_BASE_URL}/provision`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ business_id: onboardData.business_id }),
+      // Step 2: Search and purchase a phone number via Twilio
+      const searchRes = await fetch(`${FUNCTIONS_BASE}/twilio-numbers?action=available&country=US`, {
+        method: 'GET',
       });
 
-      if (!provisionRes.ok) throw new Error('Provisioning failed');
-      const provisionData = await provisionRes.json();
+      let phoneNumber = null;
+      if (searchRes.ok) {
+        const numbers = await searchRes.json();
+        if (numbers.length > 0) {
+          // Purchase the first available number
+          const purchaseRes = await fetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'purchase',
+              phone_number: numbers[0].phone_number,
+            }),
+          });
+          if (purchaseRes.ok) {
+            const purchased = await purchaseRes.json();
+            phoneNumber = purchased.phone_number || numbers[0].friendly_name;
+          }
+        }
+      }
 
-      if (provisionData.error) throw new Error(provisionData.error);
-
-      setResult(provisionData);
+      setResult({
+        phone_number: phoneNumber || 'Number pending — configure in dashboard',
+        inbound_agent: { agent_id: agentData.agent_id },
+        outbound_agent: { agent_id: 'Configure in dashboard' },
+      });
       setStatus('done');
     } catch (err: any) {
       setError(err.message || 'Something went wrong');

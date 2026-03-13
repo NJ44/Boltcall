@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { sendSms } from './twilio';
 
 export interface NotificationData {
   userId: string;
@@ -206,14 +207,13 @@ class NotificationService {
   }
 
   /**
-   * Send SMS notification
+   * Send SMS notification via Twilio
    */
   private async sendSMSNotification(phone: string, message: string): Promise<void> {
-    // TODO: Integrate with SMS service (Twilio, AWS SNS, etc.)
-    console.log(`Sending SMS to ${phone}: ${message}`);
-    
-    // For now, just simulate sending
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const result = await sendSms(phone, message);
+    if (!result.success) {
+      throw new Error('Twilio SMS delivery failed');
+    }
   }
 
   /**

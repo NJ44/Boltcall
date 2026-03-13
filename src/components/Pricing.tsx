@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { PricingTable } from './ui/pricing-table';
 import WhisperText from './ui/whisper-text';
+import { redirectToCheckout, type PlanLevel } from '../lib/stripe';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // PricingTable data
   const pricingFeatures = [
@@ -108,9 +110,28 @@ const Pricing: React.FC = () => {
           plans={pricingPlans}
           defaultPlan="pro"
           defaultInterval="monthly"
-          onPlanSelect={(plan) => {
-            console.log("Selected plan:", plan);
-            navigate('/coming-soon');
+          onPlanSelect={async (plan, interval) => {
+            if (isLoading) return;
+            setIsLoading(true);
+            try {
+              // Map plan levels to Stripe plan names
+              const planMap: Record<string, string> = {
+                starter: 'starter',
+                pro: 'pro',
+                all: 'agency',
+              };
+              const stripePlan = planMap[plan] || plan;
+              await redirectToCheckout({
+                plan: stripePlan as PlanLevel,
+                interval: interval || 'monthly',
+              });
+            } catch (error) {
+              console.error('Checkout error:', error);
+              // Fallback to signup page if Stripe isn't configured yet
+              navigate('/signup');
+            } finally {
+              setIsLoading(false);
+            }
           }}
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"

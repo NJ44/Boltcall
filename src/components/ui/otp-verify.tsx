@@ -2,20 +2,21 @@
 
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "../../lib/supabase";
 
 type OTPVerificationProps = {
-  email?: string;
-  onVerified?: (code: string) => Promise<void> | void;
-  onResend?: () => Promise<void> | void;
+  email: string;
+  onVerified?: () => Promise<void> | void;
 };
 
 export function OTPVerification({
-  email = "jamescarter@gmail.com",
+  email,
   onVerified,
-  onResend,
 }: OTPVerificationProps) {
-  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [resendCooldown, setResendCooldown] = useState(0);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (index: number, value: string) => {
@@ -23,7 +24,7 @@ export function OTPVerification({
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-    if (value && index < 3) {
+    if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
   };
@@ -34,24 +35,77 @@ export function OTPVerification({
     }
   };
 
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (pasted.length > 0) {
+      const newOtp = [...otp];
+      for (let i = 0; i < pasted.length && i < 6; i++) {
+        newOtp[i] = pasted[i];
+      }
+      setOtp(newOtp);
+      const nextEmpty = Math.min(pasted.length, 5);
+      inputRefs.current[nextEmpty]?.focus();
+    }
+  };
+
   const handleVerify = async () => {
     const otpCode = otp.join("");
-    if (otpCode.length !== 4) return;
+    if (otpCode.length !== 6) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setIsLoading(false);
-    if (onVerified) {
-      await onVerified(otpCode);
-    } else {
-      console.log("OTP verified:", otpCode);
+    setError("");
+
+    try {
+      const { error: verifyError } = await supabase.auth.verifyOtp({
+        email,
+        token: otpCode,
+        type: "signup",
+      });
+
+      if (verifyError) {
+        setError(verifyError.message || "Invalid verification code. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (onVerified) {
+        await onVerified();
+      }
+    } catch (err) {
+      setError("Verification failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleResend = async () => {
-    if (onResend) {
-      await onResend();
-    } else {
-      console.log("Resending OTP...");
+    if (resendCooldown > 0) return;
+    setError("");
+
+    try {
+      const { error: resendError } = await supabase.auth.resend({
+        type: "signup",
+        email,
+      });
+
+      if (resendError) {
+        setError(resendError.message || "Failed to resend code.");
+        return;
+      }
+
+      // Start cooldown
+      setResendCooldown(60);
+      const interval = setInterval(() => {
+        setResendCooldown((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } catch {
+      setError("Failed to resend code.");
     }
   };
 
@@ -83,7 +137,7 @@ export function OTPVerification({
             </p>
           </div>
 
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex justify-center gap-3 mb-4" onPaste={handlePaste}>
             {otp.map((digit, index) => (
               <div key={index} className="relative">
                 <input
@@ -96,16 +150,22 @@ export function OTPVerification({
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  className="w-12 h-12 text-center text-lg font-semibold bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:bg-blue-50 focus:border-blue-400 focus:outline-none transition-all duration-200 shadow-sm rounded-xl"
+                  className="w-11 h-12 text-center text-lg font-semibold bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:bg-blue-50 focus:border-blue-400 focus:outline-none transition-all duration-200 shadow-sm rounded-xl"
                   placeholder=""
                 />
               </div>
             ))}
           </div>
 
+          {error && (
+            <div className="mb-4 text-center">
+              <p className="text-red-600 text-sm">{error}</p>
+            </div>
+          )}
+
           <button
             onClick={handleVerify}
-            disabled={isLoading || otp.join("").length !== 4}
+            disabled={isLoading || otp.join("").length !== 6}
             className="w-full py-3 mb-4 rounded-xl bg-blue-600 text-white font-semibold shadow-lg transition-all duration-200 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Verifying..." : "Verify Code"}
@@ -115,9 +175,10 @@ export function OTPVerification({
             <span className="text-gray-600 text-sm">Didn't get the code? </span>
             <button
               onClick={handleResend}
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
+              disabled={resendCooldown > 0}
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200 disabled:text-gray-400"
             >
-              Resend
+              {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend"}
             </button>
           </div>
 
@@ -138,4 +199,3 @@ export function OTPVerification({
     </div>
   );
 }
-

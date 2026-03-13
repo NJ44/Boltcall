@@ -633,7 +633,7 @@ const BlogHowToScheduleText: React.FC = () => {
               <p className="text-blue-100 mb-6 text-lg">
                 Start using Boltcall today and experience the power of AI-powered text scheduling. Set up your account in 5 minutes and start automating your customer communications immediately.
               </p>
-              <Link to="/coming-soon">
+              <Link to="/signup">
                 <Button
                   variant="primary"
                   size="lg"

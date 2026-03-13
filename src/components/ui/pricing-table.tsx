@@ -29,7 +29,7 @@ export interface PricingTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
   features: PricingFeature[]
   plans: PricingPlan[]
-  onPlanSelect?: (plan: PlanLevel) => void
+  onPlanSelect?: (plan: PlanLevel, interval: "monthly" | "yearly") => void
   defaultPlan?: PlanLevel
   defaultInterval?: "monthly" | "yearly"
   containerClassName?: string
@@ -235,7 +235,7 @@ export function PricingTable({
                 <div className="w-3/4 mx-auto border-t border-gray-200 mb-3"></div>
                 
                 <button
-                  onClick={() => plan.isCustom ? window.location.href = '/contact' : onPlanSelect?.(plan.level)}
+                  onClick={() => plan.isCustom ? window.location.href = '/contact' : onPlanSelect?.(plan.level, isYearly ? "yearly" : "monthly")}
                   className={cn(
                     "w-full px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg",
                     "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase, FileText } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './ui/Button';
@@ -47,6 +47,7 @@ const Header: React.FC = () => {
     { label: 'Website Health Check', href: '/speed-test', icon: Gauge },
     { label: 'AI Revenue Audit', href: '/ai-revenue-calculator', icon: Calculator },
     { label: 'Business Audit', href: '/business-audit', icon: Briefcase },
+    { label: 'SEO & AEO Report', href: '/seo-aeo-audit', icon: FileText },
   ];
 
   /** Flat list for mobile kinetic menu (used only on mobile) */
@@ -757,7 +758,7 @@ const Header: React.FC = () => {
                 </motion.div>
                 <InteractiveHoverButton
                   text="Start Now"
-                  onClick={() => handleNavClick('/coming-soon')}
+                  onClick={() => handleNavClick('/signup')}
                   className={`!min-h-11 !min-w-[9rem] !w-auto !px-4 !py-2.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
                   hoverBgClass="bg-brand-blue"
                   hoverTextClass="text-white"
@@ -1017,7 +1018,7 @@ const Header: React.FC = () => {
                         <motion.div whileTap={{ scale: 0.98 }}>
                           <Button
                             onClick={() => {
-                              handleNavClick('/coming-soon');
+                              handleNavClick('/signup');
                               setIsMenuOpen(false);
                             }}
                             variant="primary"

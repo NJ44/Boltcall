@@ -36,8 +36,8 @@ const PlanCard: React.FC<PlanCardProps> = ({
   const navigate = useNavigate();
 
   const handleCtaClick = () => {
-    // Navigate to setup page
-    navigate('/coming-soon');
+    // Navigate to signup page
+    navigate('/signup');
   };
 
 

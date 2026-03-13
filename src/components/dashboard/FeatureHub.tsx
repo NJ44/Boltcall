@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   Phone, MessageSquare, Zap, Clock, Users, Star,
-  Copy, Check, ChevronRight, Loader2,
+  Copy, Check, ChevronRight, Loader2, AlertCircle,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -20,7 +20,7 @@ type FeatureCard = {
   key: FeatureKey;
   name: string;
   description: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   color: string;
   bgColor: string;
   configLink: string;
@@ -95,6 +95,7 @@ const FeatureHub: React.FC = () => {
   const [features, setFeatures] = useState<Record<string, boolean>>({});
   const [embedToken, setEmbedToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [toggling, setToggling] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [showScript, setShowScript] = useState(false);
@@ -103,33 +104,44 @@ const FeatureHub: React.FC = () => {
   useEffect(() => {
     if (!user) return;
     (async () => {
-      // Try to get existing row
-      let { data, error } = await supabase
-        .from('business_features')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      // If no row exists, create one
-      if (error || !data) {
-        const { data: newRow } = await supabase
+      try {
+        // Try to get existing row
+        let { data, error: fetchError } = await supabase
           .from('business_features')
-          .insert({ user_id: user.id, workspace_id: user.id })
-          .select()
+          .select('*')
+          .eq('user_id', user.id)
           .single();
-        data = newRow;
-      }
 
-      if (data) {
-        setFeatures({
-          voice_agent: data.voice_agent_enabled,
-          speed_to_lead: data.speed_to_lead_enabled,
-          chatbot: data.chatbot_enabled,
-          reminders: data.reminders_enabled,
-          lead_reactivation: data.lead_reactivation_enabled,
-          reputation_manager: data.reputation_manager_enabled,
-        });
-        setEmbedToken(data.embed_token);
+        // If no row exists, create one (fallback — trigger should handle this)
+        if (fetchError || !data) {
+          const { data: newRow, error: insertError } = await supabase
+            .from('business_features')
+            .insert({ user_id: user.id, workspace_id: user.id })
+            .select()
+            .single();
+          if (insertError) {
+            console.error('Failed to create business_features row:', insertError);
+            setError('Failed to initialize features. Please refresh the page.');
+            setLoading(false);
+            return;
+          }
+          data = newRow;
+        }
+
+        if (data) {
+          setFeatures({
+            voice_agent: data.voice_agent_enabled ?? false,
+            speed_to_lead: data.speed_to_lead_enabled ?? false,
+            chatbot: data.chatbot_enabled ?? false,
+            reminders: data.reminders_enabled ?? false,
+            lead_reactivation: data.lead_reactivation_enabled ?? false,
+            reputation_manager: data.reputation_manager_enabled ?? false,
+          });
+          setEmbedToken(data.embed_token);
+        }
+      } catch (err) {
+        console.error('FeatureHub load error:', err);
+        setError('Failed to load features. Please try again.');
       }
       setLoading(false);
     })();
@@ -140,12 +152,20 @@ const FeatureHub: React.FC = () => {
     setToggling(key);
     const newValue = !features[key];
 
-    const { error } = await supabase
-      .from('business_features')
-      .update({ [`${key}_enabled`]: newValue, updated_at: new Date().toISOString() })
-      .eq('user_id', user.id);
+    try {
+      const { error: updateError } = await supabase
+        .from('business_features')
+        .update({ [`${key}_enabled`]: newValue, updated_at: new Date().toISOString() })
+        .eq('user_id', user.id);
 
-    if (!error) {
+      if (updateError) {
+        console.error('Toggle feature error:', updateError);
+        setError(`Failed to toggle ${key.replace(/_/g, ' ')}. Please try again.`);
+        setTimeout(() => setError(null), 4000);
+        setToggling(null);
+        return;
+      }
+
       setFeatures((prev) => ({ ...prev, [key]: newValue }));
 
       // Show embed script banner if a website feature was just enabled
@@ -153,6 +173,10 @@ const FeatureHub: React.FC = () => {
       if (newValue && feature?.needsEmbed) {
         setShowScript(true);
       }
+    } catch (err) {
+      console.error('Toggle feature error:', err);
+      setError('Something went wrong. Please try again.');
+      setTimeout(() => setError(null), 4000);
     }
     setToggling(null);
   };
@@ -177,6 +201,15 @@ const FeatureHub: React.FC = () => {
 
   return (
     <div className="space-y-4">
+      {/* Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+          <p className="text-sm text-red-700">{error}</p>
+          <button onClick={() => setError(null)} className="ml-auto text-red-400 hover:text-red-600 text-sm">Dismiss</button>
+        </div>
+      )}
+
       {/* Feature Grid */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="bg-gray-50 border-b border-gray-200 p-6 flex items-center justify-between">

@@ -36,7 +36,7 @@ const FunnelOptimiser = () => {
   const handleQuizSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/funnel-report', {
+      const response = await fetch('https://noamyakoby6--boltcall-funnel-optimizer-analyze-funnel.modal.run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

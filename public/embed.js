@@ -24,21 +24,37 @@
   var host = script.src.replace(/\/embed\.js.*$/, '');
   var configUrl = host + '/.netlify/functions/embed-config?token=' + token;
 
-  // Fetch config and activate features
-  fetch(configUrl)
-    .then(function (res) { return res.json(); })
-    .then(function (cfg) {
-      if (cfg.error) {
-        console.warn('[Boltcall] Config error:', cfg.error);
-        return;
-      }
-      if (cfg.chatbot) initChatbot(cfg.chatbot);
-      if (cfg.speed_to_lead) initSpeedToLead(cfg.speed_to_lead, cfg.workspace_id);
-      if (cfg.reputation) initReputation(cfg.reputation);
-    })
-    .catch(function (err) {
-      console.warn('[Boltcall] Failed to load config:', err);
-    });
+  // Fetch config and activate features (with retry on network errors)
+  function loadConfig(attempt) {
+    fetch(configUrl)
+      .then(function (res) {
+        if (!res.ok) {
+          if (res.status === 404) {
+            console.warn('[Boltcall] Invalid token. Check your data-token attribute.');
+            return null;
+          }
+          throw new Error('HTTP ' + res.status);
+        }
+        return res.json();
+      })
+      .then(function (cfg) {
+        if (!cfg) return;
+        if (cfg.error) {
+          console.warn('[Boltcall] Config error:', cfg.error);
+          return;
+        }
+        try { if (cfg.chatbot) initChatbot(cfg.chatbot); } catch (e) { console.warn('[Boltcall] Chatbot init error:', e); }
+        try { if (cfg.speed_to_lead) initSpeedToLead(cfg.speed_to_lead, cfg.workspace_id); } catch (e) { console.warn('[Boltcall] Speed to Lead init error:', e); }
+        try { if (cfg.reputation) initReputation(cfg.reputation); } catch (e) { console.warn('[Boltcall] Reputation init error:', e); }
+      })
+      .catch(function (err) {
+        console.warn('[Boltcall] Failed to load config (attempt ' + attempt + '):', err);
+        if (attempt < 2) {
+          setTimeout(function () { loadConfig(attempt + 1); }, 3000);
+        }
+      });
+  }
+  loadConfig(1);
 
   // ── Chatbot (Retell Widget) ──
   function initChatbot(config) {
@@ -70,17 +86,25 @@
         form.dataset.boltcallBound = 'true';
 
         form.addEventListener('submit', function () {
-          var formData = new FormData(form);
-          var data = { workspace_id: workspaceId, source_url: window.location.href, fields: {} };
+          try {
+            var formData = new FormData(form);
+            var data = { workspace_id: workspaceId, source_url: window.location.href, fields: {} };
 
-          formData.forEach(function (value, key) {
-            // Skip sensitive fields
-            if (/password|card|cvv|ssn|credit/i.test(key)) return;
-            data.fields[key] = value;
-          });
+            formData.forEach(function (value, key) {
+              // Skip sensitive fields
+              if (/password|card|cvv|ssn|credit/i.test(key)) return;
+              data.fields[key] = value;
+            });
 
-          // Fire-and-forget POST to webhook
-          navigator.sendBeacon(webhookUrl, JSON.stringify(data));
+            // Fire-and-forget POST to webhook (sendBeacon survives page unload)
+            var sent = navigator.sendBeacon(webhookUrl, JSON.stringify(data));
+            if (!sent) {
+              // Fallback: use fetch with keepalive
+              fetch(webhookUrl, { method: 'POST', body: JSON.stringify(data), keepalive: true, headers: { 'Content-Type': 'application/json' } }).catch(function () {});
+            }
+          } catch (e) {
+            // Never block form submission
+          }
         });
       });
     }
@@ -105,17 +129,28 @@
   }
 
   // ── Reputation Manager (Review Popup) ──
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
   function initReputation(config) {
     if (!config.google_review_url) return;
+    // Validate URL starts with https
+    if (!/^https:\/\//i.test(config.google_review_url)) return;
 
     var triggerType = config.trigger || 'delay';
-    var delayMs = (config.delay_seconds || 30) * 1000;
-    var popupText = config.popup_text || 'Enjoying our service? Leave us a Google review!';
-    var buttonText = config.button_text || 'Leave a Review';
+    var delayMs = Math.min(Math.max((config.delay_seconds || 30), 5), 300) * 1000;
+    var popupText = escapeHtml(config.popup_text || 'Enjoying our service? Leave us a Google review!');
+    var buttonText = escapeHtml(config.button_text || 'Leave a Review');
+    var reviewUrl = encodeURI(config.google_review_url);
 
     function showPopup() {
       // Don't show if already dismissed this session
       if (sessionStorage.getItem('boltcall_review_dismissed')) return;
+      // Don't show if popup already exists
+      if (document.getElementById('boltcall-review-popup')) return;
 
       var overlay = document.createElement('div');
       overlay.id = 'boltcall-review-popup';
@@ -123,11 +158,11 @@
 
       overlay.innerHTML =
         '<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">' +
-          '<span style="font-size:24px">⭐</span>' +
-          '<button id="boltcall-review-close" style="background:none;border:none;font-size:18px;cursor:pointer;color:#999">✕</button>' +
+          '<span style="font-size:24px">&#11088;</span>' +
+          '<button id="boltcall-review-close" style="background:none;border:none;font-size:18px;cursor:pointer;color:#999">&#10005;</button>' +
         '</div>' +
         '<p style="margin:0 0 16px;color:#333;font-size:15px;line-height:1.4">' + popupText + '</p>' +
-        '<a href="' + config.google_review_url + '" target="_blank" rel="noopener" style="display:block;text-align:center;background:#4285F4;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">' + buttonText + '</a>';
+        '<a href="' + reviewUrl + '" target="_blank" rel="noopener noreferrer" style="display:block;text-align:center;background:#4285F4;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">' + buttonText + '</a>';
 
       // Add slide-in animation
       var style = document.createElement('style');
@@ -136,10 +171,13 @@
 
       document.body.appendChild(overlay);
 
-      document.getElementById('boltcall-review-close').addEventListener('click', function () {
-        overlay.remove();
-        sessionStorage.setItem('boltcall_review_dismissed', '1');
-      });
+      var closeBtn = document.getElementById('boltcall-review-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+          overlay.remove();
+          sessionStorage.setItem('boltcall_review_dismissed', '1');
+        });
+      }
     }
 
     if (triggerType === 'delay') {

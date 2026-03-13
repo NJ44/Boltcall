@@ -672,11 +672,11 @@ const DashboardLayout: React.FC = () => {
               <div className="flex items-center gap-3">
                  {/* Gift Card Announcement */}
                  <Link 
-                   to="/black-friday-gift-cards"
-                   className="px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                   to="/gift-cards"
+                   className="px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:from-pink-600 hover:to-rose-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
                  >
                    <Crown className="w-4 h-4" />
-                   <span>Black Friday 90% Gift Cards</span>
+                   <span>Spring Special 90% Gift Cards</span>
                  </Link>
                  
                  {/* Cinematic toggle (visual switch for dashboard) */}

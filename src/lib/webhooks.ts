@@ -1,4 +1,11 @@
 // Webhook service for setup page integrations
+// Uses Netlify functions to proxy all API calls (keeps secrets server-side)
+
+import { searchAvailableNumbers, purchasePhoneNumber as purchaseTwilioNumber } from './twilio';
+
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
 
 export interface PhoneNumber {
   phone_number: string;
@@ -10,16 +17,19 @@ export interface PhoneNumber {
 export interface CreateAgentResponse {
   success: boolean;
   agentId?: string;
+  agent_id?: string;
+  knowledge_base_id?: string;
   message?: string;
 }
 
 export interface PurchaseNumberResponse {
   success: boolean;
   phoneNumber?: string;
+  phone_number?: string;
   message?: string;
 }
 
-// Create AI agent and knowledge base webhook
+// Create AI agent and knowledge base via Netlify function (Retell SDK)
 export const createAgentAndKnowledgeBase = async (data: {
   businessName: string;
   websiteUrl?: string;
@@ -32,89 +42,67 @@ export const createAgentAndKnowledgeBase = async (data: {
   businessProfileId?: string;
   locationId?: string;
 }): Promise<CreateAgentResponse> => {
-  try {
-    // Generate a client ID if not provided
-    const clientId = data.clientId || `client_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    const payload = {
-      website_url: data.websiteUrl,
-      client_id: clientId,
+  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'create_full',
       business_name: data.businessName,
-      main_category: data.mainCategory,
-      country: data.country,
-      service_areas: data.serviceAreas,
-      opening_hours: data.openingHours,
-      languages: data.languages,
-      ...(data.businessProfileId && { business_profile_id: data.businessProfileId }),
-      ...(data.locationId && { location_id: data.locationId }),
-    };
+      website_url: data.websiteUrl,
+      language: data.languages.includes('en') ? 'en-US' : data.languages[0] || 'en-US',
+      knowledge_base_texts: [
+        {
+          title: 'Business Information',
+          text: `Business: ${data.businessName}\nCategory: ${data.mainCategory}\nCountry: ${data.country}\nService Areas: ${data.serviceAreas.join(', ')}\nLanguages: ${data.languages.join(', ')}`,
+        },
+      ],
+    }),
+  });
 
-    const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/3a4fe147-8277-4390-b1e6-c903fad3d7d2', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': 'perbP3PNqCvbu9JxG3YZvlBC9dS6OjR2',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Error creating agent and knowledge base:', error);
-    throw error;
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: 'Agent creation failed' }));
+    throw new Error(err.error || err.details || `Agent creation failed (${response.status})`);
   }
+
+  const result = await response.json();
+  return {
+    success: true,
+    agentId: result.agent_id,
+    agent_id: result.agent_id,
+    knowledge_base_id: result.knowledge_base_id,
+    message: 'Agent created via Retell SDK',
+  };
 };
 
-// Get available phone numbers webhook
+// Get available phone numbers — uses Netlify function (Twilio API direct)
 export const getAvailablePhoneNumbers = async (country?: string): Promise<PhoneNumber[]> => {
   try {
-    const url = new URL('https://n8n.srv974118.hstgr.cloud/webhook/56056949-3a98-4987-94be-cba983065391');
-    if (country) {
-      url.searchParams.set('country', country.toUpperCase());
-    }
-    const response = await fetch(url.toString(), {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': 'perbP3PNqCvbu9JxG3YZvlBC9dS6OjR2',
-      },
+    const numbers = await searchAvailableNumbers({
+      country: country?.toUpperCase() || 'US',
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const phoneNumbers = await response.json();
-    return phoneNumbers;
+    return numbers.map(n => ({
+      phone_number: n.phone_number,
+      friendly_name: n.friendly_name,
+      region: n.region,
+      rate_center: n.rate_center,
+    }));
   } catch (error) {
     console.error('Error fetching phone numbers:', error);
     throw error;
   }
 };
 
-// Purchase phone number webhook
+// Purchase phone number — uses Netlify function (Twilio API direct)
 export const purchasePhoneNumber = async (phoneNumber: string): Promise<PurchaseNumberResponse> => {
   try {
-    const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/19e608fe-0603-4d5d-b605-0e8ce1dcd5d9', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': 'perbP3PNqCvbu9JxG3YZvlBC9dS6OjR2',
-      },
-      body: JSON.stringify({ phoneNumber }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    return result;
+    const result = await purchaseTwilioNumber(phoneNumber);
+    return {
+      success: result.success,
+      phoneNumber: result.phone_number,
+      phone_number: result.phone_number,
+      message: `Successfully purchased ${result.phone_number}`,
+    };
   } catch (error) {
     console.error('Error purchasing phone number:', error);
     throw error;

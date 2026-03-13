@@ -30,6 +30,7 @@ import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
 import LeadReactivationPage from '../pages/dashboard/LeadReactivationPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
 import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
+import ReputationPage from '../pages/dashboard/ReputationPage';
 import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
 import LocationDashboardPage from '../pages/dashboard/LocationDashboardPage';
 import HelpCenter from '../pages/HelpCenter';
@@ -37,7 +38,7 @@ import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
-import ComingSoon from '../pages/ComingSoon';
+import Setup from '../pages/Setup';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
@@ -127,6 +128,8 @@ import LeadMagnetPage from '../pages/LeadMagnetPage';
 import LeadMagnetThankYouPage from '../pages/LeadMagnetThankYouPage';
 import AIAuditPage from '../pages/AIAuditPage';
 import AIAuditThankYouPage from '../pages/AIAuditThankYouPage';
+import SEOAuditPDF from '../pages/SEOAuditPDF';
+import SEOAuditPDFThankYou from '../pages/SEOAuditPDFThankYou';
 import SolarProfitCalculator from '../pages/SolarProfitCalculator';
 import SolarSalesCloser from '../pages/SolarSalesCloser';
 import SolarQuoteGenerator from '../pages/SolarQuoteGenerator';
@@ -196,6 +199,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="calcom" element={<CalcomPage />} />
           <Route path="call-history" element={<CallHistoryPage />} />
           <Route path="chat-history" element={<ChatHistoryPage />} />
+          <Route path="reputation" element={<ReputationPage />} />
           <Route path="settings" element={
             <SettingsLayout>
               <SettingsPage />
@@ -247,8 +251,7 @@ const NavigationWrapper: React.FC = () => {
             </SettingsLayout>
           } />
         </Route>
-        <Route path="/setup" element={<ComingSoon />} />
-        <Route path="/coming-soon" element={<ComingSoon />} />
+        <Route path="/setup" element={<Setup />} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
@@ -318,6 +321,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/business-audit" element={<BusinessAuditPage />} />
         <Route path="/ai-audit" element={<AIAuditPage />} />
         <Route path="/ai-audit/thank-you" element={<AIAuditThankYouPage />} />
+        <Route path="/seo-aeo-audit" element={<SEOAuditPDF />} />
+        <Route path="/seo-aeo-audit/thank-you" element={<SEOAuditPDFThankYou />} />
         <Route path="/conversion-rate-optimizer" element={<ConversionRateOptimizer />} />
         <Route path="/ai-visibility-check" element={<AIVisibilityCheck />} />
         {/* Feature Pages */}

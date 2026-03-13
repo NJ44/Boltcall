@@ -26,6 +26,20 @@ export const handler: Handler = async (event) => {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'token parameter required' }) };
   }
 
+  // Basic token format validation (hex string, 32 chars)
+  if (!/^[a-f0-9]{32}$/.test(token)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid token format' }) };
+  }
+
+  if (!supabaseKey) {
+    console.error('embed-config: Missing SUPABASE_SERVICE_KEY or VITE_SUPABASE_ANON_KEY');
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Server configuration error' }),
+    };
+  }
+
   try {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -35,7 +49,20 @@ export const handler: Handler = async (event) => {
       .eq('embed_token', token)
       .single();
 
-    if (error || !data) {
+    if (error) {
+      // PGRST116 = no rows found (invalid token)
+      if (error.code === 'PGRST116') {
+        return { statusCode: 404, headers, body: JSON.stringify({ error: 'Invalid token' }) };
+      }
+      console.error('embed-config Supabase error:', error.code, error.message);
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({ error: 'Database unavailable. Please try again.' }),
+      };
+    }
+
+    if (!data) {
       return { statusCode: 404, headers, body: JSON.stringify({ error: 'Invalid token' }) };
     }
 
@@ -56,7 +83,7 @@ export const handler: Handler = async (event) => {
 
     return { statusCode: 200, headers, body: JSON.stringify(config) };
   } catch (err) {
-    console.error('embed-config error:', err);
+    console.error('embed-config unexpected error:', err);
     return {
       statusCode: 500,
       headers,
