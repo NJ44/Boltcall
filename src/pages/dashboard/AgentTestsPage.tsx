@@ -10,7 +10,6 @@ import {
   Shield,
   ChevronDown,
   ChevronUp,
-  RefreshCw,
   Trash2,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';

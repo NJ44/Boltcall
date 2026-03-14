@@ -6,7 +6,6 @@ import {
   PhoneIncoming,
   PhoneOutgoing,
   Clock,
-  User,
   Play,
   Search,
   Eye,
