@@ -13,7 +13,7 @@ import DashboardPage from '../pages/dashboard/DashboardPage';
 import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
 import AgentsPage from '../pages/dashboard/AgentsPage';
 import SmsPage from '../pages/dashboard/SmsPage';
-import WhatsappPage from '../pages/dashboard/WhatsAppPage';
+import WhatsappPage from '../pages/dashboard/WhatsappPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
 import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
 import AssistantPage from '../pages/dashboard/AssistantPage';
