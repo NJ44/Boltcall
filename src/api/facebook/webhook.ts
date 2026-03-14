@@ -23,8 +23,6 @@ export default async function handler(req: Request) {
       // { entry: [{ changes: [{ field: "leadgen", value: { leadgen_id, form_id, page_id } }]}]}
       // For each leadgen event, fetch the lead fields with the page token you stored.
 
-      console.log('Facebook webhook received:', JSON.stringify(body, null, 2));
-
       // Here: forward to n8n (recommended) OR fetch lead fields right here.
       if (process.env.VITE_N8N_WEBHOOK_URL) {
         await fetch(process.env.VITE_N8N_WEBHOOK_URL, {

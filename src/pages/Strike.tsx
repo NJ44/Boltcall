@@ -232,12 +232,9 @@ const Strike: React.FC = () => {
                 <FeedbackWidget
                   label="How is Strike AI doing so far?"
                   placeholder="Share what's working well or what you'd like improved..."
-                  onSubmit={(data) => {
+                  onSubmit={(_data) => {
                     // For now, just log. Can be wired to n8n / analytics later.
-                    console.log('Strike AI feedback:', {
-                      ...data,
-                      page: window.location.href,
-                    });
+                    // TODO: wire to n8n / analytics
                   }}
                 />
               </div>

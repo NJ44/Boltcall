@@ -114,7 +114,7 @@ class NotificationService {
       // Check if user should receive this notification
       const shouldSend = await this.shouldSendNotification(userId, type, deliveryMethod);
       if (!shouldSend) {
-        console.log(`Notification blocked by user preferences: ${type} for user ${userId}`);
+        // Notification blocked by user preferences
         return null;
       }
 
@@ -198,11 +198,9 @@ class NotificationService {
   /**
    * Send email notification
    */
-  private async sendEmailNotification(email: string, title: string, message: string): Promise<void> {
+  private async sendEmailNotification(_email: string, _title: string, _message: string): Promise<void> {
     // TODO: Integrate with email service (SendGrid, AWS SES, etc.)
-    console.log(`Sending email to ${email}: ${title} - ${message}`);
-    
-    // For now, just simulate sending
+    // TODO: Integrate with email service - for now, just simulate sending
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
@@ -219,11 +217,9 @@ class NotificationService {
   /**
    * Send push notification
    */
-  private async sendPushNotification(userId: string, title: string, message: string): Promise<void> {
+  private async sendPushNotification(_userId: string, _title: string, _message: string): Promise<void> {
     // TODO: Integrate with push notification service (Firebase, OneSignal, etc.)
-    console.log(`Sending push notification to user ${userId}: ${title} - ${message}`);
-    
-    // For now, just simulate sending
+    // TODO: Integrate with push notification service - for now, just simulate sending
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 

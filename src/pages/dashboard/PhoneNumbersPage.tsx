@@ -168,9 +168,8 @@ const PhoneNumbersPage: React.FC = () => {
     setShowSipModal(true);
   };
 
-  const handlePurchaseNumber = (number: TwilioPhoneNumber) => {
-    console.log('Purchasing number:', number);
-    // Implementation for purchasing the number via Twilio
+  const handlePurchaseNumber = (_number: TwilioPhoneNumber) => {
+    // TODO: implement purchasing the number via Twilio
     setShowTwilioModal(false);
   };
 
@@ -183,7 +182,6 @@ const PhoneNumbersPage: React.FC = () => {
 
   const handleSipFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('SIP configuration:', sipFormData);
     setShowSipModal(false);
     // Implementation for saving SIP configuration
   };

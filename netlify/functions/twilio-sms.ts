@@ -10,8 +10,8 @@ const headers = {
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
 
 async function twilioRequest(path: string, method: string, body?: Record<string, string>) {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID || process.env.VITE_TWILLIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN || process.env.VITE_TWILLIO_AUTH_TOKEN;
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
 
   if (!accountSid || !authToken) {
     throw new Error('Twilio credentials not configured');
@@ -138,8 +138,8 @@ export const handler: Handler = async (event) => {
 
     // Get message history
     if (action === 'list') {
-      const accountSid = process.env.TWILIO_ACCOUNT_SID || process.env.VITE_TWILLIO_ACCOUNT_SID;
-      const authToken = process.env.TWILIO_AUTH_TOKEN || process.env.VITE_TWILLIO_AUTH_TOKEN;
+      const accountSid = process.env.TWILIO_ACCOUNT_SID;
+      const authToken = process.env.TWILIO_AUTH_TOKEN;
       const auth = Buffer.from(`${accountSid}:${authToken}`).toString('base64');
 
       const params = new URLSearchParams({ PageSize: String(body.limit || 50) });

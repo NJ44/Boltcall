@@ -46,8 +46,8 @@ export const FileUploadCompact = ({
     multiple: false,
     noClick: true,
     onDrop: handleFileChange,
-    onDropRejected: (error) => {
-      console.log(error);
+    onDropRejected: (_error) => {
+      // drop rejected
     },
   });
 

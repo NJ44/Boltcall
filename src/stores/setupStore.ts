@@ -115,7 +115,15 @@ export interface SetupData {
     pronunciationGuide: string;
   };
   
-  // Step 7: Review & Launch
+  // Step 7: Agent Config
+  agentConfig: {
+    agentType: 'inbound' | 'outbound_speed_to_lead' | 'outbound_reactivation' | 'outbound_reminder' | 'outbound_review';
+    agentName: string;
+    voiceId: string;
+    transferNumber: string;
+  };
+
+  // Step 8: Review & Launch
   review: {
     isEnabled: boolean;
     isLaunched: boolean;
@@ -207,6 +215,12 @@ const defaultData: SetupData = {
     tone: 'friendly_concise',
     pronunciationGuide: '',
   },
+  agentConfig: {
+    agentType: 'inbound',
+    agentName: '',
+    voiceId: '11labs-Adrian',
+    transferNumber: '',
+  },
   review: {
     isEnabled: false,
     isLaunched: false,
@@ -225,6 +239,7 @@ interface SetupStore extends SetupData {
   updatePhone: (data: Partial<SetupData['phone']>) => void;
   updateKnowledgeBase: (data: Partial<SetupData['knowledgeBase']>) => void;
   updateCallFlow: (data: Partial<SetupData['callFlow']>) => void;
+  updateAgentConfig: (data: Partial<SetupData['agentConfig']>) => void;
   updateReview: (data: Partial<SetupData['review']>) => void;
   reset: () => void;
   complete: () => void;
@@ -267,7 +282,11 @@ export const useSetupStore = create<SetupStore>()(
       updateCallFlow: (data) => set((state) => ({
         callFlow: { ...state.callFlow, ...data }
       })),
-      
+
+      updateAgentConfig: (data) => set((state) => ({
+        agentConfig: { ...state.agentConfig, ...data }
+      })),
+
       updateReview: (data) => set((state) => ({
         review: { ...state.review, ...data }
       })),
@@ -294,7 +313,7 @@ export const useSetupStore = create<SetupStore>()(
 export const setupSteps = [
   { id: 1, title: 'Account', description: 'Basic account setup' },
   { id: 2, title: 'Business Profile', description: 'Company information' },
-  { id: 3, title: 'Knowledge Base', description: 'Services and FAQs' },
-  { id: 4, title: 'Phone Number', description: 'Phone number setup' },
+  { id: 3, title: 'Knowledge Base', description: 'Services, FAQs & documents' },
+  { id: 4, title: 'Phone Number', description: 'Get your AI phone number' },
   { id: 5, title: 'Review & Launch', description: 'Final review and go live' },
 ];

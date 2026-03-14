@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
-import { ArrowDown } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { ArrowDown, Loader2, ShieldCheck, ShieldX } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
+import { validatePhoneNumber, type PhoneValidationResult } from '../../../lib/cekura';
 import StyledInput from '../../ui/StyledInput';
 
 const StepBusinessProfile: React.FC = () => {
   const { businessProfile, updateBusinessProfile } = useSetupStore();
   const [errors] = useState<Record<string, string>>({});
+  const [isValidatingPhone, setIsValidatingPhone] = useState(false);
+  const [phoneValidation, setPhoneValidation] = useState<PhoneValidationResult | null>(null);
+
+  // Validate business phone with Cekura on blur
+  const handlePhoneBlur = useCallback(async () => {
+    const phone = (businessProfile.businessPhone || '').trim();
+    if (!phone || phone.length < 7) {
+      setPhoneValidation(null);
+      return;
+    }
+    setIsValidatingPhone(true);
+    setPhoneValidation(null);
+    try {
+      const result = await validatePhoneNumber(phone);
+      setPhoneValidation(result);
+    } catch {
+      setPhoneValidation({ success: false, valid: false });
+    } finally {
+      setIsValidatingPhone(false);
+    }
+  }, [businessProfile.businessPhone]);
 
   const categories = [
     { value: 'dentist', label: 'Dentist' },
@@ -100,13 +122,57 @@ const StepBusinessProfile: React.FC = () => {
           
           <div className="space-y-4">
             <div>
-              <StyledInput
-                type="tel"
-                value={businessProfile.businessPhone || ''}
-                onChange={(e) => updateBusinessProfile({ businessPhone: e.target.value })}
-                placeholder="Enter your business phone number"
-                name="businessPhone"
-              />
+              <div className="relative">
+                <StyledInput
+                  type="tel"
+                  value={businessProfile.businessPhone || ''}
+                  onChange={(e) => {
+                    updateBusinessProfile({ businessPhone: e.target.value });
+                    setPhoneValidation(null); // Reset on change
+                  }}
+                  onBlur={handlePhoneBlur}
+                  placeholder="Enter your business phone number (e.g. +1234567890)"
+                  name="businessPhone"
+                />
+                {/* Validation indicator */}
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                  {isValidatingPhone && (
+                    <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />
+                  )}
+                  {!isValidatingPhone && phoneValidation && phoneValidation.valid && (
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-2 py-0.5">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      Verified
+                    </span>
+                  )}
+                  {!isValidatingPhone && phoneValidation && !phoneValidation.valid && (
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-full px-2 py-0.5">
+                      <ShieldX className="w-3.5 h-3.5" />
+                      Invalid
+                    </span>
+                  )}
+                </div>
+              </div>
+              {/* Carrier/type info when valid */}
+              {phoneValidation?.valid && (
+                <div className="mt-1.5 flex items-center gap-3 text-xs text-gray-500">
+                  {phoneValidation.phone_type && (
+                    <span className="capitalize">{phoneValidation.phone_type}</span>
+                  )}
+                  {phoneValidation.carrier && (
+                    <span>• {phoneValidation.carrier}</span>
+                  )}
+                  {phoneValidation.country_code && (
+                    <span>• {phoneValidation.country_code}</span>
+                  )}
+                </div>
+              )}
+              {/* Invalid phone warning */}
+              {phoneValidation && !phoneValidation.valid && (
+                <p className="mt-1 text-sm text-red-600">
+                  This phone number could not be verified. Please check the format (include country code, e.g. +1).
+                </p>
+              )}
               {errors.businessPhone && (
                 <p className="mt-1 text-sm text-red-600">{errors.businessPhone}</p>
               )}

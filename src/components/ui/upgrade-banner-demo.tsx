@@ -21,7 +21,7 @@ function UpgradeBannerDemo() {
         buttonText="Upgrade to Pro"
         description="for 2x more CPUs and faster builds"
         onClose={() => setIsVisible(false)}
-        onClick={() => console.log("Upgrade clicked")}
+        onClick={() => {}}
       />
     </div>
   );

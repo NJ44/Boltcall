@@ -157,9 +157,9 @@ export const handler: Handler = async (event) => {
 
   try {
     const supabase = getSupabase();
-    const retellApiKey = process.env.RETELL_API_KEY || process.env.VITE_RETELL_API_KEY || '';
-    const twilioSid = process.env.TWILIO_ACCOUNT_SID || process.env.VITE_TWILLIO_ACCOUNT_SID || '';
-    const twilioToken = process.env.TWILIO_AUTH_TOKEN || process.env.VITE_TWILLIO_AUTH_TOKEN || '';
+    const retellApiKey = process.env.RETELL_API_KEY || '';
+    const twilioSid = process.env.TWILIO_ACCOUNT_SID || '';
+    const twilioToken = process.env.TWILIO_AUTH_TOKEN || '';
 
     // Fetch all stats in parallel
     const [retellStats, twilioStats, supabaseStats] = await Promise.all([

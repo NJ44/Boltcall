@@ -98,7 +98,7 @@ const MembersPage: React.FC = () => {
   const handleInviteMember = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle invite logic here
-    console.log('Inviting:', inviteEmail, inviteRole);
+    // TODO: implement invite logic
     setShowInviteModal(false);
     setInviteEmail('');
     setInviteRole('member');

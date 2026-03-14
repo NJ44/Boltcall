@@ -58,7 +58,6 @@ export async function getVoices(): Promise<any[]> {
         .limit(10);
 
       if (!error && voices && voices.length > 0) {
-        console.log('Using real Retell voices from Supabase');
         return voices.map(voice => ({
           id: voice.id,
           name: voice.name,
@@ -76,7 +75,6 @@ export async function getVoices(): Promise<any[]> {
       const response = await fetch('/retell-voices.json');
       if (response.ok) {
         const voices = await response.json();
-        console.log('Using real Retell voices from JSON file');
         return voices;
       }
     } catch (jsonError) {
@@ -84,7 +82,6 @@ export async function getVoices(): Promise<any[]> {
     }
 
     // Final fallback: use mock data
-    console.log('Using mock data as final fallback');
     return mockVoices.map(voice => ({
       id: voice.voice_id,
       name: voice.name,
@@ -95,8 +92,6 @@ export async function getVoices(): Promise<any[]> {
     
   } catch (error) {
     console.error('Error fetching voices:', error);
-    console.log('Falling back to mock data...');
-    
     // Fallback to mock data if API call fails
     return mockVoices.map(voice => ({
       id: voice.voice_id,

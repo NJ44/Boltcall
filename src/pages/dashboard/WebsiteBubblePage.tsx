@@ -1,489 +1,498 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, X, Code, Settings, MessageCircle, Palette, Image, Type, Save } from 'lucide-react';
-import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import {
+  Copy,
+  Check,
+  Code,
+  Settings,
+  MessageCircle,
+  Palette,
+  Type,
+  Save,
+  Loader2,
+  AlertCircle,
+  Zap,
+  Star,
+  Globe,
+} from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 import { Magnetic } from '../../components/ui/magnetic';
 
-interface ClientAgent {
-  id: string;
-  name: string;
-  status: 'active' | 'inactive';
-  widgetId: string;
-  color: string;
-  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
-  createdAt: string;
-}
-
 const WebsiteBubblePage: React.FC = () => {
-  const [showIntegrationCode, setShowIntegrationCode] = useState(false);
-  const [selectedAgent, setSelectedAgent] = useState<string>('');
-  
-  // Sliding panel states
-  const [showAddPanel, setShowAddPanel] = useState(false);
-  const [showEditPanel, setShowEditPanel] = useState(false);
-  const [editingAgent, setEditingAgent] = useState<Partial<ClientAgent>>({});
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [codeCopied, setCodeCopied] = useState(false);
 
-  // Mock client agents data
-  const [clientAgents, setClientAgents] = useState<ClientAgent[]>([
-    {
-      id: '1',
-      name: 'Sales Agent',
-      status: 'active',
-      widgetId: 'boltcall-sales-001',
-      color: '#3B82F6',
-      position: 'bottom-right',
-      createdAt: '2024-01-15'
-    },
-    {
-      id: '2',
-      name: 'Support Agent',
-      status: 'active',
-      widgetId: 'boltcall-support-002',
-      color: '#10B981',
-      position: 'bottom-left',
-      createdAt: '2024-01-20'
-    },
-    {
-      id: '3',
-      name: 'Lead Capture',
-      status: 'inactive',
-      widgetId: 'boltcall-leads-003',
-      color: '#F59E0B',
-      position: 'top-right',
-      createdAt: '2024-01-25'
+  // Data from Supabase
+  const [embedToken, setEmbedToken] = useState<string | null>(null);
+  const [chatbotEnabled, setChatbotEnabled] = useState(false);
+  const [speedToLeadEnabled, setSpeedToLeadEnabled] = useState(false);
+  const [reputationEnabled, setReputationEnabled] = useState(false);
+
+  // Chatbot config
+  const [chatColor, setChatColor] = useState('#3B82F6');
+  const [chatPosition, setChatPosition] = useState<string>('bottom-right');
+  const [chatGreeting, setChatGreeting] = useState('Hi! How can I help you today?');
+  const [retellAgentId, setRetellAgentId] = useState('');
+
+  // Load data from Supabase
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      try {
+        const { data, error: fetchError } = await supabase
+          .from('business_features')
+          .select(
+            'embed_token, chatbot_enabled, speed_to_lead_enabled, reputation_manager_enabled, chatbot_config'
+          )
+          .eq('user_id', user.id)
+          .single();
+
+        if (fetchError) {
+          // If no row exists yet, the FeatureHub would have created it — show a helpful message
+          if (fetchError.code === 'PGRST116') {
+            setError('No workspace found. Visit the Feature Hub first to initialize your account.');
+          } else {
+            console.error('Failed to load embed config:', fetchError);
+            setError('Failed to load settings. Please try again.');
+          }
+          setLoading(false);
+          return;
+        }
+
+        if (data) {
+          setEmbedToken(data.embed_token || null);
+          setChatbotEnabled(data.chatbot_enabled ?? false);
+          setSpeedToLeadEnabled(data.speed_to_lead_enabled ?? false);
+          setReputationEnabled(data.reputation_manager_enabled ?? false);
+
+          if (data.chatbot_config) {
+            const cfg = data.chatbot_config as Record<string, any>;
+            if (cfg.color) setChatColor(cfg.color);
+            if (cfg.position) setChatPosition(cfg.position);
+            if (cfg.greeting) setChatGreeting(cfg.greeting);
+            if (cfg.retell_agent_id) setRetellAgentId(cfg.retell_agent_id);
+          }
+        }
+      } catch (err) {
+        console.error('WebsiteBubble load error:', err);
+        setError('Failed to load settings.');
+      }
+      setLoading(false);
+    })();
+  }, [user]);
+
+  // Toggle a feature and save to Supabase
+  const toggleFeature = async (
+    feature: 'chatbot' | 'speed_to_lead' | 'reputation_manager',
+    currentValue: boolean,
+    setter: (v: boolean) => void
+  ) => {
+    if (!user) return;
+    const newValue = !currentValue;
+    setter(newValue);
+
+    try {
+      const { error: updateError } = await supabase
+        .from('business_features')
+        .update({
+          [`${feature}_enabled`]: newValue,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', user.id);
+
+      if (updateError) {
+        console.error(`Failed to toggle ${feature}:`, updateError);
+        setter(currentValue); // revert
+        setError(`Failed to update ${feature}. Please try again.`);
+        setTimeout(() => setError(null), 4000);
+      }
+    } catch (err) {
+      setter(currentValue); // revert
+      console.error(`Toggle ${feature} error:`, err);
     }
-  ]);
-
-  const generateIntegrationCode = (agentId: string) => {
-    const agent = clientAgents.find(a => a.id === agentId);
-    if (!agent) return '';
-
-    return `<script
-    id="retell-widget"
-    src="https://dashboard.retellai.com/retell-widget.js"
-    type="module"
-    data-public-key="YOUR_RETELL_PUBLIC_KEY"
-    data-agent-id="YOUR_CHAT_AGENT_ID"
-    data-agent-version="YOUR_AGENT_VERSION"
-    data-title="YOUR_CUSTOM_TITLE"
-    data-logo-url="YOUR_LOGO_URL"
-    data-color="YOUR_CUSTOM_COLOR"
-    data-bot-name="YOUR_BOT_NAME"
-    data-popup-message="YOUR_POPUP_MESSAGE"
-    data-show-ai-popup="true"
-    data-show-ai-popup-time="5"
-    data-auto-open="false"
-    data-dynamic='{"key": "value"}'
-    data-recaptcha-key="YOUR_GOOGLE_RECAPTCHA_SITE_KEY"
-></script>`;
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    // You could add a toast notification here
-  };
+  // Save chatbot config to Supabase
+  const handleSaveChatbotConfig = async () => {
+    if (!user) return;
+    setSaving(true);
+    setError(null);
 
+    const config = {
+      color: chatColor,
+      position: chatPosition,
+      greeting: chatGreeting,
+      retell_agent_id: retellAgentId,
+    };
 
-  const toggleAgentStatus = (id: string) => {
-    setClientAgents(clientAgents.map(agent => 
-      agent.id === id 
-        ? { ...agent, status: agent.status === 'active' ? 'inactive' : 'active' }
-        : agent
-    ));
-  };
+    try {
+      const { error: updateError } = await supabase
+        .from('business_features')
+        .update({
+          chatbot_config: config,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', user.id);
 
-  const handleAddNewAgent = () => {
-    setEditingAgent({});
-    setShowAddPanel(true);
-  };
+      if (updateError) {
+        console.error('Failed to save chatbot config:', updateError);
+        setError('Failed to save settings. Please try again.');
+        setSaving(false);
+        return;
+      }
 
-  const handleEditAgent = (agent: ClientAgent) => {
-    setEditingAgent(agent);
-    setShowEditPanel(true);
-  };
-
-  const handleSaveAgent = () => {
-    if (editingAgent.id) {
-      setClientAgents(prev => 
-        prev.map(agent => 
-          agent.id === editingAgent.id ? { ...agent, ...editingAgent } as ClientAgent : agent
-        )
-      );
-    } else {
-      const newAgent: ClientAgent = {
-        id: Date.now().toString(),
-        name: editingAgent.name || '',
-        status: 'active',
-        widgetId: `boltcall-${Date.now()}`,
-        color: editingAgent.color || '#3B82F6',
-        position: editingAgent.position || 'bottom-right',
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-      setClientAgents(prev => [...prev, newAgent]);
+      setSaving(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      console.error('Chatbot config save error:', err);
+      setError('Something went wrong. Please try again.');
+      setSaving(false);
     }
-    setShowAddPanel(false);
-    setShowEditPanel(false);
-    setEditingAgent({});
   };
+
+  const embedCode = embedToken
+    ? `<script src="https://boltcall.org/embed.js" data-token="${embedToken}"></script>`
+    : '';
+
+  const copyEmbedCode = () => {
+    if (!embedCode) return;
+    navigator.clipboard.writeText(embedCode);
+    setCodeCopied(true);
+    setTimeout(() => setCodeCopied(false), 2000);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
+      {/* Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+          <p className="text-sm text-red-700">{error}</p>
+          <button
+            onClick={() => setError(null)}
+            className="ml-auto text-red-400 hover:text-red-600 text-sm"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
-      {/* Client Agents Card Table */}
+      {/* Embed Script Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+            <Code className="w-5 h-5 text-blue-600" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Embed Script</h2>
+            <p className="text-sm text-gray-600">
+              Add this single script to your website to enable all features below
+            </p>
+          </div>
+        </div>
+
+        {embedToken ? (
+          <div className="space-y-4">
+            {/* Token display */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Your Embed Token
+              </label>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 px-4 py-2 bg-gray-100 rounded-lg text-sm font-mono text-gray-800 select-all">
+                  {embedToken}
+                </code>
+              </div>
+            </div>
+
+            {/* Embed code */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Installation Code
+              </label>
+              <p className="text-xs text-gray-500 mb-2">
+                Paste this before the closing &lt;/body&gt; tag on every page of your website.
+              </p>
+              <div className="relative">
+                <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
+                  <code>{embedCode}</code>
+                </pre>
+                <button
+                  onClick={copyEmbedCode}
+                  className="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded transition-colors flex items-center gap-1"
+                  title="Copy to clipboard"
+                >
+                  {codeCopied ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
+                  <span className="text-xs">{codeCopied ? 'Copied!' : 'Copy'}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="p-4 bg-blue-50 rounded-lg">
+              <h3 className="text-sm font-medium text-blue-900 mb-2">How it works</h3>
+              <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+                <li>Paste the script on your website</li>
+                <li>Toggle the features you want below</li>
+                <li>Configure each feature from its settings page</li>
+                <li>The script automatically loads only what you have enabled</li>
+              </ol>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <Globe className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-600 font-medium">No embed token found</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Visit the Feature Hub to initialize your workspace and generate an embed token.
+            </p>
+          </div>
+        )}
+      </motion.div>
+
+      {/* Feature Toggles */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
       >
-        <CardTableWithPanel
-          columns={[
-            { key: 'name', label: 'Bubble Name', width: '35%' },
-            { key: 'status', label: 'Status', width: '20%' },
-            { key: 'createdAt', label: 'Created', width: '20%' },
-            { key: 'actions', label: 'Actions', width: '25%' }
-          ]}
-          data={clientAgents}
-          renderRow={(agent) => (
-            <div className="flex items-center gap-6">
-              {/* Bubble Name */}
-              <div className="flex items-center gap-3 flex-1">
-                <div className="font-medium text-gray-900">{agent.name}</div>
-              </div>
-              
-              {/* Status */}
-              <div className="flex-1">
-                    <button
-                      onClick={() => toggleAgentStatus(agent.id)}
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        agent.status === 'active'
-                          ? 'bg-green-100 text-green-800 hover:bg-green-200'
-                          : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                      }`}
-                    >
-                      {agent.status}
-                    </button>
-              </div>
-              
-              {/* Created Date */}
-              <div className="text-sm text-gray-500 flex-1">
-                    {new Date(agent.createdAt).toLocaleDateString()}
-              </div>
-              
-              {/* Action Icons */}
-              <div className="flex items-center gap-2 flex-1">
-                      <button
-                        onClick={() => {
-                          setSelectedAgent(agent.id);
-                          setShowIntegrationCode(true);
-                        }}
-                        className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
-                      >
-                        <Code className="w-4 h-4" />
-                        Get Code
-                      </button>
-                      <button
-                  onClick={() => handleEditAgent(agent)}
-                        className="text-gray-600 hover:text-gray-900"
-                      >
-                        <Settings className="w-4 h-4" />
-                      </button>
-                    </div>
-            </div>
-          )}
-          emptyStateText="No agents found. Create your first AI agent to get started."
-          searchPlaceholder="Search agents..."
-          filterOptions={[
-            { label: 'Active', value: 'active' },
-            { label: 'Inactive', value: 'inactive' }
-          ]}
-          onAddNew={handleAddNewAgent}
-          addNewText="Create Bubble"
-          showAddPanel={showAddPanel}
-          onCloseAddPanel={() => setShowAddPanel(false)}
-          addPanelTitle="Create New Bubble"
-          addPanelContent={
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Bubble Name</label>
-                <input
-                  type="text"
-                  value={editingAgent.name || ''}
-                  onChange={(e) => setEditingAgent({ ...editingAgent, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter agent name"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Color</label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={editingAgent.color || '#3B82F6'}
-                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
-                    className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={editingAgent.color || '#3B82F6'}
-                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="#3B82F6"
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Position</label>
-                <select
-                  value={editingAgent.position || 'bottom-right'}
-                  onChange={(e) => setEditingAgent({ ...editingAgent, position: e.target.value as any })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="bottom-right">Bottom Right</option>
-                  <option value="bottom-left">Bottom Left</option>
-                  <option value="top-right">Top Right</option>
-                  <option value="top-left">Top Left</option>
-                </select>
-              </div>
-              
-              <div className="flex justify-end gap-3 pt-4 border-t">
-                <button
-                  onClick={() => setShowAddPanel(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
-                >
-                  <X className="w-4 h-4" />
-                  Cancel
-                </button>
-                <Magnetic>
-                  <button
-                    onClick={handleSaveAgent}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                  >
-                    <Save className="w-4 h-4" />
-                    Create Bubble
-                  </button>
-                </Magnetic>
-              </div>
-            </div>
-          }
-          showEditPanel={showEditPanel}
-          onCloseEditPanel={() => setShowEditPanel(false)}
-          editPanelTitle="Edit Agent"
-          editPanelContent={
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Bubble Name</label>
-                <input
-                  type="text"
-                  value={editingAgent.name || ''}
-                  onChange={(e) => setEditingAgent({ ...editingAgent, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Color</label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={editingAgent.color || '#3B82F6'}
-                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
-                    className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={editingAgent.color || '#3B82F6'}
-                    onChange={(e) => setEditingAgent({ ...editingAgent, color: e.target.value })}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Widget Position</label>
-                <select
-                  value={editingAgent.position || 'bottom-right'}
-                  onChange={(e) => setEditingAgent({ ...editingAgent, position: e.target.value as any })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="bottom-right">Bottom Right</option>
-                  <option value="bottom-left">Bottom Left</option>
-                  <option value="top-right">Top Right</option>
-                  <option value="top-left">Top Left</option>
-                </select>
-              </div>
-              
-              <div className="flex justify-end gap-3 pt-4 border-t">
-                <button
-                  onClick={() => setShowEditPanel(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
-                >
-                  <X className="w-4 h-4" />
-                  Cancel
-                </button>
-                <Magnetic>
-                  <button
-                    onClick={handleSaveAgent}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                  >
-                    <Save className="w-4 h-4" />
-                    Save Changes
-                  </button>
-                </Magnetic>
-              </div>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+            <Settings className="w-5 h-5 text-green-600" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Embed Features</h2>
+            <p className="text-sm text-gray-600">
+              Toggle which features are active on your website
+            </p>
+          </div>
         </div>
-          }
-        />
+
+        <div className="space-y-4">
+          {/* Chatbot Toggle */}
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                <MessageCircle className="w-4 h-4 text-purple-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Website Chatbot</p>
+                <p className="text-sm text-gray-500">
+                  AI chat bubble that answers questions and books appointments
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => toggleFeature('chatbot', chatbotEnabled, setChatbotEnabled)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                chatbotEnabled ? 'bg-blue-600' : 'bg-gray-300'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  chatbotEnabled ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Speed to Lead Toggle */}
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                <Zap className="w-4 h-4 text-amber-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Speed to Lead</p>
+                <p className="text-sm text-gray-500">
+                  Auto-captures form submissions and triggers instant callback
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() =>
+                toggleFeature('speed_to_lead', speedToLeadEnabled, setSpeedToLeadEnabled)
+              }
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                speedToLeadEnabled ? 'bg-blue-600' : 'bg-gray-300'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  speedToLeadEnabled ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Reputation Manager Toggle */}
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                <Star className="w-4 h-4 text-yellow-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">Google Reviews Popup</p>
+                <p className="text-sm text-gray-500">
+                  Shows a review request popup to website visitors
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() =>
+                toggleFeature('reputation_manager', reputationEnabled, setReputationEnabled)
+              }
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                reputationEnabled ? 'bg-blue-600' : 'bg-gray-300'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  reputationEnabled ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
       </motion.div>
 
-      {/* Bubble Widget Settings */}
+      {/* Chatbot Configuration */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
       >
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-            <Settings className="w-5 h-5 text-purple-600" />
+            <MessageCircle className="w-5 h-5 text-purple-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">Widget Settings</h2>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Chatbot Configuration</h2>
+            <p className="text-sm text-gray-600">
+              Customize how the chat bubble looks and behaves on your website
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Color Settings */}
+          {/* Retell Agent ID */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Retell Chat Agent ID
+            </label>
+            <p className="text-xs text-gray-500 mb-2">
+              The agent ID from your Retell dashboard for the chat widget
+            </p>
+            <input
+              type="text"
+              value={retellAgentId}
+              onChange={(e) => setRetellAgentId(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
+              placeholder="agent_xxxxxxxxxxxx"
+            />
+          </div>
+
+          {/* Color */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               <Palette className="w-4 h-4 inline mr-1" />
               Widget Color
             </label>
             <div className="flex items-center gap-3">
               <input
                 type="color"
-                defaultValue="#3B82F6"
+                value={chatColor}
+                onChange={(e) => setChatColor(e.target.value)}
                 className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
               />
               <input
                 type="text"
-                defaultValue="#3B82F6"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={chatColor}
+                onChange={(e) => setChatColor(e.target.value)}
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
                 placeholder="#3B82F6"
               />
             </div>
           </div>
 
-          {/* Logo Upload */}
+          {/* Position */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <Image className="w-4 h-4 inline mr-1" />
-              Logo Upload
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              <Globe className="w-4 h-4 inline mr-1" />
+              Widget Position
             </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                // Handle file upload if needed
-                const file = e.target.files?.[0];
-                if (file) {
-                  console.log('Logo file selected:', file.name);
-                }
-              }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+            <select
+              value={chatPosition}
+              onChange={(e) => setChatPosition(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
+            >
+              <option value="bottom-right">Bottom Right</option>
+              <option value="bottom-left">Bottom Left</option>
+              <option value="top-right">Top Right</option>
+              <option value="top-left">Top Left</option>
+            </select>
           </div>
 
-          {/* Bot Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          {/* Greeting */}
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               <Type className="w-4 h-4 inline mr-1" />
-              Bot Name
+              Greeting Message
             </label>
             <input
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="AI Assistant"
-            />
-          </div>
-
-          {/* Popup Message */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              <MessageCircle className="w-4 h-4 inline mr-1" />
-              Popup Message
-            </label>
-            <input
-              type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              value={chatGreeting}
+              onChange={(e) => setChatGreeting(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
               placeholder="Hi! How can I help you today?"
             />
           </div>
-
         </div>
 
-        <div className="mt-6 flex justify-end">
+        {/* Save Button */}
+        <div className="flex items-center justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
           <Magnetic>
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-              Save Settings
+            <button
+              onClick={handleSaveChatbotConfig}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg font-medium transition-colors"
+            >
+              {saving ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : saved ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              {saved ? 'Saved!' : 'Save Configuration'}
             </button>
           </Magnetic>
         </div>
       </motion.div>
-
-      {/* Integration Code Modal */}
-      {showIntegrationCode && selectedAgent && (
-        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50 p-0 m-0">
-          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Integration Code</h2>
-                <button
-                  onClick={() => setShowIntegrationCode(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Agent: {clientAgents.find(a => a.id === selectedAgent)?.name}
-                </label>
-                <p className="text-sm text-gray-600 mb-4">
-                  Copy this Retell widget code and paste it into your website's HTML, just before the closing &lt;/body&gt; tag.
-                </p>
-              </div>
-
-              {/* Integration Instructions - moved before code */}
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                <h3 className="text-sm font-medium text-blue-900 mb-2">Integration Instructions:</h3>
-                <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
-                  <li>Copy the Retell widget code below</li>
-                  <li>Replace the placeholder values with your actual configuration</li>
-                  <li>Paste the code into your website's HTML before the closing &lt;/body&gt; tag</li>
-                  <li>Save and publish your website</li>
-                  <li>The AI chat bubble will appear on your website</li>
-                </ol>
-              </div>
-
-              <div className="relative">
-                <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
-                  <code>{generateIntegrationCode(selectedAgent)}</code>
-                </pre>
-                <button
-                  onClick={() => copyToClipboard(generateIntegrationCode(selectedAgent))}
-                  className="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded transition-colors"
-                  title="Copy to clipboard"
-                >
-                  <Copy className="w-4 h-4" />
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 };

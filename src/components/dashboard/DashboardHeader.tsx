@@ -11,19 +11,19 @@ const DashboardHeader: React.FC = () => {
   
   const handleExportCSV = () => {
     // CSV export logic would be implemented here
-    console.log('Exporting CSV...');
+    // TODO: implement CSV export
   };
   
   const handleCopyLink = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
     // Show toast notification
-    console.log('Link copied to clipboard');
+    // TODO: show toast notification
   };
   
   const handleInviteTeammate = () => {
     // Invite teammate logic would be implemented here
-    console.log('Inviting teammate...');
+    // TODO: implement invite teammate
   };
   
   const quickDateRanges = [

@@ -1,29 +1,15 @@
 // ChatKit Session Token Generator
-// This function creates a new ChatKit session and returns the client secret
+// This function creates a new ChatKit session via a Netlify function (server-side)
+// The OpenAI API key is NEVER exposed to the browser.
 
 export async function getChatKitSessionToken(deviceId: string): Promise<string> {
-  const WORKFLOW_ID = "wf_68e9fd4d3bc08190ba32c0dd1efa36d107c2b86288c10974";
-  const API_KEY = import.meta.env.VITE_OPENAI_API_SECRET_KEY;
-
-  if (!API_KEY) {
-    console.error("⚠️ MISSING API KEY: Please create a .env file with VITE_OPENAI_API_SECRET_KEY");
-    throw new Error("OpenAI API key is not configured. Please add VITE_OPENAI_API_SECRET_KEY to your .env file.");
-  }
-
-  console.log("Creating ChatKit session for device:", deviceId);
-
   try {
-    const response = await fetch("https://api.openai.com/v1/chatkit/sessions", {
+    const response = await fetch("/.netlify/functions/chatkit-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "OpenAI-Beta": "chatkit_beta=v1",
-        "Authorization": `Bearer ${API_KEY}`,
       },
-      body: JSON.stringify({
-        workflow: { id: WORKFLOW_ID },
-        user: deviceId,
-      }),
+      body: JSON.stringify({ deviceId }),
     });
 
     if (!response.ok) {

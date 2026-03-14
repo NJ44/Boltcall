@@ -13,7 +13,7 @@ import DashboardPage from '../pages/dashboard/DashboardPage';
 import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
 import AgentsPage from '../pages/dashboard/AgentsPage';
 import SmsPage from '../pages/dashboard/SmsPage';
-import WhatsappPage from '../pages/dashboard/WhatsappPage';
+import WhatsappPage from '../pages/dashboard/WhatsAppPage';
 import SettingsPage from '../pages/dashboard/SettingsPage';
 import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
 import AssistantPage from '../pages/dashboard/AssistantPage';
@@ -30,6 +30,7 @@ import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
 import LeadReactivationPage from '../pages/dashboard/LeadReactivationPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
 import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
+import AgentTestsPage from '../pages/dashboard/AgentTestsPage';
 import ReputationPage from '../pages/dashboard/ReputationPage';
 import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
 import LocationDashboardPage from '../pages/dashboard/LocationDashboardPage';
@@ -92,7 +93,6 @@ import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssist
 import Blog5SignsAIReceptionist from '../pages/Blog5SignsAIReceptionist';
 import BestAiReceptionistSmallBusiness from '../pages/BestAiReceptionistSmallBusiness';
 import ChatbotVsLiveChatVsPhoneAnswering from '../pages/ChatbotVsLiveChatVsPhoneAnswering';
-import HowAiReceptionistWorks from '../pages/HowAiReceptionistWorks';
 import AIVsHumanReceptionistBlog from '../pages/AIVsHumanReceptionistBlog';
 import AiReceptionistCostPricingGuide from '../pages/AiReceptionistCostPricingGuide';
 import SpeedToLeadGuide from '../pages/SpeedToLeadGuide';
@@ -199,6 +199,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="lead-reactivation" element={<LeadReactivationPage />} />
           <Route path="calcom" element={<CalcomPage />} />
           <Route path="call-history" element={<CallHistoryPage />} />
+          <Route path="agent-tests" element={<AgentTestsPage />} />
           <Route path="chat-history" element={<ChatHistoryPage />} />
           <Route path="reputation" element={<ReputationPage />} />
           <Route path="settings" element={
@@ -306,7 +307,6 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/speed-to-lead-local-business" element={<SpeedToLeadGuide />} />
             <Route path="/blog/ai-receptionist-cost-pricing" element={<AiReceptionistCostPricingGuide />} />
             <Route path="/blog/ai-vs-human-receptionist" element={<AIVsHumanReceptionistBlog />} />
-            <Route path="/blog/how-ai-receptionist-works" element={<HowAiReceptionistWorks />} />
             <Route path="/blog/ai-chatbot-vs-live-chat-phone-answering" element={<ChatbotVsLiveChatVsPhoneAnswering />} />
             <Route path="/blog/best-ai-receptionist-small-business" element={<BestAiReceptionistSmallBusiness />} />
         <Route path="/comparisons" element={<Comparisons />} />

@@ -24,7 +24,7 @@ export default function ToastDemo() {
       position,
       duration: 3000,
       onDismiss: () =>
-        console.log(`${variant} toast at ${position} dismissed`),
+        {},
     });
   };
 
@@ -47,7 +47,7 @@ export default function ToastDemo() {
         highlightTitle: true,
         actions: {
           label: 'Undo',
-          onClick: () => console.log('Undoing meeting schedule'),
+          onClick: () => {},
           variant: 'outline',
         },
       });

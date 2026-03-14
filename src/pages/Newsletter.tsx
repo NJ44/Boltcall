@@ -157,7 +157,7 @@ const Newsletter: React.FC = () => {
                     icon: <ArrowRight className="w-8 h-8" />,
                     onClick: () => {
                       // Navigate to newsletter or open it
-                      console.log('Opening: AI Receptionist Best Practices');
+                      // TODO: navigate to newsletter article
                     },
                   },
                   {
@@ -166,7 +166,7 @@ const Newsletter: React.FC = () => {
                     subtitle: 'January 8, 2025 • Discover why responding to leads within 5 minutes can increase conversion rates by 391%.',
                     icon: <ArrowRight className="w-8 h-8" />,
                     onClick: () => {
-                      console.log('Opening: Speed to Lead');
+                      // TODO: navigate to newsletter article
                     },
                   },
                   {
@@ -175,7 +175,7 @@ const Newsletter: React.FC = () => {
                     subtitle: 'January 1, 2025 • Master the art of automated follow-ups and turn more leads into customers.',
                     icon: <ArrowRight className="w-8 h-8" />,
                     onClick: () => {
-                      console.log('Opening: Automated Follow-Ups');
+                      // TODO: navigate to newsletter article
                     },
                   },
                   {
@@ -184,7 +184,7 @@ const Newsletter: React.FC = () => {
                     subtitle: 'December 25, 2024 • Stay ahead with the latest AI trends and technologies for local businesses.',
                     icon: <ArrowRight className="w-8 h-8" />,
                     onClick: () => {
-                      console.log('Opening: 2025 Trends in AI');
+                      // TODO: navigate to newsletter article
                     },
                   },
                 ]}

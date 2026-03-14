@@ -218,8 +218,6 @@ const GiveawayPage: React.FC = () => {
                               referralId: referralId
                             };
 
-                            console.log('Submitting form with payload:', payload);
-
                             // Call webhook
                             const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
                               method: 'POST',
@@ -229,11 +227,8 @@ const GiveawayPage: React.FC = () => {
                               body: JSON.stringify(payload),
                             });
 
-                            console.log('Response status:', response.status);
-
                             // Get response body first (can only read once)
                             const responseText = await response.text();
-                            console.log('Response text:', responseText);
 
                             // Check if response is ok
                             if (!response.ok) {
@@ -245,10 +240,8 @@ const GiveawayPage: React.FC = () => {
                             let referralIdFromHeader = null;
                             try {
                               referralIdFromHeader = response.headers.get('referal_id') || response.headers.get('referral_id');
-                              console.log('Referral ID from header:', referralIdFromHeader);
-                              console.log('All response headers:', Array.from(response.headers.entries()));
                             } catch (e) {
-                              console.log('Could not access response headers (CORS):', e);
+                              // CORS may block header access
                             }
 
                             // Parse response body - handle UUID string directly
@@ -263,12 +256,10 @@ const GiveawayPage: React.FC = () => {
                               if (uuidPattern.test(trimmedText)) {
                                 // Response is directly the UUID
                                 finalReferralId = trimmedText;
-                                console.log('Response is UUID string:', trimmedText);
                               } else {
                                 // Try to parse as JSON
                                 try {
                                   responseData = JSON.parse(trimmedText);
-                                  console.log('Response body (parsed as JSON):', responseData);
                                   // Try to extract ID from JSON object
                                   finalReferralId = responseData?.id ||
                                     responseData?.referal_id ||
@@ -279,15 +270,12 @@ const GiveawayPage: React.FC = () => {
                                   // If it's not JSON and not UUID, check if it's a plain number/string ID
                                   if (trimmedText) {
                                     finalReferralId = trimmedText;
-                                    console.log('Response is plain text ID:', trimmedText);
                                   } else {
-                                    console.log('Response is empty or invalid');
+                                    // Response is empty or invalid
                                   }
                                 }
                               }
                             }
-
-                            console.log('Final referral ID found:', finalReferralId);
 
                             if (finalReferralId) {
                               // Generate referral link using the ID: ref={finalReferralId}

@@ -220,6 +220,41 @@ export const handler: Handler = async (event) => {
           ...getDefaultAgentConfig(body.language),
         } as any);
 
+        // Step 5: Trigger Cekura full simulation test (async — fires and returns result_id)
+        let cekuraTest: { success: boolean; result_id?: number; cekura_agent_id?: number; evaluators_created?: number; total_runs?: number; error?: string } = { success: false };
+        try {
+          const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+          const cekuraResponse = await fetch(`${baseUrl}/.netlify/functions/cekura-test`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'full_test',
+              retell_agent_id: agent.agent_id,
+              agent_name: `${body.business_name} AI Assistant`,
+              business_name: body.business_name,
+              phone_number: body.phone_number,
+              language: body.language,
+            }),
+          });
+
+          if (cekuraResponse.ok) {
+            const cekuraData = await cekuraResponse.json();
+            cekuraTest = {
+              success: true,
+              result_id: cekuraData.result_id,
+              cekura_agent_id: cekuraData.cekura_agent_id,
+              evaluators_created: cekuraData.evaluators_created,
+              total_runs: cekuraData.total_runs,
+            };
+          } else {
+            const cekuraErr = await cekuraResponse.json().catch(() => ({}));
+            cekuraTest = { success: false, error: cekuraErr.details || cekuraErr.error || 'Cekura test failed' };
+          }
+        } catch (testErr) {
+          console.error('Cekura test trigger failed:', testErr);
+          cekuraTest = { success: false, error: testErr instanceof Error ? testErr.message : 'Cekura test trigger failed' };
+        }
+
         return {
           statusCode: 200,
           headers,
@@ -229,6 +264,7 @@ export const handler: Handler = async (event) => {
             agent_id: agent.agent_id,
             agent,
             prompt_used: body.prompt_config ? 'professional' : body.general_prompt ? 'custom' : 'legacy',
+            cekura_test: cekuraTest,
           }),
         };
       }

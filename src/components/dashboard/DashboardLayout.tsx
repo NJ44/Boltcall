@@ -25,7 +25,8 @@ import {
   Crown,
   Server,
   Zap,
-  RotateCw
+  RotateCw,
+  Shield
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -34,6 +35,7 @@ import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
 import { Banner } from '../ui/banner';
 import CinematicSwitch from '../ui/cinematic-glow-toggle';
+import AiAssistant from './AiAssistant';
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -305,6 +307,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/agent-tests', label: 'Agent Tests', icon: <Shield className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const messagingItems = [
@@ -952,18 +955,8 @@ const DashboardLayout: React.FC = () => {
              <Outlet />
           </div>
 
-           {/* Help Button - Bottom Right */}
-            <button
-             className={`fixed bottom-6 right-6 px-4 py-2 rounded-lg shadow-lg transition-all duration-300 flex items-center gap-2 text-sm font-medium ${
-               isDarkMode
-                 ? 'bg-blue-600 text-white hover:bg-blue-700'
-                 : 'bg-blue-600 text-white hover:bg-blue-700'
-             }`}
-             onClick={() => setShowHelpSidebar(true)}
-           >
-             <HelpCircle className="w-4 h-4" />
-             Help
-            </button>
+           {/* AI Assistant - Bottom Right */}
+           <AiAssistant />
          </main>
           </div>
         </div>
@@ -1041,7 +1034,7 @@ const DashboardLayout: React.FC = () => {
                   <button
                     onClick={() => {
                       // Handle support ticket creation
-                      console.log('Create support ticket');
+                      // TODO: handle support ticket creation
                       setShowHelpSidebar(false);
                     }}
                     className="w-full flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors group"
@@ -1062,7 +1055,7 @@ const DashboardLayout: React.FC = () => {
                     <button
                       onClick={() => {
                         // Handle onboarding scheduling
-                        console.log('Schedule onboarding');
+                        // TODO: handle onboarding scheduling
                         setShowHelpSidebar(false);
                       }}
                       className="w-full flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-colors group"
@@ -1084,7 +1077,7 @@ const DashboardLayout: React.FC = () => {
                     <button
                       onClick={() => {
                         // Handle upgrade
-                        console.log('Upgrade plan');
+                        // TODO: handle upgrade
                         setShowHelpSidebar(false);
                       }}
                       className="w-full flex items-center gap-3 p-4 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transition-all group"

@@ -42,22 +42,19 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    // Update workspace — only use columns that exist in the schema
+    // Mark workspace setup as complete
     const { error: wsError } = await supabase
       .from('workspaces')
-      .update({ updated_at: new Date().toISOString() })
+      .update({
+        setup_completed: true,
+        setup_completed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
       .eq('id', workspaceId);
 
     if (wsError) {
       console.error('Workspace update error:', wsError);
     }
-
-    // Also try setting setup_completed if the column exists (non-fatal)
-    await supabase
-      .from('workspaces')
-      .update({ setup_completed: true, setup_completed_at: new Date().toISOString() })
-      .eq('id', workspaceId)
-      .then(({ error }) => { if (error) console.log('setup_completed column not yet added'); });
 
     // Update business profile if userId provided
     if (userId) {

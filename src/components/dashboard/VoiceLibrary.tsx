@@ -216,7 +216,7 @@ const VoiceLibrary: React.FC<VoiceLibraryProps> = ({ agentId }) => {
     try {
       // In a real implementation, this would call your API to assign the voice
       await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log(`Assigned voice ${voice.display_name} to agent ${agentId}`);
+      // Voice assigned successfully
     } catch (error) {
       console.error("Failed to assign voice:", error);
     } finally {

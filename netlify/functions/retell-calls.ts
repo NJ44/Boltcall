@@ -13,7 +13,7 @@ export const handler: Handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
-  const apiKey = process.env.RETELL_API_KEY || process.env.VITE_RETELL_API_KEY;
+  const apiKey = process.env.RETELL_API_KEY;
   if (!apiKey) {
     return {
       statusCode: 500,

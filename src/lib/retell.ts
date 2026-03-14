@@ -29,6 +29,10 @@ interface CreateKnowledgeBaseData {
   serviceAreas: string[];
   openingHours: any;
   languages: string[];
+  businessPhone?: string;
+  addressLine1?: string;
+  city?: string;
+  state?: string;
   services?: Array<{
     name: string;
     duration: number;
@@ -43,6 +47,25 @@ interface CreateKnowledgeBaseData {
     reschedule: string;
     deposit: string;
   };
+  // Call flow config for professional prompt generation
+  callFlow?: {
+    greetingText?: string;
+    tone?: 'friendly_concise' | 'formal' | 'playful' | 'calm';
+    purposeDetection?: Record<string, boolean>;
+    qualifyingQuestions?: string[];
+    transferRules?: {
+      whenToTransfer?: string;
+      whenToBook?: string;
+      whenToVoicemail?: string;
+    };
+    fallbackLine?: string;
+    complianceDisclosure?: { enabled?: boolean; text?: string };
+    pronunciationGuide?: string;
+  };
+  // Agent type for prompt generation
+  agentType?: 'inbound' | 'outbound_speed_to_lead' | 'outbound_reactivation' | 'outbound_reminder' | 'outbound_review';
+  agentName?: string;
+  transferNumber?: string;
 }
 
 // Build knowledge base texts from business data
@@ -149,14 +172,41 @@ export const createRetellAgent = async (data: {
   };
 };
 
-// Create both KB + agent in one call
+// Create both KB + agent in one call — uses professional prompt generator
 export const createRetellAgentAndKnowledgeBase = async (data: CreateKnowledgeBaseData & { voiceId?: string }): Promise<{
   knowledge_base_id: string;
   agent_id: string;
   success: boolean;
   message?: string;
+  prompt_used?: string;
 }> => {
   const knowledgeBaseTexts = buildKnowledgeBaseTexts(data);
+
+  // Build prompt_config for the professional prompt generator
+  const promptConfig = {
+    agentType: data.agentType || 'inbound',
+    agentName: data.agentName,
+    businessProfile: {
+      businessName: data.businessName,
+      mainCategory: data.mainCategory,
+      country: data.country,
+      serviceAreas: data.serviceAreas,
+      openingHours: data.openingHours,
+      languages: Array.isArray(data.languages) ? data.languages.join(', ') : data.languages,
+      websiteUrl: data.websiteUrl,
+      businessPhone: data.businessPhone,
+      addressLine1: data.addressLine1,
+      city: data.city,
+      state: data.state,
+    },
+    callFlow: data.callFlow,
+    knowledgeBase: {
+      services: data.services,
+      faqs: data.faqs,
+      policies: data.policies,
+    },
+    transferNumber: data.transferNumber,
+  };
 
   const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
     method: 'POST',
@@ -165,9 +215,11 @@ export const createRetellAgentAndKnowledgeBase = async (data: CreateKnowledgeBas
       action: 'create_full',
       business_name: data.businessName,
       website_url: data.websiteUrl,
+      country: data.country,
       voice_id: data.voiceId || '11labs-Adrian',
-      language: data.languages.includes('en') ? 'en-US' : data.languages[0] || 'en-US',
+      language: (Array.isArray(data.languages) ? data.languages : [data.languages]).includes('en') ? 'en-US' : (Array.isArray(data.languages) ? data.languages[0] : data.languages) || 'en-US',
       knowledge_base_texts: knowledgeBaseTexts,
+      prompt_config: promptConfig,
     }),
   });
 
@@ -182,7 +234,45 @@ export const createRetellAgentAndKnowledgeBase = async (data: CreateKnowledgeBas
     agent_id: result.agent_id,
     success: true,
     message: 'Knowledge base and agent created successfully',
+    prompt_used: result.prompt_used,
   };
+};
+
+// Generate a professional voice agent prompt
+export const generateAgentPrompt = async (config: {
+  agentType?: 'inbound' | 'outbound_speed_to_lead' | 'outbound_reactivation' | 'outbound_reminder' | 'outbound_review';
+  agentName?: string;
+  businessProfile: {
+    businessName: string;
+    mainCategory: string;
+    country: string;
+    serviceAreas?: string[];
+    openingHours?: any;
+    languages?: string;
+    websiteUrl?: string;
+    businessPhone?: string;
+    city?: string;
+    state?: string;
+  };
+  callFlow?: any;
+  knowledgeBase?: any;
+  transferNumber?: string;
+}): Promise<{ prompt: string; beginMessage: string; industry: string }> => {
+  const response = await fetch(`${FUNCTIONS_BASE}/generate-agent-prompt`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      agentType: config.agentType || 'inbound',
+      ...config,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.details || err.error || `Failed: ${response.status}`);
+  }
+
+  return response.json();
 };
 
 // List all agents
@@ -245,6 +335,7 @@ export interface RetellCall {
     call_summary?: string;
     user_sentiment?: string;
     call_successful?: boolean;
+    [key: string]: any;
   };
   metadata?: any;
 }

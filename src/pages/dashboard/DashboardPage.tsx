@@ -213,7 +213,7 @@ const DashboardPage: React.FC = () => {
                       icons={[HelpCircle]}
                       action={{
                         label: "View Help Center",
-                        onClick: () => console.log("Help center clicked")
+                        onClick: () => {}
                       }}
                       className="max-w-sm"
                     />

@@ -8,7 +8,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const SUPABASE_URL = 'https://hbwogktdajorojljkjwg.supabase.co';
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
 const N8N_WEBHOOK_URL = 'https://n8n.srv974118.hstgr.cloud/webhook/calcom-appointment';
 
 const CALCOM_EVENT_TRIGGERS = [

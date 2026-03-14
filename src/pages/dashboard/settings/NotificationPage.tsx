@@ -444,7 +444,7 @@ const NotificationPage: React.FC = () => {
           )}
           emptyStateText="No notifications found"
           emptyStateAnimation="/No_Data_Preview.lottie"
-          onAddNew={() => console.log('Add new notification')}
+          onAddNew={() => {}}
           addNewText="Send Test Notification"
         />
       </motion.div>

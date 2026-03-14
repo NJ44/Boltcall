@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Check } from 'lucide-react';
+import { Phone, Check, Loader2, ShieldCheck, ShieldX } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { getAvailablePhoneNumbers, type PhoneNumber } from '../../../lib/webhooks';
+import { validatePhoneNumber, type PhoneValidationResult } from '../../../lib/cekura';
 import { useToast } from '../../../contexts/ToastContext';
 
 const StepPhone: React.FC = () => {
@@ -9,6 +10,8 @@ const StepPhone: React.FC = () => {
   const { showToast } = useToast();
   const [availableNumbers, setAvailableNumbers] = useState<PhoneNumber[]>([]);
   const [isLoadingNumbers, setIsLoadingNumbers] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
+  const [validationResult, setValidationResult] = useState<PhoneValidationResult | null>(null);
   const selectedNumber = phone.selectedPhoneNumber || '';
   const purchasedNumber = phone.purchasedPhoneNumber || '';
 
@@ -38,7 +41,7 @@ const StepPhone: React.FC = () => {
 
   
 
-  const handleNumberSelect = (number: PhoneNumber) => {
+  const handleNumberSelect = async (number: PhoneNumber) => {
     updatePhone({
       selectedPhoneNumber: number.phone_number,
       newNumber: {
@@ -46,6 +49,19 @@ const StepPhone: React.FC = () => {
         number: number.friendly_name,
       },
     });
+
+    // Validate with Cekura
+    setIsValidating(true);
+    setValidationResult(null);
+    try {
+      const result = await validatePhoneNumber(number.phone_number);
+      setValidationResult(result);
+    } catch (error) {
+      console.error('Phone validation error:', error);
+      setValidationResult({ success: false, valid: false });
+    } finally {
+      setIsValidating(false);
+    }
   };
 
   return (
@@ -90,10 +106,40 @@ const StepPhone: React.FC = () => {
                     <p className="text-sm text-gray-500">{number.phone_number}</p>
                     <p className="text-xs text-gray-400">{number.region} • {number.rate_center}</p>
                   </div>
-                  {selectedNumber === number.phone_number && (
-                    <Check className="w-5 h-5 text-blue-600" />
-                  )}
+                  <div className="flex items-center gap-2">
+                    {selectedNumber === number.phone_number && isValidating && (
+                      <Loader2 className="w-4 h-4 text-blue-500 animate-spin" />
+                    )}
+                    {selectedNumber === number.phone_number && validationResult && (
+                      <div className="flex items-center gap-1.5">
+                        {validationResult.valid ? (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-2 py-0.5">
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            Verified
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-full px-2 py-0.5">
+                            <ShieldX className="w-3.5 h-3.5" />
+                            Invalid
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    {selectedNumber === number.phone_number && (
+                      <Check className="w-5 h-5 text-blue-600" />
+                    )}
+                  </div>
                 </div>
+                {selectedNumber === number.phone_number && validationResult?.valid && (
+                  <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
+                    {validationResult.phone_type && (
+                      <span className="capitalize">{validationResult.phone_type}</span>
+                    )}
+                    {validationResult.carrier && (
+                      <span>• {validationResult.carrier}</span>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>

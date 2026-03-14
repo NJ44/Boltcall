@@ -11,8 +11,6 @@ const StepCalendar: React.FC = () => {
   const handleGoogleConnect = async () => {
     setIsConnecting(true);
     try {
-      console.log('Connecting to Google Calendar...');
-      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -34,7 +32,6 @@ const StepCalendar: React.FC = () => {
         throw error;
       }
       
-      console.log('Google Calendar OAuth initiated');
     } catch (error) {
       console.error('Error connecting to Google Calendar:', error);
       setIsConnecting(false);
@@ -44,8 +41,6 @@ const StepCalendar: React.FC = () => {
   const handleMicrosoftConnect = async () => {
     setIsConnecting(true);
     try {
-      console.log('Connecting to Microsoft Calendar...');
-      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'azure',
         options: {
@@ -66,7 +61,6 @@ const StepCalendar: React.FC = () => {
         throw error;
       }
       
-      console.log('Microsoft Calendar OAuth initiated');
     } catch (error) {
       console.error('Error connecting to Microsoft Calendar:', error);
       setIsConnecting(false);
@@ -77,8 +71,6 @@ const StepCalendar: React.FC = () => {
   const handleGoogleReadOnlyConnect = async () => {
     setIsConnecting(true);
     try {
-      console.log('Connecting to Google Calendar (Read-only)...');
-      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -98,7 +90,6 @@ const StepCalendar: React.FC = () => {
         throw error;
       }
       
-      console.log('Google Calendar Read-only OAuth initiated');
     } catch (error) {
       console.error('Error connecting to Google Calendar (Read-only):', error);
       setIsConnecting(false);
@@ -108,8 +99,6 @@ const StepCalendar: React.FC = () => {
   const handleMicrosoftReadOnlyConnect = async () => {
     setIsConnecting(true);
     try {
-      console.log('Connecting to Microsoft Calendar (Read-only)...');
-      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'azure',
         options: {
@@ -129,7 +118,6 @@ const StepCalendar: React.FC = () => {
         throw error;
       }
       
-      console.log('Microsoft Calendar Read-only OAuth initiated');
     } catch (error) {
       console.error('Error connecting to Microsoft Calendar (Read-only):', error);
       setIsConnecting(false);

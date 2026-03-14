@@ -47,26 +47,16 @@ const Signup: React.FC = () => {
     resolver: zodResolver(signupSchema)
   });
 
-  // Debug form errors
-  React.useEffect(() => {
-    if (Object.keys(errors).length > 0) {
-      console.log('Form validation errors:', errors);
-    }
-  }, [errors]);
-
   const onSubmit = async (data: SignupFormData) => {
-    console.log('Form submitted with data:', data);
     try {
       setIsLoading(true);
       setError('');
-      console.log('Attempting to signup...');
       await signup({
         name: data.name,
         email: data.email,
         password: data.password,
         company: '' // Default empty company
       });
-      console.log('Signup successful, navigating to:', redirectTo);
       setSignedUpEmail(data.email);
       setShowOtp(true);
     } catch (error) {
@@ -174,9 +164,7 @@ const Signup: React.FC = () => {
                   <h2 className="text-2xl font-bold text-zinc-900">SIGN UP</h2>
                 </motion.div>
             <form 
-              onSubmit={handleSubmit(onSubmit, (errors) => {
-                console.log('Form validation failed:', errors);
-              })} 
+              onSubmit={handleSubmit(onSubmit)}
               className="space-y-3"
             >
               {/* Name */}
@@ -242,9 +230,7 @@ const Signup: React.FC = () => {
                 type="submit"
                 disabled={isLoading}
                 className="w-full"
-                onClick={() => {
-                  console.log('Button clicked!');
-                }}
+                onClick={() => {}}
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">

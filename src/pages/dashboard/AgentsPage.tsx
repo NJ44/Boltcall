@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
-import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle } from 'lucide-react';
+import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { generateAgentPrompt, updateRetellAgent } from '../../lib/retell';
 
 interface Agent {
   id: string;
@@ -37,8 +38,8 @@ interface KnowledgeBase {
 
 interface PhoneNumber {
   id: string;
-  number: string;
-  name?: string;
+  phone_number: string;
+  assigned_agent_name?: string;
 }
 
 interface IndustryTemplate {
@@ -67,6 +68,7 @@ const AgentsPage: React.FC = () => {
   const [selectedAgentDetails, setSelectedAgentDetails] = useState<Agent | null>(null);
   const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
+  const [regeneratingAgentId, setRegeneratingAgentId] = useState<string | null>(null);
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
     name: '',
     voice: '',
@@ -216,7 +218,6 @@ const AgentsPage: React.FC = () => {
 
   const handleCreateAgent = () => {
     // Here you would typically save the agent to your backend
-    console.log('Creating agent:', createForm);
     // Reset form and close modal
     setCreateForm({
       name: '',
@@ -342,6 +343,77 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
     setShowTestChatModal(true);
   };
 
+  const handleRegeneratePrompt = async (agent: Agent) => {
+    if (!user?.id) return;
+    setRegeneratingAgentId(agent.id);
+
+    try {
+      // Fetch the agent's business profile from Supabase
+      const { data: bp } = await supabase
+        .from('business_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (!bp) {
+        alert('No business profile found. Please complete setup first.');
+        setRegeneratingAgentId(null);
+        return;
+      }
+
+      // Generate a fresh professional prompt
+      const result = await generateAgentPrompt({
+        agentType: (agent as any).direction === 'outbound' ? 'outbound_speed_to_lead' : 'inbound',
+        agentName: agent.name,
+        businessProfile: {
+          businessName: bp.business_name,
+          mainCategory: bp.main_category || '',
+          country: bp.country || '',
+          serviceAreas: bp.service_areas || [],
+          openingHours: bp.opening_hours,
+          languages: Array.isArray(bp.languages) ? bp.languages.join(', ') : bp.languages || 'en',
+          websiteUrl: bp.website_url,
+          businessPhone: bp.phone,
+          city: bp.city,
+          state: bp.state,
+        },
+      });
+
+      // Update the agent's system_prompt in Supabase
+      await supabase
+        .from('agents')
+        .update({
+          system_prompt: result.prompt,
+          greeting: result.beginMessage,
+        })
+        .eq('id', agent.id);
+
+      // If agent has a retell_agent_id, update it in Retell too
+      const { data: agentRow } = await supabase
+        .from('agents')
+        .select('retell_agent_id')
+        .eq('id', agent.id)
+        .single();
+
+      if (agentRow?.retell_agent_id) {
+        try {
+          await updateRetellAgent(agentRow.retell_agent_id, {
+            agent_name: agent.name,
+          });
+        } catch (retellErr) {
+          console.warn('Could not update Retell agent:', retellErr);
+        }
+      }
+
+      alert(`Prompt regenerated! (${result.prompt.length} chars, ${result.industry} template)`);
+    } catch (err) {
+      console.error('Prompt regeneration failed:', err);
+      alert('Failed to regenerate prompt: ' + (err instanceof Error ? err.message : 'Unknown error'));
+    } finally {
+      setRegeneratingAgentId(null);
+    }
+  };
+
   // Fetch agents from Supabase
   useEffect(() => {
     const fetchAgents = async () => {
@@ -431,9 +503,9 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       try {
         const { data, error } = await supabase
           .from('phone_numbers')
-          .select('id, number, name')
+          .select('id, phone_number, assigned_agent_name')
           .eq('user_id', user.id)
-          .order('name');
+          .order('created_at', { ascending: false });
 
         if (error) {
           console.error('Error fetching phone numbers:', error);
@@ -567,12 +639,20 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 
                 {/* Action Icons */}
                 <div className="flex items-center gap-2">
-                  <button 
+                  <button
                     onClick={() => handleTestChat(agent)}
                     className="text-blue-600 hover:text-blue-800 transition-colors"
                     title="Test Chat"
                   >
                     <MessageCircle className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleRegeneratePrompt(agent); }}
+                    disabled={regeneratingAgentId === agent.id}
+                    className="text-purple-600 hover:text-purple-800 transition-colors disabled:opacity-50"
+                    title="Regenerate Prompt"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${regeneratingAgentId === agent.id ? 'animate-spin' : ''}`} />
                   </button>
                   <button className="text-green-600 hover:text-green-800">
                     <Flame className="w-4 h-4" />
@@ -697,8 +777,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                   >
                     <option value="" className="text-zinc-900">Select phone number</option>
                     {userPhoneNumbers.map((phone) => (
-                      <option key={phone.id} value={phone.number} className="text-zinc-900">
-                        {phone.number} {phone.name && `(${phone.name})`}
+                      <option key={phone.id} value={phone.phone_number} className="text-zinc-900">
+                        {phone.phone_number} {phone.assigned_agent_name && `(${phone.assigned_agent_name})`}
                       </option>
                     ))}
                   </select>
@@ -1109,7 +1189,7 @@ const initWidget = (agentId: string, phoneNumber: string) => {
     
     // Initialize Retell widget
     (window as any).RetellChatWidget.init({
-      publicKey: "public_key_c894825223963729a1ba5",
+      publicKey: import.meta.env.VITE_RETELL_PUBLIC_KEY || '',
       agentId: agentId,
       mode: "callback",
       mount: document.getElementById("retell-voice"),

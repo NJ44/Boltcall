@@ -30,8 +30,6 @@ export interface SignupCredentials {
 
 // Helper function to transform Supabase user to our User interface
 const transformSupabaseUser = async (supabaseUser: SupabaseUser): Promise<User> => {
-  console.log('Transforming Supabase user:', supabaseUser);
-  
   // For now, just use the Supabase user data directly without custom users table
   // This avoids the hanging issue with missing users table
   return {
@@ -63,8 +61,6 @@ export const login = async (credentials: LoginCredentials): Promise<User> => {
 };
 
 export const signup = async (credentials: SignupCredentials): Promise<User> => {
-  console.log('Starting signup process with credentials:', { ...credentials, password: '[HIDDEN]' });
-  
   try {
     const { data, error } = await supabase.auth.signUp({
       email: credentials.email,
@@ -77,8 +73,6 @@ export const signup = async (credentials: SignupCredentials): Promise<User> => {
       }
     });
 
-    console.log('Supabase signup response:', { data, error });
-
     if (error) {
       console.error('Supabase signup error:', error);
       throw new Error(error.message);
@@ -89,10 +83,7 @@ export const signup = async (credentials: SignupCredentials): Promise<User> => {
       throw new Error('Signup failed - no user returned');
     }
 
-    console.log('Supabase user created, transforming...');
     const transformedUser = await transformSupabaseUser(data.user);
-    console.log('User transformation complete:', transformedUser);
-    
     return transformedUser;
   } catch (error) {
     console.error('Signup function error:', error);

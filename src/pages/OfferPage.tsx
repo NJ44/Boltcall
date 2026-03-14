@@ -127,7 +127,6 @@ const OfferPage: React.FC = () => {
       setRemainingPlaces(updatedPlaces);
       localStorage.setItem('offer_remaining_places', updatedPlaces.toString());
 
-      console.log('Offer form submitted:', data);
       setIsSubmitted(true);
       reset();
       

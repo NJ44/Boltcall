@@ -1,92 +1,101 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, Smartphone, Zap, Shield } from 'lucide-react';
+import { MessageSquare, Clock, Bell, Check, Send } from 'lucide-react';
 
 const SmsPage: React.FC = () => {
-  const integrations = [
-    {
-      name: 'Twilio',
-      description: 'Send and receive SMS messages with high deliverability rates',
-      icon: <MessageSquare className="w-8 h-8 text-blue-600" />,
-      features: ['Global SMS delivery', 'Two-way messaging', 'Delivery receipts', 'Phone number verification'],
-      status: 'Available'
-    },
-    {
-      name: 'Vonage (Nexmo)',
-      description: 'Enterprise-grade SMS API with advanced features',
-      icon: <Smartphone className="w-8 h-8 text-green-600" />,
-      features: ['SMS API', 'Number verification', 'Advanced analytics', 'Global coverage'],
-      status: 'Available'
-    },
-    {
-      name: 'AWS SNS',
-      description: 'Scalable SMS service with AWS infrastructure',
-      icon: <Zap className="w-8 h-8 text-orange-600" />,
-      features: ['High scalability', 'AWS integration', 'Cost-effective', 'Reliable delivery'],
-      status: 'Available'
-    },
-    {
-      name: 'MessageBird',
-      description: 'Global messaging platform with advanced features',
-      icon: <Shield className="w-8 h-8 text-purple-600" />,
-      features: ['Global reach', 'Advanced routing', 'Compliance tools', 'Real-time analytics'],
-      status: 'Available'
-    }
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const plannedCapabilities = [
+    'Automated appointment reminders and confirmations',
+    'Two-way SMS conversations with AI-powered replies',
+    'Bulk SMS campaigns for promotions and updates',
+    'Missed call text-back automation',
+    'Review request sequences via SMS',
+    'Custom templates and scheduling',
   ];
+
+  const handleNotify = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setSubmitted(true);
+      setEmail('');
+    }
+  };
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex items-center justify-between"
-      >
-      </motion.div>
-
-      {/* Integrations Grid */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        transition={{ duration: 0.6 }}
+        className="flex flex-col items-center justify-center min-h-[60vh]"
       >
-        {integrations.map((integration) => (
-          <div
-            key={integration.name}
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-300"
-          >
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                {integration.icon}
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900">{integration.name}</h3>
-                  <p className="text-gray-600 text-sm">{integration.description}</p>
-                </div>
-              </div>
-              <span className="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-                {integration.status}
-              </span>
-            </div>
-            
-            <div className="space-y-2 mb-6">
-              <h4 className="font-medium text-gray-900">Key Features:</h4>
-              <ul className="space-y-1">
-                {integration.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center gap-2 text-sm text-gray-600">
-                    <div className="w-1.5 h-1.5 bg-blue-600 rounded-full"></div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
-              Connect {integration.name}
-            </button>
+        <div className="max-w-lg w-full text-center space-y-6">
+          {/* Icon */}
+          <div className="mx-auto w-20 h-20 rounded-2xl bg-blue-50 flex items-center justify-center">
+            <MessageSquare className="w-10 h-10 text-blue-600" />
           </div>
-        ))}
+
+          {/* Title and description */}
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-gray-900">SMS Messaging</h1>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full">
+              <Clock className="w-3.5 h-3.5" />
+              Coming Soon
+            </span>
+            <p className="text-gray-500 mt-3">
+              Reach your customers instantly with AI-powered SMS. Automate reminders, follow-ups, and conversations — all from your Boltcall dashboard.
+            </p>
+          </div>
+
+          {/* Planned capabilities */}
+          <div className="bg-white rounded-xl border border-gray-200 p-6 text-left">
+            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4">Planned Capabilities</h3>
+            <ul className="space-y-3">
+              {plannedCapabilities.map((capability, index) => (
+                <li key={index} className="flex items-start gap-3 text-sm text-gray-600">
+                  <Check className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                  {capability}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Notify form */}
+          <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 space-y-3">
+            {submitted ? (
+              <div className="flex items-center justify-center gap-2 text-green-700 py-2">
+                <Bell className="w-5 h-5" />
+                <span className="font-medium">We'll notify you when SMS is available!</span>
+              </div>
+            ) : (
+              <>
+                <p className="text-sm font-medium text-gray-700">Get notified when this feature launches</p>
+                <form onSubmit={handleNotify} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                  >
+                    <Send className="w-4 h-4" />
+                    Notify Me
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+
+          {/* Timeline */}
+          <p className="text-xs text-gray-400">Expected: Q2 2026</p>
+        </div>
       </motion.div>
     </div>
   );

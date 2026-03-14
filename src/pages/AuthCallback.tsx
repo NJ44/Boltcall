@@ -24,11 +24,9 @@ const AuthCallback: React.FC = () => {
         }
 
         if (session) {
-          console.log('OAuth authentication successful');
           // Redirect back to setup page after successful OAuth
           navigate('/setup');
         } else {
-          console.log('No session found');
           navigate('/setup');
         }
       } catch (error) {

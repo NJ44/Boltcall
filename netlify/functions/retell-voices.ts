@@ -28,7 +28,7 @@ export const handler: Handler = async (event, context) => {
   }
 
   try {
-    const apiKey = process.env.VITE_RETELL_API_KEY;
+    const apiKey = process.env.RETELL_API_KEY;
     
     if (!apiKey) {
       return {

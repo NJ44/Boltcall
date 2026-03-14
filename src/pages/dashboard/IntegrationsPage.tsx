@@ -20,21 +20,18 @@ const IntegrationsPage: React.FC = () => {
   };
 
   const handleConnect = () => {
-    console.log('Connecting with API key:', apiKey);
     // Implementation for connecting with Cal.com
     setIsConnected(true);
     setIsSidePanelOpen(false);
   };
 
   const handleEmailConnect = () => {
-    console.log('Connecting email with Google');
     // Implementation for connecting email
     setIsEmailConnected(true);
     setIsEmailPanelOpen(false);
   };
 
   const handleMicrosoftConnect = () => {
-    console.log('Connecting Microsoft account');
     // Implementation for connecting Microsoft
     setIsMicrosoftConnected(true);
     setIsMicrosoftPanelOpen(false);

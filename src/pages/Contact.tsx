@@ -67,7 +67,6 @@ const Contact: React.FC = () => {
         throw new Error('Failed to submit form');
       }
 
-      console.log('Contact form submitted:', data);
       setIsSubmitted(true);
       reset();
       setSelectedInterests([]);

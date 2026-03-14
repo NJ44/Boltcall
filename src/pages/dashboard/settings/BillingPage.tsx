@@ -130,9 +130,8 @@ const BillingPage: React.FC = () => {
           plans={pricingPlans}
           defaultPlan="starter"
           defaultInterval="monthly"
-          onPlanSelect={(plan) => {
-            console.log("Selected plan:", plan);
-            // Handle plan change
+          onPlanSelect={(_plan) => {
+            // TODO: handle plan change
           }}
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"

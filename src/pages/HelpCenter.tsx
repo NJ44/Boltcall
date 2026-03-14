@@ -94,7 +94,7 @@ const HelpCenter: React.FC = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle search functionality
-    console.log('Searching for:', searchQuery);
+    // TODO: implement search functionality
   };
 
   return (

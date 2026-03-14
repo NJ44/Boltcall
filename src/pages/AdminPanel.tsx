@@ -138,7 +138,7 @@ const AdminPanel: React.FC = () => {
             });
           }
         } catch (err) {
-          console.log(`Table ${tableName} not accessible or doesn't exist`);
+          // Table not accessible or doesn't exist
         }
       }
 

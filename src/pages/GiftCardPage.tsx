@@ -29,7 +29,7 @@ const GiftCardPage: React.FC = () => {
   const handlePurchase = () => {
     if (selectedCards.length === 2 && recipientEmails[0] && recipientEmails[1]) {
       // Handle purchase logic here
-      console.log('Purchasing gift cards for:', recipientEmails);
+      // TODO: implement purchase logic
       setShowCheckout(false);
     }
   };

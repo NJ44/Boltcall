@@ -5,10 +5,8 @@ const VoiceLibraryTest: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('VoiceLibraryTest: Component mounted');
     const fetchVoices = async () => {
       setLoading(true);
-      console.log('VoiceLibraryTest: Starting to load voices...');
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -40,16 +38,12 @@ const VoiceLibraryTest: React.FC = () => {
         }
       ];
       
-      console.log('VoiceLibraryTest: Setting voices:', mockVoices);
       setVoices(mockVoices);
       setLoading(false);
-      console.log('VoiceLibraryTest: Loading complete');
     };
 
     fetchVoices();
   }, []);
-
-  console.log('VoiceLibraryTest: Render - loading:', loading, 'voices:', voices);
 
   return (
     <div className="p-4">

@@ -114,8 +114,6 @@ const FreeWebsitePackagePage: React.FC = () => {
                 referralId: '0' // Default to 0 as we don't have referral logic explicitly set up here yet, or we could add it.
             };
 
-            console.log('Submitting form with payload:', payload);
-
             // Call webhook
             const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9b2699f0-f411-4a5d-911d-5d562fd0b828', {
                 method: 'POST',
@@ -125,14 +123,11 @@ const FreeWebsitePackagePage: React.FC = () => {
                 body: JSON.stringify(payload),
             });
 
-            console.log('Response status:', response.status);
-
             if (!response.ok) {
                 const responseText = await response.text();
                 throw new Error(`Failed to submit form: ${response.status} ${responseText}`);
             }
 
-            console.log("Form submitted successfully");
             setIsSubmitted(true);
         } catch (error) {
             console.error('Error submitting form:', error);

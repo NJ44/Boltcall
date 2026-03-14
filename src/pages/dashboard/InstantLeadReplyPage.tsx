@@ -18,8 +18,7 @@ const InstantLeadReplyPage: React.FC = () => {
   };
 
   const handleConnect = () => {
-    console.log('Connecting with:', selectedIntegration);
-    // Implementation for connecting with the selected integration
+    // TODO: implement connection with the selected integration
   };
 
   // Add effect to update body class when panel is open

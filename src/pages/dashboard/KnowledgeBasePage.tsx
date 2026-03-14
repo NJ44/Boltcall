@@ -235,7 +235,6 @@ const KnowledgeBasePage: React.FC = () => {
         setShowPopup(false);
         setPopupType(null);
       } else {
-    console.log('Importing from URL:', urlInput);
     handleClosePopup();
       }
     }
@@ -262,7 +261,6 @@ const KnowledgeBasePage: React.FC = () => {
         setShowPopup(false);
         setPopupType(null);
       } else {
-      console.log('Uploading file:', fileInput.name);
       handleClosePopup();
       }
     }

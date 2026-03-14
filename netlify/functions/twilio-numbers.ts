@@ -10,8 +10,8 @@ const headers = {
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
 
 function getTwilioAuth() {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID || process.env.VITE_TWILLIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN || process.env.VITE_TWILLIO_AUTH_TOKEN;
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
   if (!accountSid || !authToken) {
     throw new Error('Twilio credentials not configured');
   }

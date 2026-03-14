@@ -10,12 +10,13 @@ import { createAgentAndKnowledgeBase, purchasePhoneNumber } from '../../lib/webh
 import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
+import { calculateKBCompleteness } from './kbCompleteness';
 
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepAccount = React.lazy(() => import('./steps/StepAccount'));
 const StepBusinessProfile = React.lazy(() => import('./steps/StepBusinessProfile'));
-const StepPhone = React.lazy(() => import('./steps/StepPhone'));
 const StepKnowledge = React.lazy(() => import('./steps/StepKnowledge'));
+const StepPhone = React.lazy(() => import('./steps/StepPhone'));
 const StepReview = React.lazy(() => import('./steps/StepReview'));
 
 const stepComponents = {
@@ -27,7 +28,7 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account, phone, updatePhone, updateAccount } = useSetupStore();
+  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account, phone, updatePhone, updateAccount, knowledgeBase: storeKnowledgeBase } = useSetupStore();
   const [expandedStep, setExpandedStep] = useState(0);
   const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
   const { user } = useAuth();
@@ -123,8 +124,6 @@ const WizardShell: React.FC = () => {
     try {
       // If completing business profile step (step 2), create workspace and business profile in database
       if (currentStep === 2 && user?.id) {
-        console.log('Creating workspace and business profile for user:', user.id);
-        
         const { workspace, businessProfile } = await createUserWorkspaceAndProfile(
           user.id,
           {
@@ -138,8 +137,6 @@ const WizardShell: React.FC = () => {
           }
         );
         
-        console.log('Successfully created workspace and business profile:', { workspace, businessProfile });
-
         // Auto-create primary location using address fields
         let locationId: string | undefined;
         try {
@@ -162,7 +159,6 @@ const WizardShell: React.FC = () => {
             is_active: true,
           } as any);
           locationId = location.id;
-          console.log('Primary location created:', locationId);
         } catch (locErr) {
           console.warn('Could not create primary location:', locErr);
         }
@@ -173,18 +169,25 @@ const WizardShell: React.FC = () => {
           businessProfileId: businessProfile.id,
           locationId: locationId,
         });
-        console.log('Workspace created with ID:', workspace.id, 'Business Profile ID:', businessProfile.id);
       }
       
-      // Knowledge step: run webhook on Continue (fire and forget, don't wait)
+      // Knowledge Base step (step 3): warn if KB is sparse, then create agent
       if (currentStep === 3) {
-        // Show initial toast immediately
-        showToast({ title: 'Starting setup', message: 'Creating AI agent and knowledge base...', variant: 'default', duration: 3000 });
-        
-        // Call webhook in background - don't await, user can continue immediately
+        const kbScore = calculateKBCompleteness(storeBusinessProfile, storeKnowledgeBase).score;
+        if (kbScore < 40) {
+          showToast({
+            title: 'Limited Knowledge Base',
+            message: 'Your AI agent may not answer questions well without services, FAQs, or policies. You can add them later in the dashboard.',
+            variant: 'warning',
+            duration: 5000,
+          });
+        }
+
+        showToast({ title: 'Creating AI Agent', message: 'Building your AI agent in the background...', variant: 'default', duration: 3000 });
+
         (async () => {
           try {
-            await createAgentAndKnowledgeBase({
+            const agentResult = await createAgentAndKnowledgeBase({
               businessName: storeBusinessProfile.businessName || '',
               websiteUrl: storeBusinessProfile.websiteUrl || '',
               mainCategory: storeBusinessProfile.mainCategory || '',
@@ -195,14 +198,35 @@ const WizardShell: React.FC = () => {
               clientId: user?.id || undefined,
               businessProfileId: account.businessProfileId || undefined,
               locationId: account.locationId || undefined,
+              businessPhone: storeBusinessProfile.businessPhone,
+              city: storeBusinessProfile.city,
+              state: storeBusinessProfile.state,
+              services: storeKnowledgeBase.services,
+              faqs: storeKnowledgeBase.faqs,
+              policies: storeKnowledgeBase.policies,
             });
-            console.log('Knowledge step agent created');
-            showToast({ title: 'Agent ready', message: 'AI agent and knowledge base created.', variant: 'success', duration: 4000 });
+
+            // Show result with Cekura test status
+            if (agentResult.cekura_test?.success) {
+              showToast({
+                title: 'Agent created — testing in progress',
+                message: `Your AI agent is live! Running ${agentResult.cekura_test.total_runs || 5} automated test scenarios. Check the dashboard for results.`,
+                variant: 'success',
+                duration: 6000,
+              });
+            } else {
+              showToast({
+                title: 'Agent ready',
+                message: `Your AI agent is live!${agentResult.cekura_test?.error ? ' Automated tests could not be started — you can test manually from the dashboard.' : ''}`,
+                variant: 'success',
+                duration: 5000,
+              });
+            }
           } catch (e) {
-            console.error('Knowledge step webhook failed', e);
+            console.error('Agent creation failed', e);
             showToast({ title: 'Agent setup failed', message: e instanceof Error ? e.message : 'Unknown error', variant: 'error', duration: 6000 });
           }
-        })(); // Immediately invoke the async function - runs in background
+        })();
       }
 
       // Phone step: purchase phone number on Continue
@@ -462,7 +486,7 @@ const WizardShell: React.FC = () => {
                           </Suspense>
                         )}
                         
-                        {/* Continue Button - Hide for review step (step 5) */}
+                        {/* Continue Button - Hide for review step (step 7) */}
                         {expandedStep === currentStep && currentStep !== 5 && (
                           <div className="mt-6">
                             <div className="flex justify-end">
