@@ -90,6 +90,7 @@ import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringSer
 import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
 import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssistant';
 import Blog5SignsAIReceptionist from '../pages/Blog5SignsAIReceptionist';
+import BestAiReceptionistSmallBusiness from '../pages/BestAiReceptionistSmallBusiness';
 import ChatbotVsLiveChatVsPhoneAnswering from '../pages/ChatbotVsLiveChatVsPhoneAnswering';
 import HowAiReceptionistWorks from '../pages/HowAiReceptionistWorks';
 import AIVsHumanReceptionistBlog from '../pages/AIVsHumanReceptionistBlog';
@@ -307,6 +308,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/ai-vs-human-receptionist" element={<AIVsHumanReceptionistBlog />} />
             <Route path="/blog/how-ai-receptionist-works" element={<HowAiReceptionistWorks />} />
             <Route path="/blog/ai-chatbot-vs-live-chat-phone-answering" element={<ChatbotVsLiveChatVsPhoneAnswering />} />
+            <Route path="/blog/best-ai-receptionist-small-business" element={<BestAiReceptionistSmallBusiness />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />

@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Best AI Receptionist for Small Business: Features, Pricing & Comparison',
+    slug: '/blog/best-ai-receptionist-small-business',
+    excerpt: 'Discover the best AI receptionist for small business with our complete guide covering top features, pricing plans, and side-by-side comparisons to fin',
+    date: 'March 14, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/best-ai-receptionist-small-business.png'
+  },
+  {
     title: 'AI Chatbot vs Live Chat vs Phone Answering: Which Converts More Leads for Local Businesses',
     slug: '/blog/ai-chatbot-vs-live-chat-phone-answering',
     excerpt: 'Discover which customer support channel wins the conversion battle: AI chatbots, live chat, or phone answering. We compare conversion rates to help lo',
