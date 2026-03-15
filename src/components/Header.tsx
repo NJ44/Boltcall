@@ -724,13 +724,13 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <Button
+                <InteractiveHoverButton
+                  text="Go To Dashboard"
                   onClick={() => handleNavClick('/dashboard')}
-                  variant="primary"
-                  size="sm"
-                >
-                  Go To Dashboard
-                </Button>
+                  className={`!min-h-11 !min-w-[11rem] !w-auto !px-5 !py-2.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-brand-blue bg-brand-blue text-white'}`}
+                  hoverBgClass={isOverBlueBackground ? 'bg-white' : 'bg-brand-blueDark'}
+                  hoverTextClass={isOverBlueBackground ? 'text-brand-blue' : 'text-white'}
+                />
               </>
             ) : (
               <>
@@ -991,17 +991,16 @@ const Header: React.FC = () => {
                   >
                     {isAuthenticated ? (
                       <motion.div whileTap={{ scale: 0.98 }}>
-                        <Button
+                        <InteractiveHoverButton
+                          text="Go To Dashboard"
                           onClick={() => {
                             handleNavClick('/dashboard');
                             setIsMenuOpen(false);
                           }}
-                          variant="primary"
-                          size="md"
-                          className="w-full py-3 text-base font-semibold rounded-xl shadow-lg"
-                        >
-                          Go To Dashboard
-                        </Button>
+                          className="!w-full !py-3 !px-6 text-base border border-brand-blue bg-brand-blue text-white font-semibold"
+                          hoverBgClass="bg-brand-blueDark"
+                          hoverTextClass="text-white"
+                        />
                       </motion.div>
                     ) : (
                       <>
