@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Phone Answering for Plumbers: Never Miss a Job Lead Again',
+    slug: '/blog/ai-phone-answering-plumbers',
+    excerpt: 'AI phone answering for plumbers ensures every customer call gets answered instantly, capturing job leads 24/7 so you never lose business to missed cal',
+    date: 'March 15, 2026',
+    readTime: '8 min read',
+    category: 'Industry Guide',
+    image: '/images/blog/ai-phone-answering-plumbers.png'
+  },
+  {
     title: 'Best AI Receptionist for Small Business: Features, Pricing & Comparison',
     slug: '/blog/best-ai-receptionist-small-business',
     excerpt: 'Discover the best AI receptionist for small business with our complete guide covering top features, pricing plans, and side-by-side comparisons to fin',
