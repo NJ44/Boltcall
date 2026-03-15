@@ -116,7 +116,7 @@ const HowAiReceptionistWorks: React.FC = () => {
 
               {/* Direct Answer Block */}
               <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 rounded-r-lg">
-                <h3 className="font-semibold text-gray-900 mb-2">Quick Answer:</h3>
+                <h2 className="font-semibold text-gray-900 mb-2">Quick Answer:</h2>
                 <p className="text-gray-800">
                   AI receptionists work by using natural language processing to understand caller requests, automated decision trees to route calls appropriately, and real-time integrations with business systems to provide instant responses and schedule appointments without human intervention.
                 </p>

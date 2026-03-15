@@ -31,6 +31,7 @@ const PricingPage: React.FC = () => {
       <GiveawayBar />
       <Header />
       <main className="pt-20">
+        <h1 className="sr-only">Boltcall AI Receptionist Pricing Plans</h1>
         <Pricing />
       </main>
       <Footer />

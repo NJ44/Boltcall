@@ -117,7 +117,7 @@ const FreeSetup: React.FC = () => {
                     <div className="flex h-9 w-9 items-center justify-center rounded-md">
                       <feature.icon className="h-5 w-5 text-blue-600" />
                     </div>
-                    <h4 className="text-base font-semibold text-gray-900 leading-none">{feature.title}</h4>
+                    <h3 className="text-base font-semibold text-gray-900 leading-none">{feature.title}</h3>
                   </div>
                   <p className="text-[11px] text-gray-600 leading-relaxed">{feature.description}</p>
                 </div>

@@ -274,6 +274,7 @@ const BlogCenter: React.FC = () => {
       <main>
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
+        <h1 className="sr-only">Boltcall Blog - AI Business Tips & Guides</h1>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Search Spotlight */}

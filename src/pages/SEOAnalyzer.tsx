@@ -255,9 +255,9 @@ const SEOAnalyzer: React.FC = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Audit Ready!
-              </h3>
+              </h2>
               <p className="text-gray-600 mb-6">
                 Your SEO audit has been completed and sent to your email address. Please check your inbox for the detailed report.
               </p>

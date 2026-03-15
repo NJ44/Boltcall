@@ -569,10 +569,10 @@ const Header: React.FC = () => {
                       {/* Content Section */}
                       <div className="flex-1 min-w-[198px] py-4">
                         <div className="px-6 py-2">
-                          <h3 className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                          <p className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                             }`}>
                             Content
-                          </h3>
+                          </p>
                         </div>
 
                         {resourcesItems.map((item) => {
@@ -621,10 +621,10 @@ const Header: React.FC = () => {
                       {/* Free Tools Section */}
                       <div className="flex-1 min-w-[240px] py-4">
                         <div className="px-4 py-2">
-                          <h3 className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                          <p className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
                             }`}>
                             Free Tools
-                          </h3>
+                          </p>
                         </div>
 
                         {freeToolsItems.map((item) => {
@@ -876,7 +876,7 @@ const Header: React.FC = () => {
                     transition={{ duration: 0.4, delay: 0.2 }}
                   >
                     <div className="px-4 py-2">
-                      <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Features</h3>
+                      <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Features</p>
                     </div>
                     <div className="space-y-1.5">
                       {featuresItems.map((item, index) => {
@@ -920,7 +920,7 @@ const Header: React.FC = () => {
                     transition={{ duration: 0.4, delay: 0.3 }}
                   >
                     <div className="px-4 py-2">
-                      <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Resources</h3>
+                      <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">Resources</p>
                     </div>
                     <div className="space-y-1.5">
                       {resourcesItems.map((item, index) => {

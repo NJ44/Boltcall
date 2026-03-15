@@ -96,7 +96,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Features</h4>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>Features</p>
                 <ul className="space-y-2">
                   {footerLinks.features.map((link, index) => (
                     <li key={index}>
@@ -120,7 +120,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Resources</h4>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>Resources</p>
                 <ul className="space-y-2">
                   {footerLinks.resources.map((link, index) => (
                     <li key={index}>
@@ -144,7 +144,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Company</h4>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>Company</p>
                 <ul className="space-y-2">
                   {footerLinks.company.map((link, index) => (
                     <li key={index}>
@@ -168,7 +168,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <h4 className={`text-base font-semibold mb-3 ${textClass}`}>Support</h4>
+                <p className={`text-base font-semibold mb-3 ${textClass}`}>Support</p>
                 <ul className="space-y-2">
                   {footerLinks.support.map((link, index) => (
                     <li key={index}>
