@@ -307,6 +307,9 @@ const BlogCenter: React.FC = () => {
                       src={post.image}
                       alt={post.title.replace(/<[^>]*>/g, '')}
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                      width="400"
+                      height="192"
+                      loading="lazy"
                     />
                   </div>
 

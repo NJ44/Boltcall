@@ -148,6 +148,7 @@ const SpotlightInput = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="w-full bg-transparent outline-none ring-none text-base"
+          aria-label="Search blog posts"
         />
       </div>
     </div>

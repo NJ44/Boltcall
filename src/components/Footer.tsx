@@ -83,6 +83,8 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                     src="/boltcall_full_logo.png"
                     alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
                     className={`h-12 mb-3 ${logoBgClass} rounded-lg p-2`}
+                    width="154"
+                    height="48"
                   />
                 )}
               </motion.div>
