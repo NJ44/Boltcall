@@ -10,15 +10,29 @@ const PricingPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Boltcall Pricing - AI Receptionist Plans & Pricing';
     updateMetaDescription('Compare Boltcall pricing plans. Choose the perfect AI receptionist plan for your business. Free setup included. View plans now.');
+
+    // Add canonical link
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = 'https://boltcall.org/pricing';
+
+    return () => {
+      const el = document.querySelector("link[rel='canonical']");
+      if (el) el.remove();
+    };
   }, []);
 
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      <div className="pt-20">
+      <main className="pt-20">
         <Pricing />
-      </div>
+      </main>
       <Footer />
     </div>
   );

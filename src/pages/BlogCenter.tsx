@@ -234,6 +234,20 @@ const BlogCenter: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Business Tips & Guides Blog | Boltcall';
     updateMetaDescription('AI business tips and guides to grow your business. Learn proven strategies, best practices, and AI insights. Explore articles now.');
+
+    // Add canonical link
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = 'https://boltcall.org/blog';
+
+    return () => {
+      const el = document.querySelector("link[rel='canonical']");
+      if (el) el.remove();
+    };
   }, []);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(true);
 
@@ -257,7 +271,7 @@ const BlogCenter: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-
+      <main>
       {/* Hero Section */}
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -334,7 +348,7 @@ const BlogCenter: React.FC = () => {
           </div>
         )}
       </section>
-
+      </main>
       <Footer />
     </div>
   );

@@ -105,6 +105,20 @@ const AIRevenueAudit: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Revenue Audit Calculator - Calculate Earnings | Boltcall';
     updateMetaDescription('AI revenue audit calculator: calculate your potential earnings with AI receptionist. Free revenue analysis tool. Try now.');
+
+    // Add canonical link
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = 'https://boltcall.org/ai-revenue-calculator';
+
+    return () => {
+      const el = document.querySelector("link[rel='canonical']");
+      if (el) el.remove();
+    };
   }, []);
   const [surveyStarted, setSurveyStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -396,7 +410,7 @@ const AIRevenueAudit: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      
+      <main>
       {/* Hero Section */}
       {!surveyStarted ? (
         <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
@@ -679,6 +693,7 @@ const AIRevenueAudit: React.FC = () => {
         </>
       )}
 
+      </main>
       <Footer />
     </div>
   );

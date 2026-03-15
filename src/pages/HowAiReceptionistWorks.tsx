@@ -50,8 +50,19 @@ const HowAiReceptionistWorks: React.FC = () => {
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 
+    // Add canonical link
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = 'https://boltcall.org/how-ai-receptionist-works';
+
     return () => {
       document.head.removeChild(script);
+      const el = document.querySelector("link[rel='canonical']");
+      if (el) el.remove();
     };
   }, []);
 
@@ -60,7 +71,7 @@ const HowAiReceptionistWorks: React.FC = () => {
       <GiveawayBar />
       <Header />
       <ReadingProgress />
-      
+      <main>
       <div className="min-h-screen bg-gray-50 flex">
         {/* Sidebar */}
         <div className="hidden xl:block w-80 p-8">
@@ -540,6 +551,7 @@ const HowAiReceptionistWorks: React.FC = () => {
         </div>
       </motion.div>
 
+      </main>
       <Footer />
     </>
   );

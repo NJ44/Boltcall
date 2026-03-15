@@ -16,6 +16,20 @@ const SEOAnalyzer: React.FC = () => {
   useEffect(() => {
     document.title = 'Free SEO Audit Tool - Analyze Your Website SEO';
     updateMetaDescription('Free SEO audit tool analyzes your website SEO. Get detailed report on rankings, keywords, and optimization opportunities. Try free.');
+
+    // Add canonical link
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = 'https://boltcall.org/seo-audit';
+
+    return () => {
+      const el = document.querySelector("link[rel='canonical']");
+      if (el) el.remove();
+    };
   }, []);
 
   const validateUrl = (urlString: string): boolean => {
@@ -112,7 +126,7 @@ const SEOAnalyzer: React.FC = () => {
     <div className="min-h-screen bg-white">
       <GiveawayBar />
       <Header />
-      
+      <main>
       {/* Hero Section */}
       <section className="relative pt-32 pb-4 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -258,6 +272,7 @@ const SEOAnalyzer: React.FC = () => {
         </div>
       )}
 
+      </main>
       <Footer />
     </div>
   );
