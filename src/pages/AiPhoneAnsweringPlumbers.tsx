@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Wrench, Phone, Star, DollarSign, CheckCircle, Users } from 'lucide-react';
+import { Calendar, Clock, Wrench, Phone, DollarSign, CheckCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -12,7 +11,7 @@ import TableOfContents from '../components/TableOfContents';
 import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const AiPhoneAnsweringPlumbers: React.FC = () => {
-  const { headings, activeHeading } = useTableOfContents();
+  const headings = useTableOfContents();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,7 +67,7 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
             items={[
               { label: 'Blog', href: '/blog' },
               { label: 'Industry Guide', href: '/blog/category/industry-guide' },
-              { label: 'AI Phone Answering for Plumbers' }
+              { label: 'AI Phone Answering for Plumbers', href: '#' }
             ]} 
           />
 
@@ -102,7 +101,7 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
             </div>
 
             <div className="lg:col-span-1">
-              <TableOfContents headings={headings} activeHeading={activeHeading} />
+              <TableOfContents headings={headings} />
             </div>
           </div>
         </div>
@@ -472,4 +471,19 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
                     <ul className="text-sm text-gray-600 space-y-1">
                       <li>• Per-minute charges add up</li>
                       <li>• Generic scripts, not plumbing-specific</li>
-                      <li>•
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+
+          </main>
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default AiPhoneAnsweringPlumbers;
