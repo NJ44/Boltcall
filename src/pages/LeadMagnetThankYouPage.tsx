@@ -10,7 +10,6 @@ import {
   Zap,
   Star,
   Clock,
-  Bot,
 } from 'lucide-react';
 
 const LeadMagnetThankYouPage: React.FC = () => {
