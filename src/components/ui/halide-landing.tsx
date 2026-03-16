@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 
-export const HalideLanding: React.FC = () => {
+interface HalideLandingProps {
+  heroTitle?: React.ReactNode;
+  heroCopy?: string;
+  ctaText?: string;
+  imageSrc?: string;
+}
+
+export const HalideLanding: React.FC<HalideLandingProps> = ({
+  heroTitle = <>LINKEDIN LEAD MAGNETS<br />LIBRARY</>,
+  heroCopy = 'Free guide: actionable tips to capture more leads and never miss a call. One email, instant access.',
+  ctaText = 'GET RESOURCE',
+  imageSrc = '/Blue%20Illustrative%20Annual%20Report%20Book%20Cover.png',
+}) => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const layersRef = useRef<HTMLDivElement[]>([]);
 
@@ -102,7 +114,6 @@ export const HalideLanding: React.FC = () => {
           width: 400px;
           height: 640px;
           transform: translate(-50%, -50%) rotate(90deg);
-          background-image: url('/Blue%20Illustrative%20Annual%20Report%20Book%20Cover.png');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
@@ -250,11 +261,11 @@ export const HalideLanding: React.FC = () => {
         <div className="halide-grain" style={{ filter: 'url(#halide-grain)' }}></div>
 
         <div className="halide-interface-grid">
-          <h1 className="halide-hero-title">LINKEDIN LEAD MAGNETS<br />LIBRARY</h1>
+          <h1 className="halide-hero-title">{heroTitle}</h1>
 
           <div className="halide-cta-row" style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div className="halide-lead-copy">
-              <p>Free guide: actionable tips to capture more leads and never miss a call. One email, instant access.</p>
+              <p>{heroCopy}</p>
             </div>
             <a
               href="#lead-form"
@@ -264,7 +275,7 @@ export const HalideLanding: React.FC = () => {
                 document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              GET RESOURCE
+              {ctaText}
             </a>
           </div>
         </div>
@@ -273,7 +284,7 @@ export const HalideLanding: React.FC = () => {
           <div className="halide-canvas-3d" ref={canvasRef}>
             <div className="halide-book-shadow" />
             <div className="halide-book-spine" />
-            <div className="halide-layer halide-layer-1" ref={(el) => { if (el) layersRef.current[0] = el; }}><div className="halide-layer-inner halide-layer-inner-1" /></div>
+            <div className="halide-layer halide-layer-1" ref={(el) => { if (el) layersRef.current[0] = el; }}><div className="halide-layer-inner halide-layer-inner-1" style={{ backgroundImage: `url('${imageSrc}')` }} /></div>
             <div className="halide-contours"></div>
           </div>
         </div>

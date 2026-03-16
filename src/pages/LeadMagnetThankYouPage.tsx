@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { updateMetaDescription } from '@/lib/utils';
-import { CheckCircle2, ArrowRight, Calendar } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Calendar, Download } from 'lucide-react';
 
 const LeadMagnetThankYouPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const downloadUrl = searchParams.get('download');
+
   useEffect(() => {
     document.title = 'Thank You | Boltcall';
     updateMetaDescription('Thanks for signing up. Check your email for your free guide from Boltcall.');
@@ -19,8 +22,21 @@ const LeadMagnetThankYouPage: React.FC = () => {
           Thank you
         </h1>
         <p className="text-[#e0e0e0]/80 text-lg">
-          Check your inbox for the guide. We’ve sent you everything you need to get started.
+          Check your inbox for the guide. We've sent you everything you need to get started.
         </p>
+
+        {downloadUrl && (
+          <a
+            href={downloadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 h-12 px-8 bg-brand-blue text-white font-bold uppercase tracking-wider hover:bg-brand-blueDark hover:-translate-y-0.5 transition-all duration-300 clip-path-[polygon(0_0,100%_0,100%_70%,85%_100%,0_100%)]"
+          >
+            <Download className="w-5 h-5" strokeWidth={2.5} />
+            Download Now
+          </a>
+        )}
+
         <Link
           to="/"
           className="inline-flex items-center gap-2 h-12 px-8 bg-[#e0e0e0] text-[#0a0a0a] font-bold uppercase tracking-wider hover:bg-brand-blue hover:text-white hover:-translate-y-0.5 transition-all duration-300 clip-path-[polygon(0_0,100%_0,100%_70%,85%_100%,0_100%)]"

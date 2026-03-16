@@ -6,6 +6,18 @@ import { updateMetaDescription } from '@/lib/utils';
 import { Mail, Loader2, User, BookOpen, FileText, Download, Sparkles, Gift, Bookmark } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+export interface LeadMagnetPageProps {
+  heroTitle?: React.ReactNode;
+  heroCopy?: string;
+  ctaText?: string;
+  imageSrc?: string;
+  formHeading?: string;
+  source?: string;
+  downloadUrl?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+}
+
 interface LeadMagnetIconData {
   id: number;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -94,23 +106,47 @@ const FloatingIconLead = ({
   );
 };
 
-const LeadMagnetPage: React.FC = () => {
+const LeadMagnetPage: React.FC<LeadMagnetPageProps> = ({
+  heroTitle,
+  heroCopy,
+  ctaText,
+  imageSrc,
+  formHeading = 'Get the resource',
+  source = 'general',
+  downloadUrl,
+  metaTitle = 'Lead Magnet | Boltcall',
+  metaDescription = 'Get exclusive insights and resources. Sign up for our lead magnet and explore depth with Boltcall.',
+}) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const mouseX = useRef(0);
   const mouseY = useRef(0);
 
   useEffect(() => {
-    document.title = 'Lead Magnet | Boltcall';
-    updateMetaDescription('Get exclusive insights and resources. Sign up for our lead magnet and explore depth with Boltcall.');
-  }, []);
+    document.title = metaTitle;
+    updateMetaDescription(metaDescription);
+  }, [metaTitle, metaDescription]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      navigate('/lead-magnet/thank-you');
-    }, 1000);
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    try {
+      await fetch('https://n8n.srv974118.hstgr.cloud/webhook/lead-magnet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, source }),
+      });
+    } catch (_) {
+      // don't block the user if webhook fails
+    }
+    const params = new URLSearchParams();
+    if (downloadUrl) params.set('download', downloadUrl);
+    if (source !== 'general') params.set('source', source);
+    const query = params.toString();
+    navigate(`/lead-magnet/thank-you${query ? `?${query}` : ''}`);
   };
 
   const handleSectionMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -122,7 +158,12 @@ const LeadMagnetPage: React.FC = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-[#e0e0e0] min-h-[100dvh]">
       {/* Hero: full-viewport Halide 3D parallax */}
       <section className="relative">
-        <HalideLanding />
+        <HalideLanding
+          {...(heroTitle && { heroTitle })}
+          {...(heroCopy && { heroCopy })}
+          {...(ctaText && { ctaText })}
+          {...(imageSrc && { imageSrc })}
+        />
       </section>
 
       {/* Scroll anchor and lead capture section — mobile-optimised */}
@@ -146,7 +187,7 @@ const LeadMagnetPage: React.FC = () => {
 
         <div className="relative z-10 max-w-2xl mx-auto px-4 pt-24 pb-12 sm:px-6 sm:pt-40 sm:pb-24 flex flex-col items-center gap-8 sm:gap-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center font-sans tracking-tight px-1">
-            Get the resource
+            {formHeading}
           </h2>
 
           <form
