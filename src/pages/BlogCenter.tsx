@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Is an AI Receptionist Worth It? ROI & Cost-Benefit Analysis for Local Businesses',
+    slug: '/blog/is-ai-receptionist-worth-it',
+    excerpt: 'Discover whether an AI receptionist delivers real ROI for your local business. We break down costs, benefits, and savings to help you decide.',
+    date: 'March 16, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/is-ai-receptionist-worth-it.png'
+  },
+  {
     title: 'AI Phone Answering for Plumbers: Never Miss a Job Lead Again',
     slug: '/blog/ai-phone-answering-plumbers',
     excerpt: 'AI phone answering for plumbers ensures every customer call gets answered instantly, capturing job leads 24/7 so you never lose business to missed cal',
