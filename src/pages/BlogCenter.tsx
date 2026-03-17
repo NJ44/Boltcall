@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Google Reviews Automation for Local Businesses: AI Tools That Actually Work',
+    slug: '/blog/google-reviews-automation-local-business',
+    excerpt: 'Boost your local business with Google Reviews automation tools that save time and increase customer feedback effortlessly using AI technology.',
+    date: 'March 17, 2026',
+    readTime: '8 min read',
+    category: 'Local Business',
+    image: '/images/blog/google-reviews-automation-local-business.png'
+  },
+  {
     title: 'Is an AI Receptionist Worth It? ROI & Cost-Benefit Analysis for Local Businesses',
     slug: '/blog/is-ai-receptionist-worth-it',
     excerpt: 'Discover whether an AI receptionist delivers real ROI for your local business. We break down costs, benefits, and savings to help you decide.',
