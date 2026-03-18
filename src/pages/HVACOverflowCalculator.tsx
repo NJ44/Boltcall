@@ -1,0 +1,707 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { updateMetaDescription } from '../lib/utils';
+import { motion } from 'framer-motion';
+import {
+  Flame, Phone, PhoneOff, DollarSign, Users, Wrench, TrendingUp,
+  Shield, ArrowRight, CheckCircle, AlertTriangle, Thermometer,
+  Send, Zap, BarChart3, PhoneCall
+} from 'lucide-react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import GiveawayBar from '../components/GiveawayBar';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const HVACOverflowCalculator: React.FC = () => {
+  // Peak Season Volume
+  const [peakCallsPerDay, setPeakCallsPerDay] = useState(28);
+  const [peakMonths, setPeakMonths] = useState(4);
+  const [offPeakCallsPerDay, setOffPeakCallsPerDay] = useState(8);
+
+  // Call Handling Reality
+  const [peakMissedPct, setPeakMissedPct] = useState(38);
+  const [offPeakMissedPct, setOffPeakMissedPct] = useState(12);
+  const [staffAnswering, setStaffAnswering] = useState(1);
+  const [techsAnswerCalls, setTechsAnswerCalls] = useState(true);
+
+  // Revenue Per Job
+  const [avgInstallValue, setAvgInstallValue] = useState(5800);
+  const [avgServiceValue, setAvgServiceValue] = useState(285);
+  const [installRatioPct, setInstallRatioPct] = useState(25);
+  const [competitorLossPct, setCompetitorLossPct] = useState(72);
+
+  // Maintenance Agreements
+  const [maintenanceCustomers, setMaintenanceCustomers] = useState(80);
+  const [annualAgreementValue, setAnnualAgreementValue] = useState(250);
+  const [agreementFromCallersPct, setAgreementFromCallersPct] = useState(20);
+
+  // Email capture
+  const [formName, setFormName] = useState('');
+  const [formEmail, setFormEmail] = useState('');
+  const [formCompany, setFormCompany] = useState('');
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'HVAC Peak Season Revenue Calculator | Boltcall';
+    updateMetaDescription(
+      'Free HVAC calculator — find out how many installs you lose during peak season when calls go unanswered. Calculate your revenue leak and fix it.'
+    );
+  }, []);
+
+  const offPeakMonths = 12 - peakMonths;
+
+  const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  const fmtNum = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+
+
+  const calc = useMemo(() => {
+    const peakDays = peakMonths * 30;
+    const offPeakDays = offPeakMonths * 30;
+
+    const totalPeakCalls = peakCallsPerDay * peakDays;
+    const totalOffPeakCalls = offPeakCallsPerDay * offPeakDays;
+
+    const missedPeakCalls = Math.round(totalPeakCalls * (peakMissedPct / 100));
+    const missedOffPeakCalls = Math.round(totalOffPeakCalls * (offPeakMissedPct / 100));
+    const totalMissedCalls = missedPeakCalls + missedOffPeakCalls;
+
+    const missedPeakPerMonth = Math.round(missedPeakCalls / peakMonths);
+
+    // Of missed calls, how many go to competitor
+    const lostPeakCallers = Math.round(missedPeakCalls * (competitorLossPct / 100));
+    const lostOffPeakCallers = Math.round(missedOffPeakCalls * (competitorLossPct / 100));
+
+    // Split into installs vs service
+    const lostPeakInstalls = Math.round(lostPeakCallers * (installRatioPct / 100));
+    const lostPeakService = lostPeakCallers - lostPeakInstalls;
+    const lostOffPeakInstalls = Math.round(lostOffPeakCallers * (installRatioPct / 100));
+    const lostOffPeakService = lostOffPeakCallers - lostOffPeakInstalls;
+
+    const lostInstallRevenuePeak = lostPeakInstalls * avgInstallValue;
+    const lostServiceRevenuePeak = lostPeakService * avgServiceValue;
+    const peakSeasonLoss = lostInstallRevenuePeak + lostServiceRevenuePeak;
+
+    const lostInstallRevenueOffPeak = lostOffPeakInstalls * avgInstallValue;
+    const lostServiceRevenueOffPeak = lostOffPeakService * avgServiceValue;
+    const offPeakLoss = lostInstallRevenueOffPeak + lostServiceRevenueOffPeak;
+
+    const totalInstallLoss = lostInstallRevenuePeak + lostInstallRevenueOffPeak;
+    const totalServiceLoss = lostServiceRevenuePeak + lostServiceRevenueOffPeak;
+    const annualLoss = peakSeasonLoss + offPeakLoss;
+
+    const totalLostInstalls = lostPeakInstalls + lostOffPeakInstalls;
+    const totalLostService = lostPeakService + lostOffPeakService;
+
+    // Maintenance agreements lost
+    const totalMissedCallers = lostPeakCallers + lostOffPeakCallers;
+    const lostAgreements = Math.round(totalMissedCallers * (agreementFromCallersPct / 100));
+    const lostAgreementRevenue = lostAgreements * annualAgreementValue;
+
+    // Tech distraction cost
+    const techDistractionMonthlyCost = techsAnswerCalls
+      ? Math.round((peakCallsPerDay * 0.25 * 15 / 60) * 75 * 22) // 25% of calls answered by techs, 15 min each, $75/hr billable, 22 work days
+      : 0;
+
+    // AI recovery
+    const boltcallMonthlyCost = 179;
+    const boltcallAnnualCost = boltcallMonthlyCost * 12;
+    const peakRecovery = Math.round(peakSeasonLoss * 0.85); // 85% recovery rate
+    const annualRecovery = Math.round(annualLoss * 0.85);
+    const netGain = annualRecovery - boltcallAnnualCost;
+    const roi = boltcallAnnualCost > 0 ? Math.round((netGain / boltcallAnnualCost) * 100) : 0;
+    const extraInstalls = Math.round(totalLostInstalls * 0.85);
+
+    return {
+      totalPeakCalls,
+      totalOffPeakCalls,
+      missedPeakCalls,
+      missedOffPeakCalls,
+      totalMissedCalls,
+      missedPeakPerMonth,
+      lostPeakInstalls,
+      lostPeakService,
+      lostOffPeakInstalls,
+      lostOffPeakService,
+      totalLostInstalls,
+      totalLostService,
+      lostInstallRevenuePeak,
+      lostServiceRevenuePeak,
+      peakSeasonLoss,
+      offPeakLoss,
+      totalInstallLoss,
+      totalServiceLoss,
+      annualLoss,
+      lostAgreements,
+      lostAgreementRevenue,
+      techDistractionMonthlyCost,
+      peakRecovery,
+      annualRecovery,
+      netGain,
+      roi,
+      extraInstalls,
+      boltcallAnnualCost,
+    };
+  }, [
+    peakCallsPerDay, peakMonths, offPeakCallsPerDay, offPeakMonths,
+    peakMissedPct, offPeakMissedPct, techsAnswerCalls,
+    avgInstallValue, avgServiceValue, installRatioPct, competitorLossPct,
+    maintenanceCustomers, annualAgreementValue, agreementFromCallersPct,
+  ]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formName || !formEmail) return;
+    setFormLoading(true);
+    try {
+      await fetch('https://n8n.srv974118.hstgr.cloud/webhook/niche-lead-magnet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formName,
+          email: formEmail,
+          business_name: formCompany || undefined,
+          niche: 'hvac',
+          source: 'peak-season-calculator',
+          metrics: {
+            peak_season_loss: calc.peakSeasonLoss,
+            annual_loss: calc.annualLoss,
+            missed_calls_peak: calc.missedPeakCalls,
+            lost_installs: calc.totalLostInstalls,
+            roi: calc.roi,
+          },
+        }),
+      });
+      setFormSubmitted(true);
+    } catch {
+      setFormSubmitted(true);
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  // Slider component
+  const Slider = ({
+    label, value, onChange, min, max, step = 1, unit = '', hint = '',
+  }: {
+    label: string; value: number; onChange: (v: number) => void;
+    min: number; max: number; step?: number; unit?: string; hint?: string;
+  }) => (
+    <div className="mb-5">
+      <div className="flex justify-between items-center mb-2">
+        <label className="text-sm font-medium text-slate-300">{label}</label>
+        <span className="text-sm font-bold text-orange-400">
+          {unit === '$' ? fmt.format(value) : `${fmtNum.format(value)}${unit}`}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="w-full h-2 bg-slate-700 rounded-full appearance-none cursor-pointer
+          [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5
+          [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500
+          [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(249,115,22,0.5)] [&::-webkit-slider-thumb]:cursor-pointer
+          [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full
+          [&::-moz-range-thumb]:bg-orange-500 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
+      />
+      <div className="flex justify-between text-[11px] text-slate-500 mt-1">
+        <span>{unit === '$' ? fmt.format(min) : `${min}${unit}`}</span>
+        {hint && <span className="text-slate-600">{hint}</span>}
+        <span>{unit === '$' ? fmt.format(max) : `${max}${unit}`}</span>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-950">
+      <GiveawayBar />
+      <Header />
+
+      <main className="pt-20">
+        {/* ─── HERO ─── */}
+        <section className="relative px-4 sm:px-6 pt-16 pb-12 text-center overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1c1017 50%, #0F172A 100%)' }}>
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(249,115,22,0.08) 0%, transparent 60%)' }} />
+
+          <motion.div initial="hidden" animate="visible" variants={stagger} className="relative max-w-3xl mx-auto">
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-4 py-1.5 rounded-full text-[13px] font-semibold text-orange-400 mb-6">
+              <Flame className="w-4 h-4" />
+              Free Tool for HVAC Pros
+            </motion.div>
+
+            <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4 text-white">
+              How Many Installs Are You Losing{' '}
+              <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
+                During Peak Season?
+              </span>
+            </motion.h1>
+
+            <motion.p variants={fadeUp} className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+              When the first heat wave hits, your phone explodes. But your team is on the roof, not at the desk.
+              Calculate exactly how many $5,000+ installs walk to your competitor.
+            </motion.p>
+
+            <motion.div variants={fadeUp}
+              className="inline-flex items-center gap-3 bg-red-500/10 border border-red-500/25 rounded-xl px-6 py-3 text-red-400">
+              <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+              <span className="text-sm font-medium">HVAC companies miss up to 40% of calls during peak season</span>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* ─── CALCULATOR ─── */}
+        <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-8">
+
+            {/* LEFT — INPUTS */}
+            <div className="space-y-6">
+
+              {/* Card 1: Peak Season Volume */}
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:border-orange-500/20 hover:shadow-[0_0_30px_rgba(249,115,22,0.08)]">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-500/15">
+                    <Thermometer className="w-5 h-5 text-orange-400" />
+                  </div>
+                  <div>
+                    <div className="text-[1.05rem] font-bold text-white tracking-tight">Peak Season Volume</div>
+                    <div className="text-xs text-slate-500 mt-0.5">How busy does it really get?</div>
+                  </div>
+                </div>
+
+                <Slider label="Incoming calls per day (peak)" value={peakCallsPerDay} onChange={setPeakCallsPerDay}
+                  min={10} max={60} hint="avg for busy HVAC" />
+                <Slider label="Peak season months per year" value={peakMonths} onChange={setPeakMonths}
+                  min={2} max={6} unit=" mo" />
+                <Slider label="Off-peak calls per day" value={offPeakCallsPerDay} onChange={setOffPeakCallsPerDay}
+                  min={3} max={20} />
+
+                <div className="flex justify-between items-center bg-slate-800/60 rounded-lg px-4 py-2.5 mt-2">
+                  <span className="text-sm text-slate-400">Off-peak months</span>
+                  <span className="text-sm font-bold text-white">{offPeakMonths} months (auto)</span>
+                </div>
+              </motion.div>
+
+              {/* Card 2: Call Handling Reality */}
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:border-orange-500/20 hover:shadow-[0_0_30px_rgba(249,115,22,0.08)]">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-red-500/15">
+                    <PhoneOff className="w-5 h-5 text-red-400" />
+                  </div>
+                  <div>
+                    <div className="text-[1.05rem] font-bold text-white tracking-tight">Call Handling Reality</div>
+                    <div className="text-xs text-slate-500 mt-0.5">What happens when calls come in</div>
+                  </div>
+                </div>
+
+                <Slider label="% of peak calls missed / voicemail" value={peakMissedPct} onChange={setPeakMissedPct}
+                  min={10} max={70} unit="%" />
+                <Slider label="% of off-peak calls missed" value={offPeakMissedPct} onChange={setOffPeakMissedPct}
+                  min={5} max={30} unit="%" />
+                <Slider label="Current staff answering phones" value={staffAnswering} onChange={setStaffAnswering}
+                  min={0} max={5} />
+
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-sm text-slate-300">Do techs answer calls on jobs?</span>
+                  <button
+                    onClick={() => setTechsAnswerCalls(!techsAnswerCalls)}
+                    className={`relative w-14 h-7 rounded-full transition-colors duration-200 ${
+                      techsAnswerCalls ? 'bg-orange-500' : 'bg-slate-700'
+                    }`}
+                  >
+                    <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform duration-200 ${
+                      techsAnswerCalls ? 'left-[30px]' : 'left-0.5'
+                    }`} />
+                  </button>
+                </div>
+              </motion.div>
+
+              {/* Card 3: Revenue Per Job */}
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:border-orange-500/20 hover:shadow-[0_0_30px_rgba(249,115,22,0.08)]">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-green-500/15">
+                    <DollarSign className="w-5 h-5 text-green-400" />
+                  </div>
+                  <div>
+                    <div className="text-[1.05rem] font-bold text-white tracking-tight">Revenue Per Job</div>
+                    <div className="text-xs text-slate-500 mt-0.5">What each job type is worth</div>
+                  </div>
+                </div>
+
+                <Slider label="Average install / replacement value" value={avgInstallValue} onChange={setAvgInstallValue}
+                  min={3000} max={15000} step={100} unit="$" />
+                <Slider label="Average repair / service call value" value={avgServiceValue} onChange={setAvgServiceValue}
+                  min={100} max={800} step={5} unit="$" />
+                <Slider label="Install vs service call ratio" value={installRatioPct} onChange={setInstallRatioPct}
+                  min={10} max={50} unit="% installs" hint="of total calls" />
+                <Slider label="% of missed callers who go to competitor" value={competitorLossPct} onChange={setCompetitorLossPct}
+                  min={40} max={90} unit="%" />
+              </motion.div>
+
+              {/* Card 4: Maintenance Agreements */}
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:border-orange-500/20 hover:shadow-[0_0_30px_rgba(249,115,22,0.08)]">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/15">
+                    <Shield className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-[1.05rem] font-bold text-white tracking-tight">Maintenance Agreements</div>
+                    <div className="text-xs text-slate-500 mt-0.5">Recurring revenue from service customers</div>
+                  </div>
+                </div>
+
+                <Slider label="Current maintenance agreement customers" value={maintenanceCustomers} onChange={setMaintenanceCustomers}
+                  min={0} max={500} step={5} />
+                <Slider label="Annual agreement value" value={annualAgreementValue} onChange={setAnnualAgreementValue}
+                  min={150} max={500} step={10} unit="$" />
+                <Slider label="% of agreements from first-time callers" value={agreementFromCallersPct} onChange={setAgreementFromCallersPct}
+                  min={10} max={40} unit="%" />
+              </motion.div>
+            </div>
+
+            {/* RIGHT — STICKY RESULTS */}
+            <div className="lg:sticky lg:top-24 lg:self-start space-y-5">
+
+              {/* Big Loss Number */}
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+                className="bg-gradient-to-br from-slate-900 via-slate-900 to-orange-950/30 border border-orange-500/20 rounded-2xl p-6 sm:p-7">
+                <div className="text-center mb-6">
+                  <p className="text-sm font-semibold text-orange-400 uppercase tracking-wider mb-2">
+                    You're Losing During Peak Season
+                  </p>
+                  <p className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 bg-clip-text text-transparent leading-tight">
+                    {fmt.format(calc.peakSeasonLoss)}
+                  </p>
+                  <p className="text-slate-500 text-sm mt-2">
+                    Annual total: <span className="text-red-400 font-bold">{fmt.format(calc.annualLoss)}</span>
+                  </p>
+                </div>
+
+                {/* 4 Metric Cards */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {[
+                    { label: 'Missed calls / peak mo', value: fmtNum.format(calc.missedPeakPerMonth), icon: PhoneOff, color: 'text-red-400' },
+                    { label: 'Lost installs / peak', value: fmtNum.format(calc.lostPeakInstalls), icon: Wrench, color: 'text-orange-400' },
+                    { label: 'Lost service calls / peak', value: fmtNum.format(calc.lostPeakService), icon: Phone, color: 'text-yellow-400' },
+                    { label: 'Lost agreements / year', value: fmtNum.format(calc.lostAgreements), icon: Shield, color: 'text-blue-400' },
+                  ].map((m) => (
+                    <div key={m.label} className="bg-slate-800/60 rounded-xl p-3.5 text-center">
+                      <m.icon className={`w-5 h-5 ${m.color} mx-auto mb-1.5`} />
+                      <p className="text-xl font-bold text-white">{m.value}</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5 leading-tight">{m.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Revenue Breakdown */}
+                <div className="space-y-2.5 mb-6">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Revenue Breakdown</p>
+                  <div className="flex justify-between items-center bg-slate-800/50 rounded-lg px-4 py-2.5">
+                    <span className="text-sm text-slate-300">Install revenue lost</span>
+                    <span className="text-sm font-bold text-red-400">{fmt.format(calc.totalInstallLoss)}</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-slate-800/50 rounded-lg px-4 py-2.5">
+                    <span className="text-sm text-slate-300">Service revenue lost</span>
+                    <span className="text-sm font-bold text-red-400">{fmt.format(calc.totalServiceLoss)}</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-slate-800/50 rounded-lg px-4 py-2.5">
+                    <span className="text-sm text-slate-300">Maintenance agreements lost</span>
+                    <span className="text-sm font-bold text-blue-400">{fmt.format(calc.lostAgreementRevenue)}/yr recurring</span>
+                  </div>
+                </div>
+
+                {/* Tech Distraction Cost */}
+                {techsAnswerCalls && calc.techDistractionMonthlyCost > 0 && (
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-amber-400 mb-1">Tech Distraction Cost</p>
+                        <p className="text-xs text-slate-400 leading-relaxed">
+                          When techs answer phones on jobs, each call costs ~15 min of billable time.
+                        </p>
+                        <p className="text-lg font-bold text-amber-400 mt-2">
+                          {fmt.format(calc.techDistractionMonthlyCost)}/month in lost productivity
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* With AI Section */}
+                <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 rounded-xl p-5">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Zap className="w-5 h-5 text-emerald-400" />
+                    <p className="text-sm font-bold text-emerald-400">With AI Answering Every Call</p>
+                  </div>
+                  <div className="space-y-2.5">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-slate-400">Revenue recovered (peak)</span>
+                      <span className="text-sm font-bold text-emerald-400">{fmt.format(calc.peakRecovery)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-slate-400">Year-round recovery</span>
+                      <span className="text-sm font-bold text-emerald-400">{fmt.format(calc.annualRecovery)}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-slate-400">Net gain after Boltcall ($179/mo)</span>
+                      <span className="text-sm font-bold text-emerald-400">{fmt.format(calc.netGain)}</span>
+                    </div>
+                    <div className="border-t border-emerald-500/20 pt-2.5 mt-2.5">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-semibold text-white">ROI</span>
+                        <span className="text-xl font-black text-emerald-400">{fmtNum.format(calc.roi)}%</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-emerald-400/80 text-center pt-1">
+                      That's <span className="font-bold text-emerald-400">{calc.extraInstalls} extra installs</span> per peak season
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── EMAIL CAPTURE ─── */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20"
+          style={{ background: 'linear-gradient(180deg, #020617 0%, #0c1222 50%, #020617 100%)' }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={stagger}
+            className="max-w-2xl mx-auto text-center">
+
+            <motion.div variants={fadeUp}
+              className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-4 py-1.5 rounded-full text-[13px] font-semibold text-orange-400 mb-6">
+              <BarChart3 className="w-4 h-4" />
+              Free Report
+            </motion.div>
+
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl font-black text-white mb-4">
+              Get Your Free HVAC{' '}
+              <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+                Revenue Recovery Report
+              </span>
+            </motion.h2>
+
+            <motion.div variants={fadeUp} className="text-left bg-slate-900/60 border border-slate-800 rounded-xl p-5 mb-8">
+              <ul className="space-y-3">
+                {[
+                  'Peak season loss analysis based on your numbers',
+                  'Call overflow management guide for HVAC companies',
+                  'Maintenance agreement growth strategy',
+                  'Seasonal staffing vs AI comparison breakdown',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-slate-300">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {!formSubmitted ? (
+              <motion.form variants={fadeUp} onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={formName}
+                  onChange={(e) => setFormName(e.target.value)}
+                  required
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 text-sm
+                    focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.1)] transition-all"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={formEmail}
+                  onChange={(e) => setFormEmail(e.target.value)}
+                  required
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 text-sm
+                    focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.1)] transition-all"
+                />
+                <input
+                  type="text"
+                  placeholder="Company Name (optional)"
+                  value={formCompany}
+                  onChange={(e) => setFormCompany(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 text-sm
+                    focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.1)] transition-all"
+                />
+                <button
+                  type="submit"
+                  disabled={formLoading}
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700
+                    text-white font-bold py-4 rounded-xl transition-all duration-200 shadow-lg shadow-orange-500/20
+                    hover:shadow-orange-500/30 disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  {formLoading ? 'Sending...' : 'Get My Free Report'}
+                </button>
+              </motion.form>
+            ) : (
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-8 text-center">
+                <CheckCircle className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
+                <p className="text-lg font-bold text-white mb-1">Report on the way!</p>
+                <p className="text-sm text-slate-400">Check your inbox in the next few minutes.</p>
+              </motion.div>
+            )}
+          </motion.div>
+        </section>
+
+        {/* ─── SOCIAL PROOF ─── */}
+        <section className="px-4 sm:px-6 py-14 bg-slate-950">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}
+            className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              {
+                stat: '35-45%',
+                text: 'HVAC companies report 35-45% of calls go unanswered during heat waves',
+                icon: PhoneOff,
+              },
+              {
+                stat: '$5,800',
+                text: 'The average HVAC install is $5,800 — one missed call costs more than a year of AI',
+                icon: DollarSign,
+              },
+              {
+                stat: '28%',
+                text: 'Companies using AI answering see 28% more booked installs during peak',
+                icon: TrendingUp,
+              },
+            ].map((item) => (
+              <motion.div key={item.stat} variants={fadeUp}
+                className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center hover:border-orange-500/20 transition-colors">
+                <item.icon className="w-8 h-8 text-orange-400 mx-auto mb-3" />
+                <p className="text-3xl font-black text-white mb-2">{item.stat}</p>
+                <p className="text-sm text-slate-400 leading-relaxed">{item.text}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
+        {/* ─── VALUE CONTENT ─── */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 bg-slate-950">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}
+            className="max-w-4xl mx-auto">
+
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl font-black text-white text-center mb-12">
+              3 Ways to{' '}
+              <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+                Capture Every Call
+              </span>{' '}
+              During Peak Season
+            </motion.h2>
+
+            <div className="space-y-6">
+              {[
+                {
+                  num: '01',
+                  title: '24/7 AI Call Answering',
+                  desc: 'Never miss a call, even when the whole team is on installs. AI picks up every ring — nights, weekends, heat waves — and books the appointment or takes a message instantly.',
+                  icon: PhoneCall,
+                  color: 'from-orange-500/15 to-orange-500/5',
+                  borderColor: 'border-orange-500/20',
+                  iconColor: 'text-orange-400',
+                },
+                {
+                  num: '02',
+                  title: 'Priority Routing',
+                  desc: 'AI qualifies callers in real time and routes hot install leads immediately to your sales team. Service calls get scheduled, emergencies get escalated — all automatically.',
+                  icon: Users,
+                  color: 'from-blue-500/15 to-blue-500/5',
+                  borderColor: 'border-blue-500/20',
+                  iconColor: 'text-blue-400',
+                },
+                {
+                  num: '03',
+                  title: 'Maintenance Agreement Builder',
+                  desc: 'Turn every service call into recurring revenue. AI identifies agreement-eligible customers and offers enrollment during the call, growing your maintenance base on autopilot.',
+                  icon: Shield,
+                  color: 'from-emerald-500/15 to-emerald-500/5',
+                  borderColor: 'border-emerald-500/20',
+                  iconColor: 'text-emerald-400',
+                },
+              ].map((tip) => (
+                <motion.div key={tip.num} variants={fadeUp}
+                  className={`bg-gradient-to-r ${tip.color} border ${tip.borderColor} rounded-2xl p-6 sm:p-7 flex items-start gap-5`}>
+                  <div className="flex-shrink-0">
+                    <div className={`w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center`}>
+                      <tip.icon className={`w-6 h-6 ${tip.iconColor}`} />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-xs font-bold text-slate-500">{tip.num}</span>
+                      <h3 className="text-lg font-bold text-white">{tip.title}</h3>
+                    </div>
+                    <p className="text-sm text-slate-400 leading-relaxed">{tip.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ─── SOFT CTA ─── */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20"
+          style={{ background: 'linear-gradient(180deg, #020617 0%, #1c1017 50%, #020617 100%)' }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}
+            className="max-w-2xl mx-auto text-center">
+
+            <motion.div variants={fadeUp}>
+              <Flame className="w-10 h-10 text-orange-400 mx-auto mb-4" />
+            </motion.div>
+
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl font-black text-white mb-4">
+              Ready to Capture{' '}
+              <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+                {fmt.format(calc.annualRecovery)} More Revenue
+              </span>{' '}
+              Next Peak Season?
+            </motion.h2>
+
+            <motion.p variants={fadeUp} className="text-slate-400 mb-8">
+              Stop letting heat waves burn your revenue. Let AI answer while your team installs.
+            </motion.p>
+
+            <motion.div variants={fadeUp}>
+              <a
+                href="/features/ai-receptionist"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700
+                  text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg shadow-orange-500/20
+                  hover:shadow-orange-500/30 text-lg"
+              >
+                See It In Action
+                <ArrowRight className="w-5 h-5" />
+              </a>
+            </motion.div>
+
+            <motion.p variants={fadeUp} className="text-sm text-slate-500 mt-5">
+              Starting at $99/month &bull; No contracts &bull; Set up in 24 hours
+            </motion.p>
+          </motion.div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default HVACOverflowCalculator;
