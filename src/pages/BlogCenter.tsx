@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'What Is an AI Receptionist? Complete Guide for Local Businesses',
+    slug: '/blog/what-is-ai-receptionist-guide',
+    excerpt: 'Discover how AI receptionists automate customer calls and scheduling for local businesses, saving time and improving client service 24/7.',
+    date: 'March 18, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/what-is-ai-receptionist-guide.png'
+  },
+  {
     title: 'Google Reviews Automation for Local Businesses: AI Tools That Actually Work',
     slug: '/blog/google-reviews-automation-local-business',
     excerpt: 'Boost your local business with Google Reviews automation tools that save time and increase customer feedback effortlessly using AI technology.',

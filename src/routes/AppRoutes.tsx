@@ -91,6 +91,7 @@ import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringSer
 import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
 import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssistant';
 import Blog5SignsAIReceptionist from '../pages/Blog5SignsAIReceptionist';
+import WhatIsAIReceptionistGuide from '../pages/WhatIsAIReceptionistGuide';
 import GoogleReviewsAutomationGuide from '../pages/GoogleReviewsAutomationGuide';
 // import IsAiReceptionistWorthIt from '../pages/IsAiReceptionistWorthIt'; // truncated file - fix later
 import AiPhoneAnsweringPlumbers from '../pages/AiPhoneAnsweringPlumbers';
@@ -317,6 +318,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/ai-phone-answering-plumbers" element={<AiPhoneAnsweringPlumbers />} />
             {/* <Route path="/blog/is-ai-receptionist-worth-it" element={<IsAiReceptionistWorthIt />} /> */}
             <Route path="/blog/google-reviews-automation-local-business" element={<GoogleReviewsAutomationGuide />} />
+            <Route path="/blog/what-is-ai-receptionist-guide" element={<WhatIsAIReceptionistGuide />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
