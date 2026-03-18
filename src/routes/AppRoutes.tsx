@@ -91,8 +91,8 @@ import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringSer
 import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
 import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssistant';
 import Blog5SignsAIReceptionist from '../pages/Blog5SignsAIReceptionist';
-import WhatIsAIReceptionistGuide from '../pages/WhatIsAIReceptionistGuide';
-import GoogleReviewsAutomationGuide from '../pages/GoogleReviewsAutomationGuide';
+// import WhatIsAIReceptionistGuide from '../pages/WhatIsAIReceptionistGuide'; // truncated file - fix later
+// import GoogleReviewsAutomationGuide from '../pages/GoogleReviewsAutomationGuide'; // truncated file - fix later
 // import IsAiReceptionistWorthIt from '../pages/IsAiReceptionistWorthIt'; // truncated file - fix later
 import AiPhoneAnsweringPlumbers from '../pages/AiPhoneAnsweringPlumbers';
 import BestAiReceptionistSmallBusiness from '../pages/BestAiReceptionistSmallBusiness';
@@ -141,8 +141,16 @@ import SolarSalesCloser from '../pages/SolarSalesCloser';
 import SolarQuoteGenerator from '../pages/SolarQuoteGenerator';
 import VoiceAgentOnboarding from '../pages/VoiceAgentOnboarding';
 import NicheToolPage from '../pages/NicheToolPage';
+import PlumberRevenueCalculator from '../pages/PlumberRevenueCalculator';
+import DentistChairCalculator from '../pages/DentistChairCalculator';
+import HVACOverflowCalculator from '../pages/HVACOverflowCalculator';
+import RealEstateSpeedScorecard from '../pages/RealEstateSpeedScorecard';
+import LawyerIntakeCalculator from '../pages/LawyerIntakeCalculator';
+import MedSpaRebookingCalculator from '../pages/MedSpaRebookingCalculator';
 import FunnelOptimizer from '../pages/FunnelOptimizer';
 import FunnelOptimiser from '../pages/FunnelOptimiser';
+import SolarSpeedToLeadPlaybook from '../pages/SolarSpeedToLeadPlaybook';
+import SolarSpeedToLeadPlaybookThankYou from '../pages/SolarSpeedToLeadPlaybookThankYou';
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -317,8 +325,8 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/best-ai-receptionist-small-business" element={<BestAiReceptionistSmallBusiness />} />
             <Route path="/blog/ai-phone-answering-plumbers" element={<AiPhoneAnsweringPlumbers />} />
             {/* <Route path="/blog/is-ai-receptionist-worth-it" element={<IsAiReceptionistWorthIt />} /> */}
-            <Route path="/blog/google-reviews-automation-local-business" element={<GoogleReviewsAutomationGuide />} />
-            <Route path="/blog/what-is-ai-receptionist-guide" element={<WhatIsAIReceptionistGuide />} />
+            {/* <Route path="/blog/google-reviews-automation-local-business" element={<GoogleReviewsAutomationGuide />} /> */}
+            {/* <Route path="/blog/what-is-ai-receptionist-guide" element={<WhatIsAIReceptionistGuide />} /> */}
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
@@ -354,10 +362,20 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/strike-ai" element={<Strike />} />
         <Route path="/drhazak" element={<DrHazakLandingPage />} />
         <Route path="/rank-on-google-offer" element={<RankOnGoogleOfferPage />} />
+        {/* Solar Speed-to-Lead Playbook */}
+        <Route path="/solar-speed-playbook" element={<SolarSpeedToLeadPlaybook />} />
+        <Route path="/solar-speed-playbook/thank-you" element={<SolarSpeedToLeadPlaybookThankYou />} />
         {/* Solar Lead Magnet Tools */}
         <Route path="/tools/solar-profit-calculator" element={<SolarProfitCalculator />} />
         <Route path="/tools/solar-sales-closer" element={<SolarSalesCloser />} />
         <Route path="/tools/solar-quote-generator" element={<SolarQuoteGenerator />} />
+        {/* Niche-Specific Lead Magnet Calculators */}
+        <Route path="/tools/plumber-revenue-calculator" element={<PlumberRevenueCalculator />} />
+        <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
+        <Route path="/tools/hvac-overflow-calculator" element={<HVACOverflowCalculator />} />
+        <Route path="/tools/real-estate-speed-scorecard" element={<RealEstateSpeedScorecard />} />
+        <Route path="/tools/lawyer-intake-calculator" element={<LawyerIntakeCalculator />} />
+        <Route path="/tools/medspa-rebooking-calculator" element={<MedSpaRebookingCalculator />} />
         {/* Dynamic niche lead magnet pages - loaded from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
