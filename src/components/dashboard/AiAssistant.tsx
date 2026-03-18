@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Loader2, Sparkles, CheckCircle2, Zap } from 'lucide-react';
+import { X, Send, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { cn } from '../../lib/utils';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
-  actions?: string[]; // Actions that were executed
+  actions?: string[];
 }
 
 const QUICK_ACTIONS = [
@@ -22,7 +23,7 @@ const AiAssistant: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -48,9 +49,18 @@ const AiAssistant: React.FC = () => {
       });
 
       const data = await res.json();
+
+      if (!res.ok) {
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: 'Something went wrong on our end. Please try again in a moment.',
+        }]);
+        return;
+      }
+
       const assistantMsg: Message = {
         role: 'assistant',
-        content: data.reply || 'Sorry, something went wrong.',
+        content: data.reply || 'Done!',
         actions: data.actions,
       };
       setMessages(prev => [...prev, assistantMsg]);
@@ -74,13 +84,6 @@ const AiAssistant: React.FC = () => {
     setInput('');
     await callAssistant(newMessages);
   }, [input, isLoading, messages, callAssistant]);
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
 
   const handleQuickAction = (label: string) => {
     const userMsg: Message = { role: 'user', content: label };
@@ -115,72 +118,113 @@ const AiAssistant: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] h-[560px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[360px] h-[440px] rounded-2xl overflow-hidden p-[2px]"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-brand-blue to-blue-600 text-white">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-5 h-5" />
+            {/* Animated Outer Border */}
+            <motion.div
+              className="absolute inset-0 rounded-2xl border-2 border-white/20"
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            />
+
+            {/* Inner Card */}
+            <div className="relative flex flex-col w-full h-full rounded-xl border border-white/10 overflow-hidden bg-black/90 backdrop-blur-xl">
+              {/* Animated Background */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-gray-800 via-black to-gray-900"
+                animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                style={{ backgroundSize: '200% 200%' }}
+              />
+
+              {/* Floating Particles */}
+              {Array.from({ length: 20 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 rounded-full bg-white/10"
+                  animate={{
+                    y: ['0%', '-140%'],
+                    x: [Math.random() * 200 - 100, Math.random() * 200 - 100],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 5 + Math.random() * 3,
+                    repeat: Infinity,
+                    delay: i * 0.5,
+                    ease: 'easeInOut',
+                  }}
+                  style={{ left: `${Math.random() * 100}%`, bottom: '-10%' }}
+                />
+              ))}
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-semibold text-white">Bolt AI Assistant</h2>
+                    <p className="text-xs text-white/50">I can change your settings — just ask</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-sm">Bolt AI Assistant</h3>
-                  <p className="text-xs text-blue-100">I can change your settings — just ask</p>
-                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-              {messages.length === 0 && (
-                <div className="text-center py-6">
-                  <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Zap className="w-7 h-7 text-brand-blue" />
+              {/* Messages */}
+              <div className="flex-1 px-4 py-3 overflow-y-auto space-y-3 text-sm flex flex-col relative z-10">
+                {/* Empty state with quick actions */}
+                {messages.length === 0 && (
+                  <div className="flex flex-col items-center justify-center flex-1 py-4">
+                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-3">
+                      <Sparkles className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <h4 className="font-medium text-white mb-1">What do you need?</h4>
+                    <p className="text-xs text-white/50 mb-4 max-w-[260px] text-center">
+                      Tell me what you want and I'll do it. Change your greeting, update your prompt, add FAQs — just say it.
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 w-full max-w-[300px]">
+                      {QUICK_ACTIONS.map((action) => (
+                        <button
+                          key={action.label}
+                          onClick={() => handleQuickAction(action.label)}
+                          className="flex items-center gap-2 text-left text-xs px-3 py-2.5 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white rounded-lg border border-white/10 transition-colors"
+                        >
+                          <span>{action.icon}</span>
+                          <span className="leading-tight">{action.label}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <h4 className="font-medium text-gray-900 mb-1">What do you need?</h4>
-                  <p className="text-sm text-gray-500 mb-5 max-w-[280px] mx-auto">
-                    Tell me what you want and I'll do it. Change your greeting, update your prompt, add FAQs — just say it.
-                  </p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {QUICK_ACTIONS.map((action) => (
-                      <button
-                        key={action.label}
-                        onClick={() => handleQuickAction(action.label)}
-                        className="flex items-center gap-2 text-left text-sm px-3 py-2.5 bg-gray-50 hover:bg-blue-50 hover:text-brand-blue rounded-lg border border-gray-200 transition-colors"
-                      >
-                        <span>{action.icon}</span>
-                        <span className="leading-tight">{action.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+                )}
 
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className="max-w-[85%]">
-                    <div
-                      className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
-                        msg.role === 'user'
-                          ? 'bg-brand-blue text-white rounded-br-md'
-                          : 'bg-gray-100 text-gray-800 rounded-bl-md'
-                      }`}
+                {messages.map((msg, i) => (
+                  <div key={i}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className={cn(
+                        'px-3 py-2 rounded-xl max-w-[80%] shadow-md backdrop-blur-md',
+                        msg.role === 'assistant'
+                          ? 'bg-white/10 text-white self-start'
+                          : 'bg-white/30 text-black font-semibold self-end ml-auto'
+                      )}
                     >
                       <p className="whitespace-pre-wrap">{msg.content}</p>
-                    </div>
+                    </motion.div>
                     {/* Action badges */}
                     {msg.actions && msg.actions.length > 0 && (
                       <div className="mt-1.5 flex flex-wrap gap-1">
                         {msg.actions.map((action, j) => (
                           <span
                             key={j}
-                            className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 text-xs rounded-full border border-green-200"
+                            className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/20 text-green-300 text-xs rounded-full border border-green-500/30"
                           >
                             <CheckCircle2 className="w-3 h-3" />
                             {action}
@@ -189,43 +233,41 @@ const AiAssistant: React.FC = () => {
                       </div>
                     )}
                   </div>
-                </div>
-              ))}
+                ))}
 
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-gray-100 px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-2">
-                    <Loader2 className="w-4 h-4 text-brand-blue animate-spin" />
-                    <span className="text-xs text-gray-500">Working on it...</span>
-                  </div>
-                </div>
-              )}
+                {/* AI Typing Indicator */}
+                {isLoading && (
+                  <motion.div
+                    className="flex items-center gap-1 px-3 py-2 rounded-xl max-w-[30%] bg-white/10 self-start"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 0.6, 1] }}
+                    transition={{ repeat: Infinity, duration: 1.2 }}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse delay-200"></span>
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse delay-400"></span>
+                  </motion.div>
+                )}
 
-              <div ref={messagesEndRef} />
-            </div>
+                <div ref={messagesEndRef} />
+              </div>
 
-            {/* Input */}
-            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
-              <div className="flex items-end gap-2">
-                <textarea
+              {/* Input */}
+              <div className="flex items-center gap-2 p-3 border-t border-white/10 relative z-10">
+                <input
                   ref={inputRef}
+                  className="flex-1 px-3 py-2 text-sm bg-black/50 rounded-lg border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/50"
+                  placeholder="Tell me what to change..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Tell me what to change..."
-                  rows={1}
-                  className="flex-1 resize-none px-4 py-2.5 bg-white border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue max-h-24"
+                  onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 />
                 <button
                   onClick={() => sendMessage()}
                   disabled={!input.trim() || isLoading}
-                  className="p-2.5 bg-brand-blue text-white rounded-xl hover:bg-brand-blue/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
+                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
-                  {isLoading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4" />
-                  )}
+                  <Send className="w-4 h-4 text-white" />
                 </button>
               </div>
             </div>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  BarChart3, 
-  Users, 
-  Building2, 
+import {
+  LayoutDashboard,
+  BarChart3,
+  Bot,
+  BookOpen,
+  Users,
   Settings,
   Menu,
   X,
@@ -19,14 +20,21 @@ import {
   Bell,
   Calendar,
   Phone,
+  PhoneIncoming,
+  PhoneMissed,
   FileText,
   Ticket,
-  Calendar as CalendarIcon,
   Crown,
   Server,
+  Plug,
   Zap,
   RotateCw,
-  Shield
+  Shield,
+  History,
+  CalendarCheck,
+  MessagesSquare,
+  Sparkles,
+  UserCheck
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -34,7 +42,6 @@ import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
 import { Banner } from '../ui/banner';
-import CinematicSwitch from '../ui/cinematic-glow-toggle';
 import AiAssistant from './AiAssistant';
 
 const DashboardLayout: React.FC = () => {
@@ -294,29 +301,29 @@ const DashboardLayout: React.FC = () => {
   ];
 
   const navItemsGroup2 = [
-    { to: '/dashboard/agents', label: 'Agents', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <Building2 className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/agents', label: 'Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Server className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/assistant', label: 'Assistant', icon: <HelpCircle className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/assistant', label: 'Assistant', icon: <Sparkles className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // Dropdown items
   const callsItems = [
-    { to: '/dashboard/call-history', label: 'Call History', icon: <FileText className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/call-history', label: 'Call History', icon: <History className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <PhoneIncoming className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/agent-tests', label: 'Agent Tests', icon: <Shield className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const messagingItems = [
-    { to: '/dashboard/chat-history', label: 'Chat History', icon: <FileText className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/chat-history', label: 'Chat History', icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <CalendarCheck className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <Users className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <UserCheck className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const navItemsBottom: Array<{ to: string; label: string; icon: React.ReactNode }> = [];
@@ -673,20 +680,6 @@ const DashboardLayout: React.FC = () => {
           
               {/* Right side - Free Trial, Toggle, Location switcher, Notifications */}
               <div className="flex items-center gap-3">
-                 {/* Gift Card Announcement */}
-                 <Link 
-                   to="/gift-cards"
-                   className="px-3 py-1.5 rounded-lg text-sm font-medium bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:from-pink-600 hover:to-rose-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-                 >
-                   <Crown className="w-4 h-4" />
-                   <span>Spring Special 90% Gift Cards</span>
-                 </Link>
-                 
-                 {/* Cinematic toggle (visual switch for dashboard) */}
-                 <div className="hidden md:block">
-                   <CinematicSwitch className="scale-90" />
-                 </div>
-
                 <LocationSwitcher />
                  
                  {/* Notification Dropdown */}
@@ -1061,7 +1054,7 @@ const DashboardLayout: React.FC = () => {
                       className="w-full flex items-center gap-3 p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-colors group"
                     >
                       <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <CalendarIcon className="w-5 h-5 text-purple-600" />
+                        <Calendar className="w-5 h-5 text-purple-600" />
                       </div>
                       <div className="text-left">
                         <div className="font-medium text-gray-900 group-hover:text-purple-600 transition-colors">
