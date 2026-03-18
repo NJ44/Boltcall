@@ -1,72 +1,98 @@
 [
   {
-    "id": "11labs-Adrian",
-    "name": "Adrian",
-    "accent": "American",
-    "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/adrian.mp3"
-  },
-  {
-    "id": "11labs-Antoni",
-    "name": "Antoni",
-    "accent": "American",
-    "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/antoni.mp3"
-  },
-  {
-    "id": "11labs-Arnold",
-    "name": "Arnold",
-    "accent": "American",
-    "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/arnold.mp3"
-  },
-  {
-    "id": "11labs-Bella",
-    "name": "Bella",
+    "id": "11labs-Grace",
+    "name": "Grace",
     "accent": "American",
     "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/bella.mp3"
+    "provider": "elevenlabs",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/grace.mp3"
   },
   {
-    "id": "11labs-Domi",
-    "name": "Domi",
-    "accent": "American",
-    "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/domi.mp3"
-  },
-  {
-    "id": "11labs-Elli",
-    "name": "Elli",
-    "accent": "American",
-    "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/elli.mp3"
-  },
-  {
-    "id": "11labs-Josh",
-    "name": "Josh",
+    "id": "11labs-Nico",
+    "name": "Nico",
     "accent": "American",
     "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/josh.mp3"
+    "provider": "elevenlabs",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/11labs-pdBC2RxjF7wu7aBAu86E.mp3"
   },
   {
-    "id": "11labs-Rachel",
-    "name": "Rachel",
+    "id": "openai-Nova",
+    "name": "Nova",
     "accent": "American",
     "gender": "female",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/rachel.mp3"
+    "provider": "openai",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/nova_.wav"
   },
   {
-    "id": "11labs-Sam",
-    "name": "Sam",
+    "id": "openai-Echo",
+    "name": "Echo",
     "accent": "American",
     "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/sam.mp3"
+    "provider": "openai",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/echo_.wav"
   },
   {
-    "id": "11labs-Thomas",
-    "name": "Thomas",
+    "id": "cartesia-Hailey",
+    "name": "Hailey",
+    "accent": "American",
+    "gender": "female",
+    "provider": "cartesia",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-284d1552-ff0c-4068-ad6f-1eab97bee041.mp3"
+  },
+  {
+    "id": "retell-Willa",
+    "name": "Willa",
+    "accent": "British",
+    "gender": "female",
+    "provider": "platform",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/minimax-Willa.mp3"
+  },
+  {
+    "id": "retell-Leland",
+    "name": "Leland",
     "accent": "American",
     "gender": "male",
-    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/thomas.mp3"
+    "provider": "platform",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/minimax-Leland.mp3"
+  },
+  {
+    "id": "minimax-Nia",
+    "name": "Nia",
+    "accent": "American",
+    "gender": "female",
+    "provider": "minimax",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/minimax_nia.mp3"
+  },
+  {
+    "id": "fish_audio-Jason",
+    "name": "Jason",
+    "accent": "American",
+    "gender": "male",
+    "provider": "fish_audio",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/fish_audio-Jason.mp3"
+  },
+  {
+    "id": "fish_audio-Cimo",
+    "name": "Cimo",
+    "accent": "American",
+    "gender": "female",
+    "provider": "fish_audio",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/fish_audio-Cimo.mp3"
+  },
+  {
+    "id": "retell-Della",
+    "name": "Della",
+    "accent": "American",
+    "gender": "female",
+    "provider": "platform",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/minimax-Della.mp3"
+  },
+  {
+    "id": "retell-Marissa",
+    "name": "Marissa",
+    "accent": "American",
+    "gender": "female",
+    "provider": "platform",
+    "preview": "https://retell-utils-public.s3.us-west-2.amazonaws.com/fish_audio-Marissa.mp3"
   }
 ]

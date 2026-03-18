@@ -159,7 +159,7 @@ export function createRetellLLM(
     name,
     industry,
     llm_config: {
-      model: 'gpt-4',
+      model: 'gpt-5.2',
       temperature: 0.7,
       max_tokens: 500,
       system_prompt: preset.system_prompt || `You are a professional AI assistant for ${industry} services.`,

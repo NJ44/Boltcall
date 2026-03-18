@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Play, Pause } from 'lucide-react';
 
 interface Voice {
@@ -7,6 +7,7 @@ interface Voice {
   accent: string;
   gender: string;
   preview: string;
+  provider?: string;
 }
 
 interface VoiceCardProps {
@@ -26,20 +27,12 @@ const VoiceCard: React.FC<VoiceCardProps> = ({
   onPlay,
   onPause
 }) => {
-  const audioRef = useRef<HTMLAudioElement>(null);
-
   const handlePlayPause = () => {
     if (isPlaying) {
       onPause();
-      audioRef.current?.pause();
     } else {
       onPlay(voice.id);
-      audioRef.current?.play();
     }
-  };
-
-  const handleEnded = () => {
-    onPause();
   };
 
   return (
@@ -56,6 +49,7 @@ const VoiceCard: React.FC<VoiceCardProps> = ({
           <h3 className="font-semibold text-gray-900">{voice.name}</h3>
           <p className="text-sm text-gray-500 capitalize">
             {voice.gender} • {voice.accent}
+            {voice.provider && ` • ${voice.provider}`}
           </p>
         </div>
         <button
@@ -76,15 +70,7 @@ const VoiceCard: React.FC<VoiceCardProps> = ({
           )}
         </button>
       </div>
-      
-      {/* Hidden audio element */}
-      <audio
-        ref={audioRef}
-        preload="none"
-        onEnded={handleEnded}
-        src={voice.preview}
-      />
-      
+
       {/* Selection indicator */}
       {isSelected && (
         <div className="flex items-center text-blue-600 text-sm">

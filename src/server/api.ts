@@ -1,50 +1,14 @@
 import type { LeadFormData } from '../lib/validators';
 import { supabase } from '../lib/supabase';
 
-// Mock voices data (replace with actual Retell API integration)
-const mockVoices = [
-  {
-    voice_id: 'sarah',
-    name: 'Sarah',
-    accent: 'American',
-    gender: 'Female',
-    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
-  },
-  {
-    voice_id: 'mike',
-    name: 'Mike',
-    accent: 'American',
-    gender: 'Male',
-    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
-  },
-  {
-    voice_id: 'emily',
-    name: 'Emily',
-    accent: 'British',
-    gender: 'Female',
-    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
-  },
-  {
-    voice_id: 'david',
-    name: 'David',
-    accent: 'Australian',
-    gender: 'Male',
-    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
-  },
-  {
-    voice_id: 'anna',
-    name: 'Anna',
-    accent: 'Canadian',
-    gender: 'Female',
-    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
-  },
-  {
-    voice_id: 'james',
-    name: 'James',
-    accent: 'Irish',
-    gender: 'Male',
-    preview_audio_url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'
-  }
+// Fallback voice data with verified working preview URLs from Retell
+const fallbackVoices = [
+  { id: '11labs-Grace', name: 'Grace', accent: 'American', gender: 'female', provider: 'elevenlabs', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/grace.mp3' },
+  { id: '11labs-Nico', name: 'Nico', accent: 'American', gender: 'male', provider: 'elevenlabs', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/11labs-pdBC2RxjF7wu7aBAu86E.mp3' },
+  { id: 'openai-Nova', name: 'Nova', accent: 'American', gender: 'female', provider: 'openai', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/nova_.wav' },
+  { id: 'openai-Echo', name: 'Echo', accent: 'American', gender: 'male', provider: 'openai', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/echo_.wav' },
+  { id: 'cartesia-Hailey', name: 'Hailey', accent: 'American', gender: 'female', provider: 'cartesia', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/cartesia-284d1552-ff0c-4068-ad6f-1eab97bee041.mp3' },
+  { id: 'retell-Leland', name: 'Leland', accent: 'American', gender: 'male', provider: 'platform', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/minimax-Leland.mp3' },
 ];
 
 export async function getVoices(): Promise<any[]> {
@@ -53,9 +17,9 @@ export async function getVoices(): Promise<any[]> {
     try {
       const { data: voices, error } = await supabase
         .from('voices')
-        .select('id, name, accent, gender, preview_audio_url')
+        .select('id, name, accent, gender, preview_audio_url, provider')
         .eq('is_active', true)
-        .limit(10);
+        .limit(20);
 
       if (!error && voices && voices.length > 0) {
         return voices.map(voice => ({
@@ -63,6 +27,7 @@ export async function getVoices(): Promise<any[]> {
           name: voice.name,
           accent: voice.accent,
           gender: voice.gender,
+          provider: voice.provider,
           preview: voice.preview_audio_url,
         }));
       }
@@ -81,25 +46,12 @@ export async function getVoices(): Promise<any[]> {
       console.warn('Could not fetch from JSON file:', jsonError);
     }
 
-    // Final fallback: use mock data
-    return mockVoices.map(voice => ({
-      id: voice.voice_id,
-      name: voice.name,
-      accent: voice.accent,
-      gender: voice.gender,
-      preview: voice.preview_audio_url,
-    }));
-    
+    // Final fallback: use hardcoded voice data with verified preview URLs
+    return fallbackVoices;
+
   } catch (error) {
     console.error('Error fetching voices:', error);
-    // Fallback to mock data if API call fails
-    return mockVoices.map(voice => ({
-      id: voice.voice_id,
-      name: voice.name,
-      accent: voice.accent,
-      gender: voice.gender,
-      preview: voice.preview_audio_url,
-    }));
+    return fallbackVoices;
   }
 }
 
