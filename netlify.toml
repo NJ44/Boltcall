@@ -9,6 +9,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_RETELL_PUBLIC_KEY"
 
 [functions]
   directory = "netlify/functions"
