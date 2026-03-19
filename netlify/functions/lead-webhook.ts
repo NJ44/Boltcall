@@ -33,21 +33,27 @@ function getSupabase() {
 }
 
 // Normalize incoming lead data from various formats into our leads table schema
-function normalizeLead(body: any): {
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  source: string;
-  status: string;
-  user_id: string;
-} {
+// Table columns: id, source, first_name, last_name, email, phone, status, call_status,
+// call_id, call_duration, sms_sent, sms_sid, raw_data, last_contact_at, created_at
+function normalizeLead(body: any): Record<string, any> {
+  // Parse name into first/last
+  let firstName = body.first_name || '';
+  let lastName = body.last_name || '';
+  if (!firstName && !lastName) {
+    const fullName = body.name || body.full_name || '';
+    const parts = fullName.trim().split(/\s+/);
+    firstName = parts[0] || '';
+    lastName = parts.slice(1).join(' ') || '';
+  }
+
   return {
-    name: body.name || body.full_name || [body.first_name, body.last_name].filter(Boolean).join(' ') || null,
+    first_name: firstName || null,
+    last_name: lastName || null,
     email: body.email || null,
     phone: body.phone || body.phone_number || null,
     source: body.source || body.source_type || body.acquisition_source || 'website_form',
     status: body.status || 'pending',
-    user_id: body.user_id,
+    raw_data: body,
   };
 }
 
@@ -139,13 +145,23 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
 
       const fields = parseFacebookFieldData(leadDetails.field_data);
 
+      // Parse name into first/last
+      let fbFirstName = fields.first_name || '';
+      let fbLastName = fields.last_name || '';
+      if (!fbFirstName && !fbLastName && fields.full_name) {
+        const parts = fields.full_name.trim().split(/\s+/);
+        fbFirstName = parts[0] || '';
+        fbLastName = parts.slice(1).join(' ') || '';
+      }
+
       const leadRow = {
-        name: fields.full_name || [fields.first_name, fields.last_name].filter(Boolean).join(' ') || null,
+        first_name: fbFirstName || null,
+        last_name: fbLastName || null,
         email: fields.email || null,
         phone: fields.phone_number || fields.phone || null,
         source: 'facebook_ads',
         status: 'pending',
-        user_id: userId,
+        raw_data: { leadgen_id, page_id, fields },
       };
 
       // Validate: need at least email or phone
