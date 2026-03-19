@@ -53,7 +53,7 @@ const FreeSetup: React.FC = () => {
   // Removed unused timeline and visualization per design update
 
   return (
-    <section className="pt-64 pb-20" style={{ marginTop: '150px' }}>
+    <section className="pt-16 md:pt-64 pb-12 md:pb-20 mt-8 md:mt-[150px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Content */}
@@ -67,9 +67,8 @@ const FreeSetup: React.FC = () => {
             >
               <span className="text-sm uppercase tracking-wider font-medium text-white/70">SETUP</span>
             </motion.div>
-            <motion.h2 
-              className="font-bold text-white mb-6" 
-              style={{ fontSize: '44px', lineHeight: '1.25' }}
+            <motion.h2
+              className="font-bold text-white mb-6 text-3xl md:text-[44px] leading-tight"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -79,7 +78,7 @@ const FreeSetup: React.FC = () => {
               <div>All <span className="text-blue-500">Channels.</span></div>
             </motion.h2>
             <motion.p 
-              className="text-xl text-white mb-8"
+              className="text-base md:text-xl text-white mb-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}

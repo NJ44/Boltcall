@@ -22,7 +22,7 @@ const FinalCTA: React.FC = () => {
                 <Calendar className="w-5 h-5 text-blue-500" strokeWidth={2.5} />
               </div>
             </div>
-            <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+            <h2 className="text-gray-900 font-medium mt-4 text-2xl md:text-4xl">Fast. Simple. Scalable.</h2>
             <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.</p>
             <button
               onClick={() => navigate('/signup')}

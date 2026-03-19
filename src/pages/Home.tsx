@@ -40,40 +40,40 @@ const Home: React.FC = () => {
         <Header />
         <main className="pb-0">
           <Hero />
-          
+
           <div className="relative -top-[500px] z-[100] pointer-events-none hidden md:block" style={{ minHeight: '600px', contain: 'layout' }}>
             <Suspense fallback={<div className="h-[600px] w-full" style={{ contain: 'layout' }} />}>
               <HeroScrollDemo />
             </Suspense>
           </div>
-          
-          <div className="relative mt-[170px] md:mt-0 md:-top-[600px]">
+
+          <div className="relative mt-0 md:mt-0 md:-top-[600px]">
             <HowItWorks />
           </div>
-          
-          <div className="relative -top-[60px] md:-top-[500px]" style={{ minHeight: '400px', contain: 'layout' }}>
+
+          <div className="relative -top-[60px] md:-top-[500px] hidden md:block" style={{ minHeight: '400px', contain: 'layout' }}>
             <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
             <StickyScrollSection />
             </Suspense>
           </div>
-          
-          <div className="relative -top-[500px] md:-top-[555px]">
+
+          <div className="relative md:-top-[555px]">
             <FreeSetup />
           </div>
-          
-          <div className="relative -top-[555px]">
+
+          <div className="relative md:-top-[555px]">
             <Pricing />
           </div>
-          
-          <div className="relative -top-[555px] bg-white -mb-16">
+
+          <div className="relative md:-top-[555px] bg-white -mb-16 md:-mb-16">
             <FAQ />
           </div>
-          
-          <div className="relative -top-[555px] bg-white">
+
+          <div className="relative md:-top-[555px] bg-white">
             <FinalCTA />
           </div>
-          
-          <div className="relative -top-[555px]">
+
+          <div className="relative md:-top-[555px]">
             <Footer />
           </div>
         </main>

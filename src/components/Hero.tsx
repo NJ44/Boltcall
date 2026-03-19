@@ -168,7 +168,7 @@ const Hero: React.FC = () => {
     <>
       <section
         id="hero"
-        className="relative -mt-24 pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1] bg-gradient-to-b from-white to-light-blue dark:from-gray-900 dark:to-gray-800 py-16 lg:py-24"
+        className="relative -mt-24 pb-32 md:pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1] bg-gradient-to-b from-white to-light-blue dark:from-gray-900 dark:to-gray-800 py-12 md:py-16 lg:py-24"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
         onMouseMove={handleMouseMove}
       >
@@ -185,12 +185,12 @@ const Hero: React.FC = () => {
           ))}
         </div>
 
-        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center pt-24 md:pt-16 lg:pt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 text-center pt-12 md:pt-16 lg:pt-20">
             {/* Animated Headline */}
             <div className="flex justify-center mb-6 relative z-10">
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap ml-4 md:ml-56 scale-110 md:scale-100 translate-x-5 md:translate-x-0">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap md:ml-56 md:scale-100">
                   <motion.span
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -213,7 +213,7 @@ const Hero: React.FC = () => {
                     A
                   </motion.span>
 
-                  <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[180px] md:min-w-[380px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
+                  <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[100px] md:min-w-[380px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
@@ -243,7 +243,7 @@ const Hero: React.FC = () => {
 
             {/* Subheadline */}
             <motion.p
-              className="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto leading-relaxed relative z-10"
+              className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}

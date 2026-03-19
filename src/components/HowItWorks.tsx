@@ -47,7 +47,7 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '44px', lineHeight: '1.2' }}>
+            <h2 className="font-bold mb-5 ml-5 text-3xl md:text-[44px] leading-tight">
               <WhisperText
                 text="Close leads in "
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
@@ -80,13 +80,13 @@ const HowItWorks: React.FC = () => {
           </div>
 
           {/* Sticky Cards */}
-          <ContainerScroll className="space-y-11 py-4 ml-4 md:ml-16 -mt-[50px]" style={{ minHeight: '100vh' }}>
+          <ContainerScroll className="space-y-11 py-4 ml-0 md:ml-16 -mt-[50px]" style={{ minHeight: '100vh' }}>
             {PROCESS_PHASES.map((phase, index) => (
               <CardSticky
                 key={phase.id}
                 index={index + 2}
                 incrementY={14}
-                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-[280px] md:max-w-[440px] ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
+                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-full md:max-w-[440px] ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
                 style={{ top: '150px', bottom: 'auto', minHeight: '280px' }}
               >
                 <div className="p-4 md:p-7 h-full">
