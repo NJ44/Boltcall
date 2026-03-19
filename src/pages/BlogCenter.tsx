@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Phone Answering for Dentists: Never Miss Another Patient Call',
+    slug: '/blog/ai-phone-answering-dentists',
+    excerpt: 'AI phone answering systems designed for dental practices ensure every patient call is answered promptly, reducing missed appointments and boosting rev',
+    date: 'March 19, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/images/blog/ai-phone-answering-dentists.png'
+  },
+  {
     title: 'What Is an AI Receptionist? Complete Guide for Local Businesses',
     slug: '/blog/what-is-ai-receptionist-guide',
     excerpt: 'Discover how AI receptionists automate customer calls and scheduling for local businesses, saving time and improving client service 24/7.',
