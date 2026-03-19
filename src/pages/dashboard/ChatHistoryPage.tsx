@@ -168,19 +168,19 @@ const ChatHistoryPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="bg-white rounded-lg shadow-sm border p-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 w-3.5 h-3.5" />
             <input
               type="text"
               placeholder="Search chats..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
 
@@ -188,7 +188,7 @@ const ChatHistoryPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+            className="px-2.5 py-1.5 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent text-black"
           >
             <option value="all" className="text-black">All Status</option>
             <option value="ended" className="text-black">Ended</option>
@@ -202,7 +202,7 @@ const ChatHistoryPage: React.FC = () => {
             type="date"
             value={dateRange.start}
             onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-2.5 py-1.5 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
           />
 
           {/* End Date */}
@@ -210,49 +210,49 @@ const ChatHistoryPage: React.FC = () => {
             type="date"
             value={dateRange.end}
             onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-2.5 py-1.5 text-sm border border-gray-200 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-sm border p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <MessageSquare className="w-5 h-5 text-blue-600" />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="bg-white rounded-lg shadow-sm border px-3 py-2.5">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 bg-blue-50 rounded-md">
+              <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Chats</p>
-              <p className="text-2xl font-bold text-gray-900">{filteredChats.length}</p>
+              <p className="text-xs text-gray-500">Total Chats</p>
+              <p className="text-lg font-semibold text-gray-900">{filteredChats.length}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <CheckCircle className="w-5 h-5 text-green-600" />
+        <div className="bg-white rounded-lg shadow-sm border px-3 py-2.5">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 bg-green-50 rounded-md">
+              <CheckCircle className="w-3.5 h-3.5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Completed</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xs text-gray-500">Completed</p>
+              <p className="text-lg font-semibold text-gray-900">
                 {filteredChats.filter(chat => chat.call_status === 'ended').length}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-yellow-100 rounded-lg">
-              <Clock className="w-5 h-5 text-yellow-600" />
+        <div className="bg-white rounded-lg shadow-sm border px-3 py-2.5">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 bg-yellow-50 rounded-md">
+              <Clock className="w-3.5 h-3.5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Avg Duration</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xs text-gray-500">Avg Duration</p>
+              <p className="text-lg font-semibold text-gray-900">
                 {formatDuration(
-                  filteredChats.reduce((acc, chat) => acc + (chat.duration_ms || 0), 0) / 
+                  filteredChats.reduce((acc, chat) => acc + (chat.duration_ms || 0), 0) /
                   filteredChats.filter(chat => chat.duration_ms).length
                 )}
               </p>
@@ -260,14 +260,14 @@ const ChatHistoryPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <User className="w-5 h-5 text-purple-600" />
+        <div className="bg-white rounded-lg shadow-sm border px-3 py-2.5">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 bg-purple-50 rounded-md">
+              <User className="w-3.5 h-3.5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Positive Sentiment</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-xs text-gray-500">Positive</p>
+              <p className="text-lg font-semibold text-gray-900">
                 {filteredChats.filter(chat => chat.call_analysis?.user_sentiment === 'Positive').length}
               </p>
             </div>
@@ -294,30 +294,30 @@ const ChatHistoryPage: React.FC = () => {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Chat Details
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Agent
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Duration
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Messages
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Sentiment
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-100">
                 {filteredChats.map((chat) => (
                   <motion.tr
                     key={chat.call_id}
@@ -325,55 +325,55 @@ const ChatHistoryPage: React.FC = () => {
                     animate={{ opacity: 1 }}
                     className="hover:bg-gray-50"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-blue-100 rounded-lg">
-                          <MessageCircle className="w-4 h-4 text-blue-600" />
+                    <td className="px-4 py-2.5 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 bg-blue-50 rounded-md">
+                          <MessageCircle className="w-3.5 h-3.5 text-blue-600" />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-xs font-medium text-gray-900">
                             {chat.call_id.slice(0, 8)}...
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-[11px] text-gray-400">
                             {formatDate(chat.start_timestamp)}
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <p className="text-sm font-medium text-gray-900">{chat.agent_name}</p>
-                      <p className="text-xs text-gray-500">{chat.call_type}</p>
+                    <td className="px-4 py-2.5 whitespace-nowrap">
+                      <p className="text-xs font-medium text-gray-900">{chat.agent_name}</p>
+                      <p className="text-[11px] text-gray-400">{chat.call_type}</p>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(chat.call_status)}`}>
+                    <td className="px-4 py-2.5 whitespace-nowrap">
+                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] font-medium ${getStatusColor(chat.call_status)}`}>
                         {getStatusIcon(chat.call_status)}
                         {chat.call_status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-4 py-2.5 whitespace-nowrap text-xs text-gray-900">
                       {formatDuration(chat.duration_ms)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-4 py-2.5 whitespace-nowrap text-xs text-gray-900">
                       {chat.transcript ? parseTranscript(chat.transcript).length : 0}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-2.5 whitespace-nowrap">
                       {chat.call_analysis?.user_sentiment ? (
-                        <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getSentimentColor(chat.call_analysis.user_sentiment)}`}>
+                        <span className={`inline-flex px-1.5 py-0.5 rounded-full text-[11px] font-medium ${getSentimentColor(chat.call_analysis.user_sentiment)}`}>
                           {chat.call_analysis.user_sentiment}
                         </span>
                       ) : (
-                        <span className="text-xs text-gray-400">N/A</span>
+                        <span className="text-[11px] text-gray-400">N/A</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-4 py-2.5 whitespace-nowrap">
                       <button
                         onClick={() => {
                           setSelectedChat(chat);
                           setShowDetailsModal(true);
                         }}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="text-blue-600 hover:text-blue-800"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye className="w-3.5 h-3.5" />
                       </button>
                     </td>
                   </motion.tr>
@@ -387,9 +387,9 @@ const ChatHistoryPage: React.FC = () => {
       {/* Chat Details Modal */}
       {showDetailsModal && selectedChat && (
         <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b">
-              <h3 className="text-lg font-semibold text-gray-900">Chat Details</h3>
+          <div className="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3 border-b">
+              <h3 className="text-sm font-semibold text-gray-900">Chat Details</h3>
               <button
                 onClick={() => setShowDetailsModal(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -398,12 +398,12 @@ const ChatHistoryPage: React.FC = () => {
               </button>
             </div>
             
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 overflow-y-auto max-h-[calc(90vh-100px)]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Chat Information */}
-                <div className="space-y-4">
-                  <h4 className="font-medium text-gray-900">Chat Information</h4>
-                  <div className="space-y-2 text-sm">
+                <div className="space-y-3">
+                  <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Chat Information</h4>
+                  <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Chat ID:</span>
                       <span className="font-mono">{selectedChat.call_id}</span>
@@ -437,9 +437,9 @@ const ChatHistoryPage: React.FC = () => {
 
                 {/* Chat Analysis */}
                 {selectedChat.call_analysis && (
-                  <div className="space-y-4">
-                    <h4 className="font-medium text-gray-900">Chat Analysis</h4>
-                    <div className="space-y-2 text-sm">
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Chat Analysis</h4>
+                    <div className="space-y-1.5 text-xs">
                       {selectedChat.call_analysis.user_sentiment && (
                         <div className="flex justify-between">
                           <span className="text-gray-600">Sentiment:</span>
@@ -465,9 +465,9 @@ const ChatHistoryPage: React.FC = () => {
 
               {/* Chat Messages */}
               {selectedChat.transcript && (
-                <div className="mt-6">
-                  <h4 className="font-medium text-gray-900 mb-3">Chat Messages</h4>
-                  <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
+                <div className="mt-5">
+                  <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Chat Messages</h4>
+                  <div className="bg-gray-50 rounded-lg p-3 max-h-72 overflow-y-auto">
                     <div className="space-y-3">
                       {parseTranscript(selectedChat.transcript).map((message, index) => (
                         <div

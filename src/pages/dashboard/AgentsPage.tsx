@@ -526,39 +526,39 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
 
       {agents.length === 0 ? (
         /* No agents - Show create options */
         <div>
-          <div className="max-w-3xl mx-auto text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Create New Agent</h2>
-            <p className="text-lg text-gray-600">Choose how you want to start working with the agent</p>
+          <div className="max-w-2xl mx-auto text-center mb-5">
+            <h2 className="text-xl font-semibold text-gray-900 mb-1.5">Create New Agent</h2>
+            <p className="text-sm text-gray-500">Choose how you want to get started</p>
           </div>
 
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+          <div className="max-w-2xl mx-auto grid md:grid-cols-2 gap-4">
             {/* Start from Scratch */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all"
+              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-md transition-all text-left"
             >
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
-                <Sparkles className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
+              <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-900 transition-colors">
+                <Sparkles className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Start from Scratch</h3>
-              <p className="text-gray-600">Build your AI Agent from the ground up</p>
+              <h3 className="text-sm font-semibold text-gray-900 mb-1">Start from Scratch</h3>
+              <p className="text-xs text-gray-500">Build your AI Agent from the ground up</p>
             </button>
 
             {/* Browse Templates */}
             <button
               onClick={() => setShowTemplatesModal(true)}
-              className="group bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-gray-400 hover:shadow-lg transition-all"
+              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-md transition-all text-left"
             >
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900 transition-colors">
-                <FileText className="w-8 h-8 text-gray-900 group-hover:text-white transition-colors" />
+              <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-900 transition-colors">
+                <FileText className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Browse our Templates</h3>
-              <p className="text-gray-600">Get inspired by our industry-specific templates to get started</p>
+              <h3 className="text-sm font-semibold text-gray-900 mb-1">Browse Templates</h3>
+              <p className="text-xs text-gray-500">Get started with industry-specific templates</p>
             </button>
           </div>
         </div>
@@ -691,24 +691,24 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-zinc-900">Create New Agent</h2>
-                <button 
+            <div className="p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-zinc-900">Create New Agent</h2>
+                <button
                   onClick={() => setShowCreateModal(false)}
                   className="text-zinc-400 hover:text-zinc-600 transition-colors"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Note */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-blue-800 text-sm">
+                <div className="bg-blue-50 border border-blue-100 rounded-md p-3">
+                  <p className="text-blue-700 text-xs">
                     <strong>Note:</strong> You can change any of these settings later after creating the agent.
                   </p>
                 </div>
@@ -854,16 +854,16 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
               </div>
 
               {/* Modal Actions */}
-              <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-zinc-200">
+              <div className="flex justify-end gap-2 mt-5 pt-4 border-t border-zinc-200">
                 <button
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
+                  className="px-3 py-1.5 text-sm text-zinc-600 border border-zinc-300 rounded-md hover:bg-zinc-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleCreateAgent}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                 >
                   Create Agent
                 </button>
@@ -877,52 +877,50 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       {/* Templates Modal */}
       {showTemplatesModal && (
         <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-zinc-900">Browse Industry Templates</h2>
-                <button 
+          <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+            <div className="p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-zinc-900">Industry Templates</h2>
+                <button
                   onClick={() => setShowTemplatesModal(false)}
                   className="text-zinc-400 hover:text-zinc-600 transition-colors"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Templates Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {industryTemplates.map((template) => (
                   <div
                     key={template.id}
-                    className="border border-gray-200 rounded-xl p-6 hover:border-blue-500 hover:shadow-xl transition-all cursor-pointer group bg-white relative"
+                    className="border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer group bg-white relative"
                     onClick={() => handleTemplateSelect(template)}
                   >
                     {/* Inbound/Outbound Badge - Top Left */}
-                    <span className={`absolute top-3 left-3 px-2 py-0.5 rounded-full text-xs font-medium ${
-                      template.direction === 'inbound' 
-                        ? 'bg-blue-100 text-blue-700' 
+                    <span className={`absolute top-2.5 left-2.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium ${
+                      template.direction === 'inbound'
+                        ? 'bg-blue-100 text-blue-700'
                         : 'bg-green-100 text-green-700'
                     }`}>
                       {template.direction === 'inbound' ? 'Inbound' : 'Outbound'}
                     </span>
 
                     {/* Template Header */}
-                    <div className="flex items-center gap-4 mb-4 mt-2">
-                      <div className={`w-12 h-12 ${template.color} rounded-xl flex items-center justify-center text-white shadow-sm`}>
+                    <div className="flex items-center gap-3 mb-2.5 mt-4">
+                      <div className={`w-9 h-9 ${template.color} rounded-lg flex items-center justify-center text-white shadow-sm [&_svg]:w-5 [&_svg]:h-5`}>
                         {template.icon}
                       </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-base">
-                          {template.name}
-                        </h3>
-                      </div>
+                      <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors text-sm leading-tight flex-1">
+                        {template.name}
+                      </h3>
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-700 text-sm mb-6 line-clamp-3 leading-relaxed">{template.description}</p>
+                    <p className="text-gray-500 text-xs mb-3 line-clamp-2 leading-relaxed">{template.description}</p>
 
                     {/* Use Template Button */}
-                    <button className="w-full px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold shadow-sm">
+                    <button className="w-full px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-xs font-medium">
                       Use Template
                     </button>
                   </div>
@@ -930,10 +928,10 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
               </div>
 
               {/* Modal Actions */}
-              <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-zinc-200">
+              <div className="flex justify-end gap-3 mt-5 pt-4 border-t border-zinc-200">
                 <button
                   onClick={() => setShowTemplatesModal(false)}
-                  className="px-4 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
+                  className="px-3 py-1.5 text-sm text-zinc-600 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
                 >
                   Cancel
                 </button>
