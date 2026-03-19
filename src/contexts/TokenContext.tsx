@@ -60,10 +60,9 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         .from('token_balances')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
-        // PGRST116 = no rows returned, which is fine for new users
+      if (error) {
         console.error('Error fetching token balance:', error);
       }
 
