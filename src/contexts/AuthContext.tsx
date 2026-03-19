@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import type { User, AuthState, LoginCredentials, SignupCredentials } from '../lib/auth';
-import { login as supabaseLogin, signup as supabaseSignup, logout as supabaseLogout, getCurrentUser, onAuthStateChange, signInWithGoogle, signInWithMicrosoft } from '../lib/auth';
+import { login as supabaseLogin, signup as supabaseSignup, logout as supabaseLogout, getCurrentUser, onAuthStateChange, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } from '../lib/auth';
 
 interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>;
@@ -8,6 +8,7 @@ interface AuthContextType extends AuthState {
   logout: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signInWithMicrosoft: () => Promise<void>;
+  signInWithFacebook: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -141,13 +142,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const handleFacebookLogin = async () => {
+    try {
+      dispatch({ type: 'LOGIN_START' });
+      await signInWithFacebook();
+    } catch (error) {
+      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
+        return;
+      }
+      dispatch({ type: 'LOGIN_ERROR' });
+      throw error;
+    }
+  };
+
   const value: AuthContextType = {
     ...state,
     login,
     signup,
     logout,
     signInWithGoogle: handleGoogleLogin,
-    signInWithMicrosoft: handleMicrosoftLogin
+    signInWithMicrosoft: handleMicrosoftLogin,
+    signInWithFacebook: handleFacebookLogin
   };
 
   return (
