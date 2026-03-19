@@ -278,7 +278,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/agents', label: 'AI Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/chat-widget', label: 'Chat Widget', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
