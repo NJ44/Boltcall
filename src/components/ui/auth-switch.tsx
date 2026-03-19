@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { resetPassword } from "../../lib/auth";
 import { OTPVerification } from "./otp-verify";
 import PasswordInput from "./password-input";
 
@@ -43,6 +44,12 @@ const MicrosoftIcon = () => (
     <path fill="#7FBA00" d="M13 1h10v10H13z" />
     <path fill="#00A4EF" d="M1 13h10v10H1z" />
     <path fill="#FFB900" d="M13 13h10v10H13z" />
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24">
+    <path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
   </svg>
 );
 
@@ -86,8 +93,9 @@ export default function AuthSwitch({
   const [error, setError] = useState("");
   const [showOtp, setShowOtp] = useState(false);
   const [signedUpEmail, setSignedUpEmail] = useState("");
+  const [resetSent, setResetSent] = useState(false);
 
-  const { login, signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
+  const { login, signup, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const redirectTo =
@@ -96,15 +104,25 @@ export default function AuthSwitch({
   const loginForm = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
   const signupForm = useForm<SignupFormData>({ resolver: zodResolver(signupSchema) });
 
+  const isLogin = mode === "login";
+
+  // Clear stale API error when validation errors appear
+  const loginHasValidationErrors = Object.keys(loginForm.formState.errors).length > 0;
+  const signupHasValidationErrors = Object.keys(signupForm.formState.errors).length > 0;
+  useEffect(() => {
+    if ((isLogin && loginHasValidationErrors) || (!isLogin && signupHasValidationErrors)) {
+      setError("");
+    }
+  }, [loginHasValidationErrors, signupHasValidationErrors, isLogin]);
+
   const switchMode = (newMode: "login" | "signup") => {
     if (newMode === mode) return;
     setError("");
+    setResetSent(false);
     loginForm.reset();
     signupForm.reset();
     setMode(newMode);
   };
-
-  const isLogin = mode === "login";
 
   const onLogin = async (data: LoginFormData) => {
     try {
@@ -135,6 +153,24 @@ export default function AuthSwitch({
 
   const handleOtpVerified = async () => navigate(redirectTo);
 
+  const handleForgotPassword = async () => {
+    const email = loginForm.getValues("email");
+    if (!email || !z.string().email().safeParse(email).success) {
+      loginForm.setError("email", { message: "Enter your email above first" });
+      return;
+    }
+    try {
+      setIsLoading(true);
+      setError("");
+      await resetPassword(email);
+      setResetSent(true);
+    } catch {
+      setError("Failed to send reset email. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
@@ -161,6 +197,19 @@ export default function AuthSwitch({
     }
   };
 
+  const handleFacebookLogin = async () => {
+    try {
+      setIsLoading(true);
+      setError("");
+      await signInWithFacebook();
+    } catch (err) {
+      if (err instanceof Error && err.message === "OAuth redirect initiated") return;
+      setError("Facebook login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (showOtp) {
     return <OTPVerification email={signedUpEmail} onVerified={handleOtpVerified} />;
   }
@@ -174,6 +223,7 @@ export default function AuthSwitch({
         {[
           { icon: <GoogleIcon />, handler: handleGoogleLogin },
           { icon: <MicrosoftIcon />, handler: handleMicrosoftLogin },
+          { icon: <FacebookIcon />, handler: handleFacebookLogin },
         ].map((s, i) => (
           <button
             key={i}
@@ -347,11 +397,27 @@ export default function AuthSwitch({
                     {...loginForm.register("password")}
                     placeholder="Password"
                     id="login-password"
+                    showStrength={false}
                   />
                   {loginForm.formState.errors.password && (
                     <p className="ml-4 text-xs text-red-500 -mt-2">
                       {loginForm.formState.errors.password.message}
                     </p>
+                  )}
+                  <div className="text-right -mt-1">
+                    <button
+                      type="button"
+                      onClick={handleForgotPassword}
+                      disabled={isLoading}
+                      className="text-xs text-blue-500 hover:text-blue-700 transition-colors"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                  {resetSent && (
+                    <div className="bg-green-50 rounded-full px-4 py-2">
+                      <p className="text-green-600 text-xs text-center">Password reset email sent! Check your inbox.</p>
+                    </div>
                   )}
                   {error && (
                     <div className="bg-red-50 rounded-full px-4 py-2">

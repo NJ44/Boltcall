@@ -120,6 +120,15 @@ export const onAuthStateChange = (callback: (user: User | null) => void) => {
   });
 };
 
+export const resetPassword = async (email: string): Promise<void> => {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/reset-password`,
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+};
+
 export const signInWithGoogle = async (): Promise<User> => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -140,6 +149,18 @@ export const signInWithMicrosoft = async (): Promise<User> => {
       redirectTo: `${window.location.origin}/dashboard`,
       scopes: 'openid email profile',
       queryParams: { access_type: 'offline', prompt: 'consent' }
+    }
+  });
+  if (error) throw new Error(error.message);
+  throw new Error('OAuth redirect initiated');
+};
+
+export const signInWithFacebook = async (): Promise<User> => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'facebook',
+    options: {
+      redirectTo: `${window.location.origin}/dashboard`,
+      scopes: 'email,public_profile',
     }
   });
   if (error) throw new Error(error.message);
