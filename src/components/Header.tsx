@@ -726,7 +726,7 @@ const Header: React.FC = () => {
             {isAuthenticated ? (
               <>
                 <InteractiveHoverButton
-                  text="Go To Dashboard"
+                  text="Dashboard"
                   onClick={() => handleNavClick('/dashboard')}
                   className={`!min-h-9 !min-w-[11rem] !w-auto !px-5 !py-1.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-brand-blue bg-brand-blue text-white'}`}
                   hoverBgClass={isOverBlueBackground ? 'bg-white' : 'bg-brand-blueDark'}
@@ -996,7 +996,7 @@ const Header: React.FC = () => {
                     {isAuthenticated ? (
                       <motion.div whileTap={{ scale: 0.98 }}>
                         <InteractiveHoverButton
-                          text="Go To Dashboard"
+                          text="Dashboard"
                           onClick={() => {
                             handleNavClick('/dashboard');
                             setIsMenuOpen(false);
