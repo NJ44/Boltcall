@@ -1,8 +1,9 @@
 import React from 'react';
-import { Bot, Phone, Mic } from 'lucide-react';
+import { Bot, Phone, Mic, Loader2 } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
-import VoiceGallery from '../../ui/VoiceGallery';
+import { VoicePicker } from '../../ui/voice-picker';
+import { useRetellVoices } from '../../../hooks/useRetellVoices';
 
 const agentTypes = [
   { value: 'inbound', label: 'Inbound Receptionist', description: 'Answers incoming calls — booking, FAQs, transfers' },
@@ -14,6 +15,7 @@ const agentTypes = [
 
 const StepAgentConfig: React.FC = () => {
   const { agentConfig, updateAgentConfig, businessProfile } = useSetupStore();
+  const { voices, isLoading: voicesLoading } = useRetellVoices();
 
   return (
     <div className="space-y-8">
@@ -75,10 +77,19 @@ const StepAgentConfig: React.FC = () => {
             Voice
           </div>
         </h3>
-        <VoiceGallery
-          selectedVoiceId={agentConfig.voiceId}
-          onVoiceSelect={(voiceId) => updateAgentConfig({ voiceId })}
-        />
+        {voicesLoading ? (
+          <div className="flex items-center gap-2 text-sm text-gray-500 py-2">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Loading voices...
+          </div>
+        ) : (
+          <VoicePicker
+            voices={voices}
+            value={agentConfig.voiceId}
+            onValueChange={(voiceId) => updateAgentConfig({ voiceId })}
+            placeholder="Choose a voice for your agent..."
+          />
+        )}
       </div>
 
       {/* Transfer Number */}

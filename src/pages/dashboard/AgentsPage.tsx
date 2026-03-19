@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
 import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
-import VoiceGallery from '../../components/ui/VoiceGallery';
+import { VoicePicker } from '../../components/ui/voice-picker';
+import { useRetellVoices } from '../../hooks/useRetellVoices';
 import CardTable from '../../components/ui/CardTable';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -75,6 +76,7 @@ const AgentsPage: React.FC = () => {
   const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [regeneratingAgentId, setRegeneratingAgentId] = useState<string | null>(null);
+  const { voices: retellVoices } = useRetellVoices();
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
     name: '',
     voice: '',
@@ -781,9 +783,14 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
                 {/* Voice Choice */}
                 <div>
-                  <VoiceGallery
-                    selectedVoiceId={createForm.voice}
-                    onVoiceSelect={(voiceId) => handleInputChange('voice', voiceId)}
+                  <label className="block text-sm font-medium text-zinc-700 mb-2">
+                    Voice *
+                  </label>
+                  <VoicePicker
+                    voices={retellVoices}
+                    value={createForm.voice}
+                    onValueChange={(voiceId) => handleInputChange('voice', voiceId)}
+                    placeholder="Choose a voice..."
                   />
                 </div>
 
