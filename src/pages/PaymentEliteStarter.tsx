@@ -13,7 +13,7 @@ const PaymentEliteStarter: React.FC = () => {
   useEffect(() => {
     // Load PayPal SDK
     const script = document.createElement('script');
-    script.src = 'https://www.paypal.com/sdk/js?client-id=AVT4Zzwm3heDT68aKRr0Z&components=hosted-buttons&disable-funding=venmo&currency=USD';
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AVT4Zzwm3heDT68aKRr0Z6ckH0v9gKoFrme2mP5zk8fmvbThKh28HCAWknG3MOKgCQ1S-J5efn8xOPXb&components=hosted-buttons&disable-funding=venmo&currency=USD';
     script.crossOrigin = 'anonymous';
     script.async = true;
     document.head.appendChild(script);
