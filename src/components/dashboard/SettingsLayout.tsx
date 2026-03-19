@@ -11,7 +11,6 @@ const categories = [
     label: 'Billing & Usage',
     sidebar: [
       { id: 'plan-billing', label: 'Billing', route: '/dashboard/settings/plan-billing' },
-      { id: 'packages', label: 'Packages', route: '/dashboard/settings/packages' },
       { id: 'usage', label: 'Usage', route: '/dashboard/settings/usage' },
     ],
   },
@@ -29,13 +28,6 @@ const categories = [
     sidebar: [
       { id: 'preferences', label: 'Appearance & Region', route: '/dashboard/settings/preferences' },
       { id: 'notifications', label: 'Notifications', route: '/dashboard/settings/notifications' },
-    ],
-  },
-  {
-    id: 'integrations',
-    label: 'Integrations',
-    sidebar: [
-      { id: 'services', label: 'Services', route: '/dashboard/settings/services' },
     ],
   },
 ];

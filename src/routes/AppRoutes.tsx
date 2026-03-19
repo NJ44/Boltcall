@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useLenis } from '../hooks/useLenis';
 import { AuthProvider } from '../contexts/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -33,6 +33,8 @@ import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
 import AgentTestsPage from '../pages/dashboard/AgentTestsPage';
 import ReputationPage from '../pages/dashboard/ReputationPage';
 import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
+import LeadsPage from '../pages/dashboard/LeadsPage';
+import MessagesPage from '../pages/dashboard/MessagesPage';
 import LocationDashboardPage from '../pages/dashboard/LocationDashboardPage';
 import HelpCenter from '../pages/HelpCenter';
 import Privacy from '../pages/Privacy';
@@ -194,28 +196,38 @@ const NavigationWrapper: React.FC = () => {
         >
           <Route index element={<DashboardPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
+
+          {/* New merged pages */}
+          <Route path="leads" element={<LeadsPage />} />
+          <Route path="calls" element={<CallHistoryPage />} />
+          <Route path="messages" element={<MessagesPage />} />
+
+          {/* Core pages */}
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
+          <Route path="agent-tests" element={<AgentTestsPage />} />
           <Route path="voice-library" element={<VoiceLibraryPage />} />
           <Route path="knowledge-base" element={<KnowledgeBasePage />} />
           <Route path="phone" element={<PhoneNumbersPage />} />
-          <Route path="assistant" element={<AssistantPage />} />
-          <Route path="missed-calls" element={<MissedCallsPage />} />
+          <Route path="chat-widget" element={<WebsiteBubblePage />} />
           <Route path="integrations" element={<IntegrationsPage />} />
-          <Route path="instant-lead-reply" element={<InstantLeadReplyPage />} />
-          <Route path="speed-to-lead" element={<SpeedToLeadPage />} />
+          <Route path="reminders" element={<RemindersPage />} />
+          <Route path="reputation" element={<ReputationPage />} />
+          <Route path="calcom" element={<CalcomPage />} />
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />
-          <Route path="website-bubble" element={<WebsiteBubblePage />} />
-          <Route path="reminders" element={<RemindersPage />} />
-          <Route path="sms-booking" element={<SmsBookingPage />} />
-          <Route path="follow-ups" element={<FollowUpsPage />} />
-          <Route path="lead-reactivation" element={<LeadReactivationPage />} />
-          <Route path="calcom" element={<CalcomPage />} />
-          <Route path="call-history" element={<CallHistoryPage />} />
-          <Route path="agent-tests" element={<AgentTestsPage />} />
-          <Route path="chat-history" element={<ChatHistoryPage />} />
-          <Route path="reputation" element={<ReputationPage />} />
+
+          {/* Redirects from old paths to new merged pages */}
+          <Route path="speed-to-lead" element={<Navigate to="/dashboard/leads" replace />} />
+          <Route path="missed-calls" element={<Navigate to="/dashboard/leads" replace />} />
+          <Route path="lead-reactivation" element={<Navigate to="/dashboard/leads" replace />} />
+          <Route path="call-history" element={<Navigate to="/dashboard/calls" replace />} />
+          <Route path="assistant" element={<Navigate to="/dashboard/calls" replace />} />
+          <Route path="chat-history" element={<Navigate to="/dashboard/messages" replace />} />
+          <Route path="sms-booking" element={<Navigate to="/dashboard/messages" replace />} />
+          <Route path="follow-ups" element={<Navigate to="/dashboard/messages" replace />} />
+          <Route path="website-bubble" element={<Navigate to="/dashboard/chat-widget" replace />} />
+          <Route path="instant-lead-reply" element={<Navigate to="/dashboard/leads" replace />} />
           <Route path="settings" element={
             <SettingsLayout>
               <SettingsPage />
@@ -241,11 +253,6 @@ const NavigationWrapper: React.FC = () => {
               <PlanBillingPage />
             </SettingsLayout>
           } />
-          <Route path="settings/packages" element={
-            <SettingsLayout>
-              <PackagesPage />
-            </SettingsLayout>
-          } />
           <Route path="settings/usage" element={
             <SettingsLayout>
               <UsagePage />
@@ -256,16 +263,10 @@ const NavigationWrapper: React.FC = () => {
               <NotificationPage />
             </SettingsLayout>
           } />
-          <Route path="settings/notification-preferences" element={
-            <SettingsLayout>
-              <NotificationPreferencesPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/services" element={
-            <SettingsLayout>
-              <ServicesPage />
-            </SettingsLayout>
-          } />
+          {/* Redirects for removed settings pages */}
+          <Route path="settings/packages" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
+          <Route path="settings/notification-preferences" element={<Navigate to="/dashboard/settings/notifications" replace />} />
+          <Route path="settings/services" element={<Navigate to="/dashboard/settings/general" replace />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
         <Route path="/help-center" element={<HelpCenter />} />
@@ -285,14 +286,14 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/lead-magnet/thank-you" element={<LeadMagnetThankYouPage />} />
         <Route path="/lead-magnet/claude-code-overnight-kit" element={<LeadMagnetClaudeCodeOvernightKitPage />} />
         <Route path="/free-website" element={<FreeWebsitePage />} />
-        <Route path="/free-website-package" element={<FreeWebsitePackagePage />} />
-        <Route path="/free-website-package/pricing" element={<FreeWebsitePricingPage />} />
-        <Route path="/gift-cards" element={<GiftCardPage />} />
-        <Route path="/smart-website" element={<OfferPage />} />
+        <Route path="/free-website-package" element={<Navigate to="/free-website" replace />} />
+        <Route path="/free-website-package/pricing" element={<Navigate to="/pricing" replace />} />
+        {/* /gift-cards removed — not needed pre-revenue */}
+        {/* /smart-website removed — duplicate of free-website concept */}
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/blog" element={<BlogCenter />} />
-        <Route path="/newsletter" element={<Newsletter />} />
+        <Route path="/newsletter" element={<Navigate to="/" replace />} />
         <Route path="/blog/the-new-reality-for-local-businesses" element={<Blog />} />
         <Route path="/blog/why-speed-matters" element={<BlogSpeed />} />
         <Route path="/blog/why-website-speed-is-everything" element={<BlogSpeedWebsite />} />
@@ -337,7 +338,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/comparisons/crm-vs-boltcall" element={<CRMInstantLeadReplyVsBoltcall />} />
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
-        <Route path="/ai-revenue-calculator" element={<AIRevenueAudit />} />
+        <Route path="/ai-revenue-calculator" element={<Navigate to="/ai-revenue-audit" replace />} />
         <Route path="/ai-revenue-calculator/results" element={<AIRevenueResults />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/business-audit" element={<BusinessAuditPage />} />
@@ -367,18 +368,7 @@ const NavigationWrapper: React.FC = () => {
         {/* Solar Speed-to-Lead Playbook */}
         <Route path="/solar-speed-playbook" element={<SolarSpeedToLeadPlaybook />} />
         <Route path="/solar-speed-playbook/thank-you" element={<SolarSpeedToLeadPlaybookThankYou />} />
-        {/* Solar Lead Magnet Tools */}
-        <Route path="/tools/solar-profit-calculator" element={<SolarProfitCalculator />} />
-        <Route path="/tools/solar-sales-closer" element={<SolarSalesCloser />} />
-        <Route path="/tools/solar-quote-generator" element={<SolarQuoteGenerator />} />
-        {/* Niche-Specific Lead Magnet Calculators */}
-        <Route path="/tools/plumber-revenue-calculator" element={<PlumberRevenueCalculator />} />
-        <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
-        <Route path="/tools/hvac-overflow-calculator" element={<HVACOverflowCalculator />} />
-        <Route path="/tools/real-estate-speed-scorecard" element={<RealEstateSpeedScorecard />} />
-        <Route path="/tools/lawyer-intake-calculator" element={<LawyerIntakeCalculator />} />
-        <Route path="/tools/medspa-rebooking-calculator" element={<MedSpaRebookingCalculator />} />
-        {/* Dynamic niche lead magnet pages - loaded from Supabase */}
+        {/* All niche tools now served by dynamic route from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
         <Route path="/privacy-policy" element={<Privacy />} />
