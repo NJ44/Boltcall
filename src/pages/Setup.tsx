@@ -52,7 +52,7 @@ const steps: StepDef[] = [
 const Setup: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { isCompleted, updateBusinessProfile, updateAccount, complete, updateReview, markStepCompleted, businessProfile: storeBusinessProfile, account, knowledgeBase: storeKnowledgeBase } = useSetupStore();
+  const { isCompleted, updateBusinessProfile, updateAccount, complete, updateReview, markStepCompleted, knowledgeBase: storeKnowledgeBase } = useSetupStore();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
