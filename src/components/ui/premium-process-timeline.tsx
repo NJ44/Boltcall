@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, Zap, MessageSquare, Star, BarChart3 } from 'lucide-react';
 
 // A simple utility function to merge class names, replacing the need for an external file.
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
@@ -14,8 +15,6 @@ interface ProcessStep {
   subtitle: string;
   description: string;
   details: string[];
-  duration: string;
-  image: string; // URL to the image for the phone mockup
 }
 
 interface QuantumTimelineProps {
@@ -27,48 +26,38 @@ interface QuantumTimelineProps {
 const DEMO_STEPS: ProcessStep[] = [
   {
     id: "01",
-    title: "Discovery & Planning",
-    subtitle: "Understanding Your Vision",
-    description: "We begin by diving deep into your business goals, target audience, and technical requirements to build a comprehensive project roadmap.",
-    details: ["Architecture Design", "Integration Planning", "Requirement Analysis", "Success Metrics"],
-    duration: "1-2 weeks",
-    image: "https://placehold.co/300x600/1e293b/ffffff?text=Discovery",
+    title: "AI Receptionist",
+    subtitle: "Never Miss a Call Again",
+    description: "Your AI receptionist answers every call 24/7 with a natural human voice. It books appointments, answers FAQs, and transfers urgent calls \u2014 so you never lose a lead.",
+    details: ["24/7 Call Answering", "Natural Voice AI", "Appointment Booking", "Call Transfer"],
   },
   {
     id: "02",
-    title: "Custom Solution Design",
-    subtitle: "Architecting Your AI Future",
-    description: "A dedicated team of AI experts builds and rigorously tests custom solutions designed to scale with your business.",
-    details: ["Custom AI Model Development", "Security & Compliance Setup", "User Experience Design", "API Development"],
-    duration: "2-4 weeks",
-    image: "https://placehold.co/300x600/4a00e0/ffffff?text=Design",
+    title: "Speed to Lead",
+    subtitle: "Respond to Leads in Seconds",
+    description: "When a new lead comes in from your website, Facebook Ads, or missed call \u2014 Boltcall responds instantly via SMS, email, or callback. Beat your competition by being first.",
+    details: ["Instant SMS Response", "Auto Email Follow-up", "Missed Call Text-back", "Facebook Lead Capture"],
   },
   {
     id: "03",
-    title: "Implementation",
-    subtitle: "Bringing Your Vision to Life",
-    description: "Our development team brings the designs to life, building a robust and scalable solution with clean, efficient code.",
-    details: ["Frontend Development", "Backend Development", "Database Integration", "CI/CD Setup"],
-    duration: "4-6 weeks",
-    image: "https://placehold.co/300x600/8e2de2/ffffff?text=Implement",
+    title: "Smart Chatbot",
+    subtitle: "Your Website\u2019s 24/7 Sales Rep",
+    description: "An AI chatbot embedded on your website that answers questions, captures leads, and books appointments \u2014 trained on your specific business knowledge base.",
+    details: ["Custom Knowledge Base", "Lead Capture Forms", "Appointment Scheduling", "Multi-language Support"],
   },
   {
     id: "04",
-    title: "Optimization & Launch",
-    subtitle: "Ensuring Peak Performance",
-    description: "We conduct rigorous testing and performance optimization to ensure a flawless launch and a seamless user experience.",
-    details: ["Performance Tuning", "Security Audits", "User Acceptance Testing", "Deployment"],
-    duration: "1-2 weeks",
-    image: "https://placehold.co/300x600/1e90ff/ffffff?text=Launch",
+    title: "Review Automation",
+    subtitle: "5-Star Reputation on Autopilot",
+    description: "Automatically send review requests after every appointment. Happy customers get directed to Google, unhappy ones get routed to you first \u2014 protecting your reputation.",
+    details: ["Google Review Requests", "Smart Routing", "Review Monitoring", "Reputation Dashboard"],
   },
   {
     id: "05",
-    title: "Support & Maintenance",
-    subtitle: "Ongoing Excellence",
-    description: "We provide continuous support, monitoring, and updates to ensure your solution remains optimal and evolves with your business needs.",
-    details: ["24/7 Support", "Regular Updates", "Performance Monitoring", "Feature Enhancements"],
-    duration: "Ongoing",
-    image: "https://placehold.co/300x600/00ff00/ffffff?text=Support",
+    title: "Analytics & Insights",
+    subtitle: "Know Exactly What\u2019s Working",
+    description: "Track every call, message, lead, and booking in one dashboard. See which channels drive the most revenue and optimize your marketing spend.",
+    details: ["Call Analytics", "Lead Source Tracking", "Revenue Attribution", "Token Usage Dashboard"],
   },
 ];
 
@@ -121,7 +110,7 @@ const TimelineNav = ({ steps, activeStep, onStepClick }: { steps: ProcessStep[],
               : "text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700"
           )}
         >
-          {step.title.split(' ')[0]}
+          {step.title.split(' ').slice(0, 2).join(' ')}
         </button>
       ))}
     </div>
@@ -130,12 +119,13 @@ const TimelineNav = ({ steps, activeStep, onStepClick }: { steps: ProcessStep[],
 
 const TimelineContent = ({ step }: { step: ProcessStep }) => (
   <div className="text-left mt-16">
+    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-wide uppercase">{step.subtitle}</p>
     <h2 className="text-3xl font-bold mt-2 text-slate-900 dark:text-white">{step.title}</h2>
     <p className="mt-3 text-slate-700 dark:text-slate-300">{step.description}</p>
     <div className="mt-4 grid sm:grid-cols-2 gap-4">
       {step.details.map((detail, i) => (
         <div key={i} className="flex items-center gap-3">
-          <div className="w-5 h-5 bg-green-500/10 dark:bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-xs">✓</div>
+          <div className="w-5 h-5 bg-green-500/10 dark:bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-xs">{'\u2713'}</div>
           <span className="text-sm text-slate-700 dark:text-slate-300">{detail}</span>
         </div>
       ))}
@@ -168,7 +158,7 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
     },
   };
 
-  // Discovery & Planning - Animated charts and documents
+  // AI Receptionist - Phone with sound waves and conversation bubbles
   if (stepId === "01") {
     return (
       <div className="flex items-center justify-center h-full">
@@ -178,59 +168,78 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
           animate="visible"
           className="relative w-full h-[400px] flex items-center justify-center"
         >
-          {/* Animated Chart Bars */}
-          {[1, 2, 3, 4].map((i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="absolute"
-              style={{
-                left: `${20 + i * 20}%`,
-                bottom: '20%',
-              }}
-            >
-              <motion.div
-                className="w-12 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg"
-                initial={{ height: 0 }}
-                animate={{ height: `${40 + i * 20}px` }}
-                transition={{
-                  duration: 0.8,
-                  delay: i * 0.2,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              />
-            </motion.div>
-          ))}
-          
-          {/* Floating Documents */}
+          {/* Phone Icon Center */}
+          <motion.div
+            variants={itemVariants}
+            className="relative z-10 w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30"
+            animate={{
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Phone className="w-10 h-10 text-white" />
+          </motion.div>
+
+          {/* Sound Waves */}
           {[0, 1, 2].map((i) => (
             <motion.div
-              key={`doc-${i}`}
-              variants={itemVariants}
-              className="absolute w-16 h-20 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded-lg shadow-lg"
-              style={{
-                left: `${30 + i * 25}%`,
-                top: `${20 + i * 15}%`,
-                rotate: -10 + i * 10,
-              }}
+              key={`wave-${i}`}
+              className="absolute w-20 h-20 rounded-2xl border-2 border-blue-400/40"
+              initial={{ scale: 1, opacity: 0.6 }}
               animate={{
-                y: [0, -20, 0],
-                rotate: [-10 + i * 10, -15 + i * 10, -10 + i * 10],
+                scale: [1, 1.6 + i * 0.4],
+                opacity: [0.6, 0],
               }}
               transition={{
-                duration: 2 + i * 0.5,
+                duration: 2,
+                delay: i * 0.5,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeOut",
               }}
             />
           ))}
+
+          {/* Conversation Bubbles */}
+          <motion.div
+            variants={itemVariants}
+            className="absolute top-[15%] right-[10%] bg-white dark:bg-slate-800 rounded-2xl rounded-br-sm px-4 py-3 shadow-lg max-w-[180px]"
+          >
+            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">{'\u201C'}Hi, I\u2019d like to book an appointment for Thursday.{'\u201D'}</p>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="absolute bottom-[15%] left-[10%] bg-blue-600 rounded-2xl rounded-bl-sm px-4 py-3 shadow-lg max-w-[200px]"
+          >
+            <p className="text-xs text-white font-medium">{'\u201C'}Of course! I have 2pm and 4pm available. Which works best?{'\u201D'}</p>
+          </motion.div>
+
+          {/* Floating badges */}
+          <motion.div
+            className="absolute top-[10%] left-[15%] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-[10px] font-bold px-2 py-1 rounded-full"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            24/7 Active
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-[10%] right-[15%] bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-bold px-2 py-1 rounded-full"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+          >
+            Natural Voice
+          </motion.div>
         </motion.div>
       </div>
     );
   }
 
-  // Custom Solution Design - Animated design elements
+  // Speed to Lead - Lightning bolt with notification badges
   if (stepId === "02") {
     return (
       <div className="flex items-center justify-center h-full">
@@ -240,53 +249,77 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
           animate="visible"
           className="relative w-full h-[400px] flex items-center justify-center"
         >
-          {/* Rotating Design Elements */}
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="absolute w-24 h-24 border-4 border-blue-500 rounded-lg"
-              style={{
-                rotate: i * 45,
-              }}
-              animate={{
-                rotate: 360 + i * 45,
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                rotate: {
-                  duration: 4 + i,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-                scale: {
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
-              }}
-            />
-          ))}
-          
-          {/* Pulsing Center Circle */}
+          {/* Central Lightning Bolt */}
           <motion.div
-            className="absolute w-32 h-32 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full"
+            variants={itemVariants}
+            className="relative z-10 w-20 h-20 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-xl shadow-amber-500/30"
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.7, 1, 0.7],
+              scale: [1, 1.1, 1],
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Zap className="w-10 h-10 text-white" fill="white" />
+          </motion.div>
+
+          {/* Energy Burst */}
+          <motion.div
+            className="absolute w-32 h-32 rounded-full bg-gradient-to-r from-amber-400/20 to-orange-400/20"
+            animate={{
+              scale: [1, 1.8, 1],
+              opacity: [0.4, 0, 0.4],
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: "easeOut",
             }}
           />
+
+          {/* Notification Cards flying in */}
+          {[
+            { label: "SMS Sent", icon: "💬", pos: "top-[12%] right-[8%]", delay: 0, color: "from-green-500 to-emerald-500" },
+            { label: "Email Sent", icon: "📧", pos: "top-[35%] left-[5%]", delay: 0.4, color: "from-blue-500 to-blue-600" },
+            { label: "Callback Queued", icon: "📞", pos: "bottom-[18%] right-[12%]", delay: 0.8, color: "from-purple-500 to-indigo-500" },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              className={`absolute ${item.pos} flex items-center gap-2 bg-white dark:bg-slate-800 rounded-xl px-3 py-2 shadow-lg`}
+            >
+              <div className={`w-8 h-8 bg-gradient-to-br ${item.color} rounded-lg flex items-center justify-center text-sm`}>
+                {item.icon}
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{item.label}</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Just now</p>
+              </div>
+              <motion.div
+                className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 1, delay: item.delay, repeat: Infinity }}
+              />
+            </motion.div>
+          ))}
+
+          {/* Speed indicator */}
+          <motion.div
+            className="absolute bottom-[8%] left-[15%] bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-[10px] font-bold px-3 py-1 rounded-full"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            Avg response: 3 seconds
+          </motion.div>
         </motion.div>
       </div>
     );
   }
 
-  // Implementation - Animated code blocks
+  // Smart Chatbot - Chat bubbles with typing animation
   if (stepId === "03") {
     return (
       <div className="flex items-center justify-center h-full">
@@ -294,51 +327,102 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative w-full h-[400px] flex flex-col items-center justify-center gap-4"
+          className="relative w-full h-[400px] flex items-center justify-center"
         >
-          {/* Animated Code Lines */}
-          {[0, 1, 2, 3].map((i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="w-3/4 h-4 bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 rounded"
-              initial={{ width: 0 }}
-              animate={{ width: "75%" }}
-              transition={{
-                duration: 1,
-                delay: i * 0.3,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-          ))}
-          
-          {/* Floating Code Blocks */}
-          {[0, 1].map((i) => (
-            <motion.div
-              key={`block-${i}`}
-              className="absolute w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg shadow-xl"
-              style={{
-                left: `${20 + i * 60}%`,
-                top: `${30 + i * 40}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                rotate: [0, 5, 0],
-              }}
-              transition={{
-                duration: 2 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
+          {/* Chat Window Mock */}
+          <motion.div
+            variants={itemVariants}
+            className="relative w-[280px] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700"
+          >
+            {/* Chat Header */}
+            <div className="bg-gradient-to-r from-emerald-600 to-green-500 px-4 py-3 flex items-center gap-2">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                <MessageSquare className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-white">Boltcall Assistant</p>
+                <p className="text-[10px] text-green-100">Online</p>
+              </div>
+              <div className="ml-auto w-2 h-2 bg-green-300 rounded-full animate-pulse" />
+            </div>
+
+            {/* Chat Messages */}
+            <div className="p-3 flex flex-col gap-2 min-h-[200px]">
+              {/* User message */}
+              <motion.div
+                className="self-end bg-blue-600 text-white rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <p className="text-xs">What are your opening hours?</p>
+              </motion.div>
+
+              {/* Bot message */}
+              <motion.div
+                className="self-start bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-2xl rounded-bl-sm px-3 py-2 max-w-[85%]"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <p className="text-xs">We{'\u2019'}re open Mon-Fri 9am-6pm and Sat 10am-2pm. Would you like to book an appointment?</p>
+              </motion.div>
+
+              {/* User message */}
+              <motion.div
+                className="self-end bg-blue-600 text-white rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.4 }}
+              >
+                <p className="text-xs">Yes, tomorrow at 2pm please</p>
+              </motion.div>
+
+              {/* Typing indicator */}
+              <motion.div
+                className="self-start flex items-center gap-1 bg-slate-100 dark:bg-slate-700 rounded-2xl rounded-bl-sm px-3 py-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2 }}
+              >
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="w-1.5 h-1.5 bg-slate-400 rounded-full"
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{
+                      duration: 0.6,
+                      delay: i * 0.15,
+                      repeat: Infinity,
+                    }}
+                  />
+                ))}
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Floating feature badges */}
+          <motion.div
+            className="absolute top-[8%] left-[5%] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2 py-1 rounded-full"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            AI-Powered
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-[8%] right-[5%] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-[10px] font-bold px-2 py-1 rounded-full"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, delay: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            Custom Trained
+          </motion.div>
         </motion.div>
       </div>
     );
   }
 
-  // Optimization & Launch - Animated rocket and success indicators
+  // Review Automation - Stars and Google review animation
   if (stepId === "04") {
     return (
       <div className="flex items-center justify-center h-full">
@@ -348,77 +432,98 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
           animate="visible"
           className="relative w-full h-[400px] flex items-center justify-center"
         >
-          {/* Rocket */}
+          {/* Review Card */}
           <motion.div
             variants={itemVariants}
-            className="absolute"
-            animate={{
-              y: [0, -50, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-5 w-[260px] border border-slate-200 dark:border-slate-700"
           >
-            <div className="w-16 h-24 bg-gradient-to-b from-blue-500 to-blue-600 rounded-t-full relative">
-              {/* Rocket Body */}
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[20px] border-r-[20px] border-t-[30px] border-l-transparent border-r-transparent border-t-orange-500" />
+            {/* Google-style header */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-red-500 to-yellow-500 rounded-full flex items-center justify-center text-white text-xs font-bold">G</div>
+              <div>
+                <p className="text-xs font-bold text-slate-800 dark:text-slate-200">Google Reviews</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Your Business</p>
+              </div>
             </div>
-          </motion.div>
-          
-          {/* Success Checkmarks */}
-          {[0, 1, 2].map((i) => (
+
+            {/* Stars animation */}
+            <div className="flex items-center gap-1 mb-2">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  transition={{
+                    delay: 0.5 + i * 0.2,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 10,
+                  }}
+                >
+                  <Star className="w-6 h-6 text-yellow-400" fill="#facc15" />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Rating number */}
             <motion.div
-              key={i}
-              className="absolute w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl"
-              style={{
-                left: `${20 + i * 30}%`,
-                top: `${60 + i * 10}%`,
-              }}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{
-                scale: [0, 1.2, 1],
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 0.8,
-                delay: i * 0.3,
-                repeat: Infinity,
-                repeatDelay: 2,
-              }}
+              className="flex items-baseline gap-1 mb-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
             >
-              ✓
+              <span className="text-2xl font-bold text-slate-900 dark:text-white">4.9</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">out of 5</span>
             </motion.div>
-          ))}
-          
-          {/* Stars */}
-          {[0, 1, 2, 3].map((i) => (
+
+            {/* Recent review */}
             <motion.div
-              key={`star-${i}`}
-              className="absolute w-2 h-2 bg-yellow-400 rounded-full"
-              style={{
-                left: `${15 + i * 20}%`,
-                top: `${20 + (i % 2) * 30}%`,
-              }}
-              animate={{
-                opacity: [0.3, 1, 0.3],
-                scale: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 1.5,
-                delay: i * 0.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
+              className="bg-slate-50 dark:bg-slate-700 rounded-xl p-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2 }}
+            >
+              <div className="flex items-center gap-1 mb-1">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} className="w-3 h-3 text-yellow-400" fill="#facc15" />
+                ))}
+              </div>
+              <p className="text-[10px] text-slate-600 dark:text-slate-300">{'\u201C'}Amazing service! They responded so fast and were very professional.{'\u201D'}</p>
+              <p className="text-[9px] text-slate-400 mt-1">- Sarah M., 2 hours ago</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Floating badges */}
+          <motion.div
+            className="absolute top-[8%] right-[10%] bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Star className="w-3 h-3" fill="currentColor" /> Auto-Sent
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-[10%] left-[8%] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-[10px] font-bold px-3 py-1 rounded-full"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+          >
+            +47 reviews this month
+          </motion.div>
+
+          {/* Smart routing indicator */}
+          <motion.div
+            className="absolute top-[12%] left-[5%] bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-bold px-2 py-1 rounded-full"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 2.5, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            Smart Routing
+          </motion.div>
         </motion.div>
       </div>
     );
   }
 
-  // Support & Maintenance - Animated support elements
+  // Analytics & Insights - Animated charts and KPIs
   if (stepId === "05") {
     return (
       <div className="flex items-center justify-center h-full">
@@ -428,44 +533,82 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
           animate="visible"
           className="relative w-full h-[400px] flex items-center justify-center"
         >
-          {/* Support Icons */}
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="absolute w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg"
-              style={{
-                left: `${25 + i * 25}%`,
-                top: `${30 + i * 20}%`,
-              }}
-              animate={{
-                y: [0, -15, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 2,
-                delay: i * 0.3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              ✓
-            </motion.div>
-          ))}
-          
-          {/* Pulsing Center Circle */}
+          {/* Dashboard Card */}
           <motion.div
-            className="absolute w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
+            variants={itemVariants}
+            className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-5 w-[300px] border border-slate-200 dark:border-slate-700"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-indigo-500 rounded-lg flex items-center justify-center">
+                  <BarChart3 className="w-4 h-4 text-white" />
+                </div>
+                <p className="text-xs font-bold text-slate-800 dark:text-slate-200">Dashboard</p>
+              </div>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400">This Month</p>
+            </div>
+
+            {/* KPI Row */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              {[
+                { label: "Calls", value: "342", change: "+12%", color: "text-blue-600" },
+                { label: "Leads", value: "89", change: "+23%", color: "text-emerald-600" },
+                { label: "Booked", value: "67", change: "+18%", color: "text-purple-600" },
+              ].map((kpi, i) => (
+                <motion.div
+                  key={i}
+                  className="bg-slate-50 dark:bg-slate-700 rounded-lg p-2 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.2 }}
+                >
+                  <p className={`text-lg font-bold ${kpi.color} dark:text-white`}>{kpi.value}</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-400">{kpi.label}</p>
+                  <p className="text-[9px] text-green-500 font-semibold">{kpi.change}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Animated Bar Chart */}
+            <div className="flex items-end gap-1.5 h-[80px] px-1">
+              {[45, 65, 40, 80, 55, 70, 90].map((height, i) => (
+                <motion.div
+                  key={i}
+                  className="flex-1 bg-gradient-to-t from-purple-600 to-indigo-400 rounded-t-sm"
+                  initial={{ height: 0 }}
+                  animate={{ height: `${height}%` }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 1 + i * 0.1,
+                    ease: "easeOut",
+                  }}
+                />
+              ))}
+            </div>
+            <div className="flex justify-between px-1 mt-1">
+              {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
+                <span key={i} className="flex-1 text-center text-[8px] text-slate-400">{day}</span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Floating badges */}
+          <motion.div
+            className="absolute top-[6%] left-[5%] bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <BarChart3 className="w-3 h-3" /> Real-time
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-[8%] right-[8%] bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-3 py-1 rounded-full"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+          >
+            Revenue: $12,400
+          </motion.div>
         </motion.div>
       </div>
     );
@@ -473,6 +616,3 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
 
   return null;
 };
-
-
-
