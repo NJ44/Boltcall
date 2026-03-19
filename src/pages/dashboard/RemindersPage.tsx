@@ -3,9 +3,13 @@ import { Clock, Save, Loader2, Check, AlertCircle, Link, Unlink } from 'lucide-r
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+import { useTokens } from '../../contexts/TokenContext';
 
 const RemindersPage: React.FC = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
+  const { claimReward } = useTokens();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -166,6 +170,12 @@ const RemindersPage: React.FC = () => {
       setSaving(false);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
+
+      // Claim bonus token reward for configuring reminders
+      const rewardResult = await claimReward('configure_reminders');
+      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+25 tokens earned for configuring reminders', variant: 'success', duration: 4000 });
+      }
     } catch (err) {
       console.error('Reminders save error:', err);
       setError('Something went wrong. Please try again.');

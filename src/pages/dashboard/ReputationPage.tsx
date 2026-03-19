@@ -3,9 +3,13 @@ import { Star, Save, Loader2, Check, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+import { useTokens } from '../../contexts/TokenContext';
 
 const ReputationPage: React.FC = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
+  const { claimReward } = useTokens();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -94,6 +98,12 @@ const ReputationPage: React.FC = () => {
       setSaving(false);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
+
+      // Claim bonus token reward for enabling reputation manager
+      const rewardResult = await claimReward('enable_reputation');
+      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+25 tokens earned for enabling reputation manager', variant: 'success', duration: 4000 });
+      }
     } catch (err) {
       console.error('Reputation save error:', err);
       setError('Something went wrong. Please try again.');

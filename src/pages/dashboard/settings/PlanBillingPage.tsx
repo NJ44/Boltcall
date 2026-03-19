@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap } from 'lucide-react';
+import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap, Coins } from 'lucide-react';
 import { getUserSubscription, getUserInvoices, redirectToCheckout, type PlanLevel } from '../../../lib/stripe';
+import { TOKEN_PLANS } from '../../../lib/tokens';
 
 interface Subscription {
   id: string;
@@ -290,6 +291,17 @@ const PlanBillingPage: React.FC = () => {
                         </span>
                         <span className="text-gray-500 text-sm"> /mo</span>
                       </p>
+
+                      {/* Token Allocation */}
+                      {TOKEN_PLANS[level as keyof typeof TOKEN_PLANS] && (
+                        <p className="mt-2 flex items-center gap-1.5 text-xs text-gray-600">
+                          <Coins className="w-3.5 h-3.5 text-amber-500" />
+                          <span className="font-semibold text-gray-900">
+                            {TOKEN_PLANS[level as keyof typeof TOKEN_PLANS].monthlyTokens.toLocaleString()}
+                          </span>
+                          {' '}tokens/mo
+                        </p>
+                      )}
 
                       <button
                         disabled={isCurrent || upgrading !== null}

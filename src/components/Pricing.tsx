@@ -36,6 +36,7 @@ const Pricing: React.FC = () => {
       level: "starter",
       price: { monthly: 99, yearly: 948 },
       description: "Perfect for getting started with lead management.",
+      tokens: "1,000 tokens/mo",
     },
     {
       name: "Pro",
@@ -43,12 +44,14 @@ const Pricing: React.FC = () => {
       price: { monthly: 179, yearly: 1716 },
       popular: true,
       description: "Everything in Starter plus:",
+      tokens: "3,000 tokens/mo",
     },
     {
       name: "Ultimate",
       level: "all",
       price: { monthly: 249, yearly: 2388 },
       description: "Everything in Pro plus:",
+      tokens: "10,000 tokens/mo",
     },
     {
       name: "ENTERPRISE",
@@ -56,7 +59,7 @@ const Pricing: React.FC = () => {
       price: { monthly: 997, yearly: 11964 },
       description: "Tailored solutions for your business:",
       isCustom: true,
-      excludeFromTable: true, // Add this flag to exclude from comparison table
+      excludeFromTable: true,
     },
   ];
 
@@ -136,6 +139,35 @@ const Pricing: React.FC = () => {
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"
         />
+      </motion.div>
+
+      {/* What tokens get you */}
+      <motion.div
+        className="mt-12 max-w-2xl mx-auto"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <h3 className="text-xl font-semibold text-gray-900 text-center mb-6">What tokens get you</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <p className="text-2xl font-bold text-blue-600">10</p>
+            <p className="text-sm text-gray-600">tokens = 1 AI voice minute</p>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <p className="text-2xl font-bold text-blue-600">1</p>
+            <p className="text-sm text-gray-600">token = 1 AI chat message</p>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <p className="text-2xl font-bold text-blue-600">5</p>
+            <p className="text-sm text-gray-600">tokens = 1 SMS</p>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-4 text-center">
+            <p className="text-2xl font-bold text-blue-600">2</p>
+            <p className="text-sm text-gray-600">tokens = 1 lead processed</p>
+          </div>
+        </div>
       </motion.div>
       </Section>
     </>

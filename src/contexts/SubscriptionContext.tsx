@@ -3,7 +3,7 @@ import { useAuth } from './AuthContext';
 import { getUserSubscription } from '../lib/stripe';
 import type { PlanLevel } from '../lib/stripe';
 
-const TRIAL_DAYS = 14;
+const TRIAL_DAYS = 7;
 
 const PLAN_HIERARCHY: Record<PlanLevel, number> = {
   starter: 1,

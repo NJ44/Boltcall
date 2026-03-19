@@ -24,9 +24,10 @@ const PricingSection: React.FC = () => {
         'Auto-booking to Google Calendar',
         'Owner notifications (SMS + email)'
       ],
+      tokens: '1,000 tokens/mo',
       limits: '1 calendar, 300 conversations, 1,000 SMS/mo',
-      support: 'Chat/email (24–48h)',
-      ctaLabel: 'Start now',
+      support: 'Chat/email (24-48h)',
+      ctaLabel: 'Start 7-Day Free Trial',
       popular: false
     },
     {
@@ -42,10 +43,11 @@ const PricingSection: React.FC = () => {
         'Dashboard (response time, booked jobs, missed leads, transcripts)',
         'Call transcripts with intent tags'
       ],
+      tokens: '3,000 tokens/mo',
       limits: '2 calendars, 2 users, 300 voice mins, 2,500 SMS/mo',
       support: 'Priority chat (24h target)',
       guarantee: '10 extra bookings in 30 days or your money back.',
-      ctaLabel: 'Start winning calls',
+      ctaLabel: 'Start 7-Day Free Trial',
       popular: true
     },
     {
@@ -63,9 +65,10 @@ const PricingSection: React.FC = () => {
         'Branded voice (custom greeting voice + name)',
         'Compliance pack (recording notice & retention presets)'
       ],
+      tokens: '10,000 tokens/mo',
       limits: '4 calendars, 5 users, 900 voice mins, 6,000 SMS/mo',
-      support: 'Multi-location ready (add locations at $199/₪750 each)',
-      ctaLabel: 'Concierge onboarding',
+      support: 'Multi-location ready (add locations at $199/750 each)',
+      ctaLabel: 'Start 7-Day Free Trial',
       popular: false
     }
   ];
@@ -211,9 +214,9 @@ const PricingSection: React.FC = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.title}</h3>
               <p className="text-gray-600 mb-4">{plan.subtitle}</p>
               
-              <div className="mb-6">
+              <div className="mb-4">
                 <div className="text-4xl font-bold text-gray-900">
-                  {currency === 'USD' 
+                  {currency === 'USD'
                     ? `$${(isAnnual ? plan.priceAnnualUsd : plan.priceMonthlyUsd).toLocaleString()}`
                     : `₪${(isAnnual ? plan.priceAnnualIls : plan.priceMonthlyIls).toLocaleString()}`
                   }
@@ -226,6 +229,12 @@ const PricingSection: React.FC = () => {
                 )}
               </div>
 
+              {plan.tokens && (
+                <div className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold mb-4">
+                  {plan.tokens}
+                </div>
+              )}
+
               <Button
                 onClick={handlePlanSelect}
                 variant={plan.popular ? 'primary' : 'outline'}
@@ -234,6 +243,7 @@ const PricingSection: React.FC = () => {
               >
                 {plan.ctaLabel}
               </Button>
+              <p className="text-xs text-gray-500 mt-2">No credit card required for trial</p>
             </motion.div>
           ))}
         </motion.div>
@@ -319,6 +329,34 @@ const PricingSection: React.FC = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* What tokens get you */}
+        <motion.div
+          className="mt-12 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
+        >
+          <h3 className="text-xl font-semibold text-gray-900 text-center mb-6">What tokens get you</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-100">
+              <p className="text-2xl font-bold text-brand-blue">10</p>
+              <p className="text-sm text-gray-600">tokens = 1 AI voice minute</p>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-100">
+              <p className="text-2xl font-bold text-brand-blue">1</p>
+              <p className="text-sm text-gray-600">token = 1 AI chat message</p>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-100">
+              <p className="text-2xl font-bold text-brand-blue">5</p>
+              <p className="text-sm text-gray-600">tokens = 1 SMS</p>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-100">
+              <p className="text-2xl font-bold text-brand-blue">2</p>
+              <p className="text-sm text-gray-600">tokens = 1 lead processed</p>
+            </div>
           </div>
         </motion.div>
 

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, Copy, Send, Loader2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
+import { useTokens } from '../../contexts/TokenContext';
 import { supabase } from '../../lib/supabase';
 
 interface FacebookConnection {
@@ -15,6 +16,7 @@ interface FacebookConnection {
 const InstantLeadReplyPage: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { claimReward } = useTokens();
 
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
   const [selectedIntegration, setSelectedIntegration] = useState<string>('');
@@ -41,6 +43,14 @@ const InstantLeadReplyPage: React.FC = () => {
           console.error('Error fetching FB connections:', error);
         } else {
           setFbConnections(data || []);
+          // If connections exist, claim the bonus reward (safe to call multiple times)
+          if (data && data.length > 0) {
+            claimReward('connect_facebook').then((result) => {
+              if (result?.success && !result?.alreadyClaimed) {
+                showToast({ title: 'Bonus Tokens!', message: '+75 tokens earned for connecting Facebook Ads', variant: 'success', duration: 4000 });
+              }
+            });
+          }
         }
       } catch (err) {
         console.error('Error fetching FB connections:', err);

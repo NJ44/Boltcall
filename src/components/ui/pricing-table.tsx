@@ -23,6 +23,7 @@ export interface PricingPlan {
   description?: string
   isCustom?: boolean
   excludeFromTable?: boolean
+  tokens?: string
 }
 
 export interface PricingTableProps
@@ -137,6 +138,11 @@ export function PricingTable({
                   {plan.description}
                 </p>
               )}
+              {plan.tokens && (
+                <div className={cn("mt-2 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold", plan.isCustom ? "bg-blue-900/50 text-blue-300" : "bg-blue-50 text-blue-700")}>
+                  {plan.tokens}
+                </div>
+              )}
               
               {/* Feature List */}
               <div className="mt-4 space-y-2">
@@ -242,8 +248,13 @@ export function PricingTable({
                     buttonClassName
                   )}
                 >
-                  {plan.isCustom ? "Contact Us" : "Get Started for Free"}
+                  {plan.isCustom ? "Contact Us" : "Start 7-Day Free Trial"}
                 </button>
+                {!plan.isCustom && (
+                  <p className={cn("text-[10px] mt-1.5 text-center", plan.isCustom ? "text-gray-400" : "text-zinc-500")}>
+                    No credit card required for trial
+                  </p>
+                )}
               </div>
             </div>
           ))}

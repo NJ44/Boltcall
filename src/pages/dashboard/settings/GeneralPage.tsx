@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { Magnetic } from '../../../components/ui/magnetic';
 import { useToast } from '../../../contexts/ToastContext';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useTokens } from '../../../contexts/TokenContext';
 import { supabase } from '../../../lib/supabase';
 import Button from '../../../components/ui/Button';
 
 const GeneralPage: React.FC = () => {
   const { showToast } = useToast();
   const { user } = useAuth();
+  const { claimReward } = useTokens();
   const navigate = useNavigate();
   const [businessInfo, setBusinessInfo] = useState({
     businessName: '',
@@ -163,6 +165,12 @@ const GeneralPage: React.FC = () => {
       showToast({ title: 'Saved', message: 'Settings saved successfully!', variant: 'success', duration: 3000 });
       setSaveMessage('Settings saved successfully!');
       setTimeout(() => setSaveMessage(''), 3000);
+
+      // Claim bonus token reward for completing business profile
+      const rewardResult = await claimReward('complete_business_profile');
+      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for completing your business profile', variant: 'success', duration: 4000 });
+      }
     } catch (err) {
       console.error('Error saving general settings:', err);
       showToast({ title: 'Error', message: 'Failed to save settings. Please try again.', variant: 'error', duration: 4000 });

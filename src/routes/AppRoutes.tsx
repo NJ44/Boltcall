@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import { useLenis } from '../hooks/useLenis';
 import { AuthProvider } from '../contexts/AuthContext';
 import { SubscriptionProvider } from '../contexts/SubscriptionContext';
+import { TokenProvider } from '../contexts/TokenContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import PlanGate from '../components/PlanGate';
 import Home from '../pages/Home';
@@ -392,9 +393,11 @@ const AppRoutes: React.FC = () => {
   return (
     <AuthProvider>
       <SubscriptionProvider>
-        <Router>
-          <NavigationWrapper />
-        </Router>
+        <TokenProvider>
+          <Router>
+            <NavigationWrapper />
+          </Router>
+        </TokenProvider>
       </SubscriptionProvider>
     </AuthProvider>
   );

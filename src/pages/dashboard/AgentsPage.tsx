@@ -6,6 +6,8 @@ import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+import { useTokens } from '../../contexts/TokenContext';
 import { generateAgentPrompt, updateRetellAgent } from '../../lib/retell';
 import AgentTestsPage from './AgentTestsPage';
 
@@ -59,6 +61,8 @@ interface IndustryTemplate {
 
 const AgentsPage: React.FC = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
+  const { claimReward } = useTokens();
   const [activeTab, setActiveTab] = useState<'agents' | 'tests'>('agents');
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -335,6 +339,12 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
       setShowTemplatesModal(false);
       setShowAgentDetailsModal(true);
+
+      // Claim bonus token reward for setting up an AI agent
+      const rewardResult = await claimReward('setup_ai_agent');
+      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+100 tokens earned for setting up your AI agent', variant: 'success', duration: 4000 });
+      }
     } catch (error) {
       console.error('Error creating agent from template:', error);
     }

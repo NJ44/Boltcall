@@ -6,6 +6,8 @@ import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+import { useTokens } from '../../contexts/TokenContext';
 
 interface PhoneNumber {
   id: string;
@@ -29,6 +31,8 @@ interface TwilioPhoneNumber {
 
 const PhoneNumbersPage: React.FC = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
+  const { claimReward } = useTokens();
   const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -168,9 +172,15 @@ const PhoneNumbersPage: React.FC = () => {
     setShowSipModal(true);
   };
 
-  const handlePurchaseNumber = (_number: TwilioPhoneNumber) => {
+  const handlePurchaseNumber = async (_number: TwilioPhoneNumber) => {
     // TODO: implement purchasing the number via Twilio
     setShowTwilioModal(false);
+
+    // Claim bonus token reward for connecting a phone number
+    const rewardResult = await claimReward('connect_phone_number');
+    if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+      showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for connecting a phone number', variant: 'success', duration: 4000 });
+    }
   };
 
   const handleSipFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,10 +190,16 @@ const PhoneNumbersPage: React.FC = () => {
     });
   };
 
-  const handleSipFormSubmit = (e: React.FormEvent) => {
+  const handleSipFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowSipModal(false);
     // Implementation for saving SIP configuration
+
+    // Claim bonus token reward for connecting a phone number
+    const rewardResult = await claimReward('connect_phone_number');
+    if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+      showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for connecting a phone number', variant: 'success', duration: 4000 });
+    }
   };
 
   const handleSipFormCancel = () => {

@@ -7,6 +7,7 @@ import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
+import { useTokens } from '../../contexts/TokenContext';
 import { CheckCircle2, Circle, Brain } from 'lucide-react';
 
 const FUNCTIONS_BASE = import.meta.env.DEV
@@ -33,6 +34,7 @@ interface KnowledgeBaseDocument {
 const KnowledgeBasePage: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { claimReward } = useTokens();
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState<'url' | 'file' | 'blank' | null>(null);
   const [urlInput, setUrlInput] = useState('');
@@ -371,6 +373,20 @@ const KnowledgeBasePage: React.FC = () => {
         duration: 3000
       });
 
+      // Claim bonus token rewards
+      const addDocResult = await claimReward('add_first_kb_document');
+      if (addDocResult?.success && !addDocResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+30 tokens earned for adding your first KB document', variant: 'success', duration: 4000 });
+      }
+      // Check if any doc was a file upload
+      const hasFileUpload = kbDocuments.some(d => d.type === 'file');
+      if (hasFileUpload) {
+        const fileResult = await claimReward('upload_first_file');
+        if (fileResult?.success && !fileResult?.alreadyClaimed) {
+          showToast({ title: 'Bonus Tokens!', message: '+20 tokens earned for uploading your first file', variant: 'success', duration: 4000 });
+        }
+      }
+
       handleCloseNewKnowledgeBase();
       fetchDocuments();
       syncToRetell();
@@ -451,6 +467,10 @@ const KnowledgeBasePage: React.FC = () => {
       }, ...prev]);
 
       showToast({ title: 'Success', message: `Imported ${scraped.charCount || 0} characters from website`, variant: 'success', duration: 3000 });
+      const urlDocResult = await claimReward('add_first_kb_document');
+      if (urlDocResult?.success && !urlDocResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+30 tokens earned for adding your first KB document', variant: 'success', duration: 4000 });
+      }
       handleClosePopup();
       syncToRetell();
     } catch (error) {
@@ -522,6 +542,14 @@ const KnowledgeBasePage: React.FC = () => {
       }, ...prev]);
 
       showToast({ title: 'Success', message: `File "${fileInput.name}" uploaded successfully`, variant: 'success', duration: 3000 });
+      const fileDocResult = await claimReward('add_first_kb_document');
+      if (fileDocResult?.success && !fileDocResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+30 tokens earned for adding your first KB document', variant: 'success', duration: 4000 });
+      }
+      const fileUploadResult = await claimReward('upload_first_file');
+      if (fileUploadResult?.success && !fileUploadResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+20 tokens earned for uploading your first file', variant: 'success', duration: 4000 });
+      }
       setFileInput(null);
       handleClosePopup();
       syncToRetell();
