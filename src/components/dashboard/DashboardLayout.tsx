@@ -225,33 +225,6 @@ const DashboardLayout: React.FC = () => {
     }));
   };
 
-  // Helper function to get service status
-  const getServiceStatus = (serviceKey: keyof typeof services) => {
-    if (!services[serviceKey]) return 'disabled';
-    // Mock status - in real app, this would come from API
-    const statuses = {
-      aiReceptionist: 'running',
-      phoneSystem: 'running',
-      sms: 'warning',
-      whatsapp: 'disabled',
-      email: 'running',
-      calendar: 'running',
-      analytics: 'running',
-      voiceLibrary: 'warning',
-      knowledgeBase: 'running',
-      websiteBubble: 'disabled'
-    };
-    return statuses[serviceKey];
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'running': return 'Running Good';
-      case 'warning': return 'Minor Issues';
-      case 'error': return 'Needs Attention';
-      default: return 'Disabled';
-    }
-  };
 
   // Handle click outside to close menus
   useEffect(() => {
