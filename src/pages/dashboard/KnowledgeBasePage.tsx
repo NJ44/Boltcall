@@ -611,6 +611,7 @@ const KnowledgeBasePage: React.FC = () => {
           .from('knowledge_base')
           .update({
             content: editingDocumentContent,
+            status: 'active',
             updated_at: new Date().toISOString()
           })
           .eq('id', editingDocumentId)

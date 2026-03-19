@@ -295,26 +295,45 @@ export const handler: Handler = async (event) => {
         };
       }
 
-      // Sync knowledge base — add new text sources to an existing Retell KB
+      // Sync knowledge base — replace all text sources in an existing Retell KB
       if (action === 'sync_kb') {
         const { knowledge_base_id, knowledge_base_texts, knowledge_base_urls } = body;
         if (!knowledge_base_id) {
           return { statusCode: 400, headers, body: JSON.stringify({ error: 'knowledge_base_id required' }) };
         }
 
+        if (!knowledge_base_texts?.length && !knowledge_base_urls?.length) {
+          return { statusCode: 400, headers, body: JSON.stringify({ error: 'No sources to add' }) };
+        }
+
+        // Step 1: Delete all existing text sources to avoid duplicates
+        const existing = await client.knowledgeBase.retrieve(knowledge_base_id);
+        const textSources = (existing.knowledge_base_sources || []).filter(
+          (s: any) => s.type === 'text'
+        );
+        for (const source of textSources) {
+          try {
+            await client.knowledgeBase.deleteSource(knowledge_base_id, (source as any).source_id);
+          } catch (e) {
+            console.error(`Failed to delete source ${(source as any).source_id}:`, e);
+          }
+        }
+
+        // Step 2: Add fresh sources
         const addParams: any = {};
         if (knowledge_base_texts?.length) addParams.knowledge_base_texts = knowledge_base_texts;
         if (knowledge_base_urls?.length) addParams.knowledge_base_urls = knowledge_base_urls;
-
-        if (!addParams.knowledge_base_texts && !addParams.knowledge_base_urls) {
-          return { statusCode: 400, headers, body: JSON.stringify({ error: 'No sources to add' }) };
-        }
 
         const updated = await client.knowledgeBase.addSources(knowledge_base_id, addParams);
         return {
           statusCode: 200,
           headers,
-          body: JSON.stringify({ success: true, knowledge_base_id: updated.knowledge_base_id }),
+          body: JSON.stringify({
+            success: true,
+            knowledge_base_id: updated.knowledge_base_id,
+            sources_deleted: textSources.length,
+            sources_added: (knowledge_base_texts?.length || 0) + (knowledge_base_urls?.length || 0),
+          }),
         };
       }
 
