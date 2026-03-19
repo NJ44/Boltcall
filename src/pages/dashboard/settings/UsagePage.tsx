@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Coins, Gift, Clock, Phone, MessageCircle, MessageSquare, Loader2, CheckCircle2, Circle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useTokens } from '../../../contexts/TokenContext';
 import { TOKEN_REWARDS, tokensToMinutes, tokensToMessages, tokensToSms } from '../../../lib/tokens';
 import { supabase } from '../../../lib/supabase';
@@ -15,6 +16,7 @@ interface TokenTransaction {
 }
 
 const UsagePage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { balance, bonusBalance, totalAvailable, monthlyAllocation, tokensUsed, isLoading } = useTokens();
   const [transactions, setTransactions] = useState<TokenTransaction[]>([]);
@@ -106,26 +108,26 @@ const UsagePage: React.FC = () => {
             <Coins className="w-5 h-5 text-blue-600" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Token Balance</h2>
-            <p className="text-sm text-gray-500">Current billing period</p>
+            <h2 className="text-lg font-semibold text-gray-900">{t('tokens.balance')}</h2>
+            <p className="text-sm text-gray-500">{t('tokens.currentPeriod')}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
           <div className="bg-gray-50 rounded-lg p-3">
-            <p className="text-xs text-gray-500 mb-1">Plan Tokens</p>
+            <p className="text-xs text-gray-500 mb-1">{t('tokens.planTokens')}</p>
             <p className="text-xl font-bold text-gray-900">{balance.toLocaleString()}</p>
           </div>
           <div className="bg-blue-50 rounded-lg p-3">
-            <p className="text-xs text-blue-600 mb-1">Bonus Tokens</p>
+            <p className="text-xs text-blue-600 mb-1">{t('tokens.bonusTokens')}</p>
             <p className="text-xl font-bold text-blue-700">{bonusBalance.toLocaleString()}</p>
           </div>
           <div className="bg-green-50 rounded-lg p-3">
-            <p className="text-xs text-green-600 mb-1">Total Available</p>
+            <p className="text-xs text-green-600 mb-1">{t('tokens.totalAvailable')}</p>
             <p className="text-xl font-bold text-green-700">{totalAvailable.toLocaleString()}</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
-            <p className="text-xs text-gray-500 mb-1">Monthly Allocation</p>
+            <p className="text-xs text-gray-500 mb-1">{t('tokens.monthlyAllocation')}</p>
             <p className="text-xl font-bold text-gray-900">{monthlyAllocation.toLocaleString()}</p>
           </div>
         </div>
@@ -133,7 +135,7 @@ const UsagePage: React.FC = () => {
         {/* Usage Progress */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Tokens used this period</span>
+            <span className="text-gray-600">{t('tokens.usedThisPeriod')}</span>
             <span className={`font-semibold ${getUsageColor()}`}>
               {tokensUsed.toLocaleString()} / {monthlyAllocation.toLocaleString()}
             </span>
@@ -157,7 +159,7 @@ const UsagePage: React.FC = () => {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
       >
-        <h3 className="text-sm font-semibold text-gray-900 mb-4">What Your Tokens Get You</h3>
+        <h3 className="text-sm font-semibold text-gray-900 mb-4">{t('tokens.whatYouGet')}</h3>
         <div className="border-t border-gray-100 pt-4">
           <p className="text-sm text-gray-600 mb-4">
             Your <span className="font-semibold text-gray-900">{totalAvailable.toLocaleString()}</span> tokens are equivalent to approximately:
@@ -167,21 +169,21 @@ const UsagePage: React.FC = () => {
               <Phone className="w-5 h-5 text-blue-600 flex-shrink-0" />
               <div>
                 <p className="text-lg font-bold text-gray-900">~{tokensToMinutes(totalAvailable).toLocaleString()}</p>
-                <p className="text-xs text-gray-600">AI voice minutes</p>
+                <p className="text-xs text-gray-600">{t('tokens.voiceMinutes')}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 bg-green-50 rounded-lg p-4">
               <MessageCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
               <div>
                 <p className="text-lg font-bold text-gray-900">~{tokensToMessages(totalAvailable).toLocaleString()}</p>
-                <p className="text-xs text-gray-600">chat messages</p>
+                <p className="text-xs text-gray-600">{t('tokens.chatMessages')}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 bg-purple-50 rounded-lg p-4">
               <MessageSquare className="w-5 h-5 text-purple-600 flex-shrink-0" />
               <div>
                 <p className="text-lg font-bold text-gray-900">~{tokensToSms(totalAvailable).toLocaleString()}</p>
-                <p className="text-xs text-gray-600">SMS messages</p>
+                <p className="text-xs text-gray-600">{t('tokens.smsMessages')}</p>
               </div>
             </div>
           </div>

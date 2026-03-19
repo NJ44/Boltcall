@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard,
   BarChart3,
@@ -29,6 +30,7 @@ import {
   Star,
   PhoneMissed,
   Reply,
+  Languages,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -37,13 +39,21 @@ import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
 import AiAssistant from './AiAssistant';
 
+const LANGUAGE_OPTIONS = [
+  { code: 'en', label: 'EN', flag: '\uD83C\uDDFA\uD83C\uDDF8' },
+  { code: 'he', label: 'HE', flag: '\uD83C\uDDEE\uD83C\uDDF1' },
+  { code: 'es', label: 'ES', flag: '\uD83C\uDDEA\uD83C\uDDF8' },
+] as const;
+
 const DashboardLayout: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
+  const [showLangMenu, setShowLangMenu] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
-  
+
   // Get current user from auth context
   const { user } = useAuth();
   
@@ -122,36 +132,36 @@ const DashboardLayout: React.FC = () => {
   // Get current page name based on route
   const getPageName = () => {
     const path = location.pathname;
-    
-    // Define page name mappings for better display
+
+    // Define page name mappings using i18n keys
     const pageNames: Record<string, string> = {
-      '/dashboard': 'Overview',
-      '/dashboard/leads': 'Leads',
-      '/dashboard/calls': 'Calls',
-      '/dashboard/messages': 'Messages',
-      '/dashboard/reminders': 'Reminders',
-      '/dashboard/reputation': 'Reputation Manager',
-      '/dashboard/instant-lead-response': 'Instant Lead Response',
-      '/dashboard/agents': 'AI Agents',
-      '/dashboard/knowledge-base': 'Knowledge Base',
-      '/dashboard/phone': 'Phone Numbers',
-      '/dashboard/chat-widget': 'Chat Widget',
-      '/dashboard/integrations': 'Integrations',
-      '/dashboard/analytics': 'Analytics',
-      '/dashboard/settings': 'Settings',
-      '/dashboard/settings/members': 'Team Members',
-      '/dashboard/settings/plan-billing': 'Plan & Billing',
+      '/dashboard': t('page.overview'),
+      '/dashboard/leads': t('page.leads'),
+      '/dashboard/calls': t('page.calls'),
+      '/dashboard/messages': t('page.messages'),
+      '/dashboard/reminders': t('page.reminders'),
+      '/dashboard/reputation': t('page.reputationManager'),
+      '/dashboard/instant-lead-response': t('page.instantLeadResponse'),
+      '/dashboard/agents': t('page.aiAgents'),
+      '/dashboard/knowledge-base': t('page.knowledgeBase'),
+      '/dashboard/phone': t('page.phoneNumbers'),
+      '/dashboard/chat-widget': t('page.chatWidget'),
+      '/dashboard/integrations': t('page.integrations'),
+      '/dashboard/analytics': t('page.analytics'),
+      '/dashboard/settings': t('page.settings'),
+      '/dashboard/settings/members': t('page.teamMembers'),
+      '/dashboard/settings/plan-billing': t('page.planBilling'),
     };
-    
+
     // Return mapped name or convert path to title case
     if (pageNames[path]) {
       return pageNames[path];
     }
-    
+
     // Fallback: convert path to title case
     const pathSegments = path.split('/').filter(Boolean);
     const pageSegment = pathSegments[pathSegments.length - 1] || 'dashboard';
-    
+
     return pageSegment
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -219,11 +229,14 @@ const DashboardLayout: React.FC = () => {
       if (showUserMenu && !target.closest('[data-user-menu]')) {
         setShowUserMenu(false);
       }
+      if (showLangMenu && !target.closest('[data-lang-menu]')) {
+        setShowLangMenu(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showUserMenu]);
+  }, [showUserMenu, showLangMenu]);
 
   // Load dark mode preference on mount
   useEffect(() => {
@@ -254,41 +267,41 @@ const DashboardLayout: React.FC = () => {
 
   // MAIN
   const navItemsMain = [
-    { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/leads', label: 'Leads', icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard', label: t('nav.overview'), icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/leads', label: t('nav.leads'), icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // COMMUNICATIONS
   const navItemsCommunications = [
-    { to: '/dashboard/calls', label: 'Calls', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/messages', label: 'Messages', icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/calls', label: t('nav.calls'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/messages', label: t('nav.messages'), icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // SERVICES
   const navItemsServices = [
-    { to: '/dashboard/agents', label: 'AI Receptionist', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/calls', label: 'Missed Calls', icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: 'Beta' as const },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/reputation', label: 'Reputation Manager', icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/instant-lead-response', label: 'Instant Lead Response', icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/agents', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('common.beta') as string },
+    { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // SETUP
   const navItemsSetup = [
-    { to: '/dashboard/agents', label: 'AI Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" />, badge: 'Soon' as const },
+    { to: '/dashboard/agents', label: t('nav.aiAgents'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/knowledge-base', label: t('nav.knowledgeBase'), icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/phone', label: t('nav.phoneNumbers'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/integrations', label: t('nav.integrations'), icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('common.soon') as string },
   ];
 
   // INSIGHTS
   const navItemsInsights = [
-    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/analytics', label: t('nav.analytics'), icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const navItemsFooter = [
-    { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5 scale-[0.95]" /> },
-    { to: '/help-center', label: 'Help Center', icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
+    { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" /> },
+    { to: '/help-center', label: t('nav.helpCenter'), icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
   ];
 
 
@@ -388,7 +401,7 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Setup */}
                 <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Setup</p>
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.setup')}</p>
                   <div className="space-y-1">
                     {navItemsSetup.map((item) => {
                       const isActive = location.pathname === item.to;
@@ -399,7 +412,7 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Services */}
                 <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Services</p>
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.services')}</p>
                   <div className="space-y-1">
                     {navItemsServices.map((item) => {
                       const isActive = location.pathname === item.to;
@@ -410,7 +423,7 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Communications */}
                 <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Communications</p>
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.communications')}</p>
                   <div className="space-y-1">
                     {navItemsCommunications.map((item) => {
                       const isActive = location.pathname === item.to;
@@ -421,7 +434,7 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Insights */}
                 <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Insights</p>
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.insights')}</p>
                   <div className="space-y-1">
                     {navItemsInsights.map((item) => {
                       const isActive = location.pathname === item.to;
@@ -505,6 +518,44 @@ const DashboardLayout: React.FC = () => {
                 <div className="hidden md:block">
                   <LocationSwitcher />
                 </div>
+
+                {/* Language Switcher */}
+                <div className="relative" data-lang-menu>
+                  <button
+                    onClick={() => setShowLangMenu(!showLangMenu)}
+                    className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
+                    aria-label="Change language"
+                  >
+                    <Languages className="w-4 h-4" />
+                    <span className="hidden md:inline">{LANGUAGE_OPTIONS.find(l => l.code === i18n.language)?.label || 'EN'}</span>
+                  </button>
+                  <AnimatePresence>
+                    {showLangMenu && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -4, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -4, scale: 0.96 }}
+                        transition={{ duration: 0.15 }}
+                        className={`absolute ${i18n.language === 'he' ? 'left-0' : 'right-0'} top-full mt-1 w-36 rounded-lg shadow-lg border z-50 overflow-hidden ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}
+                      >
+                        {LANGUAGE_OPTIONS.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => { i18n.changeLanguage(lang.code); setShowLangMenu(false); }}
+                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
+                              i18n.language === lang.code
+                                ? isDarkMode ? 'bg-[#1a1a1f] text-white' : 'bg-blue-50 text-blue-700'
+                                : isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            <span>{lang.flag}</span>
+                            <span>{lang.label}</span>
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
                  
                  {/* Notification Dropdown (hidden on mobile — hover doesn't work on touch) */}
                  <div className="relative group hidden md:block">
@@ -520,7 +571,7 @@ const DashboardLayout: React.FC = () => {
                      <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between mb-4">
                          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Notification Settings
+              {t('topbar.notificationSettings')}
                          </h3>
           </div>
           
@@ -530,8 +581,8 @@ const DashboardLayout: React.FC = () => {
               <div className="flex items-center gap-3">
                   <Users className="w-4 h-4 text-blue-600" />
                 <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>New Lead Arrives</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a new lead is captured</div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t('notifications.newLead')}</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t('notifications.newLeadDesc')}</div>
                 </div>
               </div>
               <button
@@ -551,8 +602,8 @@ const DashboardLayout: React.FC = () => {
               <div className="flex items-center gap-3">
                   <Calendar className="w-4 h-4 text-blue-600" />
                 <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Appointment Booked</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when an appointment is scheduled</div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t('notifications.appointmentBooked')}</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t('notifications.appointmentBookedDesc')}</div>
                 </div>
               </div>
               <button
@@ -572,8 +623,8 @@ const DashboardLayout: React.FC = () => {
               <div className="flex items-center gap-3">
                   <Phone className="w-4 h-4 text-blue-600" />
                 <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Missed Call</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Get notified when a call is missed</div>
+                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t('notifications.missedCall')}</div>
+                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t('notifications.missedCallDesc')}</div>
                 </div>
               </div>
               <button
@@ -605,18 +656,18 @@ const DashboardLayout: React.FC = () => {
                    <div className="absolute right-0 top-full mt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                      <div className={`rounded-lg shadow-lg border py-2 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
                        <div className="px-3 py-1.5 mb-1">
-                         <span className={`text-xs font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Services</span>
+                         <span className={`text-xs font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('topbar.services')}</span>
                        </div>
 
                        {([
-                         { key: 'aiReceptionist' as const, label: 'AI Receptionist', icon: <Users className="w-4 h-4" />, configured: true },
-                         { key: 'phoneSystem' as const, label: 'Phone System', icon: <Phone className="w-4 h-4" />, configured: true },
-                         { key: 'sms' as const, label: 'SMS', icon: <MessageSquare className="w-4 h-4" />, configured: true },
-                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, configured: false },
-                         { key: 'email' as const, label: 'Email', icon: <Mail className="w-4 h-4" />, configured: true },
-                         { key: 'calendar' as const, label: 'Calendar', icon: <Calendar className="w-4 h-4" />, configured: true },
-                         { key: 'analytics' as const, label: 'Analytics', icon: <BarChart3 className="w-4 h-4" />, configured: true },
-                         { key: 'websiteBubble' as const, label: 'Website Widget', icon: <Globe className="w-4 h-4" />, configured: false },
+                         { key: 'aiReceptionist' as const, label: t('services.aiReceptionist'), icon: <Users className="w-4 h-4" />, configured: true },
+                         { key: 'phoneSystem' as const, label: t('services.phoneSystem'), icon: <Phone className="w-4 h-4" />, configured: true },
+                         { key: 'sms' as const, label: t('services.sms'), icon: <MessageSquare className="w-4 h-4" />, configured: true },
+                         { key: 'whatsapp' as const, label: t('services.whatsapp'), icon: <MessageSquare className="w-4 h-4" />, configured: false },
+                         { key: 'email' as const, label: t('services.email'), icon: <Mail className="w-4 h-4" />, configured: true },
+                         { key: 'calendar' as const, label: t('services.calendar'), icon: <Calendar className="w-4 h-4" />, configured: true },
+                         { key: 'analytics' as const, label: t('services.analytics'), icon: <BarChart3 className="w-4 h-4" />, configured: true },
+                         { key: 'websiteBubble' as const, label: t('services.websiteWidget'), icon: <Globe className="w-4 h-4" />, configured: false },
                        ] as const).map((svc) => (
                          <div
                            key={svc.key}
@@ -643,7 +694,7 @@ const DashboardLayout: React.FC = () => {
                                to="/dashboard/settings/services"
                                className="text-xs font-medium text-blue-600 hover:text-blue-700"
                              >
-                               Configure
+                               {t('common.configure')}
                              </Link>
                            )}
                          </div>
@@ -690,7 +741,7 @@ const DashboardLayout: React.FC = () => {
                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                           >
                             <UserPlus className="w-4 h-4 text-gray-400" />
-                            Invite a Friend & Earn
+                            {t('topbar.inviteFriend')}
                           </Link>
                           <button
                             onClick={() => { setShowUserMenu(false); }}
@@ -698,7 +749,7 @@ const DashboardLayout: React.FC = () => {
                           >
                             <span className="flex items-center gap-3">
                               <Bell className="w-4 h-4 text-gray-400" />
-                              Notifications
+                              {t('topbar.notifications')}
                             </span>
                             <ChevronDown className="w-3.5 h-3.5 text-gray-400 -rotate-90" />
                           </button>
@@ -708,7 +759,7 @@ const DashboardLayout: React.FC = () => {
                           >
                             <span className="flex items-center gap-3">
                               <HelpCircle className="w-4 h-4 text-gray-400" />
-                              Help Center
+                              {t('nav.helpCenter')}
                             </span>
                             <ChevronDown className="w-3.5 h-3.5 text-gray-400 -rotate-90" />
                           </button>
@@ -717,7 +768,7 @@ const DashboardLayout: React.FC = () => {
                           >
                             <span className="flex items-center gap-3">
                               <Globe className="w-4 h-4 text-gray-400" />
-                              Language
+                              {t('topbar.language')}
                             </span>
                             <ChevronDown className="w-3.5 h-3.5 text-gray-400 -rotate-90" />
                           </button>
@@ -725,7 +776,7 @@ const DashboardLayout: React.FC = () => {
 
                         {/* Theme Switcher */}
                         <div className="px-4 py-3 border-t border-gray-100">
-                          <div className="text-xs font-medium text-gray-900 mb-2">Theme</div>
+                          <div className="text-xs font-medium text-gray-900 mb-2">{t('topbar.theme')}</div>
                           <div className="inline-flex items-center bg-gray-100 rounded-lg p-0.5">
                             <button
                               onClick={() => { setIsDarkMode(false); localStorage.setItem('darkMode', 'false'); }}
@@ -733,7 +784,7 @@ const DashboardLayout: React.FC = () => {
                                 !isDarkMode ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                               }`}
                             >
-                              Light
+                              {t('topbar.themeLight')}
                             </button>
                             <button
                               onClick={() => { setIsDarkMode(true); localStorage.setItem('darkMode', 'true'); }}
@@ -741,7 +792,7 @@ const DashboardLayout: React.FC = () => {
                                 isDarkMode ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                               }`}
                             >
-                              Dark
+                              {t('topbar.themeDark')}
                             </button>
                             <button
                               onClick={() => {
@@ -751,7 +802,7 @@ const DashboardLayout: React.FC = () => {
                               }}
                               className="px-3 py-1.5 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 transition-colors"
                             >
-                              System
+                              {t('topbar.themeSystem')}
                             </button>
                           </div>
                         </div>
@@ -764,7 +815,7 @@ const DashboardLayout: React.FC = () => {
                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                           >
                             <Settings className="w-4 h-4 text-gray-400" />
-                            Settings
+                            {t('nav.settings')}
                           </Link>
                           <button
                             onClick={handleLogout}
@@ -773,7 +824,7 @@ const DashboardLayout: React.FC = () => {
                             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            Logout
+                            {t('common.logout')}
                           </button>
                         </div>
                       </motion.div>
@@ -811,7 +862,7 @@ const DashboardLayout: React.FC = () => {
           <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">Help & Support</h2>
+              <h2 className="text-xl font-semibold text-gray-900">{t('help.title')}</h2>
               <button
                 onClick={() => setShowHelpSidebar(false)}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -824,7 +875,7 @@ const DashboardLayout: React.FC = () => {
             <div className="flex-1 p-6 space-y-6">
               {/* Documentation Links */}
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-4">Documentation</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-4">{t('help.documentation')}</h3>
                 <div className="space-y-3">
                   <Link
                     to="/help-center"
@@ -836,9 +887,9 @@ const DashboardLayout: React.FC = () => {
                     </div>
                     <div>
                       <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
-                        Documentation
+                        {t('help.documentation')}
                       </div>
-                      <div className="text-sm text-gray-500">Complete guides and API reference</div>
+                      <div className="text-sm text-gray-500">{t('help.documentationDesc')}</div>
                     </div>
                   </Link>
                   
@@ -852,9 +903,9 @@ const DashboardLayout: React.FC = () => {
                     </div>
                     <div>
                       <div className="font-medium text-gray-900 group-hover:text-green-600 transition-colors">
-                        Help Center
+                        {t('help.helpCenter')}
                       </div>
-                      <div className="text-sm text-gray-500">FAQs, guides, and troubleshooting</div>
+                      <div className="text-sm text-gray-500">{t('help.helpCenterDesc')}</div>
                     </div>
                   </Link>
                 </div>
@@ -862,7 +913,7 @@ const DashboardLayout: React.FC = () => {
 
               {/* Support Actions */}
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-4">Get Support</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-4">{t('help.getSupport')}</h3>
                 <div className="space-y-3">
                   {/* Create Support Ticket */}
                   <button
@@ -878,9 +929,9 @@ const DashboardLayout: React.FC = () => {
                     </div>
                     <div className="text-left">
                       <div className="font-medium text-gray-900 group-hover:text-orange-600 transition-colors">
-                        Create Support Ticket
+                        {t('help.createTicket')}
                       </div>
-                      <div className="text-sm text-gray-500">Submit your issue for detailed assistance.</div>
+                      <div className="text-sm text-gray-500">{t('help.createTicketDesc')}</div>
                     </div>
                   </button>
 
@@ -899,9 +950,9 @@ const DashboardLayout: React.FC = () => {
                       </div>
                       <div className="text-left">
                         <div className="font-medium text-gray-900 group-hover:text-purple-600 transition-colors">
-                          Schedule Onboarding
+                          {t('help.scheduleOnboarding')}
                         </div>
-                        <div className="text-sm text-gray-500">Get personalized setup assistance</div>
+                        <div className="text-sm text-gray-500">{t('help.scheduleOnboardingDesc')}</div>
                       </div>
                     </button>
                   )}
@@ -921,9 +972,9 @@ const DashboardLayout: React.FC = () => {
                       </div>
                       <div className="text-left">
                         <div className="font-medium group-hover:text-yellow-200 transition-colors">
-                          Upgrade
+                          {t('help.upgrade')}
                         </div>
-                        <div className="text-sm text-blue-100">Unlock premium features and support</div>
+                        <div className="text-sm text-blue-100">{t('help.upgradeDesc')}</div>
                       </div>
                     </button>
                   )}
@@ -937,7 +988,7 @@ const DashboardLayout: React.FC = () => {
                     userPlan === 'free' ? 'bg-gray-400' : 
                     userPlan === 'pro' ? 'bg-blue-500' : 'bg-purple-500'
                   }`} />
-                  <span>Current plan: {userPlan === 'free' ? 'Free' : userPlan === 'pro' ? 'Pro' : 'Ultimate'}</span>
+                  <span>{t('help.currentPlan')}: {userPlan === 'free' ? t('plan.free') : userPlan === 'pro' ? t('plan.pro') : t('plan.ultimate')}</span>
                 </div>
               </div>
             </div>

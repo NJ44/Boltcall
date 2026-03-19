@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, MapPin, Save, RefreshCw, AlertTriangle, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Magnetic } from '../../../components/ui/magnetic';
 import { useToast } from '../../../contexts/ToastContext';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -10,6 +11,7 @@ import { supabase } from '../../../lib/supabase';
 import Button from '../../../components/ui/Button';
 
 const GeneralPage: React.FC = () => {
+  const { t } = useTranslation();
   const { showToast } = useToast();
   const { user } = useAuth();
   const { claimReward } = useTokens();
@@ -249,13 +251,13 @@ const GeneralPage: React.FC = () => {
           <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
             <Building2 className="w-5 h-5 text-blue-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">Business Information</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t('general.businessInfo')}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Business Name *
+              {t('general.businessName')} *
             </label>
             <input
               type="text"
@@ -268,7 +270,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Owner/Manager *
+              {t('general.owner')} *
             </label>
             <input
               type="text"
@@ -281,7 +283,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Primary Language *
+              {t('general.agentLanguage')} *
             </label>
             <select
               value={businessInfo.language}
@@ -298,7 +300,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Industry
+              {t('general.industry')}
             </label>
             <select
               value={businessInfo.industry}
@@ -315,7 +317,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Website URL
+              {t('general.website')}
             </label>
             <input
               type="url"
@@ -328,7 +330,7 @@ const GeneralPage: React.FC = () => {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Business Description
+              {t('general.description')}
             </label>
             <textarea
               value={businessInfo.description}
@@ -352,13 +354,13 @@ const GeneralPage: React.FC = () => {
           <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
             <MapPin className="w-5 h-5 text-green-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">Business Address</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t('general.address')}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Street Address *
+              {t('general.addressLine1')} *
             </label>
             <input
               type="text"
@@ -371,7 +373,7 @@ const GeneralPage: React.FC = () => {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Address Line 2
+              {t('general.addressLine2')}
             </label>
             <input
               type="text"
@@ -384,7 +386,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              City *
+              {t('general.city')} *
             </label>
             <input
               type="text"
@@ -397,7 +399,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              State/Province
+              {t('general.state')}
             </label>
             <input
               type="text"
@@ -410,7 +412,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Postal Code
+              {t('general.postalCode')}
             </label>
             <input
               type="text"
@@ -423,7 +425,7 @@ const GeneralPage: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Country *
+              {t('general.country')} *
             </label>
             <select
               value={addressInfo.country}
@@ -461,12 +463,12 @@ const GeneralPage: React.FC = () => {
             {isSaving ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                Saving...
+                {t('common.saving')}
               </>
             ) : (
               <>
                 <Save className="w-4 h-4" />
-                Save Changes
+                {t('common.save')}
               </>
             )}
           </button>
@@ -485,8 +487,8 @@ const GeneralPage: React.FC = () => {
             <AlertTriangle className="w-5 h-5 text-red-600" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">Danger Zone</h2>
-            <p className="text-sm text-gray-600 mt-1">Irreversible and destructive actions</p>
+            <h2 className="text-xl font-semibold text-gray-900">{t('general.deleteAccount')}</h2>
+            <p className="text-sm text-gray-600 mt-1">{t('general.deleteAccountDesc')}</p>
           </div>
         </div>
 

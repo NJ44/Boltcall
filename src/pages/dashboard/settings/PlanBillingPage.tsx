@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap, Coins } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { getUserSubscription, getUserInvoices, redirectToCheckout, type PlanLevel } from '../../../lib/stripe';
 import { TOKEN_PLANS } from '../../../lib/tokens';
 
@@ -27,6 +28,7 @@ interface Invoice {
 }
 
 const PlanBillingPage: React.FC = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'plan' | 'invoices'>('plan');
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -115,8 +117,8 @@ const PlanBillingPage: React.FC = () => {
   }
 
   const tabs = [
-    { id: 'plan' as const, label: 'Subscription' },
-    { id: 'invoices' as const, label: 'Payment & Invoices' },
+    { id: 'plan' as const, label: t('plan.subscription') },
+    { id: 'invoices' as const, label: t('plan.paymentInvoices') },
   ];
 
   return (
@@ -145,7 +147,7 @@ const PlanBillingPage: React.FC = () => {
         <div className="space-y-6">
           {/* Current Plan Card */}
           <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Current Plan</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">{t('plan.currentPlan')}</h3>
             <div className="border-t border-gray-100 pt-4 md:pt-5">
               <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-6">
                 {/* Plan name + price */}
@@ -161,7 +163,7 @@ const PlanBillingPage: React.FC = () => {
                           ? Math.round(currentPlan.price.yearly / 12)
                           : currentPlan.price.monthly}
                       </span>
-                      {' '}/ month
+                      {' '}{t('plan.perMonth')}
                     </p>
                   </div>
                 </div>
@@ -169,7 +171,7 @@ const PlanBillingPage: React.FC = () => {
                 {/* Primary usage metric */}
                 <div className="w-full md:flex-1 md:min-w-[200px] md:max-w-xs">
                   <div className="flex items-baseline justify-between mb-1.5">
-                    <span className="text-sm text-gray-700">AI Conversations</span>
+                    <span className="text-sm text-gray-700">{t('plan.aiConversations')}</span>
                     <span className="text-sm">
                       <span className={usageItems[0].used / usageItems[0].limit > 0.9 ? 'text-red-600 font-semibold' : 'text-blue-600 font-semibold'}>
                         {usageItems[0].used.toLocaleString()}
@@ -191,7 +193,7 @@ const PlanBillingPage: React.FC = () => {
                     />
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
-                    Add more capacity with an add-on.
+                    {t('plan.addCapacity')}
                   </p>
                 </div>
 

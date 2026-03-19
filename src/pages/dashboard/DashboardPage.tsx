@@ -3,6 +3,7 @@ import { AlertTriangle, HelpCircle, X, Send, ChevronRight } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Confetti from 'react-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
@@ -27,6 +28,7 @@ const ONBOARDING_STEPS: Step[] = [
 const ONBOARDING_STORAGE_KEY = 'boltcall-onboarding-completed';
 
 const DashboardPage: React.FC = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showHelpChat, setShowHelpChat] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
@@ -113,7 +115,7 @@ const DashboardPage: React.FC = () => {
       {/* Setup Guide Section */}
       <div data-onboarding="setup-guide" className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
         <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Setup Guide</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('dashboard.setupGuide')}</h2>
         </div>
 
         <div className="p-4">
