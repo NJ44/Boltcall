@@ -1,0 +1,340 @@
+import type { Handler } from '@netlify/functions';
+import { createClient } from '@supabase/supabase-js';
+
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || '';
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET || '';
+const PAYPAL_API_BASE = process.env.PAYPAL_MODE === 'sandbox'
+  ? 'https://api-m.sandbox.paypal.com'
+  : 'https://api-m.paypal.com';
+const PAYPAL_WEBHOOK_ID = process.env.PAYPAL_WEBHOOK_ID || '';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_KEY || ''
+);
+
+// ── PayPal Auth ──────────────────────────────────────────────────────────────
+
+async function getPayPalAccessToken(): Promise<string> {
+  const res = await fetch(`${PAYPAL_API_BASE}/v1/oauth2/token`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64'),
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'grant_type=client_credentials',
+  });
+
+  if (!res.ok) {
+    throw new Error(`PayPal auth failed: ${res.status} ${await res.text()}`);
+  }
+
+  const data = await res.json();
+  return data.access_token;
+}
+
+// ── Webhook Signature Verification ───────────────────────────────────────────
+
+async function verifyWebhookSignature(event: any): Promise<boolean> {
+  if (!PAYPAL_WEBHOOK_ID) {
+    console.warn('PAYPAL_WEBHOOK_ID not set — skipping verification');
+    return true;
+  }
+
+  const accessToken = await getPayPalAccessToken();
+
+  const verifyBody = {
+    auth_algo: event.headers['paypal-auth-algo'],
+    cert_url: event.headers['paypal-cert-url'],
+    transmission_id: event.headers['paypal-transmission-id'],
+    transmission_sig: event.headers['paypal-transmission-sig'],
+    transmission_time: event.headers['paypal-transmission-time'],
+    webhook_id: PAYPAL_WEBHOOK_ID,
+    webhook_event: JSON.parse(event.body || '{}'),
+  };
+
+  const res = await fetch(`${PAYPAL_API_BASE}/v1/notifications/verify-webhook-signature`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(verifyBody),
+  });
+
+  if (!res.ok) {
+    console.error('Webhook verification API error:', await res.text());
+    return false;
+  }
+
+  const result = await res.json();
+  return result.verification_status === 'SUCCESS';
+}
+
+// ── Event Handlers ───────────────────────────────────────────────────────────
+
+async function handlePaymentCompleted(resource: any) {
+  const payerEmail = resource.payer?.email_address;
+  const payerId = resource.payer?.payer_id;
+  const amount = resource.purchase_units?.[0]?.amount?.value;
+  const currency = resource.purchase_units?.[0]?.amount?.currency_code;
+  const orderId = resource.id;
+
+  console.log(`Payment completed: ${orderId} — ${amount} ${currency} from ${payerEmail}`);
+
+  // Try to find user by email
+  const { data: user } = await supabase
+    .from('profiles')
+    .select('id, email')
+    .eq('email', payerEmail)
+    .single();
+
+  // Log the payment
+  const { error } = await supabase
+    .from('paypal_payments')
+    .upsert({
+      order_id: orderId,
+      payer_email: payerEmail,
+      payer_id: payerId,
+      user_id: user?.id || null,
+      amount: parseFloat(amount),
+      currency: currency || 'USD',
+      status: 'completed',
+      raw_event: resource,
+      created_at: new Date().toISOString(),
+    }, {
+      onConflict: 'order_id',
+    });
+
+  if (error) {
+    console.error('Error saving PayPal payment:', error);
+    throw error;
+  }
+
+  // Send Telegram notification
+  await sendTelegramNotification(
+    `💰 PayPal Payment Received!\n\n` +
+    `Amount: $${amount} ${currency}\n` +
+    `From: ${payerEmail}\n` +
+    `Order: ${orderId}\n` +
+    `User: ${user ? 'Matched ✅' : 'No account ⚠️'}`
+  );
+}
+
+async function handleSubscriptionActivated(resource: any) {
+  const subscriptionId = resource.id;
+  const planId = resource.plan_id;
+  const payerEmail = resource.subscriber?.email_address;
+  const payerId = resource.subscriber?.payer_id;
+  const startTime = resource.start_time;
+
+  console.log(`Subscription activated: ${subscriptionId} (plan: ${planId}) for ${payerEmail}`);
+
+  // Map PayPal plan ID to our plan levels
+  const planLevel = mapPayPalPlanToLevel(planId);
+
+  // Find user by email
+  const { data: user } = await supabase
+    .from('profiles')
+    .select('id, email')
+    .eq('email', payerEmail)
+    .single();
+
+  if (user) {
+    const { error } = await supabase
+      .from('subscriptions')
+      .upsert({
+        user_id: user.id,
+        payment_provider: 'paypal',
+        paypal_subscription_id: subscriptionId,
+        paypal_payer_id: payerId,
+        plan_level: planLevel,
+        billing_interval: 'monthly',
+        status: 'active',
+        current_period_start: startTime,
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'paypal_subscription_id',
+      });
+
+    if (error) {
+      console.error('Error upserting PayPal subscription:', error);
+      throw error;
+    }
+  }
+
+  await sendTelegramNotification(
+    `🎉 New PayPal Subscription!\n\n` +
+    `Plan: ${planLevel}\n` +
+    `From: ${payerEmail}\n` +
+    `Subscription: ${subscriptionId}\n` +
+    `User: ${user ? 'Matched ✅' : 'No account ⚠️'}`
+  );
+}
+
+async function handleSubscriptionCancelled(resource: any) {
+  const subscriptionId = resource.id;
+
+  console.log(`Subscription cancelled: ${subscriptionId}`);
+
+  const { error } = await supabase
+    .from('subscriptions')
+    .update({
+      status: 'canceled',
+      canceled_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    })
+    .eq('paypal_subscription_id', subscriptionId);
+
+  if (error) {
+    console.error('Error cancelling PayPal subscription:', error);
+    throw error;
+  }
+
+  await sendTelegramNotification(
+    `⚠️ PayPal Subscription Cancelled\n\nSubscription: ${subscriptionId}`
+  );
+}
+
+async function handleSubscriptionSuspended(resource: any) {
+  const subscriptionId = resource.id;
+
+  const { error } = await supabase
+    .from('subscriptions')
+    .update({
+      status: 'past_due',
+      updated_at: new Date().toISOString(),
+    })
+    .eq('paypal_subscription_id', subscriptionId);
+
+  if (error) {
+    console.error('Error suspending PayPal subscription:', error);
+  }
+
+  await sendTelegramNotification(
+    `⚠️ PayPal Subscription Suspended (payment failed)\n\nSubscription: ${subscriptionId}`
+  );
+}
+
+async function handlePaymentSaleCompleted(resource: any) {
+  const amount = resource.amount?.total;
+  const currency = resource.amount?.currency;
+  const saleId = resource.id;
+  const subscriptionId = resource.billing_agreement_id;
+
+  console.log(`Sale completed: ${saleId} — $${amount} ${currency}`);
+
+  // If this is a recurring payment, update the subscription period
+  if (subscriptionId) {
+    const { error } = await supabase
+      .from('subscriptions')
+      .update({
+        status: 'active',
+        updated_at: new Date().toISOString(),
+      })
+      .eq('paypal_subscription_id', subscriptionId);
+
+    if (error) {
+      console.error('Error updating subscription on sale:', error);
+    }
+  }
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function mapPayPalPlanToLevel(planId: string): string {
+  // Map your PayPal plan IDs to Boltcall plan levels
+  // Update these when you create subscription plans in PayPal
+  const planMap: Record<string, string> = {
+    // 'P-XXXXX': 'starter',
+    // 'P-XXXXX': 'pro',
+    // 'P-XXXXX': 'agency',
+  };
+  return planMap[planId] || 'starter';
+}
+
+async function sendTelegramNotification(message: string) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  if (!botToken || !chatId) return;
+
+  try {
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'HTML',
+      }),
+    });
+  } catch (err) {
+    console.error('Telegram notification failed:', err);
+  }
+}
+
+// ── Main Handler ─────────────────────────────────────────────────────────────
+
+const handler: Handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, body: '' };
+  }
+
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method not allowed' };
+  }
+
+  // Verify webhook signature
+  const isValid = await verifyWebhookSignature(event);
+  if (!isValid) {
+    console.error('PayPal webhook signature verification failed');
+    return { statusCode: 401, body: 'Invalid signature' };
+  }
+
+  const body = JSON.parse(event.body || '{}');
+  const eventType = body.event_type;
+  const resource = body.resource;
+
+  console.log(`PayPal webhook received: ${eventType}`);
+
+  try {
+    switch (eventType) {
+      // One-time payments (hosted buttons)
+      case 'CHECKOUT.ORDER.APPROVED':
+      case 'PAYMENT.CAPTURE.COMPLETED':
+        await handlePaymentCompleted(resource);
+        break;
+
+      // Subscriptions
+      case 'BILLING.SUBSCRIPTION.ACTIVATED':
+      case 'BILLING.SUBSCRIPTION.RE-ACTIVATED':
+        await handleSubscriptionActivated(resource);
+        break;
+
+      case 'BILLING.SUBSCRIPTION.CANCELLED':
+      case 'BILLING.SUBSCRIPTION.EXPIRED':
+        await handleSubscriptionCancelled(resource);
+        break;
+
+      case 'BILLING.SUBSCRIPTION.SUSPENDED':
+        await handleSubscriptionSuspended(resource);
+        break;
+
+      // Recurring payment received
+      case 'PAYMENT.SALE.COMPLETED':
+        await handlePaymentSaleCompleted(resource);
+        break;
+
+      default:
+        console.log(`Unhandled PayPal event: ${eventType}`);
+    }
+
+    return { statusCode: 200, body: JSON.stringify({ received: true }) };
+  } catch (error: any) {
+    console.error('PayPal webhook handler error:', error);
+    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+  }
+};
+
+export { handler };

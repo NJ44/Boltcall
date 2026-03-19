@@ -13,7 +13,7 @@ const PaymentPro: React.FC = () => {
   useEffect(() => {
     // Load PayPal SDK
     const script = document.createElement('script');
-    script.src = 'https://www.paypal.com/sdk/js?client-id=BAA5fIcZyGHSGBeakJKNPZ9R0r4qGyhW0q0YVABwmULTwWSgSncoz1XsEkhygcw-nn_A9CS5CbBWG8LJJw&components=hosted-buttons&disable-funding=venmo&currency=USD';
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AVT4Zzwm3heDT68aKRr0Z&components=hosted-buttons&disable-funding=venmo&currency=USD';
     script.crossOrigin = 'anonymous';
     script.async = true;
     document.head.appendChild(script);
