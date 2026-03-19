@@ -528,7 +528,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 px-1 md:px-0">
 
       {/* Tabs */}
       <div className="flex gap-1 border-b border-zinc-200">
@@ -632,77 +632,75 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             ]}
             data={agents}
             renderRow={(agent) => (
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
                 {/* Checkbox */}
                 <input
                   type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="hidden md:block h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
-                
-                {/* Agent Name */}
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
-                    <Users className="w-4 h-4 text-zinc-600" />
+
+                {/* Agent Name + Status (stacked on mobile) */}
+                <div className="flex items-center justify-between md:contents">
+                  <div className="flex items-center gap-3 md:flex-1">
+                    <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
+                      <Users className="w-4 h-4 text-zinc-600" />
+                    </div>
+                    <div className="font-medium text-gray-900">{agent.name}</div>
                   </div>
-                  <div className="font-medium text-gray-900">{agent.name}</div>
+
+                  {/* Status */}
+                  <div className="md:flex-1">
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                      agent.status === 'active'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                        agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
+                      }`}></div>
+                      {agent.status}
+                    </span>
+                  </div>
                 </div>
-                
-                {/* Status */}
-                <div className="flex-1">
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                    agent.status === 'active' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                      agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
-                    }`}></div>
-                    {agent.status}
-                  </span>
+
+                {/* Stats row - horizontal on mobile, inline on desktop */}
+                <div className="flex items-center gap-4 text-sm md:contents">
+                  <div className="text-gray-900 md:flex-1">
+                    <span className="text-xs text-gray-500 md:hidden">Calls: </span>{agent.callsToday}
+                  </div>
+                  <div className="text-gray-900 md:flex-1">
+                    <span className="text-xs text-gray-500 md:hidden">Avg: </span>{agent.avgResponseTime}
+                  </div>
+                  <div className="text-gray-900 md:flex-1">
+                    <span className="text-xs text-gray-500 md:hidden">Rate: </span>{agent.successRate}
+                  </div>
+                  <div className="text-gray-500 md:flex-1">
+                    <span className="text-xs text-gray-500 md:hidden">Last: </span>{agent.lastActive}
+                  </div>
                 </div>
-                
-                {/* Calls Today */}
-                <div className="text-sm text-gray-900 flex-1">
-                  {agent.callsToday}
-                </div>
-                
-                {/* Avg Response */}
-                <div className="text-sm text-gray-900 flex-1">
-                  {agent.avgResponseTime}
-                </div>
-                
-                {/* Success Rate */}
-                <div className="text-sm text-gray-900 flex-1">
-                  {agent.successRate}
-                </div>
-                
-                {/* Last Active */}
-                <div className="text-sm text-gray-500 flex-1">
-                  {agent.lastActive}
-                </div>
-                
+
                 {/* Action Icons */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3 md:gap-2">
                   <button
                     onClick={() => handleTestChat(agent)}
-                    className="text-blue-600 hover:text-blue-800 transition-colors"
+                    className="text-blue-600 hover:text-blue-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
                     title="Test Chat"
                   >
-                    <MessageCircle className="w-4 h-4" />
+                    <MessageCircle className="w-5 h-5 md:w-4 md:h-4" />
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); handleRegeneratePrompt(agent); }}
                     disabled={regeneratingAgentId === agent.id}
-                    className="text-purple-600 hover:text-purple-800 transition-colors disabled:opacity-50"
+                    className="text-purple-600 hover:text-purple-800 transition-colors disabled:opacity-50 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
                     title="Regenerate Prompt"
                   >
-                    <RefreshCw className={`w-4 h-4 ${regeneratingAgentId === agent.id ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-5 h-5 md:w-4 md:h-4 ${regeneratingAgentId === agent.id ? 'animate-spin' : ''}`} />
                   </button>
-                  <button className="text-green-600 hover:text-green-800">
-                    <Flame className="w-4 h-4" />
+                  <button className="text-green-600 hover:text-green-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
+                    <Flame className="w-5 h-5 md:w-4 md:h-4" />
                   </button>
-                  <button className="text-gray-600 hover:text-gray-800">
-                    <MoreHorizontal className="w-4 h-4" />
+                  <button className="text-gray-600 hover:text-gray-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
+                    <MoreHorizontal className="w-5 h-5 md:w-4 md:h-4" />
                   </button>
                 </div>
               </div>
@@ -847,8 +845,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                   <label className="block text-sm font-medium text-zinc-700 mb-2">
                     Call Direction *
                   </label>
-                  <div className="flex gap-4">
-                    <label className="flex items-center text-zinc-900">
+                  <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+                    <label className="flex items-center text-zinc-900 text-sm md:text-base">
                       <input
                         type="radio"
                         name="direction"
@@ -859,7 +857,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                       />
                       Inbound (Receives calls)
                     </label>
-                    <label className="flex items-center text-zinc-900">
+                    <label className="flex items-center text-zinc-900 text-sm md:text-base">
                       <input
                         type="radio"
                         name="direction"
@@ -921,7 +919,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       {/* Templates Modal */}
       {showTemplatesModal && (
         <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full mx-2 md:mx-4 max-h-[90vh] md:max-h-[80vh] overflow-y-auto">
             <div className="p-5">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-zinc-900">Industry Templates</h2>
@@ -1064,11 +1062,11 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       {/* Agent Details Modal - Shows after template selection */}
       {showAgentDetailsModal && selectedAgentDetails && (
         <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-zinc-900">{selectedAgentDetails.name}</h2>
+          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-2 md:mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="p-4 md:p-6">
+              <div className="flex items-center justify-between mb-4 md:mb-6">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-lg md:text-2xl font-bold text-zinc-900 truncate">{selectedAgentDetails.name}</h2>
                   <p className="text-sm text-gray-500 mt-1">Agent created successfully</p>
                 </div>
                 <button
@@ -1098,7 +1096,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 </div>
 
                 {/* Voice Settings */}
-                <div className="bg-gray-50 rounded-xl p-6">
+                <div className="bg-gray-50 rounded-xl p-4 md:p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Voice Settings</h3>
                   <div className="space-y-3">
                     <div>
@@ -1126,18 +1124,18 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
                 {/* Greeting */}
                 {(selectedAgentDetails as any).templateGreeting && (
-                  <div className="bg-blue-50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Greeting</h3>
+                  <div className="bg-blue-50 rounded-xl p-4 md:p-6">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Greeting</h3>
                     <p className="text-gray-700 leading-relaxed">{(selectedAgentDetails as any).templateGreeting}</p>
                   </div>
                 )}
 
                 {/* System Prompt */}
                 {(selectedAgentDetails as any).templateSystemPrompt && (
-                  <div className="bg-gray-50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">System Prompt</h3>
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
-                      <pre className="text-sm text-gray-700 whitespace-pre-wrap font-sans">
+                  <div className="bg-gray-50 rounded-xl p-4 md:p-6">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">System Prompt</h3>
+                    <div className="bg-white rounded-lg p-3 md:p-4 border border-gray-200 overflow-x-auto">
+                      <pre className="text-xs md:text-sm text-gray-700 whitespace-pre-wrap font-sans">
                         {(selectedAgentDetails as any).templateSystemPrompt}
                       </pre>
                     </div>
@@ -1146,8 +1144,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
                 {/* Sample Questions */}
                 {(selectedAgentDetails as any).templateSampleQuestions && (
-                  <div className="bg-green-50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Sample Questions</h3>
+                  <div className="bg-green-50 rounded-xl p-4 md:p-6">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Sample Questions</h3>
                     <ul className="space-y-2">
                       {((selectedAgentDetails as any).templateSampleQuestions || []).map((question: string, index: number) => (
                         <li key={index} className="flex items-start gap-2">

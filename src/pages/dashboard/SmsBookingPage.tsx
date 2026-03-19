@@ -1,9 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock } from 'lucide-react';
+import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+
+/**
+ * NOTE: There is no dedicated `bookings` or `sms_messages` table in Supabase yet.
+ * SMS message history is fetched from Twilio via the twilio-sms Netlify function (action: 'list').
+ * A dedicated Supabase `bookings` table that links Cal.com appointments to SMS reminders
+ * would be a better long-term solution — it would allow per-user filtering, faster queries,
+ * and offline/history tracking without hitting Twilio's API each time.
+ */
+
+interface TwilioMessage {
+  sid: string;
+  to: string;
+  from: string;
+  body: string;
+  status: string;
+  direction: string;
+  date_sent: string | null;
+  date_created: string;
+}
 
 interface SmsBooking {
   id: string;
@@ -21,59 +41,45 @@ interface SmsBooking {
   notes?: string;
 }
 
+/** Map a Twilio delivery status to a simplified status for the UI */
+function mapTwilioStatus(twilioStatus: string): 'active' | 'inactive' {
+  const deliveredStatuses = ['delivered', 'sent', 'queued', 'sending'];
+  return deliveredStatuses.includes(twilioStatus) ? 'active' : 'inactive';
+}
+
+/** Convert a Twilio message into the SmsBooking shape used by the table */
+function twilioMessageToBooking(msg: TwilioMessage): SmsBooking {
+  const sentDate = msg.date_sent || msg.date_created;
+  const dateObj = new Date(sentDate);
+  const isDelivered = ['delivered', 'sent'].includes(msg.status);
+
+  return {
+    id: msg.sid,
+    clientName: msg.to, // Twilio doesn't store names; show the phone number
+    clientPhone: msg.to,
+    clientEmail: '',
+    appointmentDate: dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+    appointmentTime: dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    service: msg.direction === 'outbound-api' ? 'Outbound SMS' : 'Inbound SMS',
+    status: mapTwilioStatus(msg.status),
+    reminderTime: msg.status,
+    reminderText: msg.body,
+    reminderSent: isDelivered,
+    createdAt: dateObj.toISOString(),
+    notes: `From: ${msg.from}`,
+  };
+}
+
 const SmsBookingPage: React.FC = () => {
+  const { user } = useAuth();
   const [phoneNumbers, setPhoneNumbers] = useState<Array<{ id: string; number: string }>>([]);
   const [agents, setAgents] = useState<Array<{ id: string; name: string }>>([]);
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
   const [selectedAgent, setSelectedAgent] = useState('');
-  
-  const [smsBookings, setSmsBookings] = useState<SmsBooking[]>([
-    {
-      id: '1',
-      clientName: 'John Smith',
-      clientPhone: '+1 (555) 123-4567',
-      clientEmail: 'john@example.com',
-      appointmentDate: '2024-01-15',
-      appointmentTime: '10:00 AM',
-      service: 'Dental Cleaning',
-      status: 'active',
-      reminderTime: '24 hours before',
-      reminderText: 'Hi John, this is a reminder about your dental cleaning appointment tomorrow at 10:00 AM. Please arrive 10 minutes early.',
-      reminderSent: true,
-      createdAt: '2024-01-10',
-      notes: 'Regular cleaning appointment'
-    },
-    {
-      id: '2',
-      clientName: 'Sarah Johnson',
-      clientPhone: '+1 (555) 987-6543',
-      clientEmail: 'sarah@example.com',
-      appointmentDate: '2024-01-16',
-      appointmentTime: '2:00 PM',
-      service: 'Consultation',
-      status: 'active',
-      reminderTime: '2 hours before',
-      reminderText: 'Hello Sarah, your consultation appointment is scheduled for today at 2:00 PM. We look forward to seeing you!',
-      reminderSent: false,
-      createdAt: '2024-01-12',
-      notes: 'Initial consultation'
-    },
-    {
-      id: '3',
-      clientName: 'Mike Wilson',
-      clientPhone: '+1 (555) 456-7890',
-      clientEmail: 'mike@example.com',
-      appointmentDate: '2024-01-18',
-      appointmentTime: '9:30 AM',
-      service: 'Follow-up',
-      status: 'inactive',
-      reminderTime: '48 hours before',
-      reminderText: 'Hi Mike, this is a reminder about your follow-up appointment on January 18th at 9:30 AM.',
-      reminderSent: true,
-      createdAt: '2024-01-14',
-      notes: 'Post-treatment follow-up'
-    }
-  ]);
+
+  const [smsBookings, setSmsBookings] = useState<SmsBooking[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -81,11 +87,37 @@ const SmsBookingPage: React.FC = () => {
   const [selectedBooking, setSelectedBooking] = useState<SmsBooking | null>(null);
   const [editingBooking, setEditingBooking] = useState<Partial<SmsBooking>>({});
 
-  // Fetch phone numbers and agents
+  // Fetch SMS messages from Twilio via the Netlify function
+  const fetchSmsMessages = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/.netlify/functions/twilio-sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'list', limit: 50 }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Failed to fetch SMS messages (${response.status})`);
+      }
+
+      const data = await response.json();
+      const messages: TwilioMessage[] = data.messages || [];
+      setSmsBookings(messages.map(twilioMessageToBooking));
+    } catch (err: any) {
+      console.error('Error fetching SMS messages:', err);
+      setError(err.message || 'Failed to load SMS messages. Check Twilio configuration.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch phone numbers, agents, and SMS messages on mount
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSupabaseData = async () => {
       try {
-        // Fetch phone numbers
         const { data: phoneData, error: phoneError } = await supabase
           .from('phone_numbers')
           .select('id, phone_number');
@@ -94,7 +126,6 @@ const SmsBookingPage: React.FC = () => {
           setPhoneNumbers(phoneData.map(p => ({ id: p.id, number: p.phone_number || '' })));
         }
 
-        // Fetch agents
         const { data: agentData, error: agentError } = await supabase
           .from('agents')
           .select('id, name');
@@ -102,15 +133,17 @@ const SmsBookingPage: React.FC = () => {
         if (!agentError && agentData) {
           setAgents(agentData.map(a => ({ id: a.id, name: a.name || '' })));
         }
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      } catch (err) {
+        console.error('Error fetching Supabase data:', err);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchSupabaseData();
+    fetchSmsMessages();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDeleteBooking = (id: string) => {
+    // Remove from local state only — Twilio messages cannot be deleted from the client
     setSmsBookings(smsBookings.filter(booking => booking.id !== id));
     setShowDeleteModal(false);
     setSelectedBooking(null);
@@ -123,7 +156,7 @@ const SmsBookingPage: React.FC = () => {
 
   const handleSaveBooking = () => {
     if (editingBooking.id) {
-      setSmsBookings(smsBookings.map(b => 
+      setSmsBookings(smsBookings.map(b =>
         b.id === editingBooking.id ? { ...b, ...editingBooking } as SmsBooking : b
       ));
     } else {
@@ -137,8 +170,57 @@ const SmsBookingPage: React.FC = () => {
     setEditingBooking({});
   };
 
+  // Loading skeleton
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Loader2 className="w-5 h-5 animate-spin text-blue-500" />
+              <span className="text-sm text-gray-600">Loading SMS messages...</span>
+            </div>
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse flex items-center gap-6">
+                  <div className="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-1/4" />
+                    <div className="h-3 bg-gray-100 rounded w-1/3" />
+                  </div>
+                  <div className="h-4 bg-gray-200 rounded w-20" />
+                  <div className="h-4 bg-gray-200 rounded w-16" />
+                  <div className="flex-1 h-4 bg-gray-100 rounded" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
+      {/* Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+          <p className="text-sm text-red-700">{error}</p>
+          <button
+            onClick={fetchSmsMessages}
+            className="ml-auto flex items-center gap-1 text-sm text-red-600 hover:text-red-800"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Retry
+          </button>
+        </div>
+      )}
+
       {/* SMS Bookings Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -148,16 +230,16 @@ const SmsBookingPage: React.FC = () => {
         <CardTableWithPanel
           data={smsBookings}
           columns={[
-            { key: 'client', label: 'Client & Service', width: '25%' },
-            { key: 'appointment', label: 'Appointment', width: '20%' },
+            { key: 'client', label: 'Recipient & Type', width: '25%' },
+            { key: 'appointment', label: 'Sent At', width: '20%' },
             { key: 'status', label: 'Status', width: '15%' },
-            { key: 'timing', label: 'Reminder Timing', width: '15%' },
-            { key: 'text', label: 'Reminder Text', width: '20%' },
+            { key: 'timing', label: 'Delivery Status', width: '15%' },
+            { key: 'text', label: 'Message', width: '20%' },
             { key: 'actions', label: 'Actions', width: '5%' }
           ]}
           renderRow={(booking) => (
             <div className="flex items-center gap-6">
-              {/* Client & Service */}
+              {/* Recipient & Type */}
               <div className="flex items-center gap-3 flex-1">
                 <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <MessageSquare className="w-5 h-5 text-green-600" />
@@ -165,14 +247,16 @@ const SmsBookingPage: React.FC = () => {
                 <div>
                   <div className="text-sm font-medium text-gray-900">{booking.clientName}</div>
                   <div className="text-sm text-gray-500">{booking.service}</div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Phone className="w-3 h-3 text-gray-400" />
-                    <span className="text-xs text-gray-500">{booking.clientPhone}</span>
-                  </div>
+                  {booking.notes && (
+                    <div className="flex items-center gap-2 mt-1">
+                      <Phone className="w-3 h-3 text-gray-400" />
+                      <span className="text-xs text-gray-500">{booking.notes}</span>
+                    </div>
+                  )}
                 </div>
               </div>
-              
-              {/* Appointment */}
+
+              {/* Sent At */}
               <div className="flex items-center gap-2 flex-1">
                 <Calendar className="w-4 h-4 text-gray-400" />
                 <div>
@@ -180,7 +264,7 @@ const SmsBookingPage: React.FC = () => {
                   <div className="text-sm text-gray-500">{booking.appointmentTime}</div>
                 </div>
               </div>
-              
+
               {/* Status */}
               <div className="flex items-center gap-2 flex-1">
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -188,7 +272,7 @@ const SmsBookingPage: React.FC = () => {
                     ? 'bg-green-100 text-green-800'
                     : 'bg-gray-100 text-gray-800'
                 }`}>
-                  {booking.status}
+                  {booking.status === 'active' ? 'Delivered' : 'Failed'}
                 </span>
                 {booking.reminderSent && (
                   <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
@@ -196,18 +280,18 @@ const SmsBookingPage: React.FC = () => {
                   </span>
                 )}
               </div>
-              
-              {/* Reminder Timing */}
+
+              {/* Delivery Status */}
               <div className="flex items-center gap-2 flex-1">
                 <Clock className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-900">{booking.reminderTime}</span>
+                <span className="text-sm text-gray-900 capitalize">{booking.reminderTime}</span>
               </div>
-              
-              {/* Reminder Text */}
+
+              {/* Message */}
               <div className="text-sm text-gray-900 flex-1 truncate">
                 {booking.reminderText}
               </div>
-              
+
               {/* Actions */}
               <div className="flex items-center gap-2">
                 <button
@@ -228,14 +312,14 @@ const SmsBookingPage: React.FC = () => {
               </div>
             </div>
           )}
-          emptyStateText="No SMS bookings found"
+          emptyStateText="No SMS messages found"
           emptyStateAnimation="/No_Data_Preview.lottie"
           onAddNew={() => {
             setSelectedPhoneNumber('');
             setSelectedAgent('');
             setShowAddModal(true);
           }}
-          addNewText="Add SMS Booking"
+          addNewText="Send SMS"
         />
       </motion.div>
 
@@ -256,9 +340,9 @@ const SmsBookingPage: React.FC = () => {
               className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Delete SMS Booking</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Remove SMS Record</h2>
               <p className="text-gray-600 mb-6">
-                Are you sure you want to delete the SMS booking for {selectedBooking.clientName}'s appointment? This action cannot be undone.
+                Are you sure you want to remove the SMS record for {selectedBooking.clientPhone}? This only removes it from the list view.
               </p>
               <div className="flex justify-end gap-3">
                 <button
@@ -271,7 +355,7 @@ const SmsBookingPage: React.FC = () => {
                   onClick={() => handleDeleteBooking(selectedBooking.id)}
                   className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
-                  Delete
+                  Remove
                 </button>
               </div>
             </motion.div>
@@ -296,8 +380,8 @@ const SmsBookingPage: React.FC = () => {
               className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Add SMS Booking</h2>
-              
+              <h2 className="text-xl font-bold text-gray-900 mb-6">Send SMS</h2>
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Choose Phone Number</label>
@@ -375,7 +459,7 @@ const SmsBookingPage: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-xl font-bold text-gray-900 mb-6">Reschedule SMS Booking</h2>
-              
+
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>

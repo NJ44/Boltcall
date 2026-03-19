@@ -12,7 +12,7 @@ const ConnectFacebookButton: React.FC<ConnectFacebookButtonProps> = ({
 }) => {
   const handleConnect = async () => {
     try {
-      const response = await fetch("/api/auth/facebook/start");
+      const response = await fetch("/.netlify/functions/facebook-auth-start");
       const { url } = await response.json();
       
       if (url) {

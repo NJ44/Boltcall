@@ -119,10 +119,10 @@ const PlanBillingPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6 px-1 md:px-0">
       {/* Secondary Tabs — like Instantly's "Email Outreach / Credits / CRM" row */}
       <div className="border-b border-gray-200">
-        <nav className="-mb-px flex gap-6">
+        <nav className="-mb-px flex gap-4 md:gap-6">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -143,10 +143,10 @@ const PlanBillingPage: React.FC = () => {
       {activeTab === 'plan' && (
         <div className="space-y-6">
           {/* Current Plan Card */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Current Plan</h3>
-            <div className="border-t border-gray-100 pt-5">
-              <div className="flex flex-wrap items-start justify-between gap-6">
+            <div className="border-t border-gray-100 pt-4 md:pt-5">
+              <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start md:justify-between md:gap-6">
                 {/* Plan name + price */}
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center">
@@ -166,7 +166,7 @@ const PlanBillingPage: React.FC = () => {
                 </div>
 
                 {/* Primary usage metric */}
-                <div className="flex-1 min-w-[200px] max-w-xs">
+                <div className="w-full md:flex-1 md:min-w-[200px] md:max-w-xs">
                   <div className="flex items-baseline justify-between mb-1.5">
                     <span className="text-sm text-gray-700">AI Conversations</span>
                     <span className="text-sm">
@@ -195,7 +195,7 @@ const PlanBillingPage: React.FC = () => {
                 </div>
 
                 {/* Billing cycle */}
-                <div className="text-right text-sm text-gray-600">
+                <div className="text-left md:text-right text-sm text-gray-600">
                   <p>Billed {currentInterval === 'yearly' ? 'Annually' : 'Monthly'}</p>
                   {subscription?.current_period_end && (
                     <p>Renews {formatDate(subscription.current_period_end)}</p>
@@ -221,7 +221,7 @@ const PlanBillingPage: React.FC = () => {
           </div>
 
           {/* Usage Overview */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Plan Usage</h3>
             <div className="border-t border-gray-100 pt-5 space-y-5">
               {usageItems.map((item) => {
@@ -254,10 +254,10 @@ const PlanBillingPage: React.FC = () => {
           </div>
 
           {/* Available Plans */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 md:p-6">
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Available Plans</h3>
             <div className="border-t border-gray-100 pt-5">
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {(['starter', 'pro', 'ultimate'] as PlanLevel[]).map((level) => {
                   const plan = planDetails[level];
                   const isCurrent = currentPlanLevel === level;
@@ -322,7 +322,7 @@ const PlanBillingPage: React.FC = () => {
 
       {/* ── Payment & Invoices Tab ── */}
       {activeTab === 'invoices' && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-lg border border-gray-200 p-3 md:p-6">
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Billing History</h3>
 
           {invoices.length === 0 ? (
@@ -335,7 +335,7 @@ const PlanBillingPage: React.FC = () => {
             </div>
           ) : (
             <div className="overflow-x-auto border-t border-gray-100">
-              <table className="w-full">
+              <table className="w-full min-w-[480px]">
                 <thead>
                   <tr className="border-b border-gray-200">
                     <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>

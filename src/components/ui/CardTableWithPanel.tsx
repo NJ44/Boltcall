@@ -116,9 +116,9 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
         </div>
         )}
 
-        {/* Table Headers - Simple Text */}
+        {/* Table Headers - Simple Text (hidden on mobile since rows stack) */}
         {filteredData.length > 0 && (
-          <div className="px-6 py-4">
+          <div className="hidden md:block px-6 py-4">
             <div className="flex items-center gap-6">
               {/* Column headers - match row structure exactly */}
               {columns.filter(col => col.key !== 'checkbox').map((column) => (
@@ -143,7 +143,7 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
         )}
 
         {/* Table Content - Card-based rows */}
-        <div className="space-y-3 px-6 pb-6">
+        <div className="space-y-3 px-3 md:px-6 pb-4 md:pb-6">
           {filteredData.length > 0 ? (
             filteredData.map((item, index) => (
               <motion.div
@@ -151,7 +151,7 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-lg hover:border-gray-300 transition-all duration-500 ease-in-out"
+                className="bg-white rounded-lg border border-gray-200 p-3 md:p-6 shadow-sm hover:shadow-lg hover:border-gray-300 transition-all duration-500 ease-in-out"
               >
                 {renderRow(item, index)}
               </motion.div>

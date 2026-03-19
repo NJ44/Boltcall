@@ -694,15 +694,15 @@ const KnowledgeBasePage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6 px-1 md:px-0">
       {/* KB Completeness Banner */}
       {kbCompleteness.score < 100 && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
+          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6"
         >
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-3 md:gap-4">
             <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
               <Brain className="w-5 h-5 text-blue-600" />
             </div>
@@ -757,10 +757,10 @@ const KnowledgeBasePage: React.FC = () => {
       <div className="mt-2">
         <div className="bg-white rounded-lg shadow-sm">
           {/* Custom Header */}
-          <div className="p-6">
-            <div className="flex items-center justify-between">
+          <div className="p-3 md:p-6">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               {/* Search Input */}
-              <div className="relative flex-1 max-w-xs">
+              <div className="relative flex-1 md:max-w-xs">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -783,7 +783,8 @@ const KnowledgeBasePage: React.FC = () => {
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
                     <Plus className="h-4 w-4" />
-                    <span className="font-bold">New Knowledge Base</span>
+                    <span className="font-bold hidden md:inline">New Knowledge Base</span>
+                    <span className="font-bold md:hidden">New KB</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   
@@ -850,32 +851,50 @@ const KnowledgeBasePage: React.FC = () => {
               { key: 'actions', label: 'Actions', width: '10%' }
           ]}
           renderRow={(doc) => (
-            <div className="flex items-center gap-6">
-              {/* Document Name */}
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <FileText className="w-4 h-4 text-blue-600" />
+            <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
+              {/* Document Name + Actions (mobile: side by side) */}
+              <div className="flex items-center justify-between md:contents">
+                <div className="flex items-center gap-3 md:flex-1 min-w-0">
+                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div className="font-medium text-gray-900 truncate">{doc.name}</div>
                 </div>
-                <div className="font-medium text-gray-900">{doc.name}</div>
+
+                {/* Actions - visible on mobile next to name */}
+                <div className="flex items-center gap-3 md:hidden flex-shrink-0">
+                  <button
+                    onClick={() => handleEditDocument(doc)}
+                    className="text-blue-600 hover:text-blue-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  >
+                    <Edit className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteDocument(doc.id)}
+                    className="text-red-600 hover:text-red-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
               {/* Content Preview */}
-              <div className="text-sm text-gray-600 flex-1 truncate">
+              <div className="text-sm text-gray-600 md:flex-1 truncate">
                 {doc.content.substring(0, 50)}...
               </div>
-              
-              {/* Created Date */}
-              <div className="text-sm text-gray-500 flex-1">
-                {doc.createdAt.toLocaleDateString()}
-              </div>
-              
-              {/* Updated Date */}
-              <div className="text-sm text-gray-500 flex-1">
-                {doc.updatedAt.toLocaleDateString()}
+
+              {/* Dates row on mobile */}
+              <div className="flex items-center gap-4 text-xs md:text-sm text-gray-500 md:contents">
+                <div className="md:flex-1">
+                  <span className="md:hidden">Created: </span>{doc.createdAt.toLocaleDateString()}
+                </div>
+                <div className="md:flex-1">
+                  <span className="md:hidden">Updated: </span>{doc.updatedAt.toLocaleDateString()}
+                </div>
               </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-2 flex-shrink-0">
+              {/* Actions - desktop only */}
+              <div className="hidden md:flex items-center gap-2 flex-shrink-0">
                     <button
                       onClick={() => handleEditDocument(doc)}
                   className="text-blue-600 hover:text-blue-900 transition-colors"
@@ -1218,12 +1237,12 @@ const KnowledgeBasePage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-lg p-4 md:p-8 max-w-4xl w-full mx-2 md:mx-4 max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Edit Document: {documents.find(d => d.id === editingDocumentId)?.name}
+              <div className="flex items-center justify-between mb-4 md:mb-6">
+                <h2 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate mr-2">
+                  Edit: {documents.find(d => d.id === editingDocumentId)?.name}
                 </h2>
                 <button
                   onClick={handleCancelEdit}
@@ -1236,7 +1255,7 @@ const KnowledgeBasePage: React.FC = () => {
               <textarea
                 value={editingDocumentContent}
                 onChange={(e) => setEditingDocumentContent(e.target.value)}
-                className="w-full h-96 p-4 border border-gray-300 dark:border-gray-600 rounded-lg resize-y mb-6 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full h-64 md:h-96 p-3 md:p-4 border border-gray-300 dark:border-gray-600 rounded-lg resize-y mb-4 md:mb-6 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm md:text-base"
                 placeholder="Start writing your document here..."
               />
               

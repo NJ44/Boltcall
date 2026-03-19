@@ -81,7 +81,7 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-1 md:px-0">
       {/* Confetti */}
       {showConfetti && (
         <Confetti
@@ -300,7 +300,7 @@ const DashboardPage: React.FC = () => {
       </AnimatePresence>
 
       {/* Dock Component - Fixed at bottom middle */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full md:w-auto px-2 md:px-0">
         <AppleStyleDock />
       </div>
     </div>

@@ -21,7 +21,7 @@ import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
 // import AssistantPage from '../pages/dashboard/AssistantPage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
-// import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
+import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
 import SpeedToLeadPage from '../pages/dashboard/SpeedToLeadPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
@@ -220,7 +220,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="analytics" element={<PlanGate requiredPlan="pro"><AnalyticsPage /></PlanGate>} />
           <Route path="reminders" element={<PlanGate requiredPlan="pro"><RemindersPage /></PlanGate>} />
           <Route path="reputation" element={<PlanGate requiredPlan="pro"><ReputationPage /></PlanGate>} />
-          <Route path="instant-lead-response" element={<PlanGate requiredPlan="pro"><SpeedToLeadPage /></PlanGate>} />
+          <Route path="instant-lead-response" element={<PlanGate requiredPlan="pro"><InstantLeadReplyPage /></PlanGate>} />
           <Route path="calcom" element={<PlanGate requiredPlan="pro"><CalcomPage /></PlanGate>} />
           <Route path="sms" element={<PlanGate requiredPlan="pro"><SmsPage /></PlanGate>} />
           <Route path="whatsapp" element={<PlanGate requiredPlan="pro"><WhatsappPage /></PlanGate>} />
