@@ -76,7 +76,7 @@ const AnalyticsPage: React.FC = () => {
   const [metrics, setMetrics] = useState<DailyMetric[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [, setLastRefresh] = useState<Date | null>(null);
 
   const loadData = async () => {
     setLoading(true);
@@ -157,14 +157,7 @@ const AnalyticsPage: React.FC = () => {
     <div className="space-y-8">
       {/* Header with refresh */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-text-main">Analytics</h1>
-          {lastRefresh && (
-            <p className="text-xs text-text-muted mt-1">
-              Last updated: {lastRefresh.toLocaleTimeString()}
-            </p>
-          )}
-        </div>
+        <div></div>
         <button
           onClick={loadData}
           disabled={loading}

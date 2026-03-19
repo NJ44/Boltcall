@@ -7,6 +7,25 @@ import Confetti from 'react-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
 import FeatureHub from '../../components/dashboard/FeatureHub';
+import { InteractiveOnboardingChecklist, type Step } from '../../components/ui/onboarding-checklist';
+
+const ONBOARDING_STEPS: Step[] = [
+  {
+    id: 'enable-receptionist',
+    title: 'Enable Your AI Receptionist',
+    description: 'Turn on the AI Receptionist to start handling calls, booking appointments, and answering questions automatically.',
+    targetSelector: '[data-onboarding="feature-voice_agent"]',
+  },
+  {
+    id: 'test-receptionist',
+    title: 'Test Your Receptionist',
+    description: 'Try a test call to hear your AI receptionist in action and make sure everything sounds right.',
+    targetSelector: '[data-onboarding="nav-agent-tests"]',
+  },
+];
+
+const ONBOARDING_STORAGE_KEY = 'boltcall-onboarding-completed';
+
 const DashboardPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showHelpChat, setShowHelpChat] = useState(false);
@@ -15,6 +34,11 @@ const DashboardPage: React.FC = () => {
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  // Onboarding tour — show on first visit
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    return !localStorage.getItem(ONBOARDING_STORAGE_KEY);
+  });
 
   // Check if setup was just completed
   useEffect(() => {
@@ -57,7 +81,7 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {/* Confetti */}
       {showConfetti && (
         <Confetti
@@ -70,19 +94,30 @@ const DashboardPage: React.FC = () => {
       )}
 
       {/* Setup Completion Popup */}
-      <SetupCompletionPopup 
-        isOpen={showCompletionPopup} 
-        onClose={() => setShowCompletionPopup(false)} 
+      <SetupCompletionPopup
+        isOpen={showCompletionPopup}
+        onClose={() => setShowCompletionPopup(false)}
+      />
+
+      {/* Onboarding Tour */}
+      <InteractiveOnboardingChecklist
+        steps={ONBOARDING_STEPS}
+        open={showOnboarding}
+        onOpenChange={setShowOnboarding}
+        onFinish={() => {
+          localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+          setShowOnboarding(false);
+        }}
       />
 
       {/* Setup Guide Section */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="bg-gray-50 border-b border-gray-200 p-6">
-          <h2 className="text-3xl font-semibold text-gray-900">Setup Guide</h2>
+      <div data-onboarding="setup-guide" className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+          <h2 className="text-lg font-semibold text-gray-900">Setup Guide</h2>
         </div>
-        
-        <div className="p-6">
-          <div className="space-y-3 max-w-5xl mx-auto">
+
+        <div className="p-4">
+          <div className="space-y-2 max-w-5xl mx-auto">
             {[
               { id: 1, title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents', completed: true },
               { id: 2, title: 'Connect Cal.com', description: 'Link your calendar', link: '/dashboard/calcom', completed: true },
@@ -94,7 +129,7 @@ const DashboardPage: React.FC = () => {
               <Link
                 key={step.id}
                 to={step.link}
-                className="block bg-gray-50 rounded-lg p-4 flex items-center gap-4 hover:bg-gray-100 transition-colors border border-gray-200"
+                className="block bg-gray-50 rounded-lg p-3 flex items-center gap-3 hover:bg-gray-100 transition-colors border border-gray-200"
               >
                 {/* Icon */}
                 <div className="flex-shrink-0">
@@ -144,18 +179,20 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Feature Hub */}
-      <FeatureHub />
+      <div data-onboarding="features">
+        <FeatureHub />
+      </div>
 
       {/* Alerts Section */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="bg-gray-50 border-b border-gray-200 p-6">
-          <h2 className="text-3xl font-semibold text-gray-900">Alerts</h2>
+        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+          <h2 className="text-lg font-semibold text-gray-900">Alerts</h2>
         </div>
-        
-        <div className="p-6 space-y-4">
+
+        <div className="p-4 space-y-3">
           {/* Alert items will go here */}
-          <div className="text-center py-8 text-gray-500">
-            <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+          <div className="text-center py-6 text-gray-500">
+            <AlertTriangle className="w-8 h-8 mx-auto mb-2 text-gray-400" />
             <p className="text-sm">No alerts at this time</p>
           </div>
         </div>

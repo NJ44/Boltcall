@@ -33,7 +33,6 @@ import {
   History,
   CalendarCheck,
   MessagesSquare,
-  Sparkles,
   UserCheck
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -41,7 +40,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
-import { Banner } from '../ui/banner';
 import AiAssistant from './AiAssistant';
 
 const DashboardLayout: React.FC = () => {
@@ -49,7 +47,6 @@ const DashboardLayout: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showBanner, setShowBanner] = useState(true);
   const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
   const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
@@ -305,7 +302,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/assistant', label: 'Assistant', icon: <Sparkles className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // Dropdown items
@@ -341,6 +337,7 @@ const DashboardLayout: React.FC = () => {
       <Link
         key={item.to}
         to={item.to}
+        data-onboarding={`nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
         onClick={closeSidebar}
         className={`relative flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
           isActive
@@ -372,10 +369,10 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <ToastProvider>
-      <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100 dark:bg-gray-900">
+      <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100 dark:bg-[#0a0a0c]">
       <div className="flex flex-1 overflow-hidden gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
-         <aside className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-gray-800 rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
+         <aside data-onboarding="sidebar" className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
@@ -398,7 +395,7 @@ const DashboardLayout: React.FC = () => {
                  onClick={() => setShowUserMenu(!showUserMenu)}
                   className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
                    isDarkMode 
-                      ? 'hover:bg-gray-700/50' 
+                      ? 'hover:bg-[#1a1a1f]' 
                       : 'hover:bg-gray-300/50'
                  }`}
                >
@@ -422,9 +419,9 @@ const DashboardLayout: React.FC = () => {
                {/* User dropdown menu */}
                {showUserMenu && (
                   <div className={`absolute left-0 top-full mt-2 w-full rounded-lg shadow-lg border py-2 z-50 ${
-                    isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'
                   }`}>
-                    <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                    <div className="px-4 py-3 border-b border-gray-100 dark:border-[#1e1e24]">
                       <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                        {user?.name || 'User'}
                      </div>
@@ -438,12 +435,12 @@ const DashboardLayout: React.FC = () => {
                        {user?.role === 'admin' ? 'Admin Plan' : 'Pro Plan'}
                      </div>
                    </div>
-                    <div className="border-t border-gray-100 dark:border-gray-700">
+                    <div className="border-t border-gray-100 dark:border-[#1e1e24]">
                      <Link
                        to="/dashboard/settings/plan-billing"
                        onClick={() => setShowUserMenu(false)}
                        className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
-                          isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
+                          isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
                         }`}
                      >
                        Plans & Billing
@@ -451,7 +448,7 @@ const DashboardLayout: React.FC = () => {
                      <button
                        onClick={handleLogout}
                         className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
-                          isDarkMode ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
+                          isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
                         }`}
                      >
                        Sign out
@@ -467,7 +464,7 @@ const DashboardLayout: React.FC = () => {
                 onClick={toggleSidebar}
                 className={`lg:hidden absolute top-2 right-2 p-2 rounded-md transition-colors ${
            isDarkMode 
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50' 
+                    ? 'text-gray-300 hover:text-white hover:bg-[#1a1a1f]' 
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
                 }`}
                 aria-label="Toggle navigation menu"
@@ -501,7 +498,7 @@ const DashboardLayout: React.FC = () => {
                     onClick={() => setCallsDropdownOpen(!callsDropdownOpen)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isDarkMode 
-                        ? 'text-white hover:bg-gray-700/50' 
+                        ? 'text-white hover:bg-[#1a1a1f]' 
                         : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                     }`}
                   >
@@ -549,7 +546,7 @@ const DashboardLayout: React.FC = () => {
                     onClick={() => setMessagingDropdownOpen(!messagingDropdownOpen)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isDarkMode 
-                        ? 'text-white hover:bg-gray-700/50' 
+                        ? 'text-white hover:bg-[#1a1a1f]' 
                                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
                          }`}
                        >
@@ -602,7 +599,7 @@ const DashboardLayout: React.FC = () => {
               </div>
 
               {/* Footer Group - Always at very bottom */}
-              <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 px-2">
+              <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-[#1e1e24] px-2">
                 {navItemsFooter.map((item) => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return renderNavItem(item, isActive);
@@ -611,17 +608,8 @@ const DashboardLayout: React.FC = () => {
 
             </nav>
             
-            {/* Banner at Bottom */}
-            <div className="px-2 mt-auto pt-4">
-              <Banner
-                show={showBanner}
-                variant="info"
-                size="sm"
-                title="Earn free credits container"
-                closable={true}
-                onHide={() => setShowBanner(false)}
-              />
-            </div>
+            {/* Spacer */}
+            <div className="mt-auto" />
             
           </div>
         </aside>
@@ -638,7 +626,7 @@ const DashboardLayout: React.FC = () => {
          {/* Right Panel - Main Content with Top Bar */}
          <main 
            ref={mainContentRef}
-           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-white dark:bg-gray-900 shadow-lg m-2 dashboard-main-scroll ${
+           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-white dark:bg-[#0e0e11] shadow-lg m-2 dashboard-main-scroll ${
              scrollbarVisible ? 'scrollbar-visible' : 'scrollbar-hidden'
            }`}
            style={{
@@ -657,7 +645,7 @@ const DashboardLayout: React.FC = () => {
                    onClick={toggleSidebar}
                    className={`lg:hidden p-2 rounded-md transition-colors ${
                      isDarkMode 
-                       ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                       ? 'text-gray-300 hover:text-white hover:bg-[#1a1a1f]' 
                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
                    }`}
                    aria-label="Toggle navigation menu"
@@ -693,7 +681,7 @@ const DashboardLayout: React.FC = () => {
 
                    {/* Notification Dropdown Content */}
                    <div className="absolute right-0 top-full mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
-                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between mb-4">
                          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               Notification Settings
@@ -702,7 +690,7 @@ const DashboardLayout: React.FC = () => {
           
                        <div className="space-y-3 max-h-80 overflow-y-auto">
             {/* New Lead Notification */}
-                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
                   <Users className="w-4 h-4 text-blue-600" />
                 <div>
@@ -723,7 +711,7 @@ const DashboardLayout: React.FC = () => {
             </div>
 
             {/* Appointment Booked Notification */}
-                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
                   <Calendar className="w-4 h-4 text-blue-600" />
                 <div>
@@ -744,7 +732,7 @@ const DashboardLayout: React.FC = () => {
             </div>
 
             {/* Missed Call Notification */}
-                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
               <div className="flex items-center gap-3">
                   <Phone className="w-4 h-4 text-blue-600" />
                 <div>
@@ -779,7 +767,7 @@ const DashboardLayout: React.FC = () => {
                  
                    {/* Services Status Dropdown Content */}
                    <div className="absolute right-0 top-full mt-2 w-96 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
-                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
                        <div className="flex items-center gap-3 mb-4">
               <div className="p-2 bg-blue-100 rounded-lg">
                 <Server className="w-5 h-5 text-blue-600" />
@@ -789,7 +777,7 @@ const DashboardLayout: React.FC = () => {
 
                        <div className="space-y-3 max-h-80 overflow-y-auto">
                 {/* AI Receptionist */}
-                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-200'}`}>
+                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-[#1e1e24] bg-[#131316]' : 'border-gray-200'}`}>
                   <div className="flex items-center gap-3">
                              <Users className="w-4 h-4 text-blue-600" />
                     <div>
@@ -815,7 +803,7 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Phone System */}
-                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-200'}`}>
+                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-[#1e1e24] bg-[#131316]' : 'border-gray-200'}`}>
                   <div className="flex items-center gap-3">
                              <Phone className="w-4 h-4 text-green-600" />
                     <div>
@@ -841,7 +829,7 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* SMS */}
-                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-gray-600 bg-gray-700/30' : 'border-gray-200'}`}>
+                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-[#1e1e24] bg-[#131316]' : 'border-gray-200'}`}>
                   <div className="flex items-center gap-3">
                              <MessageSquare className="w-4 h-4 text-purple-600" />
                     <div>
@@ -881,7 +869,7 @@ const DashboardLayout: React.FC = () => {
 
                    {/* Add Member Dropdown Content */}
                    <div className="absolute right-0 top-full mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
-                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
                        <div className="flex items-center gap-3 mb-4">
                          <div className="p-2 bg-blue-100 rounded-lg">
                            <UserPlus className="w-5 h-5 text-blue-600" />
