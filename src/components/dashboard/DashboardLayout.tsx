@@ -11,8 +11,6 @@ import {
   Menu,
   X,
   MessageSquare,
-  Moon,
-  Sun,
   UserPlus,
   HelpCircle,
   ChevronDown,
@@ -198,10 +196,6 @@ const DashboardLayout: React.FC = () => {
     }
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem('darkMode', (!isDarkMode).toString());
-  };
 
   const toggleNotification = (key: keyof typeof notifications) => {
     const newValue = !notifications[key];
