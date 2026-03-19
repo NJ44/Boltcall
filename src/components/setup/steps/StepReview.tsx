@@ -36,20 +36,14 @@ const StepReview: React.FC = () => {
           userId: user?.id,
         }),
       });
-      
-      // Wait for loading animation to show (1.5 seconds)
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Mark setup as completed
       complete();
       updateReview({ isLaunched: true });
-      
-      // Stop loading animation
-      setIsLaunching(false);
-      
-      // Navigate to dashboard with setup completion flag
-      navigate('/dashboard?setupCompleted=true');
-      
+
+      // Navigate to loading screen which will fade into dashboard
+      navigate('/setup/loading');
+
     } catch (error) {
       console.error('Error launching setup:', error);
       setIsLaunching(false);

@@ -42,6 +42,7 @@ import Terms from '../pages/Terms';
 import Contact from '../pages/Contact';
 import About from '../pages/About';
 import Setup from '../pages/Setup';
+import SetupLoading from '../pages/SetupLoading';
 import AuthCallback from '../pages/AuthCallback';
 import PaymentPro from '../pages/PaymentPro';
 import PaymentEliteStarter from '../pages/PaymentEliteStarter';
@@ -270,6 +271,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings/services" element={<Navigate to="/dashboard/settings/general" replace />} />
         </Route>
         <Route path="/setup" element={<Setup />} />
+        <Route path="/setup/loading" element={<SetupLoading />} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />

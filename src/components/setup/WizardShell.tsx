@@ -182,7 +182,7 @@ const WizardShell: React.FC = () => {
         markStepCompleted(currentStep);
         complete();
         updateReview({ isLaunched: true });
-        navigate('/dashboard?setupCompleted=true');
+        navigate('/setup/loading');
         return;
       }
 
