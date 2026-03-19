@@ -269,15 +269,18 @@ export default function AuthSwitch({
   const clipLeft = "ellipse(42% 100% at 5% 50%)";
   const clipRight = "ellipse(42% 100% at 95% 50%)";
 
+  // Only animate left position on desktop (lg breakpoint = 1024px)
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1024;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 p-4 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 px-4 py-6 sm:p-4 overflow-hidden">
       {/* Logo */}
       <div className="absolute top-4 left-5 z-30">
         <Link to="/">
           <img
             src="/boltcall_full_logo.png"
             alt="Boltcall"
-            className="h-10 w-auto brightness-0 invert"
+            className="h-8 sm:h-10 w-auto brightness-0 invert"
           />
         </Link>
       </div>
@@ -287,9 +290,9 @@ export default function AuthSwitch({
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative w-full max-w-[700px] h-[460px] rounded-[28px] shadow-2xl overflow-hidden bg-white"
+        className="relative w-full max-w-[700px] min-h-0 lg:h-[460px] rounded-[20px] sm:rounded-[28px] shadow-2xl overflow-hidden bg-white"
       >
-        {/* ── GRADIENT PANEL with curved clip-path ── */}
+        {/* ── GRADIENT PANEL with curved clip-path (desktop only) ── */}
         <motion.div
           className="absolute inset-0 z-10 hidden lg:block pointer-events-none"
           animate={{ x: isLogin ? 0 : 0 }}
@@ -309,7 +312,7 @@ export default function AuthSwitch({
           />
         </motion.div>
 
-        {/* ── GRADIENT PANEL CONTENT ── */}
+        {/* ── GRADIENT PANEL CONTENT (desktop only) ── */}
         <motion.div
           className="absolute top-0 bottom-0 w-[45%] z-20 hidden lg:flex items-center justify-center pointer-events-auto"
           animate={{ left: isLogin ? "0%" : "55%" }}
@@ -345,8 +348,8 @@ export default function AuthSwitch({
 
         {/* ── FORM SIDE ── */}
         <motion.div
-          className="absolute top-0 bottom-0 w-full lg:w-[50%] z-[5] flex flex-col items-center justify-center px-8 sm:px-12"
-          animate={{ left: isLogin ? "50%" : "0%" }}
+          className="relative lg:absolute lg:top-0 lg:bottom-0 w-full lg:w-[50%] z-[5] flex flex-col items-center justify-center px-6 py-8 sm:px-12 sm:py-10 lg:py-0"
+          animate={isDesktop ? { left: isLogin ? "50%" : "0%" } : { left: "0%" }}
           transition={{ type: "spring", stiffness: 170, damping: 26 }}
         >
           {/* Mobile toggle */}
@@ -383,10 +386,10 @@ export default function AuthSwitch({
                 transition={{ duration: 0.3 }}
                 className="w-full max-w-[340px]"
               >
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-6 sm:mb-8">
                   Sign in
                 </h2>
-                <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-3 sm:space-y-4">
                   <PillInput
                     {...loginForm.register("email")}
                     type="email"
@@ -437,10 +440,10 @@ export default function AuthSwitch({
                 transition={{ duration: 0.3 }}
                 className="w-full max-w-[340px]"
               >
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-6 sm:mb-8">
                   Sign up
                 </h2>
-                <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
+                <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-3 sm:space-y-4">
                   <PillInput
                     {...signupForm.register("name")}
                     placeholder="Username"
