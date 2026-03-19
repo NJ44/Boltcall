@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Sparkles, CheckCircle2 } from 'lucide-react';
+import { X, Send, Sparkles, CheckCircle2, MessageCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { cn } from '../../lib/utils';
 
@@ -101,11 +101,12 @@ const AiAssistant: React.FC = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-brand-blue to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow group"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
           >
-            <Sparkles className="w-5 h-5 group-hover:animate-pulse" />
-            <span className="font-medium text-sm">Ask Bolt</span>
+            <MessageCircle className="w-7 h-7 fill-white stroke-none" />
           </motion.button>
         )}
       </AnimatePresence>

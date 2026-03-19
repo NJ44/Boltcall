@@ -166,9 +166,9 @@ const DashboardPage: React.FC = () => {
                   >
                     <Link
                       to={step.link}
-                      className="inline-block px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+                      className="inline-block px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-md transition-colors whitespace-nowrap"
                     >
-                      Earn 10 credits
+                      +10 credits
                     </Link>
                   </div>
                 )}

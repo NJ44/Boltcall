@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+// motion removed — cards are now minimal rows
 import { Link } from 'react-router-dom';
 import {
   Phone, MessageSquare, Zap, Clock, Users, Star,
-  Copy, Check, ChevronRight, ChevronDown, Loader2, AlertCircle,
-  ExternalLink, Upload, Sparkles, CheckCircle2,
+  Loader2, AlertCircle,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -113,8 +112,8 @@ const FeatureHub: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [toggling, setToggling] = useState<string | null>(null);
-  const [expandedCard, setExpandedCard] = useState<FeatureKey | null>(null);
-  const [readiness, setReadiness] = useState<ReadinessData>({
+  // expandedCard removed — cards are now minimal
+  const [_readiness, setReadiness] = useState<ReadinessData>({
     hasAgent: false, agentName: null, agentId: null,
     hasPhone: false, phoneNumber: null,
     hasCalcom: false, businessName: null, embedToken: null,
@@ -122,10 +121,7 @@ const FeatureHub: React.FC = () => {
   });
 
   // Inline form states
-  const [googleReviewUrl, setGoogleReviewUrl] = useState('');
-  const [calApiKey, setCalApiKey] = useState('');
-  const [inlineSaving, setInlineSaving] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
+  // Inline setup state removed — configuration now happens on dedicated pages
 
   // Fetch everything on mount
   useEffect(() => {
@@ -201,9 +197,7 @@ const FeatureHub: React.FC = () => {
             reputationConfig: repConfig,
           });
 
-          if (repConfig.google_review_url) {
-            setGoogleReviewUrl(repConfig.google_review_url);
-          }
+          // google review URL stored in readiness
         }
       } catch (err) {
         console.error('FeatureHub load error:', err);
@@ -216,12 +210,6 @@ const FeatureHub: React.FC = () => {
   const toggleFeature = async (key: FeatureKey) => {
     if (!user) return;
     const newValue = !features[key];
-
-    // If turning ON and feature needs setup, expand the card instead of just toggling
-    if (newValue && needsSetup(key)) {
-      setExpandedCard(key);
-      return;
-    }
 
     setToggling(key);
     try {
@@ -238,504 +226,11 @@ const FeatureHub: React.FC = () => {
       }
 
       setFeatures((prev) => ({ ...prev, [key]: newValue }));
-
-      // If just turned ON, expand the card to show status
-      if (newValue) {
-        setExpandedCard(key);
-      } else {
-        setExpandedCard(null);
-      }
     } catch (err) {
       setError('Something went wrong. Please try again.');
       setTimeout(() => setError(null), 4000);
     }
     setToggling(null);
-  };
-
-  // Check if a feature needs additional setup before it can be activated
-  const needsSetup = (key: FeatureKey): boolean => {
-    switch (key) {
-      case 'voice_agent':
-        return !readiness.hasAgent || !readiness.hasPhone;
-      case 'speed_to_lead':
-        return !readiness.hasAgent;
-      case 'chatbot':
-        return !readiness.hasAgent;
-      case 'reminders':
-        return !readiness.hasCalcom;
-      case 'lead_reactivation':
-        return false;
-      case 'reputation_manager':
-        return !readiness.googleReviewUrl && !googleReviewUrl;
-      default:
-        return false;
-    }
-  };
-
-  // Activate a feature after inline setup is done
-  const activateFeature = async (key: FeatureKey) => {
-    if (!user) return;
-    setInlineSaving(true);
-
-    try {
-      if (key === 'reputation_manager' && googleReviewUrl) {
-        const existing = readiness.reputationConfig || {};
-        await supabase
-          .from('business_features')
-          .update({
-            reputation_manager_config: {
-              ...existing,
-              google_review_url: googleReviewUrl,
-              trigger: existing.trigger || 'delay',
-              delay_seconds: existing.delay_seconds || 30,
-              popup_text: existing.popup_text || 'Enjoying our service? Leave us a Google review!',
-              button_text: existing.button_text || 'Leave a Review',
-            },
-            reputation_manager_enabled: true,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('user_id', user.id);
-
-        setReadiness((prev) => ({ ...prev, googleReviewUrl }));
-        setFeatures((prev) => ({ ...prev, reputation_manager: true }));
-      } else if (key === 'reminders') {
-        if (calApiKey.trim()) {
-          const { data: { session } } = await supabase.auth.getSession();
-          const response = await fetch('/.netlify/functions/calcom-webhook', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${session?.access_token}`,
-            },
-            body: JSON.stringify({ cal_api_key: calApiKey.trim() }),
-          });
-
-          if (!response.ok) {
-            const result = await response.json();
-            setError(result.error || 'Failed to connect Cal.com');
-            setInlineSaving(false);
-            return;
-          }
-
-          setReadiness((prev) => ({ ...prev, hasCalcom: true }));
-          setCalApiKey('');
-        }
-
-        await supabase
-          .from('business_features')
-          .update({
-            reminders_enabled: true,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('user_id', user.id);
-
-        setFeatures((prev) => ({ ...prev, reminders: true }));
-      } else {
-        await supabase
-          .from('business_features')
-          .update({ [`${key}_enabled`]: true, updated_at: new Date().toISOString() })
-          .eq('user_id', user.id);
-
-        setFeatures((prev) => ({ ...prev, [key]: true }));
-      }
-    } catch (err) {
-      setError('Activation failed. Please try again.');
-      setTimeout(() => setError(null), 4000);
-    }
-    setInlineSaving(false);
-  };
-
-  const copyText = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(label);
-    setTimeout(() => setCopied(null), 2000);
-  };
-
-  // Get readiness checklist for a feature
-  const getReadinessItems = (key: FeatureKey): { label: string; ready: boolean; link?: string }[] => {
-    switch (key) {
-      case 'voice_agent':
-        return [
-          { label: 'AI agent created', ready: readiness.hasAgent, link: '/dashboard/agents' },
-          { label: 'Phone number configured', ready: readiness.hasPhone, link: '/dashboard/phone' },
-        ];
-      case 'speed_to_lead':
-        return [
-          { label: 'AI agent created', ready: readiness.hasAgent, link: '/dashboard/agents' },
-        ];
-      case 'chatbot':
-        return [
-          { label: 'AI agent created', ready: readiness.hasAgent, link: '/dashboard/agents' },
-        ];
-      case 'reminders':
-        return [
-          { label: 'Cal.com connected', ready: readiness.hasCalcom },
-        ];
-      case 'reputation_manager':
-        return [
-          { label: 'Google Review URL added', ready: !!readiness.googleReviewUrl },
-        ];
-      default:
-        return [];
-    }
-  };
-
-  // Reusable embed code block with platform-specific guidance
-  const renderEmbedBlock = (label: string, copyId: string) => {
-    if (!readiness.embedToken) return null;
-    const script = `<script src="https://tryboltcall.com/embed.js" data-token="${readiness.embedToken}"></script>`;
-    return (
-      <div className="space-y-2">
-        <label className="text-xs font-medium text-gray-600 block">{label}</label>
-        <div className="flex items-center gap-2">
-          <code className="flex-1 px-3 py-2 bg-gray-50 rounded-lg border text-xs font-mono text-gray-700 truncate">
-            {script}
-          </code>
-          <button
-            onClick={() => copyText(script, copyId)}
-            className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex-shrink-0"
-          >
-            {copied === copyId ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4 text-gray-600" />}
-          </button>
-        </div>
-        <p className="text-xs text-gray-400">
-          <span className="font-medium text-gray-500">Where to paste it:</span>{' '}
-          Wix → Settings &gt; Custom Code &nbsp;|&nbsp;
-          WordPress → Appearance &gt; Header Scripts &nbsp;|&nbsp;
-          Squarespace → Settings &gt; Code Injection
-        </p>
-      </div>
-    );
-  };
-
-  // Render inline activation panel for each feature
-  const renderActivationPanel = (key: FeatureKey) => {
-    const isActive = features[key];
-    const items = getReadinessItems(key);
-    const allReady = items.every((i) => i.ready);
-
-    switch (key) {
-      case 'voice_agent':
-        return (
-          <div className="space-y-3">
-            {/* How it works */}
-            <p className="text-xs text-gray-500 leading-relaxed">
-              When someone calls your number, the AI picks up, answers their questions using your business info, and books appointments on your calendar.
-            </p>
-            {isActive ? (
-              <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3">
-                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                <span>
-                  <span className="font-medium">{readiness.agentName || 'Your AI receptionist'}</span> is live
-                  {readiness.phoneNumber ? <> on <span className="font-medium">{readiness.phoneNumber}</span></> : ' and answering calls'}
-                </span>
-              </div>
-            ) : (
-              <>
-                {/* Readiness checklist */}
-                <div className="space-y-2">
-                  {items.map((item) => (
-                    <div key={item.label} className="flex items-center gap-2 text-sm">
-                      {item.ready ? (
-                        <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      ) : (
-                        <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
-                      )}
-                      <span className={item.ready ? 'text-gray-700' : 'text-gray-500'}>{item.label}</span>
-                      {!item.ready && item.link && (
-                        <Link to={item.link} className="text-blue-600 hover:text-blue-700 text-xs font-medium ml-auto">
-                          Set up →
-                        </Link>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                {allReady && (
-                  <button
-                    onClick={() => activateFeature('voice_agent')}
-                    disabled={inlineSaving}
-                    className="w-full mt-2 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                    Turn On AI Receptionist
-                  </button>
-                )}
-              </>
-            )}
-            <Link to="/dashboard/agents" className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              Change voice, greeting, or behavior <ExternalLink className="w-3 h-3" />
-            </Link>
-          </div>
-        );
-
-      case 'speed_to_lead':
-        return (
-          <div className="space-y-3">
-            <p className="text-xs text-gray-500 leading-relaxed">
-              When someone fills out a form on your website (or from Google/Facebook ads), your AI instantly calls them back to book an appointment.
-            </p>
-            {!readiness.hasAgent ? (
-              <div className="space-y-2">
-                {items.map((item) => (
-                  <div key={item.label} className="flex items-center gap-2 text-sm">
-                    <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
-                    <span className="text-gray-500">{item.label}</span>
-                    {item.link && (
-                      <Link to={item.link} className="text-blue-600 hover:text-blue-700 text-xs font-medium ml-auto">
-                        Set up →
-                      </Link>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <>
-                {isActive && (
-                  <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3">
-                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                    <span>Live — new leads from your website will be called back automatically</span>
-                  </div>
-                )}
-                {/* Option 1: Embed script (easiest) */}
-                {renderEmbedBlock(
-                  'Step 1: Copy this code and add it to your website',
-                  'embed'
-                )}
-                {/* Option 2: Direct webhook for tech-savvy or ad platforms */}
-                <div>
-                  <label className="text-xs font-medium text-gray-600 mb-1 block">
-                    For Google Ads or Facebook Ads: use this link
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <code className="flex-1 px-3 py-2 bg-gray-50 rounded-lg border text-xs font-mono text-gray-700 truncate">
-                      {window.location.origin}/hooks/lead?client_id={user?.id}
-                    </code>
-                    <button
-                      onClick={() => copyText(`${window.location.origin}/hooks/lead?client_id=${user?.id}`, 'webhook')}
-                      className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex-shrink-0"
-                    >
-                      {copied === 'webhook' ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4 text-gray-600" />}
-                    </button>
-                  </div>
-                  <p className="text-xs text-gray-400 mt-1">Paste this as the "webhook URL" in your ad platform's lead form settings</p>
-                </div>
-                {!isActive && (
-                  <button
-                    onClick={() => activateFeature('speed_to_lead')}
-                    disabled={inlineSaving}
-                    className="w-full mt-1 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
-                    Turn On Speed to Lead
-                  </button>
-                )}
-              </>
-            )}
-            <Link to="/dashboard/speed-to-lead" className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              View incoming leads <ExternalLink className="w-3 h-3" />
-            </Link>
-          </div>
-        );
-
-      case 'chatbot':
-        return (
-          <div className="space-y-3">
-            <p className="text-xs text-gray-500 leading-relaxed">
-              A chat bubble appears on your website. Visitors can ask questions, get instant answers from your AI, and book appointments — all without calling.
-            </p>
-            {!readiness.hasAgent ? (
-              <div className="space-y-2">
-                {items.map((item) => (
-                  <div key={item.label} className="flex items-center gap-2 text-sm">
-                    <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
-                    <span className="text-gray-500">{item.label}</span>
-                    {item.link && (
-                      <Link to={item.link} className="text-blue-600 hover:text-blue-700 text-xs font-medium ml-auto">
-                        Set up →
-                      </Link>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <>
-                {isActive && (
-                  <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3">
-                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                    <span>Live — the chat bubble is active on your website</span>
-                  </div>
-                )}
-                {renderEmbedBlock(
-                  'Copy this code and add it to your website — the chat bubble will appear automatically',
-                  'chatbot-embed'
-                )}
-                {!isActive && (
-                  <button
-                    onClick={() => activateFeature('chatbot')}
-                    disabled={inlineSaving}
-                    className="w-full mt-1 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <MessageSquare className="w-4 h-4" />}
-                    Turn On Chatbot
-                  </button>
-                )}
-              </>
-            )}
-            <Link to="/dashboard/website-bubble" className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              Change colors, position, or greeting <ExternalLink className="w-3 h-3" />
-            </Link>
-          </div>
-        );
-
-      case 'reminders':
-        return (
-          <div className="space-y-3">
-            <p className="text-xs text-gray-500 leading-relaxed">
-              Automatically sends a text and/or email to your clients before their appointment. Reduces no-shows by up to 80%.
-            </p>
-            {isActive && readiness.hasCalcom ? (
-              <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3">
-                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                <span>Live — reminders go out {readiness.remindersConfig?.time || '24'} hours before each appointment</span>
-              </div>
-            ) : readiness.hasCalcom ? (
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-700">Calendar connected</span>
-                </div>
-                <button
-                  onClick={() => activateFeature('reminders')}
-                  disabled={inlineSaving}
-                  className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Clock className="w-4 h-4" />}
-                  Turn On Reminders
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <div className="text-xs text-gray-500 bg-blue-50 rounded-lg p-3 space-y-1">
-                  <p className="font-medium text-gray-700">Quick setup (takes 30 seconds):</p>
-                  <ol className="list-decimal list-inside space-y-0.5 text-gray-600">
-                    <li>Open <a href="https://cal.com/settings/developer/api-keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 underline">cal.com/settings/developer/api-keys</a></li>
-                    <li>Click "Create new key" and copy it</li>
-                    <li>Paste it below</li>
-                  </ol>
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-600 mb-1 block">Your Cal.com connection key</label>
-                  <input
-                    type="password"
-                    value={calApiKey}
-                    onChange={(e) => setCalApiKey(e.target.value)}
-                    placeholder="cal_live_..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  />
-                </div>
-                <button
-                  onClick={() => activateFeature('reminders')}
-                  disabled={inlineSaving || !calApiKey.trim()}
-                  className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Clock className="w-4 h-4" />}
-                  Connect Calendar & Turn On
-                </button>
-              </div>
-            )}
-            <Link to="/dashboard/reminders" className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              Edit reminder message or timing <ExternalLink className="w-3 h-3" />
-            </Link>
-          </div>
-        );
-
-      case 'lead_reactivation':
-        return (
-          <div className="space-y-3">
-            <p className="text-xs text-gray-500 leading-relaxed">
-              Upload a list of past leads or customers who never booked. The AI will call each one, have a natural conversation, and try to re-book them.
-            </p>
-            {isActive ? (
-              <>
-                <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3">
-                  <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                  <span>Ready — upload your leads to start a campaign</span>
-                </div>
-                <Link
-                  to="/dashboard/lead-reactivation"
-                  className="w-full py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2"
-                >
-                  <Upload className="w-4 h-4" />
-                  Upload Lead List (Excel or CSV)
-                </Link>
-              </>
-            ) : (
-              <button
-                onClick={() => activateFeature('lead_reactivation')}
-                disabled={inlineSaving}
-                className="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Users className="w-4 h-4" />}
-                Turn On Lead Reactivation
-              </button>
-            )}
-          </div>
-        );
-
-      case 'reputation_manager':
-        return (
-          <div className="space-y-3">
-            <p className="text-xs text-gray-500 leading-relaxed">
-              After each appointment, your customers get a friendly text or see a popup on your website asking them to leave a Google review.
-            </p>
-            {isActive && readiness.googleReviewUrl ? (
-              <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg p-3">
-                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                <span>Live — customers are being asked for reviews automatically</span>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <div className="text-xs text-gray-500 bg-yellow-50 rounded-lg p-3 space-y-1">
-                  <p className="font-medium text-gray-700">How to find your review link:</p>
-                  <ol className="list-decimal list-inside space-y-0.5 text-gray-600">
-                    <li>Search your business on Google</li>
-                    <li>Click "Ask for reviews" on your Business Profile</li>
-                    <li>Copy the link and paste it below</li>
-                  </ol>
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-gray-600 mb-1 block">Your Google Review link</label>
-                  <input
-                    type="url"
-                    value={googleReviewUrl}
-                    onChange={(e) => setGoogleReviewUrl(e.target.value)}
-                    placeholder="https://g.page/r/..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  />
-                </div>
-                <button
-                  onClick={() => activateFeature('reputation_manager')}
-                  disabled={inlineSaving || !googleReviewUrl.trim()}
-                  className="w-full py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  {inlineSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Star className="w-4 h-4" />}
-                  Turn On Google Reviews
-                </button>
-              </div>
-            )}
-            {readiness.embedToken && isActive && renderEmbedBlock(
-              'Add to your website to show review popups',
-              'rep-embed'
-            )}
-            <Link to="/dashboard/reputation" className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1">
-              Edit popup message or SMS timing <ExternalLink className="w-3 h-3" />
-            </Link>
-          </div>
-        );
-
-      default:
-        return null;
-    }
   };
 
   if (loading) {
@@ -757,109 +252,55 @@ const FeatureHub: React.FC = () => {
         </div>
       )}
 
-      {/* Feature Grid */}
+      {/* Services Status */}
       <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
-        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] p-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">Features</h2>
-            <p className="text-sm text-gray-500 mt-1">Turn on the tools you need — each one takes under a minute to set up</p>
-          </div>
-          <div className="text-sm text-gray-500">
-            {Object.values(features).filter(Boolean).length} / {FEATURES.length} active
-          </div>
+        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Services</h2>
+          <span className="text-xs text-gray-400 font-medium">
+            {Object.values(features).filter(Boolean).length}/{FEATURES.length} active
+          </span>
         </div>
 
-        <div className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {FEATURES.map((feature, index) => {
-              const Icon = feature.icon;
-              const enabled = features[feature.key];
-              const isToggling = toggling === feature.key;
-              const isExpanded = expandedCard === feature.key;
+        <div className="divide-y divide-gray-100 dark:divide-[#1e1e24]">
+          {FEATURES.map((feature) => {
+            const Icon = feature.icon;
+            const enabled = features[feature.key];
+            const isToggling = toggling === feature.key;
 
-              return (
-                <motion.div
-                  key={feature.key}
-                  data-onboarding={`feature-${feature.key}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className={`relative rounded-xl border transition-all ${
-                    enabled
-                      ? 'border-gray-200 dark:border-[#1e1e24] bg-white dark:bg-[#131316] shadow-sm'
-                      : 'border-gray-100 dark:border-[#1a1a1f] bg-gray-50 dark:bg-[#0e0e11]'
-                  } ${isExpanded ? 'ring-2 ring-blue-200 dark:ring-blue-800' : ''}`}
-                >
-                  <div className="p-5">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className={`w-10 h-10 rounded-lg ${feature.bgColor} flex items-center justify-center`}>
-                        <Icon className={`w-5 h-5 ${feature.color}`} />
-                      </div>
-
-                      {/* Toggle */}
-                      {isToggling ? (
-                        <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
-                      ) : (
-                        <PremiumToggle
-                          checked={enabled}
-                          onChange={() => toggleFeature(feature.key)}
-                        />
-                      )}
-                    </div>
-
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-0.5">{feature.name}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{feature.description}</p>
-
-                    {/* Status indicator or expand button */}
-                    {enabled ? (
-                      <button
-                        onClick={() => setExpandedCard(isExpanded ? null : feature.key)}
-                        className="inline-flex items-center text-sm text-green-600 hover:text-green-700 font-medium"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
-                        Active
-                        {isExpanded ? <ChevronDown className="w-4 h-4 ml-1" /> : <ChevronRight className="w-4 h-4 ml-1" />}
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => setExpandedCard(isExpanded ? null : feature.key)}
-                        className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 font-medium"
-                      >
-                        Activate
-                        {isExpanded ? <ChevronDown className="w-4 h-4 ml-0.5" /> : <ChevronRight className="w-4 h-4 ml-0.5" />}
-                      </button>
-                    )}
+            return (
+              <div
+                key={feature.key}
+                data-onboarding={`feature-${feature.key}`}
+                className="flex items-center justify-between px-4 py-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-lg ${feature.bgColor} flex items-center justify-center`}>
+                    <Icon className={`w-4 h-4 ${feature.color}`} />
                   </div>
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{feature.name}</span>
+                </div>
 
-                  {/* Expanded activation panel */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 pb-5 pt-2 border-t border-gray-100">
-                          {renderActivationPanel(feature.key)}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Status dot */}
-                  <div className="absolute top-5 right-16">
-                    <div
-                      className={`w-2 h-2 rounded-full ${
-                        enabled ? 'bg-green-500' : 'bg-gray-300'
-                      }`}
+                <div className="flex items-center gap-3">
+                  {!enabled && (
+                    <Link
+                      to={feature.configLink}
+                      className="text-xs text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+                    >
+                      Configure
+                    </Link>
+                  )}
+                  {isToggling ? (
+                    <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                  ) : (
+                    <PremiumToggle
+                      checked={enabled}
+                      onChange={() => toggleFeature(feature.key)}
                     />
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
