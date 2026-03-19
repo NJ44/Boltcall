@@ -1,8 +1,176 @@
-import React from 'react';
-import { Building2, Globe, Clock, Phone, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Building2, Globe, Clock, Phone, Mail, Save, RefreshCw } from 'lucide-react';
 import { Magnetic } from '../../components/ui/magnetic';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+import { supabase } from '../../lib/supabase';
 
 const BusinessPage: React.FC = () => {
+  const { user } = useAuth();
+  const { showToast } = useToast();
+
+  const [formData, setFormData] = useState({
+    businessName: '',
+    website: '',
+    phone: '',
+    email: '',
+    openTime: '09:00',
+    closeTime: '17:00',
+    description: '',
+  });
+
+  const [isSaving, setIsSaving] = useState(false);
+  const [businessProfileId, setBusinessProfileId] = useState<string | null>(null);
+  const [locationId, setLocationId] = useState<string | null>(null);
+
+  // Fetch existing business data on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user?.id) return;
+      try {
+        const { data: profile } = await supabase
+          .from('business_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: true })
+          .limit(1)
+          .maybeSingle();
+
+        if (profile) {
+          setBusinessProfileId(profile.id);
+
+          // Extract opening hours if available
+          let openTime = '09:00';
+          let closeTime = '17:00';
+          if (profile.opening_hours) {
+            // opening_hours is Record<string, { open, close, closed }>
+            // Take the first non-closed day's hours
+            const days = Object.values(profile.opening_hours) as Array<{ open: string; close: string; closed: boolean }>;
+            const activeDay = days.find(d => !d.closed);
+            if (activeDay) {
+              openTime = activeDay.open || '09:00';
+              closeTime = activeDay.close || '17:00';
+            }
+          }
+
+          setFormData(prev => ({
+            ...prev,
+            businessName: profile.business_name || '',
+            website: profile.website_url || '',
+            description: profile.description || '',
+            openTime,
+            closeTime,
+          }));
+
+          // Fetch primary location for phone/email
+          const { data: location } = await supabase
+            .from('locations')
+            .select('*')
+            .eq('business_profile_id', profile.id)
+            .eq('is_primary', true)
+            .limit(1)
+            .maybeSingle();
+
+          if (location) {
+            setLocationId(location.id);
+            setFormData(prev => ({
+              ...prev,
+              phone: location.phone || '',
+              email: location.email || '',
+            }));
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching business data:', err);
+      }
+    };
+    fetchData();
+  }, [user?.id]);
+
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user?.id) return;
+    setIsSaving(true);
+    try {
+      // Build opening_hours object from open/close times (apply to all weekdays)
+      const weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+      const weekend = ['saturday', 'sunday'];
+      const openingHours: Record<string, { open: string; close: string; closed: boolean }> = {};
+      weekdays.forEach(day => {
+        openingHours[day] = { open: formData.openTime, close: formData.closeTime, closed: false };
+      });
+      weekend.forEach(day => {
+        openingHours[day] = { open: formData.openTime, close: formData.closeTime, closed: true };
+      });
+
+      const profilePayload = {
+        user_id: user.id,
+        business_name: formData.businessName,
+        website_url: formData.website,
+        description: formData.description,
+        opening_hours: openingHours,
+      };
+
+      if (businessProfileId) {
+        const { error } = await supabase
+          .from('business_profiles')
+          .update(profilePayload)
+          .eq('id', businessProfileId);
+        if (error) throw error;
+      } else {
+        const { data: newProfile, error } = await supabase
+          .from('business_profiles')
+          .insert([profilePayload])
+          .select()
+          .single();
+        if (error) throw error;
+        if (newProfile) setBusinessProfileId(newProfile.id);
+      }
+
+      // Update location for phone/email
+      if (businessProfileId) {
+        const locationPayload = {
+          phone: formData.phone || null,
+          email: formData.email || null,
+        };
+
+        if (locationId) {
+          const { error } = await supabase
+            .from('locations')
+            .update(locationPayload)
+            .eq('id', locationId);
+          if (error) throw error;
+        } else {
+          const { data: newLoc, error } = await supabase
+            .from('locations')
+            .insert([{
+              ...locationPayload,
+              business_profile_id: businessProfileId,
+              user_id: user.id,
+              name: formData.businessName || 'Primary Location',
+              is_primary: true,
+              is_active: true,
+            }])
+            .select()
+            .single();
+          if (error) throw error;
+          if (newLoc) setLocationId(newLoc.id);
+        }
+      }
+
+      showToast({ title: 'Saved', message: 'Business details saved successfully!', variant: 'success', duration: 3000 });
+    } catch (err) {
+      console.error('Error saving business details:', err);
+      showToast({ title: 'Error', message: 'Failed to save business details. Please try again.', variant: 'error', duration: 4000 });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Page header */}
@@ -14,8 +182,8 @@ const BusinessPage: React.FC = () => {
       {/* Business Information Form */}
       <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
         <h2 className="text-lg font-semibold text-zinc-900 mb-6">Business Information</h2>
-        
-        <form className="space-y-6">
+
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Business Name */}
           <div>
             <label htmlFor="businessName" className="block text-sm font-medium text-zinc-700 mb-2">
@@ -24,7 +192,8 @@ const BusinessPage: React.FC = () => {
             <input
               type="text"
               id="businessName"
-              defaultValue="Boltcall Medical Clinic"
+              value={formData.businessName}
+              onChange={(e) => handleChange('businessName', e.target.value)}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             />
           </div>
@@ -41,7 +210,8 @@ const BusinessPage: React.FC = () => {
               <input
                 type="url"
                 id="website"
-                defaultValue="https://boltcall.com"
+                value={formData.website}
+                onChange={(e) => handleChange('website', e.target.value)}
                 className="w-full pl-10 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               />
             </div>
@@ -59,7 +229,8 @@ const BusinessPage: React.FC = () => {
               <input
                 type="tel"
                 id="phone"
-                defaultValue="+1 (555) 123-4567"
+                value={formData.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
                 className="w-full pl-10 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               />
             </div>
@@ -77,7 +248,8 @@ const BusinessPage: React.FC = () => {
               <input
                 type="email"
                 id="email"
-                defaultValue="contact@boltcall.com"
+                value={formData.email}
+                onChange={(e) => handleChange('email', e.target.value)}
                 className="w-full pl-10 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               />
             </div>
@@ -98,7 +270,8 @@ const BusinessPage: React.FC = () => {
                   <input
                     type="time"
                     id="openTime"
-                    defaultValue="09:00"
+                    value={formData.openTime}
+                    onChange={(e) => handleChange('openTime', e.target.value)}
                     className="w-full pl-10 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   />
                 </div>
@@ -112,7 +285,8 @@ const BusinessPage: React.FC = () => {
                   <input
                     type="time"
                     id="closeTime"
-                    defaultValue="17:00"
+                    value={formData.closeTime}
+                    onChange={(e) => handleChange('closeTime', e.target.value)}
                     className="w-full pl-10 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   />
                 </div>
@@ -128,7 +302,8 @@ const BusinessPage: React.FC = () => {
             <textarea
               id="description"
               rows={4}
-              defaultValue="Leading medical clinic providing comprehensive healthcare services with a focus on patient care and modern technology."
+              value={formData.description}
+              onChange={(e) => handleChange('description', e.target.value)}
               className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
             />
           </div>
@@ -138,9 +313,20 @@ const BusinessPage: React.FC = () => {
             <Magnetic>
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                disabled={isSaving}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
-                Save Changes
+                {isSaving ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4" />
+                    Save Changes
+                  </>
+                )}
               </button>
             </Magnetic>
           </div>

@@ -23,21 +23,27 @@ const BillingPage: React.FC = () => {
     {
       name: "STARTER",
       level: "starter",
-      price: { monthly: 197, yearly: 1970 },
-      description: "Good for testing things out, something like that.",
+      price: { monthly: 99, yearly: 948 },
+      description: "Perfect for getting started with lead management.",
     },
     {
       name: "PRO",
       level: "pro",
-      price: { monthly: 497, yearly: 4970 },
+      price: { monthly: 179, yearly: 1716 },
       popular: true,
       description: "Everything on Starter plus:",
     },
     {
+      name: "ULTIMATE",
+      level: "all",
+      price: { monthly: 249, yearly: 2388 },
+      description: "Everything on Pro plus:",
+    },
+    {
       name: "ENTERPRISE",
       level: "custom",
-      price: { monthly: 1497, yearly: 14970 },
-      description: "Everything on PRO plus:",
+      price: { monthly: 997, yearly: 11964 },
+      description: "Tailored solutions for your business:",
       isCustom: true,
     },
   ];
@@ -52,7 +58,7 @@ const BillingPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <div>
             <div className="text-2xl font-bold text-gray-900">Starter Plan</div>
-            <div className="text-gray-600 mt-1">$197/month • Billed monthly</div>
+            <div className="text-gray-600 mt-1">$99/month • Billed monthly</div>
           </div>
           <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
             Active
@@ -97,9 +103,9 @@ const BillingPage: React.FC = () => {
         
         <div className="space-y-3">
           {[
-            { date: '2025-02-01', amount: '$197.00', status: 'Paid', invoice: 'INV-001' },
-            { date: '2025-01-01', amount: '$197.00', status: 'Paid', invoice: 'INV-002' },
-            { date: '2024-12-01', amount: '$197.00', status: 'Paid', invoice: 'INV-003' },
+            { date: '2025-02-01', amount: '$99.00', status: 'Paid', invoice: 'INV-001' },
+            { date: '2025-01-01', amount: '$99.00', status: 'Paid', invoice: 'INV-002' },
+            { date: '2024-12-01', amount: '$99.00', status: 'Paid', invoice: 'INV-003' },
           ].map((item, index) => (
             <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
               <div className="flex items-center gap-3">

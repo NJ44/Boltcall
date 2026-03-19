@@ -1,47 +1,112 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Moon, Sun, Palette, Bell, Eye, Shield, Save, RefreshCw } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { Magnetic } from '../../../components/ui/magnetic';
 import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useToast } from '../../../contexts/ToastContext';
+import { supabase } from '../../../lib/supabase';
+
+const defaultPreferences = {
+  theme: 'light',
+  language: 'en',
+  timezone: 'America/New_York',
+  dateFormat: 'MM/DD/YYYY',
+  timeFormat: '12h',
+  notifications: {
+    email: true,
+    push: true,
+    sms: false,
+    weeklyDigest: true,
+    marketing: false
+  },
+  privacy: {
+    profileVisibility: 'team',
+    dataSharing: false,
+    analytics: true
+  },
+  accessibility: {
+    highContrast: false,
+    reducedMotion: false,
+    fontSize: 'medium'
+  }
+};
 
 const PreferencesPage: React.FC = () => {
-  const [preferences, setPreferences] = useState({
-    theme: 'light',
-    language: 'en',
-    timezone: 'America/New_York',
-    dateFormat: 'MM/DD/YYYY',
-    timeFormat: '12h',
-    notifications: {
-      email: true,
-      push: true,
-      sms: false,
-      weeklyDigest: true,
-      marketing: false
-    },
-    privacy: {
-      profileVisibility: 'team',
-      dataSharing: false,
-      analytics: true
-    },
-    accessibility: {
-      highContrast: false,
-      reducedMotion: false,
-      fontSize: 'medium'
-    }
-  });
+  const { user } = useAuth();
+  const { showToast } = useToast();
+  const [preferences, setPreferences] = useState(defaultPreferences);
+  const [businessProfileId, setBusinessProfileId] = useState<string | null>(null);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
 
+  // Fetch existing preferences on mount
+  // Preferences are stored as a JSON object in the business_profiles.user_preferences column.
+  // If that column doesn't exist yet, the fetch will still succeed (returns null for unknown cols)
+  // and we fall back to defaults.
+  useEffect(() => {
+    const fetchPreferences = async () => {
+      if (!user?.id) return;
+      try {
+        const { data: profile } = await supabase
+          .from('business_profiles')
+          .select('id, user_preferences')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: true })
+          .limit(1)
+          .maybeSingle();
+
+        if (profile) {
+          setBusinessProfileId(profile.id);
+          if (profile.user_preferences) {
+            // Deep merge with defaults so new keys are always present
+            setPreferences(prev => ({
+              ...prev,
+              ...profile.user_preferences,
+              notifications: { ...prev.notifications, ...(profile.user_preferences.notifications || {}) },
+              privacy: { ...prev.privacy, ...(profile.user_preferences.privacy || {}) },
+              accessibility: { ...prev.accessibility, ...(profile.user_preferences.accessibility || {}) },
+            }));
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching preferences:', err);
+      }
+    };
+    fetchPreferences();
+  }, [user?.id]);
+
   const handleSave = async () => {
+    if (!user?.id) return;
     setIsSaving(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSaving(false);
+    try {
+      if (businessProfileId) {
+        const { error } = await supabase
+          .from('business_profiles')
+          .update({ user_preferences: preferences })
+          .eq('id', businessProfileId);
+        if (error) throw error;
+      } else {
+        // No business profile yet — create one with just preferences
+        const { data: newProfile, error } = await supabase
+          .from('business_profiles')
+          .insert([{ user_id: user.id, business_name: 'My Business', user_preferences: preferences }])
+          .select()
+          .single();
+        if (error) throw error;
+        if (newProfile) setBusinessProfileId(newProfile.id);
+      }
+      showToast({ title: 'Saved', message: 'Preferences saved successfully!', variant: 'success', duration: 3000 });
       setSaveMessage('Preferences saved successfully!');
       setTimeout(() => setSaveMessage(''), 3000);
-    }, 1000);
+    } catch (err) {
+      console.error('Error saving preferences:', err);
+      showToast({ title: 'Error', message: 'Failed to save preferences. Please try again.', variant: 'error', duration: 4000 });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handlePreferenceChange = (section: string, key: string, value: any) => {

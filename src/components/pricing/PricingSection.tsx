@@ -14,10 +14,10 @@ const PricingSection: React.FC = () => {
     {
       title: 'Starter',
       subtitle: 'Speed-to-Lead',
-      priceMonthlyUsd: 197,
-      priceAnnualUsd: 1970, // 20% discount
-      priceMonthlyIls: 740,
-      priceAnnualIls: 7400,
+      priceMonthlyUsd: 99,
+      priceAnnualUsd: 948, // ~20% discount
+      priceMonthlyIls: 370,
+      priceAnnualIls: 3560,
       features: [
         'Instant SMS to new leads',
         'Qualification + nurturing (3–5 smart questions)',
@@ -32,10 +32,10 @@ const PricingSection: React.FC = () => {
     {
       title: 'Pro',
       subtitle: 'AI Front Desk',
-      priceMonthlyUsd: 497,
-      priceAnnualUsd: 4970,
-      priceMonthlyIls: 1870,
-      priceAnnualIls: 18700,
+      priceMonthlyUsd: 179,
+      priceAnnualUsd: 1716,
+      priceMonthlyIls: 670,
+      priceAnnualIls: 6440,
       features: [
         'Everything in Starter',
         'AI receptionist (voice) + live transfer',
@@ -49,12 +49,12 @@ const PricingSection: React.FC = () => {
       popular: true
     },
     {
-      title: 'Elite',
+      title: 'Ultimate',
       subtitle: 'Growth Ops',
-      priceMonthlyUsd: 1497,
-      priceAnnualUsd: 14970,
-      priceMonthlyIls: 5650,
-      priceAnnualIls: 56500,
+      priceMonthlyUsd: 249,
+      priceAnnualUsd: 2388,
+      priceMonthlyIls: 940,
+      priceAnnualIls: 8960,
       features: [
         'Everything in Pro (same core outcomes)',
         'White-glove onboarding (done-for-you in 48h)',
@@ -71,17 +71,17 @@ const PricingSection: React.FC = () => {
   ];
 
   const comparisonFeatures = [
-    { name: 'Instant SMS + booking', starter: true, pro: true, elite: true },
-    { name: 'AI receptionist (voice)', starter: false, pro: true, elite: true },
-    { name: 'Live transfer to human', starter: false, pro: true, elite: true },
-    { name: 'Dashboard + transcripts', starter: false, pro: true, elite: true },
-    { name: 'Money-back guarantee', starter: false, pro: true, elite: true },
-    { name: 'VIP phone/WhatsApp support', starter: false, pro: false, elite: true },
-    { name: 'White-glove setup (48h)', starter: false, pro: false, elite: true },
-    { name: 'Quarterly strategy call', starter: false, pro: false, elite: true },
-    { name: 'Custom branded voice', starter: false, pro: false, elite: true },
-    { name: 'Calendars / Users', starter: '1 / 1', pro: '2 / 2', elite: '4 / 5' },
-    { name: 'Voice minutes / SMS', starter: '— / 1,000', pro: '300 / 2,500', elite: '900 / 6,000' }
+    { name: 'Instant SMS + booking', starter: true, pro: true, ultimate: true },
+    { name: 'AI receptionist (voice)', starter: false, pro: true, ultimate: true },
+    { name: 'Live transfer to human', starter: false, pro: true, ultimate: true },
+    { name: 'Dashboard + transcripts', starter: false, pro: true, ultimate: true },
+    { name: 'Money-back guarantee', starter: false, pro: true, ultimate: true },
+    { name: 'VIP phone/WhatsApp support', starter: false, pro: false, ultimate: true },
+    { name: 'White-glove setup (48h)', starter: false, pro: false, ultimate: true },
+    { name: 'Quarterly strategy call', starter: false, pro: false, ultimate: true },
+    { name: 'Custom branded voice', starter: false, pro: false, ultimate: true },
+    { name: 'Calendars / Users', starter: '1 / 1', pro: '2 / 2', ultimate: '4 / 5' },
+    { name: 'Voice minutes / SMS', starter: '— / 1,000', pro: '300 / 2,500', ultimate: '900 / 6,000' }
   ];
 
   const handlePlanSelect = () => {
@@ -107,7 +107,7 @@ const PricingSection: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Pro has everything most teams need. Elite adds white-glove polish.
+            Pro has everything most teams need. Ultimate adds white-glove polish.
           </motion.p>
 
           {/* Billing Toggle */}
@@ -263,7 +263,7 @@ const PricingSection: React.FC = () => {
                 )}
               </div>
               <div className="text-center">
-                <h4 className="text-lg font-semibold text-gray-900">Elite</h4>
+                <h4 className="text-lg font-semibold text-gray-900">Ultimate</h4>
               </div>
             </div>
           </div>
@@ -307,14 +307,14 @@ const PricingSection: React.FC = () => {
                 </div>
                 
                 <div className="text-center">
-                  {typeof feature.elite === 'boolean' ? (
-                    feature.elite ? (
+                  {typeof feature.ultimate === 'boolean' ? (
+                    feature.ultimate ? (
                       <Check className="w-5 h-5 text-green-500 mx-auto" strokeWidth={2.5} />
                     ) : (
                       <X className="w-5 h-5 text-red-400 mx-auto" strokeWidth={2.5} />
                     )
                   ) : (
-                    <span className="text-gray-900">{feature.elite}</span>
+                    <span className="text-gray-900">{feature.ultimate}</span>
                   )}
                 </div>
               </motion.div>

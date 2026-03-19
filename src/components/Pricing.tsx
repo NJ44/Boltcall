@@ -34,26 +34,26 @@ const Pricing: React.FC = () => {
     {
       name: "Starter",
       level: "starter",
-      price: { monthly: 197, yearly: 1970 },
+      price: { monthly: 99, yearly: 948 },
       description: "Perfect for getting started with lead management.",
     },
     {
       name: "Pro",
       level: "pro",
-      price: { monthly: 497, yearly: 4970 },
+      price: { monthly: 179, yearly: 1716 },
       popular: true,
       description: "Everything in Starter plus:",
     },
     {
-      name: "AGENCY",
+      name: "Ultimate",
       level: "all",
-      price: { monthly: 1497, yearly: 14970 },
+      price: { monthly: 249, yearly: 2388 },
       description: "Everything in Pro plus:",
     },
     {
       name: "ENTERPRISE",
       level: "custom",
-      price: { monthly: 0, yearly: 0 },
+      price: { monthly: 997, yearly: 11964 },
       description: "Tailored solutions for your business:",
       isCustom: true,
       excludeFromTable: true, // Add this flag to exclude from comparison table
@@ -118,7 +118,7 @@ const Pricing: React.FC = () => {
               const planMap: Record<string, string> = {
                 starter: 'starter',
                 pro: 'pro',
-                all: 'agency',
+                all: 'ultimate',
               };
               const stripePlan = planMap[plan] || plan;
               await redirectToCheckout({

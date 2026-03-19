@@ -80,7 +80,7 @@ const PaymentPro: React.FC = () => {
                 <Check className="w-8 h-8 text-blue-600" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Pro Plan</h2>
-              <div className="text-4xl font-bold text-blue-600 mb-2">$297<span className="text-lg text-gray-500">/month</span></div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">$179<span className="text-lg text-gray-500">/month</span></div>
               <p className="text-gray-600">Everything you need to scale your practice</p>
             </div>
 
@@ -138,7 +138,7 @@ const PaymentPro: React.FC = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Pro Plan (Monthly)</span>
-                  <span>$297.00</span>
+                  <span>$179.00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Setup Fee</span>
@@ -146,7 +146,7 @@ const PaymentPro: React.FC = () => {
                 </div>
                 <div className="border-t pt-2 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span>$297.00/month</span>
+                  <span>$179.00/month</span>
                 </div>
               </div>
             </div>

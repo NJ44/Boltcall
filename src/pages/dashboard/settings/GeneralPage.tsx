@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, MapPin, Save, RefreshCw, AlertTriangle, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Magnetic } from '../../../components/ui/magnetic';
 import { useToast } from '../../../contexts/ToastContext';
+import { useAuth } from '../../../contexts/AuthContext';
 import { supabase } from '../../../lib/supabase';
 import Button from '../../../components/ui/Button';
 
 const GeneralPage: React.FC = () => {
   const { showToast } = useToast();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [businessInfo, setBusinessInfo] = useState({
-    businessName: 'BoltCall Solutions',
+    businessName: '',
     language: 'en',
-    owner: 'John Doe',
-    website: 'https://boltcall.com',
-    description: 'AI-powered business communication solutions',
+    owner: '',
+    website: '',
+    description: '',
     industry: 'Technology'
   });
 
   const [addressInfo, setAddressInfo] = useState({
-    line1: '123 Business Street',
-    line2: 'Suite 100',
-    city: 'New York',
-    state: 'NY',
-    postalCode: '10001',
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    postalCode: '',
     country: 'United States'
   });
 
@@ -33,15 +35,140 @@ const GeneralPage: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [businessProfileId, setBusinessProfileId] = useState<string | null>(null);
+  const [locationId, setLocationId] = useState<string | null>(null);
+
+  // Fetch existing data on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user?.id) return;
+      try {
+        // Fetch business profile
+        const { data: profile } = await supabase
+          .from('business_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: true })
+          .limit(1)
+          .maybeSingle();
+
+        if (profile) {
+          setBusinessProfileId(profile.id);
+          setBusinessInfo({
+            businessName: profile.business_name || '',
+            language: profile.languages?.[0] || 'en',
+            owner: profile.owner_name || user.name || '',
+            website: profile.website_url || '',
+            description: profile.description || '',
+            industry: profile.main_category || 'Technology'
+          });
+
+          // Fetch primary location for address
+          const { data: location } = await supabase
+            .from('locations')
+            .select('*')
+            .eq('business_profile_id', profile.id)
+            .eq('is_primary', true)
+            .limit(1)
+            .maybeSingle();
+
+          if (location) {
+            setLocationId(location.id);
+            setAddressInfo({
+              line1: location.address_line1 || '',
+              line2: location.address_line2 || '',
+              city: location.city || '',
+              state: location.state || '',
+              postalCode: location.postal_code || '',
+              country: location.country || 'United States'
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching general settings:', err);
+      }
+    };
+    fetchData();
+  }, [user?.id, user?.name]);
 
   const handleSave = async () => {
+    if (!user?.id) return;
     setIsSaving(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSaving(false);
+    try {
+      // Upsert business profile
+      const profilePayload = {
+        user_id: user.id,
+        business_name: businessInfo.businessName,
+        website_url: businessInfo.website,
+        main_category: businessInfo.industry,
+        languages: [businessInfo.language],
+        // owner_name and description may not have dedicated columns yet;
+        // the upsert will silently ignore unknown columns on insert, but
+        // we include them so they work once the columns are added.
+        owner_name: businessInfo.owner,
+        description: businessInfo.description,
+      };
+
+      if (businessProfileId) {
+        const { error } = await supabase
+          .from('business_profiles')
+          .update(profilePayload)
+          .eq('id', businessProfileId);
+        if (error) throw error;
+      } else {
+        const { data: newProfile, error } = await supabase
+          .from('business_profiles')
+          .insert([profilePayload])
+          .select()
+          .single();
+        if (error) throw error;
+        if (newProfile) setBusinessProfileId(newProfile.id);
+      }
+
+      // Upsert location (address)
+      if (businessProfileId) {
+        const locationPayload = {
+          address_line1: addressInfo.line1,
+          address_line2: addressInfo.line2,
+          city: addressInfo.city,
+          state: addressInfo.state,
+          postal_code: addressInfo.postalCode,
+          country: addressInfo.country,
+        };
+
+        if (locationId) {
+          const { error } = await supabase
+            .from('locations')
+            .update(locationPayload)
+            .eq('id', locationId);
+          if (error) throw error;
+        } else {
+          const { data: newLoc, error } = await supabase
+            .from('locations')
+            .insert([{
+              ...locationPayload,
+              business_profile_id: businessProfileId,
+              user_id: user.id,
+              name: addressInfo.line1 || businessInfo.businessName || 'Primary Location',
+              is_primary: true,
+              is_active: true,
+            }])
+            .select()
+            .single();
+          if (error) throw error;
+          if (newLoc) setLocationId(newLoc.id);
+        }
+      }
+
+      showToast({ title: 'Saved', message: 'Settings saved successfully!', variant: 'success', duration: 3000 });
       setSaveMessage('Settings saved successfully!');
       setTimeout(() => setSaveMessage(''), 3000);
-    }, 1000);
+    } catch (err) {
+      console.error('Error saving general settings:', err);
+      showToast({ title: 'Error', message: 'Failed to save settings. Please try again.', variant: 'error', duration: 4000 });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleBusinessInfoChange = (field: string, value: string) => {

@@ -1,67 +1,175 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Mail, Phone, MessageSquare, Calendar, AlertTriangle, CheckCircle, Settings, Volume2, VolumeX, Clock } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 import CardTable from '../../../components/ui/CardTable';
 import { Magnetic } from '../../../components/ui/magnetic';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useToast } from '../../../contexts/ToastContext';
+import { supabase } from '../../../lib/supabase';
+
+const defaultNotificationSettings = {
+  general: {
+    enableNotifications: true,
+    soundEnabled: true,
+    vibrationEnabled: true
+  },
+  channels: {
+    email: {
+      enabled: true,
+      newLead: true,
+      appointmentBooked: true,
+      appointmentCancelled: true,
+      missedCall: true,
+      systemAlerts: true,
+      weeklyDigest: true,
+      marketing: false
+    },
+    push: {
+      enabled: true,
+      newLead: true,
+      appointmentBooked: true,
+      appointmentCancelled: true,
+      missedCall: true,
+      systemAlerts: true
+    },
+    sms: {
+      enabled: false,
+      newLead: false,
+      appointmentBooked: false,
+      appointmentCancelled: false,
+      missedCall: true,
+      systemAlerts: false
+    }
+  },
+  timing: {
+    quietHours: {
+      enabled: true,
+      start: '22:00',
+      end: '08:00'
+    },
+    timezone: 'America/New_York'
+  }
+};
 
 const NotificationPage: React.FC = () => {
-  const [notificationSettings, setNotificationSettings] = useState({
-    general: {
-      enableNotifications: true,
-      soundEnabled: true,
-      vibrationEnabled: true
-    },
-    channels: {
-      email: {
-        enabled: true,
-        newLead: true,
-        appointmentBooked: true,
-        appointmentCancelled: true,
-        missedCall: true,
-        systemAlerts: true,
-        weeklyDigest: true,
-        marketing: false
-      },
-      push: {
-        enabled: true,
-        newLead: true,
-        appointmentBooked: true,
-        appointmentCancelled: true,
-        missedCall: true,
-        systemAlerts: true
-      },
-      sms: {
-        enabled: false,
-        newLead: false,
-        appointmentBooked: false,
-        appointmentCancelled: false,
-        missedCall: true,
-        systemAlerts: false
-      }
-    },
-    timing: {
-      quietHours: {
-        enabled: true,
-        start: '22:00',
-        end: '08:00'
-      },
-      timezone: 'America/New_York'
-    }
-  });
+  const { user } = useAuth();
+  const { showToast } = useToast();
+  const [notificationSettings, setNotificationSettings] = useState(defaultNotificationSettings);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
 
+  // Fetch existing notification preferences on mount.
+  // We use the notification_preferences table which has dedicated boolean columns.
+  // We map them to our local UI state shape.
+  useEffect(() => {
+    const fetchNotificationPrefs = async () => {
+      if (!user?.id) return;
+      try {
+        const { data } = await supabase
+          .from('notification_preferences')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (data) {
+          setNotificationSettings({
+            general: {
+              enableNotifications: true, // master switch not in DB, default true
+              soundEnabled: data.push_notifications ?? true,
+              vibrationEnabled: true, // no DB column, default true
+            },
+            channels: {
+              email: {
+                enabled: data.email_notifications ?? true,
+                newLead: data.new_lead ?? true,
+                appointmentBooked: data.appointment_booked ?? true,
+                appointmentCancelled: data.appointment_cancelled ?? true,
+                missedCall: data.missed_calls ?? true,
+                systemAlerts: data.system_maintenance ?? true,
+                weeklyDigest: data.weekly_digest ?? true,
+                marketing: false,
+              },
+              push: {
+                enabled: data.push_notifications ?? true,
+                newLead: data.new_lead ?? true,
+                appointmentBooked: data.appointment_booked ?? true,
+                appointmentCancelled: data.appointment_cancelled ?? true,
+                missedCall: data.missed_calls ?? true,
+                systemAlerts: data.system_maintenance ?? true,
+              },
+              sms: {
+                enabled: data.sms_notifications ?? false,
+                newLead: data.sms_notifications ? (data.new_lead ?? false) : false,
+                appointmentBooked: data.sms_notifications ? (data.appointment_booked ?? false) : false,
+                appointmentCancelled: data.sms_notifications ? (data.appointment_cancelled ?? false) : false,
+                missedCall: data.missed_calls ?? true,
+                systemAlerts: false,
+              },
+            },
+            timing: {
+              quietHours: {
+                enabled: data.quiet_hours_enabled ?? true,
+                start: data.quiet_hours_start || '22:00',
+                end: data.quiet_hours_end || '08:00',
+              },
+              timezone: data.quiet_hours_timezone || 'America/New_York',
+            },
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching notification preferences:', err);
+      }
+    };
+    fetchNotificationPrefs();
+  }, [user?.id]);
+
   const handleSave = async () => {
+    if (!user?.id) return;
     setIsSaving(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSaving(false);
+    try {
+      const s = notificationSettings;
+      const payload = {
+        user_id: user.id,
+        // Delivery methods
+        email_notifications: s.channels.email.enabled,
+        sms_notifications: s.channels.sms.enabled,
+        push_notifications: s.channels.push.enabled,
+        in_app_notifications: true,
+        // Notification types (combine across channels — if enabled in any channel)
+        new_lead: s.channels.email.newLead || s.channels.push.newLead || s.channels.sms.newLead,
+        appointment_booked: s.channels.email.appointmentBooked || s.channels.push.appointmentBooked || s.channels.sms.appointmentBooked,
+        appointment_cancelled: s.channels.email.appointmentCancelled || s.channels.push.appointmentCancelled || s.channels.sms.appointmentCancelled,
+        missed_calls: s.channels.email.missedCall || s.channels.push.missedCall || s.channels.sms.missedCall,
+        system_maintenance: s.channels.email.systemAlerts || s.channels.push.systemAlerts,
+        weekly_digest: s.channels.email.weeklyDigest ?? true,
+        // Timing
+        quiet_hours_enabled: s.timing.quietHours.enabled,
+        quiet_hours_start: s.timing.quietHours.start,
+        quiet_hours_end: s.timing.quietHours.end,
+        quiet_hours_timezone: s.timing.timezone,
+        weekend_notifications: true,
+        instant_notifications: true,
+        daily_digest: false,
+      };
+
+      const { error } = await supabase
+        .from('notification_preferences')
+        .upsert(payload, { onConflict: 'user_id' });
+
+      if (error) throw error;
+
+      showToast({ title: 'Saved', message: 'Notification settings saved successfully!', variant: 'success', duration: 3000 });
       setSaveMessage('Notification settings saved successfully!');
       setTimeout(() => setSaveMessage(''), 3000);
-    }, 1000);
+    } catch (err) {
+      console.error('Error saving notification settings:', err);
+      showToast({ title: 'Error', message: 'Failed to save notification settings. Please try again.', variant: 'error', duration: 4000 });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleSettingChange = (path: string[], value: any) => {

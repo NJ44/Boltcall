@@ -19,20 +19,11 @@ import {
   Activity,
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
+import { supabase } from '../../lib/supabase';
 
 /* ------------------------------------------------------------------ */
 /*  Constants                                                          */
 /* ------------------------------------------------------------------ */
-
-const SUPABASE_URL = 'https://hbwogktdajorojljkjwg.supabase.co/rest/v1';
-const SUPABASE_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhid29na3RkYWpvcm9qbGprandnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM1OTYxMDgsImV4cCI6MjA0OTE3MjEwOH0.2lSxCXtVfQR-KPLOB4e6oSyXCyynUVeMBuPV0Kp5yQk';
-
-const HEADERS = {
-  apikey: SUPABASE_KEY,
-  Authorization: `Bearer ${SUPABASE_KEY}`,
-  'Content-Type': 'application/json',
-};
 
 const AUTO_REFRESH_MS = 60_000;
 
@@ -171,22 +162,22 @@ function nicheConfig(niche: string): NicheConfig | undefined {
 /* ------------------------------------------------------------------ */
 
 async function fetchPerformance(): Promise<PerformanceRow[]> {
-  const res = await fetch(
-    `${SUPABASE_URL}/lead_magnet_performance?select=*`,
-    { headers: HEADERS }
-  );
-  if (!res.ok) throw new Error(`Performance fetch failed: ${res.status}`);
-  return res.json();
+  const { data, error } = await supabase
+    .from('lead_magnet_performance')
+    .select('*');
+  if (error) throw new Error(`Performance fetch failed: ${error.message}`);
+  return data as PerformanceRow[];
 }
 
 async function fetchLeads(): Promise<LeadRow[]> {
-  const table = encodeURIComponent('Lead Magnet Leads');
-  const res = await fetch(
-    `${SUPABASE_URL}/${table}?niche=not.is.null&select=*&order=created_at.desc&limit=50`,
-    { headers: HEADERS }
-  );
-  if (!res.ok) throw new Error(`Leads fetch failed: ${res.status}`);
-  return res.json();
+  const { data, error } = await supabase
+    .from('Lead Magnet Leads')
+    .select('*')
+    .not('niche', 'is', null)
+    .order('created_at', { ascending: false })
+    .limit(50);
+  if (error) throw new Error(`Leads fetch failed: ${error.message}`);
+  return data as LeadRow[];
 }
 
 /* ------------------------------------------------------------------ */

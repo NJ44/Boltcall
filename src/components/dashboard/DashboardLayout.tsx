@@ -267,7 +267,7 @@ const DashboardLayout: React.FC = () => {
   // SERVICES
   const navItemsServices = [
     { to: '/dashboard/agents', label: 'AI Receptionist', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/calls', label: 'Missed Calls', icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/calls', label: 'Missed Calls', icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: 'Beta' as const },
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/reputation', label: 'Reputation Manager', icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/instant-lead-response', label: 'Instant Lead Response', icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
@@ -278,7 +278,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/agents', label: 'AI Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" />, badge: 'Soon' as const },
   ];
 
   // INSIGHTS
@@ -318,13 +318,22 @@ const DashboardLayout: React.FC = () => {
           {item.label}
           <div className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 ${
             isActive ? 'w-full' : 'w-0 group-hover:w-full'
-          }`} 
+          }`}
           style={{
-            transition: isActive 
+            transition: isActive
               ? 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
               : 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
           }} />
         </span>
+        {item.badge && (
+          <span className={`ml-auto px-1.5 py-0.5 text-[9px] font-semibold rounded-full leading-none ${
+            item.badge === 'Beta'
+              ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+              : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+          }`}>
+            {item.badge}
+          </span>
+        )}
       </Link>
     );
   };
@@ -928,7 +937,7 @@ const DashboardLayout: React.FC = () => {
                     userPlan === 'free' ? 'bg-gray-400' : 
                     userPlan === 'pro' ? 'bg-blue-500' : 'bg-purple-500'
                   }`} />
-                  <span>Current plan: {userPlan === 'free' ? 'Free' : userPlan === 'pro' ? 'Pro' : 'Elite'}</span>
+                  <span>Current plan: {userPlan === 'free' ? 'Free' : userPlan === 'pro' ? 'Pro' : 'Ultimate'}</span>
                 </div>
               </div>
             </div>

@@ -11,7 +11,7 @@ export function getStripe() {
   return stripePromise;
 }
 
-export type PlanLevel = 'starter' | 'pro' | 'agency';
+export type PlanLevel = 'starter' | 'pro' | 'ultimate' | 'enterprise';
 export type BillingInterval = 'monthly' | 'yearly';
 
 interface CheckoutParams {
@@ -115,7 +115,8 @@ export async function openCustomerPortal() {
  * Plan display info
  */
 export const PLAN_INFO: Record<PlanLevel, { name: string; monthlyPrice: number; yearlyPrice: number }> = {
-  starter: { name: 'Starter', monthlyPrice: 197, yearlyPrice: 1970 },
-  pro: { name: 'Pro', monthlyPrice: 497, yearlyPrice: 4970 },
-  agency: { name: 'Agency', monthlyPrice: 1497, yearlyPrice: 14970 },
+  starter: { name: 'Starter', monthlyPrice: 99, yearlyPrice: 948 },
+  pro: { name: 'Pro', monthlyPrice: 179, yearlyPrice: 1716 },
+  ultimate: { name: 'Ultimate', monthlyPrice: 249, yearlyPrice: 2388 },
+  enterprise: { name: 'Enterprise', monthlyPrice: 997, yearlyPrice: 11964 },
 };

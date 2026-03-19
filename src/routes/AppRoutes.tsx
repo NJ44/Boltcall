@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useLenis } from '../hooks/useLenis';
 import { AuthProvider } from '../contexts/AuthContext';
+import { SubscriptionProvider } from '../contexts/SubscriptionContext';
 import ProtectedRoute from '../components/ProtectedRoute';
+import PlanGate from '../components/PlanGate';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
@@ -198,26 +200,30 @@ const NavigationWrapper: React.FC = () => {
           <Route index element={<DashboardPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
 
-          {/* New merged pages */}
-          <Route path="leads" element={<LeadsPage />} />
-          <Route path="calls" element={<CallHistoryPage />} />
-          <Route path="messages" element={<MessagesPage />} />
+          {/* Pro-gated merged pages */}
+          <Route path="leads" element={<PlanGate requiredPlan="pro"><LeadsPage /></PlanGate>} />
+          <Route path="calls" element={<PlanGate requiredPlan="starter"><CallHistoryPage /></PlanGate>} />
+          <Route path="messages" element={<PlanGate requiredPlan="pro"><MessagesPage /></PlanGate>} />
 
-          {/* Core pages */}
-          <Route path="analytics" element={<AnalyticsPage />} />
-          <Route path="agents" element={<AgentsPage />} />
+          {/* Starter-gated pages */}
+          <Route path="agents" element={<PlanGate requiredPlan="starter"><AgentsPage /></PlanGate>} />
           <Route path="agent-tests" element={<Navigate to="/dashboard/agents" replace />} />
-          <Route path="voice-library" element={<VoiceLibraryPage />} />
-          <Route path="knowledge-base" element={<KnowledgeBasePage />} />
-          <Route path="phone" element={<PhoneNumbersPage />} />
-          <Route path="chat-widget" element={<WebsiteBubblePage />} />
+          <Route path="voice-library" element={<PlanGate requiredPlan="starter"><VoiceLibraryPage /></PlanGate>} />
+          <Route path="knowledge-base" element={<PlanGate requiredPlan="starter"><KnowledgeBasePage /></PlanGate>} />
+          <Route path="phone" element={<PlanGate requiredPlan="starter"><PhoneNumbersPage /></PlanGate>} />
+          <Route path="chat-widget" element={<PlanGate requiredPlan="starter"><WebsiteBubblePage /></PlanGate>} />
+
+          {/* Free pages */}
           <Route path="integrations" element={<IntegrationsPage />} />
-          <Route path="reminders" element={<RemindersPage />} />
-          <Route path="reputation" element={<ReputationPage />} />
-          <Route path="instant-lead-response" element={<SpeedToLeadPage />} />
-          <Route path="calcom" element={<CalcomPage />} />
-          <Route path="sms" element={<SmsPage />} />
-          <Route path="whatsapp" element={<WhatsappPage />} />
+
+          {/* Pro-gated pages */}
+          <Route path="analytics" element={<PlanGate requiredPlan="pro"><AnalyticsPage /></PlanGate>} />
+          <Route path="reminders" element={<PlanGate requiredPlan="pro"><RemindersPage /></PlanGate>} />
+          <Route path="reputation" element={<PlanGate requiredPlan="pro"><ReputationPage /></PlanGate>} />
+          <Route path="instant-lead-response" element={<PlanGate requiredPlan="pro"><SpeedToLeadPage /></PlanGate>} />
+          <Route path="calcom" element={<PlanGate requiredPlan="pro"><CalcomPage /></PlanGate>} />
+          <Route path="sms" element={<PlanGate requiredPlan="pro"><SmsPage /></PlanGate>} />
+          <Route path="whatsapp" element={<PlanGate requiredPlan="pro"><WhatsappPage /></PlanGate>} />
 
           {/* Redirects from old paths to new merged pages */}
           <Route path="speed-to-lead" element={<Navigate to="/dashboard/leads" replace />} />
@@ -386,9 +392,11 @@ const NavigationWrapper: React.FC = () => {
 const AppRoutes: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
-        <NavigationWrapper />
-      </Router>
+      <SubscriptionProvider>
+        <Router>
+          <NavigationWrapper />
+        </Router>
+      </SubscriptionProvider>
     </AuthProvider>
   );
 };

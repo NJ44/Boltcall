@@ -63,9 +63,10 @@ const PlanBillingPage: React.FC = () => {
 
   const planDetails: Record<string, { name: string; price: { monthly: number; yearly: number } }> = {
     free: { name: 'Free', price: { monthly: 0, yearly: 0 } },
-    starter: { name: 'Starter', price: { monthly: 197, yearly: 1970 } },
-    pro: { name: 'Pro', price: { monthly: 497, yearly: 4970 } },
-    agency: { name: 'Agency', price: { monthly: 1497, yearly: 14970 } },
+    starter: { name: 'Starter', price: { monthly: 99, yearly: 948 } },
+    pro: { name: 'Pro', price: { monthly: 179, yearly: 1716 } },
+    ultimate: { name: 'Ultimate', price: { monthly: 249, yearly: 2388 } },
+    enterprise: { name: 'Enterprise', price: { monthly: 997, yearly: 11964 } },
   };
 
   const currentPlan = planDetails[currentPlanLevel] || planDetails.free;
@@ -257,7 +258,7 @@ const PlanBillingPage: React.FC = () => {
             <h3 className="text-sm font-semibold text-gray-900 mb-4">Available Plans</h3>
             <div className="border-t border-gray-100 pt-5">
               <div className="grid md:grid-cols-3 gap-4">
-                {(['starter', 'pro', 'agency'] as PlanLevel[]).map((level) => {
+                {(['starter', 'pro', 'ultimate'] as PlanLevel[]).map((level) => {
                   const plan = planDetails[level];
                   const isCurrent = currentPlanLevel === level;
                   const isPopular = level === 'pro';
