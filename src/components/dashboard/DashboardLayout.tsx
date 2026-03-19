@@ -782,67 +782,141 @@ const DashboardLayout: React.FC = () => {
                     </div>
                   </div>
           
-                 {/* Dark Mode Toggle */}
-                  <button
-                   onClick={toggleDarkMode}
-                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
-                   aria-label="Toggle dark mode"
-                 >
-                   {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                  </button>
-
                   {/* User Avatar */}
                   <div className="relative" data-user-menu>
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold hover:bg-blue-700 transition-colors"
+                      className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white text-xs font-semibold hover:bg-gray-700 transition-colors"
                       title={user?.name || 'User'}
                     >
                       {(user?.name || 'U').charAt(0).toUpperCase()}
                     </button>
 
+                    <AnimatePresence>
                     {showUserMenu && (
-                      <div className={`absolute right-0 top-full mt-2 w-56 rounded-lg shadow-lg border py-1 z-50 ${
-                        isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'
-                      }`}>
-                        <div className="px-4 py-3 border-b border-gray-100 dark:border-[#1e1e24]">
-                          <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                            {user?.name || 'User'}
+                      <motion.div
+                        initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        className="absolute right-0 top-full mt-2 w-64 rounded-xl shadow-xl border border-gray-200 bg-white z-50 overflow-hidden"
+                      >
+                        {/* Profile Header */}
+                        <div className="px-4 py-4 flex items-center gap-3 border-b border-gray-100">
+                          <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
+                            {(user?.name || 'U').charAt(0).toUpperCase()}
                           </div>
-                          <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            {user?.email}
+                          <div className="min-w-0">
+                            <div className="text-sm font-semibold text-gray-900 truncate">{user?.name || 'User'}</div>
+                            <div className="text-xs text-gray-500 truncate">{user?.email}</div>
                           </div>
                         </div>
-                        <Link
-                          to="/dashboard/settings/plan-billing"
-                          onClick={() => setShowUserMenu(false)}
-                          className={`block px-4 py-2 text-sm transition-colors ${
-                            isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
-                          }`}
-                        >
-                          Plans & Billing
-                        </Link>
-                        <Link
-                          to="/dashboard/settings/general"
-                          onClick={() => setShowUserMenu(false)}
-                          className={`block px-4 py-2 text-sm transition-colors ${
-                            isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
-                          }`}
-                        >
-                          Settings
-                        </Link>
-                        <div className="border-t border-gray-100 dark:border-[#1e1e24]">
-                          <button
-                            onClick={handleLogout}
-                            className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                              isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
-                            }`}
+
+                        {/* Menu Items */}
+                        <div className="py-2">
+                          <Link
+                            to="/dashboard/settings/plan-billing"
+                            onClick={() => setShowUserMenu(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                           >
-                            Sign out
+                            <UserPlus className="w-4 h-4 text-gray-400" />
+                            Invite a Friend & Earn
+                          </Link>
+                          <Link
+                            to="/dashboard/changelog"
+                            onClick={() => setShowUserMenu(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <Zap className="w-4 h-4 text-gray-400" />
+                            See what's new
+                          </Link>
+                          <button
+                            onClick={() => { setShowUserMenu(false); }}
+                            className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <span className="flex items-center gap-3">
+                              <Bell className="w-4 h-4 text-gray-400" />
+                              Notifications
+                            </span>
+                            <ChevronDown className="w-3.5 h-3.5 text-gray-400 -rotate-90" />
+                          </button>
+                          <button
+                            onClick={() => { setShowUserMenu(false); setShowHelpSidebar(true); }}
+                            className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <span className="flex items-center gap-3">
+                              <HelpCircle className="w-4 h-4 text-gray-400" />
+                              Help Center
+                            </span>
+                            <ChevronDown className="w-3.5 h-3.5 text-gray-400 -rotate-90" />
+                          </button>
+                          <button
+                            className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <span className="flex items-center gap-3">
+                              <Globe className="w-4 h-4 text-gray-400" />
+                              Language
+                            </span>
+                            <ChevronDown className="w-3.5 h-3.5 text-gray-400 -rotate-90" />
                           </button>
                         </div>
-                      </div>
+
+                        {/* Theme Switcher */}
+                        <div className="px-4 py-3 border-t border-gray-100">
+                          <div className="text-xs font-medium text-gray-900 mb-2">Theme</div>
+                          <div className="inline-flex items-center bg-gray-100 rounded-lg p-0.5">
+                            <button
+                              onClick={() => { setIsDarkMode(false); localStorage.setItem('darkMode', 'false'); }}
+                              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                                !isDarkMode ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                              }`}
+                            >
+                              Light
+                            </button>
+                            <button
+                              onClick={() => { setIsDarkMode(true); localStorage.setItem('darkMode', 'true'); }}
+                              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                                isDarkMode ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                              }`}
+                            >
+                              Dark
+                            </button>
+                            <button
+                              onClick={() => {
+                                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                                setIsDarkMode(prefersDark);
+                                localStorage.removeItem('darkMode');
+                              }}
+                              className="px-3 py-1.5 text-xs font-medium rounded-md text-gray-500 hover:text-gray-700 transition-colors"
+                            >
+                              System
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Bottom Section */}
+                        <div className="py-2 border-t border-gray-100">
+                          <Link
+                            to="/dashboard/settings/general"
+                            onClick={() => setShowUserMenu(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <Settings className="w-4 h-4 text-gray-400" />
+                            Settings
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            Logout
+                          </button>
+                        </div>
+                      </motion.div>
                     )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
