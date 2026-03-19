@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
-import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw } from 'lucide-react';
+import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
 import VoiceGallery from '../../components/ui/VoiceGallery';
 import CardTable from '../../components/ui/CardTable';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { generateAgentPrompt, updateRetellAgent } from '../../lib/retell';
+import AgentTestsPage from './AgentTestsPage';
 
 interface Agent {
   id: string;
@@ -58,6 +59,7 @@ interface IndustryTemplate {
 
 const AgentsPage: React.FC = () => {
   const { user } = useAuth();
+  const [activeTab, setActiveTab] = useState<'agents' | 'tests'>('agents');
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -528,7 +530,45 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
   return (
     <div className="space-y-5">
 
-      {agents.length === 0 ? (
+      {/* Tabs */}
+      <div className="flex gap-1 border-b border-zinc-200">
+        <button
+          onClick={() => setActiveTab('agents')}
+          className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
+            activeTab === 'agents'
+              ? 'text-blue-600'
+              : 'text-zinc-500 hover:text-zinc-700'
+          }`}
+        >
+          <span className="flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            My Agents
+          </span>
+          {activeTab === 'agents' && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab('tests')}
+          className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
+            activeTab === 'tests'
+              ? 'text-blue-600'
+              : 'text-zinc-500 hover:text-zinc-700'
+          }`}
+        >
+          <span className="flex items-center gap-2">
+            <Shield className="w-4 h-4" />
+            Agent Tests
+          </span>
+          {activeTab === 'tests' && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+          )}
+        </button>
+      </div>
+
+      {activeTab === 'tests' ? (
+        <AgentTestsPage />
+      ) : agents.length === 0 ? (
         /* No agents - Show create options */
         <div>
           <div className="max-w-2xl mx-auto text-center mb-5 mt-8">

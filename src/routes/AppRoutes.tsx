@@ -30,7 +30,7 @@ import RemindersPage from '../pages/dashboard/RemindersPage';
 // import LeadReactivationPage from '../pages/dashboard/LeadReactivationPage';
 import CalcomPage from '../pages/dashboard/CalcomPage';
 import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
-import AgentTestsPage from '../pages/dashboard/AgentTestsPage';
+// AgentTestsPage now embedded as a tab inside AgentsPage
 import ReputationPage from '../pages/dashboard/ReputationPage';
 // import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
 import LeadsPage from '../pages/dashboard/LeadsPage';
@@ -205,7 +205,7 @@ const NavigationWrapper: React.FC = () => {
           {/* Core pages */}
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="agents" element={<AgentsPage />} />
-          <Route path="agent-tests" element={<AgentTestsPage />} />
+          <Route path="agent-tests" element={<Navigate to="/dashboard/agents" replace />} />
           <Route path="voice-library" element={<VoiceLibraryPage />} />
           <Route path="knowledge-base" element={<KnowledgeBasePage />} />
           <Route path="phone" element={<PhoneNumbersPage />} />
