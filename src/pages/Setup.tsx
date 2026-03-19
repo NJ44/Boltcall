@@ -2,21 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, CheckIcon, ArrowRightIcon, Loader2, ChevronDown, Zap, Phone, Calendar, MessageSquare } from 'lucide-react';
+import { Check, CheckIcon, ArrowRightIcon, Loader2, Zap, Phone, Calendar, MessageSquare } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
 import { useAuth } from '../contexts/AuthContext';
 import { createUserWorkspaceAndProfile } from '../lib/database';
 import { createAgentAndKnowledgeBase } from '../lib/webhooks';
 import { LocationService } from '../lib/locations';
 import { cn } from '../lib/utils';
+import { FancyDropdown } from '../components/ui/fancy-dropdown';
+import type { FancyDropdownOption } from '../components/ui/fancy-dropdown';
 
-const CATEGORIES = [
-  'Dentist', 'Med Spa', 'Plumber', 'HVAC', 'Legal',
-  'Salon', 'Fitness', 'Restaurant', 'Retail', 'Real Estate',
-  'Healthcare', 'Construction', 'Education', 'Technology', 'Other',
+const CATEGORY_OPTIONS: FancyDropdownOption[] = [
+  { value: 'dentist', label: 'Dentist' },
+  { value: 'medspa', label: 'Med Spa' },
+  { value: 'plumber', label: 'Plumber' },
+  { value: 'hvac', label: 'HVAC' },
+  { value: 'legal', label: 'Legal' },
+  { value: 'salon', label: 'Salon' },
+  { value: 'fitness', label: 'Fitness' },
+  { value: 'restaurant', label: 'Restaurant' },
+  { value: 'retail', label: 'Retail' },
+  { value: 'real-estate', label: 'Real Estate' },
+  { value: 'healthcare', label: 'Healthcare' },
+  { value: 'construction', label: 'Construction' },
+  { value: 'education', label: 'Education' },
+  { value: 'technology', label: 'Technology' },
+  { value: 'other', label: 'Other' },
 ];
 
-const COUNTRIES = [
+const COUNTRY_OPTIONS: FancyDropdownOption[] = [
   { value: 'us', label: 'United States' },
   { value: 'uk', label: 'United Kingdom' },
   { value: 'ca', label: 'Canada' },
@@ -328,22 +342,12 @@ const Setup: React.FC = () => {
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-white/90">Industry</label>
-                      <div className="relative">
-                        <select
-                          value={industry}
-                          onChange={(e) => setIndustry(e.target.value)}
-                          className={cn(
-                            'w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur text-white focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30 appearance-none cursor-pointer',
-                            !industry && 'text-white/50'
-                          )}
-                        >
-                          <option value="" disabled className="bg-blue-700">Select your industry</option>
-                          {CATEGORIES.map(cat => (
-                            <option key={cat} value={cat} className="bg-blue-700 text-white">{cat}</option>
-                          ))}
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
-                      </div>
+                      <FancyDropdown
+                        options={CATEGORY_OPTIONS}
+                        value={industry}
+                        onChange={setIndustry}
+                        placeholder="Select your industry"
+                      />
                     </div>
                   </div>
                 )}
@@ -352,23 +356,12 @@ const Setup: React.FC = () => {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-white/90">Country</label>
-                      <div className="relative">
-                        <select
-                          value={country}
-                          onChange={(e) => setCountry(e.target.value)}
-                          autoFocus
-                          className={cn(
-                            'w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur text-white focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30 appearance-none cursor-pointer',
-                            !country && 'text-white/50'
-                          )}
-                        >
-                          <option value="" disabled className="bg-blue-700">Select your country</option>
-                          {COUNTRIES.map(c => (
-                            <option key={c.value} value={c.value} className="bg-blue-700 text-white">{c.label}</option>
-                          ))}
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60 pointer-events-none" />
-                      </div>
+                      <FancyDropdown
+                        options={COUNTRY_OPTIONS}
+                        value={country}
+                        onChange={setCountry}
+                        placeholder="Select your country"
+                      />
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-white/90">
@@ -393,11 +386,11 @@ const Setup: React.FC = () => {
                       <div className="space-y-2 text-sm text-white/90">
                         <div className="flex items-center gap-2">
                           <Check className="w-3.5 h-3.5 text-green-300 flex-shrink-0" strokeWidth={2.5} />
-                          <span><strong>{businessName}</strong> — {industry}</span>
+                          <span><strong>{businessName}</strong> — {CATEGORY_OPTIONS.find(c => c.value === industry)?.label || industry}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Check className="w-3.5 h-3.5 text-green-300 flex-shrink-0" strokeWidth={2.5} />
-                          <span>{COUNTRIES.find(c => c.value === country)?.label || country}</span>
+                          <span>{COUNTRY_OPTIONS.find(c => c.value === country)?.label || country}</span>
                         </div>
                         {websiteUrl && (
                           <div className="flex items-center gap-2">
