@@ -9,6 +9,10 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { CheckCircle2, Circle, Brain } from 'lucide-react';
 
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
+
 interface Document {
   id: string;
   name: string;
@@ -165,6 +169,66 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
+  // Sync KB docs to Retell agent's knowledge base
+  const syncToRetell = async () => {
+    if (!user?.id) return;
+    try {
+      // 1. Find the user's agent and its Retell KB ID
+      const { data: agent } = await supabase
+        .from('agents')
+        .select('retell_agent_id')
+        .eq('user_id', user.id)
+        .not('retell_agent_id', 'is', null)
+        .limit(1)
+        .maybeSingle();
+
+      if (!agent?.retell_agent_id) return; // No Retell agent yet — skip
+
+      // 2. Get the agent details from Retell to find KB ID
+      const agentRes = await fetch(`${FUNCTIONS_BASE}/retell-agents?agent_id=${agent.retell_agent_id}`);
+      if (!agentRes.ok) return;
+      const agentData = await agentRes.json();
+
+      // Find KB ID from the agent's LLM config
+      const llmId = agentData.response_engine?.llm_id;
+      if (!llmId) return;
+
+      // Get LLM to find knowledge_base_ids
+      const llmRes = await fetch(`${FUNCTIONS_BASE}/retell-agents?llm_id=${llmId}`);
+      if (!llmRes.ok) return;
+      const llmData = await llmRes.json();
+      const kbId = llmData.knowledge_base_ids?.[0];
+      if (!kbId) return;
+
+      // 3. Get all current KB docs from Supabase
+      const { data: docs } = await supabase
+        .from('knowledge_base')
+        .select('title, content')
+        .eq('user_id', user.id)
+        .eq('status', 'active');
+
+      if (!docs?.length) return;
+
+      // 4. Push to Retell KB via sync_kb action
+      await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'sync_kb',
+          knowledge_base_id: kbId,
+          knowledge_base_texts: docs.map(d => ({
+            title: d.title || 'Untitled',
+            text: d.content || '',
+          })),
+        }),
+      });
+
+      console.log('KB synced to Retell successfully');
+    } catch (error) {
+      console.error('Failed to sync KB to Retell:', error);
+    }
+  };
+
   useEffect(() => {
     fetchDocuments();
     fetchCompleteness();
@@ -295,6 +359,7 @@ const KnowledgeBasePage: React.FC = () => {
 
       handleCloseNewKnowledgeBase();
       fetchDocuments();
+      syncToRetell();
     } catch (error) {
       console.error('Error creating knowledge base:', error);
       showToast({
@@ -369,6 +434,7 @@ const KnowledgeBasePage: React.FC = () => {
 
       showToast({ title: 'Success', message: `Imported ${scraped.charCount || 0} characters from website`, variant: 'success', duration: 3000 });
       handleClosePopup();
+      syncToRetell();
     } catch (error) {
       console.error('Error scraping URL:', error);
       showToast({ title: 'Error', message: 'Failed to scrape website', variant: 'error', duration: 3000 });
@@ -436,6 +502,7 @@ const KnowledgeBasePage: React.FC = () => {
       showToast({ title: 'Success', message: `File "${fileInput.name}" uploaded successfully`, variant: 'success', duration: 3000 });
       setFileInput(null);
       handleClosePopup();
+      syncToRetell();
     } catch (error) {
       console.error('Error reading file:', error);
       showToast({ title: 'Error', message: 'Failed to read file', variant: 'error', duration: 3000 });
@@ -536,6 +603,7 @@ const KnowledgeBasePage: React.FC = () => {
         setEditingDocumentId(null);
         setEditingDocumentContent('');
         setShowDocumentEditor(false);
+        syncToRetell();
       } catch (error) {
         console.error('Error saving document:', error);
       }
@@ -558,6 +626,7 @@ const KnowledgeBasePage: React.FC = () => {
       }
 
       setDocuments(documents.filter(doc => doc.id !== id));
+      syncToRetell();
     } catch (error) {
       console.error('Error deleting document:', error);
     }

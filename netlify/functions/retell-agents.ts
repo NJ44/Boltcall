@@ -98,6 +98,12 @@ export const handler: Handler = async (event) => {
     // GET /retell-agents?agent_id=xxx — get single agent
     if (event.httpMethod === 'GET') {
       const agentId = event.queryStringParameters?.agent_id;
+      const llmId = event.queryStringParameters?.llm_id;
+
+      if (llmId) {
+        const llm = await client.llm.retrieve(llmId);
+        return { statusCode: 200, headers, body: JSON.stringify(llm) };
+      }
       if (agentId) {
         const agent = await client.agent.retrieve(agentId);
         return { statusCode: 200, headers, body: JSON.stringify(agent) };
@@ -289,10 +295,33 @@ export const handler: Handler = async (event) => {
         };
       }
 
+      // Sync knowledge base — add new text sources to an existing Retell KB
+      if (action === 'sync_kb') {
+        const { knowledge_base_id, knowledge_base_texts, knowledge_base_urls } = body;
+        if (!knowledge_base_id) {
+          return { statusCode: 400, headers, body: JSON.stringify({ error: 'knowledge_base_id required' }) };
+        }
+
+        const addParams: any = {};
+        if (knowledge_base_texts?.length) addParams.knowledge_base_texts = knowledge_base_texts;
+        if (knowledge_base_urls?.length) addParams.knowledge_base_urls = knowledge_base_urls;
+
+        if (!addParams.knowledge_base_texts && !addParams.knowledge_base_urls) {
+          return { statusCode: 400, headers, body: JSON.stringify({ error: 'No sources to add' }) };
+        }
+
+        const updated = await client.knowledgeBase.addSources(knowledge_base_id, addParams);
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ success: true, knowledge_base_id: updated.knowledge_base_id }),
+        };
+      }
+
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Invalid action. Use: create_kb, create_agent, create_full, or create_web_call' }),
+        body: JSON.stringify({ error: 'Invalid action. Use: create_kb, create_agent, create_full, create_web_call, or sync_kb' }),
       };
     }
 
