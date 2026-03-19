@@ -56,10 +56,35 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-center"
+          className="text-center text-blue-600"
         >
-          <div className="w-8 h-8 border-4 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-text-muted">Loading...</p>
+          <svg xmlns="http://www.w3.org/2000/svg" height="100px" width="100px" viewBox="0 0 200 200" className="pencil mx-auto">
+            <defs>
+              <clipPath id="pencil-eraser"><rect height="30" width="30" ry="5" rx="5" /></clipPath>
+            </defs>
+            <circle transform="rotate(-113,100,100)" strokeLinecap="round" strokeDashoffset="439.82" strokeDasharray="439.82 439.82" strokeWidth="2" stroke="currentColor" fill="none" r="70" className="pencil__stroke" />
+            <g transform="translate(100,100)" className="pencil__rotate">
+              <g fill="none">
+                <circle transform="rotate(-90)" strokeDashoffset="402" strokeDasharray="402.12 402.12" strokeWidth="30" stroke="hsl(223,90%,50%)" r="64" className="pencil__body1" />
+                <circle transform="rotate(-90)" strokeDashoffset="465" strokeDasharray="464.96 464.96" strokeWidth="10" stroke="hsl(223,90%,60%)" r="74" className="pencil__body2" />
+                <circle transform="rotate(-90)" strokeDashoffset="339" strokeDasharray="339.29 339.29" strokeWidth="10" stroke="hsl(223,90%,40%)" r="54" className="pencil__body3" />
+              </g>
+              <g transform="rotate(-90) translate(49,0)" className="pencil__eraser">
+                <g className="pencil__eraser-skew">
+                  <rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)" />
+                  <rect clipPath="url(#pencil-eraser)" height="30" width="5" fill="hsl(223,90%,60%)" />
+                  <rect height="20" width="30" fill="hsl(40,20%,94%)" />
+                  <rect height="20" width="15" fill="hsl(40,20%,89%)" />
+                  <rect height="20" width="5" fill="hsl(40,20%,84%)" />
+                </g>
+              </g>
+              <g transform="rotate(-90) translate(49,-30)" className="pencil__point">
+                <polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)" />
+                <polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)" />
+                <polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)" />
+              </g>
+            </g>
+          </svg>
         </motion.div>
       </div>
     );
