@@ -404,7 +404,10 @@ const KnowledgeBasePage: React.FC = () => {
     }
 
     // Direct mode: scrape URL and save to Supabase
-    if (!user?.id) return;
+    if (!user?.id || !businessProfileId) {
+      showToast({ title: 'Error', message: 'Please complete your business profile first', variant: 'error', duration: 3000 });
+      return;
+    }
 
     showToast({ title: 'Scraping...', message: `Fetching content from ${urlInput}`, variant: 'default', duration: 5000 });
 
@@ -482,7 +485,10 @@ const KnowledgeBasePage: React.FC = () => {
     }
 
     // Direct mode: read file and save to Supabase
-    if (!user?.id) return;
+    if (!user?.id || !businessProfileId) {
+      showToast({ title: 'Error', message: 'Please complete your business profile first', variant: 'error', duration: 3000 });
+      return;
+    }
 
     try {
       const content = await fileInput.text();
@@ -542,7 +548,10 @@ const KnowledgeBasePage: React.FC = () => {
       return;
     }
 
-    if (!user?.id) return;
+    if (!user?.id || !businessProfileId) {
+      showToast({ title: 'Error', message: 'Please complete your business profile first', variant: 'error', duration: 3000 });
+      return;
+    }
 
     try {
       const { data, error } = await supabase
