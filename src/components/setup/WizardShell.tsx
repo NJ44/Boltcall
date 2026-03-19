@@ -28,7 +28,7 @@ const stepComponents = {
 
 const WizardShell: React.FC = () => {
   const { currentStep, updateStep, markStepCompleted, businessProfile: storeBusinessProfile, account, updateAccount, knowledgeBase: storeKnowledgeBase, complete, updateReview } = useSetupStore();
-  const [isLaunching, setIsLaunching] = useState(false);
+  const [isLaunching] = useState(false);
   const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
