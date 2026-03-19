@@ -728,7 +728,7 @@ const Header: React.FC = () => {
                 <InteractiveHoverButton
                   text="Go To Dashboard"
                   onClick={() => handleNavClick('/dashboard')}
-                  className={`!min-h-11 !min-w-[11rem] !w-auto !px-5 !py-2.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-brand-blue bg-brand-blue text-white'}`}
+                  className={`!min-h-9 !min-w-[11rem] !w-auto !px-5 !py-1.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-brand-blue bg-brand-blue text-white'}`}
                   hoverBgClass={isOverBlueBackground ? 'bg-white' : 'bg-brand-blueDark'}
                   hoverTextClass={isOverBlueBackground ? 'text-brand-blue' : 'text-white'}
                 />
