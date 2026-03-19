@@ -57,6 +57,7 @@ const KnowledgeBasePage: React.FC = () => {
   const [editingDocumentContent, setEditingDocumentContent] = useState('');
   const [showDocumentEditor, setShowDocumentEditor] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [businessProfileId, setBusinessProfileId] = useState<string | null>(null);
 
   // KB Completeness state
   const [kbCompleteness, setKbCompleteness] = useState<{
@@ -229,9 +230,21 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
+  // Fetch business profile ID for inserts
+  const fetchBusinessProfileId = async () => {
+    if (!user?.id) return;
+    const { data } = await supabase
+      .from('business_profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+    if (data?.id) setBusinessProfileId(data.id);
+  };
+
   useEffect(() => {
     fetchDocuments();
     fetchCompleteness();
+    fetchBusinessProfileId();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
@@ -274,10 +287,10 @@ const KnowledgeBasePage: React.FC = () => {
   };
 
   const handleSaveNewKnowledgeBase = async () => {
-    if (!knowledgeBaseName.trim() || !user?.id) {
+    if (!knowledgeBaseName.trim() || !user?.id || !businessProfileId) {
       showToast({
         title: 'Error',
-        message: 'Please enter a knowledge base name',
+        message: !businessProfileId ? 'Please complete your business profile first' : 'Please enter a knowledge base name',
         variant: 'error',
         duration: 3000
       });
@@ -325,6 +338,7 @@ const KnowledgeBasePage: React.FC = () => {
 
         return {
           user_id: user.id,
+          business_profile_id: businessProfileId,
           title,
           content,
           content_type: doc.type === 'file' ? 'file' : 'text',
@@ -409,6 +423,7 @@ const KnowledgeBasePage: React.FC = () => {
         .from('knowledge_base')
         .insert([{
           user_id: user.id,
+          business_profile_id: businessProfileId,
           title,
           content,
           content_type: 'text',
@@ -476,6 +491,7 @@ const KnowledgeBasePage: React.FC = () => {
         .from('knowledge_base')
         .insert([{
           user_id: user.id,
+          business_profile_id: businessProfileId,
           title: fileInput.name,
           content,
           content_type: 'file',
@@ -533,6 +549,7 @@ const KnowledgeBasePage: React.FC = () => {
         .from('knowledge_base')
         .insert([{
           user_id: user.id,
+          business_profile_id: businessProfileId,
           title: blankPageTitle.trim(),
           content: '',
           content_type: 'text',
