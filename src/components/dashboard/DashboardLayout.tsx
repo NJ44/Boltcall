@@ -388,76 +388,7 @@ const DashboardLayout: React.FC = () => {
             </Link>
           </div>
           
-            {/* User Profile - Below Logo */}
-            <div className="mb-4 px-2">
-             <div className="relative" data-user-menu>
-               <button
-                 onClick={() => setShowUserMenu(!showUserMenu)}
-                  className={`flex items-center gap-3 rounded-lg p-2 w-full transition-colors ${
-                   isDarkMode 
-                      ? 'hover:bg-[#1a1a1f]' 
-                      : 'hover:bg-gray-300/50'
-                 }`}
-               >
-                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                   <User className="w-4 h-4 text-blue-600" />
-                 </div>
-                  <div className="flex-1 text-left">
-                   <div className={`text-sm font-medium ${
-                     isDarkMode ? 'text-white' : 'text-gray-900'
-                   }`}>
-                     {user?.name || 'User'}
-                   </div>
-                   <div className={`text-xs ${
-                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                   }`}>
-                     {user?.email}
-                   </div>
-                 </div>
-               </button>
-               
-               {/* User dropdown menu */}
-               {showUserMenu && (
-                  <div className={`absolute left-0 top-full mt-2 w-full rounded-lg shadow-lg border py-2 z-50 ${
-                    isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'
-                  }`}>
-                    <div className="px-4 py-3 border-b border-gray-100 dark:border-[#1e1e24]">
-                      <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                       {user?.name || 'User'}
-                     </div>
-                      <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                       {user?.email}
-                     </div>
-                   </div>
-                   <div className="px-4 py-2">
-                      <div className={`text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Current Plan</div>
-                      <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                       {user?.role === 'admin' ? 'Admin Plan' : 'Pro Plan'}
-                     </div>
-                   </div>
-                    <div className="border-t border-gray-100 dark:border-[#1e1e24]">
-                     <Link
-                       to="/dashboard/settings/plan-billing"
-                       onClick={() => setShowUserMenu(false)}
-                       className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
-                          isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                     >
-                       Plans & Billing
-                     </Link>
-                     <button
-                       onClick={handleLogout}
-                        className={`w-full flex items-center px-4 py-2 text-sm transition-colors ${
-                          isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                     >
-                       Sign out
-                     </button>
-                   </div>
-                 </div>
-               )}
-             </div>
-           </div>
+            {/* User profile moved to top-right bar */}
 
             {/* Mobile menu button */}
               <button
@@ -927,6 +858,60 @@ const DashboardLayout: React.FC = () => {
                  >
                    {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                   </button>
+
+                  {/* User Avatar */}
+                  <div className="relative" data-user-menu>
+                    <button
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold hover:bg-blue-700 transition-colors"
+                      title={user?.name || 'User'}
+                    >
+                      {(user?.name || 'U').charAt(0).toUpperCase()}
+                    </button>
+
+                    {showUserMenu && (
+                      <div className={`absolute right-0 top-full mt-2 w-56 rounded-lg shadow-lg border py-1 z-50 ${
+                        isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'
+                      }`}>
+                        <div className="px-4 py-3 border-b border-gray-100 dark:border-[#1e1e24]">
+                          <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            {user?.name || 'User'}
+                          </div>
+                          <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                            {user?.email}
+                          </div>
+                        </div>
+                        <Link
+                          to="/dashboard/settings/plan-billing"
+                          onClick={() => setShowUserMenu(false)}
+                          className={`block px-4 py-2 text-sm transition-colors ${
+                            isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          Plans & Billing
+                        </Link>
+                        <Link
+                          to="/dashboard/settings/general"
+                          onClick={() => setShowUserMenu(false)}
+                          className={`block px-4 py-2 text-sm transition-colors ${
+                            isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          Settings
+                        </Link>
+                        <div className="border-t border-gray-100 dark:border-[#1e1e24]">
+                          <button
+                            onClick={handleLogout}
+                            className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                              isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
+                            }`}
+                          >
+                            Sign out
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

@@ -420,7 +420,7 @@ const KnowledgeBasePage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Knowledge Base Table */}
-      <div className="mt-8">
+      <div className="mt-2">
         <div className="bg-white rounded-lg shadow-sm">
           {/* Custom Header */}
           <div className="p-6">
@@ -446,7 +446,7 @@ const KnowledgeBasePage: React.FC = () => {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={handleAddDocument}
-                    className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
                     <Plus className="h-4 w-4" />
                     <span className="font-bold">New Knowledge Base</span>

@@ -151,7 +151,7 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-white rounded-lg border border-gray-200 p-6 shadow-lg"
+                className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-lg hover:border-gray-300 transition-all duration-500 ease-in-out"
               >
                 {renderRow(item, index)}
               </motion.div>

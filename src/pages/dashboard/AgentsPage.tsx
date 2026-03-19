@@ -531,7 +531,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       {agents.length === 0 ? (
         /* No agents - Show create options */
         <div>
-          <div className="max-w-2xl mx-auto text-center mb-5">
+          <div className="max-w-2xl mx-auto text-center mb-5 mt-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-1.5">Create New Agent</h2>
             <p className="text-sm text-gray-500">Choose how you want to get started</p>
           </div>
@@ -540,24 +540,28 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             {/* Start from Scratch */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-md transition-all text-left"
+              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-lg transition-all duration-500 ease-in-out text-left"
             >
-              <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-900 transition-colors">
-                <Sparkles className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors" />
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-900 transition-colors duration-500">
+                  <Sparkles className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-500" />
+                </div>
+                <h3 className="text-sm font-semibold text-gray-900">Start from Scratch</h3>
               </div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-1">Start from Scratch</h3>
               <p className="text-xs text-gray-500">Build your AI Agent from the ground up</p>
             </button>
 
             {/* Browse Templates */}
             <button
               onClick={() => setShowTemplatesModal(true)}
-              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-md transition-all text-left"
+              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-lg transition-all duration-500 ease-in-out text-left"
             >
-              <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-gray-900 transition-colors">
-                <FileText className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors" />
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-900 transition-colors duration-500">
+                  <FileText className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-500" />
+                </div>
+                <h3 className="text-sm font-semibold text-gray-900">Browse Templates</h3>
               </div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-1">Browse Templates</h3>
               <p className="text-xs text-gray-500">Get started with industry-specific templates</p>
             </button>
           </div>
