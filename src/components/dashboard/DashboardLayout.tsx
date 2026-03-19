@@ -262,7 +262,6 @@ const DashboardLayout: React.FC = () => {
   const navItemsCommunications = [
     { to: '/dashboard/calls', label: 'Calls', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/messages', label: 'Messages', icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // SERVICES
@@ -379,11 +378,11 @@ const DashboardLayout: React.FC = () => {
                   })}
                 </div>
 
-                {/* Communications */}
+                {/* Setup */}
                 <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Communications</p>
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Setup</p>
                   <div className="space-y-1">
-                    {navItemsCommunications.map((item) => {
+                    {navItemsSetup.map((item) => {
                       const isActive = location.pathname === item.to;
                       return renderNavItem(item, isActive);
                     })}
@@ -401,11 +400,11 @@ const DashboardLayout: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Setup */}
+                {/* Communications */}
                 <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Setup</p>
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Communications</p>
                   <div className="space-y-1">
-                    {navItemsSetup.map((item) => {
+                    {navItemsCommunications.map((item) => {
                       const isActive = location.pathname === item.to;
                       return renderNavItem(item, isActive);
                     })}
