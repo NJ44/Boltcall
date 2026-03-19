@@ -20,7 +20,7 @@ import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
 import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
 import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
 // import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
-// import SpeedToLeadPage from '../pages/dashboard/SpeedToLeadPage';
+import SpeedToLeadPage from '../pages/dashboard/SpeedToLeadPage';
 import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
 import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
 import RemindersPage from '../pages/dashboard/RemindersPage';
@@ -213,6 +213,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="integrations" element={<IntegrationsPage />} />
           <Route path="reminders" element={<RemindersPage />} />
           <Route path="reputation" element={<ReputationPage />} />
+          <Route path="instant-lead-response" element={<SpeedToLeadPage />} />
           <Route path="calcom" element={<CalcomPage />} />
           <Route path="sms" element={<SmsPage />} />
           <Route path="whatsapp" element={<WhatsappPage />} />

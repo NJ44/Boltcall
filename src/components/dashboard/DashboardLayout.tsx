@@ -26,6 +26,9 @@ import {
   Plug,
   Zap,
   MessagesSquare,
+  Star,
+  PhoneMissed,
+  Reply,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -127,6 +130,8 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/calls': 'Calls',
       '/dashboard/messages': 'Messages',
       '/dashboard/reminders': 'Reminders',
+      '/dashboard/reputation': 'Reputation Manager',
+      '/dashboard/instant-lead-response': 'Instant Lead Response',
       '/dashboard/agents': 'AI Agents',
       '/dashboard/knowledge-base': 'Knowledge Base',
       '/dashboard/phone': 'Phone Numbers',
@@ -260,6 +265,15 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
+  // SERVICES
+  const navItemsServices = [
+    { to: '/dashboard/agents', label: 'AI Receptionist', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/calls', label: 'Missed Calls', icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/reputation', label: 'Reputation Manager', icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/instant-lead-response', label: 'Instant Lead Response', icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
+  ];
+
   // SETUP
   const navItemsSetup = [
     { to: '/dashboard/agents', label: 'AI Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
@@ -370,6 +384,17 @@ const DashboardLayout: React.FC = () => {
                   <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Communications</p>
                   <div className="space-y-1">
                     {navItemsCommunications.map((item) => {
+                      const isActive = location.pathname === item.to;
+                      return renderNavItem(item, isActive);
+                    })}
+                  </div>
+                </div>
+
+                {/* Services */}
+                <div className="mb-4">
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Services</p>
+                  <div className="space-y-1">
+                    {navItemsServices.map((item) => {
                       const isActive = location.pathname === item.to;
                       return renderNavItem(item, isActive);
                     })}
