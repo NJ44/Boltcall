@@ -46,7 +46,7 @@ function normalizeLead(body: any): Record<string, any> {
     lastName = parts.slice(1).join(' ') || '';
   }
 
-  return {
+  const lead: Record<string, any> = {
     first_name: firstName || null,
     last_name: lastName || null,
     email: body.email || null,
@@ -55,6 +55,8 @@ function normalizeLead(body: any): Record<string, any> {
     status: body.status || 'pending',
     raw_data: body,
   };
+  if (body.user_id) lead.user_id = body.user_id;
+  return lead;
 }
 
 // Handle Facebook webhook verification (GET)
@@ -154,7 +156,7 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
         fbLastName = parts.slice(1).join(' ') || '';
       }
 
-      const leadRow = {
+      const leadRow: Record<string, any> = {
         first_name: fbFirstName || null,
         last_name: fbLastName || null,
         email: fields.email || null,
@@ -163,6 +165,7 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
         status: 'pending',
         raw_data: { leadgen_id, page_id, fields },
       };
+      if (userId) leadRow.user_id = userId;
 
       // Validate: need at least email or phone
       if (!leadRow.email && !leadRow.phone) {
@@ -237,17 +240,7 @@ export const handler: Handler = async (event) => {
     }
 
     // Generic / Web Form lead submission
-    // Validate: must have user_id
-    if (!body.user_id) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          error: 'user_id is required. Pass the Supabase user ID that owns this lead.',
-          hint: 'api_key-based lookup can be added later via a business_profiles.api_key column.',
-        }),
-      };
-    }
+    // user_id is optional but recommended for per-user lead filtering
 
     // Validate: need at least email or phone
     if (!body.email && !body.phone && !body.phone_number) {
