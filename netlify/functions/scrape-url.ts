@@ -1,5 +1,11 @@
 import type { Handler } from '@netlify/functions';
 
+// TODO: Token deduction (5 tokens per web_scrape) is not implemented here
+// because this function does not receive user_id in the request body.
+// To add token tracking, either:
+// 1. Pass user_id from the frontend when calling this endpoint, or
+// 2. Use the sync-usage pattern to reconcile usage after the fact.
+
 const handler: Handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',

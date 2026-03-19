@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import Anthropic from '@anthropic-ai/sdk';
 import { createClient } from '@supabase/supabase-js';
 import Retell from 'retell-sdk';
+import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -520,6 +521,21 @@ const handler: Handler = async (event) => {
       (block): block is Anthropic.TextBlock => block.type === 'text'
     );
     const reply = textBlocks.map(b => b.text).join('\n') || 'Done!';
+
+    // Deduct 1 token for the AI chat message
+    if (userId) {
+      try {
+        await deductTokens(
+          userId,
+          TOKEN_COSTS.ai_chat_message,
+          'ai_chat_message',
+          `AI assistant message (${actionsTaken.length} actions)`,
+          { actions_taken: actionsTaken }
+        );
+      } catch (tokenErr) {
+        console.error('Token deduction failed (non-blocking):', tokenErr);
+      }
+    }
 
     return {
       statusCode: 200,

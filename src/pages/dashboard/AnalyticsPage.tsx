@@ -10,6 +10,7 @@ import {
   AlertCircle,
   RefreshCw,
   Loader2,
+  Coins,
 } from 'lucide-react';
 import KpiTile from '../../components/dashboard/KpiTile';
 import TimeSeriesCard from '../../components/dashboard/TimeSeriesCard';
@@ -19,6 +20,9 @@ import {
   fetchDailyMetrics,
   type DashboardStats,
 } from '../../lib/dashboardApi';
+import { useTokens } from '../../contexts/TokenContext';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -77,6 +81,11 @@ const AnalyticsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [, setLastRefresh] = useState<Date | null>(null);
+  const [tokensToday, setTokensToday] = useState(0);
+  const [tokensThisWeek, setTokensThisWeek] = useState(0);
+
+  const { totalAvailable, tokensUsed, monthlyAllocation, isLoading: tokensLoading } = useTokens();
+  const { user } = useAuth();
 
   const loadData = async () => {
     setLoading(true);
@@ -103,6 +112,41 @@ const AnalyticsPage: React.FC = () => {
     const interval = setInterval(loadData, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // Fetch token consumption for today and this week
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const fetchTokenUsage = async () => {
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+      const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay()).toISOString();
+
+      // Tokens consumed today
+      const { data: todayData } = await supabase
+        .from('token_transactions')
+        .select('amount')
+        .eq('user_id', user.id)
+        .eq('type', 'debit')
+        .gte('created_at', todayStart);
+
+      const todayTotal = (todayData || []).reduce((sum, tx) => sum + (tx.amount || 0), 0);
+      setTokensToday(todayTotal);
+
+      // Tokens consumed this week
+      const { data: weekData } = await supabase
+        .from('token_transactions')
+        .select('amount')
+        .eq('user_id', user.id)
+        .eq('type', 'debit')
+        .gte('created_at', weekStart);
+
+      const weekTotal = (weekData || []).reduce((sum, tx) => sum + (tx.amount || 0), 0);
+      setTokensThisWeek(weekTotal);
+    };
+
+    fetchTokenUsage();
+  }, [user?.id]);
 
   /* ----- Loading state ----- */
   if (loading && !stats) {
@@ -210,6 +254,54 @@ const AnalyticsPage: React.FC = () => {
           format="number"
         />
       </div>
+
+      {/* Token Usage Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Coins className="w-5 h-5 text-amber-500" />
+            <h3 className="text-lg font-semibold text-text-main">Token Usage</h3>
+          </div>
+          {tokensLoading ? (
+            <div className="flex items-center justify-center h-20">
+              <Loader2 className="w-5 h-5 text-brand-blue animate-spin" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-text-main">{fmtNumber(tokensToday)}</p>
+                <p className="text-xs text-text-muted mt-1">Consumed Today</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-text-main">{fmtNumber(tokensThisWeek)}</p>
+                <p className="text-xs text-text-muted mt-1">Consumed This Week</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-brand-blue">{fmtNumber(totalAvailable)}</p>
+                <p className="text-xs text-text-muted mt-1">Remaining Balance</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-text-main">
+                  {monthlyAllocation > 0 ? `${Math.round((tokensUsed / monthlyAllocation) * 100)}%` : '0%'}
+                </p>
+                <p className="text-xs text-text-muted mt-1">Monthly Used</p>
+                {monthlyAllocation > 0 && (
+                  <div className="mt-2 w-full bg-gray-200 rounded-full h-1.5">
+                    <div
+                      className="bg-brand-blue h-1.5 rounded-full transition-all"
+                      style={{ width: `${Math.min(100, Math.round((tokensUsed / monthlyAllocation) * 100))}%` }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </Card>
+      </motion.div>
 
       {/* Secondary KPI Row */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

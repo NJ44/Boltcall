@@ -1,4 +1,5 @@
 import { Handler } from '@netlify/functions';
+import { deductTokens, deductTokensBatch, TOKEN_COSTS } from './_shared/token-utils';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -82,6 +83,21 @@ export const handler: Handler = async (event) => {
         Body: message,
       });
 
+      // Deduct tokens for SMS sent (user_id is optional — skip if not provided)
+      if (body.user_id) {
+        try {
+          await deductTokens(
+            body.user_id,
+            TOKEN_COSTS.sms_sent,
+            'sms_sent',
+            `SMS to ${to}`,
+            { message_sid: result.sid, to, from: fromNumber }
+          );
+        } catch (tokenErr) {
+          console.error('SMS token deduction failed (non-blocking):', tokenErr);
+        }
+      }
+
       return {
         statusCode: 200,
         headers,
@@ -123,6 +139,26 @@ export const handler: Handler = async (event) => {
         message_sid: result.status === 'fulfilled' ? result.value.sid : undefined,
         error: result.status === 'rejected' ? result.reason.message : undefined,
       }));
+
+      // Deduct tokens for all successfully sent SMS in batch
+      if (body.user_id) {
+        const successfulSms = summary.filter((s) => s.success);
+        if (successfulSms.length > 0) {
+          try {
+            await deductTokensBatch(
+              body.user_id,
+              successfulSms.map((s) => ({
+                cost: TOKEN_COSTS.sms_sent,
+                category: 'sms_sent' as const,
+                description: `SMS to ${s.to}`,
+                metadata: { message_sid: s.message_sid, to: s.to, bulk: true },
+              }))
+            );
+          } catch (tokenErr) {
+            console.error('Bulk SMS token deduction failed (non-blocking):', tokenErr);
+          }
+        }
+      }
 
       return {
         statusCode: 200,
