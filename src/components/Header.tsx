@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase, FileText } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -786,14 +787,17 @@ const Header: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile only: Sterling Gate kinetic navigation (hamburger menu) */}
-        <div className="md:hidden">
-          <SterlingGateKineticNavigation
-            open={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-            menuItems={kineticMenuItems}
-          />
-        </div>
+        {/* Mobile only: Sterling Gate kinetic navigation — portaled to body to escape header stacking context */}
+        {typeof document !== 'undefined' && createPortal(
+          <div className="md:hidden">
+            <SterlingGateKineticNavigation
+              open={isMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+              menuItems={kineticMenuItems}
+            />
+          </div>,
+          document.body
+        )}
 
         {/* Desktop fallback mobile overlay (hidden on mobile; kinetic nav used instead) */}
         <AnimatePresence>
