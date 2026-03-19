@@ -1,5 +1,9 @@
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { Check, X } from "lucide-react"
+
+// --- MATERIAL DESIGN 3 PHYSICS ---
+const SPRING_EASE = "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
 
 interface PremiumToggleProps {
   /** Controlled mode */
@@ -22,6 +26,7 @@ export function PremiumToggle({
 }: PremiumToggleProps) {
   const [internalChecked, setInternalChecked] = useState(defaultChecked)
   const [isPressed, setIsPressed] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   const isControlled = checked !== undefined
   const isChecked = isControlled ? checked : internalChecked
@@ -47,70 +52,103 @@ export function PremiumToggle({
           {label}
         </span>
       )}
+
+      {/* Touch target wrapper */}
       <button
         type="button"
         role="switch"
         aria-checked={isChecked}
         disabled={disabled}
         onClick={handleToggle}
-        onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
-        onMouseLeave={() => setIsPressed(false)}
+        onPointerDown={() => !disabled && setIsPressed(true)}
+        onPointerUp={() => setIsPressed(false)}
+        onPointerLeave={() => {
+          setIsPressed(false)
+          setIsHovered(false)
+        }}
+        onPointerEnter={() => !disabled && setIsHovered(true)}
         className={cn(
-          "group relative h-8 w-14 rounded-full p-1 transition-all duration-500 ease-out",
+          "group relative inline-flex items-center justify-center min-w-[48px] min-h-[48px]",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-          isChecked ? "bg-foreground" : "bg-muted-foreground/20",
-          disabled && "opacity-50 cursor-not-allowed",
+          disabled && "cursor-not-allowed opacity-50",
         )}
       >
-        {/* Glow effect */}
+        {/* --- TRACK --- */}
         <div
           className={cn(
-            "absolute inset-0 rounded-full transition-opacity duration-500",
-            isChecked ? "opacity-100 shadow-[0_0_20px_rgba(0,0,0,0.15)]" : "opacity-0",
-          )}
-        />
-
-        {/* Track inner gradient */}
-        <div
-          className={cn(
-            "absolute inset-[2px] rounded-full transition-all duration-500",
-            isChecked ? "bg-gradient-to-b from-foreground to-foreground/90" : "bg-transparent",
-          )}
-        />
-
-        {/* Thumb */}
-        <div
-          className={cn(
-            "relative h-6 w-6 rounded-full shadow-lg transition-all duration-500 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]",
-            "bg-background",
-            isChecked ? "translate-x-6" : "translate-x-0",
-            isPressed && !disabled && "scale-90 duration-150",
+            "relative inline-flex h-8 w-[52px] shrink-0 items-center rounded-full border-2 transition-colors duration-300",
+            isChecked
+              ? "bg-primary border-primary"
+              : "bg-muted border-border",
           )}
         >
-          {/* Thumb inner shine */}
-          <div className="absolute inset-[2px] rounded-full bg-gradient-to-b from-background via-background to-muted/30" />
-
-          {/* Thumb highlight */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-background/80 via-transparent to-transparent" />
-
-          {/* Status indicator dot */}
+          {/* --- HANDLE --- */}
           <div
             className={cn(
-              "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500",
+              "absolute top-1/2 -translate-y-1/2 rounded-full shadow-sm flex items-center justify-center transition-all duration-300 left-[2px]",
               isChecked
-                ? "h-2 w-2 bg-foreground opacity-100 scale-100"
-                : "h-1.5 w-1.5 bg-muted-foreground/40 opacity-100 scale-100",
+                ? "bg-primary-foreground"
+                : "bg-foreground",
             )}
-          />
+            style={{
+              transitionTimingFunction: SPRING_EASE,
+              // Position
+              transform: `translateY(-50%) ${isChecked ? "translateX(20px)" : "translateX(0px)"}`,
+              // Size morphing
+              width: isPressed ? 28 : isChecked ? 24 : 24,
+              height: isPressed ? 28 : isChecked ? 24 : 24,
+              marginLeft: isPressed ? -2 : 0,
+            }}
+          >
+            {/* --- ICON CONTAINER --- */}
+            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+              {/* CHECK ICON (shown when checked) */}
+              <div
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center transition-all duration-300",
+                  isChecked
+                    ? "opacity-100 scale-100 rotate-0"
+                    : "opacity-0 scale-50 -rotate-45",
+                )}
+              >
+                <Check
+                  className="w-3.5 h-3.5 text-primary"
+                  strokeWidth={4}
+                />
+              </div>
 
-          {/* Ripple effect on toggle */}
+              {/* X ICON (shown when unchecked) */}
+              <div
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center transition-all duration-300",
+                  !isChecked
+                    ? "opacity-100 scale-100 rotate-0"
+                    : "opacity-0 scale-50 rotate-45",
+                )}
+              >
+                <X
+                  className="w-3.5 h-3.5 text-muted"
+                  strokeWidth={4}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* --- HALO --- */}
           <div
             className={cn(
-              "absolute inset-0 rounded-full transition-all duration-700",
-              isChecked ? "animate-ping bg-foreground/20 scale-150 opacity-0" : "scale-100 opacity-0",
+              "absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none transition-all duration-200 w-10 h-10",
+              isChecked ? "bg-primary" : "bg-foreground",
+              isPressed
+                ? "opacity-10 scale-100"
+                : isHovered
+                  ? "opacity-[0.05] scale-100"
+                  : "opacity-0 scale-50",
             )}
-            key={isChecked ? "on" : "off"}
+            style={{
+              left: isChecked ? 22 : 2,
+              transform: "translate(-25%, -50%)",
+            }}
           />
         </div>
       </button>

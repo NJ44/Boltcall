@@ -61,7 +61,7 @@ const PillInput = ({
       <input
         {...props}
         className={cn(
-          "w-full px-5 py-3 bg-gray-100/80 rounded-full text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-white transition-all duration-200",
+          "w-full px-5 py-3 bg-gray-100/80 rounded-full text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200",
           rightElement && "pr-11"
         )}
       />
@@ -86,6 +86,7 @@ export default function AuthSwitch({
   const [error, setError] = useState("");
   const [showOtp, setShowOtp] = useState(false);
   const [signedUpEmail, setSignedUpEmail] = useState("");
+  const [showPasswordErrors, setShowPasswordErrors] = useState(false);
 
   const { login, signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ export default function AuthSwitch({
   const switchMode = (newMode: "login" | "signup") => {
     if (newMode === mode) return;
     setError("");
+    setShowPasswordErrors(false);
     loginForm.reset();
     signupForm.reset();
     setMode(newMode);
@@ -180,7 +182,7 @@ export default function AuthSwitch({
             type="button"
             onClick={s.handler}
             disabled={isLoading}
-            className="w-10 h-10 rounded-full border border-indigo-200 flex items-center justify-center hover:border-indigo-400 hover:shadow-md transition-all duration-200 disabled:opacity-50 bg-white"
+            className="w-10 h-10 rounded-full border border-indigo-200 flex items-center justify-center hover:border-blue-400 hover:shadow-md transition-all duration-200 disabled:opacity-50 bg-white"
           >
             {s.icon}
           </button>
@@ -193,7 +195,7 @@ export default function AuthSwitch({
     <button
       type="submit"
       disabled={isLoading}
-      className="w-52 mx-auto block py-3 rounded-full bg-indigo-500 text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-indigo-500/30 hover:bg-indigo-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-52 mx-auto block py-3 rounded-full bg-blue-600 text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {isLoading ? (
         <span className="flex items-center justify-center gap-2">
@@ -220,7 +222,7 @@ export default function AuthSwitch({
   const clipRight = "ellipse(42% 100% at 95% 50%)";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 via-purple-500 to-purple-600 p-4 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 p-4 overflow-hidden">
       {/* Logo */}
       <div className="absolute top-4 left-5 z-30">
         <Link to="/">
@@ -245,7 +247,7 @@ export default function AuthSwitch({
           animate={{ x: isLogin ? 0 : 0 }}
         >
           <motion.div
-            className="absolute top-0 bottom-0 bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600"
+            className="absolute top-0 bottom-0 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800"
             animate={{
               left: isLogin ? "0%" : "0%",
               right: isLogin ? "0%" : "0%",
@@ -285,7 +287,7 @@ export default function AuthSwitch({
               <button
                 type="button"
                 onClick={() => switchMode(isLogin ? "signup" : "login")}
-                className="px-8 py-2.5 rounded-full border-2 border-white text-white text-sm font-bold uppercase tracking-wider hover:bg-white hover:text-indigo-600 transition-all duration-300"
+                className="px-8 py-2.5 rounded-full border-2 border-white text-white text-sm font-bold uppercase tracking-wider hover:bg-white hover:text-blue-600 transition-all duration-300"
               >
                 {isLogin ? "Sign Up" : "Sign In"}
               </button>
@@ -306,7 +308,7 @@ export default function AuthSwitch({
               onClick={() => switchMode("login")}
               className={cn(
                 "flex-1 py-2 text-sm font-semibold rounded-full transition-all duration-300",
-                isLogin ? "bg-indigo-500 text-white shadow" : "text-gray-500"
+                isLogin ? "bg-blue-600 text-white shadow" : "text-gray-500"
               )}
             >
               Sign In
@@ -316,7 +318,7 @@ export default function AuthSwitch({
               onClick={() => switchMode("signup")}
               className={cn(
                 "flex-1 py-2 text-sm font-semibold rounded-full transition-all duration-300",
-                !isLogin ? "bg-indigo-500 text-white shadow" : "text-gray-500"
+                !isLogin ? "bg-blue-600 text-white shadow" : "text-gray-500"
               )}
             >
               Sign Up
@@ -336,7 +338,7 @@ export default function AuthSwitch({
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
                   Sign in
                 </h2>
-                <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                <form onSubmit={(e) => { setShowPasswordErrors(true); loginForm.handleSubmit(onLogin)(e); }} className="space-y-4">
                   <PillInput
                     {...loginForm.register("email")}
                     type="email"
@@ -347,6 +349,7 @@ export default function AuthSwitch({
                     {...loginForm.register("password")}
                     placeholder="Password"
                     id="login-password"
+                    showErrors={showPasswordErrors}
                   />
                   {loginForm.formState.errors.password && (
                     <p className="ml-4 text-xs text-red-500 -mt-2">
@@ -374,7 +377,7 @@ export default function AuthSwitch({
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
                   Sign up
                 </h2>
-                <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
+                <form onSubmit={(e) => { setShowPasswordErrors(true); signupForm.handleSubmit(onSignup)(e); }} className="space-y-4">
                   <PillInput
                     {...signupForm.register("name")}
                     placeholder="Username"
@@ -390,6 +393,7 @@ export default function AuthSwitch({
                     {...signupForm.register("password")}
                     placeholder="Password"
                     id="signup-password"
+                    showErrors={showPasswordErrors}
                   />
                   {signupForm.formState.errors.password && (
                     <p className="ml-4 text-xs text-red-500 -mt-2">
@@ -413,12 +417,12 @@ export default function AuthSwitch({
               {isLogin ? (
                 <>
                   Don&apos;t have an account?{" "}
-                  <button type="button" onClick={() => switchMode("signup")} className="text-indigo-500 font-medium">Sign up</button>
+                  <button type="button" onClick={() => switchMode("signup")} className="text-blue-600 font-medium">Sign up</button>
                 </>
               ) : (
                 <>
                   Already have an account?{" "}
-                  <button type="button" onClick={() => switchMode("login")} className="text-indigo-500 font-medium">Sign in</button>
+                  <button type="button" onClick={() => switchMode("login")} className="text-blue-600 font-medium">Sign in</button>
                 </>
               )}
             </p>

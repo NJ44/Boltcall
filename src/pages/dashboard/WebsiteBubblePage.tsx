@@ -4,15 +4,12 @@ import {
   Copy,
   Check,
   Code,
-  Settings,
   MessageCircle,
   Palette,
   Type,
   Save,
   Loader2,
   AlertCircle,
-  Zap,
-  Star,
   Globe,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -29,9 +26,6 @@ const WebsiteBubblePage: React.FC = () => {
 
   // Data from Supabase
   const [embedToken, setEmbedToken] = useState<string | null>(null);
-  const [chatbotEnabled, setChatbotEnabled] = useState(false);
-  const [speedToLeadEnabled, setSpeedToLeadEnabled] = useState(false);
-  const [reputationEnabled, setReputationEnabled] = useState(false);
 
   // Chatbot config
   const [chatColor, setChatColor] = useState('#3B82F6');
@@ -66,9 +60,6 @@ const WebsiteBubblePage: React.FC = () => {
 
         if (data) {
           setEmbedToken(data.embed_token || null);
-          setChatbotEnabled(data.chatbot_enabled ?? false);
-          setSpeedToLeadEnabled(data.speed_to_lead_enabled ?? false);
-          setReputationEnabled(data.reputation_manager_enabled ?? false);
 
           if (data.chatbot_config) {
             const cfg = data.chatbot_config as Record<string, any>;
@@ -85,37 +76,6 @@ const WebsiteBubblePage: React.FC = () => {
       setLoading(false);
     })();
   }, [user]);
-
-  // Toggle a feature and save to Supabase
-  const toggleFeature = async (
-    feature: 'chatbot' | 'speed_to_lead' | 'reputation_manager',
-    currentValue: boolean,
-    setter: (v: boolean) => void
-  ) => {
-    if (!user) return;
-    const newValue = !currentValue;
-    setter(newValue);
-
-    try {
-      const { error: updateError } = await supabase
-        .from('business_features')
-        .update({
-          [`${feature}_enabled`]: newValue,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('user_id', user.id);
-
-      if (updateError) {
-        console.error(`Failed to toggle ${feature}:`, updateError);
-        setter(currentValue); // revert
-        setError(`Failed to update ${feature}. Please try again.`);
-        setTimeout(() => setError(null), 4000);
-      }
-    } catch (err) {
-      setter(currentValue); // revert
-      console.error(`Toggle ${feature} error:`, err);
-    }
-  };
 
   // Save chatbot config to Supabase
   const handleSaveChatbotConfig = async () => {
@@ -272,112 +232,6 @@ const WebsiteBubblePage: React.FC = () => {
         )}
       </motion.div>
 
-      {/* Feature Toggles */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
-      >
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-            <Settings className="w-5 h-5 text-green-600" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">Embed Features</h2>
-            <p className="text-sm text-gray-600">
-              Toggle which features are active on your website
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          {/* Chatbot Toggle */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                <MessageCircle className="w-4 h-4 text-purple-600" />
-              </div>
-              <div>
-                <p className="font-medium text-gray-900">Website Chatbot</p>
-                <p className="text-sm text-gray-500">
-                  AI chat bubble that answers questions and books appointments
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => toggleFeature('chatbot', chatbotEnabled, setChatbotEnabled)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                chatbotEnabled ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  chatbotEnabled ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
-            </button>
-          </div>
-
-          {/* Speed to Lead Toggle */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
-                <Zap className="w-4 h-4 text-amber-600" />
-              </div>
-              <div>
-                <p className="font-medium text-gray-900">Speed to Lead</p>
-                <p className="text-sm text-gray-500">
-                  Auto-captures form submissions and triggers instant callback
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() =>
-                toggleFeature('speed_to_lead', speedToLeadEnabled, setSpeedToLeadEnabled)
-              }
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                speedToLeadEnabled ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  speedToLeadEnabled ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
-            </button>
-          </div>
-
-          {/* Reputation Manager Toggle */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <Star className="w-4 h-4 text-yellow-600" />
-              </div>
-              <div>
-                <p className="font-medium text-gray-900">Google Reviews Popup</p>
-                <p className="text-sm text-gray-500">
-                  Shows a review request popup to website visitors
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() =>
-                toggleFeature('reputation_manager', reputationEnabled, setReputationEnabled)
-              }
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                reputationEnabled ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  reputationEnabled ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
-            </button>
-          </div>
-        </div>
-      </motion.div>
 
       {/* Chatbot Configuration */}
       <motion.div
