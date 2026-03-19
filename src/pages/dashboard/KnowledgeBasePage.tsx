@@ -172,15 +172,43 @@ const KnowledgeBasePage: React.FC = () => {
     }
 
     try {
-      // Create knowledge base entries for each document
-      const documentsToInsert = kbDocuments.map((doc) => ({
-        user_id: user.id,
-        title: doc.name,
-        content: doc.content || '',
-        content_type: doc.type === 'file' ? 'file' : doc.type === 'url' ? 'text' : 'text',
-        status: 'active',
-        tags: [knowledgeBaseName.trim()], // Use KB name as tag for grouping
-        source: doc.type === 'url' ? doc.url : doc.type === 'file' ? doc.file?.name : 'manual'
+      showToast({ title: 'Saving...', message: 'Processing documents...', variant: 'default', duration: 10000 });
+
+      // Process each document - scrape URLs and read files
+      const documentsToInsert = await Promise.all(kbDocuments.map(async (doc) => {
+        let content = doc.content || '';
+        let title = doc.name;
+
+        if (doc.type === 'url' && doc.url) {
+          try {
+            const res = await fetch('/.netlify/functions/scrape-url', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url: doc.url }),
+            });
+            const scraped = await res.json();
+            content = scraped.content || `Imported from: ${doc.url}`;
+            title = scraped.title || doc.name;
+          } catch {
+            content = `Failed to scrape. URL: ${doc.url}`;
+          }
+        } else if (doc.type === 'file' && doc.file) {
+          try {
+            content = await doc.file.text();
+          } catch {
+            content = `Failed to read file: ${doc.file.name}`;
+          }
+        }
+
+        return {
+          user_id: user.id,
+          title,
+          content,
+          content_type: doc.type === 'file' ? 'file' : 'text',
+          status: 'active',
+          tags: [knowledgeBaseName.trim()],
+          source: doc.type === 'url' ? doc.url : doc.type === 'file' ? doc.file?.name : 'manual'
+        };
       }));
 
       const { error } = await supabase
@@ -219,24 +247,72 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
-  // Update handlers to add documents to KB modal
-  const handleSubmitUrl = () => {
-    if (urlInput.trim()) {
-      const newDoc: KnowledgeBaseDocument = {
+  // URL submission - scrapes content and saves to Supabase
+  const handleSubmitUrl = async () => {
+    if (!urlInput.trim()) return;
+
+    if (showNewKnowledgeBaseModal) {
+      // Modal mode: add to local list for batch save
+      setKbDocuments([...kbDocuments, {
         id: Date.now().toString(),
         name: `Website: ${urlInput}`,
         type: 'url',
         url: urlInput
-      };
-      
-      if (showNewKnowledgeBaseModal) {
-        setKbDocuments([...kbDocuments, newDoc]);
-        setUrlInput('');
-        setShowPopup(false);
-        setPopupType(null);
-      } else {
-    handleClosePopup();
+      }]);
+      setUrlInput('');
+      setShowPopup(false);
+      setPopupType(null);
+      return;
+    }
+
+    // Direct mode: scrape URL and save to Supabase
+    if (!user?.id) return;
+
+    showToast({ title: 'Scraping...', message: `Fetching content from ${urlInput}`, variant: 'default', duration: 5000 });
+
+    try {
+      const res = await fetch('/.netlify/functions/scrape-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: urlInput }),
+      });
+      const scraped = await res.json();
+
+      const title = scraped.title || `Website: ${urlInput}`;
+      const content = scraped.content || `Imported from: ${urlInput}`;
+
+      const { data, error } = await supabase
+        .from('knowledge_base')
+        .insert([{
+          user_id: user.id,
+          title,
+          content,
+          content_type: 'text',
+          status: 'active',
+          source: urlInput
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error saving URL content:', error);
+        showToast({ title: 'Error', message: 'Failed to save website content', variant: 'error', duration: 3000 });
+        return;
       }
+
+      setDocuments(prev => [{
+        id: data.id,
+        name: data.title,
+        content: data.content || '',
+        createdAt: new Date(data.created_at),
+        updatedAt: new Date(data.updated_at || data.created_at)
+      }, ...prev]);
+
+      showToast({ title: 'Success', message: `Imported ${scraped.charCount || 0} characters from website`, variant: 'success', duration: 3000 });
+      handleClosePopup();
+    } catch (error) {
+      console.error('Error scraping URL:', error);
+      showToast({ title: 'Error', message: 'Failed to scrape website', variant: 'error', duration: 3000 });
     }
   };
 
@@ -247,73 +323,118 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
-  const handleSubmitFile = () => {
-    if (fileInput) {
-      if (showNewKnowledgeBaseModal) {
-        const newDoc: KnowledgeBaseDocument = {
-          id: Date.now().toString(),
-          name: fileInput.name,
-          type: 'file',
-          file: fileInput
-        };
-        setKbDocuments([...kbDocuments, newDoc]);
-        setFileInput(null);
-        setShowPopup(false);
-        setPopupType(null);
-      } else {
-      handleClosePopup();
+  // File submission - reads file content and saves to Supabase
+  const handleSubmitFile = async () => {
+    if (!fileInput) return;
+
+    if (showNewKnowledgeBaseModal) {
+      // Modal mode: add to local list
+      setKbDocuments([...kbDocuments, {
+        id: Date.now().toString(),
+        name: fileInput.name,
+        type: 'file',
+        file: fileInput
+      }]);
+      setFileInput(null);
+      setShowPopup(false);
+      setPopupType(null);
+      return;
+    }
+
+    // Direct mode: read file and save to Supabase
+    if (!user?.id) return;
+
+    try {
+      const content = await fileInput.text();
+
+      const { data, error } = await supabase
+        .from('knowledge_base')
+        .insert([{
+          user_id: user.id,
+          title: fileInput.name,
+          content,
+          content_type: 'file',
+          status: 'active',
+          source: fileInput.name
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error saving file:', error);
+        showToast({ title: 'Error', message: 'Failed to save file content', variant: 'error', duration: 3000 });
+        return;
       }
+
+      setDocuments(prev => [{
+        id: data.id,
+        name: data.title,
+        content: data.content || '',
+        createdAt: new Date(data.created_at),
+        updatedAt: new Date(data.updated_at || data.created_at)
+      }, ...prev]);
+
+      showToast({ title: 'Success', message: `File "${fileInput.name}" uploaded successfully`, variant: 'success', duration: 3000 });
+      setFileInput(null);
+      handleClosePopup();
+    } catch (error) {
+      console.error('Error reading file:', error);
+      showToast({ title: 'Error', message: 'Failed to read file', variant: 'error', duration: 3000 });
     }
   };
 
+  // Blank page submission
   const handleSubmitBlankPage = async () => {
-    if (blankPageTitle.trim()) {
-      if (showNewKnowledgeBaseModal) {
-        const newDoc: KnowledgeBaseDocument = {
-          id: Date.now().toString(),
-          name: blankPageTitle.trim(),
-          type: 'text',
-          content: ''
-        };
-        setKbDocuments([...kbDocuments, newDoc]);
-        setBlankPageTitle('');
-        setShowPopup(false);
-        setPopupType(null);
-      } else if (user?.id) {
-      try {
-        const { data, error } = await supabase
-          .from('knowledge_base')
-          .insert([{
-            user_id: user.id,
-            title: blankPageTitle.trim(),
-            content: '',
-            content_type: 'text',
-            status: 'draft'
-          }])
-          .select()
-          .single();
+    if (!blankPageTitle.trim()) return;
 
-        if (error) {
-          console.error('Error creating document:', error);
-          return;
-        }
-
-        const newDoc: Document = {
-          id: data.id,
-          name: data.title,
-          content: data.content || '',
-          createdAt: new Date(data.created_at),
-          updatedAt: new Date(data.updated_at || data.created_at)
-        };
-
-        setDocuments(prev => [newDoc, ...prev]);
-        setBlankPageTitle('');
-        handleClosePopup();
-        handleEditDocument(newDoc);
-      } catch (error) {
-        console.error('Error creating document:', error);
-      }
+    if (showNewKnowledgeBaseModal) {
+      setKbDocuments([...kbDocuments, {
+        id: Date.now().toString(),
+        name: blankPageTitle.trim(),
+        type: 'text',
+        content: ''
+      }]);
+      setBlankPageTitle('');
+      setShowPopup(false);
+      setPopupType(null);
+      return;
     }
+
+    if (!user?.id) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('knowledge_base')
+        .insert([{
+          user_id: user.id,
+          title: blankPageTitle.trim(),
+          content: '',
+          content_type: 'text',
+          status: 'draft'
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating document:', error);
+        showToast({ title: 'Error', message: 'Failed to create document', variant: 'error', duration: 3000 });
+        return;
+      }
+
+      const newDoc: Document = {
+        id: data.id,
+        name: data.title,
+        content: data.content || '',
+        createdAt: new Date(data.created_at),
+        updatedAt: new Date(data.updated_at || data.created_at)
+      };
+
+      setDocuments(prev => [newDoc, ...prev]);
+      setBlankPageTitle('');
+      handleClosePopup();
+      handleEditDocument(newDoc);
+    } catch (error) {
+      console.error('Error creating document:', error);
     }
   };
 
