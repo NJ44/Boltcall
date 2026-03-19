@@ -49,10 +49,10 @@ const DashboardPage: React.FC = () => {
       // Remove the query parameter from URL
       setSearchParams({});
       
-      // Stop confetti after 5 seconds
+      // Stop confetti after 2.5 seconds
       setTimeout(() => {
         setShowConfetti(false);
-      }, 5000);
+      }, 2500);
     }
   }, [searchParams, setSearchParams]);
 

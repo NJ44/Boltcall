@@ -343,7 +343,7 @@ const DashboardLayout: React.FC = () => {
       <div className="h-screen flex transition-colors duration-300 gap-0 md:gap-4 bg-gray-100 dark:bg-[#0a0a0c]">
       <div className="flex flex-1 overflow-hidden gap-0 md:gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
-         <aside data-onboarding="sidebar" className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
+         <aside data-onboarding="sidebar" className={`fixed lg:static inset-y-0 left-0 z-[9999] transform transition-all duration-300 ease-in-out flex-shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40`}>
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
             <div className="mb-3 px-2">
@@ -451,7 +451,7 @@ const DashboardLayout: React.FC = () => {
         {/* Mobile overlay */}
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            className="fixed inset-0 bg-black bg-opacity-50 z-[9998] lg:hidden"
             onClick={closeSidebar}
             aria-hidden="true"
           />
