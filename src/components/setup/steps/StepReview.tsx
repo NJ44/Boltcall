@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Edit, Globe, Settings } from 'lucide-react';
+import { CheckCircle, Edit, Globe } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { useAuth } from '../../../contexts/AuthContext';
 import PageLoader from '../../PageLoader';
@@ -58,14 +58,13 @@ const StepReview: React.FC = () => {
 
 
   const getCompletionStatus = () => {
-    const totalSteps = 5; // All 5 setup steps
+    const totalSteps = 3; // All 3 setup steps
     let completedSteps = 0;
 
     // Count completed steps (assuming all are completed if we're in review)
-    if (account.businessName) completedSteps++;
     if (businessProfile.mainCategory) completedSteps++;
-    // Add the other 3 steps as completed since we're in review
-    completedSteps += 3;
+    // Add the other 2 steps as completed since we're in review
+    completedSteps += 2;
 
     return { completed: completedSteps, total: totalSteps };
   };
@@ -76,21 +75,11 @@ const StepReview: React.FC = () => {
   const reviewSections = [
     {
       id: 1,
-      title: 'Account',
-      icon: Settings,
-      data: account,
-      fields: [
-        { label: 'Business Name', value: account.businessName },
-        { label: 'Email', value: account.workEmail },
-        { label: 'Timezone', value: account.timezone },
-      ],
-    },
-    {
-      id: 2,
       title: 'Business Profile',
       icon: Globe,
       data: businessProfile,
       fields: [
+        { label: 'Business Name', value: businessProfile.businessName || 'Not set' },
         { label: 'Website', value: businessProfile.websiteUrl || 'Not set' },
         { label: 'Category', value: businessProfile.mainCategory || 'Not set' },
         { label: 'Service Areas', value: businessProfile.serviceAreas.join(', ') || 'Not set' },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NotificationPreferencesSkeleton } from '../../../components/ui/loading-skeleton';
+import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 import { motion } from 'framer-motion';
 import { 
   Bell, 
@@ -247,15 +248,7 @@ const NotificationPreferencesPage: React.FC = () => {
               ].map(({ key, label }) => (
                 <label key={key} className="flex items-center justify-between">
                   <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences[key as keyof NotificationPreferences] as boolean}
-                      onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                 </label>
               ))}
             </div>
@@ -276,15 +269,7 @@ const NotificationPreferencesPage: React.FC = () => {
               ].map(({ key, label }) => (
                 <label key={key} className="flex items-center justify-between">
                   <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences[key as keyof NotificationPreferences] as boolean}
-                      onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                 </label>
               ))}
             </div>
@@ -304,15 +289,7 @@ const NotificationPreferencesPage: React.FC = () => {
               ].map(({ key, label }) => (
                 <label key={key} className="flex items-center justify-between">
                   <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences[key as keyof NotificationPreferences] as boolean}
-                      onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                 </label>
               ))}
             </div>
@@ -333,15 +310,7 @@ const NotificationPreferencesPage: React.FC = () => {
               ].map(({ key, label }) => (
                 <label key={key} className="flex items-center justify-between">
                   <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences[key as keyof NotificationPreferences] as boolean}
-                      onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                 </label>
               ))}
             </div>
@@ -368,15 +337,7 @@ const NotificationPreferencesPage: React.FC = () => {
                     <Icon className="w-4 h-4 text-gray-500" />
                     <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
                   </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences[key as keyof NotificationPreferences] as boolean}
-                      onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                 </label>
               ))}
             </div>
@@ -432,12 +393,7 @@ const NotificationPreferencesPage: React.FC = () => {
                 ].map(({ key, label }) => (
                   <label key={key} className="flex items-center justify-between">
                     <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
-                    <input
-                      type="checkbox"
-                      checked={preferences[key as keyof NotificationPreferences] as boolean}
-                      onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                    />
+                    <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                   </label>
                 ))}
               </div>
@@ -446,15 +402,7 @@ const NotificationPreferencesPage: React.FC = () => {
               <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
                 <label className="flex items-center justify-between mb-3">
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Quiet Hours</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.quiet_hours_enabled}
-                      onChange={() => handleToggle('quiet_hours_enabled')}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                  </label>
+                  <PremiumToggle checked={preferences.quiet_hours_enabled} onChange={() => handleToggle('quiet_hours_enabled')} />
                 </label>
                 {preferences.quiet_hours_enabled && (
                   <div className="grid grid-cols-2 gap-3">
@@ -498,15 +446,7 @@ const NotificationPreferencesPage: React.FC = () => {
                 ].map(({ key, label }) => (
                   <label key={key} className="flex items-center justify-between">
                     <span className="text-xs text-gray-600 dark:text-gray-400">{label}</span>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={preferences[key as keyof NotificationPreferences] as boolean}
-                        onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-                    </label>
+                    <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                   </label>
                 ))}
               </div>
@@ -527,12 +467,7 @@ const NotificationPreferencesPage: React.FC = () => {
                   ].map(({ key, label }) => (
                     <label key={key} className="flex items-center justify-between">
                       <span className="text-xs text-gray-600 dark:text-gray-400">{label}</span>
-                      <input
-                        type="checkbox"
-                        checked={preferences[key as keyof NotificationPreferences] as boolean}
-                        onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 scale-75"
-                      />
+                      <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                     </label>
                   ))}
                 </div>
@@ -550,12 +485,7 @@ const NotificationPreferencesPage: React.FC = () => {
                   ].map(({ key, label }) => (
                     <label key={key} className="flex items-center justify-between">
                       <span className="text-xs text-gray-600 dark:text-gray-400">{label}</span>
-                      <input
-                        type="checkbox"
-                        checked={preferences[key as keyof NotificationPreferences] as boolean}
-                        onChange={() => handleToggle(key as keyof NotificationPreferences)}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 scale-75"
-                      />
+                      <PremiumToggle checked={preferences[key as keyof NotificationPreferences] as boolean} onChange={() => handleToggle(key as keyof NotificationPreferences)} />
                     </label>
                   ))}
                 </div>

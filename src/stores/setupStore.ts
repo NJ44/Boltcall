@@ -45,28 +45,7 @@ export interface SetupData {
     }>;
   };
   
-  // Step 4: Phone
-  phone: {
-    useExistingNumber: boolean;
-    existingNumber: string;
-    forwardingInstructions: string;
-    selectedPhoneNumber?: string;
-    purchasedPhoneNumber?: string;
-    newNumber: {
-      country: string;
-      areaCode: string;
-      number: string;
-      selectedPhoneNumber?: string;
-    };
-    routing: {
-      businessHoursNumbers: string[];
-      afterHoursAction: 'transfer' | 'voicemail' | 'book';
-      ringStrategy: 'sequential' | 'all';
-      maxRingTime: number;
-    };
-  };
-  
-  // Step 5: Knowledge Base
+  // Step 4: Knowledge Base
   knowledgeBase: {
     services: Array<{
       name: string;
@@ -165,22 +144,6 @@ const defaultData: SetupData = {
     calendarConnected: 'none' as const,
     appointmentTypes: [],
   },
-  phone: {
-    useExistingNumber: false,
-    existingNumber: '',
-    forwardingInstructions: '',
-    newNumber: {
-      country: 'US',
-      areaCode: '',
-      number: '',
-    },
-    routing: {
-      businessHoursNumbers: [],
-      afterHoursAction: 'voicemail',
-      ringStrategy: 'sequential',
-      maxRingTime: 30,
-    },
-  },
   knowledgeBase: {
     services: [],
     faqs: [],
@@ -236,7 +199,6 @@ interface SetupStore extends SetupData {
   updateAccount: (data: Partial<SetupData['account']>) => void;
   updateBusinessProfile: (data: Partial<SetupData['businessProfile']>) => void;
   updateCalendar: (data: Partial<SetupData['calendar']>) => void;
-  updatePhone: (data: Partial<SetupData['phone']>) => void;
   updateKnowledgeBase: (data: Partial<SetupData['knowledgeBase']>) => void;
   updateCallFlow: (data: Partial<SetupData['callFlow']>) => void;
   updateAgentConfig: (data: Partial<SetupData['agentConfig']>) => void;
@@ -269,10 +231,6 @@ export const useSetupStore = create<SetupStore>()(
       
       updateCalendar: (data) => set((state) => ({
         calendar: { ...state.calendar, ...data }
-      })),
-      
-      updatePhone: (data) => set((state) => ({
-        phone: { ...state.phone, ...data }
       })),
       
       updateKnowledgeBase: (data) => set((state) => ({
@@ -311,9 +269,6 @@ export const useSetupStore = create<SetupStore>()(
 );
 
 export const setupSteps = [
-  { id: 1, title: 'Account', description: 'Basic account setup' },
-  { id: 2, title: 'Business Profile', description: 'Company information' },
-  { id: 3, title: 'Knowledge Base', description: 'Services, FAQs & documents' },
-  { id: 4, title: 'Phone Number', description: 'Get your AI phone number' },
-  { id: 5, title: 'Review & Launch', description: 'Final review and go live' },
+  { id: 1, title: 'Business Profile', description: 'Company information' },
+  { id: 2, title: 'Knowledge Base', description: 'Services, FAQs & documents' },
 ];

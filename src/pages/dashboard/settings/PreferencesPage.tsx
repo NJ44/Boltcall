@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Globe, Moon, Sun, Palette, Bell, Eye, Shield, Save, RefreshCw } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { Magnetic } from '../../../components/ui/magnetic';
+import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 
 const PreferencesPage: React.FC = () => {
   const [preferences, setPreferences] = useState({
@@ -244,15 +245,7 @@ const PreferencesPage: React.FC = () => {
                 <h3 className="font-medium text-gray-900">{notification.label}</h3>
                 <p className="text-sm text-gray-600">{notification.description}</p>
               </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={preferences.notifications[notification.key as keyof typeof preferences.notifications]}
-                  onChange={(e) => handlePreferenceChange('notifications', notification.key, e.target.checked)}
-                  className="sr-only peer"
-                />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-              </label>
+              <PremiumToggle checked={preferences.notifications[notification.key as keyof typeof preferences.notifications]} onChange={(checked) => handlePreferenceChange('notifications', notification.key, checked)} />
             </div>
           ))}
         </div>
@@ -286,15 +279,7 @@ const PreferencesPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">Data Sharing</h3>
               <p className="text-sm text-gray-600">Allow sharing of anonymous usage data to improve our services</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-                checked={preferences.privacy.dataSharing}
-                onChange={(e) => handlePreferenceChange('privacy', 'dataSharing', e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-          </label>
+            <PremiumToggle checked={preferences.privacy.dataSharing} onChange={(checked) => handlePreferenceChange('privacy', 'dataSharing', checked)} />
           </div>
 
           <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -302,15 +287,7 @@ const PreferencesPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">Analytics</h3>
               <p className="text-sm text-gray-600">Help us improve by sharing analytics data</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-                checked={preferences.privacy.analytics}
-                onChange={(e) => handlePreferenceChange('privacy', 'analytics', e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-          </label>
+            <PremiumToggle checked={preferences.privacy.analytics} onChange={(checked) => handlePreferenceChange('privacy', 'analytics', checked)} />
         </div>
         </div>
       </div>
@@ -330,15 +307,7 @@ const PreferencesPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">High Contrast Mode</h3>
               <p className="text-sm text-gray-600">Increase contrast for better readability</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={preferences.accessibility.highContrast}
-                onChange={(e) => handlePreferenceChange('accessibility', 'highContrast', e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
+            <PremiumToggle checked={preferences.accessibility.highContrast} onChange={(checked) => handlePreferenceChange('accessibility', 'highContrast', checked)} />
       </div>
 
           <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -346,15 +315,7 @@ const PreferencesPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">Reduced Motion</h3>
               <p className="text-sm text-gray-600">Minimize animations and transitions</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={preferences.accessibility.reducedMotion}
-                onChange={(e) => handlePreferenceChange('accessibility', 'reducedMotion', e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
+            <PremiumToggle checked={preferences.accessibility.reducedMotion} onChange={(checked) => handlePreferenceChange('accessibility', 'reducedMotion', checked)} />
           </div>
         </div>
       </div>

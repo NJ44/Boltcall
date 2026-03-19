@@ -10,7 +10,7 @@ const FUNCTIONS_BASE = import.meta.env.DEV
   : '/.netlify/functions';
 
 const PreviewPanel: React.FC = () => {
-  const { account, businessProfile, phone, calendar, callFlow, knowledgeBase } = useSetupStore();
+  const { account, businessProfile, calendar, callFlow, knowledgeBase } = useSetupStore();
   const { showToast } = useToast();
   const [isCalling, setIsCalling] = useState(false);
   const [callActive, setCallActive] = useState(false);
@@ -31,10 +31,10 @@ const PreviewPanel: React.FC = () => {
 
     setIsCalling(true);
     try {
-      // Get the agent ID from the setup store (created during phone step)
-      const agentId = (phone as any).agentId;
+      // Get the agent ID from the setup store
+      const agentId = (account as any).agentId;
       if (!agentId) {
-        showToast({ title: 'No Agent', message: 'Complete the phone setup step first to create your AI agent', variant: 'error', duration: 4000 });
+        showToast({ title: 'No Agent', message: 'Complete the setup steps first to create your AI agent', variant: 'error', duration: 4000 });
         setIsCalling(false);
         return;
       }
@@ -179,17 +179,10 @@ const PreviewPanel: React.FC = () => {
             </div>
           )}
 
-          {phone.useExistingNumber ? (
+          {businessProfile.businessPhone && (
             <div className="flex items-center space-x-2 text-sm">
               <Phone className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-600">{phone.existingNumber || 'Your number'}</span>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2 text-sm">
-              <Phone className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-600">
-                {phone.newNumber.number || 'New number'}
-              </span>
+              <span className="text-gray-600">{businessProfile.businessPhone}</span>
             </div>
           )}
         </div>
@@ -291,7 +284,7 @@ const PreviewPanel: React.FC = () => {
             { label: 'Account', completed: !!account.businessName },
             { label: 'Business Profile', completed: !!businessProfile.mainCategory },
             { label: 'Calendar', completed: calendar.isConnected },
-            { label: 'Phone', completed: phone.useExistingNumber || !!phone.newNumber.number },
+            { label: 'Phone', completed: !!businessProfile.businessPhone },
             { label: 'Knowledge Base', completed: knowledgeBase.services.length > 0 },
             { label: 'Call Flow', completed: !!callFlow.greetingText },
           ].map((item, index) => (

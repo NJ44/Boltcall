@@ -2,10 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, ChevronLeft, ChevronRight, CheckCircle2, Circle } from "lucide-react";
+import { X, Check, ChevronLeft, ChevronRight, CheckCircle2, Circle, PartyPopper } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
 import { Button } from "./Button";
+import confetti from "canvas-confetti";
 
 
 export type Step = {
@@ -289,16 +290,26 @@ const CoachmarkOverlay = ({
             <ChevronLeft className="h-4 w-4 mr-1" />
             Prev
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onNext}
-            disabled={isLast}
-            aria-label="Next step"
-          >
-            Next
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
+          {isLast ? (
+            <Button
+              size="sm"
+              onClick={onComplete}
+              aria-label="Complete onboarding"
+              className="bg-blue-600 text-white hover:bg-blue-700"
+            >
+              Done
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onNext}
+              aria-label="Next step"
+            >
+              Next
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          )}
         </div>
       </motion.div>
     </motion.div>
@@ -317,7 +328,7 @@ export function InteractiveOnboardingChecklist({
   placement: _placement = "right"
 }: InteractiveOnboardingChecklistProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-
+  const [showCelebration, setShowCelebration] = useState(false);
   const [internalCompletedSteps, setInternalCompletedSteps] = useState<Set<string>>(new Set());
 
 
@@ -357,9 +368,21 @@ export function InteractiveOnboardingChecklist({
     );
 
     if (completedAllSteps.length === steps.length) {
-      setTimeout(() => onFinish?.(), 100);
+      // Fire side cannons confetti
+      const end = Date.now() + 3 * 1000;
+      const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
+      const frame = () => {
+        if (Date.now() > end) return;
+        confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
+        confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
+        requestAnimationFrame(frame);
+      };
+      frame();
+
+      // Show celebration message
+      setShowCelebration(true);
     }
-  }, [steps, internalCompletedSteps, onFinish]);
+  }, [steps, internalCompletedSteps]);
 
 
   useEffect(() => {
@@ -583,7 +606,6 @@ export function InteractiveOnboardingChecklist({
             isFirst={!hasPrevIncompleteStep}
             isLast={!hasNextIncompleteStep}
             onNext={() => {
-
               for (let i = activeStepIndex + 1; i < totalSteps; i++) {
                 if (!completedSteps.has(steps[i].id)) {
                   setActiveCoachmark(steps[i].id);
@@ -592,7 +614,6 @@ export function InteractiveOnboardingChecklist({
               }
             }}
             onPrev={() => {
-
               for (let i = activeStepIndex - 1; i >= 0; i--) {
                 if (!completedSteps.has(steps[i].id)) {
                   setActiveCoachmark(steps[i].id);
@@ -603,6 +624,49 @@ export function InteractiveOnboardingChecklist({
             onComplete={() => handleCompleteStep(activeStep.id)}
             onClose={() => setActiveCoachmark(null)}
           />
+        )}
+      </AnimatePresence>
+
+      {/* Celebration overlay */}
+      <AnimatePresence>
+        {showCelebration && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/40 z-[60]"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[61]"
+            >
+              <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md mx-4 text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <PartyPopper className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-black mb-3">
+                  You're All Set!
+                </h3>
+                <p className="text-lg text-black/70 mb-8 leading-relaxed">
+                  Your AI receptionist is ready to handle calls, book appointments, and delight your customers.
+                </p>
+                <button
+                  onClick={() => {
+                    setShowCelebration(false);
+                    onFinish?.();
+                    handleOpenChange(false);
+                  }}
+                  className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors text-base"
+                >
+                  Go to Dashboard
+                </button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

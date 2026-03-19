@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { PremiumToggle } from '../ui/bouncy-toggle';
 
 type FeatureKey =
   | 'voice_agent'
@@ -757,10 +758,10 @@ const FeatureHub: React.FC = () => {
       )}
 
       {/* Feature Grid */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="bg-gray-50 border-b border-gray-200 p-6 flex items-center justify-between">
+      <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
+        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] p-6 flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-semibold text-gray-900">Features</h2>
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">Features</h2>
             <p className="text-sm text-gray-500 mt-1">Turn on the tools you need — each one takes under a minute to set up</p>
           </div>
           <div className="text-sm text-gray-500">
@@ -779,14 +780,15 @@ const FeatureHub: React.FC = () => {
               return (
                 <motion.div
                   key={feature.key}
+                  data-onboarding={`feature-${feature.key}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                   className={`relative rounded-xl border transition-all ${
                     enabled
-                      ? 'border-gray-200 bg-white shadow-sm'
-                      : 'border-gray-100 bg-gray-50'
-                  } ${isExpanded ? 'ring-2 ring-blue-200' : ''}`}
+                      ? 'border-gray-200 dark:border-[#1e1e24] bg-white dark:bg-[#131316] shadow-sm'
+                      : 'border-gray-100 dark:border-[#1a1a1f] bg-gray-50 dark:bg-[#0e0e11]'
+                  } ${isExpanded ? 'ring-2 ring-blue-200 dark:ring-blue-800' : ''}`}
                 >
                   <div className="p-5">
                     <div className="flex items-start justify-between mb-3">
@@ -795,27 +797,18 @@ const FeatureHub: React.FC = () => {
                       </div>
 
                       {/* Toggle */}
-                      <button
-                        onClick={() => toggleFeature(feature.key)}
-                        disabled={isToggling}
-                        className={`relative w-11 h-6 rounded-full transition-colors ${
-                          enabled ? 'bg-green-500' : 'bg-gray-300'
-                        }`}
-                      >
-                        {isToggling ? (
-                          <Loader2 className="w-4 h-4 animate-spin text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-                        ) : (
-                          <span
-                            className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                              enabled ? 'left-[22px]' : 'left-0.5'
-                            }`}
-                          />
-                        )}
-                      </button>
+                      {isToggling ? (
+                        <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+                      ) : (
+                        <PremiumToggle
+                          checked={enabled}
+                          onChange={() => toggleFeature(feature.key)}
+                        />
+                      )}
                     </div>
 
-                    <h3 className="font-semibold text-gray-900 mb-0.5">{feature.name}</h3>
-                    <p className="text-sm text-gray-500 mb-2">{feature.description}</p>
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-0.5">{feature.name}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{feature.description}</p>
 
                     {/* Status indicator or expand button */}
                     {enabled ? (

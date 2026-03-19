@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Mail, Phone, MessageSquare, Calendar, AlertTriangle, CheckCircle, Settings, Volume2, VolumeX, Clock } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 import CardTable from '../../../components/ui/CardTable';
 import { Magnetic } from '../../../components/ui/magnetic';
 
@@ -197,15 +198,7 @@ const NotificationPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">Enable Notifications</h3>
               <p className="text-sm text-gray-600">Master switch for all notifications</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={notificationSettings.general.enableNotifications}
-                onChange={(e) => handleSettingChange(['general', 'enableNotifications'], e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
+            <PremiumToggle checked={notificationSettings.general.enableNotifications} onChange={(checked) => handleSettingChange(['general', 'enableNotifications'], checked)} />
           </div>
 
           <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -220,15 +213,7 @@ const NotificationPage: React.FC = () => {
                 <p className="text-sm text-gray-600">Play sound when notifications arrive</p>
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={notificationSettings.general.soundEnabled}
-                onChange={(e) => handleSettingChange(['general', 'soundEnabled'], e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
+            <PremiumToggle checked={notificationSettings.general.soundEnabled} onChange={(checked) => handleSettingChange(['general', 'soundEnabled'], checked)} />
           </div>
 
           <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -236,15 +221,7 @@ const NotificationPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">Vibration</h3>
               <p className="text-sm text-gray-600">Vibrate device for notifications</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={notificationSettings.general.vibrationEnabled}
-                onChange={(e) => handleSettingChange(['general', 'vibrationEnabled'], e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
+            <PremiumToggle checked={notificationSettings.general.vibrationEnabled} onChange={(checked) => handleSettingChange(['general', 'vibrationEnabled'], checked)} />
           </div>
         </div>
       </div>
@@ -271,15 +248,7 @@ const NotificationPage: React.FC = () => {
                     <p className="text-sm text-gray-600">{channel.description}</p>
                   </div>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={notificationSettings.channels[channel.key as keyof typeof notificationSettings.channels].enabled}
-                    onChange={(e) => handleSettingChange(['channels', channel.key, 'enabled'], e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                </label>
+                <PremiumToggle checked={notificationSettings.channels[channel.key as keyof typeof notificationSettings.channels].enabled} onChange={(checked) => handleSettingChange(['channels', channel.key, 'enabled'], checked)} />
               </div>
 
               {notificationSettings.channels[channel.key as keyof typeof notificationSettings.channels].enabled && (
@@ -320,15 +289,7 @@ const NotificationPage: React.FC = () => {
               <h3 className="font-medium text-gray-900">Enable Quiet Hours</h3>
               <p className="text-sm text-gray-600">Pause notifications during specified hours</p>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={notificationSettings.timing.quietHours.enabled}
-                onChange={(e) => handleSettingChange(['timing', 'quietHours', 'enabled'], e.target.checked)}
-                className="sr-only peer"
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
+            <PremiumToggle checked={notificationSettings.timing.quietHours.enabled} onChange={(checked) => handleSettingChange(['timing', 'quietHours', 'enabled'], checked)} />
           </div>
 
           {notificationSettings.timing.quietHours.enabled && (

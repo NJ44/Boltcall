@@ -111,9 +111,9 @@ const DashboardPage: React.FC = () => {
       />
 
       {/* Setup Guide Section */}
-      <div data-onboarding="setup-guide" className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
-          <h2 className="text-lg font-semibold text-gray-900">Setup Guide</h2>
+      <div data-onboarding="setup-guide" className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
+        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Setup Guide</h2>
         </div>
 
         <div className="p-4">
@@ -129,7 +129,7 @@ const DashboardPage: React.FC = () => {
               <Link
                 key={step.id}
                 to={step.link}
-                className="block bg-gray-50 rounded-lg p-3 flex items-center gap-3 hover:bg-gray-100 transition-colors border border-gray-200"
+                className="block bg-gray-50 dark:bg-[#0e0e11] rounded-lg p-3 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors border border-gray-200 dark:border-[#1e1e24]"
               >
                 {/* Icon */}
                 <div className="flex-shrink-0">
@@ -146,7 +146,7 @@ const DashboardPage: React.FC = () => {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className={`${step.completed ? 'text-gray-500' : 'text-gray-900'} font-medium`}>
+                  <div className={`${step.completed ? 'text-gray-500 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'} font-medium`}>
                     {step.title}
                   </div>
                   {!step.completed && step.timeEstimate && (
@@ -184,9 +184,9 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Alerts Section */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
-          <h2 className="text-lg font-semibold text-gray-900">Alerts</h2>
+      <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
+        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Alerts</h2>
         </div>
 
         <div className="p-4 space-y-3">

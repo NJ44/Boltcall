@@ -1,36 +1,34 @@
 import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
+import PageLoader from '../PageLoader';
 import { createUserWorkspaceAndProfile } from '../../lib/database';
-import { createAgentAndKnowledgeBase, purchasePhoneNumber } from '../../lib/webhooks';
+import { createAgentAndKnowledgeBase } from '../../lib/webhooks';
 import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { calculateKBCompleteness } from './kbCompleteness';
 
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
+
 // Step Components - Dynamic imports to avoid circular dependencies
-const StepAccount = React.lazy(() => import('./steps/StepAccount'));
 const StepBusinessProfile = React.lazy(() => import('./steps/StepBusinessProfile'));
 const StepKnowledge = React.lazy(() => import('./steps/StepKnowledge'));
-const StepPhone = React.lazy(() => import('./steps/StepPhone'));
-const StepReview = React.lazy(() => import('./steps/StepReview'));
 
 const stepComponents = {
-  1: StepAccount,
-  2: StepBusinessProfile,
-  3: StepKnowledge,
-  4: StepPhone,
-  5: StepReview,
+  1: StepBusinessProfile,
+  2: StepKnowledge,
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, markStepCompleted, completedSteps, businessProfile: storeBusinessProfile, account, phone, updatePhone, updateAccount, knowledgeBase: storeKnowledgeBase } = useSetupStore();
-  const [expandedStep, setExpandedStep] = useState(0);
-  const [unlockedSteps, setUnlockedSteps] = useState([1]); // Start with step 1 unlocked
+  const { currentStep, updateStep, markStepCompleted, businessProfile: storeBusinessProfile, account, updateAccount, knowledgeBase: storeKnowledgeBase, complete, updateReview } = useSetupStore();
+  const [isLaunching, setIsLaunching] = useState(false);
   const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -42,64 +40,20 @@ const WizardShell: React.FC = () => {
 
   // Listen for step completion events
   useEffect(() => {
-    const handlePhoneStepCompleted = () => {
-      // Mark phone step as completed and move to next step
-      markStepCompleted(currentStep);
-      
-      if (currentStep < setupSteps.length) {
-        const nextStep = currentStep + 1;
-        updateStep(nextStep);
-        setExpandedStep(nextStep);
-      }
-    };
-
     const handleKnowledgeStepCompleted = () => {
-      // Mark knowledge step as completed and move to next step
       markStepCompleted(currentStep);
-      
       if (currentStep < setupSteps.length) {
-        const nextStep = currentStep + 1;
-        updateStep(nextStep);
-        setExpandedStep(nextStep);
+        updateStep(currentStep + 1);
       }
     };
 
-    window.addEventListener('phone-step-completed', handlePhoneStepCompleted);
     window.addEventListener('knowledge-step-completed', handleKnowledgeStepCompleted);
-    
     return () => {
-      window.removeEventListener('phone-step-completed', handlePhoneStepCompleted);
       window.removeEventListener('knowledge-step-completed', handleKnowledgeStepCompleted);
     };
   }, [currentStep, markStepCompleted, updateStep]);
 
   const StepComponent = stepComponents[currentStep as keyof typeof stepComponents];
-
-  // Check if step is completed (based on explicit completion, not form data)
-  const isStepCompleted = (stepId: number) => {
-    return completedSteps.includes(stepId);
-  };
-
-  // Check if step is accessible (can be clicked)
-  const isStepAccessible = (stepId: number) => {
-    if (stepId === 1) return true;
-    if (stepId === 3) return unlockedSteps.includes(3); // Knowledge step unlocked when reached
-    if (stepId === 4) return currentStep >= 4; // Phone step only accessible when reached
-    return completedSteps.includes(stepId - 1); // Previous step must be explicitly completed
-  };
-
-  const handleStepClick = (stepId: number) => {
-    if (isStepAccessible(stepId)) {
-      // If clicking the same step, toggle it
-      if (expandedStep === stepId) {
-        setExpandedStep(0); // Close it
-      } else {
-        // Open the clicked step
-        updateStep(stepId);
-        setExpandedStep(stepId);
-      }
-    }
-  };
 
   // Validation function for Business Profile step
   const isBusinessProfileValid = () => {
@@ -114,7 +68,7 @@ const WizardShell: React.FC = () => {
 
   // Check if current step is valid
   const isCurrentStepValid = () => {
-    if (currentStep === 2) {
+    if (currentStep === 1) {
       return isBusinessProfileValid();
     }
     return true; // Other steps don't have validation yet
@@ -122,8 +76,8 @@ const WizardShell: React.FC = () => {
 
   const handleContinue = async () => {
     try {
-      // If completing business profile step (step 2), create workspace and business profile in database
-      if (currentStep === 2 && user?.id) {
+      // If completing business profile step (step 1), create workspace and business profile in database
+      if (currentStep === 1 && user?.id) {
         const { workspace, businessProfile } = await createUserWorkspaceAndProfile(
           user.id,
           {
@@ -171,8 +125,10 @@ const WizardShell: React.FC = () => {
         });
       }
       
-      // Knowledge Base step (step 3): warn if KB is sparse, then create agent
-      if (currentStep === 3) {
+      // Knowledge Base step (step 2 / final step): create agent, launch, and redirect to dashboard
+      if (currentStep === 2) {
+        setIsLaunching(true);
+
         const kbScore = calculateKBCompleteness(storeBusinessProfile, storeKnowledgeBase).score;
         if (kbScore < 40) {
           showToast({
@@ -183,122 +139,58 @@ const WizardShell: React.FC = () => {
           });
         }
 
-        showToast({ title: 'Creating AI Agent', message: 'Building your AI agent in the background...', variant: 'default', duration: 3000 });
-
-        (async () => {
-          try {
-            const agentResult = await createAgentAndKnowledgeBase({
-              businessName: storeBusinessProfile.businessName || '',
-              websiteUrl: storeBusinessProfile.websiteUrl || '',
-              mainCategory: storeBusinessProfile.mainCategory || '',
-              country: storeBusinessProfile.country || '',
-              serviceAreas: storeBusinessProfile.serviceAreas || [],
-              openingHours: storeBusinessProfile.openingHours || {},
-              languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
-              clientId: user?.id || undefined,
-              businessProfileId: account.businessProfileId || undefined,
-              locationId: account.locationId || undefined,
-              businessPhone: storeBusinessProfile.businessPhone,
-              city: storeBusinessProfile.city,
-              state: storeBusinessProfile.state,
-              services: storeKnowledgeBase.services,
-              faqs: storeKnowledgeBase.faqs,
-              policies: storeKnowledgeBase.policies,
-            });
-
-            // Show result with Cekura test status
-            if (agentResult.cekura_test?.success) {
-              showToast({
-                title: 'Agent created — testing in progress',
-                message: `Your AI agent is live! Running ${agentResult.cekura_test.total_runs || 5} automated test scenarios. Check the dashboard for results.`,
-                variant: 'success',
-                duration: 6000,
-              });
-            } else {
-              showToast({
-                title: 'Agent ready',
-                message: `Your AI agent is live!${agentResult.cekura_test?.error ? ' Automated tests could not be started — you can test manually from the dashboard.' : ''}`,
-                variant: 'success',
-                duration: 5000,
-              });
-            }
-          } catch (e) {
-            console.error('Agent creation failed', e);
-            showToast({ title: 'Agent setup failed', message: e instanceof Error ? e.message : 'Unknown error', variant: 'error', duration: 6000 });
-          }
-        })();
-      }
-
-      // Phone step: purchase phone number on Continue
-      if (currentStep === 4) {
-        const selectedNumber = phone.selectedPhoneNumber;
-        const purchasedNumber = phone.purchasedPhoneNumber;
-
-        if (!selectedNumber && !purchasedNumber) {
-          showToast({
-            title: 'Selection Required',
-            message: 'Please select a phone number first.',
-            variant: 'warning',
-            duration: 4000
+        // Create agent and knowledge base
+        try {
+          await createAgentAndKnowledgeBase({
+            businessName: storeBusinessProfile.businessName || '',
+            websiteUrl: storeBusinessProfile.websiteUrl || '',
+            mainCategory: storeBusinessProfile.mainCategory || '',
+            country: storeBusinessProfile.country || '',
+            serviceAreas: storeBusinessProfile.serviceAreas || [],
+            openingHours: storeBusinessProfile.openingHours || {},
+            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
+            clientId: user?.id || undefined,
+            businessProfileId: account.businessProfileId || undefined,
+            locationId: account.locationId || undefined,
+            businessPhone: storeBusinessProfile.businessPhone,
+            city: storeBusinessProfile.city,
+            state: storeBusinessProfile.state,
+            services: storeKnowledgeBase.services,
+            faqs: storeKnowledgeBase.faqs,
+            policies: storeKnowledgeBase.policies,
           });
-          return; // Don't continue if no number selected
+        } catch (e) {
+          console.error('Agent creation failed', e);
         }
 
-        // If number is not yet purchased, purchase it first
-        if (!purchasedNumber && selectedNumber) {
-          // Show progress toast immediately
-          showToast({
-            title: 'Acquiring Phone Number',
-            message: 'Please wait while we acquire your phone number...',
-            variant: 'default',
-            duration: 3000
+        // Call setup-launch to finalize
+        try {
+          await fetch(`${FUNCTIONS_BASE}/setup-launch`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              workspaceId: account.workspaceId,
+              isEnabled: true,
+              userId: user?.id,
+            }),
           });
-          
-          try {
-            const result = await purchasePhoneNumber(selectedNumber);
-            if (result.success) {
-              updatePhone({ purchasedPhoneNumber: selectedNumber });
-              showToast({
-                title: 'Success',
-                message: 'Phone number purchased successfully!',
-                variant: 'success',
-                duration: 3000
-              });
-            } else {
-              showToast({
-                title: 'Purchase Failed',
-                message: result.message || 'Failed to purchase phone number. Please try again.',
-                variant: 'error',
-                duration: 5000
-              });
-              return; // Don't continue if purchase failed
-            }
-          } catch (error) {
-            console.error('Error purchasing phone number:', error);
-            showToast({
-              title: 'Error',
-              message: 'Failed to purchase phone number. Please try again.',
-              variant: 'error',
-              duration: 5000
-            });
-            return; // Don't continue if purchase failed
-          }
+        } catch (e) {
+          console.error('Setup launch failed', e);
         }
-        // If already purchased or just purchased, continue to next step
+
+        // Mark setup as completed and redirect
+        markStepCompleted(currentStep);
+        complete();
+        updateReview({ isLaunched: true });
+        navigate('/dashboard?setupCompleted=true');
+        return;
       }
 
       // Mark current step as completed
       markStepCompleted(currentStep);
-      
+
       if (currentStep < setupSteps.length) {
-        const nextStep = currentStep + 1;
-        updateStep(nextStep);
-        setExpandedStep(nextStep);
-        
-        // Unlock the knowledge step when user reaches it
-        if (nextStep === 3 && !unlockedSteps.includes(3)) {
-          setUnlockedSteps(prev => [...prev, 3]);
-        }
+        updateStep(currentStep + 1);
       }
     } catch (error) {
       console.error('Error in handleContinue:', error);
@@ -351,8 +243,17 @@ const WizardShell: React.FC = () => {
   };
 
 
-  // Calculate progress based on explicitly completed steps
-  const progressPercentage = (completedSteps.length / setupSteps.length) * 100;
+  // Calculate progress based on current step
+  const progressPercentage = (currentStep / setupSteps.length) * 100;
+
+  const handleBack = () => {
+    if (currentStep > 1) {
+      const prevStep = currentStep - 1;
+      updateStep(prevStep);
+    }
+  };
+
+  const currentStepInfo = setupSteps.find(s => s.id === currentStep);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -360,26 +261,25 @@ const WizardShell: React.FC = () => {
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo - Far Left */}
             <div className="flex items-center -ml-4">
               <Link to="/">
-                <img 
-                  src="/boltcall_full_logo.png" 
-                  alt="Boltcall" 
+                <img
+                  src="/boltcall_full_logo.png"
+                  alt="Boltcall"
                   className="h-16 w-auto"
                 />
               </Link>
             </div>
-            
-            {/* Title - Center */}
+
             <div className="absolute left-1/2 transform -translate-x-1/2">
-              <h1 className="text-4xl font-bold text-gray-900">
+              <h1 className="text-4xl font-bold text-black">
                 Account Setup
               </h1>
             </div>
-            
-            {/* Spacer for balance */}
-            <div className="w-32"></div>
+
+            <div className="text-sm text-black font-medium">
+              Step {currentStep} of {setupSteps.length}
+            </div>
           </div>
         </div>
 
@@ -396,120 +296,66 @@ const WizardShell: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Vertical Steps */}
-        <div className="space-y-0">
-          {setupSteps.map((step, index) => (
-            <div key={step.id} className="relative">
-              {/* Step Header */}
-              <motion.button
-                onClick={() => handleStepClick(step.id)}
-                disabled={!isStepAccessible(step.id)}
-                className={`w-full text-left p-10 mb-0 transition-all duration-200 ${
-                  isStepAccessible(step.id)
-                    ? 'cursor-pointer hover:bg-gray-50/50'
-                    : 'opacity-50 cursor-not-allowed'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-6">
-                    {/* Step Number */}
-                    <div className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl ${
-                      isStepCompleted(step.id)
-                        ? 'bg-green-500 text-white shadow-lg'
-                        : step.id === currentStep
-                        ? 'bg-brand-blue text-white shadow-lg'
-                        : isStepAccessible(step.id)
-                        ? 'bg-gray-200 text-gray-700'
-                        : 'bg-gray-100 text-gray-400'
-                    }`}>
-                      {isStepCompleted(step.id) ? (
-                        <CheckCircle className="w-7 h-7" />
-                      ) : (
-                        step.id
-                      )}
-                    </div>
-
-                    {/* Step Info */}
-                    <div>
-                      <h3 className={`text-4xl font-bold text-gray-900 ${
-                        !isStepAccessible(step.id) ? 'opacity-50' : ''
-                      }`}>
-                        {step.title}
-                      </h3>
-                      <p className={`text-gray-600 text-lg mt-2 ${!isStepAccessible(step.id) ? 'opacity-50' : ''}`}>
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Chevron */}
-                  <ChevronDown className={`w-6 h-6 text-gray-400 transition-transform duration-200 ${
-                    expandedStep === step.id ? 'rotate-180' : ''
-                  } ${!isStepAccessible(step.id) ? 'opacity-50' : ''}`} />
-                </div>
-              </motion.button>
-
-               {/* Separator Line */}
-               {index < setupSteps.length - 1 && (
-                 <div className="w-full">
-                   <div className="h-px bg-gray-300"></div>
-                 </div>
-               )}
-
-              {/* Step Content */}
-              <AnimatePresence mode="wait" initial={false}>
-                {expandedStep === step.id && (
-                  <motion.div
-                    key={expandedStep}
-                    initial={{ opacity: 0, x: -20, scale: 0.95 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                    transition={{ 
-                      type: 'tween',
-                      ease: 'anticipate',
-                      duration: 0.4 
-                    }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 pb-6">
-                      <Card className="p-8 bg-white">
-                        {StepComponent && (
-                          <Suspense fallback={
-                            <div className="flex items-center justify-center py-8">
-                              <div className="text-center">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue mx-auto mb-4"></div>
-                                <p className="text-gray-600">Loading step...</p>
-                              </div>
-                            </div>
-                          }>
-                            <StepComponent />
-                          </Suspense>
-                        )}
-                        
-                        {/* Continue Button - Hide for review step (step 7) */}
-                        {expandedStep === currentStep && currentStep !== 5 && (
-                          <div className="mt-6">
-                            <div className="flex justify-end">
-                              <Button
-                                onClick={handleContinue}
-                                disabled={!isCurrentStepValid()}
-                                className="px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                              >
-                                Continue
-                              </Button>
-                            </div>
-                          </div>
-                        )}
-                      </Card>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+        {/* Step Title */}
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold text-black">{currentStepInfo?.title}</h2>
+          <p className="text-black/70 text-lg mt-1">{currentStepInfo?.description}</p>
         </div>
 
+        {/* Step Content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ type: 'tween', ease: 'easeInOut', duration: 0.3 }}
+          >
+            <Card className="p-8 bg-white text-black">
+              {StepComponent && (
+                <Suspense fallback={
+                  <div className="flex items-center justify-center py-8">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue mx-auto mb-4"></div>
+                      <p className="text-black/60">Loading...</p>
+                    </div>
+                  </div>
+                }>
+                  <StepComponent />
+                </Suspense>
+              )}
+            </Card>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Previous / Next Buttons */}
+        <div className="flex justify-between items-center mt-8">
+          <button
+            onClick={handleBack}
+            disabled={currentStep === 1}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
+              currentStep === 1
+                ? 'text-gray-300 cursor-not-allowed'
+                : 'text-black hover:bg-gray-100'
+            }`}
+          >
+            <ChevronLeft className="w-5 h-5" />
+            Previous
+          </button>
+
+          <Button
+            onClick={handleContinue}
+            disabled={!isCurrentStepValid() || isLaunching}
+            className="flex items-center gap-2 px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {currentStep === setupSteps.length ? 'Complete Setup' : 'Next'}
+            {currentStep < setupSteps.length && <ChevronRight className="w-5 h-5" />}
+          </Button>
+        </div>
       </div>
+
+      {/* Loading overlay during setup launch */}
+      <PageLoader isLoading={isLaunching} />
     </div>
   );
 };

@@ -341,11 +341,11 @@ const DashboardLayout: React.FC = () => {
         onClick={closeSidebar}
         className={`relative flex items-center gap-2 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
           isActive
-            ? isDarkMode 
-              ? 'bg-gray-800 text-white' 
+            ? isDarkMode
+              ? 'bg-[#1a1a1f] text-white'
               : 'bg-blue-50 text-blue-700'
-            : isDarkMode 
-              ? 'text-white hover:bg-gray-800' 
+            : isDarkMode
+              ? 'text-white hover:bg-[#1a1a1f]'
               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
         }`}
       >
