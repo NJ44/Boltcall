@@ -715,67 +715,6 @@ const DashboardLayout: React.FC = () => {
                    </div>
                  </div>
 
-                 {/* Add Team Member Dropdown */}
-                 <div className="relative group">
-                  <button
-                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
-                   aria-label="Add team member"
-            >
-                   <UserPlus className="w-5 h-5" />
-                  </button>
-
-                   {/* Add Member Dropdown Content */}
-                   <div className="absolute right-0 top-full mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
-                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
-                       <div className="flex items-center gap-3 mb-4">
-                         <div className="p-2 bg-blue-100 rounded-lg">
-                           <UserPlus className="w-5 h-5 text-blue-600" />
-                        </div>
-                         <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Add Team Member</h3>
-            </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Gmail Address
-              </label>
-              <input
-                type="email"
-                placeholder="colleague@gmail.com"
-                             className={`w-full px-3 py-2 rounded-lg border transition-colors text-sm ${
-                  isDarkMode
-                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                }`}
-              />
-                </div>
-
-                    <div>
-              <label className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Role
-              </label>
-              <select
-                             className={`w-full px-3 py-2 rounded-lg border transition-colors text-sm ${
-                  isDarkMode
-                    ? 'bg-gray-700 border-gray-600 text-white'
-                    : 'bg-white border-gray-300 text-gray-900'
-                }`}
-              >
-                <option>Member</option>
-                <option>Admin</option>
-              </select>
-                </div>
-
-                  <button
-                           className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors text-sm"
-                  >
-              Send Invitation
-                  </button>
-                </div>
-                        </div>
-                    </div>
-                  </div>
-          
                   {/* User Avatar */}
                   <div className="relative" data-user-menu>
                     <button
@@ -815,14 +754,6 @@ const DashboardLayout: React.FC = () => {
                           >
                             <UserPlus className="w-4 h-4 text-gray-400" />
                             Invite a Friend & Earn
-                          </Link>
-                          <Link
-                            to="/dashboard/changelog"
-                            onClick={() => setShowUserMenu(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                          >
-                            <Zap className="w-4 h-4 text-gray-400" />
-                            See what's new
                           </Link>
                           <button
                             onClick={() => { setShowUserMenu(false); }}
