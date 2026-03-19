@@ -62,7 +62,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             <defs>
               <clipPath id="pencil-eraser"><rect height="30" width="30" ry="5" rx="5" /></clipPath>
             </defs>
-            <circle transform="rotate(-113,100,100)" strokeLinecap="round" strokeDashoffset="439.82" strokeDasharray="439.82 439.82" strokeWidth="2" stroke="currentColor" fill="none" r="70" className="pencil__stroke" />
+            <circle transform="rotate(-113,100,100)" strokeLinecap="round" strokeDashoffset="439.82" strokeDasharray="439.82 439.82" strokeWidth="3" stroke="hsl(223,90%,50%)" fill="none" r="70" className="pencil__stroke" />
             <g transform="translate(100,100)" className="pencil__rotate">
               <g fill="none">
                 <circle transform="rotate(-90)" strokeDashoffset="402" strokeDasharray="402.12 402.12" strokeWidth="30" stroke="hsl(223,90%,50%)" r="64" className="pencil__body1" />
