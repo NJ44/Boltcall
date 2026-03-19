@@ -331,8 +331,8 @@ const DashboardLayout: React.FC = () => {
 
   return (
     <ToastProvider>
-      <div className="h-screen flex transition-colors duration-300 gap-4 bg-gray-100 dark:bg-[#0a0a0c]">
-      <div className="flex flex-1 overflow-hidden gap-4">
+      <div className="h-screen flex transition-colors duration-300 gap-0 md:gap-4 bg-gray-100 dark:bg-[#0a0a0c]">
+      <div className="flex flex-1 overflow-hidden gap-0 md:gap-4">
          {/* Left Panel - Navigation with Logo at Top */}
          <aside data-onboarding="sidebar" className={`fixed lg:static inset-y-0 left-0 z-40 transform transition-all duration-300 ease-in-out flex-shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar`}>
           <div className="flex flex-col h-full pt-2 pb-4">
@@ -451,7 +451,7 @@ const DashboardLayout: React.FC = () => {
          {/* Right Panel - Main Content with Top Bar */}
          <main 
            ref={mainContentRef}
-           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-2xl bg-white dark:bg-[#0e0e11] shadow-lg m-2 dashboard-main-scroll ${
+           className={`flex-1 overflow-y-auto transition-colors duration-300 rounded-none md:rounded-2xl bg-white dark:bg-[#0e0e11] shadow-lg m-0 md:m-2 dashboard-main-scroll ${
              scrollbarVisible ? 'scrollbar-visible' : 'scrollbar-hidden'
            }`}
            style={{
@@ -463,27 +463,27 @@ const DashboardLayout: React.FC = () => {
          >
            {/* Top Bar - Page Header */}
            <div className="sticky top-0 z-10 flex-shrink-0 transition-colors duration-300 bg-white/80 backdrop-blur-sm">
-             <div className="flex items-center justify-between h-16 px-6">
+             <div className="flex items-center justify-between h-14 md:h-16 px-3 md:px-6">
                {/* Left side - Mobile menu button and Page Name */}
-               <div className="flex items-center gap-3">
+               <div className="flex items-center gap-2 md:gap-3 min-w-0">
                  <button
                    onClick={toggleSidebar}
-                   className={`lg:hidden p-2 rounded-md transition-colors ${
-                     isDarkMode 
-                       ? 'text-gray-300 hover:text-white hover:bg-[#1a1a1f]' 
+                   className={`lg:hidden p-2 rounded-md transition-colors flex-shrink-0 ${
+                     isDarkMode
+                       ? 'text-gray-300 hover:text-white hover:bg-[#1a1a1f]'
                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/30'
                    }`}
                    aria-label="Toggle navigation menu"
                  >
                    <Menu className="w-5 h-5" />
                  </button>
-                 
+
                  {/* Page Name Header */}
-                 <div className="flex items-center gap-2">
-                   <div className={`w-1 h-6 rounded-full ${
+                 <div className="flex items-center gap-2 min-w-0">
+                   <div className={`w-1 h-5 md:h-6 rounded-full flex-shrink-0 ${
                      isDarkMode ? 'bg-blue-400' : 'bg-blue-600'
                    }`}></div>
-                   <h1 className={`text-2xl font-semibold ${
+                   <h1 className={`text-lg md:text-2xl font-semibold truncate ${
                      isDarkMode ? 'text-white' : 'text-gray-900'
                    }`}>
                      {getPageName()}
@@ -492,11 +492,13 @@ const DashboardLayout: React.FC = () => {
                </div>
           
               {/* Right side - Free Trial, Toggle, Location switcher, Notifications */}
-              <div className="flex items-center gap-3">
-                <LocationSwitcher />
+              <div className="flex items-center gap-1 md:gap-3">
+                <div className="hidden md:block">
+                  <LocationSwitcher />
+                </div>
                  
-                 {/* Notification Dropdown */}
-                 <div className="relative group">
+                 {/* Notification Dropdown (hidden on mobile — hover doesn't work on touch) */}
+                 <div className="relative group hidden md:block">
                  <button
                    className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
                    aria-label="Notification settings"
@@ -581,8 +583,8 @@ const DashboardLayout: React.FC = () => {
               </div>
                  </div>
 
-                 {/* Services Status Dropdown */}
-                 <div className="relative group">
+                 {/* Services Status Dropdown (hidden on mobile) */}
+                 <div className="relative group hidden md:block">
                    <button
                      className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
                      aria-label="Services status"
@@ -774,7 +776,7 @@ const DashboardLayout: React.FC = () => {
             </div>
 
            {/* Page Content */}
-           <div className="p-6">
+           <div className="p-3 md:p-6">
              <Outlet />
           </div>
 
