@@ -275,12 +275,12 @@ export default function AuthSwitch({
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 px-4 py-6 sm:p-4 overflow-hidden">
       {/* Logo */}
-      <div className="absolute top-4 left-5 z-30">
+      <div className="absolute top-4 left-5 z-30 hidden lg:block">
         <Link to="/">
           <img
             src="/boltcall_full_logo.png"
             alt="Boltcall"
-            className="h-8 sm:h-10 w-auto brightness-0 invert"
+            className="h-10 w-auto brightness-0 invert"
           />
         </Link>
       </div>
