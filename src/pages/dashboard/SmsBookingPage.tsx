@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
-import { useAuth } from '../../contexts/AuthContext';
 
 /**
  * NOTE: There is no dedicated `bookings` or `sms_messages` table in Supabase yet.
@@ -71,7 +70,7 @@ function twilioMessageToBooking(msg: TwilioMessage): SmsBooking {
 }
 
 const SmsBookingPage: React.FC = () => {
-  const { user } = useAuth();
+  // useAuth() available for future per-user filtering
   const [phoneNumbers, setPhoneNumbers] = useState<Array<{ id: string; number: string }>>([]);
   const [agents, setAgents] = useState<Array<{ id: string; name: string }>>([]);
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
