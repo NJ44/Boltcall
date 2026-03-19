@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap } from 'lucide-react';
-import { getUserSubscription, getUserInvoices, redirectToCheckout, PLAN_INFO, type PlanLevel } from '../../../lib/stripe';
+import { getUserSubscription, getUserInvoices, redirectToCheckout, type PlanLevel } from '../../../lib/stripe';
 
 interface Subscription {
   id: string;

@@ -11,7 +11,6 @@ import {
   Menu,
   X,
   MessageSquare,
-  User,
   Moon,
   Sun,
   UserPlus,
