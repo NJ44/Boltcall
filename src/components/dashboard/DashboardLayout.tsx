@@ -25,6 +25,8 @@ import {
   Ticket,
   Crown,
   Server,
+  Mail,
+  Globe,
   Plug,
   Zap,
   RotateCw,
@@ -688,105 +690,63 @@ const DashboardLayout: React.FC = () => {
 
                  {/* Services Status Dropdown */}
                  <div className="relative group">
-              <button
-                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
-                   aria-label="Services status"
-                 >
-                   <Server className="w-5 h-5" />
-              </button>
-                 
-                   {/* Services Status Dropdown Content */}
-                   <div className="absolute right-0 top-full mt-2 w-96 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
-                     <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
-                       <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Server className="w-5 h-5 text-blue-600" />
-              </div>
-                         <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Services Status</h3>
-          </div>
+                   <button
+                     className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
+                     aria-label="Services status"
+                   >
+                     <Server className="w-5 h-5" />
+                   </button>
 
-                       <div className="space-y-3 max-h-80 overflow-y-auto">
-                {/* AI Receptionist */}
-                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-[#1e1e24] bg-[#131316]' : 'border-gray-200'}`}>
-                  <div className="flex items-center gap-3">
-                             <Users className="w-4 h-4 text-blue-600" />
-                    <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Assistants</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Automated call handling</div>
-                      {services.aiReceptionist && (
-                        <div className="flex items-center gap-2 mt-1">
-                                   <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('aiReceptionist'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('aiReceptionist')}
-                             className={`relative w-10 h-5 rounded-full transition-colors ${
-                      services.aiReceptionist ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                               services.aiReceptionist ? 'translate-x-5' : 'translate-x-0.5'
-                    }`} />
-                  </button>
-                </div>
+                   {/* Services Dropdown — minimal list */}
+                   <div className="absolute right-0 top-full mt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                     <div className={`rounded-lg shadow-lg border py-2 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
+                       <div className="px-3 py-1.5 mb-1">
+                         <span className={`text-xs font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Services</span>
+                       </div>
 
-                {/* Phone System */}
-                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-[#1e1e24] bg-[#131316]' : 'border-gray-200'}`}>
-                  <div className="flex items-center gap-3">
-                             <Phone className="w-4 h-4 text-green-600" />
-                    <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Phone System</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Incoming and outgoing calls</div>
-                      {services.phoneSystem && (
-                        <div className="flex items-center gap-2 mt-1">
-                                   <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('phoneSystem'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('phoneSystem')}
-                             className={`relative w-10 h-5 rounded-full transition-colors ${
-                      services.phoneSystem ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                               services.phoneSystem ? 'translate-x-5' : 'translate-x-0.5'
-                    }`} />
-                  </button>
-                </div>
+                       {([
+                         { key: 'aiReceptionist' as const, label: 'AI Receptionist', icon: <Users className="w-4 h-4" />, configured: true },
+                         { key: 'phoneSystem' as const, label: 'Phone System', icon: <Phone className="w-4 h-4" />, configured: true },
+                         { key: 'sms' as const, label: 'SMS', icon: <MessageSquare className="w-4 h-4" />, configured: true },
+                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, configured: false },
+                         { key: 'email' as const, label: 'Email', icon: <Mail className="w-4 h-4" />, configured: true },
+                         { key: 'calendar' as const, label: 'Calendar', icon: <Calendar className="w-4 h-4" />, configured: true },
+                         { key: 'analytics' as const, label: 'Analytics', icon: <BarChart3 className="w-4 h-4" />, configured: true },
+                         { key: 'websiteBubble' as const, label: 'Website Widget', icon: <Globe className="w-4 h-4" />, configured: false },
+                       ] as const).map((svc) => (
+                         <div
+                           key={svc.key}
+                           className={`flex items-center justify-between px-3 py-2 ${isDarkMode ? 'hover:bg-[#1a1a1f]' : 'hover:bg-gray-50'}`}
+                         >
+                           <div className="flex items-center gap-2.5">
+                             <span className={isDarkMode ? 'text-gray-300' : 'text-gray-700'}>{svc.icon}</span>
+                             <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>{svc.label}</span>
+                           </div>
 
-                {/* SMS */}
-                         <div className={`flex items-center justify-between p-3 border rounded-xl ${isDarkMode ? 'border-[#1e1e24] bg-[#131316]' : 'border-gray-200'}`}>
-                  <div className="flex items-center gap-3">
-                             <MessageSquare className="w-4 h-4 text-purple-600" />
-                    <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>SMS</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Text messaging service</div>
-                      {services.sms && (
-                        <div className="flex items-center gap-2 mt-1">
-                                   <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{getStatusText(getServiceStatus('sms'))}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleService('sms')}
-                             className={`relative w-10 h-5 rounded-full transition-colors ${
-                      services.sms ? 'bg-green-600' : 'bg-gray-300'
-                    }`}
-                  >
-                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                               services.sms ? 'translate-x-5' : 'translate-x-0.5'
-                    }`} />
-                  </button>
-                </div>
-                        </div>
-                </div>
-              </div>
-            </div>
+                           {svc.configured ? (
+                             <button
+                               onClick={() => toggleService(svc.key)}
+                               className={`relative w-8 h-[18px] rounded-full transition-colors flex-shrink-0 ${
+                                 services[svc.key] ? 'bg-green-500' : 'bg-gray-300'
+                               }`}
+                             >
+                               <div className={`absolute top-[2px] w-[14px] h-[14px] bg-white rounded-full transition-transform shadow-sm ${
+                                 services[svc.key] ? 'translate-x-[15px]' : 'translate-x-[2px]'
+                               }`} />
+                             </button>
+                           ) : (
+                             <Link
+                               to="/dashboard/settings/services"
+                               className="text-xs font-medium text-blue-600 hover:text-blue-700"
+                             >
+                               Configure
+                             </Link>
+                           )}
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 </div>
 
                  {/* Add Team Member Dropdown */}
                  <div className="relative group">

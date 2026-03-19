@@ -54,10 +54,12 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Top Tabs — category-level navigation */}
-      <div className="bg-white border-b border-gray-200 flex-shrink-0">
-        <div className="px-6">
-          <nav className="flex gap-6 -mb-px">
+      {/* Page Header */}
+      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-5 pb-0">
+        <h1 className="text-xl font-semibold text-gray-900 mb-4">Settings</h1>
+
+        {/* Top Tabs — category-level navigation */}
+        <nav className="flex gap-6 -mb-px">
             {categories.map((cat) => {
               const isActive = cat.id === activeCategory.id;
               // Default route is first sidebar item
@@ -81,7 +83,6 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
               );
             })}
           </nav>
-        </div>
       </div>
 
       {/* Body — sidebar + content */}
