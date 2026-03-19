@@ -1137,7 +1137,7 @@ input:checked+.switch-left+.switch-right::before {
 .sterling-kinetic-root {
   position: fixed;
   inset: 0;
-  z-index: 115;
+  z-index: 9990;
   pointer-events: none;
 }
 .sterling-kinetic-root .sterling-nav-overlay[data-nav="open"] {
@@ -1153,7 +1153,7 @@ input:checked+.switch-left+.switch-right::before {
 .sterling-nav-overlay {
   position: fixed;
   inset: 0;
-  z-index: 115;
+  z-index: 9990;
 }
 
 .sterling-overlay {
