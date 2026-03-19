@@ -7,6 +7,7 @@ import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
+import { CheckCircle2, Circle, Brain } from 'lucide-react';
 
 interface Document {
   id: string;
@@ -52,7 +53,13 @@ const KnowledgeBasePage: React.FC = () => {
   const [editingDocumentContent, setEditingDocumentContent] = useState('');
   const [showDocumentEditor, setShowDocumentEditor] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
+  // KB Completeness state
+  const [kbCompleteness, setKbCompleteness] = useState<{
+    score: number;
+    items: Array<{ label: string; hint: string; done: boolean }>;
+  }>({ score: 0, items: [] });
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -107,8 +114,60 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
+  // Fetch KB completeness data from Supabase
+  const fetchCompleteness = async () => {
+    if (!user?.id) return;
+    try {
+      // Fetch business profile
+      const { data: profile } = await supabase
+        .from('business_profiles')
+        .select('business_name, website_url')
+        .eq('user_id', user.id)
+        .single();
+
+      // Fetch KB docs to check categories
+      const { data: kbDocs } = await supabase
+        .from('knowledge_base')
+        .select('title, content, content_type, tags, source')
+        .eq('user_id', user.id);
+
+      const docs = kbDocs || [];
+      const allText = docs.map(d => `${d.title || ''} ${(d.tags || []).join(' ')}`).join(' ').toLowerCase();
+
+      const hasBusinessName = !!profile?.business_name?.trim();
+      const hasWebsite = !!profile?.website_url?.trim();
+      const hasServices = allText.includes('service') || allText.includes('pricing') || allText.includes('price') || docs.some(d => (d.tags || []).some((t: string) => t.toLowerCase().includes('service')));
+      const hasFaqs = allText.includes('faq') || allText.includes('question') || docs.some(d => (d.tags || []).some((t: string) => t.toLowerCase().includes('faq')));
+      const hasPolicies = allText.includes('polic') || allText.includes('cancellation') || allText.includes('reschedule') || allText.includes('deposit') || allText.includes('refund');
+      const hasFiles = docs.some(d => d.content_type === 'file');
+
+      let score = 0;
+      if (hasBusinessName) score += 10;
+      if (hasWebsite) score += 20;
+      if (hasServices) score += 20;
+      if (hasFaqs) score += 20;
+      if (hasPolicies) score += 15;
+      if (hasFiles) score += 15;
+
+      setKbCompleteness({
+        score,
+        items: [
+          { label: 'Business name', hint: '', done: hasBusinessName },
+          { label: 'Website URL', hint: 'AI auto-learns from your site', done: hasWebsite },
+          { label: 'Services', hint: 'so AI can quote prices', done: hasServices },
+          { label: 'FAQs', hint: 'instant answers to common questions', done: hasFaqs },
+          { label: 'Policies', hint: 'cancellation, reschedule, deposit', done: hasPolicies },
+          { label: 'Documents uploaded', hint: 'menu, brochure, etc.', done: hasFiles },
+        ],
+      });
+    } catch (error) {
+      console.error('Error fetching KB completeness:', error);
+    }
+  };
+
   useEffect(() => {
     fetchDocuments();
+    fetchCompleteness();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
@@ -540,6 +599,64 @@ const KnowledgeBasePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* KB Completeness Banner */}
+      {kbCompleteness.score < 100 && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Brain className="w-5 h-5 text-blue-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-sm font-semibold text-gray-900">
+                  Knowledge Base Completeness
+                </h3>
+                <span className="text-sm font-bold text-blue-600">{kbCompleteness.score}%</span>
+              </div>
+
+              {/* Progress bar */}
+              <div className="w-full h-2 bg-gray-100 rounded-full mb-3 overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${kbCompleteness.score}%` }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                />
+              </div>
+
+              <p className="text-xs text-gray-500 mb-3">
+                Your AI agent works better with more info:
+              </p>
+
+              {/* Checklist */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {kbCompleteness.items.map((item) => (
+                  <div key={item.label} className="flex items-center gap-2">
+                    {item.done ? (
+                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    ) : (
+                      <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                    )}
+                    <span className={`text-xs ${item.done ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>
+                      {item.label}
+                    </span>
+                    {item.hint && !item.done && (
+                      <span className="text-xs text-gray-400">
+                        — {item.hint}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Knowledge Base Table */}
       <div className="mt-2">
         <div className="bg-white rounded-lg shadow-sm">
