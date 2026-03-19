@@ -11,14 +11,12 @@ import {
   Menu,
   X,
   MessageSquare,
-  UserPlus,
   HelpCircle,
   ChevronDown,
   Bell,
+  UserPlus,
   Calendar,
   Phone,
-  PhoneIncoming,
-  PhoneMissed,
   FileText,
   Ticket,
   Crown,
@@ -27,12 +25,7 @@ import {
   Globe,
   Plug,
   Zap,
-  RotateCw,
-  Shield,
-  History,
-  CalendarCheck,
   MessagesSquare,
-  UserCheck
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -46,8 +39,6 @@ const DashboardLayout: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [callsDropdownOpen, setCallsDropdownOpen] = useState(false);
-  const [messagingDropdownOpen, setMessagingDropdownOpen] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
   
   // Get current user from auth context
@@ -132,23 +123,19 @@ const DashboardLayout: React.FC = () => {
     // Define page name mappings for better display
     const pageNames: Record<string, string> = {
       '/dashboard': 'Overview',
-      '/dashboard/agents': 'Agents',
-      '/dashboard/phone': 'Phone Numbers',
-      '/dashboard/phone-numbers': 'Phone Numbers',
-      '/dashboard/website-bubble': 'Website Bubble',
+      '/dashboard/leads': 'Leads',
+      '/dashboard/calls': 'Calls',
+      '/dashboard/messages': 'Messages',
+      '/dashboard/reminders': 'Reminders',
+      '/dashboard/agents': 'AI Agents',
       '/dashboard/knowledge-base': 'Knowledge Base',
-      '/dashboard/knowledge': 'Knowledge Base',
+      '/dashboard/phone': 'Phone Numbers',
+      '/dashboard/chat-widget': 'Chat Widget',
+      '/dashboard/integrations': 'Integrations',
       '/dashboard/analytics': 'Analytics',
       '/dashboard/settings': 'Settings',
       '/dashboard/settings/members': 'Team Members',
-      '/dashboard/settings/packages': 'Packages',
-      '/dashboard/settings/billing': 'Billing',
       '/dashboard/settings/plan-billing': 'Plan & Billing',
-      '/dashboard/reminders': 'Reminders',
-      '/dashboard/integrations': 'Integrations',
-      '/dashboard/assistant': 'AI Receptionist',
-      '/dashboard/missed-calls': 'Missed Calls',
-      '/dashboard/instant-lead-reply': 'Instant Lead Reply',
     };
     
     // Return mapped name or convert path to title case
@@ -260,37 +247,32 @@ const DashboardLayout: React.FC = () => {
     }
   }, []);
 
-  const navItemsGroup1 = [
+  // MAIN
+  const navItemsMain = [
     { to: '/dashboard', label: 'Overview', icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/leads', label: 'Leads', icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
-  const navItemsGroup2 = [
-    { to: '/dashboard/agents', label: 'Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
+  // COMMUNICATIONS
+  const navItemsCommunications = [
+    { to: '/dashboard/calls', label: 'Calls', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/messages', label: 'Messages', icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
+  ];
+
+  // SETUP
+  const navItemsSetup = [
+    { to: '/dashboard/agents', label: 'AI Agents', icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/knowledge-base', label: 'Knowledge Base', icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: 'Phone Numbers', icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/chat-widget', label: 'Chat Widget', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/integrations', label: 'Integrations', icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
-  // Dropdown items
-  const callsItems = [
-    { to: '/dashboard/call-history', label: 'Call History', icon: <History className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/speed-to-lead', label: 'Speed to Lead', icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/assistant', label: 'AI Receptionist', icon: <PhoneIncoming className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/missed-calls', label: 'Missed Calls', icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/agent-tests', label: 'Agent Tests', icon: <Shield className="w-3.5 h-3.5 scale-[0.95]" /> },
+  // INSIGHTS
+  const navItemsInsights = [
+    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
-
-  const messagingItems = [
-    { to: '/dashboard/chat-history', label: 'Chat History', icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/sms-booking', label: 'SMS Booking', icon: <CalendarCheck className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/reminders', label: 'Reminders', icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/website-bubble', label: 'Website Bubble', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/lead-reactivation', label: 'Lead Reactivation', icon: <UserCheck className="w-3.5 h-3.5 scale-[0.95]" /> },
-  ];
-
-  const navItemsBottom: Array<{ to: string; label: string; icon: React.ReactNode }> = [];
 
   const navItemsFooter = [
     { to: '/dashboard/settings', label: 'Settings', icon: <Settings className="w-5 h-5 scale-[0.95]" /> },
@@ -375,126 +357,47 @@ const DashboardLayout: React.FC = () => {
             {/* Navigation */}
             <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
               <div className="flex-1 px-2">
-                {/* Group 1 */}
-                    <div className="space-y-1 mb-4">
-                      {navItemsGroup1.map((item) => {
-                        const isActive = location.pathname === item.to;
-                        return renderNavItem(item, isActive);
-                      })}
-                    </div>
-
-                {/* Group 2 */}
+                {/* Main */}
                 <div className="space-y-1 mb-4">
-                  {navItemsGroup2.map((item) => {
+                  {navItemsMain.map((item) => {
                     const isActive = location.pathname === item.to;
                     return renderNavItem(item, isActive);
                   })}
                 </div>
 
-                {/* Calls Dropdown */}
-                <div className="space-y-1 mb-4">
-                  <button
-                    onClick={() => setCallsDropdownOpen(!callsDropdownOpen)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isDarkMode 
-                        ? 'text-white hover:bg-[#1a1a1f]' 
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                    }`}
-                  >
-                    <span>Calls</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ease-in-out ${callsDropdownOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                  {callsDropdownOpen && (
-                      <motion.div 
-                        className="ml-4 space-y-1 overflow-hidden"
-                        initial={{ 
-                          height: 0, 
-                          opacity: 0,
-                          y: -10
-                        }}
-                        animate={{ 
-                          height: "auto", 
-                          opacity: 1,
-                          y: 0
-                        }}
-                        exit={{ 
-                          height: 0, 
-                          opacity: 0,
-                          y: -10
-                        }}
-                        transition={{ 
-                          duration: 0.3,
-                          ease: [0.4, 0.0, 0.2, 1],
-                          opacity: { duration: 0.2 },
-                          y: { duration: 0.3 }
-                        }}
-                      >
-                      {callsItems.map((item) => {
-                  const isActive = location.pathname === item.to;
-                        return renderNavItem(item, isActive);
-                      })}
-                      </motion.div>
-                  )}
-                  </AnimatePresence>
+                {/* Communications */}
+                <div className="mb-4">
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Communications</p>
+                  <div className="space-y-1">
+                    {navItemsCommunications.map((item) => {
+                      const isActive = location.pathname === item.to;
+                      return renderNavItem(item, isActive);
+                    })}
+                  </div>
                 </div>
 
-                {/* Messaging Dropdown */}
-                <div className="space-y-1 mb-4">
-                  <button
-                    onClick={() => setMessagingDropdownOpen(!messagingDropdownOpen)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isDarkMode 
-                        ? 'text-white hover:bg-[#1a1a1f]' 
-                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                         }`}
-                       >
-                    <span>Chats</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ease-in-out ${messagingDropdownOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                  {messagingDropdownOpen && (
-                      <motion.div 
-                        className="ml-4 space-y-1 overflow-hidden"
-                        initial={{ 
-                          height: 0, 
-                          opacity: 0,
-                          y: -10
-                        }}
-                        animate={{ 
-                          height: "auto", 
-                          opacity: 1,
-                          y: 0
-                        }}
-                        exit={{ 
-                          height: 0, 
-                          opacity: 0,
-                          y: -10
-                        }}
-                        transition={{ 
-                          duration: 0.3,
-                          ease: [0.4, 0.0, 0.2, 1],
-                          opacity: { duration: 0.2 },
-                          y: { duration: 0.3 }
-                        }}
-                      >
-                      {messagingItems.map((item) => {
-                        const isActive = location.pathname === item.to;
-                        return renderNavItem(item, isActive);
-                      })}
-                      </motion.div>
-                  )}
-                  </AnimatePresence>
-                    </div>
+                {/* Setup */}
+                <div className="mb-4">
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Setup</p>
+                  <div className="space-y-1">
+                    {navItemsSetup.map((item) => {
+                      const isActive = location.pathname === item.to;
+                      return renderNavItem(item, isActive);
+                    })}
+                  </div>
+                </div>
 
-              </div>
+                {/* Insights */}
+                <div className="mb-4">
+                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Insights</p>
+                  <div className="space-y-1">
+                    {navItemsInsights.map((item) => {
+                      const isActive = location.pathname === item.to;
+                      return renderNavItem(item, isActive);
+                    })}
+                  </div>
+                </div>
 
-              {/* Bottom Group - Always at bottom */}
-              <div className="space-y-1 mt-auto px-2">
-                {navItemsBottom.map((item) => {
-                  const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
-                  return renderNavItem(item, isActive);
-                })}
               </div>
 
               {/* Footer Group - Always at very bottom */}
