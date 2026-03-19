@@ -86,7 +86,6 @@ export default function AuthSwitch({
   const [error, setError] = useState("");
   const [showOtp, setShowOtp] = useState(false);
   const [signedUpEmail, setSignedUpEmail] = useState("");
-  const [showPasswordErrors, setShowPasswordErrors] = useState(false);
 
   const { login, signup, signInWithGoogle, signInWithMicrosoft } = useAuth();
   const navigate = useNavigate();
@@ -100,7 +99,6 @@ export default function AuthSwitch({
   const switchMode = (newMode: "login" | "signup") => {
     if (newMode === mode) return;
     setError("");
-    setShowPasswordErrors(false);
     loginForm.reset();
     signupForm.reset();
     setMode(newMode);
@@ -182,7 +180,7 @@ export default function AuthSwitch({
             type="button"
             onClick={s.handler}
             disabled={isLoading}
-            className="w-10 h-10 rounded-full border border-indigo-200 flex items-center justify-center hover:border-blue-400 hover:shadow-md transition-all duration-200 disabled:opacity-50 bg-white"
+            className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center hover:border-blue-400 hover:shadow-md transition-all duration-200 disabled:opacity-50 bg-white"
           >
             {s.icon}
           </button>
@@ -338,7 +336,7 @@ export default function AuthSwitch({
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
                   Sign in
                 </h2>
-                <form onSubmit={(e) => { setShowPasswordErrors(true); loginForm.handleSubmit(onLogin)(e); }} className="space-y-4">
+                <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
                   <PillInput
                     {...loginForm.register("email")}
                     type="email"
@@ -349,7 +347,6 @@ export default function AuthSwitch({
                     {...loginForm.register("password")}
                     placeholder="Password"
                     id="login-password"
-                    showErrors={showPasswordErrors}
                   />
                   {loginForm.formState.errors.password && (
                     <p className="ml-4 text-xs text-red-500 -mt-2">
@@ -377,7 +374,7 @@ export default function AuthSwitch({
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
                   Sign up
                 </h2>
-                <form onSubmit={(e) => { setShowPasswordErrors(true); signupForm.handleSubmit(onSignup)(e); }} className="space-y-4">
+                <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
                   <PillInput
                     {...signupForm.register("name")}
                     placeholder="Username"
@@ -393,7 +390,6 @@ export default function AuthSwitch({
                     {...signupForm.register("password")}
                     placeholder="Password"
                     id="signup-password"
-                    showErrors={showPasswordErrors}
                   />
                   {signupForm.formState.errors.password && (
                     <p className="ml-4 text-xs text-red-500 -mt-2">
