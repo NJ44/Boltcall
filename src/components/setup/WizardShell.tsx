@@ -127,62 +127,57 @@ const WizardShell: React.FC = () => {
       
       // Knowledge Base step (step 2 / final step): create agent, launch, and redirect to dashboard
       if (currentStep === 2) {
-        setIsLaunching(true);
-
-        const kbScore = calculateKBCompleteness(storeBusinessProfile, storeKnowledgeBase).score;
-        if (kbScore < 40) {
-          showToast({
-            title: 'Limited Knowledge Base',
-            message: 'Your AI agent may not answer questions well without services, FAQs, or policies. You can add them later in the dashboard.',
-            variant: 'warning',
-            duration: 5000,
-          });
-        }
-
-        // Create agent and knowledge base
-        try {
-          await createAgentAndKnowledgeBase({
-            businessName: storeBusinessProfile.businessName || '',
-            websiteUrl: storeBusinessProfile.websiteUrl || '',
-            mainCategory: storeBusinessProfile.mainCategory || '',
-            country: storeBusinessProfile.country || '',
-            serviceAreas: storeBusinessProfile.serviceAreas || [],
-            openingHours: storeBusinessProfile.openingHours || {},
-            languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
-            clientId: user?.id || undefined,
-            businessProfileId: account.businessProfileId || undefined,
-            locationId: account.locationId || undefined,
-            businessPhone: storeBusinessProfile.businessPhone,
-            city: storeBusinessProfile.city,
-            state: storeBusinessProfile.state,
-            services: storeKnowledgeBase.services,
-            faqs: storeKnowledgeBase.faqs,
-            policies: storeKnowledgeBase.policies,
-          });
-        } catch (e) {
-          console.error('Agent creation failed', e);
-        }
-
-        // Call setup-launch to finalize
-        try {
-          await fetch(`${FUNCTIONS_BASE}/setup-launch`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              workspaceId: account.workspaceId,
-              isEnabled: true,
-              userId: user?.id,
-            }),
-          });
-        } catch (e) {
-          console.error('Setup launch failed', e);
-        }
-
-        // Mark setup as completed and redirect
+        // Navigate to branded loading screen IMMEDIATELY (no pencil loader)
         markStepCompleted(currentStep);
         complete();
         updateReview({ isLaunched: true });
         navigate('/setup/loading');
+
+        // Fire async work in background — loading screen runs its own timer
+        const asyncWork = async () => {
+          const kbScore = calculateKBCompleteness(storeBusinessProfile, storeKnowledgeBase).score;
+          if (kbScore < 40) {
+            console.warn('KB completeness below 40% — agent may not answer well');
+          }
+
+          try {
+            await createAgentAndKnowledgeBase({
+              businessName: storeBusinessProfile.businessName || '',
+              websiteUrl: storeBusinessProfile.websiteUrl || '',
+              mainCategory: storeBusinessProfile.mainCategory || '',
+              country: storeBusinessProfile.country || '',
+              serviceAreas: storeBusinessProfile.serviceAreas || [],
+              openingHours: storeBusinessProfile.openingHours || {},
+              languages: storeBusinessProfile.languages ? [storeBusinessProfile.languages] : [],
+              clientId: user?.id || undefined,
+              businessProfileId: account.businessProfileId || undefined,
+              locationId: account.locationId || undefined,
+              businessPhone: storeBusinessProfile.businessPhone,
+              city: storeBusinessProfile.city,
+              state: storeBusinessProfile.state,
+              services: storeKnowledgeBase.services,
+              faqs: storeKnowledgeBase.faqs,
+              policies: storeKnowledgeBase.policies,
+            });
+          } catch (e) {
+            console.error('Agent creation failed', e);
+          }
+
+          try {
+            await fetch(`${FUNCTIONS_BASE}/setup-launch`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                workspaceId: account.workspaceId,
+                isEnabled: true,
+                userId: user?.id,
+              }),
+            });
+          } catch (e) {
+            console.error('Setup launch failed', e);
+          }
+        };
+        asyncWork();
         return;
       }
 

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, ChevronLeft, ChevronRight, CheckCircle2, Circle, PartyPopper } from "lucide-react";
+import { X, Check, ChevronLeft, ChevronRight, CheckCircle2, Circle, PartyPopper, Zap } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
 import { Button } from "./Button";
@@ -120,7 +120,7 @@ const CoachmarkOverlay = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
 
-        className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+        className="fixed inset-0 z-[9998] bg-black/50 flex items-center justify-center"
         role="dialog"
         aria-modal="true"
         aria-labelledby="coachmark-title"
@@ -161,7 +161,7 @@ const CoachmarkOverlay = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
 
-      className="fixed inset-0 z-50 pointer-events-none"
+      className="fixed inset-0 z-[9998] pointer-events-none"
       role="dialog"
       aria-modal="true"
       aria-labelledby="coachmark-title"
@@ -171,13 +171,13 @@ const CoachmarkOverlay = ({
     >
 
       <div
-        className="absolute border-2 border-primary rounded-lg shadow-lg"
+        className="absolute border-2 border-blue-500 rounded-lg shadow-lg z-[9999]"
         style={{
           top: top - spotlightPadding,
           left: left - spotlightPadding,
           width: width + spotlightPadding * 2,
           height: height + spotlightPadding * 2,
-          boxShadow: `0 0 0 2px hsl(var(--primary)), 0 0 20px rgba(0,0,0,0.3)`
+          boxShadow: `0 0 0 2px #3b82f6, 0 0 20px rgba(0,0,0,0.3)`
         }}
       />
 
@@ -193,7 +193,7 @@ const CoachmarkOverlay = ({
           opacity: { duration: 0.15 }
         }}
 
-        className="absolute bg-card border rounded-xl p-4 shadow-xl max-w-sm pointer-events-auto"
+        className="absolute bg-card border rounded-xl p-4 shadow-xl max-w-sm pointer-events-auto z-[9999]"
         style={(() => {
           const cardWidth = 384;
           const cardHeight = 200;
@@ -644,13 +644,17 @@ export function InteractiveOnboardingChecklist({
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[61]"
             >
-              <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md mx-4 text-center">
+              <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full mx-4 text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <PartyPopper className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-black mb-3">
                   You're All Set!
                 </h3>
+                <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                  <Zap className="w-4 h-4" />
+                  You earned 50 free credits!
+                </div>
                 <p className="text-lg text-black/70 mb-8 leading-relaxed">
                   Your AI receptionist is ready to handle calls, book appointments, and delight your customers.
                 </p>
