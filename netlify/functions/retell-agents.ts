@@ -48,6 +48,9 @@ function getDefaultAgentConfig(language?: string) {
   return {
     enable_backchannel: true,
     backchannel_words: isHebrew ? ['אהה', 'אה-אה'] : ['yeah', 'uh-huh'],
+    backchannel_frequency: 0.8,
+    ambient_sound: 'coffee-shop',
+    response_eagerness: 1,
     interruption_sensitivity: 0.71,
     end_call_after_silence_ms: 175000,
     max_call_duration_ms: 481000,
@@ -264,7 +267,7 @@ export const handler: Handler = async (event) => {
           });
 
           const llm = await client.llm.create({
-            model: 'gpt-4o-mini',
+            model: 'gpt-4.1-mini',
             general_prompt: body.general_prompt || buildAgentPrompt(body.agent_name || 'this business', body.country),
             ...(body.knowledge_base_ids ? { knowledge_base_ids: body.knowledge_base_ids } : {}),
             general_tools: generalTools,
@@ -338,7 +341,7 @@ export const handler: Handler = async (event) => {
 
           // Auto-create a Retell LLM linked to the knowledge base
           const llmConfig: any = {
-            model: 'gpt-4o-mini',
+            model: 'gpt-4.1-mini',
             general_prompt: generalPrompt,
             knowledge_base_ids: [kb.knowledge_base_id],
             general_tools: generalTools,
