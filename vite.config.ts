@@ -152,8 +152,9 @@ export default defineConfig({
         manualChunks: (id) => {
           // Split heavy libraries into separate chunks
           if (id.includes('node_modules')) {
-            if (id.includes('framer-motion') || id.includes('motion')) {
-              return 'framer-motion';
+            // Keep react + framer-motion together in vendor (framer needs React.createContext)
+            if (id.includes('framer-motion') || id.includes('react') || id.includes('react-dom')) {
+              return 'vendor';
             }
             if (id.includes('gsap')) {
               return 'gsap';
