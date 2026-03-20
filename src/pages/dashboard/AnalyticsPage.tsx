@@ -221,9 +221,9 @@ const AnalyticsPage: React.FC = () => {
       )}
 
       {/* KPI Cards - Primary metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <KpiTile
-          title="AI Calls (24h)"
+          title="Total Calls (24h)"
           value={retell?.calls_today ?? 0}
           delta={
             retell && retell.calls_7d > 0
@@ -251,6 +251,20 @@ const AnalyticsPage: React.FC = () => {
           value={twilio?.sms_sent_today ?? 0}
           delta={0}
           sparkline={smsSparkline.length >= 2 ? smsSparkline : emptySparkline}
+          format="number"
+        />
+        <KpiTile
+          title="Total Leads"
+          value={sb?.total_leads ?? 0}
+          delta={0}
+          sparkline={emptySparkline}
+          format="number"
+        />
+        <KpiTile
+          title="Missed Calls (24h)"
+          value={retell?.missed_calls_today ?? 0}
+          delta={0}
+          sparkline={emptySparkline}
           format="number"
         />
       </div>

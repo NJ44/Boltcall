@@ -14,6 +14,7 @@ export interface DashboardStats {
     avg_duration_seconds: number;
     total_talk_minutes_today: number;
     successful_calls_today: number;
+    missed_calls_today: number;
     success_rate: number;
     active_agents: number;
   } | null;
@@ -28,13 +29,16 @@ export interface DashboardStats {
     callbacks_pending: number;
     chats_active: number;
     chats_total: number;
+    total_leads: number;
     total_workspaces: number;
     latest_metrics: any;
   };
   summary: {
     ai_calls_today: number;
     ai_calls_7d: number;
+    missed_calls_today: number;
     sms_sent_today: number;
+    total_leads: number;
     active_chats: number;
     pending_callbacks: number;
     active_agents: number;

@@ -269,6 +269,7 @@ const DashboardLayout: React.FC = () => {
   const navItemsMain = [
     { to: '/dashboard', label: t('nav.overview'), icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/leads', label: t('nav.leads'), icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/analytics', label: t('nav.analytics'), icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // COMMUNICATIONS
@@ -292,11 +293,6 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/knowledge-base', label: t('nav.knowledgeBase'), icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: t('nav.phoneNumbers'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/integrations', label: t('nav.integrations'), icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('common.soon') as string },
-  ];
-
-  // INSIGHTS
-  const navItemsInsights = [
-    { to: '/dashboard/analytics', label: t('nav.analytics'), icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const navItemsFooter = [
@@ -432,16 +428,6 @@ const DashboardLayout: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Insights */}
-                <div className="mb-4">
-                  <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.insights')}</p>
-                  <div className="space-y-1">
-                    {navItemsInsights.map((item) => {
-                      const isActive = location.pathname === item.to;
-                      return renderNavItem(item, isActive);
-                    })}
-                  </div>
-                </div>
 
               </div>
 
