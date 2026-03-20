@@ -386,6 +386,46 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
       if (!agent) return { result: 'No agent found. Please complete setup first.' };
       const phone = args.phone_number.trim();
       await supabase.from('agents').update({ transfer_number: phone }).eq('id', agent.id);
+
+      // Also update the Retell LLM's transfer_call tool with the new number
+      if (agent.retell_agent_id) {
+        try {
+          const retellAgent = await retell.agent.retrieve(agent.retell_agent_id);
+          const llmId = (retellAgent as any).response_engine?.llm_id;
+          if (llmId) {
+            const llm = await retell.llm.retrieve(llmId);
+            const existingTools: any[] = (llm as any).general_tools || [];
+
+            // Find and update the transfer_call tool, or add it if missing
+            const transferToolIndex = existingTools.findIndex((t: any) => t.type === 'transfer_call');
+            const transferTool = {
+              type: 'transfer_call',
+              name: 'transfer_call',
+              description: 'Transfer the call to a human agent or the business owner. Use when the caller explicitly asks to speak to a person, or for urgent matters you cannot handle.',
+              transfer_destination: {
+                type: 'predefined',
+                number: phone,
+              },
+              transfer_option: {
+                type: 'warm_transfer',
+                show_transferee_as_caller: true,
+              },
+            };
+
+            if (transferToolIndex >= 0) {
+              existingTools[transferToolIndex] = transferTool;
+            } else {
+              existingTools.unshift(transferTool);
+            }
+
+            await retell.llm.update(llmId, { general_tools: existingTools } as any);
+          }
+        } catch (retellErr) {
+          console.error('Failed to update Retell transfer tool (non-blocking):', retellErr);
+          // Non-fatal — the Supabase update already succeeded
+        }
+      }
+
       return { result: `Transfer number updated to ${phone}. Calls will now be transferred to this number when requested.`, actionTaken: `Updated transfer number to ${phone}` };
     }
 

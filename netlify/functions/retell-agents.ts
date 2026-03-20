@@ -77,6 +77,105 @@ function buildResponseEngine(body: any) {
   return null;
 }
 
+// Build general_tools array for LLM creation/update
+// Includes: transfer_call, end_call, check_availability, book_appointment, send_sms
+function buildGeneralTools(options: {
+  transferNumber?: string;
+  baseUrl: string;
+}): any[] {
+  const { transferNumber, baseUrl } = options;
+  const toolsWebhookUrl = `${baseUrl}/.netlify/functions/agent-tools`;
+
+  const tools: any[] = [
+    // Built-in: end call
+    {
+      type: 'end_call',
+      name: 'end_call',
+      description: 'End the call politely. Use when the conversation is complete and the caller has no more questions.',
+    },
+    // Custom: check availability
+    {
+      type: 'custom',
+      name: 'check_availability',
+      description: 'Check available appointment slots for a specific date. Use when the caller wants to book an appointment and you need to find available times.',
+      speak_after_execution: true,
+      speak_during_execution: true,
+      execution_message_description: 'Let me check what times are available for that date.',
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          date: { type: 'string', description: 'The date to check availability for, in YYYY-MM-DD format' },
+        },
+        required: ['date'],
+      },
+      timeout_ms: 15000,
+    },
+    // Custom: book appointment
+    {
+      type: 'custom',
+      name: 'book_appointment',
+      description: 'Book an appointment for the caller. Use after confirming the date, time, and service with the caller. Always confirm the details before booking.',
+      speak_after_execution: true,
+      speak_during_execution: true,
+      execution_message_description: 'One moment while I book that appointment for you.',
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          name: { type: 'string', description: 'Caller full name' },
+          email: { type: 'string', description: 'Caller email address' },
+          phone: { type: 'string', description: 'Caller phone number' },
+          date: { type: 'string', description: 'Appointment date in YYYY-MM-DD format' },
+          time: { type: 'string', description: 'Appointment time in HH:MM 24-hour format' },
+          service: { type: 'string', description: 'Type of service or reason for visit' },
+          notes: { type: 'string', description: 'Any additional notes or special requests' },
+        },
+        required: ['name', 'date', 'time'],
+      },
+      timeout_ms: 20000,
+    },
+    // Custom: send SMS
+    {
+      type: 'custom',
+      name: 'send_sms',
+      description: 'Send a text message to the caller. Use to send appointment confirmations, business address, or follow-up info. Always ask permission before sending.',
+      speak_after_execution: true,
+      speak_during_execution: true,
+      execution_message_description: 'Let me send you a text message with that information.',
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          phone_number: { type: 'string', description: 'Phone number to send SMS to in E.164 format' },
+          message: { type: 'string', description: 'The text message content' },
+        },
+        required: ['phone_number', 'message'],
+      },
+      timeout_ms: 10000,
+    },
+  ];
+
+  // Add transfer_call tool only if a transfer number is provided
+  if (transferNumber) {
+    tools.unshift({
+      type: 'transfer_call',
+      name: 'transfer_call',
+      description: 'Transfer the call to a human agent or the business owner. Use when the caller explicitly asks to speak to a person, or for urgent matters you cannot handle.',
+      transfer_destination: {
+        type: 'predefined',
+        number: transferNumber,
+      },
+      transfer_option: {
+        type: 'warm_transfer',
+        show_transferee_as_caller: true,
+      },
+    });
+  }
+
+  return tools;
+}
+
 export const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
@@ -138,12 +237,20 @@ export const handler: Handler = async (event) => {
       if (action === 'create_agent') {
         let responseEngine = buildResponseEngine(body);
 
+        const webhookBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+
         // If no response engine provided, create a Retell LLM first
         if (!responseEngine) {
+          const generalTools = buildGeneralTools({
+            transferNumber: body.transfer_number || '',
+            baseUrl: webhookBaseUrl,
+          });
+
           const llm = await client.llm.create({
             model: 'gpt-4o-mini',
             general_prompt: body.general_prompt || buildAgentPrompt(body.agent_name || 'this business', body.country),
             ...(body.knowledge_base_ids ? { knowledge_base_ids: body.knowledge_base_ids } : {}),
+            general_tools: generalTools,
           } as any);
           responseEngine = {
             type: 'retell-llm' as const,
@@ -151,7 +258,6 @@ export const handler: Handler = async (event) => {
           };
         }
 
-        const webhookBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
         const agent = await client.agent.create({
           agent_name: body.agent_name,
           voice_id: body.voice_id || '11labs-Adrian',
@@ -200,17 +306,25 @@ export const handler: Handler = async (event) => {
 
         // Step 3: Determine response engine
         let responseEngine;
+        const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
 
         if (body.llm_id) {
           responseEngine = { type: 'retell-llm' as const, llm_id: body.llm_id };
         } else if (body.llm_websocket_url) {
           responseEngine = { type: 'custom-llm' as const, llm_websocket_url: body.llm_websocket_url };
         } else {
+          // Build general_tools with transfer, availability, booking, and SMS
+          const generalTools = buildGeneralTools({
+            transferNumber: body.transfer_number || '',
+            baseUrl,
+          });
+
           // Auto-create a Retell LLM linked to the knowledge base
           const llmConfig: any = {
             model: 'gpt-4o-mini',
             general_prompt: generalPrompt,
             knowledge_base_ids: [kb.knowledge_base_id],
+            general_tools: generalTools,
           };
           if (beginMessage) {
             llmConfig.begin_message = beginMessage;
