@@ -151,10 +151,12 @@ export const handler: Handler = async (event) => {
           };
         }
 
+        const webhookBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
         const agent = await client.agent.create({
           agent_name: body.agent_name,
           voice_id: body.voice_id || '11labs-Adrian',
           response_engine: responseEngine,
+          webhook_url: `${webhookBaseUrl}/.netlify/functions/retell-webhook`,
           ...getDefaultAgentConfig(body.language),
         } as any);
 
@@ -218,11 +220,13 @@ export const handler: Handler = async (event) => {
         }
 
         // Step 4: Create agent with the response engine + default config
+        const webhookUrl = `${(process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org')}/.netlify/functions/retell-webhook`;
         const agent = await client.agent.create({
           agent_name: `${body.business_name} AI Receptionist`,
           voice_id: body.voice_id || '11labs-Adrian',
           language: body.language || 'en-US',
           response_engine: responseEngine,
+          webhook_url: webhookUrl,
           ...getDefaultAgentConfig(body.language),
         } as any);
 

@@ -21,12 +21,14 @@ interface PhoneNumber {
 }
 
 interface TwilioPhoneNumber {
-  phoneNumber: string;
-  friendlyName: string;
+  phone_number: string;
+  friendly_name: string;
   locality: string;
   region: string;
-  country: string;
-  price: string;
+  country?: string;
+  monthly_cost: string;
+  rate_center?: string;
+  capabilities?: Record<string, boolean>;
 }
 
 const PhoneNumbersPage: React.FC = () => {
@@ -113,58 +115,43 @@ const PhoneNumbersPage: React.FC = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const [searchCountry, setSearchCountry] = useState('US');
+  const [searchAreaCode, setSearchAreaCode] = useState('');
+  const [purchasingNumber, setPurchasingNumber] = useState<string | null>(null);
+
+  const searchTwilioNumbers = async (country: string, areaCode?: string) => {
+    setLoadingTwilioNumbers(true);
+    setTwilioNumbers([]);
+
+    try {
+      const params = new URLSearchParams({ action: 'available', country });
+      if (areaCode) params.set('area_code', areaCode);
+
+      const response = await fetch(`/.netlify/functions/twilio-numbers?${params.toString()}`);
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.details || err.error || 'Failed to search numbers');
+      }
+
+      const numbers: TwilioPhoneNumber[] = await response.json();
+      setTwilioNumbers(numbers);
+    } catch (err) {
+      console.error('Error searching Twilio numbers:', err);
+      showToast({
+        title: 'Search Failed',
+        message: err instanceof Error ? err.message : 'Could not search for phone numbers',
+        variant: 'error',
+        duration: 4000,
+      });
+    } finally {
+      setLoadingTwilioNumbers(false);
+    }
+  };
+
   const handleBuyNewNumber = async () => {
     setShowDropdown(false);
-    setLoadingTwilioNumbers(true);
     setShowTwilioModal(true);
-    
-    // Mock Twilio numbers - replace with actual Twilio API call
-    setTimeout(() => {
-      const mockTwilioNumbers: TwilioPhoneNumber[] = [
-        {
-          phoneNumber: '+1 (555) 123-4567',
-          friendlyName: 'US Local Number',
-          locality: 'New York',
-          region: 'NY',
-          country: 'US',
-          price: '$1.00/month'
-        },
-        {
-          phoneNumber: '+1 (555) 234-5678',
-          friendlyName: 'US Local Number',
-          locality: 'Los Angeles',
-          region: 'CA',
-          country: 'US',
-          price: '$1.00/month'
-        },
-        {
-          phoneNumber: '+1 (555) 345-6789',
-          friendlyName: 'US Local Number',
-          locality: 'Chicago',
-          region: 'IL',
-          country: 'US',
-          price: '$1.00/month'
-        },
-        {
-          phoneNumber: '+1 (555) 456-7890',
-          friendlyName: 'US Toll-Free',
-          locality: 'Toll-Free',
-          region: 'US',
-          country: 'US',
-          price: '$2.00/month'
-        },
-        {
-          phoneNumber: '+1 (555) 567-8901',
-          friendlyName: 'US Local Number',
-          locality: 'Miami',
-          region: 'FL',
-          country: 'US',
-          price: '$1.00/month'
-        }
-      ];
-      setTwilioNumbers(mockTwilioNumbers);
-      setLoadingTwilioNumbers(false);
-    }, 1500);
+    await searchTwilioNumbers(searchCountry, searchAreaCode || undefined);
   };
 
   const handleConnectSip = () => {
@@ -172,14 +159,97 @@ const PhoneNumbersPage: React.FC = () => {
     setShowSipModal(true);
   };
 
-  const handlePurchaseNumber = async (_number: TwilioPhoneNumber) => {
-    // TODO: implement purchasing the number via Twilio
-    setShowTwilioModal(false);
+  const handlePurchaseNumber = async (number: TwilioPhoneNumber) => {
+    if (!user?.id) return;
+    setPurchasingNumber(number.phone_number);
 
-    // Claim bonus token reward for connecting a phone number
-    const rewardResult = await claimReward('connect_phone_number');
-    if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
-      showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for connecting a phone number', variant: 'success', duration: 4000 });
+    try {
+      // Step 1: Purchase via Twilio
+      const response = await fetch('/.netlify/functions/twilio-numbers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'purchase',
+          phone_number: number.phone_number,
+          friendly_name: `Boltcall - ${number.locality || number.region || 'Number'}`,
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.details || err.error || 'Purchase failed');
+      }
+
+      const result = await response.json();
+
+      // Step 2: Save to Supabase phone_numbers table
+      const { error: dbError } = await supabase.from('phone_numbers').insert({
+        user_id: user.id,
+        phone_number: result.phone_number,
+        phone_type: 'twilio',
+        location: [number.locality, number.region].filter(Boolean).join(', ') || 'N/A',
+        status: 'active',
+        twilio_sid: result.sid,
+        created_at: new Date().toISOString(),
+      });
+
+      if (dbError) {
+        console.error('Failed to save phone number to DB:', dbError);
+      }
+
+      setShowTwilioModal(false);
+
+      // Refresh the phone numbers list
+      const { data: freshData } = await supabase
+        .from('phone_numbers')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (freshData) {
+        setPhoneNumbers(
+          freshData.map((phone: any) => ({
+            id: phone.id,
+            number: phone.phone_number || '',
+            location: phone.location || 'N/A',
+            status: phone.status || 'inactive',
+            type: phone.phone_type || 'main',
+            assignedTo: phone.assigned_agent_name || 'Not assigned',
+            assignedAgentId: phone.assigned_agent_id || null,
+            createdAt: phone.created_at
+              ? new Date(phone.created_at).toLocaleDateString()
+              : new Date().toLocaleDateString(),
+          }))
+        );
+      }
+
+      showToast({
+        title: 'Number Purchased!',
+        message: `${result.phone_number} is now yours`,
+        variant: 'success',
+        duration: 4000,
+      });
+
+      // Claim bonus token reward for connecting a phone number
+      const rewardResult = await claimReward('connect_phone_number');
+      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+        showToast({
+          title: 'Bonus Tokens!',
+          message: '+50 tokens earned for connecting a phone number',
+          variant: 'success',
+          duration: 4000,
+        });
+      }
+    } catch (err) {
+      console.error('Error purchasing number:', err);
+      showToast({
+        title: 'Purchase Failed',
+        message: err instanceof Error ? err.message : 'Could not purchase number',
+        variant: 'error',
+        duration: 5000,
+      });
+    } finally {
+      setPurchasingNumber(null);
     }
   };
 
@@ -405,22 +475,65 @@ const PhoneNumbersPage: React.FC = () => {
                   </button>
                 </div>
 
+                {/* Search Controls */}
+                <div className="flex gap-3 mb-4">
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Country</label>
+                    <select
+                      value={searchCountry}
+                      onChange={(e) => setSearchCountry(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    >
+                      <option value="US">United States</option>
+                      <option value="GB">United Kingdom</option>
+                      <option value="CA">Canada</option>
+                      <option value="AU">Australia</option>
+                      <option value="IL">Israel</option>
+                    </select>
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Area Code (optional)</label>
+                    <input
+                      type="text"
+                      value={searchAreaCode}
+                      onChange={(e) => setSearchAreaCode(e.target.value.replace(/\D/g, '').slice(0, 5))}
+                      placeholder="e.g. 212"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <button
+                      onClick={() => searchTwilioNumbers(searchCountry, searchAreaCode || undefined)}
+                      disabled={loadingTwilioNumbers}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+
                 {loadingTwilioNumbers ? (
                   <div className="py-6">
                     <PhoneNumbersSkeleton />
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <p className="text-gray-600 mb-4">
-                      Choose from available phone numbers. All numbers include unlimited inbound calls and SMS.
-                    </p>
-                    
+                    {twilioNumbers.length === 0 ? (
+                      <p className="text-gray-500 text-center py-6">
+                        No numbers found. Try a different country or area code.
+                      </p>
+                    ) : (
+                      <p className="text-gray-600 mb-4">
+                        {twilioNumbers.length} numbers available. Choose one to purchase.
+                      </p>
+                    )}
+
                     {twilioNumbers.map((number, index) => (
                       <motion.div
-                        key={index}
+                        key={number.phone_number}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        transition={{ duration: 0.3, delay: index * 0.05 }}
                         className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:bg-blue-50 transition-colors"
                       >
                         <div className="flex items-center justify-between">
@@ -429,19 +542,21 @@ const PhoneNumbersPage: React.FC = () => {
                               <Phone className="w-5 h-5 text-blue-600" />
                             </div>
                             <div>
-                              <div className="font-semibold text-gray-900">{number.phoneNumber}</div>
+                              <div className="font-semibold text-gray-900">{number.phone_number}</div>
                               <div className="text-sm text-gray-600">
-                                {number.locality}, {number.region} • {number.friendlyName}
+                                {[number.locality, number.region].filter(Boolean).join(', ') || 'N/A'}
+                                {number.friendly_name ? ` • ${number.friendly_name}` : ''}
                               </div>
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="font-semibold text-gray-900">{number.price}</div>
+                            <div className="font-semibold text-gray-900">{number.monthly_cost}/mo</div>
                             <button
                               onClick={() => handlePurchaseNumber(number)}
-                              className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                              disabled={purchasingNumber === number.phone_number}
+                              className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
                             >
-                              Purchase
+                              {purchasingNumber === number.phone_number ? 'Purchasing...' : 'Purchase'}
                             </button>
                           </div>
                         </div>
