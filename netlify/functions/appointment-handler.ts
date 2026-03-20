@@ -60,13 +60,24 @@ export const handler: Handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'No organizer email in payload' }) };
     }
 
-    // Find user by email in auth.users
-    const { data: authUsers } = await supabase.auth.admin.listUsers();
-    const matchedUser = authUsers?.users?.find(
-      (u) => u.email?.toLowerCase() === organizerEmail.toLowerCase()
-    );
-
-    let userId: string | null = matchedUser?.id || null;
+    // Find user by organizer email — query auth.users via service role
+    let userId: string | null = null;
+    try {
+      const { data: authUsers } = await supabase.auth.admin.listUsers({ perPage: 1000 });
+      const matched = authUsers?.users?.find(
+        (u) => u.email?.toLowerCase() === organizerEmail.toLowerCase()
+      );
+      userId = matched?.id || null;
+    } catch (e) {
+      console.error('[appointment-handler] admin.listUsers failed, trying locations table:', e);
+      // Fallback: check locations table for email match
+      const { data: locRows } = await supabase
+        .from('locations')
+        .select('user_id')
+        .ilike('email', organizerEmail)
+        .limit(1);
+      userId = locRows?.[0]?.user_id || null;
+    }
 
     // Fallback: check business_features where cal_api_key is stored (the user who connected Cal.com)
     if (!userId) {
