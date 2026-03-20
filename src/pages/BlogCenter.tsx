@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Best After Hours Answering Service for Local Businesses: AI vs Traditional',
+    slug: '/blog/best-after-hours-answering-service',
+    excerpt: 'Discover how the best after hours answering service can transform your local business—compare AI efficiency with traditional reliability today.',
+    date: 'March 20, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist|Local Business',
+    image: '/images/blog/best-after-hours-answering-service.png'
+  },
+  {
     title: 'AI Phone Answering for Dentists: Never Miss Another Patient Call',
     slug: '/blog/ai-phone-answering-dentists',
     excerpt: 'AI phone answering systems designed for dental practices ensure every patient call is answered promptly, reducing missed appointments and boosting rev',
