@@ -86,10 +86,10 @@ const HowItWorks: React.FC = () => {
                 key={phase.id}
                 index={index + 2}
                 incrementY={14}
-                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-full md:max-w-[440px] ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
+                className={`relative rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-full md:max-w-[440px] ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
                 style={{ top: '150px', bottom: 'auto', minHeight: '280px' }}
               >
-                <div className="p-4 md:p-7 h-full">
+                <div className="relative z-10 p-4 md:p-7 h-full">
                   {/* Full width content */}
                   <div className="w-full">
                     <div className="flex items-center justify-between mb-3">
@@ -104,12 +104,9 @@ const HowItWorks: React.FC = () => {
                     </div>
                     <p className="text-xs md:text-sm text-gray-600 leading-relaxed mb-5">{phase.description}</p>
                   </div>
-                  
-                  {/* Right side - Animation removed */}
-                  <div className="flex-shrink-0 w-48 h-48">
-                    {/* Animation removed */}
-                  </div>
                 </div>
+                {/* Blue gradient from bottom */}
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-blue-500/15 via-blue-400/5 to-transparent pointer-events-none" />
               </CardSticky>
             ))}
           </ContainerScroll>

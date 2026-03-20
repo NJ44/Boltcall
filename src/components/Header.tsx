@@ -725,13 +725,12 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <InteractiveHoverButton
-                  text="Dashboard"
+                <button
                   onClick={() => handleNavClick('/dashboard')}
-                  className={`!min-h-9 !min-w-0 !w-auto !px-4 !py-1.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-brand-blue bg-brand-blue text-white'}`}
-                  hoverBgClass={isOverBlueBackground ? 'bg-white' : 'bg-brand-blueDark'}
-                  hoverTextClass={isOverBlueBackground ? 'text-brand-blue' : 'text-white'}
-                />
+                  className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${isOverBlueBackground ? 'bg-white text-brand-blue hover:bg-white/90' : 'bg-brand-blue text-white hover:bg-brand-blueDark'}`}
+                >
+                  Dashboard
+                </button>
               </>
             ) : (
               <>
@@ -994,18 +993,16 @@ const Header: React.FC = () => {
                     transition={{ duration: 0.4, delay: 0.7 }}
                   >
                     {isAuthenticated ? (
-                      <motion.div whileTap={{ scale: 0.98 }}>
-                        <InteractiveHoverButton
-                          text="Dashboard"
-                          onClick={() => {
-                            handleNavClick('/dashboard');
-                            setIsMenuOpen(false);
-                          }}
-                          className="!w-full !py-3 !px-6 text-base border border-brand-blue bg-brand-blue text-white font-semibold"
-                          hoverBgClass="bg-brand-blueDark"
-                          hoverTextClass="text-white"
-                        />
-                      </motion.div>
+                      <motion.button
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => {
+                          handleNavClick('/dashboard');
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full py-3 px-6 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                      >
+                        Dashboard
+                      </motion.button>
                     ) : (
                       <>
                         <motion.button
