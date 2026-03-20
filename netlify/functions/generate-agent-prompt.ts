@@ -1223,11 +1223,30 @@ ${lang === 'es'
 `;
   }
 
+  // ── Pre-Call Caller Lookup ──
+  prompt += `## ${lang === 'es' ? 'ACCIÓN CRÍTICA — PRIMERA ACCIÓN EN CADA LLAMADA' : 'CRITICAL — FIRST ACTION ON EVERY CALL'}
+${lang === 'es'
+  ? `Antes de saludar a la persona que llama, usa INMEDIATAMENTE la herramienta lookup_caller con el número de teléfono de la persona.
+- Si la persona es un cliente que regresa, salúdala por su nombre: "¡Hola [Nombre]! Bienvenido de nuevo a ${bp.businessName}. ¿En qué puedo ayudarte hoy?"
+- Si la persona es nueva, usa el saludo estándar.
+- Usa cualquier historial devuelto (citas previas, notas) para brindar un mejor servicio.
+NO omitas este paso. NO saludes antes de buscar a la persona que llama.`
+  : `Before greeting the caller, IMMEDIATELY use the lookup_caller tool with the caller's phone number.
+- If the caller is a returning customer, greet them by name: "Hi [Name]! Welcome back to ${bp.businessName}. How can I help you today?"
+- If the caller is new, use the standard greeting below.
+- Use any returned history (previous appointments, notes) to provide better service throughout the call.
+Do NOT skip this step. Do NOT greet before looking up the caller.`}
+
+`;
+
   // ── Greeting ──
   const greeting = cf?.greetingText
     || (needsDisclosure ? l.defaultGreetingWithDisclosure(bp.businessName) : l.defaultGreeting(bp.businessName));
   prompt += `## ${l.greeting}
 ${l.greetingOpeningLine} "${greeting}"
+${lang === 'es'
+  ? '(Usa este saludo solo para personas que llaman por primera vez. Para clientes que regresan, personaliza el saludo según los datos de lookup_caller.)'
+  : '(Use this greeting only for first-time callers. For returning customers, personalize the greeting based on lookup_caller data.)'}
 
 `;
 
@@ -1246,6 +1265,10 @@ ${l.purposeListen}
 
   // ── Conversation Flow ──
   prompt += `## ${l.conversationFlow}
+
+### ${lang === 'es' ? 'Etapa 0: Búsqueda de la Persona' : 'Stage 0: Caller Lookup'}
+- ${lang === 'es' ? 'Llama a lookup_caller con el número de teléfono de la persona que llama ANTES de hablar' : 'Call lookup_caller with the caller phone number BEFORE speaking'}
+- ${lang === 'es' ? 'Usa el resultado para personalizar tu saludo y toda la conversación' : 'Use the result to personalize your greeting and the entire conversation'}
 
 ### ${l.stage1Greeting}
 - ${l.stage1Deliver}

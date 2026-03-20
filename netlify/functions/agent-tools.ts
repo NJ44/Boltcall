@@ -7,7 +7,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
  * Agent Tools Webhook
  *
  * Called by Retell during live calls when the AI agent invokes a custom tool.
- * Handles: check_availability, book_appointment, send_sms
+ * Handles: lookup_caller, check_availability, book_appointment, send_sms
  *
  * Retell sends:
  *   { call_id, agent_id, tool_call_id, name, arguments: { ... } }
@@ -120,6 +120,115 @@ async function getAgentOwner(agentId: string): Promise<string | null> {
     return null;
   }
   return data.user_id;
+}
+
+// ── Tool: lookup_caller ──
+
+async function handleLookupCaller(
+  args: any,
+  userId: string | null
+): Promise<string> {
+  const { phone_number } = args;
+  if (!phone_number) return 'NEW CALLER: No phone number provided.\nProceed with standard greeting and qualification.';
+
+  if (!userId) {
+    console.error('[agent-tools] lookup_caller: no userId found for agent');
+    return 'NEW CALLER: Could not look up caller (no agent owner).\nProceed with standard greeting and qualification.';
+  }
+
+  const supabase = getSupabase();
+
+  try {
+    // Normalize phone: strip spaces/dashes for flexible matching
+    const normalizedPhone = phone_number.replace(/[\s\-()]/g, '');
+
+    // 1. Query leads table for this caller
+    const { data: leads, error: leadErr } = await supabase
+      .from('leads')
+      .select('first_name, last_name, email, source, status, created_at, raw_data')
+      .eq('user_id', userId)
+      .or(`phone.eq.${normalizedPhone},phone.eq.${phone_number}`)
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    if (leadErr) {
+      console.error('[agent-tools] lookup_caller leads query error:', leadErr);
+    }
+
+    // 2. Query appointments table for this caller
+    const { data: appointments, error: apptErr } = await supabase
+      .from('appointments')
+      .select('service_name, starts_at, status, client_name, client_email, timezone')
+      .eq('user_id', userId)
+      .or(`client_phone.eq.${normalizedPhone},client_phone.eq.${phone_number}`)
+      .order('starts_at', { ascending: false })
+      .limit(10);
+
+    if (apptErr) {
+      console.error('[agent-tools] lookup_caller appointments query error:', apptErr);
+    }
+
+    // 3. Build response
+    const hasLeads = leads && leads.length > 0;
+    const hasAppointments = appointments && appointments.length > 0;
+
+    if (!hasLeads && !hasAppointments) {
+      return 'NEW CALLER: No previous record found for this number.\nProceed with standard greeting and qualification.';
+    }
+
+    let result = '';
+
+    if (hasLeads) {
+      const lead = leads[0]; // Most recent lead record
+      const fullName = [lead.first_name, lead.last_name].filter(Boolean).join(' ') || 'Unknown';
+      const callCount = leads.length;
+      const lastContact = lead.created_at
+        ? new Date(lead.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+        : 'Unknown';
+
+      result += `RETURNING CALLER: ${fullName}`;
+      if (lead.email) result += ` (${lead.email})`;
+      result += '\n';
+      result += `- Previous interactions: ${callCount}\n`;
+      result += `- Last contact: ${lastContact}\n`;
+      result += `- Status: ${lead.status || 'unknown'}\n`;
+      result += `- Source: ${lead.source || 'unknown'}\n`;
+    }
+
+    if (hasAppointments) {
+      const now = new Date();
+
+      const upcoming = appointments.filter(a =>
+        a.starts_at && new Date(a.starts_at) > now && a.status !== 'cancelled'
+      );
+      const past = appointments.filter(a =>
+        a.starts_at && new Date(a.starts_at) <= now
+      );
+
+      if (upcoming.length > 0) {
+        result += '\nUpcoming appointments:\n';
+        for (const appt of upcoming.slice(0, 3)) {
+          const apptDate = new Date(appt.starts_at);
+          const dateStr = apptDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+          const timeStr = apptDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+          result += `  - ${appt.service_name || 'Appointment'} on ${dateStr} at ${timeStr} (${appt.status})\n`;
+        }
+      }
+
+      if (past.length > 0) {
+        result += `\nPast appointments: ${past.length} on record\n`;
+        const lastAppt = past[0];
+        const lastDate = new Date(lastAppt.starts_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        result += `  - Most recent: ${lastAppt.service_name || 'Appointment'} on ${lastDate} (${lastAppt.status})\n`;
+      }
+    }
+
+    result += '\nGreet them warmly by name and reference their history.';
+    return result;
+  } catch (err) {
+    console.error('[agent-tools] lookup_caller error:', err);
+    return 'NEW CALLER: Lookup failed due to an error.\nProceed with standard greeting and qualification.';
+  }
 }
 
 // ── Tool: check_availability ──
@@ -392,6 +501,10 @@ export const handler: Handler = async (event) => {
     let content: string;
 
     switch (name) {
+      case 'lookup_caller':
+        content = await handleLookupCaller(toolArgs || {}, userId);
+        break;
+
       case 'check_availability':
         content = await handleCheckAvailability(toolArgs || {}, calApiKey);
         break;

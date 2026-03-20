@@ -78,7 +78,7 @@ function buildResponseEngine(body: any) {
 }
 
 // Build general_tools array for LLM creation/update
-// Includes: transfer_call, end_call, check_availability, book_appointment, send_sms
+// Includes: lookup_caller, transfer_call, end_call, check_availability, book_appointment, send_sms
 function buildGeneralTools(options: {
   transferNumber?: string;
   baseUrl: string;
@@ -87,6 +87,23 @@ function buildGeneralTools(options: {
   const toolsWebhookUrl = `${baseUrl}/.netlify/functions/agent-tools`;
 
   const tools: any[] = [
+    // Custom: lookup caller — MUST be first, called at the start of every inbound call
+    {
+      type: 'custom',
+      name: 'lookup_caller',
+      description: 'Look up the caller in the customer database using their phone number. IMPORTANT: Call this tool at the very start of every inbound call before greeting the caller, using the caller phone number from the call metadata.',
+      speak_after_execution: false,
+      speak_during_execution: false,
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          phone_number: { type: 'string', description: 'The caller phone number in E.164 format' },
+        },
+        required: ['phone_number'],
+      },
+      timeout_ms: 5000,
+    },
     // Built-in: end call
     {
       type: 'end_call',
