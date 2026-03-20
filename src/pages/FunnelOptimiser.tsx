@@ -199,11 +199,7 @@ const FunnelOptimiser = () => {
             {/* Visualization Section - 7/12 width (wider) */}
             <div className="lg:col-span-7 w-full sticky top-24">
               <div className="bg-white p-8 md:p-12 rounded-3xl border border-zinc-200/60 shadow-sm flex flex-col items-center">
-                <div className="w-full mb-10 text-center">
-                  <h2 className="text-2xl font-bold text-black mb-1 uppercase tracking-tight">Optimised Funnel</h2>
-                </div>
-
-                <div className="w-full h-[540px]">
+                <div className="w-full h-[400px]">
                   <FunnelChart
                     data={data}
                     orientation="vertical"
