@@ -56,7 +56,7 @@ function getDefaultAgentConfig(language?: string) {
     max_call_duration_ms: 481000,
     begin_message_delay_ms: 1000,
     allow_user_dtmf: true,
-    post_call_analysis_model: 'gpt-4.1-mini',
+    post_call_analysis_model: 'gpt-5-mini',
   };
 }
 
@@ -267,7 +267,7 @@ export const handler: Handler = async (event) => {
           });
 
           const llm = await client.llm.create({
-            model: 'gpt-4.1-mini',
+            model: 'gpt-5-mini',
             general_prompt: body.general_prompt || buildAgentPrompt(body.agent_name || 'this business', body.country),
             ...(body.knowledge_base_ids ? { knowledge_base_ids: body.knowledge_base_ids } : {}),
             general_tools: generalTools,
@@ -341,7 +341,7 @@ export const handler: Handler = async (event) => {
 
           // Auto-create a Retell LLM linked to the knowledge base
           const llmConfig: any = {
-            model: 'gpt-4.1-mini',
+            model: 'gpt-5-mini',
             general_prompt: generalPrompt,
             knowledge_base_ids: [kb.knowledge_base_id],
             general_tools: generalTools,
