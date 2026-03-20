@@ -32,12 +32,12 @@ const HowItWorks: React.FC = () => {
   return (
     <section 
       id="how-it-works" 
-      className="relative pt-24 md:pt-16 pb-16 bg-transparent -mt-32"
+      className="relative py-16 bg-transparent -mt-32"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
-          <div className="left-0 md:sticky ml-4 pt-0 pr-2" style={{ top: '150px', height: 'fit-content' }}>
+          <div className="left-0 md:sticky ml-4 pt-12 md:pt-0 pr-2" style={{ top: '150px', height: 'fit-content' }}>
             <motion.h5 
               className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
               initial={{ opacity: 0, y: 20 }}

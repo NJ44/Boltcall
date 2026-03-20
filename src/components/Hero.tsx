@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
-import Button from './ui/Button';
 import { InteractiveHoverButton } from './ui/interactive-hover-button';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
@@ -192,7 +191,7 @@ const Hero: React.FC = () => {
             {/* Animated Headline */}
             <div className="flex justify-center mb-6 relative z-10">
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap md:ml-56 md:scale-100">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap md:ml-56 md:scale-100">
                   <motion.span
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -219,7 +218,7 @@ const Hero: React.FC = () => {
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
-                        className="absolute text-3xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
+                        className="absolute text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         initial={{ opacity: 0, y: "-100" }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
@@ -261,19 +260,17 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0 }}
             >
-              <Button
+              <button
                 onClick={() => {
                   const howItWorksSection = document.getElementById('how-it-works');
                   if (howItWorksSection) {
                     howItWorksSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                variant="squarespace-outline"
-                size="lg"
-                className="w-[85%] sm:w-auto border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white hover:border-brand-blue"
+                className="min-h-11 w-40 rounded-lg border border-brand-blue text-brand-blue font-medium hover:bg-brand-blue hover:text-white transition-colors py-2.5 px-4"
               >
                 Learn more
-              </Button>
+              </button>
               <InteractiveHoverButton
                 text="Start free"
                 onClick={() => navigate('/signup')}

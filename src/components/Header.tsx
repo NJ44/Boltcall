@@ -13,6 +13,8 @@ const Header: React.FC = () => {
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
+  const [mobileFeatures, setMobileFeatures] = useState(false);
+  const [mobileResources, setMobileResources] = useState(false);
   const resourcesRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated } = useAuth();
@@ -791,71 +793,81 @@ const Header: React.FC = () => {
                   <X size={20} strokeWidth={2.5} className="text-gray-800" />
                 </button>
 
-                <div className="px-6 pt-16 pb-8 space-y-6">
-                  {/* Main links */}
-                  <div className="space-y-1">
-                    {[
-                      { label: 'About', href: '/about' },
-                      ...navItems,
-                    ].map((item) => (
-                      <button
-                        key={item.label}
-                        onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                        className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
+                <div className="px-6 pt-16 pb-8 space-y-1">
+                  {/* Main links + dropdowns */}
+                  {[
+                    { label: 'About', href: '/about' },
+                    ...navItems,
+                  ].map((item) => (
+                    <button
+                      key={item.label}
+                      onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                      className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
 
-                  <div className="h-px bg-gray-200" />
-
-                  {/* Features */}
+                  {/* Features dropdown */}
                   <div>
-                    <p className="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Features</p>
-                    <div className="space-y-0.5">
-                      {featuresItems.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <button
-                            key={item.href}
-                            onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                            className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
-                          >
-                            <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                            <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
+                    <button
+                      onClick={() => setMobileFeatures(!mobileFeatures)}
+                      className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
+                    >
+                      Features
+                      <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileFeatures ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileFeatures && (
+                      <div className="pl-2 space-y-0.5 mt-1">
+                        {featuresItems.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <button
+                              key={item.href}
+                              onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                              className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
+                            >
+                              <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                              <span className="text-sm font-medium text-gray-700">{item.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
 
-                  <div className="h-px bg-gray-200" />
-
-                  {/* Resources */}
+                  {/* Resources dropdown */}
                   <div>
-                    <p className="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Resources</p>
-                    <div className="space-y-0.5">
-                      {resourcesItems.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <button
-                            key={item.href}
-                            onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                            className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
-                          >
-                            <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                            <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
+                    <button
+                      onClick={() => setMobileResources(!mobileResources)}
+                      className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
+                    >
+                      Resources
+                      <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileResources ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileResources && (
+                      <div className="pl-2 space-y-0.5 mt-1">
+                        {resourcesItems.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <button
+                              key={item.href}
+                              onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                              className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
+                            >
+                              <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                              <span className="text-sm font-medium text-gray-700">{item.label}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
 
-                  <div className="h-px bg-gray-200" />
+                  <div className="h-px bg-gray-200 mt-4" />
 
                   {/* Auth */}
-                  <div className="space-y-3 pt-2">
+                  <div className="space-y-3 pt-4">
                     {isAuthenticated ? (
                       <button
                         onClick={() => { handleNavClick('/dashboard'); setIsMenuOpen(false); }}
