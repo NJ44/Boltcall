@@ -122,7 +122,7 @@ export const handler: Handler = async (event) => {
     const { data: agentRow, error: agentError } = await supabase
       .from('agents')
       .select('user_id')
-      .eq('api_keys->retell_agent_id', agentId)
+      .filter('api_keys->>retell_agent_id', 'eq', agentId)
       .single();
 
     if (agentError || !agentRow) {
