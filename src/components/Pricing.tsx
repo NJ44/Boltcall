@@ -67,7 +67,7 @@ const Pricing: React.FC = () => {
 
   return (
     <>
-      <Section id="pricing" background="white" roundedTop={true}>
+      <Section id="pricing" background="white" roundedTop={true} className="!py-8 lg:!py-12">
       {/* Pricing Header */}
       <div className="text-center mb-4">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-[1.2]">
