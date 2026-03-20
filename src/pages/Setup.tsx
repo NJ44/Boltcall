@@ -25,6 +25,7 @@ const CATEGORY_OPTIONS: FancyDropdownOption[] = [
   { value: 'real-estate', label: 'Real Estate' },
   { value: 'healthcare', label: 'Healthcare' },
   { value: 'construction', label: 'Construction' },
+  { value: 'roofing', label: 'Roofing' },
   { value: 'education', label: 'Education' },
   { value: 'technology', label: 'Technology' },
   { value: 'other', label: 'Other' },
