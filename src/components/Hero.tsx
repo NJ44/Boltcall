@@ -201,36 +201,34 @@ const Hero: React.FC = () => {
             {/* Animated Headline */}
             <div className="flex justify-center mb-6 relative z-10">
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main text-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap">
                   <motion.span
-                    className="inline"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.625, delay: 0.2, ease: "easeOut" }}
                   >
-                    NEVER{' '}
+                    NEVER
                   </motion.span>
                   <motion.span
-                    className="inline"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.625, delay: 0.3, ease: "easeOut" }}
                   >
-                    MISS{' '}
+                    MISS
                   </motion.span>
                   <motion.span
-                    className="inline"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.625, delay: 0.4, ease: "easeOut" }}
                   >
-                    A{' '}
+                    A
                   </motion.span>
-                  <span className="relative inline-block w-[110px] md:w-[180px] lg:w-[210px] h-[1.2em] align-bottom overflow-hidden">
+
+                  <span className="relative inline-flex items-center justify-center overflow-hidden min-w-[100px] md:min-w-[220px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
-                        className="absolute inset-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600"
+                        className="absolute left-0 right-0 text-center text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         initial={{ opacity: 0, y: "-100" }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
