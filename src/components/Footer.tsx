@@ -29,7 +29,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
   const mutedTextClass = isDark ? 'text-neutral-400' : 'text-neutral-500';
   const hoverTextClass = isDark ? 'hover:text-white' : 'hover:text-neutral-900';
   const borderClass = isDark ? 'border-neutral-800' : 'border-neutral-200';
-  const logoBgClass = isDark ? 'bg-white/10' : 'bg-neutral-100';
+  // Logo styling removed — was adding gray container
 
   const footerLinks = {
     features: [
@@ -82,7 +82,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                   <img
                     src="/boltcall_full_logo.png"
                     alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
-                    className={`h-12 mb-3 ${logoBgClass} rounded-lg p-2`}
+                    className="h-12 mb-3"
                     width="154"
                     height="48"
                   />

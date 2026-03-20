@@ -118,11 +118,11 @@ export const handler: Handler = async (event) => {
 
     const supabase = getSupabase();
 
-    // Step 1: Look up agent owner
+    // Step 1: Look up agent owner (retell_agent_id is stored inside api_keys JSONB)
     const { data: agentRow, error: agentError } = await supabase
       .from('agents')
       .select('user_id')
-      .eq('retell_agent_id', agentId)
+      .eq('api_keys->>retell_agent_id', agentId)
       .single();
 
     if (agentError || !agentRow) {
