@@ -2,17 +2,16 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Phone, Users, Zap, DollarSign, CheckCircle, AlertTriangle, BarChart3 } from 'lucide-react';
+import { Calendar, Clock, Phone, Users, Zap, DollarSign, CheckCircle, AlertTriangle } from 'lucide-react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// Footer intentionally imported for future use when page is completed
+// import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
 import Breadcrumbs from '../components/Breadcrumbs';
-import TableOfContents from '../components/TableOfContents';
-import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const BestAfterHoursAnsweringService: React.FC = () => {
-  const { activeSection, sectionsRef } = useTableOfContents();
+  const sectionsRef = React.useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,18 +53,6 @@ const BestAfterHoursAnsweringService: React.FC = () => {
     };
   }, []);
 
-  const tableOfContents = [
-    { id: 'why-after-hours', title: 'Why After Hours Answering Matters for Local Businesses' },
-    { id: 'traditional-vs-ai', title: 'Traditional vs AI Answering Services: Cost Comparison' },
-    { id: 'how-ai-works', title: 'How AI After Hours Receptionists Work' },
-    { id: 'top-features', title: 'Top Features to Look for in an After Hours Service' },
-    { id: 'industries-benefit', title: 'Industries That Benefit Most (Dentists, Plumbers, HVAC)' },
-    { id: 'common-mistakes', title: 'Common Mistakes When Choosing an Answering Service' },
-    { id: 'measure-roi', title: 'How to Measure ROI from Your Answering Service' },
-    { id: 'getting-started', title: 'Getting Started with AI-Powered After Hours Support' },
-    { id: 'faq', title: 'Frequently Asked Questions' }
-  ];
-
   return (
     <>
       <GiveawayBar />
@@ -88,13 +75,14 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                 </span>
               </div>
               
-              <Breadcrumbs 
-                items={[
-                  { label: 'Blog', href: '/blog' },
-                  { label: 'Best After Hours Answering Service', href: '/blog/best-after-hours-answering-service' }
-                ]} 
-                className="mb-8"
-              />
+              <div className="mb-8">
+                <Breadcrumbs
+                  items={[
+                    { label: 'Blog', href: '/blog' },
+                    { label: 'Best After Hours Answering Service', href: '/blog/best-after-hours-answering-service' }
+                  ]}
+                />
+              </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 <span className="text-blue-400">Best After Hours Answering Service</span> for Local Businesses: AI vs Traditional
@@ -133,7 +121,7 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                   </div>
 
                   <motion.section
-                    ref={(el) => (sectionsRef.current['why-after-hours'] = el)}
+                    ref={(el: HTMLElement | null) => { sectionsRef.current['why-after-hours'] = el; }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -176,7 +164,7 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                   </motion.section>
 
                   <motion.section
-                    ref={(el) => (sectionsRef.current['traditional-vs-ai'] = el)}
+                    ref={(el: HTMLElement | null) => { sectionsRef.current['traditional-vs-ai'] = el; }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -254,7 +242,7 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                   </motion.section>
 
                   <motion.section
-                    ref={(el) => (sectionsRef.current['how-ai-works'] = el)}
+                    ref={(el: HTMLElement | null) => { sectionsRef.current['how-ai-works'] = el; }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -346,7 +334,7 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                   </motion.section>
 
                   <motion.section
-                    ref={(el) => (sectionsRef.current['top-features'] = el)}
+                    ref={(el: HTMLElement | null) => { sectionsRef.current['top-features'] = el; }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -427,7 +415,7 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                   </motion.section>
 
                   <motion.section
-                    ref={(el) => (sectionsRef.current['industries-benefit'] = el)}
+                    ref={(el: HTMLElement | null) => { sectionsRef.current['industries-benefit'] = el; }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -453,4 +441,21 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                         </ul>
                         <div className="bg-blue-50 rounded p-3">
                           <p className="text-blue-800 text-sm font-medium">
-                            <strong>ROI Impact:</strong> 40% reduction in emergency room visits, 25
+                            <strong>ROI Impact:</strong> 40% reduction in emergency room visits, 25% increase in patient satisfaction.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.section>
+
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default BestAfterHoursAnsweringService;
