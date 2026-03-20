@@ -18,8 +18,14 @@ export const useLenis = () => {
     // Disable on dashboard, login, signup, and other app pages
     const isDashboardPage = location.pathname.startsWith('/dashboard');
     const isAppPage = ['/login', '/signup', '/setup'].includes(location.pathname);
-    
+
     if (isDashboardPage || isAppPage) {
+      return;
+    }
+
+    // Respect user's reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
       return;
     }
 
@@ -42,16 +48,37 @@ export const useLenis = () => {
     window.lenis = lenis;
     lenisRef.current = lenis;
 
-    // RequestAnimationFrame loop for smooth performance
+    // RAF loop that pauses when tab is hidden
+    let rafId: number;
+    let isRunning = true;
+
     function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+      if (isRunning) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
+
+    // Pause/resume when tab visibility changes
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(rafId);
+      } else {
+        isRunning = true;
+        rafId = requestAnimationFrame(raf);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // Cleanup function
     return () => {
+      isRunning = false;
+      cancelAnimationFrame(rafId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;

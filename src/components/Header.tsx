@@ -73,6 +73,9 @@ const Header: React.FC = () => {
       setIsOverBlueBackground(true);
     }
 
+    // Cache header element outside scroll handler
+    let cachedHeader: Element | null = null;
+
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // When scrolled past the announcement bar (64px), make header stick to top
@@ -95,8 +98,9 @@ const Header: React.FC = () => {
         return;
       }
 
-      // Check if navbar is over a blue background section
-      const header = document.querySelector('header');
+      // Check if navbar is over a blue background section (cached lookup)
+      if (!cachedHeader) cachedHeader = document.querySelector('header');
+      const header = cachedHeader;
       if (!header) return;
 
       const headerRect = header.getBoundingClientRect();
@@ -332,14 +336,23 @@ const Header: React.FC = () => {
     if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses') || location.pathname === '/free-website-package') {
       setIsOverBlueBackground(true);
     } else {
-      // Only run scroll detection if not on AI guide page
-      window.addEventListener('scroll', handleScroll);
-      // Don't check on initial load - start with black links
-      // handleScroll();
+      // RAF-throttled scroll listener to prevent jank
+      let scrollRafId: number | null = null;
+      const throttledScroll = () => {
+        if (scrollRafId === null) {
+          scrollRafId = requestAnimationFrame(() => {
+            scrollRafId = null;
+            handleScroll();
+          });
+        }
+      };
+      window.addEventListener('scroll', throttledScroll, { passive: true });
+      return () => {
+        window.removeEventListener('scroll', throttledScroll);
+        if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+      };
     }
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => {};
   }, [location.pathname]);
 
   // Close Resources dropdown when clicking outside

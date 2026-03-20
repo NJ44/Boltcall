@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Zap, MessageSquare, Star, BarChart3 } from 'lucide-react';
+import { Phone, Zap, Star, BarChart3 } from 'lucide-react';
 
 // A simple utility function to merge class names, replacing the need for an external file.
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
@@ -27,35 +27,28 @@ const DEMO_STEPS: ProcessStep[] = [
   {
     id: "01",
     title: "AI Receptionist",
-    subtitle: "Never Miss a Call Again",
+    subtitle: "",
     description: "Your AI receptionist answers every call 24/7 with a natural human voice. It books appointments, answers FAQs, and transfers urgent calls \u2014 so you never lose a lead.",
     details: ["24/7 Call Answering", "Natural Voice AI", "Appointment Booking", "Call Transfer"],
   },
   {
     id: "02",
-    title: "Speed to Lead",
-    subtitle: "Respond to Leads in Seconds",
+    title: "Instant Lead Response",
+    subtitle: "",
     description: "When a new lead comes in from your website, Facebook Ads, or missed call \u2014 Boltcall responds instantly via SMS, email, or callback. Beat your competition by being first.",
     details: ["Instant SMS Response", "Auto Email Follow-up", "Missed Call Text-back", "Facebook Lead Capture"],
   },
   {
     id: "03",
-    title: "Smart Chatbot",
-    subtitle: "Your Website\u2019s 24/7 Sales Rep",
-    description: "An AI chatbot embedded on your website that answers questions, captures leads, and books appointments \u2014 trained on your specific business knowledge base.",
-    details: ["Custom Knowledge Base", "Lead Capture Forms", "Appointment Scheduling", "Multi-language Support"],
-  },
-  {
-    id: "04",
     title: "Review Automation",
-    subtitle: "5-Star Reputation on Autopilot",
+    subtitle: "",
     description: "Automatically send review requests after every appointment. Happy customers get directed to Google, unhappy ones get routed to you first \u2014 protecting your reputation.",
     details: ["Google Review Requests", "Smart Routing", "Review Monitoring", "Reputation Dashboard"],
   },
   {
-    id: "05",
-    title: "Analytics & Insights",
-    subtitle: "Know Exactly What\u2019s Working",
+    id: "04",
+    title: "Analytics",
+    subtitle: "",
     description: "Track every call, message, lead, and booking in one dashboard. See which channels drive the most revenue and optimize your marketing spend.",
     details: ["Call Analytics", "Lead Source Tracking", "Revenue Attribution", "Token Usage Dashboard"],
   },
@@ -119,8 +112,7 @@ const TimelineNav = ({ steps, activeStep, onStepClick }: { steps: ProcessStep[],
 
 const TimelineContent = ({ step }: { step: ProcessStep }) => (
   <div className="text-left mt-16">
-    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-wide uppercase">{step.subtitle}</p>
-    <h2 className="text-3xl font-bold mt-2 text-slate-900 dark:text-white">{step.title}</h2>
+    <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">{step.title}</h2>
     <p className="mt-3 text-slate-700 dark:text-slate-300">{step.description}</p>
     <div className="mt-4 grid sm:grid-cols-2 gap-4">
       {step.details.map((detail, i) => (
@@ -319,111 +311,8 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
     );
   }
 
-  // Smart Chatbot - Chat bubbles with typing animation
-  if (stepId === "03") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative w-full h-[400px] flex items-center justify-center"
-        >
-          {/* Chat Window Mock */}
-          <motion.div
-            variants={itemVariants}
-            className="relative w-[280px] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700"
-          >
-            {/* Chat Header */}
-            <div className="bg-gradient-to-r from-emerald-600 to-green-500 px-4 py-3 flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                <MessageSquare className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white">Boltcall Assistant</p>
-                <p className="text-[10px] text-green-100">Online</p>
-              </div>
-              <div className="ml-auto w-2 h-2 bg-green-300 rounded-full animate-pulse" />
-            </div>
-
-            {/* Chat Messages */}
-            <div className="p-3 flex flex-col gap-2 min-h-[200px]">
-              {/* User message */}
-              <motion.div
-                className="self-end bg-blue-600 text-white rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <p className="text-xs">What are your opening hours?</p>
-              </motion.div>
-
-              {/* Bot message */}
-              <motion.div
-                className="self-start bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-2xl rounded-bl-sm px-3 py-2 max-w-[85%]"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                <p className="text-xs">We{'\u2019'}re open Mon-Fri 9am-6pm and Sat 10am-2pm. Would you like to book an appointment?</p>
-              </motion.div>
-
-              {/* User message */}
-              <motion.div
-                className="self-end bg-blue-600 text-white rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.4 }}
-              >
-                <p className="text-xs">Yes, tomorrow at 2pm please</p>
-              </motion.div>
-
-              {/* Typing indicator */}
-              <motion.div
-                className="self-start flex items-center gap-1 bg-slate-100 dark:bg-slate-700 rounded-2xl rounded-bl-sm px-3 py-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2 }}
-              >
-                {[0, 1, 2].map((i) => (
-                  <motion.div
-                    key={i}
-                    className="w-1.5 h-1.5 bg-slate-400 rounded-full"
-                    animate={{ y: [0, -4, 0] }}
-                    transition={{
-                      duration: 0.6,
-                      delay: i * 0.15,
-                      repeat: Infinity,
-                    }}
-                  />
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Floating feature badges */}
-          <motion.div
-            className="absolute top-[8%] left-[5%] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2 py-1 rounded-full"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            AI-Powered
-          </motion.div>
-
-          <motion.div
-            className="absolute bottom-[8%] right-[5%] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-[10px] font-bold px-2 py-1 rounded-full"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, delay: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            Custom Trained
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
-
   // Review Automation - Stars and Google review animation
-  if (stepId === "04") {
+  if (stepId === "03") {
     return (
       <div className="flex items-center justify-center h-full">
         <motion.div
@@ -523,8 +412,8 @@ const TimelineAnimation = ({ stepId }: { stepId: string }) => {
     );
   }
 
-  // Analytics & Insights - Animated charts and KPIs
-  if (stepId === "05") {
+  // Analytics - Animated charts and KPIs
+  if (stepId === "04") {
     return (
       <div className="flex items-center justify-center h-full">
         <motion.div

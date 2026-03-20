@@ -32,8 +32,11 @@ const heroIcons: IconData[] = [
   { id: 9, icon: IconClock, className: 'top-[82%] md:top-[60%] left-[15%] md:left-[2%]' },
 ];
 
+// Stable random durations per icon (avoids recalculation on re-render)
+const floatDurations = heroIcons.map((_, i) => 5 + ((i * 3.7) % 5));
+
 // A single icon component with its own motion logic
-const FloatingIcon = ({
+const FloatingIcon = React.memo(({
   mouseX,
   mouseY,
   iconData,
@@ -52,36 +55,41 @@ const FloatingIcon = ({
   const springX = useSpring(x, { stiffness: 300, damping: 20 });
   const springY = useSpring(y, { stiffness: 300, damping: 20 });
 
+  // Single RAF-throttled mousemove listener instead of one per icon
   useEffect(() => {
-    const handleMouseMove = () => {
+    let rafId: number | null = null;
+
+    const update = () => {
+      rafId = null;
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
-        const distance = Math.sqrt(
-          Math.pow(mouseX.current - (rect.left + rect.width / 2), 2) +
-          Math.pow(mouseY.current - (rect.top + rect.height / 2), 2)
-        );
+        const dx = mouseX.current - (rect.left + rect.width / 2);
+        const dy = mouseY.current - (rect.top + rect.height / 2);
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // If the cursor is close enough, repel the icon
         if (distance < 150) {
-          const angle = Math.atan2(
-            mouseY.current - (rect.top + rect.height / 2),
-            mouseX.current - (rect.left + rect.width / 2)
-          );
-
-          // The closer the cursor, the stronger the repulsion
+          const angle = Math.atan2(dy, dx);
           const force = (1 - distance / 150) * 50;
           x.set(-Math.cos(angle) * force);
           y.set(-Math.sin(angle) * force);
         } else {
-          // Return to original position when cursor is away
           x.set(0);
           y.set(0);
         }
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    const handleMouseMove = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [x, y, mouseX, mouseY]);
 
   return (
@@ -91,6 +99,7 @@ const FloatingIcon = ({
       style={{
         x: springX,
         y: springY,
+        willChange: 'transform',
       }}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -104,13 +113,14 @@ const FloatingIcon = ({
       {/* Inner wrapper for the continuous floating animation */}
       <motion.div
         className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 p-3 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50"
+        style={{ willChange: 'transform' }}
         animate={{
           y: [0, -8, 0, 8, 0],
           x: [0, 6, 0, -6, 0],
           rotate: [0, 5, 0, -5, 0],
         }}
         transition={{
-          duration: 5 + Math.random() * 5,
+          duration: floatDurations[index],
           repeat: Infinity,
           repeatType: 'mirror',
           ease: 'easeInOut',
@@ -120,7 +130,7 @@ const FloatingIcon = ({
       </motion.div>
     </motion.div>
   );
-};
+});
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -214,11 +224,11 @@ const Hero: React.FC = () => {
                     A
                   </motion.span>
 
-                  <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[160px] md:min-w-[380px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
+                  <span className="relative inline-flex items-center justify-center overflow-hidden min-w-[100px] md:min-w-[220px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
-                        className="absolute text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
+                        className="absolute left-0 right-0 text-center text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         initial={{ opacity: 0, y: "-100" }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={

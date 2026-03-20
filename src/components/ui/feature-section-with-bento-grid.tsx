@@ -208,7 +208,7 @@ function Feature() {
                 </p>
               </div>
               <div className="flex-1 flex items-center justify-center">
-                <div className="w-32 h-32 md:w-48 md:h-48">
+                <div className="w-48 h-48 md:w-72 md:h-72">
                   <LazyLottie
                     src="/costumer_statisfication.lottie"
                     loop
