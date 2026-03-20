@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Save, Loader2, Check, AlertCircle } from 'lucide-react';
+import { Star, Save, Loader2, Check, AlertCircle, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -25,6 +25,10 @@ const ReputationPage: React.FC = () => {
     'Hi {{client_name}}, thanks for visiting {{business_name}}! We\'d love your feedback: {{review_url}}'
   );
   const [smsDelay, setSmsDelay] = useState('24');
+
+  // Scheduled review requests
+  const [reviewRequests, setReviewRequests] = useState<any[]>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
 
   useEffect(() => {
     if (!user) return;
@@ -59,6 +63,30 @@ const ReputationPage: React.FC = () => {
         setTimeout(() => setError(null), 4000);
       }
       setLoading(false);
+    })();
+  }, [user]);
+
+  // Fetch scheduled review requests
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      try {
+        const { data, error: fetchErr } = await supabase
+          .from('scheduled_messages')
+          .select('id, recipient_phone, recipient_email, message_body, scheduled_for, status')
+          .eq('user_id', user.id)
+          .eq('type', 'review_request')
+          .in('status', ['scheduled', 'sent', 'failed'])
+          .order('scheduled_for', { ascending: false })
+          .limit(10);
+
+        if (!fetchErr && data) {
+          setReviewRequests(data);
+        }
+      } catch (err) {
+        console.error('Failed to load review requests:', err);
+      }
+      setReviewsLoading(false);
     })();
   }, [user]);
 
@@ -295,6 +323,75 @@ const ReputationPage: React.FC = () => {
             </button>
           </div>
         </div>
+      </motion.div>
+
+      {/* Scheduled Review Requests */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <MessageSquare className="w-4 h-4 text-purple-600" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Review Requests</h2>
+            <p className="text-sm text-gray-600">Scheduled and sent SMS review requests</p>
+          </div>
+        </div>
+
+        {reviewsLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+          </div>
+        ) : reviewRequests.length === 0 ? (
+          <div className="text-center py-8">
+            <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-2" />
+            <p className="text-sm text-gray-500">No review requests yet.</p>
+            <p className="text-xs text-gray-400 mt-1">Review requests will be scheduled automatically after appointments.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {reviewRequests.map((msg) => (
+              <div
+                key={msg.id}
+                className="flex items-center justify-between p-3 rounded-lg border border-gray-100 bg-gray-50"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {msg.recipient_phone || msg.recipient_email || 'Unknown'}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                  <span className="text-xs text-gray-500">
+                    {new Date(msg.scheduled_for).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                    })}{' '}
+                    {new Date(msg.scheduled_for).toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
+                  </span>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      msg.status === 'scheduled'
+                        ? 'bg-blue-100 text-blue-700'
+                        : msg.status === 'sent'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
+                    }`}
+                  >
+                    {msg.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </motion.div>
     </div>
   );

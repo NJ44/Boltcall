@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Save, Loader2, Check, AlertCircle, Link, Unlink } from 'lucide-react';
+import { Clock, Save, Loader2, Check, AlertCircle, Link, Unlink, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -20,6 +20,10 @@ const RemindersPage: React.FC = () => {
   const [defaultReminderTime, setDefaultReminderTime] = useState('24');
   const [emailEnabled, setEmailEnabled] = useState(true);
   const [smsEnabled, setSmsEnabled] = useState(false);
+
+  // Upcoming scheduled reminders
+  const [scheduledReminders, setScheduledReminders] = useState<any[]>([]);
+  const [remindersLoading, setRemindersLoading] = useState(true);
 
   // Cal.com integration state
   const [calConnected, setCalConnected] = useState(false);
@@ -61,6 +65,30 @@ const RemindersPage: React.FC = () => {
         setTimeout(() => setError(null), 4000);
       }
       setLoading(false);
+    })();
+  }, [user]);
+
+  // Fetch upcoming scheduled reminders
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      try {
+        const { data, error: fetchErr } = await supabase
+          .from('scheduled_messages')
+          .select('id, recipient_phone, recipient_email, message_body, scheduled_for, status')
+          .eq('user_id', user.id)
+          .eq('type', 'reminder')
+          .in('status', ['scheduled', 'sent', 'failed'])
+          .order('scheduled_for', { ascending: true })
+          .limit(10);
+
+        if (!fetchErr && data) {
+          setScheduledReminders(data);
+        }
+      } catch (err) {
+        console.error('Failed to load scheduled reminders:', err);
+      }
+      setRemindersLoading(false);
     })();
   }, [user]);
 
@@ -428,6 +456,80 @@ const RemindersPage: React.FC = () => {
             {saved ? 'Saved!' : 'Save Configuration'}
           </button>
         </div>
+      </motion.div>
+
+      {/* Upcoming Reminders */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <MessageSquare className="w-4 h-4 text-green-600" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Upcoming Reminders</h2>
+            <p className="text-sm text-gray-600">Scheduled SMS reminders for upcoming appointments</p>
+          </div>
+        </div>
+
+        {remindersLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+          </div>
+        ) : scheduledReminders.length === 0 ? (
+          <div className="text-center py-8">
+            <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-2" />
+            <p className="text-sm text-gray-500">No scheduled reminders yet.</p>
+            <p className="text-xs text-gray-400 mt-1">Reminders will appear here when appointments are booked via Cal.com.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {scheduledReminders.map((msg) => (
+              <div
+                key={msg.id}
+                className="flex items-center justify-between p-3 rounded-lg border border-gray-100 bg-gray-50"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {msg.recipient_phone || msg.recipient_email || 'Unknown'}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate mt-0.5">
+                    {msg.message_body.length > 80
+                      ? msg.message_body.slice(0, 80) + '...'
+                      : msg.message_body}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                  <span className="text-xs text-gray-500">
+                    {new Date(msg.scheduled_for).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                    })}{' '}
+                    {new Date(msg.scheduled_for).toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
+                  </span>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      msg.status === 'scheduled'
+                        ? 'bg-blue-100 text-blue-700'
+                        : msg.status === 'sent'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
+                    }`}
+                  >
+                    {msg.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </motion.div>
     </div>
   );

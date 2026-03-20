@@ -9,7 +9,7 @@ const headers = {
 };
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
-const N8N_WEBHOOK_URL = 'https://n8n.srv974118.hstgr.cloud/webhook/calcom-appointment';
+const APPOINTMENT_HANDLER_URL = 'https://boltcall.org/.netlify/functions/appointment-handler';
 
 const CALCOM_EVENT_TRIGGERS = [
   'BOOKING_CREATED',
@@ -76,7 +76,7 @@ export const handler: Handler = async (event) => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            subscriberUrl: N8N_WEBHOOK_URL,
+            subscriberUrl: APPOINTMENT_HANDLER_URL,
             eventTriggers: CALCOM_EVENT_TRIGGERS,
             active: true,
           }),
