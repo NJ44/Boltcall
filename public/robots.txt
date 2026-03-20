@@ -3,6 +3,30 @@ Allow: /
 Disallow: /dashboard/
 Disallow: /payment/
 Disallow: /*-demo
+Disallow: /setup/
+Disallow: /admin/
+Disallow: /auth/
+
+# AI Search Crawlers — explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://boltcall.org/sitemap.xml
-

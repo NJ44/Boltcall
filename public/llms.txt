@@ -1,0 +1,31 @@
+# Boltcall
+> AI-powered receptionist and automation platform for local businesses. 24/7 phone answering, appointment booking, lead capture, and automated follow-ups.
+
+## Core Pages
+- [Homepage](https://boltcall.org/) — Overview of Boltcall's AI receptionist platform
+- [Pricing](https://boltcall.org/pricing) — Plans from $389/mo to $799/mo
+- [About](https://boltcall.org/about) — Company information
+
+## Features
+- [AI Receptionist](https://boltcall.org/features/ai-receptionist) — 24/7 AI phone answering for local businesses
+- [Speed to Lead](https://boltcall.org/features/instant-form-reply) — Instant lead response system
+- [Automated Reminders](https://boltcall.org/features/automated-reminders) — Appointment reminder automation
+- [AI Follow-Up](https://boltcall.org/features/ai-follow-up-system) — Automated lead nurturing
+- [SMS Booking](https://boltcall.org/features/sms-booking-assistant) — Text-based appointment booking
+- [Website Widget](https://boltcall.org/features/website-widget) — AI chatbot widget for websites
+
+## Free Tools
+- [SEO Audit](https://boltcall.org/seo-audit) — Free website SEO analysis
+- [AI Revenue Calculator](https://boltcall.org/ai-revenue-calculator) — Calculate ROI of AI receptionist
+
+## Blog — Key Articles
+- [What Is an AI Receptionist?](https://boltcall.org/blog/what-is-ai-receptionist-guide) — Complete guide
+- [AI Receptionist Cost & Pricing](https://boltcall.org/blog/ai-receptionist-cost-pricing) — 2026 pricing guide
+- [Is an AI Receptionist Worth It?](https://boltcall.org/blog/is-ai-receptionist-worth-it) — ROI analysis
+- [Speed to Lead](https://boltcall.org/blog/speed-to-lead-local-business) — Why response time matters
+- [AI vs Human Receptionist](https://boltcall.org/blog/ai-vs-human-receptionist) — Comparison guide
+- [Best AI Receptionist Tools](https://boltcall.org/blog/best-ai-receptionist-tools) — Tool comparison
+- [AI Phone Answering for Dentists](https://boltcall.org/blog/ai-phone-answering-dentists) — Industry guide
+- [AI Phone Answering for Plumbers](https://boltcall.org/blog/ai-phone-answering-plumbers) — Industry guide
+- [Google Reviews Automation](https://boltcall.org/blog/google-reviews-automation-local-business) — Review guide
+- [Complete Guide to SEO](https://boltcall.org/blog/complete-guide-to-seo) — SEO for local businesses
