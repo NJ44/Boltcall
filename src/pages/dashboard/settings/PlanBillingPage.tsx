@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap, Coins } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { getUserSubscription, getUserInvoices, redirectToCheckout, type PlanLevel } from '../../../lib/stripe';
+import { getUserSubscription, getUserInvoices, type PlanLevel } from '../../../lib/stripe';
+import { redirectToCheckout } from '../../../lib/stripe-checkout';
 import { TOKEN_PLANS } from '../../../lib/tokens';
 
 interface Subscription {

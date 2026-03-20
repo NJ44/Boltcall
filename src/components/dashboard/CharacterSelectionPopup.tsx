@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from '../ui/LazyLottie';
 
 interface CharacterSelectionPopupProps {
   isOpen: boolean;
@@ -91,7 +91,7 @@ const CharacterSelectionPopup: React.FC<CharacterSelectionPopupProps> = ({
                 >
                   <div className="p-4">
                     <div className="w-full h-32 mb-2 flex items-center justify-center">
-                      <DotLottieReact
+                      <LazyLottie
                         src={character.animation}
                         loop
                         autoplay

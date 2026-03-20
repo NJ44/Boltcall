@@ -1,53 +1,12 @@
-import { loadStripe } from '@stripe/stripe-js';
-import type { Stripe } from '@stripe/stripe-js';
+/**
+ * Stripe types and Supabase-based subscription queries.
+ * Does NOT import @stripe/stripe-js to keep the bundle small.
+ * For checkout/payment functions, use stripe-checkout.ts (lazy loaded).
+ */
 import { supabase } from './supabase';
-
-let stripePromise: Promise<Stripe | null>;
-
-export function getStripe() {
-  if (!stripePromise) {
-    stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
-  }
-  return stripePromise;
-}
 
 export type PlanLevel = 'starter' | 'pro' | 'ultimate' | 'enterprise';
 export type BillingInterval = 'monthly' | 'yearly';
-
-interface CheckoutParams {
-  plan: PlanLevel;
-  interval: BillingInterval;
-}
-
-/**
- * Redirect user to Stripe Checkout for subscription
- */
-export async function redirectToCheckout({ plan, interval }: CheckoutParams) {
-  // Get current user
-  const { data: { user } } = await supabase.auth.getUser();
-
-  const response = await fetch('/.netlify/functions/create-checkout-session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      plan,
-      interval,
-      userId: user?.id || '',
-      email: user?.email || '',
-    }),
-  });
-
-  const data = await response.json();
-
-  if (data.error) {
-    throw new Error(data.error);
-  }
-
-  // Redirect to Stripe Checkout
-  if (data.url) {
-    window.location.href = data.url;
-  }
-}
 
 /**
  * Get current user's subscription from Supabase
@@ -92,23 +51,6 @@ export async function getUserInvoices(limit = 10) {
   }
 
   return data || [];
-}
-
-/**
- * Open Stripe Customer Portal for managing subscription
- */
-export async function openCustomerPortal() {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return;
-
-  // Get customer ID from subscription
-  const sub = await getUserSubscription();
-  if (!sub?.stripe_customer_id) {
-    throw new Error('No active subscription found');
-  }
-
-  // For now, redirect to contact. In production, create a portal session via Netlify function
-  window.location.href = '/contact';
 }
 
 /**

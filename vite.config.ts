@@ -152,7 +152,7 @@ export default defineConfig({
         manualChunks: (id) => {
           // Split heavy libraries into separate chunks
           if (id.includes('node_modules')) {
-            if (id.includes('framer-motion')) {
+            if (id.includes('framer-motion') || id.includes('motion')) {
               return 'framer-motion';
             }
             if (id.includes('gsap')) {
@@ -166,6 +166,21 @@ export default defineConfig({
             }
             if (id.includes('@splinetool')) {
               return 'spline';
+            }
+            if (id.includes('@stripe') || id.includes('stripe')) {
+              return 'stripe';
+            }
+            if (id.includes('recharts') || id.includes('d3-')) {
+              return 'recharts';
+            }
+            if (id.includes('@supabase')) {
+              return 'supabase';
+            }
+            if (id.includes('react-router') || id.includes('@remix-run')) {
+              return 'router';
+            }
+            if (id.includes('i18next') || id.includes('react-i18next')) {
+              return 'i18n';
             }
             // Other node_modules
             return 'vendor';

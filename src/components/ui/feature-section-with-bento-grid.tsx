@@ -10,7 +10,7 @@ import {
   Visual3,
 } from './animated-card-chart';
 import { Tilt } from './tilt';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from './LazyLottie';
 import { Clock } from 'lucide-react';
 import {
   AreaChart,
@@ -209,7 +209,7 @@ function Feature() {
               </div>
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-32 h-32 md:w-48 md:h-48">
-                  <DotLottieReact
+                  <LazyLottie
                     src="/costumer_statisfication.lottie"
                     loop
                     autoplay

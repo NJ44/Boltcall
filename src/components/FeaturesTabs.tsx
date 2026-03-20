@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from './ui/LazyLottie';
 import Section from './ui/Section';
 
 const FeaturesTabs: React.FC = () => {
@@ -39,16 +39,14 @@ const FeaturesTabs: React.FC = () => {
                 WebkitBackfaceVisibility: 'hidden'
               } as React.CSSProperties & Record<string, string>}
             >
-              <DotLottieReact
+              <LazyLottie
                 src="/Clean_tooth.lottie"
                 loop
                 autoplay
                 style={{
                   width: '100%',
                   height: '100%',
-                  imageRendering: 'auto',
-                  WebkitImageRendering: 'auto'
-                } as React.CSSProperties & Record<string, string>}
+                }}
               />
             </div>
           </motion.div>
@@ -66,7 +64,7 @@ const FeaturesTabs: React.FC = () => {
               >
                 <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
                   <div className="w-20 h-20 mx-auto mb-4">
-                    <DotLottieReact
+                    <LazyLottie
                       src="/statistics_on_tab.lottie"
                       loop
                       autoplay
@@ -90,7 +88,7 @@ const FeaturesTabs: React.FC = () => {
               >
                 <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
                   <div className="w-20 h-20 mx-auto mb-4">
-                    <DotLottieReact
+                    <LazyLottie
                       src="/Dentist_Checking_Teeth.lottie"
                       loop
                       autoplay
@@ -114,7 +112,7 @@ const FeaturesTabs: React.FC = () => {
               >
                 <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
                   <div className="w-20 h-20 mx-auto mb-4">
-                    <DotLottieReact
+                    <LazyLottie
                       src="/Dental_Care_anim.lottie"
                       loop
                       autoplay
@@ -138,7 +136,7 @@ const FeaturesTabs: React.FC = () => {
               >
                 <div className="bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 w-64 text-center border border-white/30 hover:shadow-3xl transition-all duration-300">
                   <div className="w-20 h-20 mx-auto mb-4">
-                    <DotLottieReact
+                    <LazyLottie
                       src="/Dentist_Surgery.lottie"
                       loop
                       autoplay

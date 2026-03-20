@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLenis } from '../hooks/useLenis';
@@ -7,158 +7,159 @@ import { SubscriptionProvider } from '../contexts/SubscriptionContext';
 import { TokenProvider } from '../contexts/TokenContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import PlanGate from '../components/PlanGate';
+
+// ── Eager loads (critical path — homepage & auth) ────────────────────────
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
-import Dashboard from '../pages/Dashboard';
-import DashboardLayout from '../components/dashboard/DashboardLayout';
-import SettingsLayout from '../components/dashboard/SettingsLayout';
-import DashboardPage from '../pages/dashboard/DashboardPage';
-import AnalyticsPage from '../pages/dashboard/AnalyticsPage';
-import AgentsPage from '../pages/dashboard/AgentsPage';
-import SmsPage from '../pages/dashboard/SmsPage';
-import WhatsappPage from '../pages/dashboard/WhatsappPage';
-import SettingsPage from '../pages/dashboard/SettingsPage';
-import KnowledgeBasePage from '../pages/dashboard/KnowledgeBasePage';
-// import AssistantPage from '../pages/dashboard/AssistantPage';
-import PhoneNumbersPage from '../pages/dashboard/PhoneNumbersPage';
-import IntegrationsPage from '../pages/dashboard/IntegrationsPage';
-import InstantLeadReplyPage from '../pages/dashboard/InstantLeadReplyPage';
-import VoiceLibraryPage from '../pages/dashboard/VoiceLibraryPage';
-import WebsiteBubblePage from '../pages/dashboard/WebsiteBubblePage';
-import RemindersPage from '../pages/dashboard/RemindersPage';
-// import SmsBookingPage from '../pages/dashboard/SmsBookingPage';
-// import FollowUpsPage from '../pages/dashboard/FollowUpsPage';
-// import MissedCallsPage from '../pages/dashboard/MissedCallsPage';
-// import LeadReactivationPage from '../pages/dashboard/LeadReactivationPage';
-import CalcomPage from '../pages/dashboard/CalcomPage';
-import CallHistoryPage from '../pages/dashboard/CallHistoryPage';
-// AgentTestsPage now embedded as a tab inside AgentsPage
-import ReputationPage from '../pages/dashboard/ReputationPage';
-// import ChatHistoryPage from '../pages/dashboard/ChatHistoryPage';
-import LeadsPage from '../pages/dashboard/LeadsPage';
-import MessagesPage from '../pages/dashboard/MessagesPage';
-import LocationDashboardPage from '../pages/dashboard/LocationDashboardPage';
-import HelpCenter from '../pages/HelpCenter';
-import Privacy from '../pages/Privacy';
-import Terms from '../pages/Terms';
-import Contact from '../pages/Contact';
-import About from '../pages/About';
-import Setup from '../pages/Setup';
-import SetupLoading from '../pages/SetupLoading';
 import AuthCallback from '../pages/AuthCallback';
-import PaymentPro from '../pages/PaymentPro';
-import PaymentEliteStarter from '../pages/PaymentEliteStarter';
-import Giveaway from '../pages/Giveaway';
-import FreeWebsitePage from '../pages/FreeWebsitePage';
-// import FreeWebsitePackagePage from '../pages/FreeWebsitePackagePage';
-// import FreeWebsitePricingPage from '../pages/FreeWebsitePricingPage';
-import GeneralPage from '../pages/dashboard/settings/GeneralPage';
-import PreferencesPage from '../pages/dashboard/settings/PreferencesPage';
-import MembersPage from '../pages/dashboard/settings/MembersPage';
-import PlanBillingPage from '../pages/dashboard/settings/PlanBillingPage';
-// import PackagesPage from '../pages/dashboard/settings/PackagesPage';
-import UsagePage from '../pages/dashboard/settings/UsagePage';
-import NotificationPage from '../pages/dashboard/settings/NotificationPage';
-// import NotificationPreferencesPage from '../pages/dashboard/settings/NotificationPreferencesPage';
-// import ServicesPage from '../pages/dashboard/settings/ServicesPage';
-import SpeedTestLanding from '../pages/speed-test/SpeedTestLanding';
-import SpeedTestLogin from '../pages/speed-test/SpeedTestLogin';
-import SpeedTestReport from '../pages/speed-test/SpeedTestReport';
-import SpeedTestOffer from '../pages/speed-test/SpeedTestOffer';
-// import GiftCardPage from '../pages/GiftCardPage';
-import PricingPage from '../pages/PricingPage';
-// import OfferPage from '../pages/OfferPage';
-import Documentation from '../pages/Documentation';
-import Blog from '../pages/Blog';
-import BlogCenter from '../pages/BlogCenter';
-import BlogSpeed from '../pages/BlogSpeed';
-import BlogSpeedWebsite from '../pages/BlogSpeedWebsite';
-import BlogSEO from '../pages/BlogSEO';
-import BlogAIGuide from '../pages/BlogAIGuide';
-import BlogAIGuideStep1 from '../pages/BlogAIGuideStep1';
-import BlogAIGuideStep2 from '../pages/BlogAIGuideStep2';
-import BlogAIGuideStep3 from '../pages/BlogAIGuideStep3';
-import BlogAIReceptionistComparison from '../pages/BlogAIReceptionistComparison';
-import BlogAIReceptionistHowItWorks from '../pages/BlogAIReceptionistHowItWorks';
-import BlogIsAIReceptionistWorthIt from '../pages/BlogIsAIReceptionistWorthIt';
-import BlogHowToMakeAIReceptionist from '../pages/BlogHowToMakeAIReceptionist';
-import BlogWillReceptionistsBeReplacedByAI from '../pages/BlogWillReceptionistsBeReplacedByAI';
-import BlogWhatDoesInstantLeadReplyMean from '../pages/BlogWhatDoesInstantLeadReplyMean';
-import BlogHowToSetUpInstantLeadReply from '../pages/BlogHowToSetUpInstantLeadReply';
-import BlogHowDoesInstantLeadReplyWork from '../pages/BlogHowDoesInstantLeadReplyWork';
-import BlogHowToScheduleText from '../pages/BlogHowToScheduleText';
-import BlogAutomaticGoogleReviews from '../pages/BlogAutomaticGoogleReviews';
-import BlogOutsourcedReceptionServices from '../pages/BlogOutsourcedReceptionServices';
-import BlogEffectivePhoneCallScripts from '../pages/BlogEffectivePhoneCallScripts';
-import BlogLiveAnsweringServiceCosts from '../pages/BlogLiveAnsweringServiceCosts';
-import BlogProfessionalTelephoneEtiquette from '../pages/BlogProfessionalTelephoneEtiquette';
-import BlogAnsweringServiceAppointmentScheduling from '../pages/BlogAnsweringServiceAppointmentScheduling';
-import BlogTop10AIReceptionistAgencies from '../pages/BlogTop10AIReceptionistAgencies';
-import BlogGeminiGemBusinessAssistant from '../pages/BlogGeminiGemBusinessAssistant';
-import Blog5SignsAIReceptionist from '../pages/Blog5SignsAIReceptionist';
-import BestAfterHoursAnsweringService from '../pages/BestAfterHoursAnsweringService';
-import AiPhoneAnsweringDentists from '../pages/AiPhoneAnsweringDentists';
-// import WhatIsAIReceptionistGuide from '../pages/WhatIsAIReceptionistGuide'; // truncated file - fix later
-// import GoogleReviewsAutomationGuide from '../pages/GoogleReviewsAutomationGuide'; // truncated file - fix later
-// import IsAiReceptionistWorthIt from '../pages/IsAiReceptionistWorthIt'; // truncated file - fix later
-import AiPhoneAnsweringPlumbers from '../pages/AiPhoneAnsweringPlumbers';
-import BestAiReceptionistSmallBusiness from '../pages/BestAiReceptionistSmallBusiness';
-import ChatbotVsLiveChatVsPhoneAnswering from '../pages/ChatbotVsLiveChatVsPhoneAnswering';
-import AIVsHumanReceptionistBlog from '../pages/AIVsHumanReceptionistBlog';
-import AiReceptionistCostPricingGuide from '../pages/AiReceptionistCostPricingGuide';
-import SpeedToLeadGuide from '../pages/SpeedToLeadGuide';
-// import Newsletter from '../pages/Newsletter';
-import Comparisons from '../pages/Comparisons';
-import TraditionalCallCentersVsBoltcall from '../pages/comparisons/TraditionalCallCentersVsBoltcall';
-import ReceptionistVsBoltcall from '../pages/comparisons/ReceptionistVsBoltcall';
-import VoicemailVsBoltcall from '../pages/comparisons/VoicemailVsBoltcall';
-import AnsweringServicesVsBoltcall from '../pages/comparisons/AnsweringServicesVsBoltcall';
-import CRMInstantLeadReplyVsBoltcall from '../pages/comparisons/CRMInstantLeadReplyVsBoltcall';
-import AIRevenueAudit from '../pages/AIRevenueAudit';
-import AIRevenueResults from '../pages/AIRevenueResults';
-import SEOAnalyzer from '../pages/SEOAnalyzer';
-import ConversionRateOptimizer from '../pages/ConversionRateOptimizer';
-import AIVisibilityCheck from '../pages/AIVisibilityCheck';
-import NotFound from '../pages/NotFound';
-import AdminPanel from '../pages/AdminPanel';
-import AIReceptionistPage from '../pages/features/AIReceptionistPage';
-import InstantFormReplyPage from '../pages/features/InstantFormReplyPage';
-import SMSBookingAssistantPage from '../pages/features/SMSBookingAssistantPage';
-import AutomatedRemindersPage from '../pages/features/AutomatedRemindersPage';
-import AIFollowUpSystemPage from '../pages/features/AIFollowUpSystemPage';
-import WebsiteChatVoiceWidgetPage from '../pages/features/WebsiteChatVoiceWidgetPage';
-import LeadReactivationFeaturePage from '../pages/features/LeadReactivationPage';
-import SmartWebsitePage from '../pages/features/SmartWebsitePage';
 
-import Strike from '../pages/Strike';
-import Challenge from '../pages/Challenge';
-import BusinessAuditPage from '../pages/BusinessAuditPage';
-import RankOnGoogleOfferPage from '../pages/RankOnGoogleOfferPage';
-import ButtonDemoPage from '../pages/ButtonDemoPage';
-import DrHazakLandingPage from '../pages/DrHazakLandingPage';
-import LeadMagnetPage from '../pages/LeadMagnetPage';
-import LeadMagnetThankYouPage from '../pages/LeadMagnetThankYouPage';
-import LeadMagnetClaudeCodeOvernightKitPage from '../pages/LeadMagnetClaudeCodeOvernightKitPage';
-import AIAuditPage from '../pages/AIAuditPage';
-import AIAuditThankYouPage from '../pages/AIAuditThankYouPage';
-import SEOAuditPDF from '../pages/SEOAuditPDF';
-import SEOAuditPDFThankYou from '../pages/SEOAuditPDFThankYou';
-// import SolarProfitCalculator from '../pages/SolarProfitCalculator';
-// import SolarSalesCloser from '../pages/SolarSalesCloser';
-// import SolarQuoteGenerator from '../pages/SolarQuoteGenerator';
-import VoiceAgentOnboarding from '../pages/VoiceAgentOnboarding';
-import NicheToolPage from '../pages/NicheToolPage';
-// import PlumberRevenueCalculator from '../pages/PlumberRevenueCalculator';
-// import DentistChairCalculator from '../pages/DentistChairCalculator';
-// import HVACOverflowCalculator from '../pages/HVACOverflowCalculator';
-// import RealEstateSpeedScorecard from '../pages/RealEstateSpeedScorecard';
-// import LawyerIntakeCalculator from '../pages/LawyerIntakeCalculator';
-// import MedSpaRebookingCalculator from '../pages/MedSpaRebookingCalculator';
-import FunnelOptimizer from '../pages/FunnelOptimizer';
-import FunnelOptimiser from '../pages/FunnelOptimiser';
-import SolarSpeedToLeadPlaybook from '../pages/SolarSpeedToLeadPlaybook';
-import SolarSpeedToLeadPlaybookThankYou from '../pages/SolarSpeedToLeadPlaybookThankYou';
+// ── Route-level loading fallback ─────────────────────────────────────────
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="w-8 h-8 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
+
+// ── Lazy loads — Dashboard shell & pages ─────────────────────────────────
+const Dashboard = React.lazy(() => import('../pages/Dashboard'));
+const DashboardLayout = React.lazy(() => import('../components/dashboard/DashboardLayout'));
+const SettingsLayout = React.lazy(() => import('../components/dashboard/SettingsLayout'));
+const DashboardPage = React.lazy(() => import('../pages/dashboard/DashboardPage'));
+const AnalyticsPage = React.lazy(() => import('../pages/dashboard/AnalyticsPage'));
+const AgentsPage = React.lazy(() => import('../pages/dashboard/AgentsPage'));
+const SmsPage = React.lazy(() => import('../pages/dashboard/SmsPage'));
+const WhatsappPage = React.lazy(() => import('../pages/dashboard/WhatsappPage'));
+const SettingsPage = React.lazy(() => import('../pages/dashboard/SettingsPage'));
+const KnowledgeBasePage = React.lazy(() => import('../pages/dashboard/KnowledgeBasePage'));
+const PhoneNumbersPage = React.lazy(() => import('../pages/dashboard/PhoneNumbersPage'));
+const IntegrationsPage = React.lazy(() => import('../pages/dashboard/IntegrationsPage'));
+const InstantLeadReplyPage = React.lazy(() => import('../pages/dashboard/InstantLeadReplyPage'));
+const VoiceLibraryPage = React.lazy(() => import('../pages/dashboard/VoiceLibraryPage'));
+const WebsiteBubblePage = React.lazy(() => import('../pages/dashboard/WebsiteBubblePage'));
+const RemindersPage = React.lazy(() => import('../pages/dashboard/RemindersPage'));
+const CalcomPage = React.lazy(() => import('../pages/dashboard/CalcomPage'));
+const CallHistoryPage = React.lazy(() => import('../pages/dashboard/CallHistoryPage'));
+const ReputationPage = React.lazy(() => import('../pages/dashboard/ReputationPage'));
+const LeadsPage = React.lazy(() => import('../pages/dashboard/LeadsPage'));
+const MessagesPage = React.lazy(() => import('../pages/dashboard/MessagesPage'));
+const LocationDashboardPage = React.lazy(() => import('../pages/dashboard/LocationDashboardPage'));
+
+// ── Lazy loads — Dashboard settings ──────────────────────────────────────
+const GeneralPage = React.lazy(() => import('../pages/dashboard/settings/GeneralPage'));
+const PreferencesPage = React.lazy(() => import('../pages/dashboard/settings/PreferencesPage'));
+const MembersPage = React.lazy(() => import('../pages/dashboard/settings/MembersPage'));
+const PlanBillingPage = React.lazy(() => import('../pages/dashboard/settings/PlanBillingPage'));
+const UsagePage = React.lazy(() => import('../pages/dashboard/settings/UsagePage'));
+const NotificationPage = React.lazy(() => import('../pages/dashboard/settings/NotificationPage'));
+
+// ── Lazy loads — Static / info pages ─────────────────────────────────────
+const HelpCenter = React.lazy(() => import('../pages/HelpCenter'));
+const Privacy = React.lazy(() => import('../pages/Privacy'));
+const Terms = React.lazy(() => import('../pages/Terms'));
+const Contact = React.lazy(() => import('../pages/Contact'));
+const About = React.lazy(() => import('../pages/About'));
+const Setup = React.lazy(() => import('../pages/Setup'));
+const SetupLoading = React.lazy(() => import('../pages/SetupLoading'));
+const PricingPage = React.lazy(() => import('../pages/PricingPage'));
+const Documentation = React.lazy(() => import('../pages/Documentation'));
+const NotFound = React.lazy(() => import('../pages/NotFound'));
+const AdminPanel = React.lazy(() => import('../pages/AdminPanel'));
+
+// ── Lazy loads — Payment / Giveaway ──────────────────────────────────────
+const PaymentPro = React.lazy(() => import('../pages/PaymentPro'));
+const PaymentEliteStarter = React.lazy(() => import('../pages/PaymentEliteStarter'));
+const Giveaway = React.lazy(() => import('../pages/Giveaway'));
+const FreeWebsitePage = React.lazy(() => import('../pages/FreeWebsitePage'));
+
+// ── Lazy loads — Lead magnets ────────────────────────────────────────────
+const LeadMagnetPage = React.lazy(() => import('../pages/LeadMagnetPage'));
+const LeadMagnetThankYouPage = React.lazy(() => import('../pages/LeadMagnetThankYouPage'));
+const LeadMagnetClaudeCodeOvernightKitPage = React.lazy(() => import('../pages/LeadMagnetClaudeCodeOvernightKitPage'));
+const AIRevenueAudit = React.lazy(() => import('../pages/AIRevenueAudit'));
+const AIRevenueResults = React.lazy(() => import('../pages/AIRevenueResults'));
+const SEOAnalyzer = React.lazy(() => import('../pages/SEOAnalyzer'));
+const ConversionRateOptimizer = React.lazy(() => import('../pages/ConversionRateOptimizer'));
+const AIVisibilityCheck = React.lazy(() => import('../pages/AIVisibilityCheck'));
+const AIAuditPage = React.lazy(() => import('../pages/AIAuditPage'));
+const AIAuditThankYouPage = React.lazy(() => import('../pages/AIAuditThankYouPage'));
+const SEOAuditPDF = React.lazy(() => import('../pages/SEOAuditPDF'));
+const SEOAuditPDFThankYou = React.lazy(() => import('../pages/SEOAuditPDFThankYou'));
+const BusinessAuditPage = React.lazy(() => import('../pages/BusinessAuditPage'));
+const RankOnGoogleOfferPage = React.lazy(() => import('../pages/RankOnGoogleOfferPage'));
+const NicheToolPage = React.lazy(() => import('../pages/NicheToolPage'));
+const FunnelOptimizer = React.lazy(() => import('../pages/FunnelOptimizer'));
+const FunnelOptimiser = React.lazy(() => import('../pages/FunnelOptimiser'));
+const SolarSpeedToLeadPlaybook = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybook'));
+const SolarSpeedToLeadPlaybookThankYou = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybookThankYou'));
+const VoiceAgentOnboarding = React.lazy(() => import('../pages/VoiceAgentOnboarding'));
+
+// ── Lazy loads — Speed Test funnel ───────────────────────────────────────
+const SpeedTestLanding = React.lazy(() => import('../pages/speed-test/SpeedTestLanding'));
+const SpeedTestLogin = React.lazy(() => import('../pages/speed-test/SpeedTestLogin'));
+const SpeedTestReport = React.lazy(() => import('../pages/speed-test/SpeedTestReport'));
+const SpeedTestOffer = React.lazy(() => import('../pages/speed-test/SpeedTestOffer'));
+
+// ── Lazy loads — Blog pages ──────────────────────────────────────────────
+const BlogCenter = React.lazy(() => import('../pages/BlogCenter'));
+const Blog = React.lazy(() => import('../pages/Blog'));
+const BlogSpeed = React.lazy(() => import('../pages/BlogSpeed'));
+const BlogSpeedWebsite = React.lazy(() => import('../pages/BlogSpeedWebsite'));
+const BlogSEO = React.lazy(() => import('../pages/BlogSEO'));
+const BlogAIGuide = React.lazy(() => import('../pages/BlogAIGuide'));
+const BlogAIGuideStep1 = React.lazy(() => import('../pages/BlogAIGuideStep1'));
+const BlogAIGuideStep2 = React.lazy(() => import('../pages/BlogAIGuideStep2'));
+const BlogAIGuideStep3 = React.lazy(() => import('../pages/BlogAIGuideStep3'));
+const BlogAIReceptionistComparison = React.lazy(() => import('../pages/BlogAIReceptionistComparison'));
+const BlogAIReceptionistHowItWorks = React.lazy(() => import('../pages/BlogAIReceptionistHowItWorks'));
+const BlogIsAIReceptionistWorthIt = React.lazy(() => import('../pages/BlogIsAIReceptionistWorthIt'));
+const BlogHowToMakeAIReceptionist = React.lazy(() => import('../pages/BlogHowToMakeAIReceptionist'));
+const BlogWillReceptionistsBeReplacedByAI = React.lazy(() => import('../pages/BlogWillReceptionistsBeReplacedByAI'));
+const BlogWhatDoesInstantLeadReplyMean = React.lazy(() => import('../pages/BlogWhatDoesInstantLeadReplyMean'));
+const BlogHowToSetUpInstantLeadReply = React.lazy(() => import('../pages/BlogHowToSetUpInstantLeadReply'));
+const BlogHowDoesInstantLeadReplyWork = React.lazy(() => import('../pages/BlogHowDoesInstantLeadReplyWork'));
+const BlogHowToScheduleText = React.lazy(() => import('../pages/BlogHowToScheduleText'));
+const BlogAutomaticGoogleReviews = React.lazy(() => import('../pages/BlogAutomaticGoogleReviews'));
+const BlogOutsourcedReceptionServices = React.lazy(() => import('../pages/BlogOutsourcedReceptionServices'));
+const BlogEffectivePhoneCallScripts = React.lazy(() => import('../pages/BlogEffectivePhoneCallScripts'));
+const BlogLiveAnsweringServiceCosts = React.lazy(() => import('../pages/BlogLiveAnsweringServiceCosts'));
+const BlogProfessionalTelephoneEtiquette = React.lazy(() => import('../pages/BlogProfessionalTelephoneEtiquette'));
+const BlogAnsweringServiceAppointmentScheduling = React.lazy(() => import('../pages/BlogAnsweringServiceAppointmentScheduling'));
+const BlogTop10AIReceptionistAgencies = React.lazy(() => import('../pages/BlogTop10AIReceptionistAgencies'));
+const BlogGeminiGemBusinessAssistant = React.lazy(() => import('../pages/BlogGeminiGemBusinessAssistant'));
+const Blog5SignsAIReceptionist = React.lazy(() => import('../pages/Blog5SignsAIReceptionist'));
+const BestAfterHoursAnsweringService = React.lazy(() => import('../pages/BestAfterHoursAnsweringService'));
+const AiPhoneAnsweringDentists = React.lazy(() => import('../pages/AiPhoneAnsweringDentists'));
+const AiPhoneAnsweringPlumbers = React.lazy(() => import('../pages/AiPhoneAnsweringPlumbers'));
+const BestAiReceptionistSmallBusiness = React.lazy(() => import('../pages/BestAiReceptionistSmallBusiness'));
+const ChatbotVsLiveChatVsPhoneAnswering = React.lazy(() => import('../pages/ChatbotVsLiveChatVsPhoneAnswering'));
+const AIVsHumanReceptionistBlog = React.lazy(() => import('../pages/AIVsHumanReceptionistBlog'));
+const AiReceptionistCostPricingGuide = React.lazy(() => import('../pages/AiReceptionistCostPricingGuide'));
+const SpeedToLeadGuide = React.lazy(() => import('../pages/SpeedToLeadGuide'));
+
+// ── Lazy loads — Comparisons ─────────────────────────────────────────────
+const Comparisons = React.lazy(() => import('../pages/Comparisons'));
+const TraditionalCallCentersVsBoltcall = React.lazy(() => import('../pages/comparisons/TraditionalCallCentersVsBoltcall'));
+const ReceptionistVsBoltcall = React.lazy(() => import('../pages/comparisons/ReceptionistVsBoltcall'));
+const VoicemailVsBoltcall = React.lazy(() => import('../pages/comparisons/VoicemailVsBoltcall'));
+const AnsweringServicesVsBoltcall = React.lazy(() => import('../pages/comparisons/AnsweringServicesVsBoltcall'));
+const CRMInstantLeadReplyVsBoltcall = React.lazy(() => import('../pages/comparisons/CRMInstantLeadReplyVsBoltcall'));
+
+// ── Lazy loads — Feature pages ───────────────────────────────────────────
+const AIReceptionistPage = React.lazy(() => import('../pages/features/AIReceptionistPage'));
+const InstantFormReplyPage = React.lazy(() => import('../pages/features/InstantFormReplyPage'));
+const SMSBookingAssistantPage = React.lazy(() => import('../pages/features/SMSBookingAssistantPage'));
+const AutomatedRemindersPage = React.lazy(() => import('../pages/features/AutomatedRemindersPage'));
+const AIFollowUpSystemPage = React.lazy(() => import('../pages/features/AIFollowUpSystemPage'));
+const WebsiteChatVoiceWidgetPage = React.lazy(() => import('../pages/features/WebsiteChatVoiceWidgetPage'));
+const LeadReactivationFeaturePage = React.lazy(() => import('../pages/features/LeadReactivationPage'));
+const SmartWebsitePage = React.lazy(() => import('../pages/features/SmartWebsitePage'));
+
+// ── Lazy loads — Demo / misc pages ───────────────────────────────────────
+const Strike = React.lazy(() => import('../pages/Strike'));
+const Challenge = React.lazy(() => import('../pages/Challenge'));
+const ButtonDemoPage = React.lazy(() => import('../pages/ButtonDemoPage'));
+const DrHazakLandingPage = React.lazy(() => import('../pages/DrHazakLandingPage'));
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -185,7 +186,7 @@ const NavigationWrapper: React.FC = () => {
   useLenis();
 
   return (
-    <>
+    <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -395,7 +396,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </Suspense>
   );
 };
 

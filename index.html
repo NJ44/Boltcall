@@ -1,24 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5LWRPT5N');</script>
-    <!-- End Google Tag Manager -->
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LY9H4ZQW81"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-LY9H4ZQW81');
-    </script>
-    
     <meta charset="UTF-8" />
+    <!-- Preload critical assets for fast FCP/LCP -->
+    <link rel="preload" href="/boltcall_full_logo.png" as="image" />
+    <link rel="preload" href="/boltcall_small_logo.png" as="image" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/boltcall_small_logo.png" sizes="32x32" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,7 +13,7 @@
     <!-- Google Fonts - Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=optional" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     
     <!-- SEO Meta Tags -->
     <title>AI Receptionist: 24/7 Booking & Lead Capture | Boltcall</title>
@@ -141,11 +128,14 @@
     }
     </script>
     
-    <!-- OpenAI ChatKit -->
-    <script
-      src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"
-      async
-    ></script>
+    <!-- OpenAI ChatKit — loaded lazily after page interaction -->
+    <script>
+      // Defer ChatKit until user interacts or after 5s idle
+      var _ckLoaded=false;
+      function _loadChatKit(){if(_ckLoaded)return;_ckLoaded=true;var s=document.createElement('script');s.src='https://cdn.platform.openai.com/deployments/chatkit/chatkit.js';s.async=true;document.head.appendChild(s);}
+      ['scroll','click','touchstart','mousemove'].forEach(function(e){document.addEventListener(e,_loadChatKit,{once:true,passive:true});});
+      setTimeout(_loadChatKit,5000);
+    </script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -155,5 +145,31 @@
     
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Deferred analytics: load after page is interactive to not block FCP/LCP -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          // Google Tag Manager
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-5LWRPT5N');
+
+          // Google Analytics (gtag)
+          var g=document.createElement('script');
+          g.async=true;
+          g.src='https://www.googletagmanager.com/gtag/js?id=G-LY9H4ZQW81';
+          document.head.appendChild(g);
+          g.onload=function(){
+            window.dataLayer=window.dataLayer||[];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-LY9H4ZQW81');
+          };
+        }, 2000);
+      });
+    </script>
   </body>
 </html>

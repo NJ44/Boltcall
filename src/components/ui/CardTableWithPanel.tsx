@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from './LazyLottie';
 import SlidingPanel from './SlidingPanel';
 
 interface CardTableColumn {
@@ -160,7 +160,7 @@ const CardTableWithPanel: React.FC<CardTableWithPanelProps> = ({
             <div className="pt-6 pb-12 px-12 text-center">
               <div className="flex flex-col items-center justify-center">
                 <div className="w-64 h-64 -mb-4">
-                  <DotLottieReact
+                  <LazyLottie
                     src={emptyStateAnimation}
                     loop
                     autoplay

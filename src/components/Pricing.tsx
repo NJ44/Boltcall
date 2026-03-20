@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { PricingTable } from './ui/pricing-table';
 import WhisperText from './ui/whisper-text';
-import { redirectToCheckout, type PlanLevel } from '../lib/stripe';
+import type { PlanLevel } from '../lib/stripe';
+import { redirectToCheckout } from '../lib/stripe-checkout';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import React from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from '../components/ui/LazyLottie';
 import { Home } from 'lucide-react';
 
 const NotFound: React.FC = () => {
@@ -24,7 +24,7 @@ const NotFound: React.FC = () => {
           className="mb-4"
         >
           <div className="w-80 h-80 mx-auto">
-            <DotLottieReact
+            <LazyLottie
               src="/404_Animation.lottie"
               loop
               autoplay

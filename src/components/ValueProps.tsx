@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Card from './ui/Card';
 import Section from './ui/Section';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from './ui/LazyLottie';
 
 const ValueProps: React.FC = () => {
   const valueProps = [
@@ -69,7 +69,7 @@ const ValueProps: React.FC = () => {
                 
                 {/* Animation */}
                 <div className="w-40 h-40 mx-auto relative">
-                  <DotLottieReact
+                  <LazyLottie
                     src={prop.animation}
                     loop
                     autoplay

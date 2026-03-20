@@ -1,5 +1,5 @@
 import React from 'react';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LazyLottie from '../ui/LazyLottie';
 
 interface CharacterDisplayProps {
   selectedCharacter: string | null;
@@ -25,7 +25,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ selectedCharacter }
 
   return (
     <div className="w-16 h-16">
-      <DotLottieReact
+      <LazyLottie
         src={getCharacterAnimation(selectedCharacter)}
         loop
         autoplay
