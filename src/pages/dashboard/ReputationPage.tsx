@@ -119,6 +119,7 @@ const ReputationPage: React.FC = () => {
       if (updateError) {
         console.error('Failed to save reputation config:', updateError);
         setError('Failed to save settings. Please try again.');
+        showToast({ title: 'Error', message: 'Failed to save reputation settings.', variant: 'error', duration: 4000 });
         setSaving(false);
         return;
       }
@@ -135,6 +136,7 @@ const ReputationPage: React.FC = () => {
     } catch (err) {
       console.error('Reputation save error:', err);
       setError('Something went wrong. Please try again.');
+      showToast({ title: 'Error', message: 'Something went wrong saving reputation settings.', variant: 'error', duration: 4000 });
       setSaving(false);
     }
   };

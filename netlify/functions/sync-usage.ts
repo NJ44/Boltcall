@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import Retell from 'retell-sdk';
 import { getSupabase, deductTokensBatch, TOKEN_COSTS } from './_shared/token-utils';
+import { notifyError } from './_shared/notify';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -133,6 +134,9 @@ async function syncRetell(userId: string): Promise<{
   const result = await deductTokensBatch(userId, items, supabase);
 
   if (!result.success) {
+    await notifyError('sync-usage: Retell token deduction failed', result.error || 'Unknown', {
+      userId, callsSynced: items.length, minutesConsumed: totalMinutes,
+    });
     return {
       calls_synced: 0,
       minutes_consumed: totalMinutes,
@@ -255,6 +259,9 @@ async function syncTwilio(userId: string): Promise<{
   const result = await deductTokensBatch(userId, items, supabase);
 
   if (!result.success) {
+    await notifyError('sync-usage: Twilio token deduction failed', result.error || 'Unknown', {
+      userId, smsSynced: items.length,
+    });
     return { sms_synced: 0, tokens_deducted: 0, error: result.error };
   }
 
@@ -317,12 +324,12 @@ export const handler: Handler = async (event) => {
     };
   } catch (error) {
     console.error('sync-usage error:', error);
+    await notifyError('sync-usage: Unhandled exception', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        error: 'Usage sync failed',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Usage sync failed. Our team has been notified.',
       }),
     };
   }

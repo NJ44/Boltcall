@@ -280,6 +280,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
       if (error) {
         console.error('Error creating agent:', error);
+        showToast({ title: 'Error', message: 'Failed to create agent. Please try again.', variant: 'error', duration: 4000 });
         return;
       }
 
@@ -292,6 +293,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
       if (fetchError) {
         console.error('Error fetching agent:', fetchError);
+        showToast({ title: 'Error', message: 'Agent created but failed to load details.', variant: 'warning', duration: 3000 });
         return;
       }
 
@@ -349,6 +351,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       }
     } catch (error) {
       console.error('Error creating agent from template:', error);
+      showToast({ title: 'Error', message: 'Failed to create agent from template. Please try again.', variant: 'error', duration: 4000 });
     }
   };
 
@@ -419,10 +422,10 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         }
       }
 
-      alert(`Prompt regenerated! (${result.prompt.length} chars, ${result.industry} template)`);
+      showToast({ title: 'Success', message: `Prompt regenerated (${result.prompt.length} chars, ${result.industry} template)`, variant: 'success', duration: 4000 });
     } catch (err) {
       console.error('Prompt regeneration failed:', err);
-      alert('Failed to regenerate prompt: ' + (err instanceof Error ? err.message : 'Unknown error'));
+      showToast({ title: 'Error', message: `Failed to regenerate prompt: ${err instanceof Error ? err.message : 'Unknown error'}`, variant: 'error', duration: 5000 });
     } finally {
       setRegeneratingAgentId(null);
     }

@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import { notifyError } from './_shared/notify';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
 
@@ -87,6 +88,7 @@ export const handler: Handler = async (event) => {
 
     if (!userId) {
       console.error('[appointment-handler] Could not resolve user for organizer:', organizerEmail);
+      await notifyError('appointment-handler: User lookup failed', 'Could not resolve user for organizer email', { organizerEmail, triggerEvent });
       return { statusCode: 404, body: JSON.stringify({ error: 'User not found for organizer email' }) };
     }
 
@@ -139,7 +141,10 @@ export const handler: Handler = async (event) => {
 
       if (apptError) {
         console.error('[appointment-handler] Failed to insert appointment:', apptError);
-        return { statusCode: 500, body: JSON.stringify({ error: 'Failed to create appointment', details: apptError.message }) };
+        await notifyError('appointment-handler: Appointment creation failed', apptError, {
+          userId, organizerEmail, attendeeName, bookingId, triggerEvent,
+        });
+        return { statusCode: 500, body: JSON.stringify({ error: 'Failed to create appointment. Please try again or contact support.' }) };
       }
 
       const appointmentId = appt.id;
@@ -221,6 +226,9 @@ export const handler: Handler = async (event) => {
 
         if (msgError) {
           console.error('[appointment-handler] Failed to insert scheduled messages:', msgError);
+          await notifyError('appointment-handler: Scheduled messages insert failed', msgError, {
+            userId, appointmentId, messagesCount: messagesToInsert.length,
+          });
           // Non-fatal — appointment was created successfully
         }
       }
@@ -363,9 +371,10 @@ export const handler: Handler = async (event) => {
     };
   } catch (err: any) {
     console.error('[appointment-handler] Error:', err);
+    await notifyError('appointment-handler: Unhandled exception', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message || 'Internal server error' }),
+      body: JSON.stringify({ error: 'An unexpected error occurred processing the appointment. Our team has been notified.' }),
     };
   }
 };

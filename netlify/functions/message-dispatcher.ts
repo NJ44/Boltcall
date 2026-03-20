@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
+import { notifyError } from './_shared/notify';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
@@ -71,6 +72,7 @@ export const handler: Handler = async (event) => {
 
     if (fetchError) {
       console.error('[message-dispatcher] Failed to fetch messages:', fetchError);
+      await notifyError('message-dispatcher: Failed to fetch due messages', fetchError);
       return { statusCode: 500, body: JSON.stringify({ error: 'Failed to fetch due messages' }) };
     }
 
@@ -122,6 +124,13 @@ export const handler: Handler = async (event) => {
             })
             .eq('id', msg.id);
 
+          await notifyError('message-dispatcher: SMS send failed', result.error, {
+            messageId: msg.id,
+            recipient: msg.recipient_phone,
+            messageType: msg.type,
+            userId: msg.user_id,
+          });
+
           failed++;
         }
       } else {
@@ -146,9 +155,10 @@ export const handler: Handler = async (event) => {
     };
   } catch (err: any) {
     console.error('[message-dispatcher] Error:', err);
+    await notifyError('message-dispatcher: Unhandled exception', err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message || 'Internal server error' }),
+      body: JSON.stringify({ error: 'Message dispatch failed. Our team has been notified.' }),
     };
   }
 };

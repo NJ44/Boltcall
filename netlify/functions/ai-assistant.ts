@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { createClient } from '@supabase/supabase-js';
 import Retell from 'retell-sdk';
 import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
+import { notifyError } from './_shared/notify';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -493,13 +494,26 @@ const handler: Handler = async (event) => {
       const toolResults: Anthropic.ToolResultBlockParam[] = [];
       for (const tc of toolUseBlocks) {
         console.log(`Executing tool: ${tc.name}`, tc.input);
-        const { result, actionTaken } = await executeTool(tc.name, tc.input, ctx);
-        if (actionTaken) actionsTaken.push(actionTaken);
-        toolResults.push({
-          type: 'tool_result',
-          tool_use_id: tc.id,
-          content: result,
-        });
+        try {
+          const { result, actionTaken } = await executeTool(tc.name, tc.input, ctx);
+          if (actionTaken) actionsTaken.push(actionTaken);
+          toolResults.push({
+            type: 'tool_result',
+            tool_use_id: tc.id,
+            content: result,
+          });
+        } catch (toolErr) {
+          console.error(`Tool execution failed: ${tc.name}`, toolErr);
+          await notifyError('ai-assistant: Tool execution failed', toolErr, {
+            toolName: tc.name, userId, input: JSON.stringify(tc.input).slice(0, 200),
+          });
+          toolResults.push({
+            type: 'tool_result',
+            tool_use_id: tc.id,
+            content: `Error executing ${tc.name}: ${toolErr instanceof Error ? toolErr.message : 'Unknown error'}`,
+            is_error: true,
+          });
+        }
       }
 
       // Follow-up call with tool results
@@ -547,10 +561,17 @@ const handler: Handler = async (event) => {
     };
   } catch (error: any) {
     console.error('AI Assistant error:', error);
+    await notifyError('ai-assistant: Unhandled exception', error, {
+      errorType: error?.constructor?.name || 'Unknown',
+      statusCode: error?.status || 'none',
+    });
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: error.message || 'Internal server error' }),
+      body: JSON.stringify({
+        error: 'The AI assistant encountered an error. Please try again.',
+        reply: 'Sorry, I ran into a problem processing your request. Please try again in a moment.',
+      }),
     };
   }
 };

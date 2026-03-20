@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import { notifyError } from './_shared/notify';
 
 /**
  * Retell Post-Call Webhook
@@ -127,6 +128,9 @@ export const handler: Handler = async (event) => {
 
     if (agentError || !agentRow) {
       console.error('[retell-webhook] Could not find agent owner for', agentId, agentError);
+      await notifyError('retell-webhook: Agent owner not found (missed call)', agentError || 'No matching agent row', {
+        agentId, callerPhone: callerPhone || 'unknown', callId: call.call_id, callStatus: call.call_status,
+      });
       return {
         statusCode: 200,
         headers,
@@ -162,6 +166,9 @@ export const handler: Handler = async (event) => {
 
     if (leadError) {
       console.error('[retell-webhook] Failed to create lead:', leadError);
+      await notifyError('retell-webhook: Lead creation failed', leadError, {
+        callerPhone, userId, callId: call.call_id, callStatus: call.call_status,
+      });
     }
 
     if (!config.enabled) {
@@ -216,6 +223,9 @@ export const handler: Handler = async (event) => {
 
     if (msgError) {
       console.error('[retell-webhook] Failed to schedule text-back:', msgError);
+      await notifyError('retell-webhook: Text-back scheduling failed', msgError, {
+        callerPhone, userId, callId: call.call_id, delayMinutes,
+      });
       return {
         statusCode: 200,
         headers,
@@ -245,12 +255,12 @@ export const handler: Handler = async (event) => {
     };
   } catch (err) {
     console.error('[retell-webhook] Error:', err);
+    await notifyError('retell-webhook: Unhandled exception', err);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        error: 'Webhook processing failed',
-        details: err instanceof Error ? err.message : 'Unknown error',
+        error: 'Call webhook processing failed. Our team has been notified.',
       }),
     };
   }

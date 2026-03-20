@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import { notifyError } from './_shared/notify';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
@@ -228,12 +229,12 @@ export const handler: Handler = async (event) => {
         };
       } catch (error) {
         console.error('Facebook leadgen processing error:', error);
+        await notifyError('lead-webhook: Facebook leadgen processing failed', error);
         return {
           statusCode: 500,
           headers,
           body: JSON.stringify({
-            error: 'Facebook lead processing failed',
-            details: error instanceof Error ? error.message : 'Unknown error',
+            error: 'Facebook lead processing failed. Our team has been notified.',
           }),
         };
       }
@@ -262,10 +263,13 @@ export const handler: Handler = async (event) => {
 
       if (error) {
         console.error('Supabase insert error:', error);
+        await notifyError('lead-webhook: Lead insert failed', error, {
+          source: lead.source, email: lead.email || 'none', phone: lead.phone || 'none',
+        });
         return {
           statusCode: 500,
           headers,
-          body: JSON.stringify({ error: 'Failed to insert lead', details: error.message }),
+          body: JSON.stringify({ error: 'Failed to insert lead. Our team has been notified.' }),
         };
       }
 
@@ -276,12 +280,12 @@ export const handler: Handler = async (event) => {
       };
     } catch (error) {
       console.error('Lead webhook error:', error);
+      await notifyError('lead-webhook: Unhandled exception', error);
       return {
         statusCode: 500,
         headers,
         body: JSON.stringify({
-          error: 'Internal server error',
-          details: error instanceof Error ? error.message : 'Unknown error',
+          error: 'Lead processing failed. Our team has been notified.',
         }),
       };
     }

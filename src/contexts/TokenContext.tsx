@@ -20,12 +20,14 @@ interface TokenBalance {
 interface ConsumeResult {
   success: boolean;
   remainingBalance: number;
+  error?: string;
 }
 
 interface ClaimResult {
   success: boolean;
   alreadyClaimed: boolean;
   tokensAwarded: number;
+  error?: string;
 }
 
 interface TokenContextType {
@@ -85,12 +87,12 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     description: string
   ): Promise<ConsumeResult> => {
     if (!user?.id || !tokenBalance) {
-      return { success: false, remainingBalance: 0 };
+      return { success: false, remainingBalance: 0, error: 'Not authenticated or no token balance found.' };
     }
 
     const totalAvailable = tokenBalance.balance + tokenBalance.bonus_balance;
     if (totalAvailable < amount) {
-      return { success: false, remainingBalance: totalAvailable };
+      return { success: false, remainingBalance: totalAvailable, error: `Insufficient tokens. You need ${amount} but only have ${totalAvailable} available.` };
     }
 
     // Deduct from bonus_balance first, then balance
@@ -114,7 +116,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     if (updateError) {
       console.error('Error updating token balance:', updateError);
-      return { success: false, remainingBalance: totalAvailable };
+      return { success: false, remainingBalance: totalAvailable, error: 'Failed to update token balance. Please try again.' };
     }
 
     // Insert transaction record
@@ -151,7 +153,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const claimReward = async (rewardType: TokenRewardType): Promise<ClaimResult> => {
     if (!user?.id) {
-      return { success: false, alreadyClaimed: false, tokensAwarded: 0 };
+      return { success: false, alreadyClaimed: false, tokensAwarded: 0, error: 'Not authenticated.' };
     }
 
     const reward = TOKEN_REWARDS[rewardType];
@@ -166,7 +168,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     if (checkError && checkError.code !== 'PGRST116') {
       console.error('Error checking reward:', checkError);
-      return { success: false, alreadyClaimed: false, tokensAwarded: 0 };
+      return { success: false, alreadyClaimed: false, tokensAwarded: 0, error: 'Failed to check reward status.' };
     }
 
     if (existing) {
@@ -184,7 +186,7 @@ export const TokenProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     if (rewardError) {
       console.error('Error inserting reward:', rewardError);
-      return { success: false, alreadyClaimed: false, tokensAwarded: 0 };
+      return { success: false, alreadyClaimed: false, tokensAwarded: 0, error: 'Failed to claim reward. Please try again.' };
     }
 
     // Add to bonus_balance
