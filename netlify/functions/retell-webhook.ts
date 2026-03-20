@@ -145,16 +145,7 @@ export const handler: Handler = async (event) => {
 
     const config = (featureRow?.missed_call_config || {}) as Record<string, any>;
 
-    if (!config.enabled) {
-      console.log('[retell-webhook] Missed call text-back not enabled for user', userId);
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ ok: true, missed: true, textback: false, reason: 'not_enabled' }),
-      };
-    }
-
-    // Step 3: Create a lead
+    // Step 3: Always create a lead for missed calls (even if text-back is disabled)
     const { data: lead, error: leadError } = await supabase
       .from('leads')
       .insert({
@@ -171,6 +162,15 @@ export const handler: Handler = async (event) => {
 
     if (leadError) {
       console.error('[retell-webhook] Failed to create lead:', leadError);
+    }
+
+    if (!config.enabled) {
+      console.log('[retell-webhook] Missed call text-back not enabled for user', userId);
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ ok: true, missed: true, lead_created: !!lead, textback: false, reason: 'not_enabled' }),
+      };
     }
 
     // Step 4: Get business name for template substitution
