@@ -230,39 +230,57 @@ export const handler: Handler = async (event) => {
           ...getDefaultAgentConfig(body.language),
         } as any);
 
-        // Step 5: Trigger Cekura full simulation test (async — fires and returns result_id)
-        let cekuraTest: { success: boolean; result_id?: number; cekura_agent_id?: number; evaluators_created?: number; total_runs?: number; error?: string } = { success: false };
+        // Step 5: Register agent in Cekura + create test scenarios (don't run yet)
+        let cekuraSetup: { success: boolean; cekura_agent_id?: number; evaluators_created?: number; error?: string } = { success: false };
         try {
           const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-          const cekuraResponse = await fetch(`${baseUrl}/.netlify/functions/cekura-test`, {
+
+          // Step 5a: Register agent in Cekura
+          const registerRes = await fetch(`${baseUrl}/.netlify/functions/cekura-test`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              action: 'full_test',
+              action: 'register_agent',
               retell_agent_id: agent.agent_id,
               agent_name: `${body.business_name} AI Receptionist`,
-              business_name: body.business_name,
               phone_number: body.phone_number,
               language: body.language,
             }),
           });
 
-          if (cekuraResponse.ok) {
-            const cekuraData = await cekuraResponse.json();
-            cekuraTest = {
-              success: true,
-              result_id: cekuraData.result_id,
-              cekura_agent_id: cekuraData.cekura_agent_id,
-              evaluators_created: cekuraData.evaluators_created,
-              total_runs: cekuraData.total_runs,
-            };
+          if (registerRes.ok) {
+            const registerData = await registerRes.json();
+            const cekuraAgentId = registerData.cekura_agent_id;
+
+            // Step 5b: Create test evaluators (prepared, not run)
+            const evalRes = await fetch(`${baseUrl}/.netlify/functions/cekura-test`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'create_evaluators',
+                cekura_agent_id: cekuraAgentId,
+                agent_name: `${body.business_name} AI Receptionist`,
+                business_name: body.business_name,
+              }),
+            });
+
+            if (evalRes.ok) {
+              const evalData = await evalRes.json();
+              cekuraSetup = {
+                success: true,
+                cekura_agent_id: cekuraAgentId,
+                evaluators_created: evalData.evaluators_created,
+              };
+            } else {
+              cekuraSetup = { success: true, cekura_agent_id: cekuraAgentId, evaluators_created: 0, error: 'Evaluator creation failed' };
+            }
           } else {
-            const cekuraErr = await cekuraResponse.json().catch(() => ({}));
-            cekuraTest = { success: false, error: cekuraErr.details || cekuraErr.error || 'Cekura test failed' };
+            const err = await registerRes.json().catch(() => ({}));
+            cekuraSetup = { success: false, error: err.details || err.error || 'Cekura registration failed' };
           }
         } catch (testErr) {
-          console.error('Cekura test trigger failed:', testErr);
-          cekuraTest = { success: false, error: testErr instanceof Error ? testErr.message : 'Cekura test trigger failed' };
+          console.error('Cekura setup failed:', testErr);
+          cekuraSetup = { success: false, error: testErr instanceof Error ? testErr.message : 'Cekura setup failed' };
         }
 
         return {
@@ -274,7 +292,7 @@ export const handler: Handler = async (event) => {
             agent_id: agent.agent_id,
             agent,
             prompt_used: body.prompt_config ? 'professional' : body.general_prompt ? 'custom' : 'legacy',
-            cekura_test: cekuraTest,
+            cekura_setup: cekuraSetup,
           }),
         };
       }
