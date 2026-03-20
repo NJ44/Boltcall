@@ -166,9 +166,11 @@ const Hero: React.FC = () => {
 
   return (
     <>
+      {/* White cover to hide the blue body background above the hero */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-white z-[0]" />
       <section
         id="hero"
-        className="relative -mt-24 pb-32 md:pb-64 lg:-mt-32 lg:pb-96 overflow-visible z-[1] bg-white py-12 md:py-16 lg:py-24"
+        className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-visible z-[1] bg-white py-12 md:py-16 lg:py-24"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
         onMouseMove={handleMouseMove}
       >
