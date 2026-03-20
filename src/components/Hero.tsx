@@ -277,7 +277,7 @@ const Hero: React.FC = () => {
                     howItWorksSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="min-h-11 w-40 rounded-lg border border-brand-blue text-brand-blue font-medium hover:bg-brand-blue hover:text-white transition-colors py-2.5 px-4"
+                className="min-h-11 w-40 rounded-full border border-brand-blue text-brand-blue font-medium hover:bg-brand-blue hover:text-white transition-colors py-2.5 px-4"
               >
                 Learn more
               </button>
