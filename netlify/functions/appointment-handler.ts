@@ -131,7 +131,7 @@ export const handler: Handler = async (event) => {
           starts_at: startTime,
           ends_at: endTime,
           timezone: payload.organizer?.timeZone || 'UTC',
-          status: 'scheduled',
+          status: 'confirmed',
           raw_webhook: body,
         })
         .select('id')
@@ -181,7 +181,7 @@ export const handler: Handler = async (event) => {
             recipient_email: attendeeEmail,
             message_body: messageBody,
             scheduled_for: scheduledFor.toISOString(),
-            status: 'scheduled',
+            status: 'confirmed',
           });
         }
       }
@@ -209,7 +209,7 @@ export const handler: Handler = async (event) => {
           recipient_email: attendeeEmail,
           message_body: messageBody,
           scheduled_for: scheduledFor.toISOString(),
-          status: 'scheduled',
+          status: 'confirmed',
         });
       }
 
@@ -282,7 +282,7 @@ export const handler: Handler = async (event) => {
         .update({
           starts_at: startTime,
           ends_at: endTime,
-          status: 'scheduled',
+          status: 'confirmed',
           raw_webhook: body,
           updated_at: new Date().toISOString(),
         })
