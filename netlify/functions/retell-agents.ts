@@ -219,7 +219,7 @@ export const handler: Handler = async (event) => {
 
         // Step 4: Create agent with the response engine + default config
         const agent = await client.agent.create({
-          agent_name: `${body.business_name} AI Assistant`,
+          agent_name: `${body.business_name} AI Receptionist`,
           voice_id: body.voice_id || '11labs-Adrian',
           language: body.language || 'en-US',
           response_engine: responseEngine,
@@ -236,7 +236,7 @@ export const handler: Handler = async (event) => {
             body: JSON.stringify({
               action: 'full_test',
               retell_agent_id: agent.agent_id,
-              agent_name: `${body.business_name} AI Assistant`,
+              agent_name: `${body.business_name} AI Receptionist`,
               business_name: body.business_name,
               phone_number: body.phone_number,
               language: body.language,
