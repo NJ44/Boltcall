@@ -106,7 +106,7 @@ const HowItWorks: React.FC = () => {
                   </div>
                 </div>
                 {/* Blue gradient from bottom */}
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-blue-500/15 via-blue-400/5 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-blue-100 via-blue-50/60 to-transparent pointer-events-none z-0" />
               </CardSticky>
             ))}
           </ContainerScroll>
