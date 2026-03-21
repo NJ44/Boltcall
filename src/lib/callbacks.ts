@@ -6,9 +6,10 @@ export class CallbackService {
    * Create a new callback request
    */
   static async createCallback(callbackData: CreateCallbackRequest): Promise<Callback> {
+    const { data: { user } } = await supabase.auth.getUser();
     const { data, error } = await supabase
       .from('callbacks')
-      .insert([callbackData])
+      .insert([{ ...callbackData, user_id: user?.id }])
       .select()
       .single();
 

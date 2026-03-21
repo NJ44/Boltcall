@@ -16,10 +16,12 @@ export class ChatService {
    * Create a new chat session
    */
   static async createChat(chatData: CreateChatRequest): Promise<Chat> {
+    const { data: { user } } = await supabase.auth.getUser();
     const { data, error } = await supabase
       .from('chats')
       .insert([{
         ...chatData,
+        user_id: user?.id,
         chat_history: [],
         message_count: 0,
         duration_seconds: 0,
