@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npm run build:prerender"
+  command = "npm run build"
 
 # Service worker must not be cached by browser/CDN
 [[headers]]
