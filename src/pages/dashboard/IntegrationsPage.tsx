@@ -3,44 +3,34 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, Mail } from 'lucide-react';
 
 const IntegrationsPage: React.FC = () => {
-  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
-  const [isEmailPanelOpen, setIsEmailPanelOpen] = useState(false);
-  const [isMicrosoftPanelOpen, setIsMicrosoftPanelOpen] = useState(false);
+  const [activePanel, setActivePanel] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState('');
-  const [isConnected, setIsConnected] = useState(false);
-  const [isEmailConnected, setIsEmailConnected] = useState(false);
-  const [isMicrosoftConnected, setIsMicrosoftConnected] = useState(false);
+  const [connectedIntegrations, setConnectedIntegrations] = useState<Set<string>>(new Set());
 
-  const handleContainerClick = () => {
-    setIsSidePanelOpen(true);
+  const openPanel = (id: string) => setActivePanel(id);
+  const closePanel = () => setActivePanel(null);
+
+  const handleConnect = (id: string) => {
+    setConnectedIntegrations(prev => new Set(prev).add(id));
+    setActivePanel(null);
   };
 
-  const handleClosePanel = () => {
-    setIsSidePanelOpen(false);
-  };
-
-  const handleConnect = () => {
-    // Implementation for connecting with Cal.com
-    setIsConnected(true);
-    setIsSidePanelOpen(false);
-  };
-
-  const handleEmailConnect = () => {
-    // Implementation for connecting email
-    setIsEmailConnected(true);
-    setIsEmailPanelOpen(false);
-  };
-
-  const handleMicrosoftConnect = () => {
-    // Implementation for connecting Microsoft
-    setIsMicrosoftConnected(true);
-    setIsMicrosoftPanelOpen(false);
-  };
+  const isConnected = (id: string) => connectedIntegrations.has(id);
 
   const handleOpenCalcom = () => {
-    // Navigate to Cal.com page
     window.location.href = '/dashboard/calcom';
   };
+
+  // Backwards compat
+  const handleContainerClick = () => openPanel('calcom');
+  const isSidePanelOpen = activePanel === 'calcom';
+  const handleClosePanel = closePanel;
+  const isEmailPanelOpen = activePanel === 'email';
+  const isMicrosoftPanelOpen = activePanel === 'microsoft';
+  const handleEmailConnect = () => handleConnect('email');
+  const handleMicrosoftConnect = () => handleConnect('microsoft');
+  const isEmailConnected = isConnected('email');
+  const isMicrosoftConnected = isConnected('microsoft');
 
   // Add effect to update body class when panel is open
   React.useEffect(() => {
@@ -77,7 +67,7 @@ const IntegrationsPage: React.FC = () => {
         {/* Cal.com Integration */}
         <div 
           className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={isConnected ? undefined : handleContainerClick}
+          onClick={isConnected('calcom') ? undefined : handleContainerClick}
         >
           <div className="flex items-center gap-3 mb-3">
             {/* Cal.com Logo */}
@@ -97,7 +87,7 @@ const IntegrationsPage: React.FC = () => {
             Your AI receptionist can book meetings directly into your calendar.
           </p>
 
-          {isConnected && (
+          {isConnected('calcom') && (
             <button
               onClick={handleOpenCalcom}
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
@@ -134,7 +124,7 @@ const IntegrationsPage: React.FC = () => {
         {/* Email Integration */}
         <div 
           className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={() => setIsEmailPanelOpen(true)}
+          onClick={() => openPanel('email')}
         >
           <div className="flex items-center gap-3 mb-3">
             {/* Gmail Logo */}
@@ -177,7 +167,7 @@ const IntegrationsPage: React.FC = () => {
         {/* Microsoft Integration */}
         <div 
           className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={() => setIsMicrosoftPanelOpen(true)}
+          onClick={() => openPanel('microsoft')}
         >
           <div className="flex items-center gap-3 mb-3">
             {/* Microsoft Logo */}
@@ -209,7 +199,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* Google Calendar Integration */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('google-calendar')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
@@ -234,7 +224,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* HubSpot CRM */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('hubspot')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#FF7A59] rounded-lg flex items-center justify-center">
@@ -254,7 +244,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* Jobber */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('jobber')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#7BC74D] rounded-lg flex items-center justify-center">
@@ -272,7 +262,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* Housecall Pro */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('housecall-pro')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#0D6EFD] rounded-lg flex items-center justify-center">
@@ -292,7 +282,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* ServiceTitan */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('servicetitan')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#1B365D] rounded-lg flex items-center justify-center">
@@ -310,7 +300,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* Zapier */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('zapier')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#FF4F00] rounded-lg flex items-center justify-center">
@@ -330,7 +320,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* Google Sheets */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('google-sheets')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#0F9D58] rounded-lg flex items-center justify-center">
@@ -350,7 +340,7 @@ const IntegrationsPage: React.FC = () => {
 
         {/* QuickBooks */}
         <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={handleContainerClick}
+          onClick={() => openPanel('quickbooks')}
         >
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#2CA01C] rounded-lg flex items-center justify-center">
@@ -377,7 +367,7 @@ const IntegrationsPage: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed -inset-[200px] bg-black bg-opacity-50 z-40"
-              onClick={() => setIsEmailPanelOpen(false)}
+              onClick={() => closePanel()}
             />
             
             {/* Side Panel */}
@@ -402,7 +392,7 @@ const IntegrationsPage: React.FC = () => {
                     <h2 className="text-xl font-semibold text-gray-900">Email Integration</h2>
                   </div>
                   <button
-                    onClick={() => setIsEmailPanelOpen(false)}
+                    onClick={() => closePanel()}
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
                     <X className="w-5 h-5 text-gray-500" />
@@ -448,7 +438,7 @@ const IntegrationsPage: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed -inset-[200px] bg-black bg-opacity-50 z-40"
-              onClick={() => setIsMicrosoftPanelOpen(false)}
+              onClick={() => closePanel()}
             />
             
             {/* Side Panel */}
@@ -478,7 +468,7 @@ const IntegrationsPage: React.FC = () => {
                     <h2 className="text-xl font-semibold text-gray-900">Microsoft Integration</h2>
                   </div>
                   <button
-                    onClick={() => setIsMicrosoftPanelOpen(false)}
+                    onClick={() => closePanel()}
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
                     <X className="w-5 h-5 text-gray-500" />
@@ -603,7 +593,7 @@ const IntegrationsPage: React.FC = () => {
                     </div>
                     
                     <button
-                      onClick={handleConnect}
+                      onClick={() => handleConnect('calcom')}
                       className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
                     >
                       Connect
@@ -614,6 +604,107 @@ const IntegrationsPage: React.FC = () => {
             </motion.div>
           </>
         )}
+      </AnimatePresence>
+
+      {/* Generic Integration Panel (for new integrations) */}
+      <AnimatePresence>
+        {activePanel && !['calcom', 'email', 'microsoft'].includes(activePanel) && (() => {
+          const integrationInfo: Record<string, { name: string; color: string; description: string; steps: string[]; apiLabel?: string; url?: string }> = {
+            'google-calendar': { name: 'Google Calendar', color: '#4285F4', description: 'Sync your Google Calendar so the AI receptionist can check availability and book appointments.', steps: ['Sign in with your Google account', 'Select which calendar to use', 'Your AI receptionist will check availability before booking'], url: 'https://calendar.google.com' },
+            'hubspot': { name: 'HubSpot', color: '#FF7A59', description: 'Automatically push new leads, calls, and appointments into your HubSpot CRM.', steps: ['Create a free HubSpot account if you don\'t have one', 'Enter your HubSpot API key below', 'New leads from calls will appear in your HubSpot contacts'], apiLabel: 'HubSpot API Key', url: 'https://app.hubspot.com' },
+            'jobber': { name: 'Jobber', color: '#7BC74D', description: 'Sync leads as new jobs, schedule site visits, and send quotes automatically.', steps: ['Log into your Jobber account', 'Enter your Jobber API key below', 'Incoming calls will create new job requests in Jobber'], apiLabel: 'Jobber API Key', url: 'https://getjobber.com' },
+            'housecall-pro': { name: 'Housecall Pro', color: '#0D6EFD', description: 'Turn incoming calls into jobs, dispatch techs, and send invoices — all connected.', steps: ['Log into your Housecall Pro account', 'Enter your API key below', 'Booked appointments will sync as new jobs'], apiLabel: 'Housecall Pro API Key', url: 'https://housecallpro.com' },
+            'servicetitan': { name: 'ServiceTitan', color: '#1B365D', description: 'Sync calls, book jobs, and track leads directly from your AI receptionist.', steps: ['Contact your ServiceTitan admin for API access', 'Enter your Client ID and Secret below', 'Calls and bookings will sync in real time'], apiLabel: 'ServiceTitan Client ID', url: 'https://servicetitan.com' },
+            'zapier': { name: 'Zapier', color: '#FF4F00', description: 'Connect Boltcall to 6,000+ apps — QuickBooks, Slack, Mailchimp, and more.', steps: ['Create a free Zapier account', 'Search for "Boltcall" in Zapier', 'Choose a trigger (new lead, call ended, appointment booked) and connect to any app'], url: 'https://zapier.com' },
+            'google-sheets': { name: 'Google Sheets', color: '#0F9D58', description: 'Log every call, lead, and appointment into a Google Sheet automatically.', steps: ['Sign in with your Google account', 'Select or create a spreadsheet', 'New leads and calls will be added as rows automatically'], url: 'https://sheets.google.com' },
+            'quickbooks': { name: 'QuickBooks', color: '#2CA01C', description: 'Create invoices and estimates automatically when a job is booked.', steps: ['Log into your QuickBooks account', 'Authorize Boltcall to access your QuickBooks', 'Booked jobs will create draft invoices automatically'], apiLabel: 'QuickBooks API Key', url: 'https://quickbooks.intuit.com' },
+          };
+          const info = integrationInfo[activePanel];
+          if (!info) return null;
+          return (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed -inset-[200px] bg-black bg-opacity-50 z-40"
+                onClick={closePanel}
+              />
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'tween', ease: [0.25, 0.46, 0.45, 0.94], duration: 0.4 }}
+                className="fixed right-0 top-0 h-screen w-96 bg-white shadow-xl z-50 overflow-y-auto rounded-l-3xl"
+              >
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: info.color }}>
+                        <span className="text-white font-bold text-sm">{info.name[0]}</span>
+                      </div>
+                      <h2 className="text-xl font-semibold text-gray-900">{info.name}</h2>
+                    </div>
+                    <button onClick={closePanel} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                      <X className="w-5 h-5 text-gray-500" />
+                    </button>
+                  </div>
+
+                  <p className="text-gray-600 mb-6">{info.description}</p>
+
+                  <div className="border-t border-gray-200 mb-6"></div>
+
+                  <h3 className="text-lg font-medium text-gray-900 mb-3">How to connect</h3>
+                  <ol className="space-y-3 mb-6">
+                    {info.steps.map((step, i) => (
+                      <li key={i} className="flex gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: info.color }}>{i + 1}</span>
+                        <span className="text-sm text-gray-600">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+
+                  {info.apiLabel && (
+                    <div className="space-y-4 mb-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{info.apiLabel}</label>
+                        <input
+                          type="text"
+                          placeholder={`Enter your ${info.name} API key`}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                      <button
+                        onClick={() => handleConnect(activePanel)}
+                        className="w-full text-white py-2 px-4 rounded-lg hover:opacity-90 transition-opacity"
+                        style={{ backgroundColor: info.color }}
+                      >
+                        Connect {info.name}
+                      </button>
+                    </div>
+                  )}
+
+                  {!info.apiLabel && (
+                    <button
+                      onClick={() => handleConnect(activePanel)}
+                      className="w-full text-white py-2 px-4 rounded-lg hover:opacity-90 transition-opacity mb-4"
+                      style={{ backgroundColor: info.color }}
+                    >
+                      Connect {info.name}
+                    </button>
+                  )}
+
+                  {info.url && (
+                    <a href={info.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700">
+                      <ExternalLink className="w-4 h-4" />
+                      Visit {info.name}
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            </>
+          );
+        })()}
       </AnimatePresence>
     </div>
   );
