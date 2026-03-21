@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "npm run build:prerender"
 
 # Service worker must not be cached by browser/CDN
 [[headers]]
@@ -26,6 +26,8 @@
 [build.environment]
   NODE_VERSION = "20"
   SECRETS_SCAN_OMIT_KEYS = "VITE_RETELL_PUBLIC_KEY"
+  # Ensure Puppeteer downloads Chromium during npm install on Netlify
+  PUPPETEER_CACHE_DIR = "/opt/buildhome/.cache/puppeteer"
 
 [functions]
   directory = "netlify/functions"

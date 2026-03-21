@@ -137,10 +137,28 @@ async function prerender() {
   console.log(`Prerendering ${ROUTES.length} routes...\n`);
 
   const server = await startServer();
-  const browser = await puppeteer.launch({
+  // On Netlify CI, use the system Chromium if puppeteer's bundled one isn't found
+  const launchOptions = {
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-  });
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+  };
+
+  // Check for Netlify CI environment
+  if (process.env.NETLIFY || process.env.CI) {
+    // Try common system chromium paths on Netlify's Ubuntu image
+    const { execSync } = await import('child_process');
+    try {
+      const chromePath = execSync('which chromium-browser || which chromium || which google-chrome-stable || which google-chrome', { encoding: 'utf8' }).trim();
+      if (chromePath) {
+        console.log(`Using system Chrome: ${chromePath}`);
+        launchOptions.executablePath = chromePath;
+      }
+    } catch {
+      console.log('No system Chrome found, using puppeteer bundled Chromium');
+    }
+  }
+
+  const browser = await puppeteer.launch(launchOptions);
 
   let success = 0;
   let failed = 0;
