@@ -1,0 +1,188 @@
+import { Handler } from '@netlify/functions';
+import { createClient } from '@supabase/supabase-js';
+import { notifyError } from './_shared/notify';
+import { randomUUID } from 'crypto';
+
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
+const BREVO_API_BASE = 'https://api.brevo.com/v3';
+
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json',
+};
+
+function getServiceClient() {
+  return createClient(SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY!, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
+export const handler: Handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
+
+  const supabase = getServiceClient();
+
+  try {
+    const body = JSON.parse(event.body || '{}');
+    const action = body.action || 'invite';
+
+    // ─── INVITE MEMBER ───────────────────────────────────────────
+    if (action === 'invite') {
+      const { email, role, workspaceId, invitedBy, businessName } = body;
+
+      if (!email || !workspaceId || !invitedBy) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'email, workspaceId, invitedBy are required' }) };
+      }
+
+      // Check if already invited
+      const { data: existing } = await supabase
+        .from('workspace_members')
+        .select('id, status')
+        .eq('workspace_id', workspaceId)
+        .eq('email', email)
+        .single();
+
+      if (existing && existing.status === 'active') {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'This person is already a team member' }) };
+      }
+
+      const inviteToken = randomUUID();
+
+      if (existing) {
+        // Re-invite
+        await supabase
+          .from('workspace_members')
+          .update({
+            invite_token: inviteToken,
+            role: role || 'member',
+            status: 'pending',
+            invited_at: new Date().toISOString(),
+          })
+          .eq('id', existing.id);
+      } else {
+        // New invite
+        await supabase.from('workspace_members').insert({
+          workspace_id: workspaceId,
+          email,
+          role: role || 'member',
+          status: 'pending',
+          invited_by: invitedBy,
+          invite_token: inviteToken,
+        });
+      }
+
+      // Send invite email via Brevo
+      const brevoApiKey = process.env.BREVO_API_KEY;
+      if (brevoApiKey) {
+        const inviteUrl = `https://boltcall.org/invite?token=${inviteToken}`;
+        await fetch(`${BREVO_API_BASE}/smtp/email`, {
+          method: 'POST',
+          headers: {
+            'api-key': brevoApiKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: { name: 'Boltcall', email: process.env.BREVO_FROM_EMAIL || 'noreply@boltcall.org' },
+            to: [{ email }],
+            subject: `You've been invited to ${businessName || 'a Boltcall workspace'}`,
+            htmlContent: `
+              <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
+                <h2 style="color: #2563EB;">You're invited!</h2>
+                <p>You've been invited to join <strong>${businessName || 'a workspace'}</strong> on Boltcall as a <strong>${role || 'member'}</strong>.</p>
+                <a href="${inviteUrl}" style="display: inline-block; background: #2563EB; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 16px 0;">Accept Invitation</a>
+                <p style="color: #6B7280; font-size: 14px;">If you don't recognize this invitation, you can safely ignore this email.</p>
+              </div>
+            `,
+          }),
+        });
+      }
+
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, inviteToken }) };
+    }
+
+    // ─── ACCEPT INVITE ───────────────────────────────────────────
+    if (action === 'accept') {
+      const { inviteToken, userId } = body;
+
+      if (!inviteToken || !userId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'inviteToken and userId are required' }) };
+      }
+
+      const { data: member, error: findError } = await supabase
+        .from('workspace_members')
+        .select('*')
+        .eq('invite_token', inviteToken)
+        .eq('status', 'pending')
+        .single();
+
+      if (findError || !member) {
+        return { statusCode: 404, headers, body: JSON.stringify({ error: 'Invalid or expired invitation' }) };
+      }
+
+      await supabase
+        .from('workspace_members')
+        .update({
+          user_id: userId,
+          status: 'active',
+          accepted_at: new Date().toISOString(),
+          invite_token: null,
+        })
+        .eq('id', member.id);
+
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, workspaceId: member.workspace_id }) };
+    }
+
+    // ─── REMOVE MEMBER ───────────────────────────────────────────
+    if (action === 'remove') {
+      const { memberId, workspaceId, requestedBy } = body;
+
+      // Verify requester is owner/admin
+      const { data: requester } = await supabase
+        .from('workspace_members')
+        .select('role')
+        .eq('workspace_id', workspaceId)
+        .eq('user_id', requestedBy)
+        .single();
+
+      if (!requester || (requester.role !== 'owner' && requester.role !== 'admin')) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Only owners and admins can remove members' }) };
+      }
+
+      await supabase
+        .from('workspace_members')
+        .update({ status: 'removed' })
+        .eq('id', memberId)
+        .eq('workspace_id', workspaceId);
+
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+    }
+
+    // ─── LIST MEMBERS ────────────────────────────────────────────
+    if (action === 'list') {
+      const { workspaceId } = body;
+
+      const { data: members } = await supabase
+        .from('workspace_members')
+        .select('*')
+        .eq('workspace_id', workspaceId)
+        .neq('status', 'removed')
+        .order('invited_at', { ascending: true });
+
+      return { statusCode: 200, headers, body: JSON.stringify({ members: members || [] }) };
+    }
+
+    return { statusCode: 400, headers, body: JSON.stringify({ error: `Unknown action: ${action}` }) };
+  } catch (err: any) {
+    console.error('[invite-member] Error:', err);
+    await notifyError('invite-member: Unhandled exception', err);
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'Member management failed' }) };
+  }
+};

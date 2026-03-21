@@ -59,13 +59,24 @@ export async function fetchDashboardStats(): Promise<DashboardStats> {
 
 /**
  * Fetch daily metrics from Supabase (for charts)
+ * Supports both a simple `days` count and explicit date range.
  */
-export async function fetchDailyMetrics(days: number = 30) {
-  const { data, error } = await supabase
+export async function fetchDailyMetrics(
+  days: number = 30,
+  range?: { start: string; end: string }
+) {
+  let query = supabase
     .from('daily_metrics')
     .select('*')
-    .order('date', { ascending: false })
-    .limit(days);
+    .order('date', { ascending: false });
+
+  if (range) {
+    query = query.gte('date', range.start).lte('date', range.end);
+  } else {
+    query = query.limit(days);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error('Error fetching daily metrics:', error);

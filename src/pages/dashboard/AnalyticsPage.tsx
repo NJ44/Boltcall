@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Phone,
@@ -11,6 +11,7 @@ import {
   RefreshCw,
   Loader2,
   Coins,
+  CalendarDays,
 } from 'lucide-react';
 import KpiTile from '../../components/dashboard/KpiTile';
 import TimeSeriesCard from '../../components/dashboard/TimeSeriesCard';
@@ -75,6 +76,22 @@ const StatusBadge: React.FC<{ label: string; value: number; color: string }> = (
 /*  Main Component                                                     */
 /* ------------------------------------------------------------------ */
 
+type DateRange = '7d' | '30d' | '90d' | 'custom';
+
+function getDateRange(range: DateRange, customStart?: string, customEnd?: string) {
+  if (range === 'custom' && customStart && customEnd) {
+    return { start: customStart, end: customEnd };
+  }
+  const days = range === '7d' ? 7 : range === '30d' ? 30 : 90;
+  const end = new Date();
+  const start = new Date();
+  start.setDate(end.getDate() - days);
+  return {
+    start: start.toISOString().split('T')[0],
+    end: end.toISOString().split('T')[0],
+  };
+}
+
 const AnalyticsPage: React.FC = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [metrics, setMetrics] = useState<DailyMetric[]>([]);
@@ -83,17 +100,25 @@ const AnalyticsPage: React.FC = () => {
   const [, setLastRefresh] = useState<Date | null>(null);
   const [tokensToday, setTokensToday] = useState(0);
   const [tokensThisWeek, setTokensThisWeek] = useState(0);
+  const [dateRange, setDateRange] = useState<DateRange>('7d');
+  const [customStart, setCustomStart] = useState('');
+  const [customEnd, setCustomEnd] = useState('');
+  const [showCustomPicker, setShowCustomPicker] = useState(false);
 
   const { totalAvailable, tokensUsed, monthlyAllocation, isLoading: tokensLoading } = useTokens();
   const { user } = useAuth();
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
+      const range = getDateRange(dateRange, customStart, customEnd);
+      const days = dateRange === '7d' ? 7 : dateRange === '30d' ? 30 : 90;
       const [dashStats, dailyMetrics] = await Promise.all([
         fetchDashboardStats(),
-        fetchDailyMetrics(7),
+        dateRange === 'custom'
+          ? fetchDailyMetrics(365, range)
+          : fetchDailyMetrics(days),
       ]);
       setStats(dashStats);
       setMetrics((dailyMetrics as DailyMetric[]).reverse()); // oldest first for charts
@@ -104,14 +129,13 @@ const AnalyticsPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dateRange, customStart, customEnd]);
 
   useEffect(() => {
     loadData();
-    // Auto-refresh every 5 minutes
     const interval = setInterval(loadData, 5 * 60 * 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [loadData]);
 
   // Fetch token consumption for today and this week
   useEffect(() => {
@@ -199,17 +223,68 @@ const AnalyticsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header with refresh */}
-      <div className="flex items-center justify-between">
-        <div></div>
-        <button
-          onClick={loadData}
-          disabled={loading}
-          className="inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg border border-border hover:bg-gray-50 transition-colors disabled:opacity-50"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          Refresh
-        </button>
+      {/* Header with date range picker and refresh */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+          {(['7d', '30d', '90d'] as DateRange[]).map((r) => (
+            <button
+              key={r}
+              onClick={() => { setDateRange(r); setShowCustomPicker(false); }}
+              className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                dateRange === r && !showCustomPicker
+                  ? 'bg-white text-text-main shadow-sm'
+                  : 'text-text-muted hover:text-text-main'
+              }`}
+            >
+              {r === '7d' ? '7 Days' : r === '30d' ? '30 Days' : '90 Days'}
+            </button>
+          ))}
+          <button
+            onClick={() => setShowCustomPicker(!showCustomPicker)}
+            className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors inline-flex items-center gap-1 ${
+              dateRange === 'custom'
+                ? 'bg-white text-text-main shadow-sm'
+                : 'text-text-muted hover:text-text-main'
+            }`}
+          >
+            <CalendarDays className="w-3.5 h-3.5" />
+            Custom
+          </button>
+        </div>
+        <div className="flex items-center gap-3">
+          {showCustomPicker && (
+            <div className="flex items-center gap-2">
+              <input
+                type="date"
+                value={customStart}
+                onChange={(e) => setCustomStart(e.target.value)}
+                className="px-2 py-1.5 text-sm rounded-lg border border-border"
+              />
+              <span className="text-text-muted text-sm">to</span>
+              <input
+                type="date"
+                value={customEnd}
+                onChange={(e) => setCustomEnd(e.target.value)}
+                className="px-2 py-1.5 text-sm rounded-lg border border-border"
+              />
+              <button
+                onClick={() => { if (customStart && customEnd) setDateRange('custom'); }}
+                disabled={!customStart || !customEnd}
+                className="px-3 py-1.5 text-sm font-medium rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors disabled:opacity-50"
+              >
+                Apply
+              </button>
+            </div>
+          )}
+          <button
+            onClick={loadData}
+            disabled={loading}
+            className="inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg border border-border hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </button>
+        </div>
       </div>
 
       {/* Error banner (when we have stale data but refresh failed) */}
@@ -379,7 +454,9 @@ const AnalyticsPage: React.FC = () => {
           <TimeSeriesCard data={timeSeriesData} />
         ) : (
           <Card className="p-6">
-            <h3 className="text-xl font-semibold text-text-main mb-4">7-Day Trend</h3>
+            <h3 className="text-xl font-semibold text-text-main mb-4">
+              {dateRange === '7d' ? '7-Day' : dateRange === '30d' ? '30-Day' : dateRange === '90d' ? '90-Day' : 'Custom'} Trend
+            </h3>
             <div className="flex items-center justify-center h-64 text-text-muted text-sm">
               No daily metrics data available yet.
               <br />

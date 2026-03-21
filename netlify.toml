@@ -31,6 +31,14 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# Run message dispatcher every 5 minutes to process due scheduled_messages
+[functions."message-dispatcher"]
+  schedule = "*/5 * * * *"
+
+# Run sequence processor every 5 minutes to advance follow-up enrollments
+[functions."sequence-processor"]
+  schedule = "*/5 * * * *"
+
 # Redirect API calls to functions before the SPA catch-all
 [[redirects]]
   from = "/.netlify/functions/*"

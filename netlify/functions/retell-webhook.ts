@@ -171,6 +171,48 @@ export const handler: Handler = async (event) => {
       });
     }
 
+    // Auto-enroll in missed_call follow-up sequences
+    if (lead?.id) {
+      try {
+        const { data: sequences } = await supabase
+          .from('followup_sequences')
+          .select('id')
+          .eq('user_id', userId)
+          .eq('trigger_event', 'missed_call')
+          .eq('is_active', true);
+
+        if (sequences && sequences.length > 0) {
+          for (const seq of sequences) {
+            // Get the first step's delay to calculate next_step_at
+            const { data: firstStep } = await supabase
+              .from('followup_sequence_steps')
+              .select('delay_minutes')
+              .eq('sequence_id', seq.id)
+              .eq('step_order', 1)
+              .eq('is_active', true)
+              .single();
+
+            const delayMs = (firstStep?.delay_minutes || 1440) * 60 * 1000;
+
+            await supabase.from('followup_enrollments').insert({
+              sequence_id: seq.id,
+              user_id: userId,
+              lead_id: lead.id,
+              contact_name: null,
+              contact_phone: callerPhone,
+              contact_email: null,
+              current_step: 0,
+              status: 'active',
+              next_step_at: new Date(Date.now() + delayMs).toISOString(),
+            });
+          }
+          console.log(`[retell-webhook] Auto-enrolled ${callerPhone} in ${sequences.length} missed_call sequence(s)`);
+        }
+      } catch (enrollErr) {
+        console.error('[retell-webhook] Auto-enrollment failed (non-blocking):', enrollErr);
+      }
+    }
+
     if (!config.enabled) {
       console.log('[retell-webhook] Missed call text-back not enabled for user', userId);
       return {

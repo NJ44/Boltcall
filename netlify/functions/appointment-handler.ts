@@ -186,7 +186,40 @@ export const handler: Handler = async (event) => {
             recipient_email: attendeeEmail,
             message_body: messageBody,
             scheduled_for: scheduledFor.toISOString(),
-            status: 'confirmed',
+            status: 'scheduled',
+          });
+        }
+      }
+
+      // Schedule reminder EMAIL (if enabled)
+      if (bf?.reminders_enabled && remindersConfig.email_enabled && attendeeEmail) {
+        const template = remindersConfig.email_template || 'Hi {{client_name}}, this is a reminder about your appointment on {{appointment_date}} at {{appointment_time}}.';
+        const subject = remindersConfig.email_subject || 'Appointment Reminder - {{appointment_date}}';
+        const delayHours = remindersConfig.time || '24';
+        const delayMs = DELAY_MAP[delayHours] || DELAY_MAP['24'];
+
+        const scheduledFor = new Date(new Date(startTime).getTime() - delayMs);
+
+        if (scheduledFor.getTime() > Date.now()) {
+          const vars = {
+            client_name: attendeeName,
+            service: eventTitle,
+            appointment_date: formatDate(startTime),
+            appointment_time: formatTime(startTime),
+            business_name: businessName,
+          };
+
+          messagesToInsert.push({
+            user_id: userId,
+            appointment_id: appointmentId,
+            type: 'reminder',
+            channel: 'email',
+            recipient_phone: attendeePhone,
+            recipient_email: attendeeEmail,
+            message_body: substituteVars(template, vars),
+            subject: substituteVars(subject, vars),
+            scheduled_for: scheduledFor.toISOString(),
+            status: 'scheduled',
           });
         }
       }
@@ -214,8 +247,49 @@ export const handler: Handler = async (event) => {
           recipient_email: attendeeEmail,
           message_body: messageBody,
           scheduled_for: scheduledFor.toISOString(),
-          status: 'confirmed',
+          status: 'scheduled',
         });
+      }
+
+      // Auto-enroll in appointment_completed follow-up sequences
+      if (attendeePhone || attendeeEmail) {
+        try {
+          const { data: sequences } = await supabase
+            .from('followup_sequences')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('trigger_event', 'appointment_completed')
+            .eq('is_active', true);
+
+          if (sequences && sequences.length > 0) {
+            for (const seq of sequences) {
+              const { data: firstStep } = await supabase
+                .from('followup_sequence_steps')
+                .select('delay_minutes')
+                .eq('sequence_id', seq.id)
+                .eq('step_order', 1)
+                .eq('is_active', true)
+                .single();
+
+              const delayMs = (firstStep?.delay_minutes || 1440) * 60 * 1000;
+              // Schedule from appointment end time (not now)
+              const nextStepAt = new Date(new Date(endTime || startTime).getTime() + delayMs);
+
+              await supabase.from('followup_enrollments').insert({
+                sequence_id: seq.id,
+                user_id: userId,
+                contact_name: attendeeName,
+                contact_phone: attendeePhone || null,
+                contact_email: attendeeEmail || null,
+                current_step: 0,
+                status: 'active',
+                next_step_at: nextStepAt.toISOString(),
+              });
+            }
+          }
+        } catch (enrollErr) {
+          console.error('[appointment-handler] Auto-enrollment failed (non-blocking):', enrollErr);
+        }
       }
 
       // Insert all scheduled messages

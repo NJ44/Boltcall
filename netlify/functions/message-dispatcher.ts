@@ -45,16 +45,20 @@ async function sendTwilioSms(to: string, message: string): Promise<{ sid: string
 }
 
 export const handler: Handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
+  // Support both Netlify scheduled invocations and manual POST calls
+  const isScheduled = !event.httpMethod || event.httpMethod === 'POST';
+  if (!isScheduled && event.httpMethod !== 'GET') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  // Auth check — require secret header
-  const dispatcherKey = process.env.DISPATCHER_SECRET;
-  if (dispatcherKey) {
-    const providedKey = event.headers['x-dispatcher-key'] || event.headers['X-Dispatcher-Key'];
-    if (providedKey !== dispatcherKey) {
-      return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+  // Auth check for manual calls — require secret header (skip for scheduled invocations)
+  if (event.httpMethod === 'POST' && event.body) {
+    const dispatcherKey = process.env.DISPATCHER_SECRET;
+    if (dispatcherKey) {
+      const providedKey = event.headers['x-dispatcher-key'] || event.headers['X-Dispatcher-Key'];
+      if (providedKey !== dispatcherKey) {
+        return { statusCode: 401, body: JSON.stringify({ error: 'Unauthorized' }) };
+      }
     }
   }
 
@@ -133,13 +137,87 @@ export const handler: Handler = async (event) => {
 
           failed++;
         }
+      } else if (msg.channel === 'email' && msg.recipient_email) {
+        // Send email via Brevo API
+        const brevoApiKey = process.env.BREVO_API_KEY;
+        if (!brevoApiKey) {
+          await supabase
+            .from('scheduled_messages')
+            .update({ status: 'failed', error: 'Brevo API key not configured' })
+            .eq('id', msg.id);
+          failed++;
+          continue;
+        }
+
+        const emailBody = {
+          sender: {
+            name: process.env.BREVO_FROM_NAME || 'Boltcall',
+            email: process.env.BREVO_FROM_EMAIL || 'noreply@boltcall.org',
+          },
+          to: [{ email: msg.recipient_email }],
+          subject: msg.subject || (msg.type === 'reminder' ? 'Appointment Reminder' : 'We\'d love your feedback'),
+          htmlContent: `<p>${(msg.message_body || '').replace(/\n/g, '<br/>')}</p>`,
+        };
+
+        const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'api-key': brevoApiKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(emailBody),
+        });
+
+        const emailData = await emailResponse.json();
+
+        if (emailResponse.ok) {
+          await supabase
+            .from('scheduled_messages')
+            .update({
+              status: 'sent',
+              sent_at: new Date().toISOString(),
+              tokens_deducted: TOKEN_COSTS.email_sent,
+            })
+            .eq('id', msg.id);
+
+          try {
+            await deductTokens(
+              msg.user_id,
+              TOKEN_COSTS.email_sent,
+              'email_sent',
+              `${msg.type === 'reminder' ? 'Reminder' : 'Review request'} email to ${msg.recipient_email}`,
+              { scheduled_message_id: msg.id, type: msg.type },
+              supabase
+            );
+          } catch (tokenErr) {
+            console.error('[message-dispatcher] Token deduction failed (non-blocking):', tokenErr);
+          }
+
+          sent++;
+        } else {
+          const errorMsg = emailData.message || `Brevo API error: ${emailResponse.status}`;
+          await supabase
+            .from('scheduled_messages')
+            .update({ status: 'failed', error: errorMsg })
+            .eq('id', msg.id);
+
+          await notifyError('message-dispatcher: Email send failed', errorMsg, {
+            messageId: msg.id,
+            recipient: msg.recipient_email,
+            messageType: msg.type,
+          });
+
+          failed++;
+        }
       } else {
-        // Email channel or missing phone — mark as failed for now (email not implemented)
+        // Unknown channel or missing recipient
         await supabase
           .from('scheduled_messages')
           .update({
             status: 'failed',
-            error: msg.channel === 'email' ? 'Email dispatch not yet implemented' : 'No recipient phone number',
+            error: !msg.recipient_phone && !msg.recipient_email
+              ? 'No recipient contact info'
+              : `Unsupported channel: ${msg.channel}`,
           })
           .eq('id', msg.id);
 

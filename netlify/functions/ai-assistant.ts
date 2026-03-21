@@ -154,6 +154,53 @@ const tools: Anthropic.Tool[] = [
     description: 'Generate a web call link so the user can test their AI agent directly in the browser. No parameters needed.',
     input_schema: { type: 'object' as const, properties: {} },
   },
+  {
+    name: 'toggle_feature',
+    description: 'Enable or disable a dashboard feature/service. Features: speed_to_lead, reminders, reputation_manager (Google reviews), missed_call_textback, chatbot, instant_lead_response.',
+    input_schema: {
+      type: 'object' as const,
+      properties: {
+        feature: { type: 'string', description: 'Feature key: speed_to_lead, reminders, reputation_manager, missed_call_textback, chatbot, instant_lead_response' },
+        enabled: { type: 'boolean', description: 'true to enable, false to disable' },
+      },
+      required: ['feature', 'enabled'],
+    },
+  },
+  {
+    name: 'query_leads',
+    description: 'Search and retrieve leads data. Use when the user asks about their leads, how many leads they have, recent leads, leads by source, etc.',
+    input_schema: {
+      type: 'object' as const,
+      properties: {
+        status: { type: 'string', description: 'Filter by status: new, pending, contacted, qualified, lost. Leave empty for all.' },
+        source: { type: 'string', description: 'Filter by source: ai_receptionist, speed_to_lead, website_form, google_ads, facebook_ads, missed_call, manual. Leave empty for all.' },
+        days: { type: 'number', description: 'Only show leads from the last N days. Default: 30' },
+        limit: { type: 'number', description: 'Max results to return. Default: 10' },
+      },
+    },
+  },
+  {
+    name: 'query_appointments',
+    description: 'Retrieve appointment data. Use when the user asks about bookings, upcoming appointments, past appointments, or appointment counts.',
+    input_schema: {
+      type: 'object' as const,
+      properties: {
+        upcoming: { type: 'boolean', description: 'true = only future appointments, false = past appointments. Default: true' },
+        days: { type: 'number', description: 'Look ahead/back this many days. Default: 7' },
+        limit: { type: 'number', description: 'Max results. Default: 10' },
+      },
+    },
+  },
+  {
+    name: 'get_dashboard_metrics',
+    description: 'Get business performance metrics from the dashboard. Use when the user asks about performance, conversion rates, trends, revenue, or "how is my business doing".',
+    input_schema: {
+      type: 'object' as const,
+      properties: {
+        days: { type: 'number', description: 'Number of days to analyze. Default: 7' },
+      },
+    },
+  },
 ];
 
 // ── Fetch user's business context ──
@@ -444,6 +491,155 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
       } catch { return { result: 'Could not generate test call. Please try again or use the Test Call button in your dashboard.' }; }
     }
 
+    case 'toggle_feature': {
+      const featureKey = args.feature;
+      const enabled = !!args.enabled;
+
+      // Map feature keys to business_features columns
+      const featureColumnMap: Record<string, string> = {
+        speed_to_lead: 'speed_to_lead_enabled',
+        reminders: 'reminders_enabled',
+        reputation_manager: 'reputation_manager_enabled',
+        missed_call_textback: 'missed_call_textback_enabled',
+        chatbot: 'chatbot_enabled',
+        instant_lead_response: 'instant_lead_response_enabled',
+      };
+
+      const column = featureColumnMap[featureKey];
+      if (!column) return { result: `Unknown feature: ${featureKey}. Available: ${Object.keys(featureColumnMap).join(', ')}` };
+
+      const { error: updateErr } = await supabase
+        .from('business_features')
+        .update({ [column]: enabled })
+        .eq('user_id', ctx.userId);
+
+      if (updateErr) return { result: `Failed to update: ${updateErr.message}` };
+
+      const friendlyNames: Record<string, string> = {
+        speed_to_lead: 'Speed to Lead',
+        reminders: 'Appointment Reminders',
+        reputation_manager: 'Google Review Automation',
+        missed_call_textback: 'Missed Call Text-Back',
+        chatbot: 'Website Chatbot',
+        instant_lead_response: 'Instant Lead Response',
+      };
+
+      return {
+        result: `${friendlyNames[featureKey] || featureKey} has been ${enabled ? 'enabled' : 'disabled'}.`,
+        actionTaken: `${enabled ? 'Enabled' : 'Disabled'} ${friendlyNames[featureKey] || featureKey}`,
+      };
+    }
+
+    case 'query_leads': {
+      const days = args.days || 30;
+      const limit = Math.min(args.limit || 10, 25);
+      const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+
+      let query = supabase
+        .from('leads')
+        .select('first_name, last_name, phone, email, source, status, created_at')
+        .eq('user_id', ctx.userId)
+        .gte('created_at', since)
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (args.status) query = query.eq('status', args.status);
+      if (args.source) query = query.eq('source', args.source);
+
+      const { data: leads, error: leadErr } = await query;
+      if (leadErr) return { result: `Failed to query leads: ${leadErr.message}` };
+      if (!leads?.length) return { result: `No leads found in the last ${days} days${args.status ? ` with status "${args.status}"` : ''}${args.source ? ` from "${args.source}"` : ''}.` };
+
+      // Also get total count
+      const { count } = await supabase
+        .from('leads')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', ctx.userId)
+        .gte('created_at', since);
+
+      const lines = leads.map((l: any) => {
+        const name = [l.first_name, l.last_name].filter(Boolean).join(' ') || 'Unknown';
+        const date = new Date(l.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return `• ${name} | ${l.phone || l.email || 'no contact'} | ${l.source} | ${l.status} | ${date}`;
+      });
+
+      return { result: `${count || leads.length} total leads (last ${days} days)${args.status ? `, status: ${args.status}` : ''}${args.source ? `, source: ${args.source}` : ''}:\n\n${lines.join('\n')}` };
+    }
+
+    case 'query_appointments': {
+      const upcoming = args.upcoming !== false;
+      const days = args.days || 7;
+      const limit = Math.min(args.limit || 10, 25);
+      const now = new Date().toISOString();
+
+      let query = supabase
+        .from('appointments')
+        .select('client_name, client_phone, service_name, starts_at, status')
+        .eq('user_id', ctx.userId)
+        .limit(limit);
+
+      if (upcoming) {
+        const futureLimit = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+        query = query.gte('starts_at', now).lte('starts_at', futureLimit).order('starts_at', { ascending: true });
+      } else {
+        const pastLimit = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+        query = query.lte('starts_at', now).gte('starts_at', pastLimit).order('starts_at', { ascending: false });
+      }
+
+      const { data: appts, error: apptErr } = await query;
+      if (apptErr) return { result: `Failed to query appointments: ${apptErr.message}` };
+      if (!appts?.length) return { result: `No ${upcoming ? 'upcoming' : 'past'} appointments in the next ${days} days.` };
+
+      const lines = appts.map((a: any) => {
+        const date = new Date(a.starts_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        const time = new Date(a.starts_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        return `• ${date} ${time} — ${a.client_name || 'Unknown'} (${a.service_name || 'General'}) [${a.status}]`;
+      });
+
+      return { result: `${upcoming ? 'Upcoming' : 'Past'} appointments (${days} days):\n\n${lines.join('\n')}` };
+    }
+
+    case 'get_dashboard_metrics': {
+      const days = args.days || 7;
+
+      const { data: metrics, error: metricsErr } = await supabase
+        .from('daily_metrics')
+        .select('*')
+        .order('date', { ascending: false })
+        .limit(days);
+
+      if (metricsErr || !metrics?.length) {
+        // Fallback to direct counts
+        const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+        const [leadsRes, apptsRes, callbacksRes] = await Promise.all([
+          supabase.from('leads').select('id', { count: 'exact', head: true }).eq('user_id', ctx.userId).gte('created_at', since),
+          supabase.from('appointments').select('id', { count: 'exact', head: true }).eq('user_id', ctx.userId).gte('created_at', since),
+          supabase.from('callbacks').select('id', { count: 'exact', head: true }).eq('user_id', ctx.userId).gte('created_at', since),
+        ]);
+
+        return {
+          result: `Last ${days} days (direct counts):\n• Leads: ${leadsRes.count || 0}\n• Appointments: ${apptsRes.count || 0}\n• Callbacks: ${callbacksRes.count || 0}\n\nNote: Detailed daily metrics are not available yet. The daily collector needs to run to populate trends.`,
+        };
+      }
+
+      // Aggregate metrics
+      const totals = {
+        calls: 0, leads: 0, bookings: 0, sms_sent: 0,
+      };
+      for (const m of metrics) {
+        totals.calls += m.calls || 0;
+        totals.leads += m.leads || 0;
+        totals.bookings += m.bookings || 0;
+        totals.sms_sent += m.sms_sent || 0;
+      }
+
+      const avgSuccessRate = metrics.reduce((sum: number, m: any) => sum + (m.success_rate || 0), 0) / metrics.length;
+
+      return {
+        result: `Last ${days} days performance:\n• Total calls: ${totals.calls}\n• Total leads: ${totals.leads}\n• Bookings: ${totals.bookings}\n• SMS sent: ${totals.sms_sent}\n• Avg success rate: ${Math.round(avgSuccessRate)}%\n\nDaily avg: ${Math.round(totals.calls / days)} calls, ${Math.round(totals.leads / days)} leads, ${Math.round(totals.bookings / days)} bookings`,
+      };
+    }
+
     default:
       return { result: `Unknown action: ${name}` };
   }
@@ -453,26 +649,41 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
 const SYSTEM_PROMPT = `You are Bolt, the Boltcall AI assistant. You live inside the dashboard and can both ANSWER questions and TAKE ACTIONS on the user's behalf.
 
 You have tools to:
-- Update the agent's greeting (what it says first on calls)
-- Update the agent's prompt/behavior (make it more formal, friendlier, add instructions, etc.)
-- Regenerate the entire prompt from scratch
-- Add FAQs to the knowledge base
-- Add services to the knowledge base
-- Update business hours
-- View current agent configuration
-- Get call statistics
+**Agent Management:**
+- Update the agent's greeting, prompt/behavior, or regenerate the entire prompt
 - Change the agent's voice (Adrian, Dorothy, Charlie, etc.)
 - Enable or disable the agent
 - Update the call transfer phone number
-- Generate a test call link to try the agent in your browser
+- Generate a test call link
+
+**Knowledge Base:**
+- Add FAQs and services
+- Update business hours
+
+**Feature Control:**
+- Enable or disable dashboard features: Speed to Lead, Appointment Reminders, Google Review Automation, Missed Call Text-Back, Website Chatbot, Instant Lead Response
+
+**Data & Analytics:**
+- Query leads (filter by status, source, date range)
+- Query appointments (upcoming or past)
+- Get dashboard metrics (calls, leads, bookings, success rate, trends)
 
 IMPORTANT RULES:
-- When the user asks you to DO something (change greeting, make agent friendlier, add a FAQ, etc.), USE THE TOOLS. Don't just tell them how — do it for them.
+- When the user asks you to DO something, USE THE TOOLS. Don't just tell them how — do it for them.
+- When the user asks about data (leads, appointments, metrics), USE the query tools to give real numbers.
 - After executing an action, confirm what you did in a short, clear message.
-- If you need clarification before acting (e.g. "what should the new greeting say?"), ask first.
+- If you need clarification before acting, ask first.
 - Be concise — 2-3 sentences max for most responses.
 - If the user asks something you can't do with your tools, explain what they need to do manually and where in the dashboard.
-- You can call multiple tools in sequence if needed (e.g. add FAQ then regenerate prompt).`;
+- You can call multiple tools in sequence if needed.
+
+CONFIRMATION REQUIRED — for these high-impact actions, do NOT execute immediately. Instead, explain what will happen and ask "Are you sure?" first. Only execute after the user confirms:
+- Enabling or disabling features (toggle_feature) — tell them which feature and what the impact is
+- Disabling/enabling the agent (toggle_agent) — warn that calls will/won't be answered
+- Regenerating the entire agent prompt (regenerate_agent_prompt) — warn the current prompt will be replaced
+- Major prompt changes (update_agent_prompt) that fundamentally change agent behavior
+
+For small actions like adding a FAQ, changing greeting text, querying data, or checking stats — just do it immediately, no confirmation needed.`;
 
 // ── Main handler ──
 const handler: Handler = async (event) => {
