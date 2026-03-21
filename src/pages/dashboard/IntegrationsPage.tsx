@@ -192,14 +192,14 @@ const IntegrationsPage: React.FC = () => {
         {integrations.map((integration) => (
           <div
             key={integration.id}
-            className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-blue-200 transition-all duration-200 cursor-pointer group"
+            className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg hover:border-blue-200 transition-all duration-200 cursor-pointer group flex flex-col"
             onClick={() => handleCardClick(integration)}
           >
-            <div className="flex items-start gap-4">
-              {/* Logo */}
+            {/* Logo */}
+            <div className="mb-5">
               {imgErrors.has(integration.id) ? (
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: integration.fallbackColor }}
                 >
                   <span className="text-white font-bold text-lg">{integration.name[0]}</span>
@@ -208,37 +208,27 @@ const IntegrationsPage: React.FC = () => {
                 <img
                   src={integration.logo}
                   alt={integration.name}
-                  className="w-10 h-10 rounded-lg flex-shrink-0 object-contain"
+                  className="w-10 h-10 rounded-lg object-contain"
                   onError={() => handleImgError(integration.id)}
                 />
               )}
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-base font-semibold text-gray-900">{integration.name}</h3>
-                  {isConnected(integration.id) && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                      Connected
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-blue-600 font-medium mt-0.5">{integration.subtitle}</p>
-                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{integration.description}</p>
-              </div>
             </div>
 
-            {/* Connect button */}
-            <div className="mt-4 pt-3 border-t border-gray-100">
+            {/* Name + description */}
+            <h3 className="text-base font-semibold text-gray-900">{integration.name}</h3>
+            <p className="text-sm text-gray-500 mt-1 flex-1">{integration.description}</p>
+
+            {/* Button */}
+            <div className="mt-5 pt-5 border-t border-dashed border-gray-200">
               <button
-                className="w-full flex items-center justify-center gap-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-lg transition-colors"
+                className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 px-4 py-2 rounded-lg transition-colors"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCardClick(integration);
                 }}
               >
-                {isConnected(integration.id) ? 'Manage' : 'Connect'}
-                <ChevronRight className="w-4 h-4" />
+                {isConnected(integration.id) ? 'Manage' : 'Learn More'}
+                <ChevronRight className="w-3.5 h-3.5 opacity-50" />
               </button>
             </div>
           </div>
