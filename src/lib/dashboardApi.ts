@@ -50,7 +50,12 @@ export interface DashboardStats {
  * Fetch aggregated dashboard stats from all APIs
  */
 export async function fetchDashboardStats(): Promise<DashboardStats> {
-  const response = await fetch(`${FUNCTIONS_BASE}/dashboard-stats`);
+  const { data: { session } } = await supabase.auth.getSession();
+  const response = await fetch(`${FUNCTIONS_BASE}/dashboard-stats`, {
+    headers: {
+      ...(session?.access_token ? { 'Authorization': `Bearer ${session.access_token}` } : {}),
+    },
+  });
   if (!response.ok) {
     throw new Error(`Dashboard stats failed: ${response.status}`);
   }

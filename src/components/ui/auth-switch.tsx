@@ -98,8 +98,10 @@ export default function AuthSwitch({
   const { login, signup, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const redirectTo =
-    new URLSearchParams(location.search).get("redirect") || defaultRedirect;
+  const rawRedirect = new URLSearchParams(location.search).get("redirect");
+  const redirectTo = rawRedirect && rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
+    ? rawRedirect
+    : defaultRedirect;
 
   const loginForm = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
   const signupForm = useForm<SignupFormData>({ resolver: zodResolver(signupSchema) });

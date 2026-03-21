@@ -28,7 +28,18 @@ export const handler: Handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
+  // Verify authentication
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Authentication required' }) };
+  }
+
   const supabase = getServiceClient();
+  const token = authHeader.substring(7);
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !authUser) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+  }
 
   try {
     const body = JSON.parse(event.body || '{}');

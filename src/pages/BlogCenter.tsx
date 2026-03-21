@@ -246,24 +246,6 @@ const blogPosts: BlogPost[] = [
     image: '/images/blog/ai-receptionist.png'
   },
   {
-    title: 'How Does an <span class="text-blue-600">AI Receptionist</span> Work? A Complete Technical Guide',
-    slug: '/blog/how-ai-receptionist-works',
-    excerpt: 'Discover the technology behind AI receptionists: speech recognition, natural language understanding, large language models, and how they learn your business to provide intelligent customer service.',
-    date: 'February 10, 2025',
-    readTime: '5 min read',
-    category: 'AI Technology',
-    image: '/images/blog/ai-services-pro.png'
-  },
-  {
-    title: 'Is an <span class="text-blue-600">AI Receptionist</span> Worth It? A Complete Cost-Benefit Analysis',
-    slug: '/blog/is-ai-receptionist-worth-it',
-    excerpt: 'Every business owner faces the same question: Should I invest in an AI receptionist? This guide breaks down the real costs, benefits, and ROI to help you determine if an AI receptionist is worth it for your business.',
-    date: 'February 15, 2025',
-    readTime: '8 min read',
-    category: 'Business Analysis',
-    image: '/images/blog/ai-receptionist.png'
-  },
-  {
     title: 'How to Make an <span class="text-blue-600">AI Receptionist</span>: A Complete Step-by-Step Guide',
     slug: '/blog/how-to-make-ai-receptionist',
     excerpt: 'Building an AI receptionist from scratch requires combining multiple technologies. This guide walks you through the complete process, from choosing the right tools to deploying your AI receptionist.',

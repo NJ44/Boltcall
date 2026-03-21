@@ -25,7 +25,7 @@ const HelpCenter: React.FC = () => {
     {
       id: 'getting-started',
       title: 'Getting Started',
-      description: 'How to setup and best settings for customers to get started with Synthflow',
+      description: 'How to setup and best settings for customers to get started with Boltcall',
       articleCount: 5,
       icon: <BookOpen className="w-8 h-8" />,
       color: 'text-blue-600',
@@ -51,7 +51,7 @@ const HelpCenter: React.FC = () => {
     },
     {
       id: 'how-to-guides',
-      title: 'Synthflow How To Guides',
+      title: 'Boltcall How To Guides',
       description: 'How to Guides that you might need',
       articleCount: 11,
       icon: <HelpCircle className="w-8 h-8" />,
@@ -109,7 +109,7 @@ const HelpCenter: React.FC = () => {
             className="text-center"
           >
             <h1 className="text-4xl font-bold text-gray-900 mb-4">How can we help?</h1>
-            <p className="text-xl text-gray-600 mb-8">Find answers, guides, and solutions to get the most out of Synthflow</p>
+            <p className="text-xl text-gray-600 mb-8">Find answers, guides, and solutions to get the most out of Boltcall</p>
             
             {/* Search Input */}
             <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
