@@ -14,17 +14,17 @@ const Pricing: React.FC = () => {
   // PricingTable data
   const pricingFeatures = [
     // Starter Plan Features
-    { name: "Missed calls", included: "starter" },
-    { name: "Speed to lead", included: "starter" },
-    { name: "Reminders (bonus)", included: "starter" },
-    { name: "Analytics dashboard", included: "starter" },
-    
+    { name: "AI receptionist", included: "starter" },
+    { name: "Missed call text-back", included: "starter" },
+    { name: "Instant lead reply", included: "starter" },
+    { name: "Appointment reminders", included: "starter" },
+    { name: "Reports dashboard", included: "starter" },
+
     // Pro Plan Features (includes everything from Starter)
-    { name: "AI receptionist", included: "pro" },
-    { name: "Speed to lead - full funnel", included: "pro" },
-    { name: "SMS chat", included: "pro" },
-    { name: "Post service follow ups (bonus)", included: "pro" },
-    { name: "Free website widget (bonus)", included: "pro" },
+    { name: "Full lead follow-up system", included: "pro" },
+    { name: "SMS conversations", included: "pro" },
+    { name: "Automatic follow-ups after jobs", included: "pro" },
+    { name: "Website chat widget", included: "pro" },
     
     // Agency Plan Features (includes everything from Pro)
     { name: "Locations", included: "all" },

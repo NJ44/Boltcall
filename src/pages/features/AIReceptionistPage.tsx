@@ -67,23 +67,23 @@ const AIReceptionistPage: React.FC = () => {
             <div className="space-y-6 text-gray-700 leading-relaxed">
               <p className="text-lg">
                 AI Receptionist is an intelligent virtual assistant that handles all your incoming calls automatically. 
-                Using advanced natural language processing and machine learning, it understands customer inquiries, 
+                It understands callers like a real person, gets smarter over time, and handles customer inquiries,
                 answers questions, schedules appointments, and routes calls—all without human intervention.
               </p>
               <p className="text-lg">
                 Unlike traditional voicemail or call centers, your AI receptionist engages in natural conversations, 
-                qualifies leads, and provides instant responses 24 hours a day, 7 days a week. It's powered by cutting-edge 
-                artificial intelligence that learns from every interaction, continuously improving its ability to understand 
-                context, handle complex requests, and provide accurate information.
+                figures out who's serious, and provides instant responses 24 hours a day, 7 days a week. It learns from
+                every interaction, getting smarter over time so it can handle more complex requests and give more
+                accurate answers.
               </p>
               <p className="text-lg">
-                The system integrates seamlessly with your existing business tools, including your calendar, CRM, and 
-                customer database. When a call comes in, the AI receptionist can access relevant information about the caller, 
-                check your availability, and make intelligent decisions about how to best serve the customer—all in real-time.
+                It works with your existing business tools, including your calendar, contacts, and
+                customer list. When a call comes in, the AI receptionist can pull up information about the caller,
+                check your availability, and decide how to best help the customer—all in real-time.
               </p>
               <p className="text-lg">
-                Whether it's answering frequently asked questions, scheduling appointments, qualifying leads, or routing 
-                urgent calls to the right person, your AI receptionist handles it all with the professionalism and consistency 
+                Whether it's answering common questions, scheduling appointments, figuring out who's a real buyer, or routing
+                urgent calls to the right person, your AI receptionist handles it all with the professionalism and consistency
                 that builds customer trust and loyalty.
               </p>
             </div>
@@ -101,10 +101,10 @@ const AIReceptionistPage: React.FC = () => {
               <WavePath className="mb-8 text-blue-600" />
               <div className="flex w-full flex-col">
                 <div className="flex">
-                  <p className="text-gray-500 text-sm mt-2">Seamless customer experience</p>
+                  <p className="text-gray-500 text-sm mt-2">Smooth customer experience</p>
                   <p className="text-gray-800 ml-8 w-3/4 text-lg md:text-xl">
                     From the moment a call comes in, your AI receptionist provides a smooth, 
-                    professional experience that converts leads into customers.
+                    professional experience that turns callers into customers.
                   </p>
                 </div>
               </div>
@@ -171,10 +171,10 @@ const AIReceptionistPage: React.FC = () => {
                   responsive, and customer-focused.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
-                  In today's competitive marketplace, differentiation is key. An AI receptionist demonstrates that you're 
-                  forward-thinking and committed to providing exceptional customer service. This technology-forward approach 
-                  attracts customers who value efficiency and innovation, setting you apart from businesses that still rely 
-                  on outdated communication methods.
+                  In today's market, standing out matters. An AI receptionist shows that you're
+                  serious about customer service. This modern approach
+                  attracts customers who value speed and reliability, setting you apart from businesses that still rely
+                  on voicemail and missed calls.
                 </p>
               </div>
             </div>
@@ -203,14 +203,14 @@ const AIReceptionistPage: React.FC = () => {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Never lose a potential customer again. Every call is answered, every inquiry is handled, 
-                  and every lead is captured and qualified automatically. The AI receptionist doesn't just answer 
-                  calls—it actively engages with callers, asks qualifying questions, gathers important information, 
-                  and ensures that every interaction moves the customer closer to making a purchase decision.
+                  and every caller's details are saved automatically. The AI receptionist doesn't just answer
+                  calls—it actively talks with callers, asks the right questions, gathers important information,
+                  and helps move each conversation toward a booking or sale.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
-                  The system automatically logs all interactions in your CRM, creating a complete record of every customer 
-                  touchpoint. This comprehensive data helps you understand your customers better, identify patterns in their 
-                  needs, and tailor your marketing and sales efforts accordingly.
+                  Every call is automatically saved to your customer list, creating a complete record of every conversation.
+                  This helps you understand your customers better, spot patterns in what they need,
+                  and focus your follow-ups where they matter most.
                 </p>
               </div>
 
@@ -220,14 +220,14 @@ const AIReceptionistPage: React.FC = () => {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Respond to customers in seconds, not hours. Research shows that responding within 60 seconds 
-                  increases conversion rates by 391%. The AI receptionist provides this instant response consistently, 
-                  ensuring that every caller receives immediate attention and professional service.
+                  increases your chances of winning the job by 391%. The AI receptionist picks up every time,
+                  so every caller gets immediate attention and professional service.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
                   Speed matters because customer attention spans are short. When someone calls your business, they're 
                   actively engaged and ready to make a decision. The longer they wait, the more likely they are to 
-                  reconsider, get distracted, or choose a competitor. Instant response keeps the momentum going and 
-                  increases the likelihood of conversion.
+                  reconsider, get distracted, or choose a competitor. Instant response keeps the momentum going and
+                  makes it much more likely they'll book with you.
                 </p>
               </div>
 
@@ -288,7 +288,7 @@ const AIReceptionistPage: React.FC = () => {
               <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Dental Practice</h3>
                 <p className="text-gray-600 leading-relaxed mb-3">
-                  A dental practice receives 200 calls per month. Before implementing an AI receptionist, 
+                  A dental practice receives 200 calls per month. Before setting up an AI receptionist, 
                   they missed 30% of calls during peak hours and after hours. The AI now answers every call, 
                   schedules appointments, sends reminders, and handles insurance questions. Result: 100% call 
                   answer rate, 25% increase in new patient bookings, and $15,000 saved annually on receptionist costs.
@@ -305,13 +305,13 @@ const AIReceptionistPage: React.FC = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">Legal Firm</h3>
                 <p className="text-gray-600 leading-relaxed mb-3">
                   A small law firm was losing potential clients because calls went to voicemail after hours. 
-                  The AI receptionist now answers calls 24/7, qualifies leads by asking about case type and 
-                  urgency, and schedules consultations. The firm saw a 40% increase in consultation bookings 
-                  and converted 15% more leads into clients.
+                  The AI receptionist now answers calls 24/7, asks about case type and
+                  urgency to figure out who needs help most, and schedules consultations. The firm saw a 40% increase in consultation bookings
+                  and turned 15% more callers into paying clients.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  The AI can handle initial intake questions, explain the consultation process, provide 
-                  information about practice areas, and even collect basic case information before routing 
+                  The AI can ask the first round of questions, explain how consultations work, share
+                  info about what the firm handles, and even collect basic case details before passing the call
                   to an attorney. For urgent matters, it can immediately connect callers to the on-call 
                   attorney or schedule same-day consultations when available.
                 </p>
@@ -359,7 +359,7 @@ const AIReceptionistPage: React.FC = () => {
                 <p className="text-gray-600 leading-relaxed">
                   When a call comes in, the AI receptionist answers immediately with a professional greeting. 
                   It identifies itself and your business name, creating a welcoming first impression. The system 
-                  uses natural language processing to understand the caller's intent, whether they're looking to 
+                  understands what callers are saying — whether they're looking to
                   schedule an appointment, ask a question, or speak with someone specific.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
@@ -380,28 +380,26 @@ const AIReceptionistPage: React.FC = () => {
                   natural and human-like, not robotic.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
-                  Advanced natural language understanding allows the AI to handle complex queries, understand 
-                  context, and maintain conversation flow. It can remember information mentioned earlier in the 
-                  conversation, follow up on previous points, and adapt its responses based on the caller's 
-                  responses and tone.
+                  The AI understands what callers are saying, even when questions are complicated. It remembers
+                  what was said earlier in the conversation, follows up on previous points, and adjusts its
+                  responses based on what the caller says and how they say it.
                 </p>
               </div>
 
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  Step 3: Lead Qualification
+                  Step 3: Finding Serious Buyers
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  For potential customers, the AI asks qualifying questions to determine buying intent, budget, 
-                  timeline, and specific needs. This information is automatically logged in your CRM, helping 
-                  you prioritize follow-ups and focus on the most promising leads. The qualification process 
-                  is conversational and non-intrusive, gathering information naturally during the conversation.
+                  For potential customers, the AI asks smart questions to figure out if they're ready to buy, what their
+                  budget looks like, when they need the work done, and what exactly they need. All this gets saved
+                  to your customer list automatically, so you know who to call back first. It feels like a normal
+                  conversation — not an interrogation.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
-                  The system can score leads based on their responses, identifying high-value prospects that 
-                  need immediate attention. It can also identify low-quality leads or spam calls, saving your 
-                  team time and resources. All qualification data is stored and accessible for your sales team 
-                  to review and act upon.
+                  The system can rank callers based on their answers, flagging the best opportunities that
+                  need your attention right away. It can also spot time-wasters or spam calls, saving you
+                  hours every week. All the details are saved so you can review them whenever you want.
                 </p>
               </div>
 
@@ -416,7 +414,7 @@ const AIReceptionistPage: React.FC = () => {
                   the preferred slot isn't available.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
-                  The scheduling process is seamless and efficient. The AI confirms appointment details, sends 
+                  The scheduling process is quick and easy. The AI confirms appointment details, sends 
                   automatic confirmation messages via SMS or email, and adds the appointment to your calendar. 
                   It can also send reminder messages before appointments to reduce no-shows and ensure customers 
                   are prepared.
@@ -429,16 +427,15 @@ const AIReceptionistPage: React.FC = () => {
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   For calls that require human attention, the AI can intelligently route to the right person 
-                  or department. It can also take detailed messages, schedule callbacks, or escalate urgent 
-                  matters. The system learns from your preferences and routing rules, improving its routing 
-                  decisions over time.
+                  or department. It can also take detailed messages, schedule callbacks, or flag urgent
+                  matters for immediate attention. The system learns from your preferences, getting better at
+                  sending calls to the right person over time.
                 </p>
                 <p className="text-gray-600 leading-relaxed mt-3">
                   The AI can determine when a call should be transferred based on complexity, customer request, 
-                  or predefined rules. It provides context to the human agent when transferring, ensuring a 
-                  smooth handoff and avoiding the need for customers to repeat information. This creates a 
-                  seamless experience that combines the efficiency of AI with the personal touch of human 
-                  interaction when needed.
+                  or rules you set up. It fills in the person you're transferring to on what the caller needs, so
+                  the customer doesn't have to repeat themselves. This keeps things smooth and combines the speed of AI
+                  with the personal touch of a real person when it's needed.
                 </p>
               </div>
             </div>
@@ -462,10 +459,10 @@ const AIReceptionistPage: React.FC = () => {
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Natural Language Understanding</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Understands What Callers Are Saying</h3>
                 <p className="text-gray-600 text-sm">
-                  Understands context, intent, and nuance in conversations. Handles complex queries and 
-                  maintains natural conversation flow.
+                  Picks up on what callers mean, not just what they say. Handles tricky questions and
+                  keeps the conversation flowing naturally.
                 </p>
               </div>
 
@@ -478,26 +475,26 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">CRM Integration</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Connects to Your Calendar and Contacts</h3>
                 <p className="text-gray-600 text-sm">
-                  Automatically syncs call data, lead information, and appointment details with your 
-                  existing CRM system.
+                  Automatically saves call details, caller information, and appointment details to your
+                  existing tools.
                 </p>
               </div>
 
               <div className="bg-white rounded-lg p-6 border border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Call Transcription</h3>
                 <p className="text-gray-600 text-sm">
-                  Every call is transcribed and stored, providing a searchable record of all customer 
-                  interactions for review and analysis.
+                  Every call is written out word-for-word and saved, so you can look back at any
+                  conversation whenever you need to.
                 </p>
               </div>
 
               <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Analytics & Insights</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Reports & Numbers</h3>
                 <p className="text-gray-600 text-sm">
-                  Detailed analytics on call volume, call duration, conversion rates, and customer 
-                  satisfaction help you optimize your operations.
+                  See how many calls you're getting, how long they last, how many turn into bookings, and
+                  how happy customers are — so you know what's working.
                 </p>
               </div>
 
@@ -524,13 +521,13 @@ const AIReceptionistPage: React.FC = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-center gap-3">
               <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
-              <span>Return on Investment</span>
+              <span>What You'll Get Back</span>
             </h2>
             
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border border-blue-100">
               <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                Let's calculate the ROI for a typical business. Assume you receive 150 calls per month, 
-                with an average customer value of $400. Before implementing an AI receptionist, you were 
+                Let's do the math for a typical business. Say you receive 150 calls per month, 
+                with an average customer value of $400. Before setting up an AI receptionist, you were 
                 missing 25% of calls (37.5 calls per month), resulting in $15,000 in lost revenue monthly 
                 ($180,000 annually).
               </p>
@@ -542,7 +539,7 @@ const AIReceptionistPage: React.FC = () => {
               <p className="text-lg text-gray-700 leading-relaxed">
                 The AI receptionist pays for itself many times over, while providing better service coverage 
                 than a human receptionist could ever provide. The investment is minimal compared to the returns, 
-                making it one of the highest-ROI investments you can make for your business.
+                making it one of the smartest investments you can make for your business.
               </p>
             </div>
           </motion.div>
@@ -567,9 +564,9 @@ const AIReceptionistPage: React.FC = () => {
               <div className="bg-white rounded-lg p-6 border border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Can the AI handle complex questions?</h3>
                 <p className="text-gray-600">
-                  Yes. The AI uses advanced natural language processing to understand context and handle 
-                  complex queries. For questions it can't answer, it can take detailed messages, schedule 
-                  callbacks, or route to a human agent with full context.
+                  Yes. The AI understands callers like a real person and can handle tough questions.
+                  For anything it can't answer, it takes a detailed message, schedules a callback,
+                  or transfers the call to you with all the details.
                 </p>
               </div>
 
@@ -583,11 +580,11 @@ const AIReceptionistPage: React.FC = () => {
               </div>
 
               <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">How does it integrate with my existing systems?</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Does it work with my existing tools?</h3>
                 <p className="text-gray-600">
-                  The AI receptionist integrates with popular calendar systems (Google Calendar, Outlook), 
-                  CRM platforms (Salesforce, HubSpot), and phone systems. It can also integrate with custom 
-                  systems via API, ensuring seamless workflow integration.
+                  Yes. The AI receptionist works with popular calendars (Google Calendar, Outlook),
+                  contact management tools (Salesforce, HubSpot), and phone systems. It also connects to
+                  your other business tools, so everything stays in sync.
                 </p>
               </div>
 
@@ -625,8 +622,8 @@ const AIReceptionistPage: React.FC = () => {
                 <Calendar className="w-6 h-6 text-blue-500" />
               </div>
             </div>
-            <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
-            <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.</p>
+            <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Grows with you.</h2>
+            <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Get your AI receptionist running in 5 minutes — free. Connect it to your phone, website, and more.</p>
             <Link
               to="/signup"
               className="inline-block mt-6 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"

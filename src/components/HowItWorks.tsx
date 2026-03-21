@@ -14,9 +14,9 @@ const PROCESS_PHASES = [
   },
   {
     id: "process-2",
-    title: "Qualify & Nurture",
+    title: "Find serious buyers",
       description:
-        "Your helper talks to people like a real person. It asks them questions. It finds out what they need. It finds out how much money they have. It finds out when they want help. It figures out who really wants to buy from you.",
+        "Your helper talks to people like a real person. It asks them questions. It finds out what they need, when they want help, and if they're ready to move forward. It separates the serious buyers from the tire-kickers — so you only spend time on people who are ready.",
     animationUrl: "/statistics_on_tab.lottie"
   },
   {

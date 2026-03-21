@@ -270,21 +270,10 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0 }}
             >
-              <button
-                onClick={() => {
-                  const howItWorksSection = document.getElementById('how-it-works');
-                  if (howItWorksSection) {
-                    howItWorksSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="min-h-11 w-40 rounded-full border border-brand-blue text-brand-blue font-medium hover:bg-brand-blue hover:text-white transition-colors py-2.5 px-4"
-              >
-                Learn more
-              </button>
               <InteractiveHoverButton
                 text="Start free"
                 onClick={() => navigate('/signup')}
-                className="min-h-11 w-40 border-gray-300 bg-white text-gray-900 py-2.5 px-4"
+                className="min-h-11 w-48 border-gray-300 bg-white text-gray-900 py-2.5 px-6"
                 hoverBgClass="bg-brand-blue"
                 hoverTextClass="text-white"
               />

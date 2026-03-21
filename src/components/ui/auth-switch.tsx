@@ -448,7 +448,7 @@ export default function AuthSwitch({
                 <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-3 sm:space-y-4">
                   <PillInput
                     {...signupForm.register("name")}
-                    placeholder="Username"
+                    placeholder="Full Name"
                     error={signupForm.formState.errors.name?.message}
                   />
                   <PillInput

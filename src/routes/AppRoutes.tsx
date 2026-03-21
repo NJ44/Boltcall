@@ -294,8 +294,8 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings/notification-preferences" element={<Navigate to="/dashboard/settings/notifications" replace />} />
           <Route path="settings/services" element={<Navigate to="/dashboard/settings/general" replace />} />
         </Route>
-        <Route path="/setup" element={<Setup />} />
-        <Route path="/setup/loading" element={<SetupLoading />} />
+        <Route path="/setup" element={<ProtectedRoute><Setup /></ProtectedRoute>} />
+        <Route path="/setup/loading" element={<ProtectedRoute><SetupLoading /></ProtectedRoute>} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />

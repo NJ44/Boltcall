@@ -58,7 +58,8 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
     ],
     support: [
       { label: 'Help Center', href: '/help-center' },
-      { label: 'Documentation', href: '/documentation' }
+      { label: 'Documentation', href: '/documentation' },
+      { label: 'Email: support@boltcall.org', href: 'mailto:support@boltcall.org' }
     ]
   };
 

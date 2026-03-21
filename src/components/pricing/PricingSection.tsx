@@ -59,7 +59,7 @@ const PricingSection: React.FC = () => {
       priceAnnualIls: 8960,
       features: [
         'Everything in Pro (same core outcomes)',
-        'White-glove onboarding (done-for-you in 48h)',
+        'We set it up for you (done in 48h)',
         'VIP support (same-day + phone/WhatsApp)',
         'Quarterly strategy review (scripts, funnels, offers)',
         'Branded voice (custom greeting voice + name)',
@@ -80,7 +80,7 @@ const PricingSection: React.FC = () => {
     { name: 'Dashboard + transcripts', starter: false, pro: true, ultimate: true },
     { name: 'Money-back guarantee', starter: false, pro: true, ultimate: true },
     { name: 'VIP phone/WhatsApp support', starter: false, pro: false, ultimate: true },
-    { name: 'White-glove setup (48h)', starter: false, pro: false, ultimate: true },
+    { name: 'We set it up for you (48h)', starter: false, pro: false, ultimate: true },
     { name: 'Quarterly strategy call', starter: false, pro: false, ultimate: true },
     { name: 'Custom branded voice', starter: false, pro: false, ultimate: true },
     { name: 'Calendars / Users', starter: '1 / 1', pro: '2 / 2', ultimate: '4 / 5' },
