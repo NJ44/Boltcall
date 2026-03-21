@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessagesSquare, CalendarCheck, RotateCw } from 'lucide-react';
+import { MessagesSquare, CalendarCheck, RotateCw, Activity } from 'lucide-react';
 import ChatHistoryPage from './ChatHistoryPage';
 import SmsBookingPage from './SmsBookingPage';
 import FollowUpsPage from './FollowUpsPage';
+import MessageActivityPage from './MessageActivityPage';
 
-type Tab = 'chat-history' | 'sms-booking' | 'follow-ups';
+type Tab = 'activity' | 'chat-history' | 'sms-booking' | 'follow-ups';
 
 const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
+  { id: 'activity', label: 'Message Activity', icon: <Activity className="w-4 h-4" /> },
   { id: 'chat-history', label: 'Chat History', icon: <MessagesSquare className="w-4 h-4" /> },
   { id: 'sms-booking', label: 'SMS Booking', icon: <CalendarCheck className="w-4 h-4" /> },
   { id: 'follow-ups', label: 'Follow Ups', icon: <RotateCw className="w-4 h-4" /> },
 ];
 
 const MessagesPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('chat-history');
+  const [activeTab, setActiveTab] = useState<Tab>('activity');
 
   return (
     <div className="flex flex-col h-full">
@@ -50,6 +52,7 @@ const MessagesPage: React.FC = () => {
 
       {/* Tab Content */}
       <div className="flex-1 overflow-y-auto">
+        {activeTab === 'activity' && <MessageActivityPage />}
         {activeTab === 'chat-history' && <ChatHistoryPage />}
         {activeTab === 'sms-booking' && <SmsBookingPage />}
         {activeTab === 'follow-ups' && <FollowUpsPage />}
