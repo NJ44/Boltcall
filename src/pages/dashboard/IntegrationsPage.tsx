@@ -206,6 +206,165 @@ const IntegrationsPage: React.FC = () => {
             </div>
           )}
         </div>
+
+        {/* Google Calendar Integration */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-gray-200">
+              <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                <path d="M18 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z" fill="#4285F4"/>
+                <path d="M6 4h12v4H6V4z" fill="#EA4335"/>
+                <rect x="8" y="10" width="3" height="3" rx="0.5" fill="white"/>
+                <rect x="13" y="10" width="3" height="3" rx="0.5" fill="white"/>
+                <rect x="8" y="15" width="3" height="3" rx="0.5" fill="white"/>
+                <rect x="13" y="15" width="3" height="3" rx="0.5" fill="white"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">Google Calendar</h3>
+              <p className="text-xs text-gray-500">Scheduling</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Sync your Google Calendar so the AI receptionist can check your availability and book appointments directly.
+          </p>
+        </div>
+
+        {/* HubSpot CRM */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#FF7A59] rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.58 10.1V7.64a2.07 2.07 0 001.19-1.87 2.08 2.08 0 00-2.08-2.08 2.08 2.08 0 00-2.08 2.08c0 .82.48 1.53 1.18 1.87v2.46a5.12 5.12 0 00-2.35 1.08l-6.38-4.96a2.34 2.34 0 00.06-.52A2.34 2.34 0 004.78 3.4a2.34 2.34 0 00-2.34 2.33 2.34 2.34 0 002.34 2.34c.49 0 .95-.15 1.33-.42l6.27 4.88a5.13 5.13 0 00-.7 2.59 5.13 5.13 0 001.51 3.64l-1.2 1.2a1.76 1.76 0 00-.52-.08 1.78 1.78 0 00-1.78 1.78 1.78 1.78 0 001.78 1.78 1.78 1.78 0 001.78-1.78c0-.18-.03-.36-.08-.52l1.2-1.2a5.14 5.14 0 003.64 1.51 5.15 5.15 0 005.14-5.14 5.15 5.15 0 00-5.14-5.14c-.58 0-1.14.1-1.67.27z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">HubSpot</h3>
+              <p className="text-xs text-gray-500">CRM & Lead Management</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Automatically push new leads and call data into HubSpot. Keep your CRM updated without lifting a finger.
+          </p>
+        </div>
+
+        {/* Jobber */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#7BC74D] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">J</span>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">Jobber</h3>
+              <p className="text-xs text-gray-500">Field Service Management</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Perfect for plumbers, electricians, and contractors. Sync leads as new jobs, schedule site visits, and send quotes automatically.
+          </p>
+        </div>
+
+        {/* Housecall Pro */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#0D6EFD] rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">Housecall Pro</h3>
+              <p className="text-xs text-gray-500">Home Service Management</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Built for home service businesses. Turn incoming calls into jobs, dispatch techs, and send invoices — all connected to your AI receptionist.
+          </p>
+        </div>
+
+        {/* ServiceTitan */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#1B365D] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">ST</span>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">ServiceTitan</h3>
+              <p className="text-xs text-gray-500">HVAC, Plumbing & Electrical</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            The #1 platform for HVAC, plumbing, and electrical businesses. Sync calls, book jobs, and track leads directly from your AI receptionist.
+          </p>
+        </div>
+
+        {/* Zapier */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#FF4F00] rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M15.478 12.89l-2.557-2.557 2.557-2.557a1.51 1.51 0 000-2.134l-.12-.12a1.51 1.51 0 00-2.133 0L10.668 8.08 8.11 5.522a1.51 1.51 0 00-2.134 0l-.12.12a1.51 1.51 0 000 2.134l2.557 2.557-2.557 2.557a1.51 1.51 0 000 2.134l.12.12a1.51 1.51 0 002.134 0l2.557-2.557 2.557 2.557a1.51 1.51 0 002.134 0l.12-.12a1.51 1.51 0 000-2.134z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">Zapier</h3>
+              <p className="text-xs text-gray-500">Connect 6,000+ Apps</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Connect Boltcall to any tool you already use — QuickBooks, Google Sheets, Slack, Mailchimp, and 6,000+ more. No coding needed.
+          </p>
+        </div>
+
+        {/* Google Sheets */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#0F9D58] rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 11H5v2h14v-2zm0 4H5v2h14v-2zm0-8H5v2h14V7z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">Google Sheets</h3>
+              <p className="text-xs text-gray-500">Simple Lead Tracking</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Automatically log every call, lead, and appointment into a Google Sheet. Simple lead tracking without learning a new tool.
+          </p>
+        </div>
+
+        {/* QuickBooks */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={handleContainerClick}
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-[#2CA01C] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">Q</span>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900">QuickBooks</h3>
+              <p className="text-xs text-gray-500">Invoicing & Accounting</p>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600">
+            Create invoices and estimates automatically when your AI receptionist books a job. Keep your books up to date effortlessly.
+          </p>
+        </div>
       </motion.div>
 
       {/* Email Integration Side Panel */}

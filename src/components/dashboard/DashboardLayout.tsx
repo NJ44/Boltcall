@@ -292,7 +292,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/agents', label: t('nav.aiAgents'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/knowledge-base', label: t('nav.knowledgeBase'), icon: <BookOpen className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/phone', label: t('nav.phoneNumbers'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/integrations', label: t('nav.integrations'), icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('common.soon') as string },
+    { to: '/dashboard/integrations', label: t('nav.integrations'), icon: <Plug className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   const navItemsFooter = [
