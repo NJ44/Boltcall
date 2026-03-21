@@ -173,11 +173,17 @@ const NavigationWrapper: React.FC = () => {
   const location = useLocation();
   const { i18n } = useTranslation();
 
-  // RTL support for Hebrew
+  // RTL support for Hebrew — only apply to dashboard, public pages stay English LTR
   useEffect(() => {
-    document.documentElement.dir = i18n.language === 'he' ? 'rtl' : 'ltr';
-    document.documentElement.lang = i18n.language;
-  }, [i18n.language]);
+    const isDashboard = location.pathname.startsWith('/dashboard');
+    if (isDashboard) {
+      document.documentElement.dir = i18n.language === 'he' ? 'rtl' : 'ltr';
+      document.documentElement.lang = i18n.language === 'he' ? 'he' : i18n.language;
+    } else {
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = 'en';
+    }
+  }, [i18n.language, location.pathname]);
 
   // Scroll to top on route change
   useEffect(() => {
