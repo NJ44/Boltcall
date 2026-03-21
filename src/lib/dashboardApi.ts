@@ -51,15 +51,27 @@ export interface DashboardStats {
  */
 export async function fetchDashboardStats(): Promise<DashboardStats> {
   const { data: { session } } = await supabase.auth.getSession();
-  const response = await fetch(`${FUNCTIONS_BASE}/dashboard-stats`, {
-    headers: {
-      ...(session?.access_token ? { 'Authorization': `Bearer ${session.access_token}` } : {}),
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Dashboard stats failed: ${response.status}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+  try {
+    const response = await fetch(`${FUNCTIONS_BASE}/dashboard-stats`, {
+      headers: {
+        ...(session?.access_token ? { 'Authorization': `Bearer ${session.access_token}` } : {}),
+      },
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      throw new Error(`Dashboard stats failed: ${response.status}`);
+    }
+    return response.json();
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new Error('Dashboard stats request timed out. Please try again.');
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeout);
   }
-  return response.json();
 }
 
 /**
