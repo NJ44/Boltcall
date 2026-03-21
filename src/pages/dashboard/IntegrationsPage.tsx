@@ -192,7 +192,7 @@ const IntegrationsPage: React.FC = () => {
         {integrations.map((integration) => (
           <div
             key={integration.id}
-            className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-all duration-200 cursor-pointer group"
+            className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-blue-200 transition-all duration-200 cursor-pointer group"
             onClick={() => handleCardClick(integration)}
           >
             <div className="flex items-start gap-4">
@@ -223,7 +223,7 @@ const IntegrationsPage: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-gray-500 mt-0.5">{integration.subtitle}</p>
+                <p className="text-xs text-blue-600 font-medium mt-0.5">{integration.subtitle}</p>
                 <p className="text-sm text-gray-600 mt-2 leading-relaxed">{integration.description}</p>
               </div>
             </div>
@@ -231,7 +231,7 @@ const IntegrationsPage: React.FC = () => {
             {/* Connect button */}
             <div className="mt-4 pt-3 border-t border-gray-100">
               <button
-                className="w-full flex items-center justify-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors group-hover:bg-blue-50"
+                className="w-full flex items-center justify-center gap-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-lg transition-colors"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCardClick(integration);
