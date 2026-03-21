@@ -146,6 +146,13 @@ const VoicemailVsBoltcall = React.lazy(() => import('../pages/comparisons/Voicem
 const AnsweringServicesVsBoltcall = React.lazy(() => import('../pages/comparisons/AnsweringServicesVsBoltcall'));
 const CRMInstantLeadReplyVsBoltcall = React.lazy(() => import('../pages/comparisons/CRMInstantLeadReplyVsBoltcall'));
 
+// ── Lazy loads — Competitor comparison pages ─────────────────────────────
+const CompareBoltcallVsPodium = React.lazy(() => import('../pages/CompareBoltcallVsPodium'));
+const CompareBoltcallVsGoHighLevel = React.lazy(() => import('../pages/CompareBoltcallVsGoHighLevel'));
+const CompareBoltcallVsBirdeye = React.lazy(() => import('../pages/CompareBoltcallVsBirdeye'));
+const CompareBoltcallVsEmitrr = React.lazy(() => import('../pages/CompareBoltcallVsEmitrr'));
+const CompareBoltcallVsCalomation = React.lazy(() => import('../pages/CompareBoltcallVsCalomation'));
+
 // ── Lazy loads — Feature pages ───────────────────────────────────────────
 const AIReceptionistPage = React.lazy(() => import('../pages/features/AIReceptionistPage'));
 const InstantFormReplyPage = React.lazy(() => import('../pages/features/InstantFormReplyPage'));
@@ -358,6 +365,11 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/comparisons/voicemail-vs-boltcall" element={<VoicemailVsBoltcall />} />
         <Route path="/comparisons/answering-services-vs-boltcall" element={<AnsweringServicesVsBoltcall />} />
         <Route path="/comparisons/crm-vs-boltcall" element={<CRMInstantLeadReplyVsBoltcall />} />
+        <Route path="/compare/boltcall-vs-podium" element={<CompareBoltcallVsPodium />} />
+        <Route path="/compare/boltcall-vs-gohighlevel" element={<CompareBoltcallVsGoHighLevel />} />
+        <Route path="/compare/boltcall-vs-birdeye" element={<CompareBoltcallVsBirdeye />} />
+        <Route path="/compare/boltcall-vs-emitrr" element={<CompareBoltcallVsEmitrr />} />
+        <Route path="/compare/boltcall-vs-calomation" element={<CompareBoltcallVsCalomation />} />
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/ai-revenue-calculator" element={<Navigate to="/ai-revenue-audit" replace />} />

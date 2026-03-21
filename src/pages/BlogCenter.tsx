@@ -21,6 +21,51 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Boltcall vs Podium: Honest Comparison for Local Businesses (2026)',
+    slug: '/compare/boltcall-vs-podium',
+    excerpt: 'Side-by-side comparison of Boltcall and Podium for local businesses. See pricing, AI features, and which platform delivers more value.',
+    date: 'March 21, 2026',
+    readTime: '10 min read',
+    category: 'Comparison',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Boltcall vs GoHighLevel: Simple AI vs Complex CRM (2026)',
+    slug: '/compare/boltcall-vs-gohighlevel',
+    excerpt: 'Compare Boltcall simple AI receptionist with GoHighLevel complex CRM. See why small businesses choose focused AI over agency platforms.',
+    date: 'March 21, 2026',
+    readTime: '10 min read',
+    category: 'Comparison',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Boltcall vs Birdeye: AI Receptionist vs Reputation Management (2026)',
+    slug: '/compare/boltcall-vs-birdeye',
+    excerpt: 'Compare Boltcall AI receptionist with Birdeye reputation platform. See which is better for your local business needs.',
+    date: 'March 21, 2026',
+    readTime: '10 min read',
+    category: 'Comparison',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Boltcall vs Emitrr: Full AI Suite vs SMS-First Platform (2026)',
+    slug: '/compare/boltcall-vs-emitrr',
+    excerpt: 'Compare Boltcall full AI receptionist suite with Emitrr SMS-focused platform. See features, pricing, and which fits your business.',
+    date: 'March 21, 2026',
+    readTime: '10 min read',
+    category: 'Comparison',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Boltcall vs Calomation: AI Receptionist Platforms Compared (2026)',
+    slug: '/compare/boltcall-vs-calomation',
+    excerpt: 'Two AI receptionist platforms compared. See transparent pricing, features, and which delivers more value for local businesses.',
+    date: 'March 21, 2026',
+    readTime: '10 min read',
+    category: 'Comparison',
+    image: '/og-image.jpg'
+  },
+  {
     title: 'AI Chatbot vs Live Chat vs Phone Answering: Which Works Best for Local Businesses',
     slug: '/blog/ai-chatbot-vs-live-chat-phone-comparison',
     excerpt: 'Discover whether an AI chatbot or live chat better serves your local business needs and learn how to choose the right customer communication solution.',
