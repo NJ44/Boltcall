@@ -92,6 +92,18 @@ const ReputationPage: React.FC = () => {
 
   const handleSave = async () => {
     if (!user) return;
+
+    // Validate required variables in SMS template
+    if (smsEnabled) {
+      const requiredVars = ['{{client_name}}', '{{review_url}}'];
+      const missingVars = requiredVars.filter(v => !smsTemplate.includes(v));
+      if (missingVars.length > 0) {
+        setError(`Your SMS template is missing required variables: ${missingVars.join(', ')}. These are needed to personalize the message.`);
+        showToast({ title: 'Missing variables', message: `Add ${missingVars.join(', ')} to your template`, variant: 'error', duration: 5000 });
+        return;
+      }
+    }
+
     setSaving(true);
     setError(null);
 
@@ -299,9 +311,23 @@ const ReputationPage: React.FC = () => {
                     rows={3}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900 resize-none"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Variables: {'{{client_name}}'}, {'{{business_name}}'}, {'{{review_url}}'}
-                  </p>
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {['{{client_name}}', '{{business_name}}', '{{review_url}}'].map((v) => (
+                      <span
+                        key={v}
+                        className={`inline-flex items-center px-2 py-0.5 text-xs font-mono rounded-full ${
+                          smsTemplate.includes(v)
+                            ? 'bg-green-50 text-green-700 border border-green-200'
+                            : 'bg-red-50 text-red-600 border border-red-200'
+                        }`}
+                      >
+                        {smsTemplate.includes(v) ? '✓' : '✗'} {v}
+                      </span>
+                    ))}
+                  </div>
+                  {!smsTemplate.includes('{{client_name}}') || !smsTemplate.includes('{{review_url}}') ? (
+                    <p className="text-xs text-red-500 mt-1">Required variables are missing — the message won't personalize correctly.</p>
+                  ) : null}
                 </div>
               </div>
             )}

@@ -160,6 +160,16 @@ const RemindersPage: React.FC = () => {
 
   const handleSave = async () => {
     if (!user) return;
+
+    // Validate required variables are present in the template
+    const requiredVars = ['{{client_name}}', '{{appointment_date}}', '{{appointment_time}}'];
+    const missingVars = requiredVars.filter(v => !defaultReminderText.includes(v));
+    if (missingVars.length > 0) {
+      setError(`Your message is missing required variables: ${missingVars.join(', ')}. These are needed to personalize the reminder.`);
+      showToast({ title: 'Missing variables', message: `Add ${missingVars.join(', ')} to your template`, variant: 'error', duration: 5000 });
+      return;
+    }
+
     setSaving(true);
     setError(null);
 
@@ -396,9 +406,23 @@ const RemindersPage: React.FC = () => {
                     rows={6}
                   placeholder="Enter your default reminder message template..."
                   />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Variables: {'{{client_name}}'}, {'{{service}}'}, {'{{appointment_date}}'}, {'{{appointment_time}}'}
-                  </p>
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {['{{client_name}}', '{{service}}', '{{appointment_date}}', '{{appointment_time}}'].map((v) => (
+                      <span
+                        key={v}
+                        className={`inline-flex items-center px-2 py-0.5 text-xs font-mono rounded-full ${
+                          defaultReminderText.includes(v)
+                            ? 'bg-green-50 text-green-700 border border-green-200'
+                            : 'bg-red-50 text-red-600 border border-red-200'
+                        }`}
+                      >
+                        {defaultReminderText.includes(v) ? '✓' : '✗'} {v}
+                      </span>
+                    ))}
+                  </div>
+                  {!defaultReminderText.includes('{{client_name}}') || !defaultReminderText.includes('{{appointment_date}}') || !defaultReminderText.includes('{{appointment_time}}') ? (
+                    <p className="text-xs text-red-500 mt-1">Required variables are missing — the message won't personalize correctly.</p>
+                  ) : null}
               </div>
             </div>
           </div>
