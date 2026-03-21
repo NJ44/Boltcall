@@ -13,6 +13,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import AuthCallback from '../pages/AuthCallback';
+import ChatbotVsLivePhoneComparison from '../pages/ChatbotVsLivePhoneComparison';
 
 // ── Route-level loading fallback ─────────────────────────────────────────
 const PageLoader = () => (
@@ -350,6 +351,7 @@ const NavigationWrapper: React.FC = () => {
             {/* <Route path="/blog/what-is-ai-receptionist-guide" element={<WhatIsAIReceptionistGuide />} /> */}
             <Route path="/blog/ai-phone-answering-dentists" element={<AiPhoneAnsweringDentists />} />
             <Route path="/blog/best-after-hours-answering-service" element={<BestAfterHoursAnsweringService />} />
+            <Route path="/blog/ai-chatbot-vs-live-chat-phone-comparison" element={<ChatbotVsLivePhoneComparison />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
