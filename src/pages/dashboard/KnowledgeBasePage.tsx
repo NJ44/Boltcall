@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
+import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import { FileUpload } from '@/components/ui/file-upload';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
@@ -800,14 +801,14 @@ const KnowledgeBasePage: React.FC = () => {
                 />
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                <PageInfoTooltip text="Add business info so your AI agent can answer questions accurately" />
                 {/* New Knowledge Base Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={handleAddDocument}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
-                    <Plus className="h-4 w-4" />
                     <span className="font-bold hidden md:inline">New Knowledge Base</span>
                     <span className="font-bold md:hidden">New KB</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />

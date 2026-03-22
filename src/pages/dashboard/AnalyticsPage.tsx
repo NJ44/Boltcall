@@ -13,6 +13,7 @@ import {
   Coins,
   CalendarDays,
 } from 'lucide-react';
+import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import KpiTile from '../../components/dashboard/KpiTile';
 import TimeSeriesCard from '../../components/dashboard/TimeSeriesCard';
 import Card from '../../components/ui/Card';
@@ -223,6 +224,11 @@ const AnalyticsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
+      {/* Page Info */}
+      <div className="flex justify-end">
+        <PageInfoTooltip text="Track calls, leads, bookings, and token usage over time" />
+      </div>
+
       {/* Header with date range picker and refresh */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">

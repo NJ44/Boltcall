@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessagesSquare, CalendarCheck, RotateCw, Activity } from 'lucide-react';
+import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import ChatHistoryPage from './ChatHistoryPage';
 import SmsBookingPage from './SmsBookingPage';
 import FollowUpsPage from './FollowUpsPage';
@@ -24,7 +25,7 @@ const MessagesPage: React.FC = () => {
       <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-4 pb-0">
         <div className="flex items-center gap-1 mb-0">
           <h1 className="text-xl font-semibold text-gray-900 mr-6">Messages</h1>
-          <nav className="flex gap-4 -mb-px">
+          <nav className="flex gap-4 -mb-px flex-1">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -47,6 +48,7 @@ const MessagesPage: React.FC = () => {
               );
             })}
           </nav>
+          <PageInfoTooltip text="SMS conversations with your customers" />
         </div>
       </div>
 

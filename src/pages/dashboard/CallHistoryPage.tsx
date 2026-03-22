@@ -16,6 +16,7 @@ import {
   Shield,
   Info
 } from 'lucide-react';
+import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import { getRetellCallHistory, type RetellCall } from '../../lib/retell';
 import { supabase } from '../../lib/supabase';
 
@@ -215,6 +216,11 @@ const CallHistoryPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Page Info */}
+      <div className="flex justify-end">
+        <PageInfoTooltip text="View all call recordings, transcripts, and outcomes" />
+      </div>
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow-sm border p-4">

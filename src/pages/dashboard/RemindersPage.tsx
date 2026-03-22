@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Save, Loader2, Check, AlertCircle, Link, Unlink, MessageSquare } from 'lucide-react';
+import { Save, Loader2, Check, AlertCircle, Link, Unlink, MessageSquare } from 'lucide-react';
+import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -239,7 +240,12 @@ const RemindersPage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-2xl mx-auto space-y-8 pb-12">
+      {/* Page Info */}
+      <div className="flex justify-end">
+        <PageInfoTooltip text="Set up automated appointment reminders via SMS and email" />
+      </div>
+
       {/* Error Banner */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
@@ -249,314 +255,307 @@ const RemindersPage: React.FC = () => {
         </div>
       )}
 
-      {/* Cal.com Integration */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+      {/* ── Cal.com Integration ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        transition={{ duration: 0.4 }}
       >
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-            <Link className="w-4 h-4 text-purple-600" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">Cal.com Integration</h2>
-            <p className="text-sm text-gray-600">Connect your Cal.com account to sync appointment bookings</p>
-          </div>
+        <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Calendar Connection</h2>
+        <div className="bg-white rounded-xl border border-gray-100 p-6">
+          {calError && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-5 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
+              <p className="text-sm text-red-700">{calError}</p>
+              <button onClick={() => setCalError(null)} className="ml-auto text-red-400 hover:text-red-600 text-sm">Dismiss</button>
+            </div>
+          )}
+
+          {calSuccess && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-5 flex items-center gap-2">
+              <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+              <p className="text-sm text-green-700">{calSuccess}</p>
+            </div>
+          )}
+
+          {calConnected ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Cal.com is connected</p>
+                  <p className="text-xs text-gray-500">Receiving booking events</p>
+                </div>
+              </div>
+              <button
+                onClick={handleDisconnectCal}
+                disabled={calDisconnecting}
+                className="px-4 py-2.5 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-2 text-sm disabled:opacity-50"
+              >
+                {calDisconnecting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Unlink className="w-4 h-4" />
+                )}
+                Disconnect
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Cal.com API Key</label>
+                <input
+                  type="password"
+                  value={calApiKey}
+                  onChange={(e) => setCalApiKey(e.target.value)}
+                  placeholder="cal_live_..."
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm placeholder:text-gray-400"
+                />
+                <p className="text-xs text-gray-500 mt-1.5">
+                  Find your API key at{' '}
+                  <a
+                    href="https://cal.com/settings/developer/api-keys"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-600 hover:text-purple-700 underline"
+                  >
+                    cal.com/settings/developer/api-keys
+                  </a>
+                </p>
+              </div>
+              <button
+                onClick={handleConnectCal}
+                disabled={calConnecting}
+                className="px-4 py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm disabled:opacity-50"
+              >
+                {calConnecting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Link className="w-4 h-4" />
+                )}
+                Connect Cal.com
+              </button>
+            </div>
+          )}
         </div>
+      </motion.section>
 
-        {calError && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
-            <p className="text-sm text-red-700">{calError}</p>
-            <button onClick={() => setCalError(null)} className="ml-auto text-red-400 hover:text-red-600 text-sm">Dismiss</button>
-          </div>
-        )}
-
-        {calSuccess && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4 flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-            <p className="text-sm text-green-700">{calSuccess}</p>
-          </div>
-        )}
-
-        {calConnected ? (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-3 h-3 bg-green-500 rounded-full" />
-              <span className="text-sm font-medium text-gray-900">Cal.com is connected</span>
-              <span className="text-xs text-gray-500">Receiving booking events</span>
-            </div>
-            <button
-              onClick={handleDisconnectCal}
-              disabled={calDisconnecting}
-              className="px-4 py-2 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors flex items-center gap-2 text-sm disabled:opacity-50"
-            >
-              {calDisconnecting ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Unlink className="w-4 h-4" />
-              )}
-              Disconnect
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Cal.com API Key</label>
-              <input
-                type="password"
-                value={calApiKey}
-                onChange={(e) => setCalApiKey(e.target.value)}
-                placeholder="cal_live_..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Find your API key at{' '}
-                <a
-                  href="https://cal.com/settings/developer/api-keys"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple-600 hover:text-purple-700 underline"
-                >
-                  cal.com/settings/developer/api-keys
-                </a>
-              </p>
-            </div>
-            <button
-              onClick={handleConnectCal}
-              disabled={calConnecting}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm disabled:opacity-50"
-            >
-              {calConnecting ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Link className="w-4 h-4" />
-              )}
-              Connect Cal.com
-            </button>
-          </div>
-        )}
-      </motion.div>
-
-      {/* Reminders Configuration */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+      {/* ── Reminder Settings ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        transition={{ duration: 0.4, delay: 0.08 }}
       >
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-              <Clock className="w-4 h-4 text-blue-600" />
-            </div>
+        <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Reminder Settings</h2>
+        <div className="bg-white rounded-xl border border-gray-100 divide-y divide-gray-50">
+
+          {/* Master Toggle */}
+          <div className="flex items-center justify-between px-6 py-5">
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Reminders Configuration</h2>
-              <p className="text-sm text-gray-600">Configure your reminder settings and templates</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <label className="text-sm font-medium text-gray-900">Enable Reminders</label>
-              <p className="text-xs text-gray-500">Turn reminders on or off for all clients</p>
+              <p className="text-sm font-medium text-gray-900">Enable Reminders</p>
+              <p className="text-xs text-gray-500 mt-0.5">Turn reminders on or off for all clients</p>
             </div>
             <button
               onClick={() => setRemindersEnabled(!remindersEnabled)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                 remindersEnabled ? 'bg-blue-600' : 'bg-gray-300'
               }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
                   remindersEnabled ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
           </div>
-        </div>
 
-        <div className="space-y-6">
+          {/* Reminder Time */}
+          <div className="px-6 py-5">
+            <label className="block text-sm font-medium text-gray-900 mb-1.5">Reminder Time</label>
+            <select
+              value={defaultReminderTime}
+              onChange={(e) => setDefaultReminderTime(e.target.value)}
+              className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            >
+              <option value="24">24 hours before</option>
+              <option value="48">48 hours before</option>
+              <option value="72">72 hours before</option>
+              <option value="168">1 week before</option>
+            </select>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Default Reminder Settings */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Default Settings</h3>
-            <div className="space-y-3">
+          {/* Channels */}
+          <div className="px-6 py-5 space-y-4">
+            <p className="text-sm font-medium text-gray-900">Delivery Channels</p>
+            <div className="flex items-center justify-between py-1">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Reminder Time</label>
-                  <select
-                    value={defaultReminderTime}
-                    onChange={(e) => setDefaultReminderTime(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                  <option value="24">24 hours before</option>
-                  <option value="48">48 hours before</option>
-                  <option value="72">72 hours before</option>
-                  <option value="168">1 week before</option>
-                </select>
+                <p className="text-sm text-gray-700">Email</p>
+                <p className="text-xs text-gray-500">Send reminders via email</p>
               </div>
-              <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                <textarea
-                    value={defaultReminderText}
-                    onChange={(e) => setDefaultReminderText(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    rows={6}
-                  placeholder="Enter your default reminder message template..."
-                  />
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {['{{client_name}}', '{{service}}', '{{appointment_date}}', '{{appointment_time}}'].map((v) => (
-                      <span
-                        key={v}
-                        className={`inline-flex items-center px-2 py-0.5 text-xs font-mono rounded-full ${
-                          defaultReminderText.includes(v)
-                            ? 'bg-green-50 text-green-700 border border-green-200'
-                            : 'bg-red-50 text-red-600 border border-red-200'
-                        }`}
-                      >
-                        {defaultReminderText.includes(v) ? '✓' : '✗'} {v}
-                      </span>
-                    ))}
-                  </div>
-                  {!defaultReminderText.includes('{{client_name}}') || !defaultReminderText.includes('{{appointment_date}}') || !defaultReminderText.includes('{{appointment_time}}') ? (
-                    <p className="text-xs text-red-500 mt-1">Required variables are missing — the message won't personalize correctly.</p>
-                  ) : null}
-              </div>
-            </div>
-          </div>
-
-          {/* Notification Settings */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Notification Settings</h3>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Email Reminders</label>
-                  <p className="text-xs text-gray-500">Send reminders via email</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={emailEnabled}
-                  onChange={(e) => setEmailEnabled(e.target.checked)}
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 accent-blue-600"
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">SMS Reminders</label>
-                  <p className="text-xs text-gray-500">Send reminders via SMS</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={smsEnabled}
-                  onChange={(e) => setSmsEnabled(e.target.checked)}
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 accent-blue-600"
-                />
-              </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
-          <button
-            onClick={handleReset}
-            className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Reset to Defaults
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:bg-gray-300"
-          >
-            {saving ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : saved ? (
-              <Check className="w-4 h-4" />
-            ) : (
-              <Save className="w-4 h-4" />
-            )}
-            {saved ? 'Saved!' : 'Save Configuration'}
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Upcoming Reminders */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
-      >
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-            <MessageSquare className="w-4 h-4 text-green-600" />
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">Upcoming Reminders</h2>
-            <p className="text-sm text-gray-600">Scheduled SMS reminders for upcoming appointments</p>
-          </div>
-        </div>
-
-        {remindersLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
-          </div>
-        ) : scheduledReminders.length === 0 ? (
-          <div className="text-center py-8">
-            <MessageSquare className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-            <p className="text-sm text-gray-500">No scheduled reminders yet.</p>
-            <p className="text-xs text-gray-400 mt-1">Reminders will appear here when appointments are booked via Cal.com.</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {scheduledReminders.map((msg) => (
-              <div
-                key={msg.id}
-                className="flex items-center justify-between p-3 rounded-lg border border-gray-100 bg-gray-50"
+              <button
+                onClick={() => setEmailEnabled(!emailEnabled)}
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                  emailEnabled ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
               >
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {msg.recipient_phone || msg.recipient_email || 'Unknown'}
-                  </p>
-                  <p className="text-xs text-gray-500 truncate mt-0.5">
-                    {msg.message_body.length > 80
-                      ? msg.message_body.slice(0, 80) + '...'
-                      : msg.message_body}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 ml-4 flex-shrink-0">
-                  <span className="text-xs text-gray-500">
-                    {new Date(msg.scheduled_for).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                    })}{' '}
-                    {new Date(msg.scheduled_for).toLocaleTimeString('en-US', {
-                      hour: 'numeric',
-                      minute: '2-digit',
-                      hour12: true,
-                    })}
-                  </span>
-                  <span
-                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                      msg.status === 'scheduled'
-                        ? 'bg-blue-100 text-blue-700'
-                        : msg.status === 'sent'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-red-100 text-red-700'
-                    }`}
-                  >
-                    {msg.status}
-                  </span>
-                </div>
+                <span
+                  className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                    emailEnabled ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+            <div className="flex items-center justify-between py-1">
+              <div>
+                <p className="text-sm text-gray-700">SMS</p>
+                <p className="text-xs text-gray-500">Send reminders via text message</p>
               </div>
+              <button
+                onClick={() => setSmsEnabled(!smsEnabled)}
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                  smsEnabled ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                    smsEnabled ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Message Template ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.16 }}
+      >
+        <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Message Template</h2>
+        <div className="bg-white rounded-xl border border-gray-100 px-6 py-5">
+          <textarea
+            value={defaultReminderText}
+            onChange={(e) => setDefaultReminderText(e.target.value)}
+            className="w-full px-3 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm leading-relaxed resize-none"
+            rows={5}
+            placeholder="Enter your default reminder message template..."
+          />
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {['{{client_name}}', '{{service}}', '{{appointment_date}}', '{{appointment_time}}'].map((v) => (
+              <span
+                key={v}
+                className={`inline-flex items-center px-2 py-0.5 text-xs font-mono rounded-full ${
+                  defaultReminderText.includes(v)
+                    ? 'bg-green-50 text-green-700 border border-green-200'
+                    : 'bg-red-50 text-red-600 border border-red-200'
+                }`}
+              >
+                {defaultReminderText.includes(v) ? 'ok' : 'missing'} {v}
+              </span>
             ))}
           </div>
-        )}
+          {(!defaultReminderText.includes('{{client_name}}') || !defaultReminderText.includes('{{appointment_date}}') || !defaultReminderText.includes('{{appointment_time}}')) && (
+            <p className="text-xs text-red-500 mt-2">Required variables are missing -- the message will not personalize correctly.</p>
+          )}
+        </div>
+      </motion.section>
+
+      {/* Save / Reset */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.24 }}
+        className="flex justify-end gap-3"
+      >
+        <button
+          onClick={handleReset}
+          className="px-5 py-2.5 text-sm text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          Reset to Defaults
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2 disabled:bg-gray-300"
+        >
+          {saving ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : saved ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <Save className="w-4 h-4" />
+          )}
+          {saved ? 'Saved!' : 'Save Configuration'}
+        </button>
       </motion.div>
+
+      {/* ── Upcoming Reminders ── */}
+      <motion.section
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.32 }}
+      >
+        <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Scheduled Reminders</h2>
+        <div className="bg-white rounded-xl border border-gray-100">
+          {remindersLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
+            </div>
+          ) : scheduledReminders.length === 0 ? (
+            <div className="text-center py-12 px-6">
+              <MessageSquare className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+              <p className="text-sm text-gray-500">No scheduled reminders yet</p>
+              <p className="text-xs text-gray-400 mt-1">Reminders will appear here when appointments are booked via Cal.com.</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-50">
+              {scheduledReminders.map((msg) => (
+                <div
+                  key={msg.id}
+                  className="flex items-center justify-between px-6 py-4"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {msg.recipient_phone || msg.recipient_email || 'Unknown'}
+                    </p>
+                    <p className="text-xs text-gray-500 truncate mt-0.5">
+                      {msg.message_body.length > 80
+                        ? msg.message_body.slice(0, 80) + '...'
+                        : msg.message_body}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                    <span className="text-xs text-gray-500">
+                      {new Date(msg.scheduled_for).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                      })}{' '}
+                      {new Date(msg.scheduled_for).toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true,
+                      })}
+                    </span>
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                        msg.status === 'scheduled'
+                          ? 'bg-blue-100 text-blue-700'
+                          : msg.status === 'sent'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {msg.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.section>
     </div>
   );
 };
