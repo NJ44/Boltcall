@@ -221,7 +221,7 @@ const AgentTestsPage: React.FC = () => {
             <h1 className="text-2xl font-bold text-gray-900">Agent Testing</h1>
           </div>
           <p className="text-gray-500 ml-10">
-            Run 8 real-world scenarios against your AI agents to find issues
+            Stress-test your AI agents with 12 brutal edge-case scenarios
           </p>
         </div>
         <button
@@ -311,7 +311,7 @@ const AgentTestsPage: React.FC = () => {
                     {isRunning ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        Testing 8 scenarios...
+                        Testing 12 scenarios...
                       </>
                     ) : (
                       <>
@@ -329,9 +329,9 @@ const AgentTestsPage: React.FC = () => {
                       <div className="flex items-center gap-3">
                         <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
                         <div>
-                          <p className="text-sm font-medium text-blue-900">Running 8 test scenarios...</p>
+                          <p className="text-sm font-medium text-blue-900">Running 12 stress-test scenarios...</p>
                           <p className="text-xs text-blue-600 mt-0.5">
-                            Testing booking, pricing, after-hours, angry customer, FAQ, transfer, spam, and multi-service
+                            Testing price extraction, prompt injection, social engineering, emotional escalation, and more
                           </p>
                         </div>
                       </div>
