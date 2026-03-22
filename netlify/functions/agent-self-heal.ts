@@ -19,6 +19,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
 const RETELL_API = 'https://api.retellai.com';
 const RETELL_KEY = process.env.RETELL_API_KEY || '';
 const OPENAI_KEY = process.env.OPENAI_API_KEY || '';
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || '';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -51,7 +52,36 @@ async function retellFetch(path: string, options: RequestInit = {}) {
   return res.json();
 }
 
-async function askOpenAI(systemPrompt: string, userPrompt: string): Promise<string> {
+async function askLLM(systemPrompt: string, userPrompt: string): Promise<string> {
+  // Try Anthropic first (more reliable), fall back to OpenAI
+  if (ANTHROPIC_KEY) {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': ANTHROPIC_KEY,
+          'anthropic-version': '2023-06-01',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 4000,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: userPrompt }],
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data.content?.[0]?.text || '';
+      }
+      console.warn(`Anthropic API returned ${res.status}, falling back to OpenAI`);
+    } catch (err) {
+      console.warn('Anthropic API failed, falling back to OpenAI:', err);
+    }
+  }
+
+  // Fallback: OpenAI
+  if (!OPENAI_KEY) throw new Error('No LLM API key configured (need ANTHROPIC_API_KEY or OPENAI_API_KEY)');
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -112,7 +142,7 @@ ${agentPrompt}
 
 Analyze why this call failed and provide the fix.`;
 
-  const response = await askOpenAI(systemPrompt, userPrompt);
+  const response = await askLLM(systemPrompt, userPrompt);
 
   // Parse JSON from response (handle markdown code blocks)
   const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -217,8 +247,8 @@ export const handler: Handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  if (!RETELL_KEY || !OPENAI_KEY) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'API keys not configured' }) };
+  if (!RETELL_KEY || (!OPENAI_KEY && !ANTHROPIC_KEY)) {
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'API keys not configured (need RETELL + ANTHROPIC or OPENAI)' }) };
   }
 
   try {
