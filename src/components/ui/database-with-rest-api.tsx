@@ -243,10 +243,11 @@ const DatabaseWithRestApi = ({
         {/* box outter circle */}
         <div className="absolute -bottom-6 z-30 grid h-[48px] w-[48px] place-items-center rounded-full border-t bg-[#141516] font-semibold text-xs">
           {circleText ? circleText : (
-            <img 
-              src="/boltcall_icon.png" 
-              alt="Boltcall" 
+            <img
+              src="/boltcall_icon.png"
+              alt="Boltcall"
               className="w-6 h-6 object-contain"
+              loading="lazy"
             />
           )}
         </div>

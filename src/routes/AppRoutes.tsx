@@ -13,8 +13,6 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import AuthCallback from '../pages/AuthCallback';
-import ChatbotVsLivePhoneComparison from '../pages/ChatbotVsLivePhoneComparison';
-
 // ── Route-level loading fallback ─────────────────────────────────────────
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -137,6 +135,7 @@ const ChatbotVsLiveChatVsPhoneAnswering = React.lazy(() => import('../pages/Chat
 const AIVsHumanReceptionistBlog = React.lazy(() => import('../pages/AIVsHumanReceptionistBlog'));
 const AiReceptionistCostPricingGuide = React.lazy(() => import('../pages/AiReceptionistCostPricingGuide'));
 const SpeedToLeadGuide = React.lazy(() => import('../pages/SpeedToLeadGuide'));
+const ChatbotVsLivePhoneComparison = React.lazy(() => import('../pages/ChatbotVsLivePhoneComparison'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -177,8 +176,9 @@ const NavigationWrapper: React.FC = () => {
   useEffect(() => {
     const isDashboard = location.pathname.startsWith('/dashboard');
     if (isDashboard) {
-      document.documentElement.dir = i18n.language === 'he' ? 'rtl' : 'ltr';
-      document.documentElement.lang = i18n.language === 'he' ? 'he' : i18n.language;
+      const lang = i18n.language?.split('-')[0] || 'en'; // normalize he-IL → he
+      document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
     } else {
       document.documentElement.dir = 'ltr';
       document.documentElement.lang = 'en';

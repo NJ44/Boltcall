@@ -155,10 +155,11 @@ export default function RadialOrbitalTimeline({
                className="absolute w-28 h-28 rounded-full border border-white/10 animate-ping opacity-50"
                style={{ animationDelay: "0.5s" }}
              ></div>
-             <img 
-               src="/boltcall_icon.png" 
-               alt="BoltCall" 
+             <img
+               src="/boltcall_icon.png"
+               alt="BoltCall"
                className="w-12 h-12 rounded-full object-contain"
+               loading="lazy"
              />
            </div>
 

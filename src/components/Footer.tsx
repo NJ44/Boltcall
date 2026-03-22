@@ -86,6 +86,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                     className="h-12 mb-3"
                     width="154"
                     height="48"
+                    loading="lazy"
                   />
                 )}
               </motion.div>

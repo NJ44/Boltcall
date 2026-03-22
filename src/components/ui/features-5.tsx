@@ -31,19 +31,21 @@ export function Features() {
                     </div>
                     <div className="border-border/50 relative rounded-3xl border p-3 lg:col-span-3">
                         <div className="bg-gradient-to-b aspect-[76/59] relative rounded-2xl from-zinc-300 to-transparent p-px dark:from-zinc-700">
-                            <img 
-                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1207&h=929&fit=crop" 
-                                className="hidden rounded-[15px] dark:block" 
-                                alt="payments illustration dark" 
-                                width={1207} 
-                                height={929} 
+                            <img
+                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1207&h=929&fit=crop"
+                                className="hidden rounded-[15px] dark:block"
+                                alt="payments illustration dark"
+                                width={1207}
+                                height={929}
+                                loading="lazy"
                             />
-                            <img 
-                                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1207&h=929&fit=crop" 
-                                className="rounded-[15px] shadow dark:hidden" 
-                                alt="payments illustration light" 
-                                width={1207} 
-                                height={929} 
+                            <img
+                                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1207&h=929&fit=crop"
+                                className="rounded-[15px] shadow dark:hidden"
+                                alt="payments illustration light"
+                                width={1207}
+                                height={929}
+                                loading="lazy"
                             />
                         </div>
                     </div>

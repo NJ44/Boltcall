@@ -178,6 +178,13 @@ async function prerender() {
         }
       });
 
+      // Force English locale so prerendered pages always get lang="en"
+      await page.evaluateOnNewDocument(() => {
+        Object.defineProperty(navigator, 'language', { get: () => 'en' });
+        Object.defineProperty(navigator, 'languages', { get: () => ['en'] });
+        localStorage.setItem('i18nextLng', 'en');
+      });
+
       await page.goto(`http://localhost:${PORT}${route}`, {
         waitUntil: 'networkidle0',
         timeout: 15000,
@@ -185,6 +192,17 @@ async function prerender() {
 
       // Wait for React to render content
       await page.waitForSelector('#root > *', { timeout: 10000 });
+
+      // Ensure lang="en" and correct og:url/canonical in prerendered output
+      await page.evaluate((r) => {
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+        const canonUrl = 'https://boltcall.org' + (r === '/' ? '/' : r.replace(/\/$/, ''));
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.href = canonUrl;
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute('content', canonUrl);
+      }, route);
 
       // Get the full rendered HTML
       const html = await page.content();
