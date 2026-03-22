@@ -107,12 +107,25 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, results: data || [], method: 'vector_search' }) };
     }
 
+    // ─── Helper: Get business_profile_id for a user ──────────────────
+    async function getProfileId(userId: string): Promise<string | null> {
+      const { data } = await supabase
+        .from('business_profiles')
+        .select('id')
+        .eq('user_id', userId)
+        .limit(1)
+        .maybeSingle();
+      return data?.id || null;
+    }
+
     // ─── ADD: Add a single KB entry ─────────────────────────────────
     if (action === 'add') {
       const { userId, title, content, category, tier, tags } = body;
       if (!userId || !title || !content) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId, title, and content required' }) };
       }
+
+      const profileId = await getProfileId(userId);
 
       // Generate embedding for search-tier entries
       let embedding = null;
@@ -124,6 +137,7 @@ export const handler: Handler = async (event) => {
         .from('knowledge_base')
         .insert({
           user_id: userId,
+          business_profile_id: profileId,
           title,
           content,
           category: category || 'general',
@@ -146,6 +160,7 @@ export const handler: Handler = async (event) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and entries array required' }) };
       }
 
+      const profileId = await getProfileId(userId);
       const results = [];
       for (const entry of entries) {
         let embedding = null;
@@ -157,6 +172,7 @@ export const handler: Handler = async (event) => {
           .from('knowledge_base')
           .insert({
             user_id: userId,
+            business_profile_id: profileId,
             title: entry.title,
             content: entry.content,
             category: entry.category || 'general',
