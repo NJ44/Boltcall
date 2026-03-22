@@ -174,6 +174,24 @@ function buildGeneralTools(options: {
       },
       timeout_ms: 10000,
     },
+    // Custom: search knowledge base — for detailed/technical questions
+    {
+      type: 'custom',
+      name: 'search_knowledge_base',
+      description: 'Search the business knowledge base for detailed or technical information. Use when the caller asks a specific question that is NOT covered in your main instructions — such as product details, technical specifications, materials used, detailed procedures, or specialized services. Do NOT use for basic info like hours, services, or pricing.',
+      speak_after_execution: true,
+      speak_during_execution: true,
+      execution_message_description: 'Let me check our records for that information.',
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          question: { type: 'string', description: 'The specific question or topic to search for in the knowledge base' },
+        },
+        required: ['question'],
+      },
+      timeout_ms: 10000,
+    },
   ];
 
   // Add transfer_call tool only if a transfer number is provided
@@ -299,29 +317,58 @@ export const handler: Handler = async (event) => {
 
       // Create both KB + Agent in one call
       if (action === 'create_full') {
-        // Step 1: Create knowledge base
-        const kb = await client.knowledgeBase.create({
-          knowledge_base_name: `${body.business_name} Knowledge Base`,
-          knowledge_base_texts: body.knowledge_base_texts || [],
-          knowledge_base_urls: body.website_url ? [body.website_url] : [],
-        });
+        // Step 1: Store KB in Supabase (NOT Retell — saves $64+/mo)
+        // Tier 1 (prompt) entries get injected into the LLM prompt
+        // Tier 2 (search) entries are searchable via search_knowledge_base tool
+        let supabaseKbId: string | null = null;
+        if (body.knowledge_base_texts?.length) {
+          try {
+            const kbBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+            const kbRes = await fetch(`${kbBaseUrl}/.netlify/functions/kb-search`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'add_batch',
+                userId: body.user_id,
+                entries: body.knowledge_base_texts.map((text: any) => ({
+                  title: typeof text === 'string' ? text.split('\n')[0].slice(0, 100) : text.title || 'Knowledge Entry',
+                  content: typeof text === 'string' ? text : text.text || text.content || '',
+                  category: 'business_info',
+                  tier: 'prompt', // Core business info goes in prompt
+                })),
+              }),
+            });
+            if (kbRes.ok) {
+              const kbData = await kbRes.json();
+              console.log(`[retell-agents] Saved ${kbData.added} KB entries to Supabase`);
+            }
+          } catch (kbErr) {
+            console.error('[retell-agents] KB save to Supabase failed (non-blocking):', kbErr);
+          }
+        }
 
         // Step 2: Generate professional prompt (or use legacy fallback)
         let generalPrompt: string;
         let beginMessage: string | undefined;
 
         if (body.prompt_config) {
-          // Use the professional prompt generator
           const generated = await generateProfessionalPrompt(body.prompt_config);
           generalPrompt = generated.prompt;
           beginMessage = generated.beginMessage;
         } else if (body.general_prompt) {
-          // Caller provided their own prompt
           generalPrompt = body.general_prompt;
           beginMessage = body.begin_message;
         } else {
-          // Legacy fallback
           generalPrompt = buildAgentPrompt(body.business_name, body.country);
+        }
+
+        // Inject KB text directly into the prompt (Tier 1)
+        if (body.knowledge_base_texts?.length) {
+          generalPrompt += '\n\n## Business Knowledge Base\n';
+          for (const text of body.knowledge_base_texts) {
+            const content = typeof text === 'string' ? text : text.text || text.content || '';
+            if (content) generalPrompt += `${content}\n\n`;
+          }
         }
 
         // Step 3: Determine response engine
@@ -333,17 +380,16 @@ export const handler: Handler = async (event) => {
         } else if (body.llm_websocket_url) {
           responseEngine = { type: 'custom-llm' as const, llm_websocket_url: body.llm_websocket_url };
         } else {
-          // Build general_tools with transfer, availability, booking, and SMS
+          // Build general_tools with transfer, availability, booking, SMS, and KB search
           const generalTools = buildGeneralTools({
             transferNumber: body.transfer_number || '',
             baseUrl,
           });
 
-          // Auto-create a Retell LLM linked to the knowledge base
+          // Create LLM WITHOUT Retell KB — KB is in the prompt + search tool
           const llmConfig: any = {
             model: 'gpt-5-mini',
             general_prompt: generalPrompt,
-            knowledge_base_ids: [kb.knowledge_base_id],
             general_tools: generalTools,
           };
           if (beginMessage) {

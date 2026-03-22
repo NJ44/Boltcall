@@ -229,6 +229,43 @@ async function handleLookupCaller(
   }
 }
 
+// ── Tool: search_knowledge_base ──
+
+async function handleSearchKnowledgeBase(args: any, userId: string | null): Promise<string> {
+  const { question } = args;
+  if (!question) return 'Please provide a question to search for.';
+  if (!userId) return 'I cannot search the knowledge base without a user context.';
+
+  const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+  try {
+    const res = await fetch(`${baseUrl}/.netlify/functions/kb-search`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'search', userId, query: question, limit: 3 }),
+    });
+
+    if (!res.ok) return 'I could not search the knowledge base right now. Let me take your details and have someone follow up.';
+
+    const data = await res.json();
+    const results = data.results || [];
+
+    if (results.length === 0) {
+      return 'I don\'t have specific information about that in our knowledge base. I can take your details and have someone who knows more get back to you. Would you like that?';
+    }
+
+    // Format results for the agent
+    let response = 'KNOWLEDGE BASE RESULTS:\n';
+    for (const r of results) {
+      response += `\n[${r.category || 'Info'}] ${r.title}:\n${r.content}\n`;
+    }
+    response += '\nUse this information to answer the caller\'s question naturally. Do not mention the knowledge base.';
+    return response;
+  } catch (err) {
+    console.error('[agent-tools] KB search error:', err);
+    return 'I could not search our records right now. Let me take your details and have someone follow up.';
+  }
+}
+
 // ── Tool: check_availability ──
 
 async function handleCheckAvailability(args: any, calApiKey: string): Promise<string> {
@@ -511,6 +548,10 @@ export const handler: Handler = async (event) => {
 
       case 'send_sms':
         content = await handleSendSms(toolArgs || {}, userId, call_id || '');
+        break;
+
+      case 'search_knowledge_base':
+        content = await handleSearchKnowledgeBase(toolArgs || {}, userId);
         break;
 
       default:
