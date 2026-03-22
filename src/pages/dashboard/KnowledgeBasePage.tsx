@@ -8,7 +8,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
-import { CheckCircle2, Circle, Brain } from 'lucide-react';
+import { CheckCircle2, Circle } from 'lucide-react';
 
 const FUNCTIONS_BASE = import.meta.env.DEV
   ? 'http://localhost:8888/.netlify/functions'
@@ -731,13 +731,10 @@ const KnowledgeBasePage: React.FC = () => {
           className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6"
         >
           <div className="flex items-start gap-3 md:gap-4">
-            <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Brain className="w-5 h-5 text-blue-600" />
-            </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
                 <h3 className="text-sm font-semibold text-gray-900">
-                  Knowledge Base Completeness
+                  Setup Progress
                 </h3>
                 <span className="text-sm font-bold text-blue-600">{kbCompleteness.score}%</span>
               </div>
