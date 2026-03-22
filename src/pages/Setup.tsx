@@ -173,8 +173,8 @@ const Setup: React.FC = () => {
       updateReview({ isLaunched: true });
       navigate('/setup/loading');
 
-      // Fire agent creation in background
-      createAgentAndKnowledgeBase({
+      // Fire agent creation in background — create both inbound + outbound
+      const agentBaseData = {
         businessName,
         websiteUrl,
         mainCategory: industry.toLowerCase(),
@@ -188,7 +188,21 @@ const Setup: React.FC = () => {
         services: storeKnowledgeBase.services,
         faqs: storeKnowledgeBase.faqs,
         policies: storeKnowledgeBase.policies,
-      }).catch(e => console.error('Agent creation failed:', e));
+      };
+
+      // 1. Inbound agent — answers incoming calls
+      createAgentAndKnowledgeBase({
+        ...agentBaseData,
+        agentType: 'inbound',
+        agentName: `${businessName} AI Receptionist`,
+      }).catch(e => console.error('Inbound agent creation failed:', e));
+
+      // 2. Outbound agent — speed-to-lead follow-up calls
+      createAgentAndKnowledgeBase({
+        ...agentBaseData,
+        agentType: 'speed_to_lead',
+        agentName: `${businessName} Follow-Up Agent`,
+      }).catch(e => console.error('Outbound agent creation failed:', e));
 
       const FUNCTIONS_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
       fetch(`${FUNCTIONS_BASE}/setup-launch`, {

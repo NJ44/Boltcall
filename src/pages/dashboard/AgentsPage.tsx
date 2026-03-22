@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
 import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
+import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import { VoicePicker } from '../../components/ui/voice-picker';
 import { useRetellVoices } from '../../hooks/useRetellVoices';
 import CardTable from '../../components/ui/CardTable';
@@ -546,43 +547,42 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
     <div className="space-y-5 px-1 md:px-0">
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-zinc-200">
-        <button
-          onClick={() => setActiveTab('agents')}
-          className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
-            activeTab === 'agents'
-              ? 'text-blue-600'
-              : 'text-zinc-500 hover:text-zinc-700'
-          }`}
-        >
-          <span className="flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            My Agents
-          </span>
-          {activeTab === 'agents' && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
-          )}
-        </button>
-        <button
-          onClick={() => setActiveTab('tests')}
-          className={`px-4 py-2.5 text-sm font-medium transition-colors relative ${
-            activeTab === 'tests'
-              ? 'text-blue-600'
-              : 'text-zinc-500 hover:text-zinc-700'
-          }`}
-        >
-          <span className="flex items-center gap-2">
-            <Shield className="w-4 h-4" />
-            Agent Tests
-          </span>
-          {activeTab === 'tests' && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
-          )}
-        </button>
+      <div className="flex items-center gap-1 border-b border-zinc-200">
+        {[
+          { id: 'agents' as const, label: 'My Agents', icon: <Users className="w-4 h-4" /> },
+          { id: 'tests' as const, label: 'Agent Tests', icon: <Shield className="w-4 h-4" /> },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-4 py-2.5 text-sm font-medium transition-colors duration-200 relative ${
+              activeTab === tab.id
+                ? 'text-blue-600'
+                : 'text-zinc-500 hover:text-zinc-700'
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              {tab.icon}
+              {tab.label}
+            </span>
+            {activeTab === tab.id && (
+              <motion.div
+                layoutId="agent-tab-indicator"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              />
+            )}
+          </button>
+        ))}
+        <div className="ml-auto pb-2">
+          <PageInfoTooltip text="Create and manage your AI voice agents" />
+        </div>
       </div>
 
       {activeTab === 'tests' ? (
-        <AgentTestsPage />
+        <motion.div key="tests" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
+          <AgentTestsPage />
+        </motion.div>
       ) : agents.length === 0 ? (
         /* No agents - Show create options */
         <div>
