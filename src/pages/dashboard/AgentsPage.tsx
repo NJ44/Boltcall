@@ -573,7 +573,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         >
           <span className="flex items-center gap-2">
             <Shield className="w-4 h-4" />
-            Agent Tests
+            Testing & Self-Heal
           </span>
           {activeTab === 'tests' && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />

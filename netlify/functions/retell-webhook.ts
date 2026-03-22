@@ -6,15 +6,16 @@ import { notifyError } from './_shared/notify';
  * Retell Post-Call Webhook
  *
  * Receives Retell's post-call webhook events after every call ends.
- * Detects missed calls and triggers the text-back pipeline:
- *   1. Creates a lead with source='missed_call'
- *   2. Inserts a scheduled_message for SMS text-back
- *   3. The existing message-dispatcher cron picks it up and sends via Twilio
  *
- * Missed call criteria:
- *   - call_status === 'not_connected'
- *   - call_status === 'error'
- *   - call_status === 'ended' AND duration_ms < 15000 (abandoned)
+ * Two pipelines:
+ *   A) Missed-call text-back — SMS follow-up for unanswered calls
+ *   B) Self-healing — auto-detect failed calls, trigger prompt fix pipeline
+ *
+ * Self-healing triggers:
+ *   - call_analysis.call_successful === false
+ *   - user_sentiment is 'Negative' or 'Very Negative'
+ *   - call ended in error
+ *   - call_analysis.call_summary mentions failure keywords
  */
 
 const MISSED_CALL_THRESHOLD_MS = 15000;
@@ -59,6 +60,86 @@ function substituteTemplate(
   return result;
 }
 
+// ─── Self-Healing Detection ─────────────────────────────────────────────────
+
+function isFailedCall(call: any): boolean {
+  const analysis = call.call_analysis;
+  if (!analysis) return false;
+
+  // Explicit failure flag from Retell's post-call analysis
+  if (analysis.call_successful === false) return true;
+
+  // Negative user sentiment
+  const sentiment = (analysis.user_sentiment || '').toLowerCase();
+  if (sentiment === 'negative' || sentiment === 'very negative') return true;
+
+  // Call summary mentions failure keywords
+  const summary = (analysis.call_summary || '').toLowerCase();
+  const failureKeywords = [
+    'hung up', 'disconnected', 'frustrated', 'angry', 'confused',
+    'could not help', 'unable to assist', 'wrong information',
+    'incorrect', 'loop', 'repeated', 'hallucinated',
+  ];
+  if (failureKeywords.some(kw => summary.includes(kw))) return true;
+
+  return false;
+}
+
+function buildTranscriptText(call: any): string {
+  const transcript = call.transcript_object || call.transcript;
+  if (!transcript) return call.call_analysis?.call_summary || '';
+
+  if (Array.isArray(transcript)) {
+    return transcript
+      .map((t: any) => `${t.role || 'unknown'}: ${t.content || t.words?.map((w: any) => w.word).join(' ') || ''}`)
+      .join('\n');
+  }
+
+  if (typeof transcript === 'string') return transcript;
+  return JSON.stringify(transcript);
+}
+
+async function checkAndTriggerSelfHeal(call: any, agentId: string): Promise<boolean> {
+  // Skip test calls and very short calls (missed calls handled separately)
+  if (!call.call_analysis) return false;
+  if (call.call_status !== 'ended') return false;
+  if ((call.duration_ms || 0) < 15000) return false;
+
+  if (!isFailedCall(call)) return false;
+
+  const transcript = buildTranscriptText(call);
+  if (!transcript || transcript.length < 50) return false;
+
+  console.log(`[retell-webhook] Failed call detected: ${call.call_id}, triggering self-heal`);
+
+  // Look up user_id for this agent
+  const supabase = getSupabase();
+  const { data: agentRow } = await supabase
+    .from('agents')
+    .select('user_id')
+    .filter('api_keys->>retell_agent_id', 'eq', agentId)
+    .single();
+
+  // Fire-and-forget: trigger self-healing pipeline asynchronously
+  const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+  fetch(`${baseUrl}/.netlify/functions/agent-self-heal`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'heal',
+      agentId,
+      callId: call.call_id,
+      transcript,
+      callAnalysis: call.call_analysis,
+      userId: agentRow?.user_id || null,
+    }),
+  }).catch(err => {
+    console.error('[retell-webhook] Self-heal trigger failed (non-blocking):', err);
+  });
+
+  return true;
+}
+
 export const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
@@ -96,13 +177,17 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, headers, body: JSON.stringify({ ok: true, skipped: true }) };
     }
 
+    // ─── Self-Healing: Detect failed calls and trigger auto-fix ────────────
+    // This runs for ALL completed calls, not just missed ones
+    const selfHealTriggered = await checkAndTriggerSelfHeal(call, agentId);
+
     // Check if this is a missed call
     if (!isMissedCall(call)) {
       console.log(`[retell-webhook] Call ${call.call_id} is not a missed call (status=${call.call_status}, duration=${call.duration_ms}ms)`);
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ ok: true, missed: false }),
+        body: JSON.stringify({ ok: true, missed: false, selfHealTriggered }),
       };
     }
 
