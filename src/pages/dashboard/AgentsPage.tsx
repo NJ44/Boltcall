@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
-import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
+import { Users, Plus, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
+import ModalShell from '../../components/ui/modal-shell';
 
 import { VoicePicker } from '../../components/ui/voice-picker';
 import { useRetellVoices } from '../../hooks/useRetellVoices';
@@ -730,485 +731,420 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       )}
 
       {/* Create Agent Modal */}
-      <AnimatePresence>
-        {showCreateModal && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowCreateModal(false)}
-          >
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+      <ModalShell
+        open={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        title="Create New Agent"
+        maxWidth="max-w-lg"
+        footer={
+          <>
+            <button
+              onClick={() => setShowCreateModal(false)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-zinc-900">Create New Agent</h2>
-                <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="text-zinc-400 hover:text-zinc-600 transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
+              Cancel
+            </button>
+            <button
+              onClick={handleCreateAgent}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            >
+              Create Agent
+            </button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          {/* Note */}
+          <div className="bg-blue-50 border border-blue-100 rounded-md p-3">
+            <p className="text-blue-700 text-xs">
+              <strong>Note:</strong> You can change any of these settings later after creating the agent.
+            </p>
+          </div>
 
-              <div className="space-y-4">
-                {/* Note */}
-                <div className="bg-blue-50 border border-blue-100 rounded-md p-3">
-                  <p className="text-blue-700 text-xs">
-                    <strong>Note:</strong> You can change any of these settings later after creating the agent.
-                  </p>
-                </div>
+          {/* Agent Name */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Agent Name *
+            </label>
+            <input
+              type="text"
+              value={createForm.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter agent name"
+            />
+          </div>
 
-                {/* Agent Name */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Agent Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={createForm.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter agent name"
-                  />
-                </div>
+          {/* Voice Choice */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Voice *
+            </label>
+            <VoicePicker
+              voices={retellVoices}
+              value={createForm.voice}
+              onValueChange={(voiceId) => handleInputChange('voice', voiceId)}
+              placeholder="Choose a voice..."
+            />
+          </div>
 
-                {/* Voice Choice */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Voice *
-                  </label>
-                  <VoicePicker
-                    voices={retellVoices}
-                    value={createForm.voice}
-                    onValueChange={(voiceId) => handleInputChange('voice', voiceId)}
-                    placeholder="Choose a voice..."
-                  />
-                </div>
+          {/* Knowledge Base Choice */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Knowledge Base *
+            </label>
+            <select
+              value={createForm.knowledgeBase}
+              onChange={(e) => handleInputChange('knowledgeBase', e.target.value)}
+              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
+            >
+              <option value="" className="text-zinc-900">Select knowledge base</option>
+              {userKnowledgeBases.map((kb) => (
+                <option key={kb.id} value={kb.id} className="text-zinc-900">
+                  {kb.name}
+                </option>
+              ))}
+            </select>
+            <p className="text-sm text-blue-600 mt-2">
+              <a
+                href="/dashboard/knowledge-base"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-800 underline"
+              >
+                Create a new knowledge base
+              </a>
+            </p>
+          </div>
 
+          {/* Phone Number */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Phone Number *
+            </label>
+            <select
+              value={createForm.phoneNumber}
+              onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
+            >
+              <option value="" className="text-zinc-900">Select phone number</option>
+              {userPhoneNumbers.map((phone) => (
+                <option key={phone.id} value={phone.phone_number} className="text-zinc-900">
+                  {phone.phone_number} {phone.assigned_agent_name && `(${phone.assigned_agent_name})`}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                {/* Knowledge Base Choice */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Knowledge Base *
-                  </label>
-                  <select
-                    value={createForm.knowledgeBase}
-                    onChange={(e) => handleInputChange('knowledgeBase', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
-                  >
-                    <option value="" className="text-zinc-900">Select knowledge base</option>
-                    {userKnowledgeBases.map((kb) => (
-                      <option key={kb.id} value={kb.id} className="text-zinc-900">
-                        {kb.name}
-                      </option>
-                    ))}
-                  </select>
-                  <p className="text-sm text-blue-600 mt-2">
-                    <a 
-                      href="/dashboard/knowledge-base" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="hover:text-blue-800 underline"
-                    >
-                      Create a new knowledge base
-                    </a>
-                  </p>
-                </div>
+          {/* Human Transfer Phone */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Human Transfer Phone
+            </label>
+            <input
+              type="tel"
+              value={createForm.humanTransferPhone}
+              onChange={(e) => handleInputChange('humanTransferPhone', e.target.value)}
+              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="+1 (555) 987-6543"
+            />
+          </div>
 
-                {/* Phone Number */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Phone Number *
-                  </label>
-                  <select
-                    value={createForm.phoneNumber}
-                    onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
-                  >
-                    <option value="" className="text-zinc-900">Select phone number</option>
-                    {userPhoneNumbers.map((phone) => (
-                      <option key={phone.id} value={phone.phone_number} className="text-zinc-900">
-                        {phone.phone_number} {phone.assigned_agent_name && `(${phone.assigned_agent_name})`}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Human Transfer Phone */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Human Transfer Phone
-                  </label>
-                  <input
-                    type="tel"
-                    value={createForm.humanTransferPhone}
-                    onChange={(e) => handleInputChange('humanTransferPhone', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="+1 (555) 987-6543"
-                  />
-                </div>
-
-                {/* Inbound/Outbound */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Call Direction *
-                  </label>
-                  <div className="flex flex-col gap-2 md:flex-row md:gap-4">
-                    <label className="flex items-center text-zinc-900 text-sm md:text-base">
-                      <input
-                        type="radio"
-                        name="direction"
-                        value="inbound"
-                        checked={createForm.direction === 'inbound'}
-                        onChange={(e) => handleInputChange('direction', e.target.value as 'inbound' | 'outbound')}
-                        className="mr-2"
-                      />
-                      Inbound (Receives calls)
-                    </label>
-                    <label className="flex items-center text-zinc-900 text-sm md:text-base">
-                      <input
-                        type="radio"
-                        name="direction"
-                        value="outbound"
-                        checked={createForm.direction === 'outbound'}
-                        onChange={(e) => handleInputChange('direction', e.target.value as 'inbound' | 'outbound')}
-                        className="mr-2"
-                      />
-                      Outbound (Makes calls)
-                    </label>
-                  </div>
-                </div>
-
-                {/* Language */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-700 mb-2">
-                    Language *
-                  </label>
-                  <select
-                    value={createForm.language}
-                    onChange={(e) => handleInputChange('language', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
-                  >
-                    <option value="" className="text-zinc-900">Select language</option>
-                    <option value="en" className="text-zinc-900">English</option>
-                    <option value="es" className="text-zinc-900">Spanish</option>
-                    <option value="fr" className="text-zinc-900">French</option>
-                    <option value="de" className="text-zinc-900">German</option>
-                    <option value="it" className="text-zinc-900">Italian</option>
-                    <option value="pt" className="text-zinc-900">Portuguese</option>
-                    <option value="zh" className="text-zinc-900">Chinese</option>
-                    <option value="ja" className="text-zinc-900">Japanese</option>
-                    <option value="ko" className="text-zinc-900">Korean</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Modal Actions */}
-              <div className="flex justify-end gap-2 mt-5 pt-4 border-t border-zinc-200">
-                <button
-                  onClick={() => setShowCreateModal(false)}
-                  className="px-3 py-1.5 text-sm text-zinc-600 border border-zinc-300 rounded-md hover:bg-zinc-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleCreateAgent}
-                  className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Create Agent
-                </button>
-              </div>
+          {/* Inbound/Outbound */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Call Direction *
+            </label>
+            <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+              <label className="flex items-center text-zinc-900 text-sm md:text-base">
+                <input
+                  type="radio"
+                  name="direction"
+                  value="inbound"
+                  checked={createForm.direction === 'inbound'}
+                  onChange={(e) => handleInputChange('direction', e.target.value as 'inbound' | 'outbound')}
+                  className="mr-2"
+                />
+                Inbound (Receives calls)
+              </label>
+              <label className="flex items-center text-zinc-900 text-sm md:text-base">
+                <input
+                  type="radio"
+                  name="direction"
+                  value="outbound"
+                  checked={createForm.direction === 'outbound'}
+                  onChange={(e) => handleInputChange('direction', e.target.value as 'inbound' | 'outbound')}
+                  className="mr-2"
+                />
+                Outbound (Makes calls)
+              </label>
             </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+
+          {/* Language */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Language *
+            </label>
+            <select
+              value={createForm.language}
+              onChange={(e) => handleInputChange('language', e.target.value)}
+              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
+            >
+              <option value="" className="text-zinc-900">Select language</option>
+              <option value="en" className="text-zinc-900">English</option>
+              <option value="es" className="text-zinc-900">Spanish</option>
+              <option value="fr" className="text-zinc-900">French</option>
+              <option value="de" className="text-zinc-900">German</option>
+              <option value="it" className="text-zinc-900">Italian</option>
+              <option value="pt" className="text-zinc-900">Portuguese</option>
+              <option value="zh" className="text-zinc-900">Chinese</option>
+              <option value="ja" className="text-zinc-900">Japanese</option>
+              <option value="ko" className="text-zinc-900">Korean</option>
+            </select>
+          </div>
+        </div>
+      </ModalShell>
 
       {/* Templates Modal */}
-      {showTemplatesModal && (
-        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full mx-2 md:mx-4 max-h-[90vh] md:max-h-[80vh] overflow-y-auto">
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-zinc-900">Industry Templates</h2>
-                <button
-                  onClick={() => setShowTemplatesModal(false)}
-                  className="text-zinc-400 hover:text-zinc-600 transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+      <ModalShell
+        open={showTemplatesModal}
+        onClose={() => setShowTemplatesModal(false)}
+        title="Industry Templates"
+        maxWidth="max-w-3xl"
+        footer={
+          <button
+            onClick={() => setShowTemplatesModal(false)}
+            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            Cancel
+          </button>
+        }
+      >
+        {/* Templates Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {industryTemplates.map((template) => (
+            <div
+              key={template.id}
+              className="border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer group bg-white relative"
+              onClick={() => handleTemplateSelect(template)}
+            >
+              {/* Inbound/Outbound Badge - Top Left */}
+              <span className={`absolute top-2.5 left-2.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium ${
+                template.direction === 'inbound'
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'bg-green-100 text-green-700'
+              }`}>
+                {template.direction === 'inbound' ? 'Inbound' : 'Outbound'}
+              </span>
+
+              {/* Template Header */}
+              <div className="flex items-center gap-3 mb-2.5 mt-4">
+                <div className={`w-9 h-9 ${template.color} rounded-lg flex items-center justify-center text-white shadow-sm [&_svg]:w-5 [&_svg]:h-5`}>
+                  {template.icon}
+                </div>
+                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors text-sm leading-tight flex-1">
+                  {template.name}
+                </h3>
               </div>
 
-              {/* Templates Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {industryTemplates.map((template) => (
-                  <div
-                    key={template.id}
-                    className="border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer group bg-white relative"
-                    onClick={() => handleTemplateSelect(template)}
-                  >
-                    {/* Inbound/Outbound Badge - Top Left */}
-                    <span className={`absolute top-2.5 left-2.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium ${
-                      template.direction === 'inbound'
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'bg-green-100 text-green-700'
-                    }`}>
-                      {template.direction === 'inbound' ? 'Inbound' : 'Outbound'}
-                    </span>
+              {/* Description */}
+              <p className="text-gray-500 text-xs mb-3 line-clamp-2 leading-relaxed">{template.description}</p>
 
-                    {/* Template Header */}
-                    <div className="flex items-center gap-3 mb-2.5 mt-4">
-                      <div className={`w-9 h-9 ${template.color} rounded-lg flex items-center justify-center text-white shadow-sm [&_svg]:w-5 [&_svg]:h-5`}>
-                        {template.icon}
-                      </div>
-                      <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors text-sm leading-tight flex-1">
-                        {template.name}
-                      </h3>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-500 text-xs mb-3 line-clamp-2 leading-relaxed">{template.description}</p>
-
-                    {/* Use Template Button */}
-                    <button className="w-full px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-xs font-medium">
-                      Use Template
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              {/* Modal Actions */}
-              <div className="flex justify-end gap-3 mt-5 pt-4 border-t border-zinc-200">
-                <button
-                  onClick={() => setShowTemplatesModal(false)}
-                  className="px-3 py-1.5 text-sm text-zinc-600 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
-                >
-                  Cancel
-                </button>
-              </div>
+              {/* Use Template Button */}
+              <button className="w-full px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-xs font-medium">
+                Use Template
+              </button>
             </div>
-          </div>
+          ))}
         </div>
-      )}
+      </ModalShell>
 
       {/* Test Chat Modal */}
-      {showTestChatModal && selectedAgentForTest && (
-        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full mx-4">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-zinc-900">Test Chat - {selectedAgentForTest.name}</h2>
-                <button 
-                  onClick={() => {
-                    setShowTestChatModal(false);
-                    setSelectedAgentForTest(null);
-                  }}
-                  className="text-zinc-400 hover:text-zinc-600 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
+      <ModalShell
+        open={showTestChatModal && !!selectedAgentForTest}
+        onClose={() => {
+          setShowTestChatModal(false);
+          setSelectedAgentForTest(null);
+        }}
+        title={`Test Chat - ${selectedAgentForTest?.name || ''}`}
+        maxWidth="max-w-md"
+        footer={
+          <button
+            onClick={() => {
+              setShowTestChatModal(false);
+              setSelectedAgentForTest(null);
+            }}
+            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            Close
+          </button>
+        }
+      >
+        <div className="space-y-4">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p className="text-blue-800 text-sm mb-2">
+              <strong>How it works:</strong>
+            </p>
+            <ul className="text-blue-700 text-sm space-y-1">
+              <li>• Enter your phone number below</li>
+              <li>• Click "Call Me" to receive a call</li>
+              <li>• Test your AI agent in real-time</li>
+            </ul>
+          </div>
 
-              <div className="space-y-4">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-blue-800 text-sm mb-2">
-                    <strong>How it works:</strong>
-                  </p>
-                  <ul className="text-blue-700 text-sm space-y-1">
-                    <li>• Enter your phone number below</li>
-                    <li>• Click "Call Me" to receive a call</li>
-                    <li>• Test your AI agent in real-time</li>
-                  </ul>
+          {/* Retell Chat Widget Container */}
+          <div className="border border-gray-200 rounded-lg p-4">
+            <div id="retell-voice-widget" className="min-h-[200px] flex items-center justify-center">
+              <div className="text-center">
+                <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 mb-4">Test your AI agent with a phone callback</p>
+                <div className="space-y-3">
+                  <input
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    id="phone-input"
+                  />
+                  <button
+                    onClick={() => selectedAgentForTest && initializeRetellWidget(selectedAgentForTest.id)}
+                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Call Me Now
+                  </button>
                 </div>
-
-                {/* Retell Chat Widget Container */}
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <div id="retell-voice-widget" className="min-h-[200px] flex items-center justify-center">
-                    <div className="text-center">
-                      <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600 mb-4">Test your AI agent with a phone callback</p>
-                      <div className="space-y-3">
-                        <input
-                          type="tel"
-                          placeholder="Enter your phone number"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          id="phone-input"
-                        />
-                        <button
-                          onClick={() => initializeRetellWidget(selectedAgentForTest.id)}
-                          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-                        >
-                          Call Me Now
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="text-xs text-gray-500 text-center">
-                  This will initiate a phone call to test your AI agent. Standard call rates may apply.
-                </div>
-              </div>
-
-              {/* Modal Actions */}
-              <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-zinc-200">
-                <button
-                  onClick={() => {
-                    setShowTestChatModal(false);
-                    setSelectedAgentForTest(null);
-                  }}
-                  className="px-4 py-2 text-zinc-700 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors"
-                >
-                  Close
-                </button>
               </div>
             </div>
           </div>
+
+          <div className="text-xs text-gray-500 text-center">
+            This will initiate a phone call to test your AI agent. Standard call rates may apply.
+          </div>
         </div>
-      )}
+      </ModalShell>
 
       {/* Agent Details Modal - Shows after template selection */}
-      {showAgentDetailsModal && selectedAgentDetails && (
-        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full mx-2 md:mx-4 max-h-[90vh] overflow-y-auto">
-            <div className="p-4 md:p-6">
-              <div className="flex items-center justify-between mb-4 md:mb-6">
-                <div className="min-w-0 flex-1">
-                  <h2 className="text-lg md:text-2xl font-bold text-zinc-900 truncate">{selectedAgentDetails.name}</h2>
-                  <p className="text-sm text-gray-500 mt-1">Agent created successfully</p>
+      <ModalShell
+        open={showAgentDetailsModal && !!selectedAgentDetails}
+        onClose={() => {
+          setShowAgentDetailsModal(false);
+          setSelectedAgentDetails(null);
+        }}
+        title={selectedAgentDetails?.name || ''}
+        description="Agent created successfully"
+        maxWidth="max-w-4xl"
+        footer={
+          <>
+            <button
+              onClick={() => {
+                setShowAgentDetailsModal(false);
+                setSelectedAgentDetails(null);
+              }}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              Close
+            </button>
+            <button
+              onClick={() => {
+                // Navigate to edit or configure the agent
+                setShowAgentDetailsModal(false);
+                // You can add navigation here if needed
+              }}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            >
+              Configure Agent
+            </button>
+          </>
+        }
+      >
+        {selectedAgentDetails && (
+          <div className="space-y-6">
+            {/* Agent Status */}
+            <div className="flex items-center gap-3">
+              <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                selectedAgentDetails.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-gray-100 text-gray-800'
+              }`}>
+                {selectedAgentDetails.status}
+              </span>
+              <span className="text-sm text-gray-500">
+                Created {selectedAgentDetails.created_at ? new Date(selectedAgentDetails.created_at).toLocaleDateString() : 'Just now'}
+              </span>
+            </div>
+
+            {/* Voice Settings */}
+            <div className="bg-gray-50 rounded-xl p-4 md:p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Voice Settings</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Voice ID</label>
+                  <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).voice_id || 'Not set'}</p>
                 </div>
-                <button
-                  onClick={() => {
-                    setShowAgentDetailsModal(false);
-                    setSelectedAgentDetails(null);
-                  }}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-
-              <div className="space-y-6">
-                {/* Agent Status */}
-                <div className="flex items-center gap-3">
-                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                    selectedAgentDetails.status === 'active'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {selectedAgentDetails.status}
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    Created {selectedAgentDetails.created_at ? new Date(selectedAgentDetails.created_at).toLocaleDateString() : 'Just now'}
-                  </span>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Personality</label>
+                  <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).personality || 'Professional'}</p>
                 </div>
-
-                {/* Voice Settings */}
-                <div className="bg-gray-50 rounded-xl p-4 md:p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Voice Settings</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">Voice ID</label>
-                      <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).voice_id || 'Not set'}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">Personality</label>
-                      <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).personality || 'Professional'}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">Conversation Style</label>
-                      <p className="text-gray-900 mt-1 capitalize">{(selectedAgentDetails as any).conversation_style || 'Professional'}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">Language</label>
-                      <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).language || 'English'}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700">Direction</label>
-                      <p className="text-gray-900 mt-1 capitalize">{(selectedAgentDetails as any).direction || 'Inbound'}</p>
-                    </div>
-                  </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Conversation Style</label>
+                  <p className="text-gray-900 mt-1 capitalize">{(selectedAgentDetails as any).conversation_style || 'Professional'}</p>
                 </div>
-
-                {/* Greeting */}
-                {(selectedAgentDetails as any).templateGreeting && (
-                  <div className="bg-blue-50 rounded-xl p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Greeting</h3>
-                    <p className="text-gray-700 leading-relaxed">{(selectedAgentDetails as any).templateGreeting}</p>
-                  </div>
-                )}
-
-                {/* System Prompt */}
-                {(selectedAgentDetails as any).templateSystemPrompt && (
-                  <div className="bg-gray-50 rounded-xl p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">System Prompt</h3>
-                    <div className="bg-white rounded-lg p-3 md:p-4 border border-gray-200 overflow-x-auto">
-                      <pre className="text-xs md:text-sm text-gray-700 whitespace-pre-wrap font-sans">
-                        {(selectedAgentDetails as any).templateSystemPrompt}
-                      </pre>
-                    </div>
-                  </div>
-                )}
-
-                {/* Sample Questions */}
-                {(selectedAgentDetails as any).templateSampleQuestions && (
-                  <div className="bg-green-50 rounded-xl p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Sample Questions</h3>
-                    <ul className="space-y-2">
-                      {((selectedAgentDetails as any).templateSampleQuestions || []).map((question: string, index: number) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <span className="text-blue-600 mt-1">•</span>
-                          <span className="text-gray-700">{question}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Description */}
-                {selectedAgentDetails.description && (
-                  <div className="bg-gray-50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Description</h3>
-                    <p className="text-gray-700 leading-relaxed">{selectedAgentDetails.description}</p>
-                  </div>
-                )}
-
-                {/* Actions */}
-                <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-                  <button
-                    onClick={() => {
-                      setShowAgentDetailsModal(false);
-                      setSelectedAgentDetails(null);
-                    }}
-                    className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    Close
-                  </button>
-                  <button
-                    onClick={() => {
-                      // Navigate to edit or configure the agent
-                      setShowAgentDetailsModal(false);
-                      // You can add navigation here if needed
-                    }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    Configure Agent
-                  </button>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Language</label>
+                  <p className="text-gray-900 mt-1">{(selectedAgentDetails as any).language || 'English'}</p>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700">Direction</label>
+                  <p className="text-gray-900 mt-1 capitalize">{(selectedAgentDetails as any).direction || 'Inbound'}</p>
                 </div>
               </div>
             </div>
+
+            {/* Greeting */}
+            {(selectedAgentDetails as any).templateGreeting && (
+              <div className="bg-blue-50 rounded-xl p-4 md:p-6">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Greeting</h3>
+                <p className="text-gray-700 leading-relaxed">{(selectedAgentDetails as any).templateGreeting}</p>
+              </div>
+            )}
+
+            {/* System Prompt */}
+            {(selectedAgentDetails as any).templateSystemPrompt && (
+              <div className="bg-gray-50 rounded-xl p-4 md:p-6">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">System Prompt</h3>
+                <div className="bg-white rounded-lg p-3 md:p-4 border border-gray-200 overflow-x-auto">
+                  <pre className="text-xs md:text-sm text-gray-700 whitespace-pre-wrap font-sans">
+                    {(selectedAgentDetails as any).templateSystemPrompt}
+                  </pre>
+                </div>
+              </div>
+            )}
+
+            {/* Sample Questions */}
+            {(selectedAgentDetails as any).templateSampleQuestions && (
+              <div className="bg-green-50 rounded-xl p-4 md:p-6">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Sample Questions</h3>
+                <ul className="space-y-2">
+                  {((selectedAgentDetails as any).templateSampleQuestions || []).map((question: string, index: number) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <span className="text-blue-600 mt-1">•</span>
+                      <span className="text-gray-700">{question}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Description */}
+            {selectedAgentDetails.description && (
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Description</h3>
+                <p className="text-gray-700 leading-relaxed">{selectedAgentDetails.description}</p>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </ModalShell>
 
     </div>
   );

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import ModalShell from '../../components/ui/modal-shell';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
 
@@ -323,211 +324,169 @@ const SmsBookingPage: React.FC = () => {
       </motion.div>
 
       {/* Delete Confirmation Modal */}
-      <AnimatePresence>
-        {showDeleteModal && selectedBooking && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowDeleteModal(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
-              onClick={(e) => e.stopPropagation()}
+      <ModalShell
+        open={showDeleteModal && !!selectedBooking}
+        onClose={() => setShowDeleteModal(false)}
+        title="Remove SMS Record"
+        description={selectedBooking ? `Are you sure you want to remove the SMS record for ${selectedBooking.clientPhone}? This only removes it from the list view.` : ''}
+        footer={
+          <>
+            <button
+              onClick={() => setShowDeleteModal(false)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Remove SMS Record</h2>
-              <p className="text-gray-600 mb-6">
-                Are you sure you want to remove the SMS record for {selectedBooking.clientPhone}? This only removes it from the list view.
-              </p>
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => setShowDeleteModal(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => handleDeleteBooking(selectedBooking.id)}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Remove
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              Cancel
+            </button>
+            <button
+              onClick={() => selectedBooking && handleDeleteBooking(selectedBooking.id)}
+              className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+            >
+              Remove
+            </button>
+          </>
+        }
+      >
+        {/* No additional body content needed */}
+        <div />
+      </ModalShell>
 
       {/* Add SMS Booking Modal */}
-      <AnimatePresence>
-        {showAddModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowAddModal(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
-              onClick={(e) => e.stopPropagation()}
+      <ModalShell
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        title="Send SMS"
+        footer={
+          <>
+            <button
+              onClick={() => setShowAddModal(false)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Send SMS</h2>
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                if (selectedPhoneNumber && selectedAgent) {
+                  // Handle the save logic here
+                  setShowAddModal(false);
+                }
+              }}
+              disabled={!selectedPhoneNumber || !selectedAgent}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            >
+              Save
+            </button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Choose Phone Number</label>
+            <select
+              value={selectedPhoneNumber}
+              onChange={(e) => setSelectedPhoneNumber(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+            >
+              <option value="">Select a phone number</option>
+              {phoneNumbers.map((phone) => (
+                <option key={phone.id} value={phone.id} className="text-black">
+                  {phone.number}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Choose Phone Number</label>
-                  <select
-                    value={selectedPhoneNumber}
-                    onChange={(e) => setSelectedPhoneNumber(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
-                  >
-                    <option value="">Select a phone number</option>
-                    {phoneNumbers.map((phone) => (
-                      <option key={phone.id} value={phone.id} className="text-black">
-                        {phone.number}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Choose Agent</label>
-                  <select
-                    value={selectedAgent}
-                    onChange={(e) => setSelectedAgent(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
-                  >
-                    <option value="">Select an agent</option>
-                    {agents.map((agent) => (
-                      <option key={agent.id} value={agent.id} className="text-black">
-                        {agent.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 mt-6">
-                <button
-                  onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    if (selectedPhoneNumber && selectedAgent) {
-                      // Handle the save logic here
-                      setShowAddModal(false);
-                    }
-                  }}
-                  disabled={!selectedPhoneNumber || !selectedAgent}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-                >
-                  Save
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Choose Agent</label>
+            <select
+              value={selectedAgent}
+              onChange={(e) => setSelectedAgent(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+            >
+              <option value="">Select an agent</option>
+              {agents.map((agent) => (
+                <option key={agent.id} value={agent.id} className="text-black">
+                  {agent.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </ModalShell>
 
       {/* Edit/Reschedule Modal */}
-      <AnimatePresence>
-        {showEditModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowEditModal(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+      <ModalShell
+        open={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        title="Reschedule SMS Booking"
+        maxWidth="max-w-2xl"
+        footer={
+          <>
+            <button
+              onClick={() => setShowEditModal(false)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Reschedule SMS Booking</h2>
+              Cancel
+            </button>
+            <Magnetic>
+              <button
+                onClick={handleSaveBooking}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+              >
+                Save Changes
+              </button>
+            </Magnetic>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Date</label>
+              <input
+                type="date"
+                value={editingBooking.appointmentDate || ''}
+                onChange={(e) => setEditingBooking({ ...editingBooking, appointmentDate: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Time</label>
+              <input
+                type="time"
+                value={editingBooking.appointmentTime || ''}
+                onChange={(e) => setEditingBooking({ ...editingBooking, appointmentTime: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
 
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Date</label>
-                    <input
-                      type="date"
-                      value={editingBooking.appointmentDate || ''}
-                      onChange={(e) => setEditingBooking({ ...editingBooking, appointmentDate: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Time</label>
-                    <input
-                      type="time"
-                      value={editingBooking.appointmentTime || ''}
-                      onChange={(e) => setEditingBooking({ ...editingBooking, appointmentTime: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Timing</label>
+            <select
+              value={editingBooking.reminderTime || ''}
+              onChange={(e) => setEditingBooking({ ...editingBooking, reminderTime: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="1 hour before">1 hour before</option>
+              <option value="2 hours before">2 hours before</option>
+              <option value="4 hours before">4 hours before</option>
+              <option value="24 hours before">24 hours before</option>
+              <option value="48 hours before">48 hours before</option>
+              <option value="72 hours before">72 hours before</option>
+            </select>
+          </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Timing</label>
-                  <select
-                    value={editingBooking.reminderTime || ''}
-                    onChange={(e) => setEditingBooking({ ...editingBooking, reminderTime: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="1 hour before">1 hour before</option>
-                    <option value="2 hours before">2 hours before</option>
-                    <option value="4 hours before">4 hours before</option>
-                    <option value="24 hours before">24 hours before</option>
-                    <option value="48 hours before">48 hours before</option>
-                    <option value="72 hours before">72 hours before</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
-                  <textarea
-                    value={editingBooking.reminderText || ''}
-                    onChange={(e) => setEditingBooking({ ...editingBooking, reminderText: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    rows={4}
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 mt-6">
-                <button
-                  onClick={() => setShowEditModal(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <Magnetic>
-                  <button
-                    onClick={handleSaveBooking}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    Save Changes
-                  </button>
-                </Magnetic>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
+            <textarea
+              value={editingBooking.reminderText || ''}
+              onChange={(e) => setEditingBooking({ ...editingBooking, reminderText: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              rows={4}
+            />
+          </div>
+        </div>
+      </ModalShell>
     </div>
   );
 };

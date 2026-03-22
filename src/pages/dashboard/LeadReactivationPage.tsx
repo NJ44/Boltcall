@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, XCircle, Play, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { CheckCircle, XCircle, Play } from 'lucide-react';
 import { FileUpload } from '@/components/ui/file-upload';
 import CardTableWithPanel from '@/components/ui/CardTableWithPanel';
+import ModalShell from '../../components/ui/modal-shell';
 
 const LeadReactivationPage: React.FC = () => {
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
@@ -141,91 +142,62 @@ const LeadReactivationPage: React.FC = () => {
       )}
 
       {/* Lead Reactivation Campaign Modal */}
-      <AnimatePresence>
-        {showCampaignModal && (
+      <ModalShell
+        open={showCampaignModal}
+        onClose={() => setShowCampaignModal(false)}
+        title="Lead Reactivation Campaign"
+        maxWidth="max-w-2xl"
+        footer={
           <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
+            <button
               onClick={() => setShowCampaignModal(false)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                      Lead Reactivation Campaign
-                    </h2>
-                    <button
-                      onClick={() => setShowCampaignModal(false)}
-                      className="text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <X className="w-6 h-6" />
-                    </button>
-                  </div>
-                  
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Campaign Name
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Enter campaign name"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Select Agent
-                      </label>
-                      <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 text-black">
-                        <option value="">Select an agent</option>
-                        <option value="agent1">Agent 1</option>
-                        <option value="agent2">Agent 2</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Message Template
-                      </label>
-                      <textarea
-                        rows={4}
-                        placeholder="Enter your reactivation message..."
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                      />
-                    </div>
-
-                    <div className="flex gap-3 pt-4">
-                      <button
-                        onClick={() => setShowCampaignModal(false)}
-                        className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Start Campaign
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
+              Cancel
+            </button>
+            <button
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            >
+              Start Campaign
+            </button>
           </>
-        )}
-      </AnimatePresence>
+        }
+      >
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Campaign Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter campaign name"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Select Agent
+            </label>
+            <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 text-black">
+              <option value="">Select an agent</option>
+              <option value="agent1">Agent 1</option>
+              <option value="agent2">Agent 2</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Message Template
+            </label>
+            <textarea
+              rows={4}
+              placeholder="Enter your reactivation message..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+            />
+          </div>
+        </div>
+      </ModalShell>
     </div>
   );
 };

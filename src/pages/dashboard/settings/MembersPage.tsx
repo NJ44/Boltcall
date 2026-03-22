@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { UserPlus, MoreVertical, Edit, User, Crown, Shield } from 'lucide-react';
 import Button from '../../../components/ui/Button';
+import ModalShell from '../../../components/ui/modal-shell';
 
 const MembersPage: React.FC = () => {
   const [showInviteModal, setShowInviteModal] = useState(false);
@@ -214,53 +215,54 @@ const MembersPage: React.FC = () => {
 
 
       {/* Invite Modal */}
-      {showInviteModal && (
-        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
-          >
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Invite Team Member</h2>
-            <form onSubmit={handleInviteMember} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                <input
-                  type="email"
-                  value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="member@company.com"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                <select
-                  value={inviteRole}
-                  onChange={(e) => setInviteRole(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="member">Member</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-              <div className="flex items-center gap-3 pt-4">
-                <Button type="submit" variant="primary" className="flex-1">
-                  Send Invitation
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                onClick={() => setShowInviteModal(false)}
-              >
-                Cancel
-                </Button>
-            </div>
-            </form>
-          </motion.div>
-        </div>
-      )}
+      <ModalShell
+        open={showInviteModal}
+        onClose={() => setShowInviteModal(false)}
+        title="Invite Team Member"
+        footer={
+          <>
+            <button
+              type="button"
+              onClick={() => setShowInviteModal(false)}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              form="invite-member-form"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            >
+              Send Invitation
+            </button>
+          </>
+        }
+      >
+        <form id="invite-member-form" onSubmit={handleInviteMember} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <input
+              type="email"
+              value={inviteEmail}
+              onChange={(e) => setInviteEmail(e.target.value)}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="member@company.com"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
+            <select
+              value={inviteRole}
+              onChange={(e) => setInviteRole(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="member">Member</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </form>
+      </ModalShell>
     </div>
   );
 };

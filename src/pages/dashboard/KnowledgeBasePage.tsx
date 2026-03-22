@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
+import ModalShell from '../../components/ui/modal-shell';
 
 import { FileUpload } from '@/components/ui/file-upload';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
@@ -943,311 +944,226 @@ const KnowledgeBasePage: React.FC = () => {
       </div>
 
       {/* New Knowledge Base Modal */}
-      <AnimatePresence>
-        {showNewKnowledgeBaseModal && (
+      <ModalShell
+        open={showNewKnowledgeBaseModal}
+        onClose={handleCloseNewKnowledgeBase}
+        title="Add Knowledge Base"
+        maxWidth="max-w-2xl"
+        footer={
           <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed -inset-[200px] bg-black bg-opacity-50 z-[9999]"
+            <button
               onClick={handleCloseNewKnowledgeBase}
-            />
-            
-            {/* Modal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed top-0 left-0 right-0 bottom-0 z-[10000] flex items-center justify-center p-4 pointer-events-none"
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-10 pointer-events-auto">
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                      Add Knowledge Base
-                    </h2>
-                    <button
-                      onClick={handleCloseNewKnowledgeBase}
-                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                    >
-                      <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                    </button>
-                  </div>
-
-                  {/* Knowledge Base Name Input */}
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Knowledge Base Name
-                    </label>
-                    <input
-                      type="text"
-                      value={knowledgeBaseName}
-                      onChange={(e) => setKnowledgeBaseName(e.target.value)}
-                      placeholder="Enter knowledge base name..."
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  {/* Add Documents Button */}
-                  <div className="mb-6">
-                    <div className="relative" ref={kbDropdownRef}>
-                      <button
-                        onClick={handleAddKbDocument}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                      >
-                        <Plus className="h-4 w-4" />
-                        <span className="font-medium">Add Documents</span>
-                        <ChevronDown className={`h-4 w-4 transition-transform ${showKbDocumentDropdown ? 'rotate-180' : ''}`} />
-                      </button>
-                      
-                      <AnimatePresence>
-                        {showKbDocumentDropdown && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute left-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-10"
-                          >
-                            <div className="py-1">
-                              <button
-                                onClick={handleKbAddWebsite}
-                                className="w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
-                              >
-                                <Globe className="w-4 h-4 text-green-600" />
-                                <div>
-                                  <div className="text-sm font-medium text-gray-900 dark:text-white">Websites</div>
-                                  <div className="text-xs text-gray-500 dark:text-gray-400">Import from URL</div>
-                                </div>
-                              </button>
-                              <button
-                                onClick={handleKbAddFile}
-                                className="w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
-                              >
-                                <Upload className="w-4 h-4 text-blue-600" />
-                                <div>
-                                  <div className="text-sm font-medium text-gray-900 dark:text-white">Upload files</div>
-                                  <div className="text-xs text-gray-500 dark:text-gray-400">PDF, DOC, TXT</div>
-                                </div>
-                              </button>
-                              <button
-                                onClick={handleKbAddText}
-                                className="w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
-                              >
-                                <PenTool className="w-4 h-4 text-purple-600" />
-                                <div>
-                                  <div className="text-sm font-medium text-gray-900 dark:text-white">Add text</div>
-                                  <div className="text-xs text-gray-500 dark:text-gray-400">Create from scratch</div>
-                                </div>
-                              </button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </div>
-
-                  {/* Documents List */}
-                  {kbDocuments.length > 0 && (
-                    <div className="mb-6">
-                      <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Documents ({kbDocuments.length})</h3>
-                      <div className="space-y-2 max-h-64 overflow-y-auto">
-                        {kbDocuments.map((doc) => (
-                          <div
-                            key={doc.id}
-                            className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                          >
-                            <div className="flex items-center gap-3">
-                              {doc.type === 'url' && <Globe className="w-4 h-4 text-green-600" />}
-                              {doc.type === 'file' && <Upload className="w-4 h-4 text-blue-600" />}
-                              {doc.type === 'text' && <PenTool className="w-4 h-4 text-purple-600" />}
-                              <span className="text-sm text-gray-900 dark:text-white">{doc.name}</span>
-                            </div>
-                            <button
-                              onClick={() => handleRemoveKbDocument(doc.id)}
-                              className="text-red-600 hover:text-red-800 transition-colors"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Footer Buttons */}
-                  <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <button
-                      onClick={handleCloseNewKnowledgeBase}
-                      className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={handleSaveNewKnowledgeBase}
-                      disabled={!knowledgeBaseName.trim() || kbDocuments.length === 0}
-                      className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                    >
-                      <Save className="w-4 h-4" />
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveNewKnowledgeBase}
+              disabled={!knowledgeBaseName.trim() || kbDocuments.length === 0}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              <Save className="w-4 h-4" />
+              Save
+            </button>
           </>
+        }
+      >
+        {/* Knowledge Base Name Input */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Knowledge Base Name
+          </label>
+          <input
+            type="text"
+            value={knowledgeBaseName}
+            onChange={(e) => setKnowledgeBaseName(e.target.value)}
+            placeholder="Enter knowledge base name..."
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          />
+        </div>
+
+        {/* Add Documents Button */}
+        <div className="mb-6">
+          <div className="relative" ref={kbDropdownRef}>
+            <button
+              onClick={handleAddKbDocument}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="font-medium">Add Documents</span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showKbDocumentDropdown ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+              {showKbDocumentDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-10"
+                >
+                  <div className="py-1">
+                    <button
+                      onClick={handleKbAddWebsite}
+                      className="w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                    >
+                      <Globe className="w-4 h-4 text-green-600" />
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">Websites</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Import from URL</div>
+                      </div>
+                    </button>
+                    <button
+                      onClick={handleKbAddFile}
+                      className="w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                    >
+                      <Upload className="w-4 h-4 text-blue-600" />
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">Upload files</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">PDF, DOC, TXT</div>
+                      </div>
+                    </button>
+                    <button
+                      onClick={handleKbAddText}
+                      className="w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                    >
+                      <PenTool className="w-4 h-4 text-purple-600" />
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">Add text</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Create from scratch</div>
+                      </div>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Documents List */}
+        {kbDocuments.length > 0 && (
+          <div>
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Documents ({kbDocuments.length})</h3>
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {kbDocuments.map((doc) => (
+                <div
+                  key={doc.id}
+                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                >
+                  <div className="flex items-center gap-3">
+                    {doc.type === 'url' && <Globe className="w-4 h-4 text-green-600" />}
+                    {doc.type === 'file' && <Upload className="w-4 h-4 text-blue-600" />}
+                    {doc.type === 'text' && <PenTool className="w-4 h-4 text-purple-600" />}
+                    <span className="text-sm text-gray-900 dark:text-white">{doc.name}</span>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveKbDocument(doc.id)}
+                    className="text-red-600 hover:text-red-800 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      </ModalShell>
 
       {/* Popup Modal for Adding Documents */}
-      <AnimatePresence>
-        {showPopup && (
+      <ModalShell
+        open={!!showPopup}
+        onClose={handleClosePopup}
+        title={
+          popupType === 'url' ? 'Import from URL' :
+          popupType === 'file' ? 'Upload File' :
+          popupType === 'blank' ? 'Create Blank Page' : ''
+        }
+        description={
+          popupType === 'url' ? 'Enter the URL of the website you want to import content from.' :
+          popupType === 'blank' ? 'Create a new knowledge base page that you can edit manually.' :
+          undefined
+        }
+        footer={
           <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed -inset-[200px] bg-black bg-opacity-50 z-[10001]"
+            <button
               onClick={handleClosePopup}
-            />
-            
-            {/* Popup */}
-      <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed top-0 left-0 right-0 bottom-0 z-[10002] flex items-center justify-center p-4 pointer-events-none"
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto z-10 pointer-events-auto">
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        {popupType === 'url' && <Globe className="w-5 h-5 text-blue-600" />}
-                        {popupType === 'file' && <Upload className="w-5 h-5 text-blue-600" />}
-                        {popupType === 'blank' && <PenTool className="w-5 h-5 text-blue-600" />}
-                      </div>
-                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        {popupType === 'url' && 'Import from URL'}
-                        {popupType === 'file' && 'Upload File'}
-                        {popupType === 'blank' && 'Create Blank Page'}
-                      </h2>
-                    </div>
-                    <button
-                      onClick={handleClosePopup}
-                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                    >
-                      <X className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                    </button>
-            </div>
-
-                  {/* Content */}
-                  {popupType === 'url' && (
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Website URL
-                        </label>
-                        <input
-                          type="url"
-                          value={urlInput}
-                          onChange={(e) => setUrlInput(e.target.value)}
-                          placeholder="https://example.com"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                        />
-            </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Enter the URL of the website you want to import content from.
-                      </p>
-                      <div className="flex gap-3 pt-4">
-                        <button
-                          onClick={handleClosePopup}
-                          className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={handleSubmitUrl}
-                          disabled={!urlInput}
-                          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {showNewKnowledgeBaseModal ? 'Add' : 'Import'}
-                        </button>
-          </div>
-        </div>
-                  )}
-
-                  {popupType === 'file' && (
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Select File
-                        </label>
-                        <FileUpload onChange={handleFileUpload} />
-                      </div>
-                      <div className="flex gap-3 pt-4">
-                        <button
-                          onClick={handleClosePopup}
-                          className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={handleSubmitFile}
-                          disabled={!fileInput}
-                          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {showNewKnowledgeBaseModal ? 'Add' : 'Upload'}
-                        </button>
-            </div>
-          </div>
-                  )}
-
-                  {popupType === 'blank' && (
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Page Title
-                        </label>
-                        <input
-                          type="text"
-                          value={blankPageTitle}
-                          onChange={(e) => setBlankPageTitle(e.target.value)}
-                          placeholder="Enter page title..."
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                        />
-            </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Create a new knowledge base page that you can edit manually.
-                      </p>
-                      <div className="flex gap-3 pt-4">
-                        <button
-                          onClick={handleClosePopup}
-                          className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={handleSubmitBlankPage}
-                          disabled={!blankPageTitle}
-                          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {showNewKnowledgeBaseModal ? 'Add' : 'Create'}
-                        </button>
-            </div>
-                    </div>
-                  )}
-          </div>
-        </div>
-      </motion.div>
+              Cancel
+            </button>
+            {popupType === 'url' && (
+              <button
+                onClick={handleSubmitUrl}
+                disabled={!urlInput}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {showNewKnowledgeBaseModal ? 'Add' : 'Import'}
+              </button>
+            )}
+            {popupType === 'file' && (
+              <button
+                onClick={handleSubmitFile}
+                disabled={!fileInput}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {showNewKnowledgeBaseModal ? 'Add' : 'Upload'}
+              </button>
+            )}
+            {popupType === 'blank' && (
+              <button
+                onClick={handleSubmitBlankPage}
+                disabled={!blankPageTitle}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {showNewKnowledgeBaseModal ? 'Add' : 'Create'}
+              </button>
+            )}
           </>
+        }
+      >
+        {/* URL Content */}
+        {popupType === 'url' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Website URL
+            </label>
+            <input
+              type="url"
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+              placeholder="https://example.com"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
         )}
-      </AnimatePresence>
+
+        {/* File Content */}
+        {popupType === 'file' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Select File
+            </label>
+            <FileUpload onChange={handleFileUpload} />
+          </div>
+        )}
+
+        {/* Blank Page Content */}
+        {popupType === 'blank' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Page Title
+            </label>
+            <input
+              type="text"
+              value={blankPageTitle}
+              onChange={(e) => setBlankPageTitle(e.target.value)}
+              placeholder="Enter page title..."
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+        )}
+      </ModalShell>
 
       {/* Document Editor Modal */}
       <AnimatePresence>

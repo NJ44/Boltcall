@@ -4,6 +4,7 @@ import { PhoneNumbersSkeleton } from '../../components/ui/loading-skeleton';
 import { PhoneCall, MoreHorizontal, ChevronDown, Phone, Settings } from 'lucide-react';
 
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
+import ModalShell from '../../components/ui/modal-shell';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -444,282 +445,226 @@ const PhoneNumbersPage: React.FC = () => {
       </motion.div>
 
       {/* Twilio Numbers Modal */}
-      <AnimatePresence>
-        {showTwilioModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowTwilioModal(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white rounded-2xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+      <ModalShell
+        open={showTwilioModal}
+        onClose={() => setShowTwilioModal(false)}
+        title="Buy a New Phone Number"
+        maxWidth="max-w-2xl"
+      >
+        {/* Search Controls */}
+        <div className="flex gap-3 mb-4">
+          <div className="flex-1">
+            <label className="block text-xs font-medium text-gray-500 mb-1">Country</label>
+            <select
+              value={searchCountry}
+              onChange={(e) => setSearchCountry(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">Buy a New Phone Number</h2>
-                  <button
-                    onClick={() => setShowTwilioModal(false)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
+              <option value="US">United States</option>
+              <option value="GB">United Kingdom</option>
+              <option value="CA">Canada</option>
+              <option value="AU">Australia</option>
+              <option value="IL">Israel</option>
+            </select>
+          </div>
+          <div className="flex-1">
+            <label className="block text-xs font-medium text-gray-500 mb-1">Area Code (optional)</label>
+            <input
+              type="text"
+              value={searchAreaCode}
+              onChange={(e) => setSearchAreaCode(e.target.value.replace(/\D/g, '').slice(0, 5))}
+              placeholder="e.g. 212"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+          </div>
+          <div className="flex items-end">
+            <button
+              onClick={() => searchTwilioNumbers(searchCountry, searchAreaCode || undefined)}
+              disabled={loadingTwilioNumbers}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
+            >
+              Search
+            </button>
+          </div>
+        </div>
 
-                {/* Search Controls */}
-                <div className="flex gap-3 mb-4">
-                  <div className="flex-1">
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Country</label>
-                    <select
-                      value={searchCountry}
-                      onChange={(e) => setSearchCountry(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    >
-                      <option value="US">United States</option>
-                      <option value="GB">United Kingdom</option>
-                      <option value="CA">Canada</option>
-                      <option value="AU">Australia</option>
-                      <option value="IL">Israel</option>
-                    </select>
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Area Code (optional)</label>
-                    <input
-                      type="text"
-                      value={searchAreaCode}
-                      onChange={(e) => setSearchAreaCode(e.target.value.replace(/\D/g, '').slice(0, 5))}
-                      placeholder="e.g. 212"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    />
-                  </div>
-                  <div className="flex items-end">
-                    <button
-                      onClick={() => searchTwilioNumbers(searchCountry, searchAreaCode || undefined)}
-                      disabled={loadingTwilioNumbers}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
+        {loadingTwilioNumbers ? (
+          <div className="py-6">
+            <PhoneNumbersSkeleton />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {twilioNumbers.length === 0 ? (
+              <p className="text-gray-500 text-center py-6">
+                No numbers found. Try a different country or area code.
+              </p>
+            ) : (
+              <p className="text-gray-600 mb-4">
+                {twilioNumbers.length} numbers available. Choose one to purchase.
+              </p>
+            )}
 
-                {loadingTwilioNumbers ? (
-                  <div className="py-6">
-                    <PhoneNumbersSkeleton />
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {twilioNumbers.length === 0 ? (
-                      <p className="text-gray-500 text-center py-6">
-                        No numbers found. Try a different country or area code.
-                      </p>
-                    ) : (
-                      <p className="text-gray-600 mb-4">
-                        {twilioNumbers.length} numbers available. Choose one to purchase.
-                      </p>
-                    )}
-
-                    {twilioNumbers.map((number, index) => (
-                      <motion.div
-                        key={number.phone_number}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.05 }}
-                        className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:bg-blue-50 transition-colors"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                              <Phone className="w-5 h-5 text-blue-600" />
-                            </div>
-                            <div>
-                              <div className="font-semibold text-gray-900">{number.phone_number}</div>
-                              <div className="text-sm text-gray-600">
-                                {[number.locality, number.region].filter(Boolean).join(', ') || 'N/A'}
-                                {number.friendly_name ? ` • ${number.friendly_name}` : ''}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="font-semibold text-gray-900">{number.monthly_cost}/mo</div>
-                            <button
-                              onClick={() => handlePurchaseNumber(number)}
-                              disabled={purchasingNumber === number.phone_number}
-                              className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
-                            >
-                              {purchasingNumber === number.phone_number ? 'Purchasing...' : 'Purchase'}
-                            </button>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                    
-                    <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                      <div className="flex items-start gap-3">
-                        <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div className="text-sm text-gray-600">
-                          <p className="font-medium text-gray-900 mb-1">Important:</p>
-                          <ul className="space-y-1 list-disc list-inside">
-                            <li>Numbers are billed monthly to your Twilio account</li>
-                            <li>Setup typically takes 1-2 minutes</li>
-                            <li>You can release numbers anytime from your dashboard</li>
-                          </ul>
-                        </div>
+            {twilioNumbers.map((number, index) => (
+              <motion.div
+                key={number.phone_number}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">{number.phone_number}</div>
+                      <div className="text-sm text-gray-600">
+                        {[number.locality, number.region].filter(Boolean).join(', ') || 'N/A'}
+                        {number.friendly_name ? ` \u2022 ${number.friendly_name}` : ''}
                       </div>
                     </div>
                   </div>
-                )}
+                  <div className="text-right">
+                    <div className="font-semibold text-gray-900">{number.monthly_cost}/mo</div>
+                    <button
+                      onClick={() => handlePurchaseNumber(number)}
+                      disabled={purchasingNumber === number.phone_number}
+                      className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
+                    >
+                      {purchasingNumber === number.phone_number ? 'Purchasing...' : 'Purchase'}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div className="text-sm text-gray-600">
+                  <p className="font-medium text-gray-900 mb-1">Important:</p>
+                  <ul className="space-y-1 list-disc list-inside">
+                    <li>Numbers are billed monthly to your Twilio account</li>
+                    <li>Setup typically takes 1-2 minutes</li>
+                    <li>You can release numbers anytime from your dashboard</li>
+                  </ul>
+                </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      </ModalShell>
 
       {/* SIP Configuration Modal */}
-      <AnimatePresence>
-        {showSipModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50"
-            onClick={() => setShowSipModal(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-2xl mx-4 max-h-[85vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+      <ModalShell
+        open={showSipModal}
+        onClose={() => setShowSipModal(false)}
+        title="Connect to your number via SIP trunking"
+        maxWidth="max-w-2xl"
+        footer={
+          <>
+            <button
+              type="button"
+              onClick={handleSipFormCancel}
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              Connect to your number via SIP trunking
-            </h2>
-                  <button
-                    onClick={() => setShowSipModal(false)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-            
-            <form onSubmit={handleSipFormSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  name="phoneNumber"
-                  value={sipFormData.phoneNumber}
-                  onChange={handleSipFormChange}
-                  placeholder="Enter phone number"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Termination URI
-                </label>
-                <input
-                  type="text"
-                  name="terminationUri"
-                  value={sipFormData.terminationUri}
-                  onChange={handleSipFormChange}
-                  placeholder="Enter termination URI (NOT Retell SIP server uri)"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  SIP Trunk User Name (Optional)
-                </label>
-                <input
-                  type="text"
-                  name="sipTrunkUsername"
-                  value={sipFormData.sipTrunkUsername}
-                  onChange={handleSipFormChange}
-                  placeholder="Enter SIP Trunk User Name"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  SIP Trunk Password (Optional)
-                </label>
-                <input
-                  type="password"
-                  name="sipTrunkPassword"
-                  value={sipFormData.sipTrunkPassword}
-                  onChange={handleSipFormChange}
-                  placeholder="Enter SIP Trunk Password"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Nickname (Optional)
-                </label>
-                <input
-                  type="text"
-                  name="nickname"
-                  value={sipFormData.nickname}
-                  onChange={handleSipFormChange}
-                  placeholder="Enter Nickname"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                />
-              </div>
-              
-              <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-                <p className="text-sm text-yellow-800">
-                  <strong>Note:</strong> Configuration can take up to 48 hours
-                </p>
-              </div>
-              
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={handleSipFormCancel}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <Magnetic>
-                  <button
-                    type="submit"
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                  >
-                    Save
-                  </button>
-                </Magnetic>
-              </div>
-            </form>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              Cancel
+            </button>
+            <Magnetic>
+              <button
+                type="submit"
+                form="sip-form"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+              >
+                Save
+              </button>
+            </Magnetic>
+          </>
+        }
+      >
+        <form id="sip-form" onSubmit={handleSipFormSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={sipFormData.phoneNumber}
+              onChange={handleSipFormChange}
+              placeholder="Enter phone number"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Termination URI
+            </label>
+            <input
+              type="text"
+              name="terminationUri"
+              value={sipFormData.terminationUri}
+              onChange={handleSipFormChange}
+              placeholder="Enter termination URI (NOT Retell SIP server uri)"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              SIP Trunk User Name (Optional)
+            </label>
+            <input
+              type="text"
+              name="sipTrunkUsername"
+              value={sipFormData.sipTrunkUsername}
+              onChange={handleSipFormChange}
+              placeholder="Enter SIP Trunk User Name"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              SIP Trunk Password (Optional)
+            </label>
+            <input
+              type="password"
+              name="sipTrunkPassword"
+              value={sipFormData.sipTrunkPassword}
+              onChange={handleSipFormChange}
+              placeholder="Enter SIP Trunk Password"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Nickname (Optional)
+            </label>
+            <input
+              type="text"
+              name="nickname"
+              value={sipFormData.nickname}
+              onChange={handleSipFormChange}
+              placeholder="Enter Nickname"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
+            />
+          </div>
+
+          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3">
+            <p className="text-sm text-yellow-800">
+              <strong>Note:</strong> Configuration can take up to 48 hours
+            </p>
+          </div>
+        </form>
+      </ModalShell>
 
     </div>
   );

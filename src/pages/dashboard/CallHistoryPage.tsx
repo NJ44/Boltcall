@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CallHistorySkeleton } from '../../components/ui/loading-skeleton';
+import ModalShell from '../../components/ui/modal-shell';
 import {
   Phone,
   PhoneIncoming,
@@ -473,206 +474,199 @@ const CallHistoryPage: React.FC = () => {
       </div>
 
       {/* Call Details Modal */}
-      {showDetailsModal && selectedCall && (
-        <div className="fixed -inset-[200px] bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b">
-              <h3 className="text-lg font-semibold text-gray-900">Call Details</h3>
-              <button
-                onClick={() => setShowDetailsModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                ×
-              </button>
-            </div>
-            
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Call Information */}
-                <div className="space-y-4">
-                  <h4 className="font-medium text-gray-900">Call Information</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Call ID:</span>
-                      <span className="font-mono">{selectedCall.call_id}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Agent:</span>
-                      <span>{selectedCall.agent_name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Status:</span>
-                      <span className={`px-2 py-1 rounded text-xs ${getStatusColor(selectedCall.call_status)}`}>
-                        {selectedCall.call_status}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Duration:</span>
-                      <span>{formatDuration(selectedCall.duration_ms)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Start Time:</span>
-                      <span>{formatDate(selectedCall.start_timestamp)}</span>
-                    </div>
-                    {selectedCall.end_timestamp && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">End Time:</span>
-                        <span>{formatDate(selectedCall.end_timestamp)}</span>
-                      </div>
-                    )}
+      <ModalShell
+        open={showDetailsModal && !!selectedCall}
+        onClose={() => setShowDetailsModal(false)}
+        title="Call Details"
+        maxWidth="max-w-4xl"
+      >
+        {selectedCall && (
+          <div className="max-h-[calc(90vh-180px)] overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Call Information */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-gray-900">Call Information</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Call ID:</span>
+                    <span className="font-mono">{selectedCall.call_id}</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Agent:</span>
+                    <span>{selectedCall.agent_name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Status:</span>
+                    <span className={`px-2 py-1 rounded text-xs ${getStatusColor(selectedCall.call_status)}`}>
+                      {selectedCall.call_status}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Duration:</span>
+                    <span>{formatDuration(selectedCall.duration_ms)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Start Time:</span>
+                    <span>{formatDate(selectedCall.start_timestamp)}</span>
+                  </div>
+                  {selectedCall.end_timestamp && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">End Time:</span>
+                      <span>{formatDate(selectedCall.end_timestamp)}</span>
+                    </div>
+                  )}
                 </div>
-
-                {/* Call Analysis */}
-                {selectedCall.call_analysis && (
-                  <div className="space-y-4">
-                    <h4 className="font-medium text-gray-900">Call Analysis</h4>
-                    <div className="space-y-3 text-sm">
-                      {/* Sentiment Badge */}
-                      {selectedCall.call_analysis.user_sentiment && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-600">Sentiment:</span>
-                          <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${getSentimentColor(selectedCall.call_analysis.user_sentiment)}`}>
-                            {selectedCall.call_analysis.user_sentiment === 'Positive' && <CheckCircle className="w-3 h-3" />}
-                            {selectedCall.call_analysis.user_sentiment === 'Negative' && <XCircle className="w-3 h-3" />}
-                            {selectedCall.call_analysis.user_sentiment === 'Neutral' && <AlertCircle className="w-3 h-3" />}
-                            {selectedCall.call_analysis.user_sentiment}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Successful Badge */}
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-600">Successful:</span>
-                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
-                          selectedCall.call_analysis.call_successful
-                            ? 'text-green-700 bg-green-100'
-                            : 'text-red-700 bg-red-100'
-                        }`}>
-                          {selectedCall.call_analysis.call_successful ? (
-                            <><CheckCircle className="w-3 h-3" /> Pass</>
-                          ) : (
-                            <><XCircle className="w-3 h-3" /> Fail</>
-                          )}
-                        </span>
-                      </div>
-
-                      {/* Call Quality Score */}
-                      {(() => {
-                        const quality = getCallQuality(selectedCall);
-                        const scoreMap = { excellent: 95, good: 70, poor: 30, unknown: 0 };
-                        const score = scoreMap[quality];
-                        const colorMap = { excellent: 'text-green-600', good: 'text-yellow-600', poor: 'text-red-600', unknown: 'text-gray-400' };
-                        const bgMap = { excellent: 'bg-green-500', good: 'bg-yellow-500', poor: 'bg-red-500', unknown: 'bg-gray-300' };
-                        return (
-                          <div className="mt-2">
-                            <div className="flex justify-between items-center mb-1">
-                              <span className="text-gray-600 flex items-center gap-1">
-                                <Shield className="w-3.5 h-3.5" />
-                                Call Quality Score
-                              </span>
-                              <span className={`text-sm font-bold ${colorMap[quality]}`}>
-                                {quality !== 'unknown' ? `${score}/100` : 'N/A'}
-                              </span>
-                            </div>
-                            {quality !== 'unknown' && (
-                              <div className="w-full bg-gray-200 rounded-full h-2">
-                                <div
-                                  className={`h-2 rounded-full ${bgMap[quality]} transition-all duration-500`}
-                                  style={{ width: `${score}%` }}
-                                />
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })()}
-                    </div>
-                  </div>
-                )}
               </div>
 
-              {/* Post-Call Analysis Summary */}
-              {selectedCall.call_analysis?.call_summary && (
-                <div className="mt-6">
-                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Sparkles className="w-5 h-5 text-purple-600" />
-                      <h4 className="font-semibold text-gray-900">AI Call Summary</h4>
-                    </div>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {selectedCall.call_analysis.call_summary}
-                    </p>
-                  </div>
-                </div>
-              )}
+              {/* Call Analysis */}
+              {selectedCall.call_analysis && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-gray-900">Call Analysis</h4>
+                  <div className="space-y-3 text-sm">
+                    {/* Sentiment Badge */}
+                    {selectedCall.call_analysis.user_sentiment && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Sentiment:</span>
+                        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${getSentimentColor(selectedCall.call_analysis.user_sentiment)}`}>
+                          {selectedCall.call_analysis.user_sentiment === 'Positive' && <CheckCircle className="w-3 h-3" />}
+                          {selectedCall.call_analysis.user_sentiment === 'Negative' && <XCircle className="w-3 h-3" />}
+                          {selectedCall.call_analysis.user_sentiment === 'Neutral' && <AlertCircle className="w-3 h-3" />}
+                          {selectedCall.call_analysis.user_sentiment}
+                        </span>
+                      </div>
+                    )}
 
-              {/* Custom Analysis Fields */}
-              {selectedCall.call_analysis && (() => {
-                const customKeys = Object.keys(selectedCall.call_analysis).filter(
-                  key => !STANDARD_ANALYSIS_KEYS.includes(key) && selectedCall.call_analysis![key] != null
-                );
-                if (customKeys.length === 0) return null;
-                return (
-                  <div className="mt-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Info className="w-5 h-5 text-blue-600" />
-                      <h4 className="font-semibold text-gray-900">Additional Analysis</h4>
+                    {/* Successful Badge */}
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Successful:</span>
+                      <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
+                        selectedCall.call_analysis.call_successful
+                          ? 'text-green-700 bg-green-100'
+                          : 'text-red-700 bg-red-100'
+                      }`}>
+                        {selectedCall.call_analysis.call_successful ? (
+                          <><CheckCircle className="w-3 h-3" /> Pass</>
+                        ) : (
+                          <><XCircle className="w-3 h-3" /> Fail</>
+                        )}
+                      </span>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {customKeys.map(key => {
-                        const value = selectedCall.call_analysis![key];
-                        const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-                        return (
-                          <div key={key} className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">{label}</p>
-                            <p className="text-sm text-gray-900">
-                              {typeof value === 'boolean' ? (
-                                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                                  value ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'
-                                }`}>
-                                  {value ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
-                                  {value ? 'Yes' : 'No'}
-                                </span>
-                              ) : typeof value === 'object' ? (
-                                JSON.stringify(value, null, 2)
-                              ) : (
-                                String(value)
-                              )}
-                            </p>
+
+                    {/* Call Quality Score */}
+                    {(() => {
+                      const quality = getCallQuality(selectedCall);
+                      const scoreMap = { excellent: 95, good: 70, poor: 30, unknown: 0 };
+                      const score = scoreMap[quality];
+                      const colorMap = { excellent: 'text-green-600', good: 'text-yellow-600', poor: 'text-red-600', unknown: 'text-gray-400' };
+                      const bgMap = { excellent: 'bg-green-500', good: 'bg-yellow-500', poor: 'bg-red-500', unknown: 'bg-gray-300' };
+                      return (
+                        <div className="mt-2">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-gray-600 flex items-center gap-1">
+                              <Shield className="w-3.5 h-3.5" />
+                              Call Quality Score
+                            </span>
+                            <span className={`text-sm font-bold ${colorMap[quality]}`}>
+                              {quality !== 'unknown' ? `${score}/100` : 'N/A'}
+                            </span>
                           </div>
-                        );
-                      })}
-                    </div>
+                          {quality !== 'unknown' && (
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div
+                                className={`h-2 rounded-full ${bgMap[quality]} transition-all duration-500`}
+                                style={{ width: `${score}%` }}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
-                );
-              })()}
-
-              {/* Transcript */}
-              {selectedCall.transcript && (
-                <div className="mt-6">
-                  <h4 className="font-medium text-gray-900 mb-3">Transcript</h4>
-                  <div className="bg-gray-50 rounded-lg p-4 max-h-60 overflow-y-auto">
-                    <pre className="text-sm text-gray-700 whitespace-pre-wrap">
-                      {selectedCall.transcript}
-                    </pre>
-                  </div>
-                </div>
-              )}
-
-              {/* Recording */}
-              {selectedCall.recording_url && (
-                <div className="mt-6">
-                  <h4 className="font-medium text-gray-900 mb-3">Recording</h4>
-                  <audio controls className="w-full">
-                    <source src={selectedCall.recording_url} type="audio/wav" />
-                    Your browser does not support the audio element.
-                  </audio>
                 </div>
               )}
             </div>
+
+            {/* Post-Call Analysis Summary */}
+            {selectedCall.call_analysis?.call_summary && (
+              <div className="mt-6">
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-5 h-5 text-purple-600" />
+                    <h4 className="font-semibold text-gray-900">AI Call Summary</h4>
+                  </div>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {selectedCall.call_analysis.call_summary}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Custom Analysis Fields */}
+            {selectedCall.call_analysis && (() => {
+              const customKeys = Object.keys(selectedCall.call_analysis).filter(
+                key => !STANDARD_ANALYSIS_KEYS.includes(key) && selectedCall.call_analysis![key] != null
+              );
+              if (customKeys.length === 0) return null;
+              return (
+                <div className="mt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Info className="w-5 h-5 text-blue-600" />
+                    <h4 className="font-semibold text-gray-900">Additional Analysis</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {customKeys.map(key => {
+                      const value = selectedCall.call_analysis![key];
+                      const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                      return (
+                        <div key={key} className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">{label}</p>
+                          <p className="text-sm text-gray-900">
+                            {typeof value === 'boolean' ? (
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                                value ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'
+                              }`}>
+                                {value ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+                                {value ? 'Yes' : 'No'}
+                              </span>
+                            ) : typeof value === 'object' ? (
+                              JSON.stringify(value, null, 2)
+                            ) : (
+                              String(value)
+                            )}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Transcript */}
+            {selectedCall.transcript && (
+              <div className="mt-6">
+                <h4 className="font-medium text-gray-900 mb-3">Transcript</h4>
+                <div className="bg-gray-50 rounded-lg p-4 max-h-60 overflow-y-auto">
+                  <pre className="text-sm text-gray-700 whitespace-pre-wrap">
+                    {selectedCall.transcript}
+                  </pre>
+                </div>
+              </div>
+            )}
+
+            {/* Recording */}
+            {selectedCall.recording_url && (
+              <div className="mt-6">
+                <h4 className="font-medium text-gray-900 mb-3">Recording</h4>
+                <audio controls className="w-full">
+                  <source src={selectedCall.recording_url} type="audio/wav" />
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </ModalShell>
     </div>
   );
 };
