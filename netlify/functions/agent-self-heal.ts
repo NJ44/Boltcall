@@ -59,7 +59,7 @@ async function askOpenAI(systemPrompt: string, userPrompt: string): Promise<stri
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4.1-mini',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
