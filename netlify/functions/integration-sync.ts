@@ -377,12 +377,14 @@ export const handler: Handler = async (event) => {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: list, connect, disconnect, test, sync_lead' }) };
 
   } catch (err) {
-    console.error('[integration-sync] Error:', err);
+    const errMsg = err instanceof Error ? err.message : String(err);
+    const errStack = err instanceof Error ? err.stack?.split('\n').slice(0, 3).join('\n') : '';
+    console.error('[integration-sync] Error:', errMsg, errStack);
     await notifyError('integration-sync: Failed', err);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: err instanceof Error ? err.message : 'Integration sync failed' }),
+      body: JSON.stringify({ error: errMsg, details: errStack }),
     };
   }
 };
