@@ -33,6 +33,12 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+[functions."agent-test"]
+  timeout = 300
+
+[functions."agent-self-heal"]
+  timeout = 300
+
 # Run message dispatcher every 5 minutes to process due scheduled_messages
 [functions."message-dispatcher"]
   schedule = "*/5 * * * *"
