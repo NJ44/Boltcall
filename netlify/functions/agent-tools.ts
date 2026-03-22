@@ -303,10 +303,11 @@ async function handleBookAppointment(
       eventTypeId,
       start: startISO,
       end: endISO,
-      name: name,
-      email: email || 'noemail@placeholder.com',
-      timeZone: 'Europe/London',
-      language: 'en',
+      responses: {
+        name: name,
+        email: email || 'noemail@placeholder.com',
+        location: { value: 'integrations:daily', optionValue: '' },
+      },
       metadata: {
         source: 'ai_receptionist',
         call_id: callId,
@@ -314,6 +315,8 @@ async function handleBookAppointment(
         service: service || '',
         notes: notes || '',
       },
+      timeZone: 'Europe/London',
+      language: 'en',
     };
 
     const response = await fetch(`${CAL_BASE_URL}/bookings?apiKey=${calApiKey}`, {
