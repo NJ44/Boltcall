@@ -30,7 +30,6 @@ import {
   Star,
   PhoneMissed,
   Reply,
-  Languages,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -39,18 +38,12 @@ import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
 import AiAssistant from './AiAssistant';
 
-const LANGUAGE_OPTIONS = [
-  { code: 'en', label: 'EN', flag: '\uD83C\uDDFA\uD83C\uDDF8' },
-  { code: 'he', label: 'HE', flag: '\uD83C\uDDEE\uD83C\uDDF1' },
-  { code: 'es', label: 'ES', flag: '\uD83C\uDDEA\uD83C\uDDF8' },
-] as const;
-
 const DashboardLayout: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
-  const [showLangMenu, setShowLangMenu] = useState(false);
+  // Language switcher removed
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
 
@@ -229,14 +222,11 @@ const DashboardLayout: React.FC = () => {
       if (showUserMenu && !target.closest('[data-user-menu]')) {
         setShowUserMenu(false);
       }
-      if (showLangMenu && !target.closest('[data-lang-menu]')) {
-        setShowLangMenu(false);
-      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showUserMenu, showLangMenu]);
+  }, [showUserMenu]);
 
   // Load dark mode preference on mount
   useEffect(() => {
@@ -505,43 +495,7 @@ const DashboardLayout: React.FC = () => {
                   <LocationSwitcher />
                 </div>
 
-                {/* Language Switcher */}
-                <div className="relative" data-lang-menu>
-                  <button
-                    onClick={() => setShowLangMenu(!showLangMenu)}
-                    className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30"
-                    aria-label="Change language"
-                  >
-                    <Languages className="w-4 h-4" />
-                    <span className="hidden md:inline">{LANGUAGE_OPTIONS.find(l => l.code === i18n.language)?.label || 'EN'}</span>
-                  </button>
-                  <AnimatePresence>
-                    {showLangMenu && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -4, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -4, scale: 0.96 }}
-                        transition={{ duration: 0.15 }}
-                        className={`absolute ${i18n.language === 'he' ? 'left-0' : 'right-0'} top-full mt-1 w-36 rounded-lg shadow-lg border z-50 overflow-hidden ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}
-                      >
-                        {LANGUAGE_OPTIONS.map((lang) => (
-                          <button
-                            key={lang.code}
-                            onClick={() => { i18n.changeLanguage(lang.code); setShowLangMenu(false); }}
-                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
-                              i18n.language === lang.code
-                                ? isDarkMode ? 'bg-[#1a1a1f] text-white' : 'bg-blue-50 text-blue-700'
-                                : isDarkMode ? 'text-gray-300 hover:bg-[#1a1a1f]' : 'text-gray-700 hover:bg-gray-50'
-                            }`}
-                          >
-                            <span>{lang.flag}</span>
-                            <span>{lang.label}</span>
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                {/* Language switcher removed — English only */}
                  
                  {/* Notification Dropdown (hidden on mobile — hover doesn't work on touch) */}
                  <div className="relative group hidden md:block">
