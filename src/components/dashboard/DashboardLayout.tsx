@@ -48,7 +48,7 @@ const DashboardLayout: React.FC = () => {
     const saved = localStorage.getItem('sidebarCollapsed');
     return saved === 'true';
   });
-  const [sidebarHovered, setSidebarHovered] = useState(false);
+  // sidebarHovered removed — collapsed sidebar shows tooltips instead of expanding
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
   // Language switcher removed
@@ -326,7 +326,7 @@ const DashboardLayout: React.FC = () => {
 
   // Helper function to render navigation items
   const renderNavItem = (item: any, isActive: boolean) => {
-    const isCollapsedView = sidebarCollapsed && !sidebarHovered;
+    const isCollapsedView = sidebarCollapsed;
     return (
       <Link
         key={item.to}
@@ -380,16 +380,14 @@ const DashboardLayout: React.FC = () => {
          {/* Left Panel - Navigation with Logo at Top */}
          <aside
            data-onboarding="sidebar"
-           onMouseEnter={() => setSidebarHovered(true)}
-           onMouseLeave={() => setSidebarHovered(false)}
            className={`fixed lg:static inset-y-0 left-0 z-[9999] transform transition-all duration-300 ease-in-out flex-shrink-0 ${
-             sidebarCollapsed && !sidebarHovered ? 'w-16' : 'w-64'
+             sidebarCollapsed ? 'w-16' : 'w-64'
            } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40 relative group/sidebar`}
          >
           {/* Collapse/Expand toggle arrow */}
           <button
             onClick={toggleSidebarCollapse}
-            className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
+            className="hidden lg:flex absolute -right-3 top-6 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
             aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {sidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
@@ -402,10 +400,12 @@ const DashboardLayout: React.FC = () => {
               to="/dashboard"
               className="flex items-center justify-start"
             >
-              {sidebarCollapsed && !sidebarHovered ? (
-                <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center mx-auto">
-                  <span className="text-white font-bold text-lg">B</span>
-                </div>
+              {sidebarCollapsed ? (
+                <img
+                  src="/boltcall_small_logo.png"
+                  alt="Boltcall"
+                  className="h-10 w-10 mx-auto"
+                />
               ) : (
                 <img
                   src="/boltcall_full_logo.png"
@@ -445,10 +445,10 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Setup */}
                 <div className="mb-4">
-                  {!(sidebarCollapsed && !sidebarHovered) && (
+                  {!(sidebarCollapsed) && (
                     <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.setup')}</p>
                   )}
-                  {sidebarCollapsed && !sidebarHovered && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
+                  {sidebarCollapsed && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
                   <div className="space-y-1">
                     {navItemsSetup.map((item) => {
                       const isActive = location.pathname === item.to;
@@ -459,10 +459,10 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Services */}
                 <div className="mb-4">
-                  {!(sidebarCollapsed && !sidebarHovered) && (
+                  {!(sidebarCollapsed) && (
                     <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.services')}</p>
                   )}
-                  {sidebarCollapsed && !sidebarHovered && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
+                  {sidebarCollapsed && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
                   <div className="space-y-1">
                     {navItemsServices.map((item) => {
                       const isActive = location.pathname === item.to;
@@ -473,10 +473,10 @@ const DashboardLayout: React.FC = () => {
 
                 {/* Communications */}
                 <div className="mb-4">
-                  {!(sidebarCollapsed && !sidebarHovered) && (
+                  {!(sidebarCollapsed) && (
                     <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.communications')}</p>
                   )}
-                  {sidebarCollapsed && !sidebarHovered && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
+                  {sidebarCollapsed && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
                   <div className="space-y-1">
                     {navItemsCommunications.map((item) => {
                       const isActive = location.pathname === item.to;
