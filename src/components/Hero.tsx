@@ -224,11 +224,11 @@ const Hero: React.FC = () => {
                     A
                   </motion.span>
 
-                  <span className="relative inline-flex items-center justify-start overflow-hidden min-w-[160px] md:min-w-[380px] h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint' }}>
+                  <span className="relative inline-flex items-center justify-start overflow-hidden h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint', width: '4.5em' }}>
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
-                        className="absolute text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
+                        className="absolute left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         initial={{ opacity: 0, y: "-100" }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
