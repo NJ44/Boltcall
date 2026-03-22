@@ -9,7 +9,6 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
 import FeatureHub from '../../components/dashboard/FeatureHub';
 import { InteractiveOnboardingChecklist, type Step } from '../../components/ui/onboarding-checklist';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 
 const ONBOARDING_STEPS: Step[] = [
   {
@@ -85,11 +84,6 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-4 px-1 md:px-0">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div />
-        <PageInfoTooltip text="Overview of your business metrics and recent activity" />
-      </div>
 
       {/* Confetti */}
       {showConfetti && (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ChevronRight, Check, Loader2, AlertCircle, Unplug } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 
@@ -361,10 +361,6 @@ const IntegrationsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Page Info */}
-      <div className="flex justify-end">
-        <PageInfoTooltip text="Connect your CRM, calendar, and tools" />
-      </div>
 
       {/* Grid */}
       {loading ? (

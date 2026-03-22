@@ -39,6 +39,7 @@ import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { LocationSwitcher } from './LocationSwitcher';
 import AiAssistant from './AiAssistant';
+import PageInfoTooltip from '../ui/PageInfoTooltip';
 
 const DashboardLayout: React.FC = () => {
   const { t } = useTranslation();
@@ -171,6 +172,17 @@ const DashboardLayout: React.FC = () => {
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
+  };
+
+  // Page-specific tooltips — only shown on pages where extra context helps
+  const getPageTooltip = (): string | null => {
+    const path = location.pathname;
+    const tooltips: Record<string, string> = {
+      '/dashboard/reputation': 'Monitor and manage your online reviews across platforms',
+      '/dashboard/chat-widget': 'Add an AI chat widget to your website to capture leads 24/7',
+      '/dashboard/integrations': 'Connect your CRM, calendar, and other tools to sync data automatically',
+    };
+    return tooltips[path] || null;
   };
 
   // Add dashboard-page class to body for normal scrolling
@@ -541,6 +553,9 @@ const DashboardLayout: React.FC = () => {
                    }`}>
                      {getPageName()}
                    </h1>
+                   {getPageTooltip() && (
+                     <PageInfoTooltip text={getPageTooltip()!} />
+                   )}
                  </div>
                </div>
           

@@ -2,17 +2,39 @@ import React, { useEffect, useState } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, CheckIcon, ArrowRightIcon, Loader2, Zap, Phone, Calendar, MessageSquare } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Loader2, Zap } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
 import { useAuth } from '../contexts/AuthContext';
 import { createUserWorkspaceAndProfile } from '../lib/database';
 import { createAgentAndKnowledgeBase } from '../lib/webhooks';
 import { LocationService } from '../lib/locations';
 import { cn } from '../lib/utils';
-import { FancyDropdown } from '../components/ui/fancy-dropdown';
-import type { FancyDropdownOption } from '../components/ui/fancy-dropdown';
+import { Button } from '../components/ui/button-shadcn';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../components/ui/card-shadcn';
+import { Input } from '../components/ui/input-shadcn';
+import { Label } from '../components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select-shadcn';
 
-const CATEGORY_OPTIONS: FancyDropdownOption[] = [
+const steps = [
+  { id: 'business', title: 'Your Business' },
+  { id: 'location', title: 'Location' },
+  { id: 'launch', title: 'Review & Launch' },
+];
+
+const INDUSTRY_OPTIONS = [
   { value: 'dentist', label: 'Dentist' },
   { value: 'medspa', label: 'Med Spa' },
   { value: 'plumber', label: 'Plumber' },
@@ -31,7 +53,7 @@ const CATEGORY_OPTIONS: FancyDropdownOption[] = [
   { value: 'other', label: 'Other' },
 ];
 
-const COUNTRY_OPTIONS: FancyDropdownOption[] = [
+const COUNTRY_OPTIONS = [
   { value: 'us', label: 'United States' },
   { value: 'uk', label: 'United Kingdom' },
   { value: 'ca', label: 'Canada' },
@@ -53,21 +75,29 @@ const COUNTRY_OPTIONS: FancyDropdownOption[] = [
   { value: 'other', label: 'Other' },
 ];
 
-type StepDef = {
-  id: number;
-  label: string;
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 
-const steps: StepDef[] = [
-  { id: 1, label: 'Your Business' },
-  { id: 2, label: 'Location' },
-  { id: 3, label: 'Launch' },
-];
+const contentVariants = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+  exit: { opacity: 0, x: -50, transition: { duration: 0.2 } },
+};
 
 const Setup: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { isCompleted, updateBusinessProfile, updateAccount, complete, updateReview, markStepCompleted, knowledgeBase: storeKnowledgeBase } = useSetupStore();
+  const {
+    isCompleted,
+    updateBusinessProfile,
+    updateAccount,
+    complete,
+    updateReview,
+    markStepCompleted,
+    knowledgeBase: storeKnowledgeBase,
+  } = useSetupStore();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,7 +111,9 @@ const Setup: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Setup Your Boltcall Account';
-    updateMetaDescription('Setup your Boltcall account in under 60 seconds. Free setup, no credit card required.');
+    updateMetaDescription(
+      'Setup your Boltcall account in under 60 seconds. Free setup, no credit card required.'
+    );
   }, []);
 
   useEffect(() => {
@@ -91,27 +123,39 @@ const Setup: React.FC = () => {
   }, [isCompleted, navigate]);
 
   const isStepValid = () => {
-    if (currentStep === 0) return businessName.trim().length >= 2 && industry.length > 0;
-    if (currentStep === 1) return country.length > 0;
-    return true;
+    switch (currentStep) {
+      case 0:
+        return businessName.trim().length >= 2 && industry.length > 0;
+      case 1:
+        return country.length > 0;
+      default:
+        return true;
+    }
   };
 
-  const handleNext = async () => {
-    if (!isStepValid()) return;
-    setError('');
-
+  const nextStep = () => {
     if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-      return;
+      setCurrentStep((prev) => prev + 1);
+      setError('');
     }
+  };
 
-    // Final step — create everything and redirect
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep((prev) => prev - 1);
+      setError('');
+    }
+  };
+
+  const handleSubmit = async () => {
     if (!user?.id) {
       setError('Please log in first.');
       return;
     }
 
     setIsSubmitting(true);
+    setError('');
+
     try {
       // Update store
       updateBusinessProfile({
@@ -125,15 +169,16 @@ const Setup: React.FC = () => {
       });
 
       // Create workspace + business profile
-      const { workspace, businessProfile } = await createUserWorkspaceAndProfile(user.id, {
-        business_name: businessName,
-        website_url: websiteUrl,
-        main_category: industry.toLowerCase(),
-        country,
-        service_areas: [],
-        opening_hours: {},
-        languages: ['en'],
-      });
+      const { workspace, businessProfile } =
+        await createUserWorkspaceAndProfile(user.id, {
+          business_name: businessName,
+          website_url: websiteUrl,
+          main_category: industry.toLowerCase(),
+          country,
+          service_areas: [],
+          opening_hours: {},
+          languages: ['en'],
+        });
 
       // Create primary location
       let locationId: string | undefined;
@@ -195,283 +240,376 @@ const Setup: React.FC = () => {
         ...agentBaseData,
         agentType: 'inbound',
         agentName: `${businessName} AI Receptionist`,
-      }).catch(e => console.error('Inbound agent creation failed:', e));
+      }).catch((e) => console.error('Inbound agent creation failed:', e));
 
       // 2. Outbound agent — speed-to-lead follow-up calls
       createAgentAndKnowledgeBase({
         ...agentBaseData,
         agentType: 'speed_to_lead',
         agentName: `${businessName} Follow-Up Agent`,
-      }).catch(e => console.error('Outbound agent creation failed:', e));
+      }).catch((e) => console.error('Outbound agent creation failed:', e));
 
-      const FUNCTIONS_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
+      const FUNCTIONS_BASE = import.meta.env.DEV
+        ? 'http://localhost:8888/.netlify/functions'
+        : '/.netlify/functions';
       fetch(`${FUNCTIONS_BASE}/setup-launch`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId: workspace.id, isEnabled: true, userId: user.id }),
-      }).catch(e => console.error('Setup launch failed:', e));
+        body: JSON.stringify({
+          workspaceId: workspace.id,
+          isEnabled: true,
+          userId: user.id,
+        }),
+      }).catch((e) => console.error('Setup launch failed:', e));
     } catch (err) {
       console.error('Setup error:', err);
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again.'
+      );
       setIsSubmitting(false);
     }
   };
 
-  const progress = ((currentStep + 1) / steps.length) * 100;
-
   return (
-    <div className="min-h-screen flex items-start md:items-center justify-center bg-white">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-white">
       {/* Logo */}
-      <header className="fixed top-0 left-0 right-0 z-10 py-4 md:py-6">
-        <div className="max-w-4xl mx-auto px-4 flex justify-center">
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+      <header className="w-full py-6">
+        <div className="max-w-lg mx-auto px-4 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
             <Link to="/">
-              <img src="/boltcall_full_logo.png" alt="Boltcall" className="h-12 md:h-16 w-auto" />
+              <img
+                src="/boltcall_full_logo.png"
+                alt="Boltcall"
+                className="h-12 md:h-14 w-auto"
+              />
             </Link>
           </motion.div>
         </div>
       </header>
 
-      <motion.div
-        className="w-full max-w-4xl mx-auto px-4 pt-24 md:pt-8 pb-8"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: 'easeOut', delay: 0.15 }}
-      >
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl overflow-hidden shadow-[0_35px_60px_-12px_rgba(0,0,0,0.15)] md:shadow-[0_35px_60px_-12px_rgba(0,0,0,0.6)]">
-          {/* Left: dark panel */}
-          <div className="bg-gray-900 text-white p-8 md:p-12 flex flex-col justify-between">
-            <div>
-              <span className="inline-block text-xs font-bold uppercase tracking-wider text-gray-400">
-                Free Setup
-              </span>
-              <h1 className="text-2xl md:text-3xl font-extrabold text-white leading-tight mt-3">
-                Get your <span className="text-blue-500">AI receptionist</span> ready in{' '}
-                <span className="text-blue-500">60 seconds</span>
-              </h1>
-
-              <p className="mt-6 text-white/80 text-sm md:text-base leading-relaxed max-w-md">
-                Just tell us your business name and industry. We'll set up everything for you automatically.
-              </p>
-
-              <ul className="mt-6 space-y-3 text-white/90 text-sm">
-                <li className="flex items-start gap-3">
-                  <Phone className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
-                  <span>AI answers calls 24/7</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Calendar className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
-                  <span>Books appointments automatically</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <MessageSquare className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
-                  <span>Responds to leads instantly</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Zap className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
-                  <span>No credit card required</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="mt-8 flex items-center gap-2 text-xs text-gray-500">
-              <Check className="w-3 h-3" strokeWidth={2.5} />
-              <span>50 free credits on signup</span>
-            </div>
+      <div className="w-full max-w-lg mx-auto px-4 py-4">
+        {/* Progress indicator */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex justify-between mb-2">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                className="flex flex-col items-center"
+                whileHover={{ scale: 1.1 }}
+              >
+                <motion.div
+                  className={cn(
+                    'w-4 h-4 rounded-full cursor-pointer transition-colors duration-300',
+                    index < currentStep
+                      ? 'bg-primary'
+                      : index === currentStep
+                        ? 'bg-primary ring-4 ring-primary/20'
+                        : 'bg-muted'
+                  )}
+                  onClick={() => {
+                    if (index <= currentStep) {
+                      setCurrentStep(index);
+                    }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                />
+                <motion.span
+                  className={cn(
+                    'text-xs mt-1.5 hidden sm:block',
+                    index === currentStep
+                      ? 'text-primary font-medium'
+                      : 'text-muted-foreground'
+                  )}
+                >
+                  {step.title}
+                </motion.span>
+              </motion.div>
+            ))}
           </div>
+          <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
+            <motion.div
+              className="h-full bg-primary"
+              initial={{ width: 0 }}
+              animate={{
+                width: `${(currentStep / (steps.length - 1)) * 100}%`,
+              }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+        </motion.div>
 
-          {/* Right: blue form panel */}
-          <div className="bg-gradient-to-b from-blue-600 to-blue-700 text-white p-8 md:p-12">
-            {/* Step indicators */}
-            <div className="mb-6 flex items-center justify-center gap-2">
-              {steps.map((step, index) => (
-                <div key={step.id} className="flex items-center gap-2">
-                  <button
-                    onClick={() => index < currentStep && setCurrentStep(index)}
-                    disabled={index > currentStep}
+        {/* Form card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card className="border shadow-md rounded-3xl overflow-hidden">
+            <div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={contentVariants}
+                >
+                  {/* Step 1: Your Business */}
+                  {currentStep === 0 && (
+                    <>
+                      <CardHeader>
+                        <CardTitle>Tell us about your business</CardTitle>
+                        <CardDescription>
+                          We'll use this to set up your AI receptionist
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <motion.div variants={fadeInUp} className="space-y-2">
+                          <Label htmlFor="businessName">Business Name</Label>
+                          <Input
+                            id="businessName"
+                            placeholder="e.g. Smith Dental"
+                            value={businessName}
+                            onChange={(e) => setBusinessName(e.target.value)}
+                            autoFocus
+                            className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                          />
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="space-y-2">
+                          <Label htmlFor="industry">Industry</Label>
+                          <Select
+                            value={industry}
+                            onValueChange={(value) => setIndustry(value)}
+                          >
+                            <SelectTrigger
+                              id="industry"
+                              className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            >
+                              <SelectValue placeholder="Select your industry" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {INDUSTRY_OPTIONS.map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>
+                                  {opt.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </motion.div>
+                      </CardContent>
+                    </>
+                  )}
+
+                  {/* Step 2: Location */}
+                  {currentStep === 1 && (
+                    <>
+                      <CardHeader>
+                        <CardTitle>Where are you located?</CardTitle>
+                        <CardDescription>
+                          Your AI receptionist will match your region's language
+                          and accent
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <motion.div variants={fadeInUp} className="space-y-2">
+                          <Label htmlFor="country">Country</Label>
+                          <Select
+                            value={country}
+                            onValueChange={(value) => setCountry(value)}
+                          >
+                            <SelectTrigger
+                              id="country"
+                              className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                            >
+                              <SelectValue placeholder="Select your country" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {COUNTRY_OPTIONS.map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>
+                                  {opt.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="space-y-2">
+                          <Label htmlFor="websiteUrl">
+                            Website URL{' '}
+                            <span className="text-muted-foreground font-normal">
+                              (optional)
+                            </span>
+                          </Label>
+                          <Input
+                            id="websiteUrl"
+                            type="url"
+                            placeholder="https://yourbusiness.com"
+                            value={websiteUrl}
+                            onChange={(e) => setWebsiteUrl(e.target.value)}
+                            className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                          />
+                          <p className="text-xs text-muted-foreground">
+                            AI will auto-learn from your website
+                          </p>
+                        </motion.div>
+                      </CardContent>
+                    </>
+                  )}
+
+                  {/* Step 3: Review & Launch */}
+                  {currentStep === 2 && (
+                    <>
+                      <CardHeader>
+                        <CardTitle>Ready to launch</CardTitle>
+                        <CardDescription>
+                          Review your details and launch your AI receptionist
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <motion.div
+                          variants={fadeInUp}
+                          className="rounded-lg border p-4 space-y-3"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                              <Check className="h-3.5 w-3.5 text-primary" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">
+                                {businessName}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {INDUSTRY_OPTIONS.find(
+                                  (o) => o.value === industry
+                                )?.label || industry}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                              <Check className="h-3.5 w-3.5 text-primary" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">
+                                {COUNTRY_OPTIONS.find(
+                                  (o) => o.value === country
+                                )?.label || country}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Voice matched to your region
+                              </p>
+                            </div>
+                          </div>
+                          {websiteUrl && (
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                                <Check className="h-3.5 w-3.5 text-primary" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium truncate max-w-[280px]">
+                                  {websiteUrl}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  AI will learn from your site
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </motion.div>
+                        <motion.div variants={fadeInUp}>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            We'll create your AI receptionist and follow-up
+                            agent. You can add services, FAQs, and more from the
+                            dashboard.
+                          </p>
+                        </motion.div>
+
+                        {error && (
+                          <motion.div
+                            variants={fadeInUp}
+                            className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2"
+                          >
+                            <p className="text-sm text-destructive">{error}</p>
+                          </motion.div>
+                        )}
+                      </CardContent>
+                    </>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+
+              <CardFooter className="flex justify-between pt-6 pb-4">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={prevStep}
+                    disabled={currentStep === 0}
+                    className="flex items-center gap-1 transition-all duration-300 rounded-2xl"
+                  >
+                    <ChevronLeft className="h-4 w-4" /> Back
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    type="button"
+                    onClick={
+                      currentStep === steps.length - 1
+                        ? handleSubmit
+                        : nextStep
+                    }
+                    disabled={!isStepValid() || isSubmitting}
                     className={cn(
-                      'relative flex h-8 w-8 items-center justify-center rounded-full transition-all duration-500',
-                      'disabled:cursor-not-allowed',
-                      index < currentStep && 'bg-white/20 text-white/80',
-                      index === currentStep && 'bg-white text-blue-600 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)]',
-                      index > currentStep && 'bg-white/10 text-white/40',
+                      'flex items-center gap-1 transition-all duration-300 rounded-2xl'
                     )}
                   >
-                    {index < currentStep ? (
-                      <CheckIcon className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />{' '}
+                        Setting up...
+                      </>
+                    ) : currentStep === steps.length - 1 ? (
+                      <>
+                        <Zap className="h-4 w-4" /> Launch
+                      </>
                     ) : (
-                      <span className="text-xs font-medium">{step.id}</span>
+                      <>
+                        Next <ChevronRight className="h-4 w-4" />
+                      </>
                     )}
-                    {index === currentStep && (
-                      <div className="absolute inset-0 rounded-full bg-white/30 blur-md animate-pulse" />
-                    )}
-                  </button>
-                  {index < steps.length - 1 && (
-                    <div className="relative h-[1.5px] w-8">
-                      <div className="absolute inset-0 bg-white/20" />
-                      <div
-                        className="absolute inset-0 bg-white/60 transition-all duration-700 origin-left"
-                        style={{ transform: `scaleX(${index < currentStep ? 1 : 0})` }}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
+                  </Button>
+                </motion.div>
+              </CardFooter>
             </div>
+          </Card>
+        </motion.div>
 
-            {/* Progress bar */}
-            <div className="mb-6 overflow-hidden rounded-full bg-white/20 h-[2px]">
-              <div
-                className="h-full bg-white transition-all duration-1000 ease-out"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-
-            {/* Step content */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-5"
-              >
-                <div className="flex items-baseline justify-between">
-                  <span className="text-base font-medium text-white">{steps[currentStep].label}</span>
-                  <span className="text-xs font-medium text-white/60">{currentStep + 1}/{steps.length}</span>
-                </div>
-
-                {currentStep === 0 && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/90">Business Name</label>
-                      <input
-                        type="text"
-                        value={businessName}
-                        onChange={(e) => setBusinessName(e.target.value)}
-                        placeholder="e.g. Smith Dental"
-                        autoFocus
-                        className="w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur !text-white placeholder-white/50 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30" style={{ color: 'white' }}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/90">Industry</label>
-                      <FancyDropdown
-                        options={CATEGORY_OPTIONS}
-                        value={industry}
-                        onChange={setIndustry}
-                        placeholder="Select your industry"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {currentStep === 1 && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/90">Country</label>
-                      <FancyDropdown
-                        options={COUNTRY_OPTIONS}
-                        value={country}
-                        onChange={setCountry}
-                        placeholder="Select your country"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-white/90">
-                        Website URL <span className="text-white/50">(optional)</span>
-                      </label>
-                      <input
-                        type="url"
-                        value={websiteUrl}
-                        onChange={(e) => setWebsiteUrl(e.target.value)}
-                        placeholder="https://yourbusiness.com"
-                        className="w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur !text-white placeholder-white/50 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30" style={{ color: 'white' }}
-                      />
-                      <p className="text-xs text-white/60">AI will auto-learn from your website</p>
-                    </div>
-                  </div>
-                )}
-
-                {currentStep === 2 && (
-                  <div className="space-y-4">
-                    <div className="bg-white/10 rounded-lg p-4 border border-white/20 space-y-3">
-                      <h3 className="font-semibold text-sm">Ready to launch:</h3>
-                      <div className="space-y-2 text-sm text-white/90">
-                        <div className="flex items-center gap-2">
-                          <Check className="w-3.5 h-3.5 text-green-300 flex-shrink-0" strokeWidth={2.5} />
-                          <span><strong>{businessName}</strong> — {CATEGORY_OPTIONS.find(c => c.value === industry)?.label || industry}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Check className="w-3.5 h-3.5 text-green-300 flex-shrink-0" strokeWidth={2.5} />
-                          <span>{COUNTRY_OPTIONS.find(c => c.value === country)?.label || country}</span>
-                        </div>
-                        {websiteUrl && (
-                          <div className="flex items-center gap-2">
-                            <Check className="w-3.5 h-3.5 text-green-300 flex-shrink-0" strokeWidth={2.5} />
-                            <span className="truncate">{websiteUrl}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
-                      We'll create your AI receptionist and dashboard. You can add services, FAQs, and more later.
-                    </p>
-                  </div>
-                )}
-
-                {error && (
-                  <div className="bg-red-500/20 border border-red-400/30 rounded-lg px-3 py-2">
-                    <p className="text-sm text-white">{error}</p>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation buttons */}
-            <div className="flex gap-3 mt-6">
-              {currentStep > 0 && (
-                <button
-                  onClick={() => { setCurrentStep(currentStep - 1); setError(''); }}
-                  className="flex-1 px-4 py-2.5 h-10 text-sm bg-white/10 text-white font-semibold rounded-md border border-white/30 hover:bg-white/20 transition-colors"
-                >
-                  Back
-                </button>
-              )}
-              <button
-                onClick={handleNext}
-                disabled={!isStepValid() || isSubmitting}
-                className={cn(
-                  'flex-1 h-10 text-sm font-semibold rounded-md transition-all duration-300',
-                  'bg-white text-blue-600 hover:bg-gray-50 hover:shadow-lg hover:shadow-white/10',
-                  (!isStepValid() || isSubmitting) && 'opacity-60 cursor-not-allowed',
-                  currentStep === 0 && 'w-full',
-                )}
-              >
-                <span className="flex items-center justify-center gap-2">
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Setting up...
-                    </>
-                  ) : currentStep === steps.length - 1 ? (
-                    <>
-                      <Zap className="w-4 h-4" />
-                      Launch My AI Receptionist
-                    </>
-                  ) : (
-                    <>
-                      Continue
-                      <ArrowRightIcon className="h-4 w-4" strokeWidth={2} />
-                    </>
-                  )}
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+        {/* Step indicator */}
+        <motion.div
+          className="mt-4 text-center text-sm text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
+        </motion.div>
+      </div>
     </div>
   );
 };

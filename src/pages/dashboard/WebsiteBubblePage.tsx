@@ -12,7 +12,7 @@ import {
   AlertCircle,
   Globe,
 } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Magnetic } from '../../components/ui/magnetic';
@@ -138,10 +138,6 @@ const WebsiteBubblePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Page Info */}
-      <div className="flex justify-end">
-        <PageInfoTooltip text="Add an AI chat widget to your website" />
-      </div>
 
       {/* Error Banner */}
       {error && (

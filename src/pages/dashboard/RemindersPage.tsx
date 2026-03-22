@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Save, Loader2, Check, AlertCircle, Link, Unlink, MessageSquare } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -241,10 +241,6 @@ const RemindersPage: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 pb-12">
-      {/* Page Info */}
-      <div className="flex justify-end">
-        <PageInfoTooltip text="Set up automated appointment reminders via SMS and email" />
-      </div>
 
       {/* Error Banner */}
       {error && (

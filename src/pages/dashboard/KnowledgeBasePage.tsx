@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
 import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import { FileUpload } from '@/components/ui/file-upload';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { supabase } from '../../lib/supabase';
@@ -802,7 +802,7 @@ const KnowledgeBasePage: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-3">
-                <PageInfoTooltip text="Add business info so your AI agent can answer questions accurately" />
+
                 {/* New Knowledge Base Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <button

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Save, Loader2, Check, AlertCircle, MessageSquare } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -164,10 +164,6 @@ const ReputationPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Page Info */}
-      <div className="flex justify-end">
-        <PageInfoTooltip text="Monitor and manage your online reviews" />
-      </div>
 
       {/* Error Banner */}
       {error && (

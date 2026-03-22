@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessagesSquare, CalendarCheck, RotateCw, Activity } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import ChatHistoryPage from './ChatHistoryPage';
 import SmsBookingPage from './SmsBookingPage';
 import FollowUpsPage from './FollowUpsPage';
@@ -48,7 +48,7 @@ const MessagesPage: React.FC = () => {
               );
             })}
           </nav>
-          <PageInfoTooltip text="SMS conversations with your customers" />
+
         </div>
       </div>
 

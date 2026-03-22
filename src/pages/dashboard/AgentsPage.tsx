@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
 import { Users, Plus, X, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import { VoicePicker } from '../../components/ui/voice-picker';
 import { useRetellVoices } from '../../hooks/useRetellVoices';
 import CardTable from '../../components/ui/CardTable';
@@ -574,9 +574,6 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             )}
           </button>
         ))}
-        <div className="ml-auto pb-2">
-          <PageInfoTooltip text="Create and manage your AI voice agents" />
-        </div>
       </div>
 
       {activeTab === 'tests' ? (

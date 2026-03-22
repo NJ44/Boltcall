@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PhoneNumbersSkeleton } from '../../components/ui/loading-skeleton';
 import { PhoneCall, MoreHorizontal, ChevronDown, Phone, Settings } from 'lucide-react';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
+
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
@@ -290,10 +290,6 @@ const PhoneNumbersPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Page Info */}
-      <div className="flex justify-end">
-        <PageInfoTooltip text="Manage phone numbers connected to your AI agents" />
-      </div>
 
       {/* Phone Numbers Card Table */}
       <motion.div

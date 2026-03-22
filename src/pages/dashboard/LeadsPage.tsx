@@ -4,7 +4,6 @@ import { Zap, PhoneMissed, RotateCw } from 'lucide-react';
 import SpeedToLeadPage from './SpeedToLeadPage';
 import MissedCallsPage from './MissedCallsPage';
 import LeadReactivationPage from './LeadReactivationPage';
-import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 
 type Tab = 'speed-to-lead' | 'missed-calls' | 'reactivation';
 
@@ -45,7 +44,7 @@ const LeadsPage: React.FC = () => {
               );
             })}
           </nav>
-          <PageInfoTooltip text="Manage incoming leads from calls, forms, and missed calls" />
+
         </div>
       </div>
 
