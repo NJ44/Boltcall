@@ -153,6 +153,11 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/settings/plan-billing': t('page.planBilling'),
     };
 
+    // Settings pages always show "Settings"
+    if (path.startsWith('/dashboard/settings')) {
+      return t('page.settings');
+    }
+
     // Return mapped name or convert path to title case
     if (pageNames[path]) {
       return pageNames[path];

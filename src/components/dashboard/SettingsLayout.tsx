@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface SettingsLayoutProps {
   children?: React.ReactNode;
@@ -48,8 +49,6 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
     <div className="flex flex-col h-full">
       {/* Page Header */}
       <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-5 pb-0">
-        <h1 className="text-xl font-semibold text-gray-900 mb-4">Settings</h1>
-
         {/* Top Tabs — category-level navigation */}
         <nav className="flex gap-6 -mb-px">
             {categories.map((cat) => {
@@ -69,7 +68,11 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
                 >
                   {cat.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-t" />
+                    <motion.span
+                      layoutId="settings-tab-indicator"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-t"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
                   )}
                 </Link>
               );

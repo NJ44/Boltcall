@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PhoneNumbersSkeleton } from '../../components/ui/loading-skeleton';
-import { PhoneCall, MoreHorizontal, ChevronDown, Plus, Phone, Settings } from 'lucide-react';
+import { PhoneCall, MoreHorizontal, ChevronDown, Phone, Settings } from 'lucide-react';
 import PageInfoTooltip from '../../components/ui/PageInfoTooltip';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import { Magnetic } from '../../components/ui/magnetic';
@@ -328,7 +328,6 @@ const PhoneNumbersPage: React.FC = () => {
                     onClick={handleAddPhoneNumber}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
-                    <Plus className="h-4 w-4" />
                     <span className="font-bold">Add Phone Number</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                   </button>
