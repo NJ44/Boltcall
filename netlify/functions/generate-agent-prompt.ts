@@ -1233,8 +1233,8 @@ ${serveLine}
     prompt += `## ${l.aiDisclosureMandatory}
 ${l.aiDisclosureInstruction} "${disclosureText}"
 ${lang === 'es'
-  ? 'NO omitas esto bajo ninguna circunstancia. Dilo de manera natural como parte de tu saludo, luego continúa la conversación.'
-  : 'Do NOT skip this under any circumstances. Say it naturally as part of your greeting, then continue the conversation.'}
+  ? 'NO omitas esto bajo ninguna circunstancia. Dilo UNA SOLA VEZ como parte de tu primer saludo, luego NUNCA lo repitas — solo continúa la conversación naturalmente.'
+  : 'Do NOT skip this under any circumstances. Say it ONCE as part of your very first greeting, then NEVER repeat it — not after tool calls, not after pauses, not ever. Just continue the conversation naturally.'}
 
 `;
   }
