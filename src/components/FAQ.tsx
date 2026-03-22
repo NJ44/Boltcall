@@ -9,20 +9,28 @@ const FAQ: React.FC = () => {
 
   const faqs = [
     {
-      question: 'What exactly Boltcall offers?',
-      answer: 'Boltcall helps your business. It talks to new customers right away. It answers your phone calls. It answers your messages. It books appointments for you. It talks to people again so they don\'t forget. It sends reminders. It tells you what is happening. It works even when you are busy or closed.'
+      question: 'What exactly does Boltcall do?',
+      answer: 'Boltcall is an AI receptionist that answers your calls 24/7, books appointments, captures leads, sends follow-up texts, and reminds customers about upcoming visits. It works even when you\'re busy or closed.'
     },
     {
-      question: 'Can it transfer the call to a real person?',
-      answer: 'Yes. You can tell it to give the call to a real person. You can say to do this during work hours. Or only for important customers. If no one answers, it books an appointment or takes a message. Then it tells you.'
+      question: 'Can it transfer calls to a real person?',
+      answer: 'Yes. You set the rules — transfer during business hours, for VIP customers, or urgent calls. If no one picks up, it takes a message and books a callback.'
     },
     {
-      question: 'How good is the call quality and voice?',
-      answer: 'It sounds like a real person. You choose how it talks. You can make it friendly. You can make it calm. You can make it formal. It talks in short sentences. It does not sound like a robot.'
+      question: 'Does it sound like a real person?',
+      answer: 'Yes. You choose the voice and tone — friendly, calm, or professional. Callers often can\'t tell it\'s AI.'
     },
     {
-      question: 'Can it use my current phone number?',
-      answer: 'Yes. You can use your phone number that you have now. Or you can get a new phone number in the app. Then you can start using it.'
+      question: 'Can I keep my current phone number?',
+      answer: 'Yes. You can forward your existing number to Boltcall, or get a new local number in the app.'
+    },
+    {
+      question: 'How long does setup take?',
+      answer: 'About 5 minutes. Enter your business details, pick a voice, and your AI receptionist is live. No technical skills needed.'
+    },
+    {
+      question: 'Does it connect to my CRM or calendar?',
+      answer: 'Yes. Boltcall integrates with HubSpot, Google Sheets, Zapier, Cal.com, and more. Every lead and booking syncs automatically to the tools you already use.'
     }
   ];
 
@@ -49,11 +57,11 @@ const FAQ: React.FC = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-5xl font-bold text-text-main mb-6">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl md:text-4xl font-bold text-text-main mb-4">
           <WhisperText
             text="Frequently Asked"
-            className="text-3xl md:text-5xl font-bold text-text-main inline-block"
+            className="text-2xl md:text-4xl font-bold text-text-main inline-block"
             delay={125}
             duration={0.625}
             x={-20}
@@ -62,7 +70,7 @@ const FAQ: React.FC = () => {
           />{' '}
           <WhisperText
             text="Questions"
-            className="text-3xl md:text-5xl font-bold text-blue-500 inline-block"
+            className="text-2xl md:text-4xl font-bold text-blue-500 inline-block"
             delay={125}
             duration={0.625}
             x={-20}
@@ -72,8 +80,8 @@ const FAQ: React.FC = () => {
         </h2>
       </div>
 
-      <div className="max-w-5xl mx-auto">
-        <div className="space-y-6">
+      <div className="max-w-3xl mx-auto">
+        <div className="space-y-3">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -85,25 +93,25 @@ const FAQ: React.FC = () => {
               <div className="group bg-white rounded-xl border border-gray-200/50 overflow-hidden shadow-sm transition-all duration-300" style={{ contain: 'layout style' }}>
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-7 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-all duration-300 focus:outline-none rounded-t-xl"
+                  className="w-full px-5 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-all duration-300 focus:outline-none rounded-t-xl"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="text-xl font-semibold text-gray-900 pr-5 group-hover:text-blue-600 transition-colors duration-300">
+                  <span className="text-base font-semibold text-gray-900 pr-4 group-hover:text-blue-600 transition-colors duration-300">
                     {faq.question}
                   </span>
-                  <motion.div 
-                    className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center shadow-sm transition-shadow duration-300"
-                    style={{ minWidth: '36px', minHeight: '36px' }}
+                  <motion.div
+                    className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center shadow-sm transition-shadow duration-300"
+                    style={{ minWidth: '28px', minHeight: '28px' }}
                   >
                     {openIndex === index ? (
-                      <Minus className="w-5 h-5 text-white" strokeWidth={2.5} />
+                      <Minus className="w-4 h-4 text-white" strokeWidth={2.5} />
                     ) : (
-                      <Plus className="w-5 h-5 text-white" strokeWidth={2.5} />
+                      <Plus className="w-4 h-4 text-white" strokeWidth={2.5} />
                     )}
                   </motion.div>
                 </button>
-                
+
                 <AnimatePresence>
                   {openIndex === index && (
                     <motion.div
@@ -111,16 +119,16 @@ const FAQ: React.FC = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ 
-                        duration: 0.4, 
+                      transition={{
+                        duration: 0.4,
                         ease: [0.04, 0.62, 0.23, 0.98],
                         type: "spring"
                       }}
                       className="overflow-hidden"
                       style={{ willChange: 'height, opacity' }}
                     >
-                      <div className="px-7 pb-5 bg-white">
-                        <p className="text-gray-700 leading-relaxed text-lg">
+                      <div className="px-5 pb-4 bg-white">
+                        <p className="text-gray-600 leading-relaxed text-sm">
                           {faq.answer}
                         </p>
                       </div>
