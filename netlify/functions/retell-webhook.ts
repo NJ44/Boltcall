@@ -256,6 +256,31 @@ export const handler: Handler = async (event) => {
       });
     }
 
+    // Sync lead to connected CRMs (fire-and-forget)
+    if (lead?.id && userId) {
+      const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+      fetch(`${baseUrl}/.netlify/functions/integration-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'sync_lead',
+          userId,
+          lead: {
+            name: null,
+            first_name: null,
+            last_name: null,
+            phone: callerPhone,
+            email: null,
+            source: 'missed_call',
+            status: 'pending',
+            notes: `Missed call - ${call.call_status} (${call.duration_ms || 0}ms)`,
+          },
+        }),
+      }).catch(err => {
+        console.error('[retell-webhook] CRM sync failed (non-blocking):', err);
+      });
+    }
+
     // Auto-enroll in missed_call follow-up sequences
     if (lead?.id) {
       try {

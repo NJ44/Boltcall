@@ -273,6 +273,31 @@ export const handler: Handler = async (event) => {
         };
       }
 
+      // Sync lead to connected CRMs (fire-and-forget)
+      if (lead.user_id) {
+        const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+        fetch(`${baseUrl}/.netlify/functions/integration-sync`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'sync_lead',
+            userId: lead.user_id,
+            lead: {
+              name: body.name || null,
+              first_name: lead.first_name || null,
+              last_name: lead.last_name || null,
+              phone: lead.phone || null,
+              email: lead.email || null,
+              source: lead.source || 'web_form',
+              status: lead.status || 'new',
+              notes: body.notes || body.message || null,
+            },
+          }),
+        }).catch(err => {
+          console.error('[lead-webhook] CRM sync failed (non-blocking):', err);
+        });
+      }
+
       return {
         statusCode: 201,
         headers,
