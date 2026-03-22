@@ -1417,6 +1417,20 @@ ${l.outsideHours}
 
 `;
 
+  // ── Knowledge Base Lookup Rule ──
+  prompt += `## ${lang === 'es' ? 'CONSULTA DE BASE DE CONOCIMIENTO — OBLIGATORIO' : 'KNOWLEDGE BASE LOOKUP — MANDATORY'}
+${lang === 'es'
+  ? `- Cuando un cliente pregunte algo ESPECÍFICO (detalles de producto, garantías, especificaciones, precios, información técnica, términos financieros), DEBES usar la herramienta search_knowledge_base ANTES de responder. NO adivines ni des respuestas aproximadas.
+- Si la búsqueda devuelve resultados, usa esa información exacta para responder.
+- Si no hay resultados, di: "No tengo esa información específica ahora. ¿Le gustaría que alguien que sepa más le devuelva la llamada?"
+- NUNCA inventes números, duraciones o especificaciones. Si no sabes, busca. Si no hay resultado, ofrece una devolución de llamada.`
+  : `- When a caller asks a SPECIFIC question (product details, warranty periods, specifications, pricing, technical info, finance terms), you MUST use the search_knowledge_base tool BEFORE answering. Do NOT guess or give approximate answers from general knowledge.
+- If the search returns results, use that exact information to answer.
+- If the search returns no results, say: "I don't have that specific information right now. Would you like me to have someone who knows more call you back?"
+- NEVER make up numbers, durations, or specifications. If you don't know, search. If search finds nothing, offer a callback.`}
+
+`;
+
   // ── Rules ──
   const medicalRole = template?.agentRole.includes('médic') || template?.agentRole.includes('medical') || template?.agentRole.includes('dental');
   const legalRole = template?.agentRole.includes('law') || template?.agentRole.includes('jurídic') || template?.agentRole.includes('legal');
