@@ -79,32 +79,36 @@ export const handler: Handler = async (event) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and query required' }) };
       }
 
+      // Try vector search first if embeddings are available
       const embedding = await getEmbedding(query);
-      if (!embedding) {
-        // Fallback: text search if embeddings aren't available
-        const { data, error } = await supabase
-          .from('knowledge_base')
-          .select('id, title, content, category')
-          .eq('user_id', userId)
-          .eq('tier', 'search')
-          .eq('status', 'active')
-          .or(`title.ilike.%${query}%,content.ilike.%${query}%`)
-          .limit(matchCount || 3);
+      if (embedding) {
+        const { data, error } = await supabase.rpc('search_kb', {
+          query_embedding: JSON.stringify(embedding),
+          match_user_id: userId,
+          match_count: matchCount || 3,
+          match_threshold: 0.65,
+        });
 
-        if (error) throw error;
-        return { statusCode: 200, headers, body: JSON.stringify({ success: true, results: data || [], method: 'text_search' }) };
+        if (!error && data && data.length > 0) {
+          return { statusCode: 200, headers, body: JSON.stringify({ success: true, results: data, method: 'vector_search' }) };
+        }
       }
 
-      // Vector search
-      const { data, error } = await supabase.rpc('search_kb', {
-        query_embedding: JSON.stringify(embedding),
-        match_user_id: userId,
-        match_count: matchCount || 3,
-        match_threshold: 0.65,
-      });
+      // Fallback: smart text search — split query into keywords and match
+      const keywords = query.toLowerCase().split(/\s+/).filter((w: string) => w.length > 2);
+      const orConditions = keywords.map((kw: string) => `title.ilike.%${kw}%,content.ilike.%${kw}%`).join(',');
+
+      const { data, error } = await supabase
+        .from('knowledge_base')
+        .select('id, title, content, category')
+        .eq('user_id', userId)
+        .eq('tier', 'search')
+        .eq('status', 'active')
+        .or(orConditions)
+        .limit(matchCount || 3);
 
       if (error) throw error;
-      return { statusCode: 200, headers, body: JSON.stringify({ success: true, results: data || [], method: 'vector_search' }) };
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, results: data || [], method: 'text_search' }) };
     }
 
     // ─── Helper: Get business_profile_id for a user ──────────────────
