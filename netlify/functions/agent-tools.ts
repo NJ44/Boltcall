@@ -294,20 +294,25 @@ async function handleBookAppointment(
   try {
     // Build ISO start time
     const startISO = `${date}T${time}:00Z`;
+    const endDate = new Date(startISO);
+    endDate.setMinutes(endDate.getMinutes() + 20); // Default 20-min consultation
+    const endISO = endDate.toISOString();
 
+    // Cal.com V1 booking format
     const bookingBody: any = {
       eventTypeId,
       start: startISO,
-      responses: {
-        name: name,
-        email: email || '',
-        phone: phone || '',
-        notes: [service, notes].filter(Boolean).join(' - ') || '',
-      },
-      timeZone: 'America/New_York',
+      end: endISO,
+      name: name,
+      email: email || 'noemail@placeholder.com',
+      timeZone: 'Europe/London',
+      language: 'en',
       metadata: {
         source: 'ai_receptionist',
         call_id: callId,
+        phone: phone || '',
+        service: service || '',
+        notes: notes || '',
       },
     };
 
