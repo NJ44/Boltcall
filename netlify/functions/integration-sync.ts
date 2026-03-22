@@ -231,8 +231,8 @@ export const handler: Handler = async (event) => {
       }
 
       if (error) {
-        console.error('[integration-sync] Connect error:', error);
-        throw error;
+        console.error('[integration-sync] Connect error:', JSON.stringify(error));
+        return { statusCode: 500, headers, body: JSON.stringify({ error: error.message || JSON.stringify(error), code: error.code }) };
       }
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, integration: data }) };
     }
@@ -377,14 +377,13 @@ export const handler: Handler = async (event) => {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: list, connect, disconnect, test, sync_lead' }) };
 
   } catch (err) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    const errStack = err instanceof Error ? err.stack?.split('\n').slice(0, 3).join('\n') : '';
-    console.error('[integration-sync] Error:', errMsg, errStack);
-    await notifyError('integration-sync: Failed', err);
+    const errMsg = err instanceof Error ? err.message : (typeof err === 'object' ? JSON.stringify(err) : String(err));
+    console.error('[integration-sync] Error:', errMsg);
+    await notifyError('integration-sync: Failed', errMsg);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: errMsg, details: errStack }),
+      body: JSON.stringify({ error: errMsg }),
     };
   }
 };
