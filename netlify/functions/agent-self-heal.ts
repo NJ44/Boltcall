@@ -53,57 +53,51 @@ async function retellFetch(path: string, options: RequestInit = {}) {
 }
 
 async function askLLM(systemPrompt: string, userPrompt: string): Promise<string> {
-  // Use Retell's LLM API (already paid for via Retell subscription)
-  // Create a temporary Retell LLM, get a response, then delete it
-  const tempLlm = await retellFetch('/create-retell-llm', {
-    method: 'POST',
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      general_prompt: systemPrompt,
-    }),
-  });
-
-  const tempLlmId = tempLlm.llm_id;
-  if (!tempLlmId) throw new Error('Failed to create temp LLM for analysis');
-
-  try {
-    // Create a temp chat agent with this LLM
-    const chatAgent = await retellFetch('/create-chat-agent', {
+  // Primary: Anthropic Claude Haiku (fast, cheap, reliable)
+  if (ANTHROPIC_KEY) {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        response_engine: { type: 'retell-llm', llm_id: tempLlmId },
-        agent_name: `ANALYZE-${Date.now()}`,
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 4000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }],
       }),
     });
-
-    const chatAgentId = chatAgent.agent_id;
-
-    try {
-      // Create chat and send the analysis request
-      const chat = await retellFetch('/create-chat', {
-        method: 'POST',
-        body: JSON.stringify({ agent_id: chatAgentId }),
-      });
-
-      const response = await retellFetch('/create-chat-completion', {
-        method: 'POST',
-        body: JSON.stringify({ chat_id: chat.chat_id, content: userPrompt }),
-      });
-
-      // End the chat
-      try { await retellFetch(`/end-chat/${chat.chat_id}`, { method: 'PATCH' }); } catch { /* ignore */ }
-
-      // Extract response text
-      const messages = response.messages || [];
-      return messages.map((m: any) => m.content || '').join('\n');
-    } finally {
-      // Delete temp chat agent
-      try { await retellFetch(`/delete-chat-agent/${chatAgentId}`, { method: 'DELETE' }); } catch { /* ignore */ }
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '');
+      throw new Error(`Anthropic API failed (${res.status}): ${errText}`);
     }
-  } finally {
-    // Delete temp LLM
-    try { await retellFetch(`/delete-retell-llm/${tempLlmId}`, { method: 'DELETE' }); } catch { /* ignore */ }
+    const data = await res.json();
+    return data.content?.[0]?.text || '';
   }
+
+  // Fallback: OpenAI
+  if (!OPENAI_KEY) throw new Error('No LLM API key configured (need ANTHROPIC_API_KEY or OPENAI_API_KEY)');
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${OPENAI_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
+      temperature: 0.3,
+      max_tokens: 4000,
+    }),
+  });
+  if (!res.ok) throw new Error(`OpenAI API failed: ${res.status}`);
+  const data = await res.json();
+  return data.choices[0]?.message?.content || '';
 }
 
 // ─── Step 1: Analyze the failed call transcript ─────────────────────────────
