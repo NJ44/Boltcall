@@ -20,12 +20,13 @@ import { notifyError } from './_shared/notify';
  */
 
 const OPENAI_KEY = process.env.OPENAI_API_KEY || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Type': 'application/json',
+  'Content-Type': 'application/json; charset=utf-8',
 };
 
 function getSupabase() {
@@ -35,27 +36,47 @@ function getSupabase() {
   return createClient(url, key);
 }
 
-// Generate embedding via OpenAI
+// Generate embedding — tries OpenAI, falls back to Supabase Edge Function
 async function getEmbedding(text: string): Promise<number[] | null> {
-  if (!OPENAI_KEY) return null;
-  try {
-    const res = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: text,
-      }),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.data?.[0]?.embedding || null;
-  } catch {
-    return null;
+  // Try OpenAI first
+  if (OPENAI_KEY) {
+    try {
+      const res = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENAI_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ model: 'text-embedding-3-small', input: text }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const emb = data.data?.[0]?.embedding;
+        if (emb) return emb;
+      }
+    } catch { /* fall through */ }
   }
+
+  // Fallback: Supabase Edge Function for embeddings (if configured)
+  if (SUPABASE_URL) {
+    try {
+      const serviceKey = process.env.SUPABASE_SERVICE_KEY || '';
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/embed`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${serviceKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ input: text }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.embedding) return data.embedding;
+      }
+    } catch { /* fall through */ }
+  }
+
+  return null;
 }
 
 export const handler: Handler = async (event) => {
@@ -94,7 +115,7 @@ export const handler: Handler = async (event) => {
         }
       }
 
-      // Fallback: smart text search — split query into keywords and match
+      // Fallback: smart text search — split query into keywords, search ALL tiers
       const keywords = query.toLowerCase().split(/\s+/).filter((w: string) => w.length > 2);
       const orConditions = keywords.map((kw: string) => `title.ilike.%${kw}%,content.ilike.%${kw}%`).join(',');
 
@@ -102,7 +123,6 @@ export const handler: Handler = async (event) => {
         .from('knowledge_base')
         .select('id, title, content, category')
         .eq('user_id', userId)
-        .eq('tier', 'search')
         .eq('status', 'active')
         .or(orConditions)
         .limit(matchCount || 3);
