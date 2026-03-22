@@ -338,7 +338,7 @@ const Setup: React.FC = () => {
                         onChange={(e) => setBusinessName(e.target.value)}
                         placeholder="e.g. Smith Dental"
                         autoFocus
-                        className="w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur text-white placeholder-white/50 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30"
+                        className="w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur !text-white placeholder-white/50 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30" style={{ color: 'white' }}
                       />
                     </div>
                     <div className="space-y-2">
@@ -373,7 +373,7 @@ const Setup: React.FC = () => {
                         value={websiteUrl}
                         onChange={(e) => setWebsiteUrl(e.target.value)}
                         placeholder="https://yourbusiness.com"
-                        className="w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur text-white placeholder-white/50 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30"
+                        className="w-full h-10 px-3 text-sm rounded-md border border-white/30 bg-white/10 backdrop-blur !text-white placeholder-white/50 focus:border-white/50 focus:outline-none focus:ring-1 focus:ring-white/30" style={{ color: 'white' }}
                       />
                       <p className="text-xs text-white/60">AI will auto-learn from your website</p>
                     </div>
