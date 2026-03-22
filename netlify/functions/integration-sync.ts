@@ -191,21 +191,49 @@ export const handler: Handler = async (event) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and provider required' }) };
       }
 
-      const { data, error } = await supabase
+      // Check if exists
+      const { data: existing } = await supabase
         .from('user_integrations')
-        .upsert({
-          user_id: userId,
-          provider,
-          is_connected: true,
-          api_key: integrationApiKey || null,
-          webhook_url: webhookUrl || null,
-          config: config || {},
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id,provider' })
-        .select('id, provider, is_connected')
-        .single();
+        .select('id')
+        .eq('user_id', userId)
+        .eq('provider', provider)
+        .maybeSingle();
 
-      if (error) throw error;
+      let data, error;
+      if (existing) {
+        // Update
+        ({ data, error } = await supabase
+          .from('user_integrations')
+          .update({
+            is_connected: true,
+            api_key: integrationApiKey || null,
+            webhook_url: webhookUrl || null,
+            config: config || {},
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', existing.id)
+          .select('id, provider, is_connected')
+          .single());
+      } else {
+        // Insert
+        ({ data, error } = await supabase
+          .from('user_integrations')
+          .insert({
+            user_id: userId,
+            provider,
+            is_connected: true,
+            api_key: integrationApiKey || null,
+            webhook_url: webhookUrl || null,
+            config: config || {},
+          })
+          .select('id, provider, is_connected')
+          .single());
+      }
+
+      if (error) {
+        console.error('[integration-sync] Connect error:', error);
+        throw error;
+      }
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, integration: data }) };
     }
 
