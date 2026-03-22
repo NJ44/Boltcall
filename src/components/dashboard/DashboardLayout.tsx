@@ -384,10 +384,11 @@ const DashboardLayout: React.FC = () => {
              sidebarCollapsed ? 'w-16' : 'w-64'
            } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40 relative group/sidebar`}
          >
-          {/* Collapse/Expand toggle arrow */}
+          {/* Collapse/Expand toggle arrow — fixed position so it doesn't shift on collapse */}
           <button
             onClick={toggleSidebarCollapse}
-            className="hidden lg:flex absolute -right-3 top-6 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
+            className="hidden lg:flex fixed top-8 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
+            style={{ left: sidebarCollapsed ? 'calc(4rem + 0.5rem - 0.75rem + 8px)' : 'calc(16rem + 0.5rem - 0.75rem + 8px)', transition: 'left 300ms ease-in-out' }}
             aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {sidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
