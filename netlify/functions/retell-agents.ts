@@ -500,9 +500,19 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    // PUT /retell-agents — update agent
+    // PUT /retell-agents — update agent or LLM
     if (event.httpMethod === 'PUT') {
       const body = JSON.parse(event.body || '{}');
+
+      // Update LLM prompt directly
+      if (body.action === 'update_llm' && body.llm_id) {
+        const { llm_id, ...llmUpdates } = body;
+        delete llmUpdates.action;
+        const llm = await client.llm.update(llm_id, llmUpdates as any);
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, llm_id: llm.llm_id, prompt_length: (llm as any).general_prompt?.length || 0 }) };
+      }
+
+      // Update agent
       const { agent_id, ...updates } = body;
       if (!agent_id) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'agent_id required' }) };
