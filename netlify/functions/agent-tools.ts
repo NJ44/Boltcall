@@ -17,7 +17,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
  */
 
 const CAL_API_KEY = process.env.CAL_API_KEY || 'cal_live_876a71577c2ff7baaca243a7e0178a83';
-const CAL_BASE_URL = 'https://api.cal.com/v2';
+const CAL_BASE_URL = 'https://api.cal.com/v1';
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
 
 const headers = {
@@ -41,13 +41,7 @@ async function getEventTypeId(calApiKey: string): Promise<number | null> {
   if (cachedEventTypeId) return cachedEventTypeId;
 
   try {
-    const response = await fetch(`${CAL_BASE_URL}/event-types`, {
-      headers: {
-        'Authorization': `Bearer ${calApiKey}`,
-        'Content-Type': 'application/json',
-        'cal-api-version': '2024-08-13',
-      },
-    });
+    const response = await fetch(`${CAL_BASE_URL}/event-types?apiKey=${calApiKey}`);
 
     if (!response.ok) {
       console.error('[agent-tools] Failed to fetch event types:', response.status, await response.text());
@@ -55,10 +49,14 @@ async function getEventTypeId(calApiKey: string): Promise<number | null> {
     }
 
     const data = await response.json();
-    const eventTypes = data.data || data.event_types || [];
+    const eventTypes = data.event_types || data.data || [];
     if (eventTypes.length === 0) return null;
 
-    cachedEventTypeId = eventTypes[0].id;
+    // Prefer "Free Consultation" event type, fall back to first
+    const consultation = eventTypes.find((e: any) =>
+      e.title?.toLowerCase().includes('consultation') || e.slug?.includes('consultation')
+    );
+    cachedEventTypeId = consultation?.id || eventTypes[0].id;
     return cachedEventTypeId;
   } catch (err) {
     console.error('[agent-tools] Error fetching event types:', err);
@@ -244,14 +242,8 @@ async function handleCheckAvailability(args: any, calApiKey: string): Promise<st
     const startTime = `${date}T00:00:00Z`;
     const endTime = `${date}T23:59:59Z`;
 
-    const url = `${CAL_BASE_URL}/slots?startTime=${encodeURIComponent(startTime)}&endTime=${encodeURIComponent(endTime)}&eventTypeId=${eventTypeId}`;
-    const response = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${calApiKey}`,
-        'Content-Type': 'application/json',
-        'cal-api-version': '2024-08-13',
-      },
-    });
+    const url = `${CAL_BASE_URL}/slots?apiKey=${calApiKey}&startTime=${encodeURIComponent(startTime)}&endTime=${encodeURIComponent(endTime)}&eventTypeId=${eventTypeId}`;
+    const response = await fetch(url);
 
     if (!response.ok) {
       const errText = await response.text();
@@ -319,13 +311,9 @@ async function handleBookAppointment(
       },
     };
 
-    const response = await fetch(`${CAL_BASE_URL}/bookings`, {
+    const response = await fetch(`${CAL_BASE_URL}/bookings?apiKey=${calApiKey}`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${calApiKey}`,
-        'Content-Type': 'application/json',
-        'cal-api-version': '2024-08-13',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bookingBody),
     });
 
