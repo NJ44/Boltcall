@@ -73,11 +73,11 @@ const TimeSeriesCard: React.FC<TimeSeriesCardProps> = ({ data, className = '' })
             <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#2563EB" stopOpacity={0.8} />
+                  <stop offset="5%" stopColor="#2563EB" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="colorBookings" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.8} />
+                  <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.1} />
                   <stop offset="95%" stopColor="#1E40AF" stopOpacity={0} />
                 </linearGradient>
               </defs>

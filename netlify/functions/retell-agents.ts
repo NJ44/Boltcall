@@ -41,6 +41,31 @@ async function generateProfessionalPrompt(promptConfig: any): Promise<{ prompt: 
   return { prompt: data.prompt, beginMessage: data.beginMessage };
 }
 
+// Match voice to user's country — always ElevenLabs
+function getDefaultVoiceForCountry(country?: string, gender: 'female' | 'male' = 'female'): string {
+  const c = (country || '').toLowerCase();
+
+  if (gender === 'male') {
+    if (['gb', 'uk', 'ie'].includes(c)) return '11labs-Anthony';          // British male
+    if (['au', 'nz'].includes(c)) return '11labs-Billy';                  // Australian-friendly
+    if (['us', 'ca'].includes(c)) return '11labs-Adrian';                 // American male
+    if (['il'].includes(c)) return '11labs-Adrian';
+    if (['za'].includes(c)) return '11labs-Anthony';                      // British-adjacent
+    return '11labs-Adrian'; // Default male
+  }
+
+  // Female voices by region
+  if (['gb', 'uk', 'ie'].includes(c)) return '11labs-Willa';             // British female
+  if (['au', 'nz'].includes(c)) return '11labs-Lily';                    // Australian-friendly
+  if (['us', 'ca'].includes(c)) return '11labs-Marissa';                 // American female
+  if (['il'].includes(c)) return '11labs-Marissa';
+  if (['in', 'pk', 'bd'].includes(c)) return '11labs-Merritt';           // Clear English
+  if (['za'].includes(c)) return '11labs-Willa';                         // British-adjacent
+  if (['de', 'at', 'ch', 'fr', 'be', 'nl', 'se', 'no', 'dk', 'fi'].includes(c)) return '11labs-Dorothy'; // Neutral British
+  if (['es', 'mx', 'ar', 'co', 'cl', 'pe'].includes(c)) return '11labs-Lily'; // Warm tone
+  return '11labs-Willa'; // Default female — British
+}
+
 // Default agent config — copied from agent_9a4ecdf921de328c9ba0009ff3 (Israel-Outbound)
 // Applied to every new agent for consistent call quality
 function getDefaultAgentConfig(language?: string) {
@@ -298,7 +323,7 @@ export const handler: Handler = async (event) => {
 
         const agent = await client.agent.create({
           agent_name: body.agent_name,
-          voice_id: body.voice_id || '11labs-Adrian',
+          voice_id: body.voice_id || getDefaultVoiceForCountry(body.country, body.voice_gender),
           response_engine: responseEngine,
           webhook_url: `${webhookBaseUrl}/.netlify/functions/retell-webhook`,
           ...getDefaultAgentConfig(body.language),
@@ -403,7 +428,7 @@ export const handler: Handler = async (event) => {
         const webhookUrl = `${(process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org')}/.netlify/functions/retell-webhook`;
         const agent = await client.agent.create({
           agent_name: `${body.business_name} AI Receptionist`,
-          voice_id: body.voice_id || '11labs-Adrian',
+          voice_id: body.voice_id || getDefaultVoiceForCountry(body.country, body.voice_gender),
           language: body.language || 'en-US',
           response_engine: responseEngine,
           webhook_url: webhookUrl,
