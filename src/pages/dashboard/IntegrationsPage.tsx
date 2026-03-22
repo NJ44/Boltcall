@@ -360,36 +360,6 @@ const IntegrationsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-2xl font-bold text-gray-900">Integrations</h1>
-        <p className="text-gray-500 mt-1">
-          Connect your CRM and tools — leads sync automatically when calls come in.
-        </p>
-      </motion.div>
-
-      {/* Stats */}
-      <div className="flex gap-4">
-        <div className="bg-white rounded-lg border px-4 py-3 flex items-center gap-3">
-          <div className="p-2 bg-green-50 rounded-lg">
-            <Check className="w-4 h-4 text-green-600" />
-          </div>
-          <div>
-            <p className="text-xs text-gray-500">Connected</p>
-            <p className="text-lg font-bold text-gray-900">{savedIntegrations.filter(i => i.is_connected).length}</p>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg border px-4 py-3 flex items-center gap-3">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <ExternalLink className="w-4 h-4 text-blue-600" />
-          </div>
-          <div>
-            <p className="text-xs text-gray-500">Total Syncs</p>
-            <p className="text-lg font-bold text-gray-900">{savedIntegrations.reduce((s, i) => s + (i.sync_count || 0), 0)}</p>
-          </div>
-        </div>
-      </div>
-
       {/* Grid */}
       {loading ? (
         <div className="flex items-center justify-center py-12">

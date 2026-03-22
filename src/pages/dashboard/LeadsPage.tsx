@@ -21,7 +21,6 @@ const LeadsPage: React.FC = () => {
       {/* Tab Bar */}
       <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-4 pb-0">
         <div className="flex items-center gap-1 mb-0">
-          <h1 className="text-xl font-semibold text-gray-900 mr-6">Leads</h1>
           <nav className="flex gap-4 -mb-px">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
@@ -49,7 +48,7 @@ const LeadsPage: React.FC = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pt-4">
         {activeTab === 'speed-to-lead' && <SpeedToLeadPage />}
         {activeTab === 'missed-calls' && <MissedCallsPage />}
         {activeTab === 'reactivation' && <LeadReactivationPage />}
