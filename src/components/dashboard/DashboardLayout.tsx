@@ -344,7 +344,6 @@ const DashboardLayout: React.FC = () => {
         to={item.to}
         data-onboarding={`nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
         onClick={closeSidebar}
-        title={isCollapsedView ? item.label : undefined}
         className={`relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
           isActive
             ? isDarkMode
@@ -358,6 +357,12 @@ const DashboardLayout: React.FC = () => {
         <span className={`flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
         </span>
+        {/* Custom tooltip — white card to the right of icon */}
+        {isCollapsedView && (
+          <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 bg-white rounded-lg shadow-lg border border-gray-200 whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
+            {item.label}
+          </span>
+        )}
         {!isCollapsedView && (
           <span className="relative pb-1">
             {item.label}
@@ -399,7 +404,7 @@ const DashboardLayout: React.FC = () => {
           <button
             onClick={toggleSidebarCollapse}
             className="hidden lg:flex fixed top-8 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
-            style={{ left: sidebarCollapsed ? 'calc(4rem + 0.5rem - 0.75rem + 8px)' : 'calc(16rem + 0.5rem - 0.75rem + 8px)', transition: 'left 300ms ease-in-out' }}
+            style={{ left: sidebarCollapsed ? 'calc(4rem + 0.5rem - 12px)' : 'calc(16rem + 0.5rem - 12px)', transition: 'left 300ms ease-in-out' }}
             aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {sidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
