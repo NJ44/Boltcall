@@ -1,88 +1,216 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { UserPlus, MoreVertical, Edit, User, Crown, Shield } from 'lucide-react';
+import { UserPlus, Edit, User, Crown, Shield, Trash2, Loader2, Mail } from 'lucide-react';
 import { PopButton } from '../../../components/ui/pop-button';
-import Button from '../../../components/ui/Button';
 import ModalShell from '../../../components/ui/modal-shell';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useToast } from '../../../contexts/ToastContext';
+import { supabase } from '../../../lib/supabase';
+
+interface Member {
+  id: string;
+  email: string;
+  name: string | null;
+  role: string;
+  status: string;
+  invited_at: string;
+  accepted_at: string | null;
+  last_active: string | null;
+  user_id: string | null;
+  invited_by: string;
+}
+
+const roles = [
+  {
+    id: 'owner',
+    name: 'Owner',
+    description: 'Full access to all features and settings',
+    icon: <Crown className="w-4 h-4" />,
+    color: 'text-yellow-600 bg-yellow-100',
+  },
+  {
+    id: 'admin',
+    name: 'Admin',
+    description: 'Manage team members and most settings',
+    icon: <Shield className="w-4 h-4" />,
+    color: 'text-purple-600 bg-purple-100',
+  },
+  {
+    id: 'member',
+    name: 'Member',
+    description: 'Basic access to dashboard features',
+    icon: <User className="w-4 h-4" />,
+    color: 'text-blue-600 bg-blue-100',
+  },
+];
 
 const MembersPage: React.FC = () => {
+  const { user } = useAuth();
+  const { showToast } = useToast();
+
+  const [members, setMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteName, setInviteName] = useState('');
   const [inviteRole, setInviteRole] = useState('member');
+  const [inviting, setInviting] = useState(false);
 
-  const members = [
-    {
-      id: '1',
-      name: 'John Smith',
-      email: 'john@company.com',
-      role: 'owner',
-      status: 'active',
-      joinedDate: '2024-01-15',
-      lastActive: '2 hours ago',
-      avatar: null
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      email: 'sarah@company.com',
-      role: 'admin',
-      status: 'active',
-      joinedDate: '2024-01-20',
-      lastActive: '1 day ago',
-      avatar: null
-    },
-    {
-      id: '3',
-      name: 'Mike Davis',
-      email: 'mike@company.com',
-      role: 'member',
-      status: 'active',
-      joinedDate: '2024-02-01',
-      lastActive: '3 days ago',
-      avatar: null
-    },
-    {
-      id: '4',
-      name: 'Emily Wilson',
-      email: 'emily@company.com',
-      role: 'member',
-      status: 'pending',
-      joinedDate: '2024-02-10',
-      lastActive: 'Never',
-      avatar: null
+  const [editingMember, setEditingMember] = useState<Member | null>(null);
+  const [editRole, setEditRole] = useState('');
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const [deletingMember, setDeletingMember] = useState<Member | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // ─── Fetch members ───────────────────────────────────────────────
+  const fetchMembers = useCallback(async () => {
+    if (!user) return;
+    try {
+      const { data, error } = await supabase
+        .from('workspace_members')
+        .select('*')
+        .eq('invited_by', user.id)
+        .order('invited_at', { ascending: true });
+
+      if (error) throw error;
+      setMembers(data || []);
+    } catch (err) {
+      console.error('Failed to fetch members:', err);
+      showToast({ message: 'Failed to load team members', variant: 'error' });
+    } finally {
+      setLoading(false);
     }
-  ];
+  }, [user, showToast]);
 
-  const roles = [
-    {
-      id: 'owner',
-      name: 'Owner',
-      description: 'Full access to all features and settings',
-      permissions: ['All permissions', 'Manage billing', 'Delete account'],
-      icon: <Crown className="w-5 h-5" />,
-      color: 'text-yellow-600 bg-yellow-100'
-    },
-    {
-      id: 'admin',
-      name: 'Admin',
-      description: 'Manage team members and most settings',
-      permissions: ['Manage members', 'Edit settings', 'View analytics'],
-      icon: <Shield className="w-5 h-5" />,
-      color: 'text-purple-600 bg-purple-100'
-    },
-    {
-      id: 'member',
-      name: 'Member',
-      description: 'Basic access to dashboard features',
-      permissions: ['View dashboard', 'Manage own profile'],
-      icon: <User className="w-5 h-5" />,
-      color: 'text-blue-600 bg-blue-100'
+  useEffect(() => {
+    fetchMembers();
+  }, [fetchMembers]);
+
+  // Ensure owner exists as first member
+  useEffect(() => {
+    if (!user || loading || members.length > 0) return;
+
+    const seedOwner = async () => {
+      const { error } = await supabase.from('workspace_members').insert({
+        invited_by: user.id,
+        user_id: user.id,
+        email: user.email,
+        name: user.name || user.email.split('@')[0],
+        role: 'owner',
+        status: 'active',
+        accepted_at: new Date().toISOString(),
+        last_active: new Date().toISOString(),
+      });
+      if (!error) fetchMembers();
+    };
+    seedOwner();
+  }, [user, loading, members.length, fetchMembers]);
+
+  // ─── Invite member ───────────────────────────────────────────────
+  const handleInviteMember = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    const emailLower = inviteEmail.trim().toLowerCase();
+    if (!emailLower) return;
+
+    // Check duplicate
+    if (members.some((m) => m.email.toLowerCase() === emailLower)) {
+      showToast({ message: 'This email is already on your team', variant: 'warning' });
+      return;
     }
-  ];
 
-  const getRoleInfo = (roleId: string) => {
-    return roles.find(role => role.id === roleId) || roles[2];
+    setInviting(true);
+    try {
+      const { error } = await supabase.from('workspace_members').insert({
+        invited_by: user.id,
+        email: emailLower,
+        name: inviteName.trim() || null,
+        role: inviteRole,
+        status: 'pending',
+        invited_at: new Date().toISOString(),
+      });
+
+      if (error) throw error;
+
+      showToast({ message: `Invitation sent to ${emailLower}`, variant: 'success' });
+      setShowInviteModal(false);
+      setInviteEmail('');
+      setInviteName('');
+      setInviteRole('member');
+      fetchMembers();
+    } catch (err: any) {
+      console.error('Failed to invite member:', err);
+      showToast({
+        message: err?.message?.includes('unique') ? 'This email is already invited' : 'Failed to send invitation',
+        variant: 'error',
+      });
+    } finally {
+      setInviting(false);
+    }
   };
+
+  // ─── Update member role ──────────────────────────────────────────
+  const handleUpdateRole = async () => {
+    if (!editingMember) return;
+    try {
+      const { error } = await supabase
+        .from('workspace_members')
+        .update({ role: editRole })
+        .eq('id', editingMember.id);
+
+      if (error) throw error;
+
+      showToast({ message: `Updated ${editingMember.name || editingMember.email} to ${editRole}`, variant: 'success' });
+      setShowEditModal(false);
+      setEditingMember(null);
+      fetchMembers();
+    } catch (err) {
+      console.error('Failed to update role:', err);
+      showToast({ message: 'Failed to update role', variant: 'error' });
+    }
+  };
+
+  // ─── Remove member ──────────────────────────────────────────────
+  const handleRemoveMember = async () => {
+    if (!deletingMember) return;
+    try {
+      const { error } = await supabase
+        .from('workspace_members')
+        .delete()
+        .eq('id', deletingMember.id);
+
+      if (error) throw error;
+
+      showToast({ message: `Removed ${deletingMember.name || deletingMember.email}`, variant: 'success' });
+      setShowDeleteModal(false);
+      setDeletingMember(null);
+      fetchMembers();
+    } catch (err) {
+      console.error('Failed to remove member:', err);
+      showToast({ message: 'Failed to remove member', variant: 'error' });
+    }
+  };
+
+  // ─── Resend invite ───────────────────────────────────────────────
+  const handleResendInvite = async (member: Member) => {
+    try {
+      const { error } = await supabase
+        .from('workspace_members')
+        .update({ invited_at: new Date().toISOString() })
+        .eq('id', member.id);
+
+      if (error) throw error;
+      showToast({ message: `Invitation resent to ${member.email}`, variant: 'success' });
+      fetchMembers();
+    } catch {
+      showToast({ message: 'Failed to resend invitation', variant: 'error' });
+    }
+  };
+
+  // ─── Helpers ─────────────────────────────────────────────────────
+  const getRoleInfo = (roleId: string) => roles.find((r) => r.id === roleId) || roles[2];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -97,14 +225,36 @@ const MembersPage: React.FC = () => {
     }
   };
 
-  const handleInviteMember = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle invite logic here
-    // TODO: implement invite logic
-    setShowInviteModal(false);
-    setInviteEmail('');
-    setInviteRole('member');
+  const formatDate = (dateStr: string | null) => {
+    if (!dateStr) return '—';
+    return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
+
+  const formatLastActive = (dateStr: string | null) => {
+    if (!dateStr) return 'Never';
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'Just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d ago`;
+    return formatDate(dateStr);
+  };
+
+  const activeCount = members.filter((m) => m.status === 'active').length;
+  const pendingCount = members.filter((m) => m.status === 'pending').length;
+  const adminCount = members.filter((m) => m.role === 'admin' || m.role === 'owner').length;
+
+  // ─── Render ──────────────────────────────────────────────────────
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -115,23 +265,22 @@ const MembersPage: React.FC = () => {
             <span className="font-semibold text-gray-900">{members.length}</span> Total Members
           </div>
           <div className="text-sm text-gray-600">
-            <span className="font-semibold text-gray-900">{members.filter(m => m.status === 'active').length}</span> Active
+            <span className="font-semibold text-gray-900">{activeCount}</span> Active
           </div>
           <div className="text-sm text-gray-600">
-            <span className="font-semibold text-gray-900">{members.filter(m => m.status === 'pending').length}</span> Pending
+            <span className="font-semibold text-gray-900">{pendingCount}</span> Pending
           </div>
           <div className="text-sm text-gray-600">
-            <span className="font-semibold text-gray-900">{members.filter(m => m.role === 'admin' || m.role === 'owner').length}</span> Admins
+            <span className="font-semibold text-gray-900">{adminCount}</span> Admins
           </div>
         </div>
-        <Button
-          variant="primary"
+        <PopButton
+          color="blue"
           onClick={() => setShowInviteModal(true)}
-          size="sm"
         >
           <UserPlus className="w-4 h-4 mr-2" />
           Invite Member
-        </Button>
+        </PopButton>
       </div>
 
       {/* Members List */}
@@ -161,13 +310,16 @@ const MembersPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {members.map((member) => {
+              {members.map((member, i) => {
                 const roleInfo = getRoleInfo(member.role);
+                const isOwner = member.role === 'owner';
+
                 return (
                   <motion.tr
                     key={member.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, delay: i * 0.05 }}
                     className="hover:bg-gray-50"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -176,7 +328,9 @@ const MembersPage: React.FC = () => {
                           <User className="w-5 h-5 text-gray-600" />
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{member.name}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {member.name || member.email.split('@')[0]}
+                          </div>
                           <div className="text-sm text-gray-500">{member.email}</div>
                         </div>
                       </div>
@@ -190,50 +344,96 @@ const MembersPage: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(member.status)}`}>
+                      <span
+                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(member.status)}`}
+                      >
                         {member.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{member.joinedDate}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{member.lastActive}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {formatDate(member.accepted_at || member.invited_at)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {formatLastActive(member.last_active)}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <div className="flex items-center gap-2">
-                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                          <Edit className="w-4 h-4 text-gray-600" />
-                        </button>
-                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
-                          <MoreVertical className="w-4 h-4 text-gray-600" />
-                        </button>
-                      </div>
+                      {isOwner ? (
+                        <span className="text-xs text-gray-400">—</span>
+                      ) : (
+                        <div className="flex items-center gap-1">
+                          {member.status === 'pending' && (
+                            <button
+                              onClick={() => handleResendInvite(member)}
+                              className="p-1.5 hover:bg-blue-50 rounded transition-colors"
+                              title="Resend invite"
+                            >
+                              <Mail className="w-4 h-4 text-blue-500" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => {
+                              setEditingMember(member);
+                              setEditRole(member.role);
+                              setShowEditModal(true);
+                            }}
+                            className="p-1.5 hover:bg-gray-100 rounded transition-colors"
+                            title="Edit role"
+                          >
+                            <Edit className="w-4 h-4 text-gray-600" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDeletingMember(member);
+                              setShowDeleteModal(true);
+                            }}
+                            className="p-1.5 hover:bg-red-50 rounded transition-colors"
+                            title="Remove member"
+                          >
+                            <Trash2 className="w-4 h-4 text-red-500" />
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </motion.tr>
                 );
               })}
+
+              {members.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                    No team members yet. Invite someone to get started.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-
-      {/* Invite Modal */}
+      {/* ─── Invite Modal ─────────────────────────────────────────── */}
       <ModalShell
         open={showInviteModal}
         onClose={() => setShowInviteModal(false)}
         title="Invite Team Member"
         footer={
           <>
-            <PopButton
-              type="button"
-              onClick={() => setShowInviteModal(false)}
-            >
+            <PopButton type="button" onClick={() => setShowInviteModal(false)}>
               Cancel
             </PopButton>
             <PopButton
               color="blue"
               type="submit"
               form="invite-member-form"
+              disabled={inviting}
             >
-              Send Invitation
+              {inviting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Sending…
+                </>
+              ) : (
+                'Send Invitation'
+              )}
             </PopButton>
           </>
         }
@@ -251,6 +451,16 @@ const MembersPage: React.FC = () => {
             />
           </div>
           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Name (optional)</label>
+            <input
+              type="text"
+              value={inviteName}
+              onChange={(e) => setInviteName(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="John Smith"
+            />
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
             <select
               value={inviteRole}
@@ -262,6 +472,70 @@ const MembersPage: React.FC = () => {
             </select>
           </div>
         </form>
+      </ModalShell>
+
+      {/* ─── Edit Role Modal ──────────────────────────────────────── */}
+      <ModalShell
+        open={showEditModal}
+        onClose={() => {
+          setShowEditModal(false);
+          setEditingMember(null);
+        }}
+        title="Change Role"
+        footer={
+          <>
+            <PopButton type="button" onClick={() => setShowEditModal(false)}>
+              Cancel
+            </PopButton>
+            <PopButton color="blue" onClick={handleUpdateRole}>
+              Save
+            </PopButton>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600">
+            Change role for <span className="font-medium text-gray-900">{editingMember?.name || editingMember?.email}</span>
+          </p>
+          <select
+            value={editRole}
+            onChange={(e) => setEditRole(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="admin">Admin</option>
+            <option value="member">Member</option>
+          </select>
+          <div className="text-xs text-gray-500 space-y-1">
+            <p><strong>Admin</strong> — Manage team members and most settings</p>
+            <p><strong>Member</strong> — Basic access to dashboard features</p>
+          </div>
+        </div>
+      </ModalShell>
+
+      {/* ─── Delete Confirmation Modal ────────────────────────────── */}
+      <ModalShell
+        open={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setDeletingMember(null);
+        }}
+        title="Remove Member"
+        footer={
+          <>
+            <PopButton type="button" onClick={() => setShowDeleteModal(false)}>
+              Cancel
+            </PopButton>
+            <PopButton color="red" onClick={handleRemoveMember}>
+              Remove
+            </PopButton>
+          </>
+        }
+      >
+        <p className="text-sm text-gray-600">
+          Are you sure you want to remove{' '}
+          <span className="font-medium text-gray-900">{deletingMember?.name || deletingMember?.email}</span> from your
+          team? This action cannot be undone.
+        </p>
       </ModalShell>
     </div>
   );
