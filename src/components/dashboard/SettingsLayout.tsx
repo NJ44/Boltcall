@@ -110,7 +110,14 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
         {/* Content */}
         <div className="flex-1 overflow-y-auto bg-gray-50">
           <div className="p-8 max-w-5xl">
-            {children || <Outlet />}
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            >
+              {children || <Outlet />}
+            </motion.div>
           </div>
         </div>
       </div>

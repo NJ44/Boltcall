@@ -359,7 +359,7 @@ const DashboardLayout: React.FC = () => {
         </span>
         {/* Custom tooltip — white card to the right of icon */}
         {isCollapsedView && (
-          <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 bg-white rounded-lg shadow-lg border border-gray-200 whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
+          <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
             {item.label}
           </span>
         )}
@@ -404,7 +404,7 @@ const DashboardLayout: React.FC = () => {
           <button
             onClick={toggleSidebarCollapse}
             className="hidden lg:flex fixed top-8 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
-            style={{ left: sidebarCollapsed ? 'calc(4rem + 0.5rem - 12px)' : 'calc(16rem + 0.5rem - 12px)', transition: 'left 300ms ease-in-out' }}
+            style={{ left: sidebarCollapsed ? 'calc(4rem + 0.5rem - 20px)' : 'calc(16rem + 0.5rem - 20px)', transition: 'left 300ms ease-in-out' }}
             aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {sidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
@@ -450,7 +450,7 @@ const DashboardLayout: React.FC = () => {
 
             
             {/* Navigation */}
-            <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
+            <nav className={`flex-1 flex flex-col ${sidebarCollapsed ? '' : 'overflow-y-auto'} dashboard-sidebar`} aria-label="Main navigation">
               <div className="flex-1 px-2">
                 {/* Main */}
                 <div className="space-y-1 mb-4">
@@ -875,7 +875,14 @@ const DashboardLayout: React.FC = () => {
 
            {/* Page Content */}
            <div className="p-3 md:p-6">
-             <Outlet />
+             <motion.div
+               key={location.pathname}
+               initial={{ opacity: 0, y: 12 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.3, ease: 'easeOut' }}
+             >
+               <Outlet />
+             </motion.div>
           </div>
 
            {/* AI Assistant - Bottom Right */}
