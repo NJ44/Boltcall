@@ -65,7 +65,13 @@ fi
 echo "  ✅ Workspace ready!"
 echo ""
 echo "  Opening VS Code..."
-code "$WORKTREE_PATH"
+
+# Convert to Windows path for VS Code on Windows
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+  code "$(cygpath -w "$WORKTREE_PATH")"
+else
+  code "$WORKTREE_PATH"
+fi
 
 echo ""
 echo "  ┌─────────────────────────────────────────────────┐"
