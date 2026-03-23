@@ -80,14 +80,17 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 viewport={{ once: true }}
               >
                 {showLogo && (
-                  <img
-                    src="/boltcall_full_logo.png"
-                    alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
-                    className="h-12 mb-3"
-                    width="154"
-                    height="48"
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source srcSet="/boltcall_full_logo.webp" type="image/webp" />
+                    <img
+                      src="/boltcall_full_logo.png"
+                      alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
+                      className="h-12 mb-3"
+                      width="97"
+                      height="48"
+                      loading="lazy"
+                    />
+                  </picture>
                 )}
               </motion.div>
             </div>

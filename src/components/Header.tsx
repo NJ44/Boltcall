@@ -394,14 +394,18 @@ const Header: React.FC = () => {
                 className="flex items-center cursor-pointer"
                 whileHover={{ scale: 1.05 }}
               >
-                <img
-                  src="/boltcall_full_logo.png"
-                  alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
-                  className="h-14 w-auto -translate-y-[2.8px]"
-                  width="180"
-                  height="56"
-                  loading="eager"
-                />
+                <picture>
+                  <source srcSet="/boltcall_full_logo.webp" type="image/webp" />
+                  <img
+                    src="/boltcall_full_logo.png"
+                    alt="Boltcall - AI Receptionist, Follow Ups, Reminders"
+                    className="h-14 w-auto -translate-y-[2.8px]"
+                    width="113"
+                    height="56"
+                    loading="eager"
+                    fetchPriority="high"
+                  />
+                </picture>
               </motion.div>
             </Link>
 

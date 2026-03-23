@@ -150,11 +150,15 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Split heavy libraries into separate chunks
+          // Split heavy libraries into separate chunks to reduce initial load
           if (id.includes('node_modules')) {
-            // Keep react + framer-motion together in vendor (framer needs React.createContext)
-            if (id.includes('framer-motion') || id.includes('react') || id.includes('react-dom')) {
-              return 'vendor';
+            // React core — small, needed everywhere
+            if (id.includes('react-dom') || (id.includes('/react/') && !id.includes('react-router') && !id.includes('react-i18next'))) {
+              return 'react-core';
+            }
+            // Framer Motion — heavy (~150KB), split out
+            if (id.includes('framer-motion')) {
+              return 'framer';
             }
             if (id.includes('gsap')) {
               return 'gsap';
@@ -182,6 +186,10 @@ export default defineConfig({
             }
             if (id.includes('i18next') || id.includes('react-i18next')) {
               return 'i18n';
+            }
+            // Radix UI / utility libs — separate chunk
+            if (id.includes('@radix-ui') || id.includes('class-variance-authority') || id.includes('clsx') || id.includes('tailwind-merge')) {
+              return 'ui-utils';
             }
             // Other node_modules
             return 'vendor';
