@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Receptionist for Contractors: Never Miss a Job Lead Again',
+    slug: '/blog/ai-receptionist-contractors',
+    excerpt: 'Discover how an AI receptionist for contractors captures every incoming call and job lead automatically, ensuring you never miss business opportunitie',
+    date: 'March 23, 2026',
+    readTime: '8 min read',
+    category: 'AI Receptionist|Local Business|Industry Guide',
+    image: '/images/blog/ai-receptionist-contractors.png'
+  },
+  {
     title: 'Boltcall vs Podium: Honest Comparison for Local Businesses (2026)',
     slug: '/compare/boltcall-vs-podium',
     excerpt: 'Side-by-side comparison of Boltcall and Podium for local businesses. See pricing, AI features, and which platform delivers more value.',
