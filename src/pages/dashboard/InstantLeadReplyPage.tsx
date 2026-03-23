@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle, Copy, Send, Loader2 } from 'lucide-react';
+import { X, CheckCircle, Send, Loader2 } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 import { CopyButton } from '../../components/ui/copy-button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -26,8 +26,6 @@ const InstantLeadReplyPage: React.FC = () => {
   const [fbLoading, setFbLoading] = useState(true);
   const [fbConnecting, setFbConnecting] = useState(false);
   const [testSending, setTestSending] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
-
   const webhookUrl = 'https://boltcall.org/.netlify/functions/lead-webhook';
 
   // Fetch Facebook connection status
@@ -92,13 +90,6 @@ const InstantLeadReplyPage: React.FC = () => {
     } finally {
       setFbConnecting(false);
     }
-  };
-
-  const handleCopy = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(label);
-    showToast({ message: 'Copied to clipboard', variant: 'success' });
-    setTimeout(() => setCopied(null), 2000);
   };
 
   const handleSendTestLead = async () => {

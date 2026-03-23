@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
-  Copy as CopyIcon,
   Check,
   Code,
   MessageCircle,
@@ -26,8 +25,6 @@ const WebsiteBubblePage: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [codeCopied, setCodeCopied] = useState(false);
-
   // Data from Supabase
   const [embedToken, setEmbedToken] = useState<string | null>(null);
 
@@ -123,13 +120,6 @@ const WebsiteBubblePage: React.FC = () => {
   const embedCode = embedToken
     ? `<script src="https://boltcall.org/embed.js" data-token="${embedToken}"></script>`
     : '';
-
-  const copyEmbedCode = () => {
-    if (!embedCode) return;
-    navigator.clipboard.writeText(embedCode);
-    setCodeCopied(true);
-    setTimeout(() => setCodeCopied(false), 2000);
-  };
 
   if (loading) {
     return <PageSkeleton />;
