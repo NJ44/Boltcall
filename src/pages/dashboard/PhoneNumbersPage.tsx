@@ -263,15 +263,83 @@ const PhoneNumbersPage: React.FC = () => {
     });
   };
 
+  const [connectingSip, setConnectingSip] = useState(false);
+
   const handleSipFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowSipModal(false);
-    // Implementation for saving SIP configuration
+    if (!user?.id || !sipFormData.phoneNumber.trim()) return;
 
-    // Claim bonus token reward for connecting a phone number
-    const rewardResult = await claimReward('connect_phone_number');
-    if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
-      showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for connecting a phone number', variant: 'success', duration: 4000 });
+    setConnectingSip(true);
+    try {
+      // Save the connected phone number to Supabase
+      const { error: dbError } = await supabase.from('phone_numbers').insert({
+        user_id: user.id,
+        phone_number: sipFormData.phoneNumber.trim(),
+        phone_type: 'sip',
+        location: sipFormData.nickname || 'Connected Number',
+        status: 'active',
+        provider: 'sip',
+        features: {
+          termination_uri: sipFormData.terminationUri || null,
+          sip_username: sipFormData.sipTrunkUsername || null,
+          nickname: sipFormData.nickname || null,
+        },
+        created_at: new Date().toISOString(),
+      });
+
+      if (dbError) {
+        throw new Error(dbError.message);
+      }
+
+      setShowSipModal(false);
+      setSipFormData({ phoneNumber: '', terminationUri: '', sipTrunkUsername: '', sipTrunkPassword: '', nickname: '' });
+
+      // Refresh phone numbers list
+      const { data: freshData } = await supabase
+        .from('phone_numbers')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (freshData) {
+        setPhoneNumbers(
+          freshData.map((phone: any) => ({
+            id: phone.id,
+            number: phone.phone_number || '',
+            location: phone.location || 'N/A',
+            status: phone.status || 'inactive',
+            type: phone.phone_type || 'main',
+            assignedTo: phone.assigned_agent_name || 'Not assigned',
+            assignedAgentId: phone.assigned_agent_id || null,
+            createdAt: phone.created_at
+              ? new Date(phone.created_at).toLocaleDateString()
+              : new Date().toLocaleDateString(),
+          }))
+        );
+      }
+
+      showToast({
+        title: 'Number Connected!',
+        message: `${sipFormData.phoneNumber} has been connected`,
+        variant: 'success',
+        duration: 4000,
+      });
+
+      // Claim bonus token reward
+      const rewardResult = await claimReward('connect_phone_number');
+      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+        showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for connecting a phone number', variant: 'success', duration: 4000 });
+      }
+    } catch (err) {
+      console.error('Error connecting phone number:', err);
+      showToast({
+        title: 'Connection Failed',
+        message: err instanceof Error ? err.message : 'Could not connect phone number',
+        variant: 'error',
+        duration: 5000,
+      });
+    } finally {
+      setConnectingSip(false);
     }
   };
 
@@ -356,8 +424,8 @@ const PhoneNumbersPage: React.FC = () => {
                           >
                             <Settings className="w-3 h-3 text-green-600 flex-shrink-0" />
                             <div className="min-w-0 flex-1">
-                              <div className="text-xs font-medium text-gray-900 truncate">Connect via SIP</div>
-                              <div className="text-xs text-gray-500 truncate">Use existing number</div>
+                              <div className="text-xs font-medium text-gray-900 truncate">Connect yours</div>
+                              <div className="text-xs text-gray-500 truncate">Use your existing number</div>
                             </div>
                           </button>
                         </div>
@@ -562,7 +630,8 @@ const PhoneNumbersPage: React.FC = () => {
       <ModalShell
         open={showSipModal}
         onClose={() => setShowSipModal(false)}
-        title="Connect to your number via SIP trunking"
+        title="Connect Your Phone Number"
+        description="Forward calls from your existing number to your AI receptionist."
         maxWidth="max-w-2xl"
         footer={
           <>
@@ -576,8 +645,9 @@ const PhoneNumbersPage: React.FC = () => {
               <PopButton color="blue"
                 type="submit"
                 form="sip-form"
+                disabled={connectingSip}
               >
-                Save
+                {connectingSip ? 'Connecting...' : 'Connect Number'}
               </PopButton>
             </Magnetic>
           </>

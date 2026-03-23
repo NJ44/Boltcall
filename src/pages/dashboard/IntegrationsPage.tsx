@@ -130,8 +130,19 @@ const integrations: Integration[] = [
     subtitle: 'Email Notifications',
     description: 'Get email notifications for new leads, missed calls, and bookings.',
     fallbackColor: '#EA4335',
-    type: 'coming_soon',
-    steps: [],
+    type: 'api_key',
+    apiLabel: 'Notification Email Address',
+    extraFields: [
+      { key: 'notify_new_leads', label: 'Notify on new leads?', placeholder: 'yes' },
+      { key: 'notify_missed_calls', label: 'Notify on missed calls?', placeholder: 'yes' },
+      { key: 'notify_bookings', label: 'Notify on new bookings?', placeholder: 'yes' },
+    ],
+    steps: [
+      'Enter the email address where you want to receive notifications',
+      'Choose which events trigger an email (leads, missed calls, bookings)',
+      'Click Connect — you\'ll start receiving notifications immediately',
+    ],
+    url: 'https://mail.google.com',
   },
   {
     id: 'jobber',
@@ -177,21 +188,16 @@ const integrations: Integration[] = [
     id: 'google_calendar',
     name: 'Google Calendar',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg',
-    subtitle: 'Calendar & Availability',
-    description: 'Sync your Google Calendar so your AI receptionist checks real-time availability before booking.',
+    subtitle: 'Calendar & Booking',
+    description: 'Connect Google Calendar so your AI receptionist checks availability and books appointments directly.',
     fallbackColor: '#4285F4',
-    type: 'api_key',
-    apiLabel: 'Google Calendar API Key',
-    extraFields: [
-      { key: 'calendar_id', label: 'Calendar ID', placeholder: 'your-email@gmail.com or calendar ID' },
-    ],
+    type: 'oauth',
     steps: [
-      'Go to console.cloud.google.com and enable the Google Calendar API',
-      'Create an API key (or service account for full access)',
-      'Find your Calendar ID in Google Calendar Settings > Integrate Calendar',
-      'Paste both below — your AI will check availability before booking',
+      'Click "Connect with Google" below',
+      'Sign in with your Google account and grant calendar access',
+      'Your AI receptionist will now check availability and create appointments automatically',
     ],
-    url: 'https://calendar.google.com/calendar/r/settings',
+    url: 'https://calendar.google.com',
   },
   {
     id: 'microsoft',
@@ -349,6 +355,60 @@ const IntegrationsPage: React.FC = () => {
       showToast({ message: 'Failed to disconnect', variant: 'error' });
     }
   };
+
+  // Handle OAuth connect (e.g. Google Calendar)
+  const handleOAuthConnect = async (integration: Integration) => {
+    if (!user) return;
+    setConnecting(true);
+    try {
+      const res = await fetch(`${FUNCTIONS_BASE}/${integration.id.replace('_', '-')}-auth-start?user_id=${user.id}`);
+      const data = await res.json();
+      if (data.url) {
+        // Redirect to OAuth provider in the same window
+        window.location.href = data.url;
+      } else {
+        showToast({ message: data.error || 'Failed to start OAuth flow', variant: 'error' });
+      }
+    } catch {
+      showToast({ message: 'Failed to start OAuth flow', variant: 'error' });
+    } finally {
+      setConnecting(false);
+    }
+  };
+
+  // Handle OAuth callback params on mount (e.g. ?gcal=success)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const gcalStatus = params.get('gcal');
+    if (gcalStatus === 'success') {
+      const calendarName = params.get('calendar') || 'Google Calendar';
+      showToast({ message: `${calendarName} connected!`, variant: 'success' });
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
+      // Refresh integrations list
+      if (user) {
+        fetch(`${FUNCTIONS_BASE}/integration-sync`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'list', userId: user.id }),
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.integrations) setSavedIntegrations(data.integrations);
+          })
+          .catch(console.error);
+      }
+    } else if (gcalStatus && gcalStatus !== 'success') {
+      const messages: Record<string, string> = {
+        error: 'Google Calendar connection failed',
+        token_fail: 'Failed to get Google tokens',
+        config_error: 'Google Calendar not configured on server',
+        missing_code: 'Authorization was incomplete',
+      };
+      showToast({ message: messages[gcalStatus] || 'Google Calendar connection failed', variant: 'error' });
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
 
   // Sort: connected first, then active integrations, then coming soon
   const sorted = [...integrations].sort((a, b) => {
@@ -576,10 +636,27 @@ const IntegrationsPage: React.FC = () => {
                     </div>
                   )}
 
+                  {/* OAuth connect button */}
+                  {integration.type === 'oauth' && (
+                    <div className="space-y-3 mb-4">
+                      {connected && (() => {
+                        const info = getSyncInfo(integration.id);
+                        const calName = info?.config?.calendar_name;
+                        const email = info?.config?.user_email;
+                        return (
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                            <p className="text-sm font-medium text-blue-900">{calName || 'Calendar connected'}</p>
+                            {email && <p className="text-xs text-blue-600 mt-0.5">{email}</p>}
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  )}
+
                   {/* Action buttons */}
                   <div className="space-y-3">
-                    {/* Test button */}
-                    {(formApiKey || formWebhookUrl) && (
+                    {/* Test button (API key / webhook only) */}
+                    {integration.type !== 'oauth' && (formApiKey || formWebhookUrl) && (
                       <button
                         onClick={() => handleTest(integration)}
                         disabled={testing}
@@ -593,21 +670,62 @@ const IntegrationsPage: React.FC = () => {
                       </button>
                     )}
 
-                    {/* Connect button */}
-                    <button
-                      onClick={() => handleConnect(integration)}
-                      disabled={connecting || (!formApiKey && !formWebhookUrl && !connected)}
-                      className="w-full text-white py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium disabled:opacity-50"
-                      style={{ backgroundColor: integration.fallbackColor }}
-                    >
-                      {connecting ? (
-                        <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Connecting...</span>
-                      ) : connected ? (
-                        'Update Connection'
-                      ) : (
-                        `Connect ${integration.name}`
-                      )}
-                    </button>
+                    {/* OAuth connect button */}
+                    {integration.type === 'oauth' && !connected && (
+                      <button
+                        onClick={() => handleOAuthConnect(integration)}
+                        disabled={connecting}
+                        className="w-full flex items-center justify-center gap-2.5 text-gray-700 py-2.5 px-4 rounded-lg border-2 border-gray-300 hover:bg-gray-50 transition-colors text-sm font-medium"
+                      >
+                        {connecting ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> Redirecting...</>
+                        ) : (
+                          <>
+                            <svg className="w-4 h-4" viewBox="0 0 24 24">
+                              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                            </svg>
+                            Connect with Google
+                          </>
+                        )}
+                      </button>
+                    )}
+
+                    {/* OAuth reconnect button */}
+                    {integration.type === 'oauth' && connected && (
+                      <button
+                        onClick={() => handleOAuthConnect(integration)}
+                        disabled={connecting}
+                        className="w-full text-white py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+                        style={{ backgroundColor: integration.fallbackColor }}
+                      >
+                        {connecting ? (
+                          <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Redirecting...</span>
+                        ) : (
+                          'Reconnect Account'
+                        )}
+                      </button>
+                    )}
+
+                    {/* Connect button (API key / webhook only) */}
+                    {integration.type !== 'oauth' && (
+                      <button
+                        onClick={() => handleConnect(integration)}
+                        disabled={connecting || (!formApiKey && !formWebhookUrl && !connected)}
+                        className="w-full text-white py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium disabled:opacity-50"
+                        style={{ backgroundColor: integration.fallbackColor }}
+                      >
+                        {connecting ? (
+                          <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Connecting...</span>
+                        ) : connected ? (
+                          'Update Connection'
+                        ) : (
+                          `Connect ${integration.name}`
+                        )}
+                      </button>
+                    )}
                   </div>
 
                   {/* Visit link */}

@@ -84,7 +84,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar */}
         <div className="w-56 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
-          <nav className="py-4 px-3 space-y-0.5">
+          <nav className="py-5 px-4 space-y-1">
             {activeCategory.sidebar.map((item) => {
               const isActive =
                 location.pathname === item.route ||
@@ -109,7 +109,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto bg-gray-50">
-          <div className="p-8 max-w-5xl">
+          <div className="p-10 md:p-12 max-w-5xl">
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0, y: 12 }}

@@ -106,7 +106,7 @@ function buildResponseEngine(body: any) {
 }
 
 // Build general_tools array for LLM creation/update
-// Includes: lookup_caller, transfer_call, end_call, check_availability, book_appointment, send_sms
+// Includes: lookup_caller, transfer_call, end_call, check_availability, book_appointment, cancel_appointment, reschedule_appointment, send_sms, search_knowledge_base
 function buildGeneralTools(options: {
   transferNumber?: string;
   baseUrl: string;
@@ -177,6 +177,49 @@ function buildGeneralTools(options: {
           notes: { type: 'string', description: 'Any additional notes or special requests' },
         },
         required: ['name', 'date', 'time'],
+      },
+      timeout_ms: 20000,
+    },
+    // Custom: cancel appointment
+    {
+      type: 'custom',
+      name: 'cancel_appointment',
+      description: 'Cancel an existing appointment for the caller. Use when the caller wants to cancel their upcoming appointment. You need their name, phone number, or email to find the appointment. Always confirm the cancellation before executing.',
+      speak_after_execution: true,
+      speak_during_execution: true,
+      execution_message_description: 'Let me cancel that appointment for you.',
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          name: { type: 'string', description: 'Caller full name to search for the appointment' },
+          phone: { type: 'string', description: 'Caller phone number' },
+          email: { type: 'string', description: 'Caller email address' },
+          reason: { type: 'string', description: 'Reason for cancellation' },
+        },
+        required: [],
+      },
+      timeout_ms: 15000,
+    },
+    // Custom: reschedule appointment
+    {
+      type: 'custom',
+      name: 'reschedule_appointment',
+      description: 'Reschedule an existing appointment to a new date and time. Use when the caller wants to move their appointment. You need their name/phone/email to find it, plus the new date and time. Always check availability first, then confirm before rescheduling.',
+      speak_after_execution: true,
+      speak_during_execution: true,
+      execution_message_description: 'Let me reschedule that appointment for you.',
+      url: toolsWebhookUrl,
+      parameters: {
+        type: 'object' as const,
+        properties: {
+          name: { type: 'string', description: 'Caller full name to search for the appointment' },
+          phone: { type: 'string', description: 'Caller phone number' },
+          email: { type: 'string', description: 'Caller email address' },
+          new_date: { type: 'string', description: 'New appointment date in YYYY-MM-DD format' },
+          new_time: { type: 'string', description: 'New appointment time in HH:MM 24-hour format' },
+        },
+        required: ['new_date', 'new_time'],
       },
       timeout_ms: 20000,
     },

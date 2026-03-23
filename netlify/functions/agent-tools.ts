@@ -266,12 +266,99 @@ async function handleSearchKnowledgeBase(args: any, userId: string | null): Prom
   }
 }
 
-// ── Tool: check_availability ──
+// ── Google Calendar helpers for agent tools ──
 
-async function handleCheckAvailability(args: any, calApiKey: string): Promise<string> {
+async function getGoogleCalendarForUser(userId: string): Promise<{ accessToken: string; config: any } | null> {
+  const supabase = getSupabase();
+  const { data: gcal } = await supabase
+    .from('user_integrations')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('provider', 'google_calendar')
+    .eq('is_connected', true)
+    .maybeSingle();
+
+  if (!gcal) return null;
+
+  const config = gcal.config || {};
+  let accessToken = config.access_token;
+  const expiresAt = config.token_expires_at;
+  const refreshToken = gcal.api_key;
+
+  // Refresh if expired (5-min buffer)
+  if (accessToken && expiresAt && Date.now() >= new Date(expiresAt).getTime() - 5 * 60 * 1000) {
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    if (clientId && clientSecret && refreshToken) {
+      try {
+        const res = await fetch('https://oauth2.googleapis.com/token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            client_id: clientId,
+            client_secret: clientSecret,
+            refresh_token: refreshToken,
+            grant_type: 'refresh_token',
+          }).toString(),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          accessToken = data.access_token;
+          // Update in DB
+          await supabase
+            .from('user_integrations')
+            .update({ config: { ...config, access_token: accessToken, token_expires_at: new Date(Date.now() + (data.expires_in || 3600) * 1000).toISOString() } })
+            .eq('id', gcal.id);
+        }
+      } catch { /* fall through */ }
+    }
+  }
+
+  return accessToken ? { accessToken, config } : null;
+}
+
+// ── Tool: check_availability (Google Calendar first, Cal.com fallback) ──
+
+async function handleCheckAvailability(args: any, calApiKey: string, userId: string | null): Promise<string> {
   const { date } = args;
   if (!date) return 'Please provide a date to check availability.';
 
+  // Try Google Calendar first
+  if (userId) {
+    const gcal = await getGoogleCalendarForUser(userId);
+    if (gcal) {
+      try {
+        const calendarId = gcal.config.calendar_id || 'primary';
+        const timeMin = `${date}T00:00:00Z`;
+        const timeMax = `${date}T23:59:59Z`;
+
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime`;
+        const res = await fetch(url, { headers: { Authorization: `Bearer ${gcal.accessToken}` } });
+
+        if (res.ok) {
+          const data = await res.json();
+          const events = (data.items || []).filter((e: any) => e.status !== 'cancelled');
+
+          if (events.length === 0) {
+            return `The calendar is completely open on ${formatDateReadable(date)}. What time works best for you?`;
+          }
+
+          // Build busy times list
+          const busyTimes = events.map((e: any) => {
+            const start = formatTimeSlot(e.start?.dateTime || e.start?.date);
+            const end = formatTimeSlot(e.end?.dateTime || e.end?.date);
+            return `${start} - ${end}`;
+          });
+
+          return `On ${formatDateReadable(date)}, these times are already booked: ${busyTimes.join(', ')}. Any time outside those is available. What time would you prefer?`;
+        }
+      } catch (err) {
+        console.error('[agent-tools] Google Calendar availability error:', err);
+      }
+    }
+  }
+
+  // Fallback to Cal.com
   const eventTypeId = await getEventTypeId(calApiKey);
   if (!eventTypeId) return 'Could not determine event type. Appointment scheduling may not be configured.';
 
@@ -290,8 +377,6 @@ async function handleCheckAvailability(args: any, calApiKey: string): Promise<st
 
     const data = await response.json();
     const slots = data.data?.slots || data.slots || {};
-
-    // Cal.com returns slots grouped by date
     const dateSlots = slots[date] || [];
 
     if (dateSlots.length === 0) {
@@ -325,58 +410,94 @@ async function handleBookAppointment(
     return 'I need at least your name, preferred date, and time to book an appointment.';
   }
 
-  const eventTypeId = await getEventTypeId(calApiKey);
-  if (!eventTypeId) return 'Appointment scheduling is not configured. I will note your request and have someone follow up.';
-
   try {
-    // Build ISO start time
     const startISO = `${date}T${time}:00Z`;
-    const endDate = new Date(startISO);
-    endDate.setMinutes(endDate.getMinutes() + 20); // Default 20-min consultation
-    const endISO = endDate.toISOString();
+    const formattedDate = formatDateReadable(date);
+    const formattedTime = formatTimeSlot(`${date}T${time}:00Z`);
+    let bookingId = 'N/A';
+    let bookedVia = 'cal.com';
 
-    // Cal.com V1 booking format
-    const bookingBody: any = {
-      eventTypeId,
-      start: startISO,
-      end: endISO,
-      responses: {
-        name: name,
-        email: email || 'noemail@placeholder.com',
-        location: { value: 'integrations:daily', optionValue: '' },
-      },
-      metadata: {
-        source: 'ai_receptionist',
-        call_id: callId,
-        phone: phone || '',
-        service: service || '',
-        notes: notes || '',
-      },
-      timeZone: 'Europe/London',
-      language: 'en',
-    };
+    // Try Google Calendar first
+    if (userId) {
+      const gcal = await getGoogleCalendarForUser(userId);
+      if (gcal) {
+        const calendarId = gcal.config.calendar_id || 'primary';
+        const startDate = new Date(startISO);
+        const endDate = new Date(startDate.getTime() + 30 * 60 * 1000); // 30-min appointment
 
-    const response = await fetch(`${CAL_BASE_URL}/bookings?apiKey=${calApiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bookingBody),
-    });
+        const gcalEvent = {
+          summary: `Appointment: ${name}`,
+          description: [
+            name ? `Name: ${name}` : '',
+            email ? `Email: ${email}` : '',
+            phone ? `Phone: ${phone}` : '',
+            service ? `Service: ${service}` : '',
+            notes ? `Notes: ${notes}` : '',
+            `Source: Boltcall AI Receptionist`,
+            `Call ID: ${callId}`,
+          ].filter(Boolean).join('\n'),
+          start: { dateTime: startDate.toISOString() },
+          end: { dateTime: endDate.toISOString() },
+          attendees: email ? [{ email }] : [],
+          reminders: { useDefault: false, overrides: [{ method: 'email', minutes: 60 }, { method: 'popup', minutes: 15 }] },
+        };
 
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error('[agent-tools] Cal.com booking error:', response.status, errText);
-      return `I wasn't able to book that time slot. It may no longer be available. Would you like to try a different time?`;
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?sendUpdates=all`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${gcal.accessToken}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify(gcalEvent),
+        });
+
+        if (res.ok) {
+          const eventData = await res.json();
+          bookingId = eventData.id;
+          bookedVia = 'google_calendar';
+        } else {
+          console.error('[agent-tools] Google Calendar booking failed:', res.status, await res.text());
+          // Fall through to Cal.com
+        }
+      }
     }
 
-    const bookingData = await response.json();
-    const booking = bookingData.data || bookingData;
-    const bookingId = booking.id || booking.uid || 'N/A';
+    // Fallback to Cal.com if Google Calendar didn't work
+    if (bookedVia !== 'google_calendar') {
+      const eventTypeId = await getEventTypeId(calApiKey);
+      if (!eventTypeId) return 'Appointment scheduling is not configured. I will note your request and have someone follow up.';
 
-    // Insert into Supabase if we have a user
+      const endDate = new Date(startISO);
+      endDate.setMinutes(endDate.getMinutes() + 20);
+
+      const bookingBody: any = {
+        eventTypeId,
+        start: startISO,
+        end: endDate.toISOString(),
+        responses: { name, email: email || 'noemail@placeholder.com', location: { value: 'integrations:daily', optionValue: '' } },
+        metadata: { source: 'ai_receptionist', call_id: callId, phone: phone || '', service: service || '', notes: notes || '' },
+        timeZone: 'Europe/London',
+        language: 'en',
+      };
+
+      const response = await fetch(`${CAL_BASE_URL}/bookings?apiKey=${calApiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingBody),
+      });
+
+      if (!response.ok) {
+        console.error('[agent-tools] Cal.com booking error:', response.status, await response.text());
+        return `I wasn't able to book that time slot. It may no longer be available. Would you like to try a different time?`;
+      }
+
+      const bookingData = await response.json();
+      const booking = bookingData.data || bookingData;
+      bookingId = booking.id || booking.uid || 'N/A';
+    }
+
+    // Insert into Supabase
     if (userId) {
       const supabase = getSupabase();
 
-      // Insert appointment record
       try {
         await supabase.from('appointments').insert({
           user_id: userId,
@@ -389,13 +510,12 @@ async function handleBookAppointment(
           starts_at: startISO,
           timezone: 'America/New_York',
           status: 'confirmed',
-          raw_webhook: { source: 'agent_tool', call_id: callId, booking: bookingData },
+          raw_webhook: { source: 'agent_tool', call_id: callId, booked_via: bookedVia },
         });
       } catch (dbErr) {
         console.error('[agent-tools] Failed to insert appointment:', dbErr);
       }
 
-      // Insert lead record
       try {
         await supabase.from('leads').insert({
           first_name: name.split(' ')[0] || name,
@@ -405,31 +525,21 @@ async function handleBookAppointment(
           source: 'ai_receptionist',
           status: 'booked',
           user_id: userId,
-          raw_data: { call_id: callId, service, booking_id: bookingId },
+          raw_data: { call_id: callId, service, booking_id: bookingId, booked_via: bookedVia },
         });
       } catch (dbErr) {
         console.error('[agent-tools] Failed to insert lead:', dbErr);
       }
 
-      // Deduct tokens (2 for booking)
       try {
-        await deductTokens(
-          userId,
-          TOKEN_COSTS.lead_processed,
-          'lead_processed',
-          `Appointment booked via AI call: ${name} on ${date} at ${time}`,
-          { call_id: callId, booking_id: bookingId, service }
-        );
+        await deductTokens(userId, TOKEN_COSTS.lead_processed, 'lead_processed',
+          `Appointment booked via AI call: ${name} on ${date} at ${time}`, { call_id: callId, booking_id: bookingId, service });
       } catch (tokenErr) {
         console.error('[agent-tools] Token deduction failed (non-blocking):', tokenErr);
       }
     }
 
-    // Format confirmation
-    const formattedDate = formatDateReadable(date);
-    const formattedTime = formatTimeSlot(`${date}T${time}:00Z`);
     const refText = bookingId !== 'N/A' ? ` Your reference number is ${bookingId}.` : '';
-
     await notifyInfo(`📅 *New Appointment Booked via AI*\n\n👤 ${name}\n📧 ${email || 'N/A'}\n📱 ${phone || 'N/A'}\n📅 ${formattedDate} at ${formattedTime}\n💼 ${service || 'General'}\n📞 Call: ${callId}${refText}`);
 
     return `Great! Your appointment is confirmed for ${formattedDate} at ${formattedTime}.${refText} Is there anything else I can help you with?`;
@@ -437,6 +547,123 @@ async function handleBookAppointment(
     console.error('[agent-tools] book_appointment error:', err);
     return 'Sorry, I had trouble booking your appointment. Let me note your request and have someone follow up with you.';
   }
+}
+
+// ── Tool: cancel_appointment ──
+
+async function handleCancelAppointment(args: any, userId: string | null, callId: string): Promise<string> {
+  const { name, phone, email, reason } = args;
+  if (!name && !phone && !email) return 'I need your name, phone number, or email to find your appointment.';
+
+  if (!userId) return 'Sorry, I cannot access the calendar right now. Please call back and we will help you cancel.';
+
+  const query = name || email || phone;
+  const supabase = getSupabase();
+
+  // Try Google Calendar
+  const gcal = await getGoogleCalendarForUser(userId);
+  if (gcal) {
+    try {
+      const calendarId = gcal.config.calendar_id || 'primary';
+      const now = new Date().toISOString();
+      const future = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+
+      const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?q=${encodeURIComponent(query)}&timeMin=${encodeURIComponent(now)}&timeMax=${encodeURIComponent(future)}&singleEvents=true&orderBy=startTime&maxResults=5`;
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${gcal.accessToken}` } });
+
+      if (res.ok) {
+        const data = await res.json();
+        const events = (data.items || []).filter((e: any) => e.status !== 'cancelled');
+
+        if (events.length === 0) {
+          return `I couldn't find any upcoming appointments for ${query}. Could you provide more details like your full name or email?`;
+        }
+
+        // Cancel the first matching event
+        const event = events[0];
+        const deleteUrl = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${encodeURIComponent(event.id)}?sendUpdates=all`;
+        const deleteRes = await fetch(deleteUrl, { method: 'DELETE', headers: { Authorization: `Bearer ${gcal.accessToken}` } });
+
+        if (deleteRes.ok || deleteRes.status === 204) {
+          const eventDate = formatDateReadable(event.start?.dateTime || event.start?.date);
+          const eventTime = formatTimeSlot(event.start?.dateTime || event.start?.date);
+
+          // Update Supabase appointment status
+          try {
+            await supabase.from('appointments')
+              .update({ status: 'cancelled', raw_webhook: { cancelled_via: 'ai_receptionist', call_id: callId, reason } })
+              .eq('user_id', userId)
+              .eq('cal_booking_id', event.id);
+          } catch { /* best effort */ }
+
+          await notifyInfo(`❌ *Appointment Cancelled via AI*\n\n👤 ${query}\n📅 ${eventDate} at ${eventTime}\n💬 Reason: ${reason || 'Not specified'}\n📞 Call: ${callId}`);
+
+          return `Your appointment on ${eventDate} at ${eventTime} has been cancelled. Would you like to reschedule for a different time?`;
+        }
+      }
+    } catch (err) {
+      console.error('[agent-tools] Google Calendar cancel error:', err);
+    }
+  }
+
+  return 'Sorry, I was unable to cancel the appointment right now. Let me note your request and have someone follow up with you shortly.';
+}
+
+// ── Tool: reschedule_appointment ──
+
+async function handleRescheduleAppointment(args: any, userId: string | null, callId: string): Promise<string> {
+  const { name, phone, email, new_date, new_time } = args;
+  if (!name && !phone && !email) return 'I need your name, phone number, or email to find your appointment.';
+  if (!new_date || !new_time) return 'I need the new date and time you would like to reschedule to.';
+
+  if (!userId) return 'Sorry, I cannot access the calendar right now. Please call back.';
+
+  const query = name || email || phone;
+  const gcal = await getGoogleCalendarForUser(userId);
+
+  if (gcal) {
+    try {
+      const calendarId = gcal.config.calendar_id || 'primary';
+      const now = new Date().toISOString();
+      const future = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+
+      const searchUrl = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?q=${encodeURIComponent(query)}&timeMin=${encodeURIComponent(now)}&timeMax=${encodeURIComponent(future)}&singleEvents=true&orderBy=startTime&maxResults=5`;
+      const searchRes = await fetch(searchUrl, { headers: { Authorization: `Bearer ${gcal.accessToken}` } });
+
+      if (searchRes.ok) {
+        const data = await searchRes.json();
+        const events = (data.items || []).filter((e: any) => e.status !== 'cancelled');
+
+        if (events.length === 0) {
+          return `I couldn't find any upcoming appointments for ${query}. Would you like to book a new appointment instead?`;
+        }
+
+        const event = events[0];
+        const newStart = new Date(`${new_date}T${new_time}:00Z`);
+        const newEnd = new Date(newStart.getTime() + 30 * 60 * 1000);
+
+        const patchUrl = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${encodeURIComponent(event.id)}?sendUpdates=all`;
+        const patchRes = await fetch(patchUrl, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${gcal.accessToken}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ start: { dateTime: newStart.toISOString() }, end: { dateTime: newEnd.toISOString() } }),
+        });
+
+        if (patchRes.ok) {
+          const newFormattedDate = formatDateReadable(new_date);
+          const newFormattedTime = formatTimeSlot(`${new_date}T${new_time}:00Z`);
+
+          await notifyInfo(`🔄 *Appointment Rescheduled via AI*\n\n👤 ${query}\n📅 New: ${newFormattedDate} at ${newFormattedTime}\n📞 Call: ${callId}`);
+
+          return `Your appointment has been rescheduled to ${newFormattedDate} at ${newFormattedTime}. You'll receive a calendar update. Is there anything else I can help with?`;
+        }
+      }
+    } catch (err) {
+      console.error('[agent-tools] Google Calendar reschedule error:', err);
+    }
+  }
+
+  return 'Sorry, I was unable to reschedule right now. Let me note your preferred time and have someone follow up.';
 }
 
 // ── Tool: send_sms ──
@@ -539,11 +766,19 @@ export const handler: Handler = async (event) => {
         break;
 
       case 'check_availability':
-        content = await handleCheckAvailability(toolArgs || {}, calApiKey);
+        content = await handleCheckAvailability(toolArgs || {}, calApiKey, userId);
         break;
 
       case 'book_appointment':
         content = await handleBookAppointment(toolArgs || {}, calApiKey, userId, call_id || '');
+        break;
+
+      case 'cancel_appointment':
+        content = await handleCancelAppointment(toolArgs || {}, userId, call_id || '');
+        break;
+
+      case 'reschedule_appointment':
+        content = await handleRescheduleAppointment(toolArgs || {}, userId, call_id || '');
         break;
 
       case 'send_sms':

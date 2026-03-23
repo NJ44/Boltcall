@@ -10,7 +10,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { CheckCircle2, Circle, Sparkles, ArrowRight, Check as CheckIcon } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 
 const FUNCTIONS_BASE = import.meta.env.DEV
@@ -32,6 +32,31 @@ interface KnowledgeBaseDocument {
   content?: string;
   url?: string;
   file?: File;
+}
+
+// Industry-specific placeholder helpers
+function getServicePlaceholder(industry: string): string {
+  const map: Record<string, string> = {
+    'Plumbing': 'e.g. Emergency repairs — $150 call-out\nDrain cleaning — $120\nBoiler installation — from $2,500',
+    'HVAC': 'e.g. AC tune-up — $89\nFurnace repair — $150+\nDuct cleaning — $299',
+    'Dental': 'e.g. Teeth cleaning — $120\nWhitening — $350\nCrown — $800-$1,200',
+    'Roofing': 'e.g. Roof inspection — Free\nShingle repair — $300+\nFull replacement — from $8,000',
+    'Landscaping': 'e.g. Weekly lawn care — $50/visit\nTree trimming — $200+\nHardscaping — custom quote',
+  };
+  return map[industry] || 'List your services, one per line. Include prices if possible.\ne.g. Service A — $100\nService B — $250';
+}
+
+function getFaqPlaceholder(industry: string): string {
+  const map: Record<string, string> = {
+    'Plumbing': 'e.g. Q: Do you offer emergency service?\nA: Yes, we offer 24/7 emergency plumbing.\n\nQ: How quickly can you come out?\nA: Same-day for emergencies, next-day for standard jobs.',
+    'HVAC': 'e.g. Q: How often should I service my AC?\nA: Once a year, ideally before summer.\n\nQ: Do you offer financing?\nA: Yes, 0% financing on systems over $3,000.',
+    'Dental': 'e.g. Q: Do you accept insurance?\nA: Yes, we accept most major dental plans.\n\nQ: Do you offer payment plans?\nA: Yes, we offer flexible payment options.',
+  };
+  return map[industry] || 'Write your most common Q&As, one per line.\ne.g. Q: Do you offer free quotes?\nA: Yes, all quotes are free with no obligation.';
+}
+
+function getPolicyPlaceholder(industry: string): string {
+  return 'e.g. Cancellation: 24-hour notice required or $50 fee\nRefunds: Full refund if not satisfied within 7 days\nDeposit: 50% deposit required for jobs over $500\nRescheduling: Free rescheduling with 12-hour notice';
 }
 
 const KnowledgeBasePage: React.FC = () => {
@@ -69,6 +94,152 @@ const KnowledgeBasePage: React.FC = () => {
     score: number;
     items: Array<{ label: string; hint: string; done: boolean }>;
   }>({ score: 0, items: [] });
+
+  // Fill the Gaps quiz state
+  const [showGapsQuiz, setShowGapsQuiz] = useState(false);
+  const [quizStep, setQuizStep] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState<Record<string, string>>({});
+  const [quizSaving, setQuizSaving] = useState(false);
+  const [businessIndustry, setBusinessIndustry] = useState('');
+
+  // Generate quiz questions based on missing KB items and industry
+  const getQuizQuestions = () => {
+    const missing = kbCompleteness.items.filter(i => !i.done);
+    const industry = businessIndustry || 'your business';
+    const questions: Array<{ key: string; label: string; question: string; placeholder: string; multiline?: boolean }> = [];
+
+    for (const item of missing) {
+      if (item.label === 'Business name') {
+        questions.push({
+          key: 'business_name',
+          label: 'Business Name',
+          question: `What is the name of your ${industry} business?`,
+          placeholder: `e.g. Smith's ${industry} Services`,
+        });
+      } else if (item.label === 'Website URL') {
+        questions.push({
+          key: 'website_url',
+          label: 'Website URL',
+          question: `What is your ${industry} business website? Your AI will auto-learn from it.`,
+          placeholder: 'e.g. https://www.mybusiness.com',
+        });
+      } else if (item.label === 'Services') {
+        questions.push({
+          key: 'services',
+          label: 'Services & Pricing',
+          question: `What services does your ${industry} business offer? Include prices if possible.`,
+          placeholder: getServicePlaceholder(industry),
+          multiline: true,
+        });
+      } else if (item.label === 'FAQs') {
+        questions.push({
+          key: 'faqs',
+          label: 'Frequently Asked Questions',
+          question: `What questions do your ${industry} customers ask most often?`,
+          placeholder: getFaqPlaceholder(industry),
+          multiline: true,
+        });
+      } else if (item.label === 'Policies') {
+        questions.push({
+          key: 'policies',
+          label: 'Business Policies',
+          question: `What are your ${industry} business policies? (cancellation, refunds, deposits, rescheduling)`,
+          placeholder: getPolicyPlaceholder(industry),
+          multiline: true,
+        });
+      }
+    }
+    return questions;
+  };
+
+  // Fetch industry on mount
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('business_profiles')
+      .select('main_category')
+      .eq('user_id', user.id)
+      .single()
+      .then(({ data }) => {
+        if (data?.main_category) setBusinessIndustry(data.main_category);
+      });
+  }, [user?.id]);
+
+  // Save quiz answers as KB documents
+  const handleQuizSave = async () => {
+    if (!user?.id || !businessProfileId) return;
+    setQuizSaving(true);
+    try {
+      const entries: Array<{ title: string; content: string; content_type: string; tags: string[] }> = [];
+
+      if (quizAnswers.business_name?.trim()) {
+        await supabase
+          .from('business_profiles')
+          .update({ business_name: quizAnswers.business_name.trim() })
+          .eq('user_id', user.id);
+      }
+
+      if (quizAnswers.website_url?.trim()) {
+        await supabase
+          .from('business_profiles')
+          .update({ website_url: quizAnswers.website_url.trim() })
+          .eq('user_id', user.id);
+      }
+
+      if (quizAnswers.services?.trim()) {
+        entries.push({
+          title: 'Services & Pricing',
+          content: quizAnswers.services.trim(),
+          content_type: 'product_info',
+          tags: ['service', 'pricing'],
+        });
+      }
+
+      if (quizAnswers.faqs?.trim()) {
+        entries.push({
+          title: 'Frequently Asked Questions',
+          content: quizAnswers.faqs.trim(),
+          content_type: 'faq',
+          tags: ['faq', 'question'],
+        });
+      }
+
+      if (quizAnswers.policies?.trim()) {
+        entries.push({
+          title: 'Business Policies',
+          content: quizAnswers.policies.trim(),
+          content_type: 'policy',
+          tags: ['policy', 'cancellation', 'refund'],
+        });
+      }
+
+      for (const entry of entries) {
+        await supabase.from('knowledge_base').insert({
+          user_id: user.id,
+          business_profile_id: businessProfileId,
+          title: entry.title,
+          content: entry.content,
+          content_type: entry.content_type,
+          tags: entry.tags,
+          status: 'active',
+          priority: 3,
+        });
+      }
+
+      showToast({ message: 'Knowledge base updated!', variant: 'success' });
+      setShowGapsQuiz(false);
+      setQuizStep(0);
+      setQuizAnswers({});
+      fetchDocuments();
+      fetchCompleteness();
+      syncToRetell();
+    } catch (error) {
+      console.error('Error saving quiz answers:', error);
+      showToast({ message: 'Failed to save — try again', variant: 'error' });
+    } finally {
+      setQuizSaving(false);
+    }
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -735,15 +906,15 @@ const KnowledgeBasePage: React.FC = () => {
         >
           <div className="flex items-start gap-3 md:gap-4">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-semibold text-gray-900">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg md:text-xl font-bold text-gray-900">
                   Setup Progress
                 </h3>
-                <span className="text-sm font-bold text-blue-600">{kbCompleteness.score}%</span>
+                <span className="text-base font-bold text-blue-600">{kbCompleteness.score}%</span>
               </div>
 
               {/* Progress bar */}
-              <div className="w-full h-2 bg-gray-100 rounded-full mb-3 overflow-hidden">
+              <div className="w-full h-2.5 bg-gray-100 rounded-full mb-4 overflow-hidden">
                 <motion.div
                   className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600"
                   initial={{ width: 0 }}
@@ -752,7 +923,7 @@ const KnowledgeBasePage: React.FC = () => {
                 />
               </div>
 
-              <p className="text-xs text-gray-500 mb-3">
+              <p className="text-sm text-gray-500 mb-3">
                 Your AI agent works better with more info:
               </p>
 
@@ -776,6 +947,22 @@ const KnowledgeBasePage: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Fill the Gaps button */}
+              {kbCompleteness.items.some(i => !i.done && i.label !== 'Documents uploaded') && (
+                <button
+                  onClick={() => {
+                    setQuizStep(0);
+                    setQuizAnswers({});
+                    setShowGapsQuiz(true);
+                  }}
+                  className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Fill the Gaps
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           </div>
         </motion.div>
@@ -1215,6 +1402,108 @@ const KnowledgeBasePage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ─── Fill the Gaps Quiz Modal ─────────────────────────────────── */}
+      <ModalShell
+        open={showGapsQuiz}
+        onClose={() => setShowGapsQuiz(false)}
+        title="Fill the Gaps"
+        description={`Answer a few quick questions about your ${businessIndustry || 'business'} to train your AI agent.`}
+        maxWidth="max-w-lg"
+        footer={
+          (() => {
+            const questions = getQuizQuestions();
+            const isLast = quizStep >= questions.length - 1;
+            const currentQ = questions[quizStep];
+            const hasAnswer = currentQ && quizAnswers[currentQ.key]?.trim();
+
+            return (
+              <>
+                {quizStep > 0 && (
+                  <button
+                    onClick={() => setQuizStep(s => s - 1)}
+                    className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Back
+                  </button>
+                )}
+                <button
+                  onClick={() => {
+                    if (isLast) {
+                      handleQuizSave();
+                    } else {
+                      setQuizStep(s => s + 1);
+                    }
+                  }}
+                  disabled={!hasAnswer || quizSaving}
+                  className="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                >
+                  {quizSaving ? (
+                    <>Saving...</>
+                  ) : isLast ? (
+                    <>Save All</>
+                  ) : (
+                    <>Next <ArrowRight className="w-3.5 h-3.5" /></>
+                  )}
+                </button>
+              </>
+            );
+          })()
+        }
+      >
+        {(() => {
+          const questions = getQuizQuestions();
+          if (questions.length === 0) {
+            return <p className="text-sm text-gray-500">All gaps are filled! Your KB is complete.</p>;
+          }
+          const q = questions[quizStep];
+          if (!q) return null;
+
+          return (
+            <div className="space-y-4">
+              {/* Step indicator */}
+              <div className="flex items-center gap-1.5">
+                {questions.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-1.5 flex-1 rounded-full transition-colors ${
+                      i < quizStep ? 'bg-blue-500' : i === quizStep ? 'bg-blue-400' : 'bg-gray-200'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <p className="text-xs text-gray-400 font-medium">
+                Question {quizStep + 1} of {questions.length}
+              </p>
+
+              <label className="block text-sm font-semibold text-gray-900">
+                {q.question}
+              </label>
+
+              {q.multiline ? (
+                <textarea
+                  rows={6}
+                  value={quizAnswers[q.key] || ''}
+                  onChange={(e) => setQuizAnswers(prev => ({ ...prev, [q.key]: e.target.value }))}
+                  placeholder={q.placeholder}
+                  className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
+                  autoFocus
+                />
+              ) : (
+                <input
+                  type="text"
+                  value={quizAnswers[q.key] || ''}
+                  onChange={(e) => setQuizAnswers(prev => ({ ...prev, [q.key]: e.target.value }))}
+                  placeholder={q.placeholder}
+                  className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  autoFocus
+                />
+              )}
+            </div>
+          );
+        })()}
+      </ModalShell>
     </div>
   );
 };

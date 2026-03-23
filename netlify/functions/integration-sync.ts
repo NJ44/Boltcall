@@ -153,16 +153,85 @@ async function syncToGoogleSheets(apiKey: string, config: any, lead: any): Promi
   }
 }
 
-// ─── Google Calendar Integration ────────────────────────────────────────────
+// ─── Google Calendar Integration (OAuth) ────────────────────────────────────
 
-async function checkGoogleCalendarAvailability(apiKey: string, config: any, date: string): Promise<{ success: boolean; slots?: string[]; error?: string }> {
+/**
+ * Refresh an expired Google Calendar access token using the refresh token.
+ * Updates the token in Supabase and returns the new access token.
+ */
+async function refreshGoogleToken(refreshToken: string, integrationId: string): Promise<string | null> {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  if (!clientId || !clientSecret || !refreshToken) return null;
+
+  try {
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        refresh_token: refreshToken,
+        grant_type: 'refresh_token',
+      }).toString(),
+    });
+
+    if (!res.ok) return null;
+    const data = await res.json();
+    const newAccessToken = data.access_token;
+    const expiresAt = new Date(Date.now() + (data.expires_in || 3600) * 1000).toISOString();
+
+    // Update token in Supabase
+    const supabase = getSupabase();
+    await supabase
+      .from('user_integrations')
+      .update({
+        config: { access_token: newAccessToken, token_expires_at: expiresAt },
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', integrationId);
+
+    return newAccessToken;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get a valid access token for Google Calendar — refreshes if expired.
+ */
+async function getGoogleAccessToken(integration: any): Promise<string | null> {
+  const config = integration.config || {};
+  const accessToken = config.access_token;
+  const expiresAt = config.token_expires_at;
+  const refreshToken = integration.api_key;
+
+  // Check if token is still valid (with 5-minute buffer)
+  if (accessToken && expiresAt) {
+    const expiresTime = new Date(expiresAt).getTime();
+    if (Date.now() < expiresTime - 5 * 60 * 1000) {
+      return accessToken;
+    }
+  }
+
+  // Token expired — refresh it
+  if (refreshToken) {
+    return refreshGoogleToken(refreshToken, integration.id);
+  }
+
+  return null;
+}
+
+async function checkGoogleCalendarAvailability(accessToken: string, config: any, date: string): Promise<{ success: boolean; slots?: string[]; error?: string }> {
   try {
     const calendarId = config.calendar_id || 'primary';
     const timeMin = `${date}T00:00:00Z`;
     const timeMax = `${date}T23:59:59Z`;
 
-    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime`;
-    const res = await fetch(url);
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
 
     if (!res.ok) {
       const errText = await res.text();
@@ -172,7 +241,6 @@ async function checkGoogleCalendarAvailability(apiKey: string, config: any, date
     const data = await res.json();
     const events = data.items || [];
 
-    // Find busy times
     const busySlots = events
       .filter((e: any) => e.status !== 'cancelled')
       .map((e: any) => ({
@@ -187,15 +255,161 @@ async function checkGoogleCalendarAvailability(apiKey: string, config: any, date
   }
 }
 
-async function addGoogleCalendarEvent(apiKey: string, config: any, lead: any): Promise<{ success: boolean; error?: string }> {
-  // Note: API key only allows read access. For write access, need OAuth.
-  // For now, we log the lead as a note — full write requires OAuth setup.
+async function addGoogleCalendarEvent(accessToken: string, config: any, lead: any): Promise<{ success: boolean; eventId?: string; error?: string }> {
   try {
-    // Can't create events with API key alone — need OAuth token
-    // This is a limitation we document to the user
+    const calendarId = config.calendar_id || 'primary';
+
+    // Create a 30-minute appointment event
+    const startTime = lead.appointment_time || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+    const startDate = new Date(startTime);
+    const endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
+
+    const event = {
+      summary: `Appointment: ${lead.name || 'New Lead'}`,
+      description: [
+        lead.name ? `Name: ${lead.name}` : '',
+        lead.email ? `Email: ${lead.email}` : '',
+        lead.phone ? `Phone: ${lead.phone}` : '',
+        lead.notes ? `Notes: ${lead.notes}` : '',
+        `Source: ${lead.source || 'Boltcall AI Receptionist'}`,
+      ].filter(Boolean).join('\n'),
+      start: {
+        dateTime: startDate.toISOString(),
+        timeZone: lead.timezone || 'UTC',
+      },
+      end: {
+        dateTime: endDate.toISOString(),
+        timeZone: lead.timezone || 'UTC',
+      },
+      attendees: lead.email ? [{ email: lead.email }] : [],
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 15 },
+        ],
+      },
+    };
+
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?sendUpdates=all`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(event),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      return { success: false, error: `Failed to create event: ${res.status} - ${errText}` };
+    }
+
+    const data = await res.json();
+    return { success: true, eventId: data.id };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Google Calendar event creation failed' };
+  }
+}
+
+/**
+ * Cancel (delete) a Google Calendar event by eventId.
+ */
+async function cancelGoogleCalendarEvent(accessToken: string, config: any, eventId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const calendarId = config.calendar_id || 'primary';
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${encodeURIComponent(eventId)}?sendUpdates=all`;
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!res.ok && res.status !== 410) { // 410 = already deleted
+      const errText = await res.text();
+      return { success: false, error: `Failed to cancel event: ${res.status} - ${errText}` };
+    }
     return { success: true };
   } catch (err) {
-    return { success: false, error: err instanceof Error ? err.message : 'Google Calendar failed' };
+    return { success: false, error: err instanceof Error ? err.message : 'Google Calendar cancel failed' };
+  }
+}
+
+/**
+ * Reschedule a Google Calendar event — update its start/end time.
+ */
+async function rescheduleGoogleCalendarEvent(
+  accessToken: string,
+  config: any,
+  eventId: string,
+  newStartTime: string,
+  durationMinutes: number = 30
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const calendarId = config.calendar_id || 'primary';
+    const startDate = new Date(newStartTime);
+    const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
+
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${encodeURIComponent(eventId)}?sendUpdates=all`;
+    const res = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        start: { dateTime: startDate.toISOString() },
+        end: { dateTime: endDate.toISOString() },
+      }),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      return { success: false, error: `Failed to reschedule: ${res.status} - ${errText}` };
+    }
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Google Calendar reschedule failed' };
+  }
+}
+
+/**
+ * Find an appointment by searching for the caller's name, email, or phone in event descriptions.
+ */
+async function findGoogleCalendarAppointment(
+  accessToken: string,
+  config: any,
+  query: string
+): Promise<{ success: boolean; events?: any[]; error?: string }> {
+  try {
+    const calendarId = config.calendar_id || 'primary';
+    const now = new Date().toISOString();
+    // Search upcoming events (next 90 days)
+    const futureDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?q=${encodeURIComponent(query)}&timeMin=${encodeURIComponent(now)}&timeMax=${encodeURIComponent(futureDate)}&singleEvents=true&orderBy=startTime&maxResults=10`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      return { success: false, error: `Search failed: ${res.status} - ${errText}` };
+    }
+
+    const data = await res.json();
+    const events = (data.items || []).map((e: any) => ({
+      eventId: e.id,
+      summary: e.summary,
+      start: e.start?.dateTime || e.start?.date,
+      end: e.end?.dateTime || e.end?.date,
+      description: e.description,
+      status: e.status,
+    }));
+
+    return { success: true, events };
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Google Calendar search failed' };
   }
 }
 
@@ -335,12 +549,56 @@ export const handler: Handler = async (event) => {
         return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `Google Sheets access failed: ${res.status}` }) };
       }
 
+      if (provider === 'email') {
+        if (!testApiKey) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Email address required' }) };
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(testApiKey)) {
+          return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: 'Invalid email address format' }) };
+        }
+        // Send a test notification email via Brevo
+        const brevoKey = process.env.BREVO_API_KEY;
+        if (brevoKey) {
+          try {
+            const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+              method: 'POST',
+              headers: {
+                'api-key': brevoKey,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                sender: { name: 'Boltcall', email: 'notifications@boltcall.org' },
+                to: [{ email: testApiKey }],
+                subject: 'Boltcall Notifications Connected!',
+                htmlContent: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px">
+                  <h2 style="color:#1e40af">Notifications Connected</h2>
+                  <p>Your Boltcall notifications are now active. You'll receive emails for:</p>
+                  <ul>
+                    <li>New leads captured by your AI receptionist</li>
+                    <li>Missed calls</li>
+                    <li>New appointment bookings</li>
+                  </ul>
+                  <p style="color:#6b7280;font-size:13px">— The Boltcall Team</p>
+                </div>`,
+              }),
+            });
+            if (res.ok) {
+              return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `Test email sent to ${testApiKey}` }) };
+            }
+          } catch {}
+        }
+        // Even without Brevo, validate the email is correct
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `Email address ${testApiKey} verified` }) };
+      }
+
       if (provider === 'google_calendar') {
-        if (!testApiKey || !testConfig?.calendar_id) {
-          return { statusCode: 400, headers, body: JSON.stringify({ error: 'apiKey and config.calendar_id required' }) };
+        // OAuth-based test: use the stored access token from config
+        const accessToken = testConfig?.access_token;
+        if (!accessToken) {
+          return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: 'Not connected. Use "Connect with Google" to authorize.' }) };
         }
         const today = new Date().toISOString().split('T')[0];
-        const result = await checkGoogleCalendarAvailability(testApiKey, testConfig, today);
+        const result = await checkGoogleCalendarAvailability(accessToken, testConfig, today);
         if (result.success) {
           return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `Calendar connected. ${(result.slots || []).length} events today.` }) };
         }
@@ -400,6 +658,50 @@ export const handler: Handler = async (event) => {
             }
             break;
 
+          case 'email':
+            if (integration.api_key) {
+              const brevoKey = process.env.BREVO_API_KEY;
+              if (brevoKey) {
+                try {
+                  const emailConfig = integration.config || {};
+                  const shouldNotify = emailConfig.notify_new_leads?.toLowerCase() !== 'no';
+                  if (shouldNotify) {
+                    const leadName = lead.name || [lead.first_name, lead.last_name].filter(Boolean).join(' ') || 'Unknown';
+                    const emailRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+                      method: 'POST',
+                      headers: { 'api-key': brevoKey, 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        sender: { name: 'Boltcall', email: 'notifications@boltcall.org' },
+                        to: [{ email: integration.api_key }],
+                        subject: `New Lead: ${leadName}`,
+                        htmlContent: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px">
+                          <h2 style="color:#1e40af">New Lead Captured</h2>
+                          <table style="width:100%;border-collapse:collapse">
+                            ${lead.name || leadName ? `<tr><td style="padding:6px 0;color:#6b7280">Name</td><td style="padding:6px 0;font-weight:600">${leadName}</td></tr>` : ''}
+                            ${lead.email ? `<tr><td style="padding:6px 0;color:#6b7280">Email</td><td style="padding:6px 0">${lead.email}</td></tr>` : ''}
+                            ${lead.phone ? `<tr><td style="padding:6px 0;color:#6b7280">Phone</td><td style="padding:6px 0">${lead.phone}</td></tr>` : ''}
+                            ${lead.source ? `<tr><td style="padding:6px 0;color:#6b7280">Source</td><td style="padding:6px 0">${lead.source}</td></tr>` : ''}
+                          </table>
+                          ${lead.notes ? `<p style="margin-top:12px;padding:12px;background:#f3f4f6;border-radius:8px;font-size:14px">${lead.notes}</p>` : ''}
+                          <p style="color:#6b7280;font-size:12px;margin-top:16px">— Boltcall AI Receptionist</p>
+                        </div>`,
+                      }),
+                    });
+                    result = emailRes.ok ? { success: true } : { success: false, error: 'Failed to send email notification' };
+                  } else {
+                    result = { success: true };
+                  }
+                } catch (err) {
+                  result = { success: false, error: err instanceof Error ? err.message : 'Email notification failed' };
+                }
+              } else {
+                result = { success: false, error: 'Email service not configured on server' };
+              }
+            } else {
+              result = { success: false, error: 'No email address configured' };
+            }
+            break;
+
           default:
             result = { success: true, error: `Provider ${integration.provider} sync not implemented yet` };
         }
@@ -432,7 +734,75 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: list, connect, disconnect, test, sync_lead' }) };
+    // ─── CALENDAR: Book, cancel, reschedule, find appointments ─────
+    if (action === 'calendar_book' || action === 'calendar_cancel' || action === 'calendar_reschedule' || action === 'calendar_find' || action === 'calendar_availability') {
+      const { userId } = body;
+      if (!userId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
+      }
+
+      // Get user's Google Calendar integration
+      const { data: gcalIntegration } = await supabase
+        .from('user_integrations')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('provider', 'google_calendar')
+        .eq('is_connected', true)
+        .maybeSingle();
+
+      if (!gcalIntegration) {
+        return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: 'Google Calendar not connected' }) };
+      }
+
+      const accessToken = await getGoogleAccessToken(gcalIntegration);
+      if (!accessToken) {
+        return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: 'Google Calendar token expired. Please reconnect.' }) };
+      }
+
+      const config = gcalIntegration.config || {};
+
+      // ── Book appointment
+      if (action === 'calendar_book') {
+        const { lead } = body;
+        if (!lead) return { statusCode: 400, headers, body: JSON.stringify({ error: 'lead data required' }) };
+        const result = await addGoogleCalendarEvent(accessToken, config, lead);
+        return { statusCode: 200, headers, body: JSON.stringify(result) };
+      }
+
+      // ── Cancel appointment
+      if (action === 'calendar_cancel') {
+        const { eventId } = body;
+        if (!eventId) return { statusCode: 400, headers, body: JSON.stringify({ error: 'eventId required' }) };
+        const result = await cancelGoogleCalendarEvent(accessToken, config, eventId);
+        return { statusCode: 200, headers, body: JSON.stringify(result) };
+      }
+
+      // ── Reschedule appointment
+      if (action === 'calendar_reschedule') {
+        const { eventId, newStartTime, durationMinutes } = body;
+        if (!eventId || !newStartTime) return { statusCode: 400, headers, body: JSON.stringify({ error: 'eventId and newStartTime required' }) };
+        const result = await rescheduleGoogleCalendarEvent(accessToken, config, eventId, newStartTime, durationMinutes || 30);
+        return { statusCode: 200, headers, body: JSON.stringify(result) };
+      }
+
+      // ── Find appointment by name/email/phone
+      if (action === 'calendar_find') {
+        const { query } = body;
+        if (!query) return { statusCode: 400, headers, body: JSON.stringify({ error: 'query (name, email, or phone) required' }) };
+        const result = await findGoogleCalendarAppointment(accessToken, config, query);
+        return { statusCode: 200, headers, body: JSON.stringify(result) };
+      }
+
+      // ── Check availability for a date
+      if (action === 'calendar_availability') {
+        const { date } = body;
+        if (!date) return { statusCode: 400, headers, body: JSON.stringify({ error: 'date (YYYY-MM-DD) required' }) };
+        const result = await checkGoogleCalendarAvailability(accessToken, config, date);
+        return { statusCode: 200, headers, body: JSON.stringify(result) };
+      }
+    }
+
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: list, connect, disconnect, test, sync_lead, calendar_book, calendar_cancel, calendar_reschedule, calendar_find, calendar_availability' }) };
 
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : (typeof err === 'object' ? JSON.stringify(err) : String(err));
