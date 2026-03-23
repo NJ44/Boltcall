@@ -13,7 +13,6 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import AuthCallback from '../pages/AuthCallback';
-import AiReceptionistContractors from '../pages/AiReceptionistContractors';
 // ── Route-level loading fallback ─────────────────────────────────────────
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -93,6 +92,7 @@ const FunnelOptimiser = React.lazy(() => import('../pages/FunnelOptimiser'));
 const SolarSpeedToLeadPlaybook = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybook'));
 const SolarSpeedToLeadPlaybookThankYou = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybookThankYou'));
 const VoiceAgentOnboarding = React.lazy(() => import('../pages/VoiceAgentOnboarding'));
+const AiReadinessScorecard = React.lazy(() => import('../pages/AiReadinessScorecard'));
 
 // ── Lazy loads — Speed Test funnel ───────────────────────────────────────
 const SpeedTestLanding = React.lazy(() => import('../pages/speed-test/SpeedTestLanding'));
@@ -137,6 +137,7 @@ const AIVsHumanReceptionistBlog = React.lazy(() => import('../pages/AIVsHumanRec
 const AiReceptionistCostPricingGuide = React.lazy(() => import('../pages/AiReceptionistCostPricingGuide'));
 const SpeedToLeadGuide = React.lazy(() => import('../pages/SpeedToLeadGuide'));
 const ChatbotVsLivePhoneComparison = React.lazy(() => import('../pages/ChatbotVsLivePhoneComparison'));
+const AiReceptionistForPlumbers = React.lazy(() => import('../pages/AiReceptionistForPlumbers'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -152,6 +153,7 @@ const CompareBoltcallVsGoHighLevel = React.lazy(() => import('../pages/CompareBo
 const CompareBoltcallVsBirdeye = React.lazy(() => import('../pages/CompareBoltcallVsBirdeye'));
 const CompareBoltcallVsEmitrr = React.lazy(() => import('../pages/CompareBoltcallVsEmitrr'));
 const CompareBoltcallVsCalomation = React.lazy(() => import('../pages/CompareBoltcallVsCalomation'));
+const CompareBoltcallVsSmithAi = React.lazy(() => import('../pages/CompareBoltcallVsSmithAi'));
 
 // ── Lazy loads — Feature pages ───────────────────────────────────────────
 const AIReceptionistPage = React.lazy(() => import('../pages/features/AIReceptionistPage'));
@@ -367,7 +369,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/ai-phone-answering-dentists" element={<AiPhoneAnsweringDentists />} />
             <Route path="/blog/best-after-hours-answering-service" element={<BestAfterHoursAnsweringService />} />
             <Route path="/blog/ai-chatbot-vs-live-chat-phone-comparison" element={<ChatbotVsLivePhoneComparison />} />
-            <Route path="/blog/ai-receptionist-contractors" element={<AiReceptionistContractors />} />
+            <Route path="/blog/ai-receptionist-for-plumbers" element={<AiReceptionistForPlumbers />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
@@ -379,6 +381,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/compare/boltcall-vs-birdeye" element={<CompareBoltcallVsBirdeye />} />
         <Route path="/compare/boltcall-vs-emitrr" element={<CompareBoltcallVsEmitrr />} />
         <Route path="/compare/boltcall-vs-calomation" element={<CompareBoltcallVsCalomation />} />
+        <Route path="/compare/boltcall-vs-smith-ai" element={<CompareBoltcallVsSmithAi />} />
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/ai-revenue-calculator" element={<Navigate to="/ai-revenue-audit" replace />} />
@@ -414,6 +417,7 @@ const NavigationWrapper: React.FC = () => {
         {/* All niche tools now served by dynamic route from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
+        <Route path="/ai-readiness-scorecard" element={<AiReadinessScorecard />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

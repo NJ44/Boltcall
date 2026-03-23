@@ -75,6 +75,24 @@ const blogPosts: BlogPost[] = [
     image: '/og-image.jpg'
   },
   {
+    title: 'Boltcall vs Smith.ai: AI Receptionist Compared for Small Business (2026)',
+    slug: '/compare/boltcall-vs-smith-ai',
+    excerpt: 'Boltcall vs Smith.ai compared head-to-head. Flat pricing vs per-call fees, pure AI vs hybrid, and which AI receptionist is better for your small business.',
+    date: 'March 23, 2026',
+    readTime: '10 min read',
+    category: 'Comparison',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'AI Receptionist for Plumbers: Answer Every Call 24/7 (2026 Guide)',
+    slug: '/blog/ai-receptionist-for-plumbers',
+    excerpt: 'AI receptionist for plumbers answers calls 24/7, books appointments, and qualifies emergencies. Stop missing leads. Setup in 24 hours.',
+    date: 'March 23, 2026',
+    readTime: '12 min read',
+    category: 'Industry Guide',
+    image: '/og-image.jpg'
+  },
+  {
     title: 'AI Chatbot vs Live Chat vs Phone Answering: Which Works Best for Local Businesses',
     slug: '/blog/ai-chatbot-vs-live-chat-phone-comparison',
     excerpt: 'Discover whether an AI chatbot or live chat better serves your local business needs and learn how to choose the right customer communication solution.',
