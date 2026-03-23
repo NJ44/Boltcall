@@ -10,7 +10,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
-import { CheckCircle2, Circle, Sparkles, ArrowRight, Check as CheckIcon } from 'lucide-react';
+import { CheckCircle2, Circle, Sparkles, ArrowRight } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 
 const FUNCTIONS_BASE = import.meta.env.DEV
@@ -55,7 +55,7 @@ function getFaqPlaceholder(industry: string): string {
   return map[industry] || 'Write your most common Q&As, one per line.\ne.g. Q: Do you offer free quotes?\nA: Yes, all quotes are free with no obligation.';
 }
 
-function getPolicyPlaceholder(industry: string): string {
+function getPolicyPlaceholder(_industry: string): string {
   return 'e.g. Cancellation: 24-hour notice required or $50 fee\nRefunds: Full refund if not satisfied within 7 days\nDeposit: 50% deposit required for jobs over $500\nRescheduling: Free rescheduling with 12-hour notice';
 }
 
