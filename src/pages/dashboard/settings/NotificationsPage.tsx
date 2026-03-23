@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Bell, Mail, MessageSquare, Phone } from 'lucide-react';
 import { PopButton } from '../../../components/ui/pop-button';
-import { CustomCheckbox } from '../../../components/ui/custom-checkbox';
+import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 
 const NotificationsPage: React.FC = () => {
   const [notifications, setNotifications] = useState({
@@ -45,7 +45,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">New leads</div>
               <div className="text-sm text-gray-600">Get notified when a new lead is captured</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.emailNewLead}
               onChange={() => handleToggle('emailNewLead')}
             />
@@ -56,7 +56,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Missed calls</div>
               <div className="text-sm text-gray-600">Alert when a call is missed</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.emailMissedCall}
               onChange={() => handleToggle('emailMissedCall')}
             />
@@ -67,7 +67,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Appointments</div>
               <div className="text-sm text-gray-600">Notifications for new appointments</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.emailAppointment}
               onChange={() => handleToggle('emailAppointment')}
             />
@@ -78,7 +78,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Weekly reports</div>
               <div className="text-sm text-gray-600">Receive weekly performance summaries</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.emailWeeklyReport}
               onChange={() => handleToggle('emailWeeklyReport')}
             />
@@ -99,7 +99,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">New leads</div>
               <div className="text-sm text-gray-600">Instant SMS for new leads</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.smsNewLead}
               onChange={() => handleToggle('smsNewLead')}
             />
@@ -110,7 +110,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Missed calls</div>
               <div className="text-sm text-gray-600">SMS alerts for missed calls</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.smsMissedCall}
               onChange={() => handleToggle('smsMissedCall')}
             />
@@ -121,7 +121,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Appointments</div>
               <div className="text-sm text-gray-600">SMS for appointment confirmations</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.smsAppointment}
               onChange={() => handleToggle('smsAppointment')}
             />
@@ -142,7 +142,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">New leads</div>
               <div className="text-sm text-gray-600">Browser push for new leads</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.pushNewLead}
               onChange={() => handleToggle('pushNewLead')}
             />
@@ -153,7 +153,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Missed calls</div>
               <div className="text-sm text-gray-600">Push alerts for missed calls</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.pushMissedCall}
               onChange={() => handleToggle('pushMissedCall')}
             />
@@ -164,7 +164,7 @@ const NotificationsPage: React.FC = () => {
               <div className="font-medium text-gray-900">Appointments</div>
               <div className="text-sm text-gray-600">Push for new appointments</div>
             </div>
-            <CustomCheckbox
+            <PremiumToggle
               checked={notifications.pushAppointment}
               onChange={() => handleToggle('pushAppointment')}
             />
