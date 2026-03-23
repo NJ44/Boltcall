@@ -169,8 +169,6 @@ const GeneralPage: React.FC = () => {
       }
 
       showToast({ title: 'Saved', message: 'Settings saved successfully!', variant: 'success', duration: 3000 });
-      setSaveMessage('Settings saved successfully!');
-      setTimeout(() => setSaveMessage(''), 3000);
       setSaveSuccess(true);
       setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
 
