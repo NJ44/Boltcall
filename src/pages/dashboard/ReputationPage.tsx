@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Save, Loader2, Check, AlertCircle, MessageSquare } from 'lucide-react';
-import { PopButton } from '../../components/ui/pop-button';
+import { Star, Loader2, AlertCircle, MessageSquare } from 'lucide-react';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
 
 import { motion } from 'framer-motion';
@@ -8,6 +7,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
+import { UnsavedChanges } from '../../components/ui/unsaved-changes';
 
 const ReputationPage: React.FC = () => {
   const { user } = useAuth();
@@ -15,8 +15,10 @@ const ReputationPage: React.FC = () => {
   const { claimReward } = useTokens();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   const [googleReviewUrl, setGoogleReviewUrl] = useState('');
   const [trigger, setTrigger] = useState<'delay' | 'scroll' | 'exit'>('delay');
@@ -135,13 +137,15 @@ const ReputationPage: React.FC = () => {
         console.error('Failed to save reputation config:', updateError);
         setError('Failed to save settings. Please try again.');
         showToast({ title: 'Error', message: 'Failed to save reputation settings.', variant: 'error', duration: 4000 });
+        setSaveError(true);
+        setTimeout(() => setSaveError(false), 3000);
         setSaving(false);
         return;
       }
 
       setSaving(false);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setSaveSuccess(true);
+      setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
 
       // Claim bonus token reward for enabling reputation manager
       const rewardResult = await claimReward('enable_reputation');
@@ -152,6 +156,8 @@ const ReputationPage: React.FC = () => {
       console.error('Reputation save error:', err);
       setError('Something went wrong. Please try again.');
       showToast({ title: 'Error', message: 'Something went wrong saving reputation settings.', variant: 'error', duration: 4000 });
+      setSaveError(true);
+      setTimeout(() => setSaveError(false), 3000);
       setSaving(false);
     }
   };
@@ -200,7 +206,7 @@ const ReputationPage: React.FC = () => {
             <input
               type="url"
               value={googleReviewUrl}
-              onChange={(e) => setGoogleReviewUrl(e.target.value)}
+              onChange={(e) => { setGoogleReviewUrl(e.target.value); setIsDirty(true); }}
               placeholder="https://g.page/r/..."
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
             />
@@ -218,7 +224,7 @@ const ReputationPage: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">When to show popup</label>
                 <select
                   value={trigger}
-                  onChange={(e) => setTrigger(e.target.value as 'delay' | 'scroll' | 'exit')}
+                  onChange={(e) => { setTrigger(e.target.value as 'delay' | 'scroll' | 'exit'); setIsDirty(true); }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
                 >
                   <option value="delay">After time delay</option>
@@ -234,7 +240,7 @@ const ReputationPage: React.FC = () => {
                   <input
                     type="number"
                     value={delaySeconds}
-                    onChange={(e) => setDelaySeconds(parseInt(e.target.value) || 30)}
+                    onChange={(e) => { setDelaySeconds(parseInt(e.target.value) || 30); setIsDirty(true); }}
                     min={5}
                     max={300}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
@@ -248,7 +254,7 @@ const ReputationPage: React.FC = () => {
                 <input
                   type="text"
                   value={popupText}
-                  onChange={(e) => setPopupText(e.target.value)}
+                  onChange={(e) => { setPopupText(e.target.value); setIsDirty(true); }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
                 />
               </div>
@@ -259,7 +265,7 @@ const ReputationPage: React.FC = () => {
                 <input
                   type="text"
                   value={buttonText}
-                  onChange={(e) => setButtonText(e.target.value)}
+                  onChange={(e) => { setButtonText(e.target.value); setIsDirty(true); }}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
                 />
               </div>
@@ -274,7 +280,7 @@ const ReputationPage: React.FC = () => {
                 <p className="text-sm text-gray-500">Send review requests via SMS after appointments</p>
               </div>
               <button
-                onClick={() => setSmsEnabled(!smsEnabled)}
+                onClick={() => { setSmsEnabled(!smsEnabled); setIsDirty(true); }}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   smsEnabled ? 'bg-blue-600' : 'bg-gray-300'
                 }`}
@@ -293,7 +299,7 @@ const ReputationPage: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Send after (hours)</label>
                   <select
                     value={smsDelay}
-                    onChange={(e) => setSmsDelay(e.target.value)}
+                    onChange={(e) => { setSmsDelay(e.target.value); setIsDirty(true); }}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
                   >
                     <option value="1">1 hour after appointment</option>
@@ -307,7 +313,7 @@ const ReputationPage: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">SMS Template</label>
                   <textarea
                     value={smsTemplate}
-                    onChange={(e) => setSmsTemplate(e.target.value)}
+                    onChange={(e) => { setSmsTemplate(e.target.value); setIsDirty(true); }}
                     rows={3}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900 resize-none"
                   />
@@ -333,24 +339,6 @@ const ReputationPage: React.FC = () => {
             )}
           </div>
 
-          {/* Save Button */}
-          <div className="flex items-center justify-end gap-3 pt-4">
-            <PopButton
-              color="blue"
-              onClick={handleSave}
-              disabled={saving || !googleReviewUrl}
-              className="gap-2"
-            >
-              {saving ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : saved ? (
-                <Check className="w-4 h-4" />
-              ) : (
-                <Save className="w-4 h-4" />
-              )}
-              {saved ? 'Saved!' : 'Save & Activate'}
-            </PopButton>
-          </div>
         </div>
       </motion.div>
 
@@ -422,6 +410,15 @@ const ReputationPage: React.FC = () => {
           </div>
         )}
       </motion.div>
+
+      <UnsavedChanges
+        open={isDirty}
+        isSaving={saving}
+        success={saveSuccess}
+        error={saveError}
+        onReset={() => { setIsDirty(false); window.location.reload(); }}
+        onSave={handleSave}
+      />
     </div>
   );
 };

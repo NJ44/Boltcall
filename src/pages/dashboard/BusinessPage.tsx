@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Globe, Clock, Phone, Mail, Save, RefreshCw } from 'lucide-react';
-import { Magnetic } from '../../components/ui/magnetic';
-import { PopButton } from '../../components/ui/pop-button';
+import { Building2, Globe, Clock, Phone, Mail } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { supabase } from '../../lib/supabase';
+import { UnsavedChanges } from '../../components/ui/unsaved-changes';
 
 const BusinessPage: React.FC = () => {
   const { user } = useAuth();
@@ -21,6 +20,9 @@ const BusinessPage: React.FC = () => {
   });
 
   const [isSaving, setIsSaving] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
   const [businessProfileId, setBusinessProfileId] = useState<string | null>(null);
   const [locationId, setLocationId] = useState<string | null>(null);
 
@@ -90,6 +92,7 @@ const BusinessPage: React.FC = () => {
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    setIsDirty(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -164,12 +167,20 @@ const BusinessPage: React.FC = () => {
       }
 
       showToast({ title: 'Saved', message: 'Business details saved successfully!', variant: 'success', duration: 3000 });
+      setSaveSuccess(true);
+      setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
     } catch (err) {
       console.error('Error saving business details:', err);
       showToast({ title: 'Error', message: 'Failed to save business details. Please try again.', variant: 'error', duration: 4000 });
+      setSaveError(true);
+      setTimeout(() => setSaveError(false), 3000);
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleSaveFromBar = () => {
+    handleSubmit({ preventDefault: () => {} } as React.FormEvent);
   };
 
   return (
@@ -309,29 +320,6 @@ const BusinessPage: React.FC = () => {
             />
           </div>
 
-          {/* Save Button */}
-          <div className="flex justify-end">
-            <Magnetic>
-              <PopButton
-                color="blue"
-                type="submit"
-                disabled={isSaving}
-                className="gap-2"
-              >
-                {isSaving ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  <>
-                    <Save className="w-4 h-4" />
-                    Save Changes
-                  </>
-                )}
-              </PopButton>
-            </Magnetic>
-          </div>
         </form>
       </div>
 
@@ -373,6 +361,15 @@ const BusinessPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <UnsavedChanges
+        open={isDirty}
+        isSaving={isSaving}
+        success={saveSuccess}
+        error={saveError}
+        onReset={() => { setIsDirty(false); window.location.reload(); }}
+        onSave={handleSaveFromBar}
+      />
     </div>
   );
 };

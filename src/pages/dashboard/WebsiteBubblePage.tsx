@@ -2,29 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
-  Check,
   Code,
   MessageCircle,
   Palette,
   Type,
-  Save,
-  Loader2,
   AlertCircle,
   Globe,
 } from 'lucide-react';
 
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
-import { Magnetic } from '../../components/ui/magnetic';
-import { PopButton } from '../../components/ui/pop-button';
 import { CopyButton } from '../../components/ui/copy-button';
+import { UnsavedChanges } from '../../components/ui/unsaved-changes';
 
 const WebsiteBubblePage: React.FC = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
   // Data from Supabase
   const [embedToken, setEmbedToken] = useState<string | null>(null);
 
@@ -103,16 +101,20 @@ const WebsiteBubblePage: React.FC = () => {
       if (updateError) {
         console.error('Failed to save chatbot config:', updateError);
         setError('Failed to save settings. Please try again.');
+        setSaveError(true);
+        setTimeout(() => setSaveError(false), 3000);
         setSaving(false);
         return;
       }
 
       setSaving(false);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setSaveSuccess(true);
+      setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
     } catch (err) {
       console.error('Chatbot config save error:', err);
       setError('Something went wrong. Please try again.');
+      setSaveError(true);
+      setTimeout(() => setSaveError(false), 3000);
       setSaving(false);
     }
   };
@@ -247,7 +249,7 @@ const WebsiteBubblePage: React.FC = () => {
             <input
               type="text"
               value={retellAgentId}
-              onChange={(e) => setRetellAgentId(e.target.value)}
+              onChange={(e) => { setRetellAgentId(e.target.value); setIsDirty(true); }}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
               placeholder="agent_xxxxxxxxxxxx"
             />
@@ -263,13 +265,13 @@ const WebsiteBubblePage: React.FC = () => {
               <input
                 type="color"
                 value={chatColor}
-                onChange={(e) => setChatColor(e.target.value)}
+                onChange={(e) => { setChatColor(e.target.value); setIsDirty(true); }}
                 className="w-12 h-8 border border-gray-300 rounded cursor-pointer"
               />
               <input
                 type="text"
                 value={chatColor}
-                onChange={(e) => setChatColor(e.target.value)}
+                onChange={(e) => { setChatColor(e.target.value); setIsDirty(true); }}
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
                 placeholder="#3B82F6"
               />
@@ -284,7 +286,7 @@ const WebsiteBubblePage: React.FC = () => {
             </label>
             <select
               value={chatPosition}
-              onChange={(e) => setChatPosition(e.target.value)}
+              onChange={(e) => { setChatPosition(e.target.value); setIsDirty(true); }}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
             >
               <option value="bottom-right">Bottom Right</option>
@@ -303,34 +305,23 @@ const WebsiteBubblePage: React.FC = () => {
             <input
               type="text"
               value={chatGreeting}
-              onChange={(e) => setChatGreeting(e.target.value)}
+              onChange={(e) => { setChatGreeting(e.target.value); setIsDirty(true); }}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-900"
               placeholder="Hi! How can I help you today?"
             />
           </div>
         </div>
 
-        {/* Save Button */}
-        <div className="flex items-center justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
-          <Magnetic>
-            <PopButton
-              color="blue"
-              onClick={handleSaveChatbotConfig}
-              disabled={saving}
-              className="gap-2"
-            >
-              {saving ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : saved ? (
-                <Check className="w-4 h-4" />
-              ) : (
-                <Save className="w-4 h-4" />
-              )}
-              {saved ? 'Saved!' : 'Save Configuration'}
-            </PopButton>
-          </Magnetic>
-        </div>
       </motion.div>
+
+      <UnsavedChanges
+        open={isDirty}
+        isSaving={saving}
+        success={saveSuccess}
+        error={saveError}
+        onReset={() => { setIsDirty(false); window.location.reload(); }}
+        onSave={handleSaveChatbotConfig}
+      />
     </div>
   );
 };

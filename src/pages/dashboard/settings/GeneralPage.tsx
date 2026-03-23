@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, MapPin, Save, RefreshCw, AlertTriangle, Trash2 } from 'lucide-react';
+import { Building2, MapPin, RefreshCw, AlertTriangle, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Magnetic } from '../../../components/ui/magnetic';
 import { useToast } from '../../../contexts/ToastContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTokens } from '../../../contexts/TokenContext';
@@ -11,6 +10,7 @@ import { supabase } from '../../../lib/supabase';
 import { PopButton } from '../../../components/ui/pop-button';
 import Button from '../../../components/ui/Button';
 import ModalShell from '../../../components/ui/modal-shell';
+import { UnsavedChanges } from '../../../components/ui/unsaved-changes';
 
 const GeneralPage: React.FC = () => {
   const { t } = useTranslation();
@@ -38,6 +38,9 @@ const GeneralPage: React.FC = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -169,6 +172,8 @@ const GeneralPage: React.FC = () => {
       showToast({ title: 'Saved', message: 'Settings saved successfully!', variant: 'success', duration: 3000 });
       setSaveMessage('Settings saved successfully!');
       setTimeout(() => setSaveMessage(''), 3000);
+      setSaveSuccess(true);
+      setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
 
       // Claim bonus token reward for completing business profile
       const rewardResult = await claimReward('complete_business_profile');
@@ -178,6 +183,8 @@ const GeneralPage: React.FC = () => {
     } catch (err) {
       console.error('Error saving general settings:', err);
       showToast({ title: 'Error', message: 'Failed to save settings. Please try again.', variant: 'error', duration: 4000 });
+      setSaveError(true);
+      setTimeout(() => setSaveError(false), 3000);
     } finally {
       setIsSaving(false);
     }
@@ -188,6 +195,7 @@ const GeneralPage: React.FC = () => {
       ...prev,
       [field]: value
     }));
+    setIsDirty(true);
   };
 
   const handleAddressChange = (field: string, value: string) => {
@@ -195,6 +203,7 @@ const GeneralPage: React.FC = () => {
       ...prev,
       [field]: value
     }));
+    setIsDirty(true);
   };
 
   const languages = [
@@ -444,40 +453,6 @@ const GeneralPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Save Button */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="flex items-center justify-between"
-      >
-        <div>
-          {saveMessage && (
-            <p className="text-green-600 text-sm font-medium">{saveMessage}</p>
-          )}
-        </div>
-        <Magnetic>
-          <PopButton
-            color="blue"
-            onClick={handleSave}
-            disabled={isSaving}
-            className="gap-2"
-          >
-            {isSaving ? (
-              <>
-                <RefreshCw className="w-4 h-4 animate-spin" />
-                {t('common.saving')}
-              </>
-            ) : (
-              <>
-                <Save className="w-4 h-4" />
-                {t('common.save')}
-              </>
-            )}
-          </PopButton>
-        </Magnetic>
-      </motion.div>
-
       {/* Danger Zone */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -620,6 +595,15 @@ const GeneralPage: React.FC = () => {
           />
         </div>
       </ModalShell>
+
+      <UnsavedChanges
+        open={isDirty}
+        isSaving={isSaving}
+        success={saveSuccess}
+        error={saveError}
+        onReset={() => { setIsDirty(false); window.location.reload(); }}
+        onSave={handleSave}
+      />
     </div>
   );
 };

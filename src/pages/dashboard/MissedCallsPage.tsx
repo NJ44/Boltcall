@@ -8,9 +8,6 @@ import {
   Eye,
   Play,
   MessageSquare,
-  Save,
-  Loader2,
-  Check,
   ChevronDown,
   ChevronUp,
   Smartphone,
@@ -26,6 +23,7 @@ import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import { useNavigate } from 'react-router-dom';
 import { PopButton } from '../../components/ui/pop-button';
+import { UnsavedChanges } from '../../components/ui/unsaved-changes';
 
 // Threshold in ms — calls shorter than this are considered missed/abandoned
 const MISSED_CALL_DURATION_THRESHOLD = 15000; // 15 seconds
@@ -68,7 +66,9 @@ const MissedCallsPage: React.FC = () => {
     delay_minutes: 0,
   });
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
 
   // Setup banner state
   const [showForwardingGuide, setShowForwardingGuide] = useState(false);
@@ -286,13 +286,15 @@ const MissedCallsPage: React.FC = () => {
       if (updateError) {
         console.error('Failed to save missed call config:', updateError);
         showToast({ title: 'Error', message: 'Failed to save settings', variant: 'error', duration: 4000 });
+        setSaveFailed(true);
+        setTimeout(() => setSaveFailed(false), 3000);
         setSaving(false);
         return;
       }
 
       setSaving(false);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
+      setSaveSuccess(true);
+      setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
 
       showToast({ title: 'Saved', message: 'Missed call text-back settings saved', variant: 'success', duration: 3000 });
 
@@ -304,6 +306,8 @@ const MissedCallsPage: React.FC = () => {
     } catch (err) {
       console.error('Save error:', err);
       showToast({ title: 'Error', message: 'Something went wrong', variant: 'error', duration: 4000 });
+      setSaveFailed(true);
+      setTimeout(() => setSaveFailed(false), 3000);
       setSaving(false);
     }
   };
@@ -480,7 +484,7 @@ const MissedCallsPage: React.FC = () => {
             <input
               type="checkbox"
               checked={config.enabled}
-              onChange={(e) => setConfig({ ...config, enabled: e.target.checked })}
+              onChange={(e) => { setConfig({ ...config, enabled: e.target.checked }); setIsDirty(true); }}
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-100 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" />
@@ -496,7 +500,7 @@ const MissedCallsPage: React.FC = () => {
               </label>
               <textarea
                 value={config.template}
-                onChange={(e) => setConfig({ ...config, template: e.target.value })}
+                onChange={(e) => { setConfig({ ...config, template: e.target.value }); setIsDirty(true); }}
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
                 placeholder="Enter your text-back message..."
@@ -513,7 +517,7 @@ const MissedCallsPage: React.FC = () => {
               </label>
               <select
                 value={config.delay_minutes}
-                onChange={(e) => setConfig({ ...config, delay_minutes: parseInt(e.target.value) })}
+                onChange={(e) => { setConfig({ ...config, delay_minutes: parseInt(e.target.value) }); setIsDirty(true); }}
                 className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               >
                 <option value={0}>Immediately</option>
@@ -522,25 +526,10 @@ const MissedCallsPage: React.FC = () => {
               </select>
             </div>
 
-            {/* Save button */}
+            {/* Reset to default link */}
             <div className="flex items-center gap-3 pt-2">
-              <PopButton
-                color="blue"
-                onClick={handleSaveConfig}
-                disabled={saving}
-                className="gap-2"
-              >
-                {saving ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : saved ? (
-                  <Check className="w-4 h-4" />
-                ) : (
-                  <Save className="w-4 h-4" />
-                )}
-                {saving ? 'Saving...' : saved ? 'Saved!' : 'Save Settings'}
-              </PopButton>
               <button
-                onClick={() => setConfig({ ...config, template: DEFAULT_TEMPLATE, delay_minutes: 0 })}
+                onClick={() => { setConfig({ ...config, template: DEFAULT_TEMPLATE, delay_minutes: 0 }); setIsDirty(true); }}
                 className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
               >
                 Reset to default
@@ -803,6 +792,15 @@ const MissedCallsPage: React.FC = () => {
           )}
         </motion.div>
       )}
+
+      <UnsavedChanges
+        open={isDirty}
+        isSaving={saving}
+        success={saveSuccess}
+        error={saveFailed}
+        onReset={() => { setIsDirty(false); window.location.reload(); }}
+        onSave={handleSaveConfig}
+      />
     </div>
   );
 };

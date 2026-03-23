@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { NotificationPreferencesSkeleton } from '../../../components/ui/loading-skeleton';
 import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 import {
-  Bell, 
-  Mail, 
-  MessageSquare, 
+  Bell,
+  Mail,
+  MessageSquare,
   Smartphone,
   Clock,
   Calendar,
@@ -13,13 +13,11 @@ import {
   CreditCard,
   Star,
   Settings,
-  Save,
-  RefreshCw
 } from 'lucide-react';
-import { PopButton } from '../../../components/ui/pop-button';
 import { supabase } from '../../../lib/supabase';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
+import { UnsavedChanges } from '../../../components/ui/unsaved-changes';
 
 interface NotificationPreferences {
   id?: string;
@@ -129,6 +127,9 @@ const NotificationPreferencesPage: React.FC = () => {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   useEffect(() => {
     fetchPreferences();
@@ -192,6 +193,8 @@ const NotificationPreferencesPage: React.FC = () => {
         message: 'Notification preferences saved successfully',
         variant: 'success'
       });
+      setSaveSuccess(true);
+      setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
     } catch (error) {
       console.error('Error saving notification preferences:', error);
       showToast({
@@ -199,6 +202,8 @@ const NotificationPreferencesPage: React.FC = () => {
         message: 'Failed to save notification preferences',
         variant: 'error'
       });
+      setSaveError(true);
+      setTimeout(() => setSaveError(false), 3000);
     } finally {
       setSaving(false);
     }
@@ -209,6 +214,7 @@ const NotificationPreferencesPage: React.FC = () => {
       ...prev,
       [key]: !prev[key]
     }));
+    setIsDirty(true);
   };
 
   const handleInputChange = (key: keyof NotificationPreferences, value: string) => {
@@ -216,6 +222,7 @@ const NotificationPreferencesPage: React.FC = () => {
       ...prev,
       [key]: value
     }));
+    setIsDirty(true);
   };
 
   if (loading) {
@@ -495,22 +502,14 @@ const NotificationPreferencesPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Save Button */}
-      <div className="flex justify-end pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
-        <PopButton
-          color="blue"
-          onClick={savePreferences}
-          disabled={saving}
-          className="gap-2 min-w-[160px]"
-        >
-          {saving ? (
-            <RefreshCw className="w-5 h-5 animate-spin" />
-          ) : (
-            <Save className="w-5 h-5" />
-          )}
-          {saving ? 'Saving...' : 'Save Preferences'}
-        </PopButton>
-      </div>
+      <UnsavedChanges
+        open={isDirty}
+        isSaving={saving}
+        success={saveSuccess}
+        error={saveError}
+        onReset={() => { setIsDirty(false); window.location.reload(); }}
+        onSave={savePreferences}
+      />
     </div>
   );
 };
