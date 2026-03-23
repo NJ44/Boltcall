@@ -371,4 +371,46 @@ export const CardsSkeleton = ({ count = 6 }: { count?: number }) => (
   <LoadingSkeleton variant="cards" rows={Math.ceil(count / 3)} columns={3} />
 );
 
+// Generic page-level skeleton — drop-in replacement for any full-page Loader2 spinner
+export const PageSkeleton = () => (
+  <div className="space-y-6 animate-pulse">
+    {/* Header area */}
+    <div className="flex items-center justify-between">
+      <div className="space-y-2">
+        <div className="h-6 w-48 rounded-lg bg-gray-100 dark:bg-neutral-800" />
+        <div className="h-4 w-72 rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      </div>
+      <div className="h-9 w-28 rounded-lg bg-gray-100 dark:bg-neutral-800" />
+    </div>
+
+    {/* Stat cards row */}
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {[...new Array(4)].map((_, i) => (
+        <div key={`stat-${i}`} className="bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-neutral-800 p-4">
+          <div className="h-8 w-8 rounded-lg bg-gray-100 dark:bg-neutral-800 mb-3" />
+          <div className="h-6 w-16 rounded bg-gray-100 dark:bg-neutral-800 mb-1" />
+          <div className="h-3 w-24 rounded bg-gray-100 dark:bg-neutral-800" />
+        </div>
+      ))}
+    </div>
+
+    {/* Content block */}
+    <div className="bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-neutral-800 p-5">
+      <div className="space-y-4">
+        <div className="h-4 w-40 rounded bg-gray-100 dark:bg-neutral-800" />
+        {[...new Array(4)].map((_, i) => (
+          <div key={`row-${i}`} className="flex items-center gap-4">
+            <div className="h-10 w-10 rounded-lg bg-gray-100 dark:bg-neutral-800 flex-shrink-0" />
+            <div className="flex-1 space-y-2">
+              <div className="h-4 w-3/4 rounded bg-gray-100 dark:bg-neutral-800" />
+              <div className="h-3 w-1/2 rounded bg-gray-100 dark:bg-neutral-800" />
+            </div>
+            <div className="h-8 w-20 rounded-lg bg-gray-100 dark:bg-neutral-800 flex-shrink-0" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 export default LoadingSkeleton;

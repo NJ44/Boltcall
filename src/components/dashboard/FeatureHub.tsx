@@ -36,7 +36,7 @@ const FEATURES: FeatureCard[] = [
     icon: Phone,
     color: 'text-blue-600',
     bgColor: 'bg-blue-50',
-    configLink: '/dashboard/agents',
+    configLink: '/dashboard/ai-receptionist',
     needsEmbed: false,
   },
   {

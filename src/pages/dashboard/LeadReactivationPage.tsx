@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Play } from 'lucide-react';
 import { FileUpload } from '@/components/ui/file-upload';
+import { PopButton } from '../../components/ui/pop-button';
 import CardTableWithPanel from '@/components/ui/CardTableWithPanel';
 import ModalShell from '../../components/ui/modal-shell';
 
@@ -71,13 +72,14 @@ const LeadReactivationPage: React.FC = () => {
               <h2 className="text-xl font-semibold text-gray-900">Uploaded Leads</h2>
               <p className="text-sm text-gray-600 mt-1">{uploadedData.length} leads ready for reactivation</p>
             </div>
-            <button
+            <PopButton
+              color="blue"
               onClick={() => setShowCampaignModal(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="gap-2"
             >
               <Play className="w-4 h-4" />
               Start Lead Reactivation
-            </button>
+            </PopButton>
           </div>
           <CardTableWithPanel
             hideSearch={true}
@@ -149,17 +151,18 @@ const LeadReactivationPage: React.FC = () => {
         maxWidth="max-w-2xl"
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => setShowCampaignModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              size="sm"
             >
               Cancel
-            </button>
-            <button
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+            </PopButton>
+            <PopButton
+              color="blue"
+              size="sm"
             >
               Start Campaign
-            </button>
+            </PopButton>
           </>
         }
       >

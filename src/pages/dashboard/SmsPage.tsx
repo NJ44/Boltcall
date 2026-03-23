@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Clock, Bell, Check, Send } from 'lucide-react';
+import { PopButton } from '../../components/ui/pop-button';
 
 const SmsPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -81,13 +82,15 @@ const SmsPage: React.FC = () => {
                     className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
                   />
-                  <button
+                  <PopButton
+                    color="blue"
+                    size="sm"
                     type="submit"
-                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                    className="gap-2"
                   >
                     <Send className="w-4 h-4" />
                     Notify Me
-                  </button>
+                  </PopButton>
                 </form>
               </>
             )}

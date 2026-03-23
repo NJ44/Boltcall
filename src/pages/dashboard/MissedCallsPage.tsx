@@ -25,6 +25,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import { useNavigate } from 'react-router-dom';
+import { PopButton } from '../../components/ui/pop-button';
 
 // Threshold in ms — calls shorter than this are considered missed/abandoned
 const MISSED_CALL_DURATION_THRESHOLD = 15000; // 15 seconds
@@ -357,13 +358,14 @@ const MissedCallsPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <button
+              <PopButton
+                color="blue"
                 onClick={() => navigate('/dashboard/phone-numbers')}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                className="w-full gap-2"
               >
                 Get a Phone Number
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </PopButton>
             </div>
 
             {/* Option 2: Forward from Your Number */}
@@ -522,10 +524,11 @@ const MissedCallsPage: React.FC = () => {
 
             {/* Save button */}
             <div className="flex items-center gap-3 pt-2">
-              <button
+              <PopButton
+                color="blue"
                 onClick={handleSaveConfig}
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+                className="gap-2"
               >
                 {saving ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -535,7 +538,7 @@ const MissedCallsPage: React.FC = () => {
                   <Save className="w-4 h-4" />
                 )}
                 {saving ? 'Saving...' : saved ? 'Saved!' : 'Save Settings'}
-              </button>
+              </PopButton>
               <button
                 onClick={() => setConfig({ ...config, template: DEFAULT_TEMPLATE, delay_minutes: 0 })}
                 className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
@@ -599,12 +602,14 @@ const MissedCallsPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-12 flex flex-col items-center justify-center">
           <AlertCircle className="w-10 h-10 text-red-500 mb-3" />
           <p className="text-red-600 font-medium">{error}</p>
-          <button
+          <PopButton
+            color="blue"
+            size="sm"
             onClick={fetchMissedCalls}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+            className="mt-4"
           >
             Try Again
-          </button>
+          </PopButton>
         </div>
       )}
 

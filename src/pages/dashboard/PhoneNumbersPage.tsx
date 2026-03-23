@@ -10,6 +10,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
+import { PopButton } from '../../components/ui/pop-button';
 
 interface PhoneNumber {
   id: string;
@@ -321,13 +322,13 @@ const PhoneNumbersPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 {/* Add Phone Number Dropdown */}
                 <div className="relative" ref={dropdownRef}>
-                  <button
+                  <PopButton color="blue"
                     onClick={handleAddPhoneNumber}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                    className="gap-2"
                   >
                     <span className="font-bold">Add Phone Number</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-                  </button>
+                  </PopButton>
                   
                   <AnimatePresence>
                     {showDropdown && (
@@ -478,13 +479,12 @@ const PhoneNumbersPage: React.FC = () => {
             />
           </div>
           <div className="flex items-end">
-            <button
+            <PopButton color="blue" size="sm"
               onClick={() => searchTwilioNumbers(searchCountry, searchAreaCode || undefined)}
               disabled={loadingTwilioNumbers}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
             >
               Search
-            </button>
+            </PopButton>
           </div>
         </div>
 
@@ -527,13 +527,13 @@ const PhoneNumbersPage: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <div className="font-semibold text-gray-900">{number.monthly_cost}/mo</div>
-                    <button
+                    <PopButton color="blue" size="sm"
                       onClick={() => handlePurchaseNumber(number)}
                       disabled={purchasingNumber === number.phone_number}
-                      className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm disabled:opacity-50"
+                      className="mt-2"
                     >
                       {purchasingNumber === number.phone_number ? 'Purchasing...' : 'Purchase'}
-                    </button>
+                    </PopButton>
                   </div>
                 </div>
               </motion.div>
@@ -566,21 +566,19 @@ const PhoneNumbersPage: React.FC = () => {
         maxWidth="max-w-2xl"
         footer={
           <>
-            <button
+            <PopButton
               type="button"
               onClick={handleSipFormCancel}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
+            </PopButton>
             <Magnetic>
-              <button
+              <PopButton color="blue"
                 type="submit"
                 form="sip-form"
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
               >
                 Save
-              </button>
+              </PopButton>
             </Magnetic>
           </>
         }

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect, useCallback } from 'react';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
   RotateCw,
   Plus,
@@ -21,6 +22,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import FeatureOnboarding from '../../components/dashboard/FeatureOnboarding';
+import { PopButton } from '../../components/ui/pop-button';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -376,24 +378,22 @@ const FollowUpsContent: React.FC = () => {
             </p>
           </div>
         </div>
-        <button
+        <PopButton
+          color="blue"
+          size="sm"
           onClick={() => {
             setEditingSequence(null);
             setModalOpen(true);
           }}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="gap-2"
         >
           <Plus className="w-4 h-4" />
           New Sequence
-        </button>
+        </PopButton>
       </div>
 
       {/* Loading */}
-      {loading && (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        </div>
-      )}
+      {loading && <PageSkeleton />}
 
       {/* Empty state */}
       {!loading && sequences.length === 0 && (
@@ -412,16 +412,17 @@ const FollowUpsContent: React.FC = () => {
               SMS or email after missed calls, completed appointments, or new lead
               events.
             </p>
-            <button
+            <PopButton
+              color="blue"
               onClick={() => {
                 setEditingSequence(null);
                 setModalOpen(true);
               }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+              className="gap-2"
             >
               <Plus className="w-4 h-4" />
               Create Sequence
-            </button>
+            </PopButton>
           </div>
         </motion.div>
       )}
@@ -807,20 +808,22 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
 
           {/* Footer */}
           <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
-            <button
+            <PopButton
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              size="sm"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton
+              color="blue"
+              size="sm"
               onClick={handleSave}
               disabled={saving}
-              className="flex items-center gap-2 px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+              className="gap-2"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {isEdit ? 'Save Changes' : 'Create Sequence'}
-            </button>
+            </PopButton>
           </div>
         </div>
       </motion.div>
@@ -1024,21 +1027,19 @@ const EnrollmentsPanel: React.FC<EnrollmentsPanelProps> = ({
             </div>
           </div>
         </div>
-        <button
+        <PopButton
+          color="blue"
+          size="sm"
           onClick={onEnrollNew}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="gap-2"
         >
           <UserPlus className="w-4 h-4" />
           Manual Enroll
-        </button>
+        </PopButton>
       </div>
 
       {/* Loading */}
-      {loading && (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        </div>
-      )}
+      {loading && <PageSkeleton />}
 
       {/* Empty */}
       {!loading && enrollments.length === 0 && (
@@ -1250,20 +1251,22 @@ const EnrollModal: React.FC<EnrollModalProps> = ({
 
           {/* Footer */}
           <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
-            <button
+            <PopButton
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              size="sm"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton
+              color="blue"
+              size="sm"
               onClick={handleEnroll}
               disabled={saving}
-              className="flex items-center gap-2 px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+              className="gap-2"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               Enroll Contact
-            </button>
+            </PopButton>
           </div>
         </div>
       </motion.div>

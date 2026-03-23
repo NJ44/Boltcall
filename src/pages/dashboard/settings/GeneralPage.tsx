@@ -8,6 +8,7 @@ import { useToast } from '../../../contexts/ToastContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTokens } from '../../../contexts/TokenContext';
 import { supabase } from '../../../lib/supabase';
+import { PopButton } from '../../../components/ui/pop-button';
 import Button from '../../../components/ui/Button';
 import ModalShell from '../../../components/ui/modal-shell';
 
@@ -456,10 +457,11 @@ const GeneralPage: React.FC = () => {
           )}
         </div>
         <Magnetic>
-          <button
+          <PopButton
+            color="blue"
             onClick={handleSave}
             disabled={isSaving}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="gap-2"
           >
             {isSaving ? (
               <>
@@ -472,7 +474,7 @@ const GeneralPage: React.FC = () => {
                 {t('common.save')}
               </>
             )}
-          </button>
+          </PopButton>
         </Magnetic>
       </motion.div>
 
@@ -524,16 +526,15 @@ const GeneralPage: React.FC = () => {
         description="This action cannot be undone. This will permanently delete your workspace, all associated data, members, and settings."
         footer={
           <>
-            <button
+            <PopButton
               type="button"
               onClick={() => {
                 setShowDeleteModal(false);
                 setDeleteConfirmText('');
               }}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
+            </PopButton>
             <button
               type="button"
               onClick={async () => {

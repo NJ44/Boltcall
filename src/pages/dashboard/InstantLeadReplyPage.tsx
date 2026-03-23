@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, Copy, Send, Loader2 } from 'lucide-react';
+import { PopButton } from '../../components/ui/pop-button';
+import { CopyButton } from '../../components/ui/copy-button';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
@@ -367,10 +369,11 @@ document.getElementById("lead-form")
                     </div>
 
                     {/* Connect / Reconnect Button */}
-                    <button
+                    <PopButton
+                      color="blue"
                       onClick={handleConnectFacebook}
                       disabled={fbConnecting}
-                      className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full gap-2"
                     >
                       {fbConnecting ? (
                         <>
@@ -382,7 +385,7 @@ document.getElementById("lead-form")
                       ) : (
                         'Connect Facebook'
                       )}
-                    </button>
+                    </PopButton>
                   </div>
                 )}
 
@@ -403,17 +406,12 @@ document.getElementById("lead-form")
                         <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800">
                           {webhookUrl}
                         </code>
-                        <button
-                          onClick={() => handleCopy(webhookUrl, 'url')}
-                          className="p-2 hover:bg-gray-200 rounded-lg transition-colors flex-shrink-0"
-                          title="Copy URL"
-                        >
-                          {copied === 'url' ? (
-                            <CheckCircle className="w-4 h-4 text-green-600" />
-                          ) : (
-                            <Copy className="w-4 h-4 text-gray-500" />
-                          )}
-                        </button>
+                        <CopyButton
+                          textToCopy={webhookUrl}
+                          label=""
+                          copiedLabel=""
+                          className="p-2 px-2 h-auto flex-shrink-0"
+                        />
                       </div>
                     </div>
 
@@ -425,17 +423,12 @@ document.getElementById("lead-form")
                           {user?.id || 'Loading...'}
                         </code>
                         {user?.id && (
-                          <button
-                            onClick={() => handleCopy(user.id, 'userId')}
-                            className="p-2 hover:bg-gray-200 rounded-lg transition-colors flex-shrink-0"
-                            title="Copy User ID"
-                          >
-                            {copied === 'userId' ? (
-                              <CheckCircle className="w-4 h-4 text-green-600" />
-                            ) : (
-                              <Copy className="w-4 h-4 text-gray-500" />
-                            )}
-                          </button>
+                          <CopyButton
+                            textToCopy={user.id}
+                            label=""
+                            copiedLabel=""
+                            className="p-2 px-2 h-auto flex-shrink-0"
+                          />
                         )}
                       </div>
                       <p className="text-xs text-gray-500 mt-1">Include this in every request so leads are linked to your account.</p>
@@ -445,16 +438,10 @@ document.getElementById("lead-form")
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-medium text-gray-900 text-sm">JavaScript (fetch)</h4>
-                        <button
-                          onClick={() => handleCopy(fetchSnippet, 'fetch')}
-                          className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
-                        >
-                          {copied === 'fetch' ? (
-                            <><CheckCircle className="w-3 h-3" /> Copied</>
-                          ) : (
-                            <><Copy className="w-3 h-3" /> Copy</>
-                          )}
-                        </button>
+                        <CopyButton
+                          textToCopy={fetchSnippet}
+                          className="py-1 px-3 text-xs h-auto"
+                        />
                       </div>
                       <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
                         {fetchSnippet}
@@ -465,16 +452,10 @@ document.getElementById("lead-form")
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-medium text-gray-900 text-sm">HTML Form Example</h4>
-                        <button
-                          onClick={() => handleCopy(htmlFormSnippet, 'html')}
-                          className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
-                        >
-                          {copied === 'html' ? (
-                            <><CheckCircle className="w-3 h-3" /> Copied</>
-                          ) : (
-                            <><Copy className="w-3 h-3" /> Copy</>
-                          )}
-                        </button>
+                        <CopyButton
+                          textToCopy={htmlFormSnippet}
+                          className="py-1 px-3 text-xs h-auto"
+                        />
                       </div>
                       <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
                         {htmlFormSnippet}

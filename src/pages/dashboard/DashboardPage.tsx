@@ -124,7 +124,7 @@ const DashboardPage: React.FC = () => {
             {[
               { id: 1, title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents', completed: true },
               { id: 2, title: 'Connect Cal.com', description: 'Link your calendar', link: '/dashboard/calcom', completed: true },
-              { id: 3, title: 'Setup AI Receptionist', description: 'Configure your receptionist', link: '/dashboard/agents', completed: true },
+              { id: 3, title: 'Setup AI Receptionist', description: 'Configure your receptionist', link: '/dashboard/ai-receptionist', completed: true },
               { id: 4, title: 'Configure Phone Numbers', description: 'Set up your phone numbers', link: '/dashboard/phone-numbers', completed: true },
               { id: 5, title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', completed: false, timeEstimate: 'About 1 min' },
               { id: 6, title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents', completed: false, timeEstimate: 'About 1 min' },

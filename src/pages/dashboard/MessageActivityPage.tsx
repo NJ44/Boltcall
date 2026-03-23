@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
   Activity,
   Loader2,
@@ -161,9 +162,7 @@ const MessageActivityPage: React.FC = () => {
 
       {/* Messages list */}
       {loading ? (
-        <div className="flex items-center justify-center py-16">
-          <Loader2 className="w-6 h-6 text-brand-blue animate-spin" />
-        </div>
+        <PageSkeleton />
       ) : messages.length === 0 ? (
         <div className="text-center py-16">
           <Activity className="w-12 h-12 text-gray-300 mx-auto mb-3" />

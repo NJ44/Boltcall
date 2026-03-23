@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Coins, Gift, Clock, Phone, MessageCircle, MessageSquare, Loader2, CheckCircle2, Circle } from 'lucide-react';
+import { PageSkeleton } from '../../../components/ui/loading-skeleton';
 import { useTranslation } from 'react-i18next';
 import { useTokens } from '../../../contexts/TokenContext';
 import { TOKEN_REWARDS, tokensToMinutes, tokensToMessages, tokensToSms } from '../../../lib/tokens';
@@ -87,11 +88,7 @@ const UsagePage: React.FC = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (

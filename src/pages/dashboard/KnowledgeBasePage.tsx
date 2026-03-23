@@ -11,6 +11,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import { CheckCircle2, Circle } from 'lucide-react';
+import { PopButton } from '../../components/ui/pop-button';
 
 const FUNCTIONS_BASE = import.meta.env.DEV
   ? 'http://localhost:8888/.netlify/functions'
@@ -806,14 +807,14 @@ const KnowledgeBasePage: React.FC = () => {
 
                 {/* New Knowledge Base Dropdown */}
                 <div className="relative" ref={dropdownRef}>
-                  <button
+                  <PopButton color="blue"
                     onClick={handleAddDocument}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                    className="gap-2"
                   >
                     <span className="font-bold hidden md:inline">New Knowledge Base</span>
                     <span className="font-bold md:hidden">New KB</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-                  </button>
+                  </PopButton>
                   
                   <AnimatePresence>
                     {showDropdown && (
@@ -951,20 +952,19 @@ const KnowledgeBasePage: React.FC = () => {
         maxWidth="max-w-2xl"
         footer={
           <>
-            <button
+            <PopButton
               onClick={handleCloseNewKnowledgeBase}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton color="blue"
               onClick={handleSaveNewKnowledgeBase}
               disabled={!knowledgeBaseName.trim() || kbDocuments.length === 0}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="gap-2"
             >
               <Save className="w-4 h-4" />
               Save
-            </button>
+            </PopButton>
           </>
         }
       >
@@ -985,14 +985,14 @@ const KnowledgeBasePage: React.FC = () => {
         {/* Add Documents Button */}
         <div className="mb-6">
           <div className="relative" ref={kbDropdownRef}>
-            <button
+            <PopButton color="blue"
               onClick={handleAddKbDocument}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="gap-2"
             >
               <Plus className="h-4 w-4" />
               <span className="font-medium">Add Documents</span>
               <ChevronDown className={`h-4 w-4 transition-transform ${showKbDocumentDropdown ? 'rotate-180' : ''}`} />
-            </button>
+            </PopButton>
 
             <AnimatePresence>
               {showKbDocumentDropdown && (
@@ -1086,38 +1086,34 @@ const KnowledgeBasePage: React.FC = () => {
         }
         footer={
           <>
-            <button
+            <PopButton
               onClick={handleClosePopup}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
+            </PopButton>
             {popupType === 'url' && (
-              <button
+              <PopButton color="blue"
                 onClick={handleSubmitUrl}
                 disabled={!urlInput}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {showNewKnowledgeBaseModal ? 'Add' : 'Import'}
-              </button>
+              </PopButton>
             )}
             {popupType === 'file' && (
-              <button
+              <PopButton color="blue"
                 onClick={handleSubmitFile}
                 disabled={!fileInput}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {showNewKnowledgeBaseModal ? 'Add' : 'Upload'}
-              </button>
+              </PopButton>
             )}
             {popupType === 'blank' && (
-              <button
+              <PopButton color="blue"
                 onClick={handleSubmitBlankPage}
                 disabled={!blankPageTitle}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {showNewKnowledgeBaseModal ? 'Add' : 'Create'}
-              </button>
+              </PopButton>
             )}
           </>
         }
@@ -1202,19 +1198,18 @@ const KnowledgeBasePage: React.FC = () => {
               />
               
               <div className="flex justify-end gap-3">
-                <button
+                <PopButton
                   onClick={handleCancelEdit}
-                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                   Cancel
-                </button>
-                  <button
+                </PopButton>
+                  <PopButton color="blue"
                     onClick={handleSaveDocument}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                    className="gap-2"
                   >
                     <Save className="w-4 h-4" />
                     Save Changes
-                  </button>
+                  </PopButton>
               </div>
             </motion.div>
           </motion.div>

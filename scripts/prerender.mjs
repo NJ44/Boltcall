@@ -80,6 +80,7 @@ const ROUTES = [
   '/blog/ai-receptionist-for-plumbers',
   '/compare/boltcall-vs-smith-ai',
   '/ai-readiness-scorecard',
+  '/ai-receptionist-roi',
   '/blog/ai-receptionist-cost-pricing',
   '/blog/ai-vs-human-receptionist',
   '/blog/answering-service-scheduling',

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
   Phone,
   MessageSquare,
@@ -174,14 +175,7 @@ const AnalyticsPage: React.FC = () => {
 
   /* ----- Loading state ----- */
   if (loading && !stats) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-brand-blue animate-spin" />
-          <p className="text-sm text-text-muted">Loading analytics...</p>
-        </div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   /* ----- Error state ----- */

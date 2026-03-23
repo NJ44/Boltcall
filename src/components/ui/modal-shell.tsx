@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -24,7 +25,7 @@ const ModalShell: React.FC<ModalShellProps> = ({
   footer,
   className,
 }) => {
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <>
@@ -87,7 +88,8 @@ const ModalShell: React.FC<ModalShellProps> = ({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

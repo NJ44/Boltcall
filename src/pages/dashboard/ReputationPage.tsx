@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Save, Loader2, Check, AlertCircle, MessageSquare } from 'lucide-react';
+import { PopButton } from '../../components/ui/pop-button';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
@@ -155,11 +157,7 @@ const ReputationPage: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (
@@ -337,10 +335,11 @@ const ReputationPage: React.FC = () => {
 
           {/* Save Button */}
           <div className="flex items-center justify-end gap-3 pt-4">
-            <button
+            <PopButton
+              color="blue"
               onClick={handleSave}
               disabled={saving || !googleReviewUrl}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg font-medium transition-colors"
+              className="gap-2"
             >
               {saving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -350,7 +349,7 @@ const ReputationPage: React.FC = () => {
                 <Save className="w-4 h-4" />
               )}
               {saved ? 'Saved!' : 'Save & Activate'}
-            </button>
+            </PopButton>
           </div>
         </div>
       </motion.div>

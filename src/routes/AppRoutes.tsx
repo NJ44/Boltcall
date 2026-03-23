@@ -27,6 +27,7 @@ const SettingsLayout = React.lazy(() => import('../components/dashboard/Settings
 const DashboardPage = React.lazy(() => import('../pages/dashboard/DashboardPage'));
 const AnalyticsPage = React.lazy(() => import('../pages/dashboard/AnalyticsPage'));
 const AgentsPage = React.lazy(() => import('../pages/dashboard/AgentsPage'));
+const ReceptionistPage = React.lazy(() => import('../pages/dashboard/ReceptionistPage'));
 const SmsPage = React.lazy(() => import('../pages/dashboard/SmsPage'));
 const WhatsappPage = React.lazy(() => import('../pages/dashboard/WhatsappPage'));
 const SettingsPage = React.lazy(() => import('../pages/dashboard/SettingsPage'));
@@ -93,6 +94,7 @@ const SolarSpeedToLeadPlaybook = React.lazy(() => import('../pages/SolarSpeedToL
 const SolarSpeedToLeadPlaybookThankYou = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybookThankYou'));
 const VoiceAgentOnboarding = React.lazy(() => import('../pages/VoiceAgentOnboarding'));
 const AiReadinessScorecard = React.lazy(() => import('../pages/AiReadinessScorecard'));
+const AiReceptionistRoi = React.lazy(() => import('../pages/AiReceptionistRoi'));
 
 // ── Lazy loads — Speed Test funnel ───────────────────────────────────────
 const SpeedTestLanding = React.lazy(() => import('../pages/speed-test/SpeedTestLanding'));
@@ -233,6 +235,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="messages" element={<PlanGate requiredPlan="pro"><MessagesPage /></PlanGate>} />
 
           {/* Starter-gated pages */}
+          <Route path="ai-receptionist" element={<PlanGate requiredPlan="starter"><ReceptionistPage /></PlanGate>} />
           <Route path="agents" element={<PlanGate requiredPlan="starter"><AgentsPage /></PlanGate>} />
           <Route path="agent-tests" element={<Navigate to="/dashboard/agents" replace />} />
           <Route path="voice-library" element={<PlanGate requiredPlan="starter"><VoiceLibraryPage /></PlanGate>} />
@@ -418,6 +421,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
         <Route path="/ai-readiness-scorecard" element={<AiReadinessScorecard />} />
+        <Route path="/ai-receptionist-roi" element={<AiReceptionistRoi />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
         <Route path="/admin" element={<AdminPanel />} />

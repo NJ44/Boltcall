@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
-  Copy,
+  Copy as CopyIcon,
   Check,
   Code,
   MessageCircle,
@@ -16,6 +17,8 @@ import {
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { Magnetic } from '../../components/ui/magnetic';
+import { PopButton } from '../../components/ui/pop-button';
+import { CopyButton } from '../../components/ui/copy-button';
 
 const WebsiteBubblePage: React.FC = () => {
   const { user } = useAuth();
@@ -129,11 +132,7 @@ const WebsiteBubblePage: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (
@@ -198,18 +197,10 @@ const WebsiteBubblePage: React.FC = () => {
                 <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
                   <code>{embedCode}</code>
                 </pre>
-                <button
-                  onClick={copyEmbedCode}
-                  className="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded transition-colors flex items-center gap-1"
-                  title="Copy to clipboard"
-                >
-                  {codeCopied ? (
-                    <Check className="w-4 h-4" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
-                  <span className="text-xs">{codeCopied ? 'Copied!' : 'Copy'}</span>
-                </button>
+                <CopyButton
+                  textToCopy={embedCode}
+                  className="absolute top-2 right-2"
+                />
               </div>
             </div>
 
@@ -332,10 +323,11 @@ const WebsiteBubblePage: React.FC = () => {
         {/* Save Button */}
         <div className="flex items-center justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
           <Magnetic>
-            <button
+            <PopButton
+              color="blue"
               onClick={handleSaveChatbotConfig}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg font-medium transition-colors"
+              className="gap-2"
             >
               {saving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -345,7 +337,7 @@ const WebsiteBubblePage: React.FC = () => {
                 <Save className="w-4 h-4" />
               )}
               {saved ? 'Saved!' : 'Save Configuration'}
-            </button>
+            </PopButton>
           </Magnetic>
         </div>
       </motion.div>

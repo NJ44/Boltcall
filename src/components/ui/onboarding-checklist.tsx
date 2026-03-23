@@ -2,9 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, ChevronLeft, ChevronRight, CheckCircle2, Circle, PartyPopper, Zap } from "lucide-react";
-import * as Dialog from "@radix-ui/react-dialog";
-import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight, PartyPopper, Zap, X } from "lucide-react";
 import { Button } from "./Button";
 import confetti from "canvas-confetti";
 
@@ -24,8 +22,6 @@ export interface InteractiveOnboardingChecklistProps {
   onOpenChange?(open: boolean): void;
   onCompleteStep?(id: string): void;
   onFinish?(): void;
-  accentColorVar?: string;
-  placement?: "left" | "right";
 }
 
 
@@ -105,7 +101,8 @@ const CoachmarkOverlay = ({
         onPrev();
       } else if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        onComplete();
+        if (isLast) onComplete();
+        else onNext();
       }
     };
 
@@ -119,7 +116,6 @@ const CoachmarkOverlay = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-
         className="fixed inset-0 z-[9998] bg-black/50 flex items-center justify-center"
         role="dialog"
         aria-modal="true"
@@ -129,22 +125,27 @@ const CoachmarkOverlay = ({
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-
-          className="bg-card border rounded-xl p-6 max-w-md mx-4 shadow-lg"
+          className="bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] rounded-xl p-6 max-w-md mx-4 shadow-lg"
         >
-          <h3 id="coachmark-title" className="font-semibold text-lg mb-2">
+          <h3 id="coachmark-title" className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">
             {step.title}
           </h3>
-          <p className="text-muted-foreground mb-4">
-            Target element not found. Please ensure the element with selector "{step.targetSelector}" exists.
+          <p className="text-gray-500 mb-4">
+            This element isn't visible right now. Skip to the next step.
           </p>
           <div className="flex justify-end gap-2">
             <Button variant="outline" size="sm" onClick={onClose}>
-              Close
+              Skip Tour
             </Button>
-            <Button size="sm" onClick={onComplete}>
-              Mark Complete
-            </Button>
+            {!isLast ? (
+              <Button size="sm" onClick={onNext} className="bg-blue-600 text-white hover:bg-blue-700">
+                Next
+              </Button>
+            ) : (
+              <Button size="sm" onClick={onComplete} className="bg-blue-600 text-white hover:bg-blue-700">
+                Done
+              </Button>
+            )}
           </div>
         </motion.div>
       </motion.div>
@@ -160,7 +161,6 @@ const CoachmarkOverlay = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-
       className="fixed inset-0 z-[9998] pointer-events-none"
       role="dialog"
       aria-modal="true"
@@ -169,19 +169,28 @@ const CoachmarkOverlay = ({
         background: `radial-gradient(circle at ${left + width/2}px ${top + height/2}px, transparent ${Math.max(width, height)/2 + spotlightPadding}px, rgba(0,0,0,0.7) ${Math.max(width, height)/2 + spotlightPadding + 1}px)`
       }}
     >
+      {/* Skip button top-right */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 pointer-events-auto z-[10000] text-white/70 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+        aria-label="Skip tour"
+      >
+        <X className="h-5 w-5" />
+      </button>
 
+      {/* Spotlight border ring */}
       <div
-        className="absolute border-2 border-blue-500 rounded-lg shadow-lg z-[9999]"
+        className="absolute border-2 border-white rounded-lg z-[9999]"
         style={{
           top: top - spotlightPadding,
           left: left - spotlightPadding,
           width: width + spotlightPadding * 2,
           height: height + spotlightPadding * 2,
-          boxShadow: `0 0 0 2px #3b82f6, 0 0 20px rgba(0,0,0,0.3)`
+          boxShadow: `0 0 0 2px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.15)`
         }}
       />
 
-
+      {/* Tooltip card */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0, y: 10 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -192,36 +201,17 @@ const CoachmarkOverlay = ({
           stiffness: 400,
           opacity: { duration: 0.15 }
         }}
-
-        className="absolute bg-card border rounded-xl p-4 shadow-xl max-w-sm pointer-events-auto z-[9999]"
+        className="absolute bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] rounded-xl p-4 shadow-2xl max-w-sm pointer-events-auto z-[9999]"
         style={(() => {
-          const cardWidth = 384;
-          const cardHeight = 200;
+          const cardWidth = 340;
+          const cardHeight = 180;
           const margin = 16;
-          const onboardingCardWidth = 320;
-          const onboardingCardHeight = 400;
 
           const positions = [
-            {
-              top: top + height + margin,
-              left: left + (width / 2) - (cardWidth / 2),
-              priority: 1
-            },
-            {
-              top: top - cardHeight - margin,
-              left: left + (width / 2) - (cardWidth / 2),
-              priority: 2
-            },
-            {
-              top: top + (height / 2) - (cardHeight / 2),
-              left: left + width + margin,
-              priority: 3
-            },
-            {
-              top: top + (height / 2) - (cardHeight / 2),
-              left: left - cardWidth - margin,
-              priority: 4
-            }
+            { top: top + height + margin, left: left + (width / 2) - (cardWidth / 2), priority: 1 },
+            { top: top - cardHeight - margin, left: left + (width / 2) - (cardWidth / 2), priority: 2 },
+            { top: top + (height / 2) - (cardHeight / 2), left: left + width + margin, priority: 3 },
+            { top: top + (height / 2) - (cardHeight / 2), left: left - cardWidth - margin, priority: 4 }
           ];
 
           const bestPosition = positions
@@ -229,87 +219,83 @@ const CoachmarkOverlay = ({
               ...pos,
               fitsHorizontally: pos.left >= margin && pos.left + cardWidth <= window.innerWidth - margin,
               fitsVertically: pos.top >= margin && pos.top + cardHeight <= window.innerHeight - margin,
-              overlapsOnboarding: (
-                pos.left + cardWidth > window.innerWidth - onboardingCardWidth - margin * 2 &&
-                pos.top + cardHeight > window.innerHeight - onboardingCardHeight - margin * 2
-              )
             }))
-            .filter(pos => pos.fitsHorizontally && pos.fitsVertically && !pos.overlapsOnboarding)
+            .filter(pos => pos.fitsHorizontally && pos.fitsVertically)
             .sort((a, b) => a.priority - b.priority)[0];
 
           if (bestPosition) {
-            return {
-              top: bestPosition.top,
-              left: bestPosition.left
-            };
-          }
-
-          let fallbackTop = top + height + margin;
-          let fallbackLeft = left + (width / 2) - (cardWidth / 2);
-
-          fallbackLeft = Math.max(margin, Math.min(fallbackLeft, window.innerWidth - cardWidth - margin));
-
-          const maxTop = window.innerHeight - cardHeight - margin;
-          const onboardingTop = window.innerHeight - onboardingCardHeight - margin * 2;
-
-          if (fallbackTop + cardHeight > onboardingTop && fallbackLeft + cardWidth > window.innerWidth - onboardingCardWidth - margin * 2) {
-            fallbackTop = Math.max(margin, top - cardHeight - margin);
-          } else {
-            fallbackTop = Math.max(margin, Math.min(fallbackTop, maxTop));
+            return { top: bestPosition.top, left: bestPosition.left };
           }
 
           return {
-            top: fallbackTop,
-            left: fallbackLeft
+            top: Math.max(margin, Math.min(top + height + margin, window.innerHeight - cardHeight - margin)),
+            left: Math.max(margin, Math.min(left + (width / 2) - (cardWidth / 2), window.innerWidth - cardWidth - margin))
           };
         })()}
       >
         <div className="mb-3">
-          <h3 id="coachmark-title" className="font-semibold text-base mb-1">
+          <h3 id="coachmark-title" className="font-semibold text-base mb-1 text-gray-900 dark:text-white">
             {step.title}
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs text-gray-400">
             Step {stepIndex + 1} of {totalSteps}
           </p>
         </div>
 
         {step.description && (
-          <p className="text-sm text-foreground mb-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
             {step.description}
           </p>
         )}
 
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onPrev}
-            disabled={isFirst}
-            aria-label="Previous step"
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Prev
-          </Button>
-          {isLast ? (
-            <Button
-              size="sm"
-              onClick={onComplete}
-              aria-label="Complete onboarding"
-              className="bg-blue-600 text-white hover:bg-blue-700"
-            >
-              Done
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onNext}
-              aria-label="Next step"
-            >
-              Next
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
-          )}
+        <div className="flex items-center justify-between">
+          {/* Step dots */}
+          <div className="flex items-center gap-1.5">
+            {Array.from({ length: totalSteps }).map((_, i) => (
+              <div
+                key={i}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  i === stepIndex ? 'bg-blue-600' : i < stepIndex ? 'bg-blue-300' : 'bg-gray-300 dark:bg-gray-600'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Nav buttons */}
+          <div className="flex items-center gap-2">
+            {!isFirst && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onPrev}
+                aria-label="Previous step"
+                className="h-8 px-3 text-xs"
+              >
+                <ChevronLeft className="h-3.5 w-3.5 mr-1" />
+                Prev
+              </Button>
+            )}
+            {isLast ? (
+              <Button
+                size="sm"
+                onClick={onComplete}
+                aria-label="Complete onboarding"
+                className="h-8 px-4 text-xs bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Done
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                onClick={onNext}
+                aria-label="Next step"
+                className="h-8 px-3 text-xs bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Next
+                <ChevronRight className="h-3.5 w-3.5 ml-1" />
+              </Button>
+            )}
+          </div>
         </div>
       </motion.div>
     </motion.div>
@@ -324,13 +310,10 @@ export function InteractiveOnboardingChecklist({
   onOpenChange,
   onCompleteStep,
   onFinish,
-  accentColorVar: _accentColorVar = "--primary",
-  placement: _placement = "right"
 }: InteractiveOnboardingChecklistProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [showCelebration, setShowCelebration] = useState(false);
   const [internalCompletedSteps, setInternalCompletedSteps] = useState<Set<string>>(new Set());
-
 
   const completedSteps = new Set([
     ...steps.filter(step => step.completed).map(step => step.id),
@@ -341,34 +324,25 @@ export function InteractiveOnboardingChecklist({
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 
-
   const advanceToNextStep = useCallback((completedStepId: string) => {
-
     const newCompletedSteps = new Set([
       ...steps.filter(step => step.completed).map(step => step.id),
       ...internalCompletedSteps,
       completedStepId
     ]);
 
-
     const currentStepIndex = steps.findIndex(step => step.id === completedStepId);
     const nextIncompleteStep = steps.slice(currentStepIndex + 1).find(step => !newCompletedSteps.has(step.id));
 
     if (nextIncompleteStep) {
-
       setActiveCoachmark(nextIncompleteStep.id);
     } else {
-
       setActiveCoachmark(null);
     }
 
-
-    const completedAllSteps = steps.filter(step =>
-      newCompletedSteps.has(step.id)
-    );
+    const completedAllSteps = steps.filter(step => newCompletedSteps.has(step.id));
 
     if (completedAllSteps.length === steps.length) {
-      // Fire side cannons confetti
       const end = Date.now() + 3 * 1000;
       const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
       const frame = () => {
@@ -378,18 +352,15 @@ export function InteractiveOnboardingChecklist({
         requestAnimationFrame(frame);
       };
       frame();
-
-      // Show celebration message
       setShowCelebration(true);
     }
   }, [steps, internalCompletedSteps]);
 
-
+  // Auto-start first step when opened
   useEffect(() => {
     if (open && !activeCoachmark) {
       const firstIncompleteStep = steps.find(step => !completedSteps.has(step.id));
       if (firstIncompleteStep) {
-
         const timer = setTimeout(() => {
           setActiveCoachmark(firstIncompleteStep.id);
         }, 400);
@@ -398,12 +369,11 @@ export function InteractiveOnboardingChecklist({
     }
   }, [open, activeCoachmark, steps, completedSteps]);
 
-
+  // Skip completed steps
   useEffect(() => {
     if (activeCoachmark) {
       const activeStep = steps.find(s => s.id === activeCoachmark);
       if (activeStep && activeStep.completed) {
-
         setTimeout(() => {
           advanceToNextStep(activeCoachmark);
         }, 500);
@@ -411,192 +381,36 @@ export function InteractiveOnboardingChecklist({
     }
   }, [steps, activeCoachmark, advanceToNextStep]);
 
-  const handleOpenChange = (newOpen: boolean) => {
-
-    if (!newOpen && activeCoachmark) {
-      return;
-    }
-
+  const handleClose = () => {
+    setActiveCoachmark(null);
     if (!isControlled) {
-      setInternalOpen(newOpen);
+      setInternalOpen(false);
     }
-    onOpenChange?.(newOpen);
-
-    if (!newOpen) {
-      setActiveCoachmark(null);
-    }
+    onOpenChange?.(false);
   };
 
   const handleCompleteStep = (stepId: string) => {
     setInternalCompletedSteps(prev => new Set([...prev, stepId]));
     onCompleteStep?.(stepId);
-
-
     setTimeout(() => {
       advanceToNextStep(stepId);
     }, 500);
   };
 
-  const handleStepClick = (step: Step) => {
-    if (completedSteps.has(step.id)) return;
-    setActiveCoachmark(step.id);
-  };
-
   const activeStep = activeCoachmark ? steps.find(s => s.id === activeCoachmark) : null;
   const activeStepIndex = activeStep ? steps.indexOf(activeStep) : -1;
-
-  const completedCount = steps.filter(step => completedSteps.has(step.id)).length;
   const totalSteps = steps.length;
-  const progress = (completedCount / totalSteps) * 100;
-
-  const allStepsCompleted = completedCount === totalSteps;
-
 
   const hasPrevIncompleteStep = activeStepIndex > 0 &&
     steps.slice(0, activeStepIndex).some(step => !completedSteps.has(step.id));
   const hasNextIncompleteStep = activeStepIndex < totalSteps - 1 &&
     steps.slice(activeStepIndex + 1).some(step => !completedSteps.has(step.id));
 
+  if (!open) return null;
+
   return (
     <>
-      <Dialog.Root open={open} onOpenChange={handleOpenChange} modal={false}>
-        <Dialog.Portal>
-          <Dialog.Content
-            className="fixed bottom-4 right-4 z-50 w-80 max-h-[calc(100vh-2rem)] bg-card border rounded-xl shadow-xl pointer-events-auto"
-            onOpenAutoFocus={(e) => e.preventDefault()}
-            onEscapeKeyDown={(e) => e.preventDefault()}
-            onPointerDownOutside={(e) => e.preventDefault()}
-            onInteractOutside={(e) => e.preventDefault()}
-          >
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: [0.4, 0.0, 0.2, 1]
-              }}
-              className="flex flex-col h-full"
-            >
-
-              <div className="p-6 border-b">
-                <div className="flex items-center justify-between mb-4">
-                  <Dialog.Title className="text-lg font-semibold">
-                    Getting Started
-                  </Dialog.Title>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6"
-                    onClick={() => {
-                      setActiveCoachmark(null);
-                      if (!isControlled) {
-                        setInternalOpen(false);
-                      }
-                      onOpenChange?.(false);
-                    }}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Progress</span>
-                    <span className="font-medium">{completedCount}/{totalSteps}</span>
-                  </div>
-                  <div className="w-full bg-muted rounded-full h-2">
-                    <motion.div
-                      className="h-2 rounded-full bg-primary"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-
-              <div className="flex-1 overflow-y-auto p-6 min-h-0">
-                <ul role="list" className="space-y-3">
-                  {steps.map((step, _index) => {
-                    const isCompleted = completedSteps.has(step.id);
-                    const isActive = activeCoachmark === step.id;
-
-                    return (
-                      <li key={step.id}>
-                        <button
-                          onClick={() => handleStepClick(step)}
-                          disabled={isCompleted}
-                          className={cn(
-                            "w-full text-left p-3 rounded-lg border transition-colors",
-                            "hover:bg-accent/50 focus:outline-none focus:ring-2 focus:ring-ring",
-                            isCompleted && "bg-green-50 border-green-200 cursor-default dark:bg-green-950/20 dark:border-green-800",
-                            isActive && "ring-2 ring-primary"
-                          )}
-                          aria-describedby={`step-${step.id}-description`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className="mt-0.5">
-                              {isCompleted ? (
-                                <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center">
-                                  <Check className="h-3 w-3 text-white" />
-                                </div>
-                              ) : (
-                                <Circle className="h-5 w-5 text-muted-foreground" />
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className={cn(
-                                  "font-medium text-sm",
-                                  isCompleted ? "text-muted-foreground line-through" : "text-foreground"
-                                )}>
-                                  {step.title}
-                                </span>
-                              </div>
-                              {step.description && (
-                                <p
-                                  id={`step-${step.id}-description`}
-                                  className={cn(
-                                    "text-xs",
-                                    isCompleted ? "text-muted-foreground" : "text-muted-foreground"
-                                  )}
-                                >
-                                  {step.description}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-
-
-              {allStepsCompleted && (
-                <div className="p-6 border-t">
-                  <Button
-                    className="w-full"
-                    onClick={() => {
-                      onFinish?.();
-                      handleOpenChange(false);
-                    }}
-                  >
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    Finish Setup
-                  </Button>
-                </div>
-              )}
-            </motion.div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
-
+      {/* Coachmark spotlight overlay */}
       <AnimatePresence>
         {activeStep && (
           <CoachmarkOverlay
@@ -622,7 +436,7 @@ export function InteractiveOnboardingChecklist({
               }
             }}
             onComplete={() => handleCompleteStep(activeStep.id)}
-            onClose={() => setActiveCoachmark(null)}
+            onClose={handleClose}
           />
         )}
       </AnimatePresence>
@@ -662,7 +476,7 @@ export function InteractiveOnboardingChecklist({
                   onClick={() => {
                     setShowCelebration(false);
                     onFinish?.();
-                    handleOpenChange(false);
+                    handleClose();
                   }}
                   className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors text-base"
                 >

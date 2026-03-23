@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import { MessageSquare, Edit, Trash2, Calendar, Phone, Clock, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import ModalShell from '../../components/ui/modal-shell';
 import { Magnetic } from '../../components/ui/magnetic';
+import { PopButton } from '../../components/ui/pop-button';
 import { supabase } from '../../lib/supabase';
 
 /**
@@ -172,36 +174,7 @@ const SmsBookingPage: React.FC = () => {
 
   // Loading skeleton
   if (loading) {
-    return (
-      <div className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <Loader2 className="w-5 h-5 animate-spin text-blue-500" />
-              <span className="text-sm text-gray-600">Loading SMS messages...</span>
-            </div>
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="animate-pulse flex items-center gap-6">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0" />
-                  <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-1/4" />
-                    <div className="h-3 bg-gray-100 rounded w-1/3" />
-                  </div>
-                  <div className="h-4 bg-gray-200 rounded w-20" />
-                  <div className="h-4 bg-gray-200 rounded w-16" />
-                  <div className="flex-1 h-4 bg-gray-100 rounded" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (
@@ -331,18 +304,19 @@ const SmsBookingPage: React.FC = () => {
         description={selectedBooking ? `Are you sure you want to remove the SMS record for ${selectedBooking.clientPhone}? This only removes it from the list view.` : ''}
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => setShowDeleteModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              size="sm"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton
+              color="red"
+              size="sm"
               onClick={() => selectedBooking && handleDeleteBooking(selectedBooking.id)}
-              className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
             >
               Remove
-            </button>
+            </PopButton>
           </>
         }
       >
@@ -357,13 +331,15 @@ const SmsBookingPage: React.FC = () => {
         title="Send SMS"
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => setShowAddModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              size="sm"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton
+              color="blue"
+              size="sm"
               onClick={() => {
                 if (selectedPhoneNumber && selectedAgent) {
                   // Handle the save logic here
@@ -371,10 +347,9 @@ const SmsBookingPage: React.FC = () => {
                 }
               }}
               disabled={!selectedPhoneNumber || !selectedAgent}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
               Save
-            </button>
+            </PopButton>
           </>
         }
       >
@@ -421,19 +396,20 @@ const SmsBookingPage: React.FC = () => {
         maxWidth="max-w-2xl"
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => setShowEditModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              size="sm"
             >
               Cancel
-            </button>
+            </PopButton>
             <Magnetic>
-              <button
+              <PopButton
+                color="blue"
+                size="sm"
                 onClick={handleSaveBooking}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
               >
                 Save Changes
-              </button>
+              </PopButton>
             </Magnetic>
           </>
         }

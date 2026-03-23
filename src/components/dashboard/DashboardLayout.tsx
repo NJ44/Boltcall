@@ -313,7 +313,7 @@ const DashboardLayout: React.FC = () => {
 
   // SERVICES
   const navItemsServices = [
-    { to: '/dashboard/agents', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/ai-receptionist', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('common.beta') as string },
     { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },

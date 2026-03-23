@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap, Coins } from 'lucide-react';
+import { PopButton } from '../../../components/ui/pop-button';
+import { PageSkeleton } from '../../../components/ui/loading-skeleton';
 import { useTranslation } from 'react-i18next';
 import { getUserSubscription, getUserInvoices, type PlanLevel } from '../../../lib/stripe';
 import { redirectToCheckout } from '../../../lib/stripe-checkout';
@@ -110,11 +112,7 @@ const PlanBillingPage: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   const tabs = [
@@ -211,12 +209,14 @@ const PlanBillingPage: React.FC = () => {
             {/* Upgrade to annual CTA */}
             {currentInterval === 'monthly' && subscription && (
               <div className="mt-6">
-                <button
+                <PopButton
+                  color="blue"
+                  size="sm"
                   onClick={() => handleUpgrade(currentPlanLevel as PlanLevel)}
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
+                  className="gap-2"
                 >
                   Upgrade to annual
-                </button>
+                </PopButton>
                 <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800">
                   Save 20%
                 </span>
@@ -306,14 +306,11 @@ const PlanBillingPage: React.FC = () => {
                         </p>
                       )}
 
-                      <button
+                      <PopButton
+                        color={isCurrent ? 'default' : 'blue'}
                         disabled={isCurrent || upgrading !== null}
                         onClick={() => !isCurrent && handleUpgrade(level)}
-                        className={`mt-4 w-full py-2 rounded-lg text-sm font-medium transition-colors ${
-                          isCurrent
-                            ? 'bg-gray-100 text-gray-400 cursor-default'
-                            : 'bg-blue-600 hover:bg-blue-700 text-white'
-                        }`}
+                        className="mt-4 w-full"
                       >
                         {upgrading === level ? (
                           <span className="flex items-center justify-center gap-2">
@@ -325,7 +322,7 @@ const PlanBillingPage: React.FC = () => {
                         ) : (
                           'Upgrade'
                         )}
-                      </button>
+                      </PopButton>
                     </div>
                   );
                 })}

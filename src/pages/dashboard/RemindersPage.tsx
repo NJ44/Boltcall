@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2, AlertCircle, MessageSquare, Plus, Save } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import ModalShell from '../../components/ui/modal-shell';
+import { PopButton } from '../../components/ui/pop-button';
 
 const RemindersPage: React.FC = () => {
   const { user } = useAuth();
@@ -137,11 +139,7 @@ const RemindersPage: React.FC = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (
@@ -163,13 +161,13 @@ const RemindersPage: React.FC = () => {
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Scheduled Reminders</h2>
-          <button
+          <PopButton color="blue"
             onClick={() => { setCalError(false); setShowSettingsModal(true); }}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2"
+            className="gap-2"
           >
             <Plus className="w-4 h-4" />
             Add Reminder
-          </button>
+          </PopButton>
         </div>
         <div className="bg-white rounded-xl border border-gray-100">
           {remindersLoading ? (
@@ -223,20 +221,19 @@ const RemindersPage: React.FC = () => {
         title="Reminder Settings"
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => setShowSettingsModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton color="blue"
               onClick={handleSaveSettings}
               disabled={saving}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50"
+              className="gap-2"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               Save
-            </button>
+            </PopButton>
           </>
         }
       >
@@ -262,24 +259,6 @@ const RemindersPage: React.FC = () => {
               </div>
             </div>
           )}
-
-          {/* Enable Toggle */}
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-900">Enable Reminders</p>
-              <p className="text-xs text-gray-500 mt-0.5">Turn reminders on or off for all clients</p>
-            </div>
-            <button
-              onClick={() => setRemindersEnabled(!remindersEnabled)}
-              className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                remindersEnabled ? 'bg-blue-600' : 'bg-gray-300'
-              }`}
-            >
-              <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
-                remindersEnabled ? 'translate-x-6' : 'translate-x-1'
-              }`} />
-            </button>
-          </div>
 
           {/* Reminder Time */}
           <div>

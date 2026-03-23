@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
+import { PopButton } from '../../components/ui/pop-button';
 import {
   RefreshCw,
-  Loader2,
   AlertCircle,
   TrendingUp,
   TrendingDown,
@@ -588,12 +589,7 @@ export default function LeadMagnetDashboardPage() {
 
   /* ---- loading state ---- */
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-32 text-gray-400 gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-        <p className="text-sm">Loading lead magnet data...</p>
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   /* ---- error state ---- */
@@ -602,12 +598,9 @@ export default function LeadMagnetDashboardPage() {
       <div className="flex flex-col items-center justify-center py-32 gap-4">
         <AlertCircle className="w-10 h-10 text-red-500" />
         <p className="text-sm text-gray-600">{error}</p>
-        <button
-          onClick={() => loadData()}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-        >
+        <PopButton color="blue" onClick={() => loadData()}>
           Retry
-        </button>
+        </PopButton>
       </div>
     );
   }

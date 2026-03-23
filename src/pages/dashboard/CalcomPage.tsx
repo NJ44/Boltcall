@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Calendar, Loader2, CheckCircle, XCircle, Link2 } from 'lucide-react';
+import { ExternalLink, Calendar, CheckCircle, XCircle, Link2 } from 'lucide-react';
+import { PopButton } from '../../components/ui/pop-button';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -35,11 +37,7 @@ const CalcomPage: React.FC = () => {
   }, [user]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   return (
@@ -78,15 +76,17 @@ const CalcomPage: React.FC = () => {
             />
             {calConnected ? 'Connected' : 'Not Connected'}
           </span>
-          <a
-            href="https://app.cal.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
-          >
-            <ExternalLink className="w-4 h-4" />
-            Open Cal.com
-          </a>
+          <PopButton color="blue" size="sm" asChild>
+            <a
+              href="https://app.cal.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gap-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Open Cal.com
+            </a>
+          </PopButton>
         </div>
       </motion.div>
 

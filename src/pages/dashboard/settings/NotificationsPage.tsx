@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Bell, Mail, MessageSquare, Phone } from 'lucide-react';
+import { PopButton } from '../../../components/ui/pop-button';
 import { CustomCheckbox } from '../../../components/ui/custom-checkbox';
 
 const NotificationsPage: React.FC = () => {
@@ -173,9 +174,9 @@ const NotificationsPage: React.FC = () => {
 
       {/* Save Button */}
       <div className="flex justify-end">
-        <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <PopButton color="blue">
           Save Notification Preferences
-        </button>
+        </PopButton>
       </div>
     </div>
   );

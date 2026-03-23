@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { UserPlus, MoreVertical, Edit, User, Crown, Shield } from 'lucide-react';
+import { PopButton } from '../../../components/ui/pop-button';
 import Button from '../../../components/ui/Button';
 import ModalShell from '../../../components/ui/modal-shell';
 
@@ -221,20 +222,19 @@ const MembersPage: React.FC = () => {
         title="Invite Team Member"
         footer={
           <>
-            <button
+            <PopButton
               type="button"
               onClick={() => setShowInviteModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton
+              color="blue"
               type="submit"
               form="invite-member-form"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
             >
               Send Invitation
-            </button>
+            </PopButton>
           </>
         }
       >

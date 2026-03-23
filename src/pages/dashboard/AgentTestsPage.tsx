@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
   CheckCircle,
   XCircle,
@@ -256,10 +257,7 @@ const AgentTestsPage: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-lg shadow-sm border p-12 flex items-center justify-center">
-          <Loader2 className="w-6 h-6 animate-spin text-brand-blue mr-3" />
-          <span className="text-gray-600">Loading agents...</span>
-        </div>
+        <PageSkeleton />
       ) : agents.length === 0 ? (
         <div className="bg-white rounded-lg shadow-sm border p-12 text-center">
           <Shield className="w-10 h-10 text-gray-300 mx-auto mb-3" />

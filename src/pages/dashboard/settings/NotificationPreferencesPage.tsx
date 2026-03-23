@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NotificationPreferencesSkeleton } from '../../../components/ui/loading-skeleton';
 import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
-import { motion } from 'framer-motion';
-import { 
+import {
   Bell, 
   Mail, 
   MessageSquare, 
@@ -17,6 +16,7 @@ import {
   Save,
   RefreshCw
 } from 'lucide-react';
+import { PopButton } from '../../../components/ui/pop-button';
 import { supabase } from '../../../lib/supabase';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
@@ -497,12 +497,11 @@ const NotificationPreferencesPage: React.FC = () => {
 
       {/* Save Button */}
       <div className="flex justify-end pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <PopButton
+          color="blue"
           onClick={savePreferences}
           disabled={saving}
-          className="flex items-center gap-2 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 font-semibold shadow-md min-w-[160px]"
+          className="gap-2 min-w-[160px]"
         >
           {saving ? (
             <RefreshCw className="w-5 h-5 animate-spin" />
@@ -510,7 +509,7 @@ const NotificationPreferencesPage: React.FC = () => {
             <Save className="w-5 h-5" />
           )}
           {saving ? 'Saving...' : 'Save Preferences'}
-        </motion.button>
+        </PopButton>
       </div>
     </div>
   );

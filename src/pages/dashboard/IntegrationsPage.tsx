@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { ExternalLink, X, ChevronRight, Check, Loader2, AlertCircle, Unplug } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -364,10 +365,7 @@ const IntegrationsPage: React.FC = () => {
 
       {/* Grid */}
       {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-6 h-6 animate-spin text-brand-blue mr-3" />
-          <span className="text-gray-500">Loading integrations...</span>
-        </div>
+        <PageSkeleton />
       ) : (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

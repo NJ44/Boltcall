@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { LocationService, type Location } from '@/lib/locations';
 import { supabase } from '../../lib/supabase';
-import { Phone, Users, Calendar, Loader2 } from 'lucide-react';
+import { Phone, Users, Calendar } from 'lucide-react';
 
 interface LocationMetrics {
   leadsToday: number;
@@ -69,11 +70,7 @@ const LocationDashboardPage: React.FC = () => {
   }, [locationId]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[300px]">
-        <Loader2 className="w-6 h-6 text-brand-blue animate-spin" />
-      </div>
-    );
+    return <PageSkeleton />;
   }
 
   if (!location) {

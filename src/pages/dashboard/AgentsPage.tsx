@@ -13,6 +13,7 @@ import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import { generateAgentPrompt, updateRetellAgent } from '../../lib/retell';
 import AgentTestsPage from './AgentTestsPage';
+import { PopButton } from '../../components/ui/pop-button';
 
 interface Agent {
   id: string;
@@ -584,38 +585,38 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       ) : agents.length === 0 ? (
         /* No agents - Show create options */
         <div>
-          <div className="max-w-2xl mx-auto text-center mb-5 mt-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-1.5">Create New Agent</h2>
-            <p className="text-sm text-gray-500">Choose how you want to get started</p>
+          <div className="max-w-3xl mx-auto text-center mb-8 mt-12">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Create New Agent</h2>
+            <p className="text-base text-gray-500">Choose how you want to get started</p>
           </div>
 
-          <div className="max-w-2xl mx-auto grid md:grid-cols-2 gap-4">
+          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-5">
             {/* Start from Scratch */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-lg transition-all duration-500 ease-in-out text-left"
+              className="group bg-white dark:bg-[#111114] border border-gray-200 dark:border-[#1e1e24] rounded-xl p-7 hover:border-gray-300 hover:shadow-lg transition-all duration-500 ease-in-out text-left"
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-900 transition-colors duration-500">
-                  <Sparkles className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-500" />
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-12 h-12 bg-gray-50 dark:bg-[#1a1a1f] rounded-xl flex items-center justify-center group-hover:bg-gray-900 transition-colors duration-500">
+                  <Sparkles className="w-6 h-6 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-500" />
                 </div>
-                <h3 className="text-sm font-semibold text-gray-900">Start from Scratch</h3>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white">Start from Scratch</h3>
               </div>
-              <p className="text-xs text-gray-500">Build your AI Agent from the ground up</p>
+              <p className="text-sm text-gray-500">Build your AI Agent from the ground up with full customization</p>
             </button>
 
             {/* Browse Templates */}
             <button
               onClick={() => setShowTemplatesModal(true)}
-              className="group bg-white border border-gray-200 rounded-lg p-5 hover:border-gray-300 hover:shadow-lg transition-all duration-500 ease-in-out text-left"
+              className="group bg-white dark:bg-[#111114] border border-gray-200 dark:border-[#1e1e24] rounded-xl p-7 hover:border-gray-300 hover:shadow-lg transition-all duration-500 ease-in-out text-left"
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-900 transition-colors duration-500">
-                  <FileText className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-500" />
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-12 h-12 bg-gray-50 dark:bg-[#1a1a1f] rounded-xl flex items-center justify-center group-hover:bg-gray-900 transition-colors duration-500">
+                  <FileText className="w-6 h-6 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-500" />
                 </div>
-                <h3 className="text-sm font-semibold text-gray-900">Browse Templates</h3>
+                <h3 className="text-base font-semibold text-gray-900 dark:text-white">Browse Templates</h3>
               </div>
-              <p className="text-xs text-gray-500">Get started with industry-specific templates</p>
+              <p className="text-sm text-gray-500">Get started quickly with industry-specific templates</p>
             </button>
           </div>
         </div>
@@ -624,13 +625,13 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         <>
           {/* Add Agent Button */}
           <div className="flex justify-end">
-            <button 
+            <PopButton color="blue"
               onClick={() => setShowCreateModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="gap-2"
             >
               <Plus className="w-4 h-4" />
               Add Agent
-            </button>
+            </PopButton>
           </div>
 
           {/* Agents Card Table */}
@@ -738,18 +739,16 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         maxWidth="max-w-lg"
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => setShowCreateModal(false)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
-            </button>
-            <button
+            </PopButton>
+            <PopButton color="blue"
               onClick={handleCreateAgent}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
             >
               Create Agent
-            </button>
+            </PopButton>
           </>
         }
       >
@@ -913,12 +912,11 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         title="Industry Templates"
         maxWidth="max-w-3xl"
         footer={
-          <button
+          <PopButton
             onClick={() => setShowTemplatesModal(false)}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
             Cancel
-          </button>
+          </PopButton>
         }
       >
         {/* Templates Grid */}
@@ -952,9 +950,9 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
               <p className="text-gray-500 text-xs mb-3 line-clamp-2 leading-relaxed">{template.description}</p>
 
               {/* Use Template Button */}
-              <button className="w-full px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-xs font-medium">
+              <PopButton color="blue" size="sm" className="w-full">
                 Use Template
-              </button>
+              </PopButton>
             </div>
           ))}
         </div>
@@ -970,15 +968,14 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         title={`Test Chat - ${selectedAgentForTest?.name || ''}`}
         maxWidth="max-w-md"
         footer={
-          <button
+          <PopButton
             onClick={() => {
               setShowTestChatModal(false);
               setSelectedAgentForTest(null);
             }}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
             Close
-          </button>
+          </PopButton>
         }
       >
         <div className="space-y-4">
@@ -1006,12 +1003,12 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     id="phone-input"
                   />
-                  <button
+                  <PopButton color="blue"
                     onClick={() => selectedAgentForTest && initializeRetellWidget(selectedAgentForTest.id)}
-                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full"
                   >
                     Call Me Now
-                  </button>
+                  </PopButton>
                 </div>
               </div>
             </div>
@@ -1035,25 +1032,23 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         maxWidth="max-w-4xl"
         footer={
           <>
-            <button
+            <PopButton
               onClick={() => {
                 setShowAgentDetailsModal(false);
                 setSelectedAgentDetails(null);
               }}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Close
-            </button>
-            <button
+            </PopButton>
+            <PopButton color="blue"
               onClick={() => {
                 // Navigate to edit or configure the agent
                 setShowAgentDetailsModal(false);
                 // You can add navigation here if needed
               }}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
             >
               Configure Agent
-            </button>
+            </PopButton>
           </>
         }
       >
