@@ -24,7 +24,6 @@ import {
   Ticket,
   Crown,
   Server,
-  Mail,
   Globe,
   Plug,
   Zap,
@@ -37,6 +36,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
+import { supabase } from '../../lib/supabase';
 import { LocationSwitcher } from './LocationSwitcher';
 import AiAssistant from './AiAssistant';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
@@ -71,18 +71,13 @@ const DashboardLayout: React.FC = () => {
     systemAlert: false
   });
 
-  // Services status
+  // Services status — loaded from Supabase business_features
   const [services, setServices] = useState({
-    aiReceptionist: true,
-    phoneSystem: true,
-    sms: true,
+    aiReceptionist: false,
+    phoneSystem: false,
+    sms: false,
     whatsapp: false,
-    email: true,
-    calendar: true,
-    analytics: true,
-    voiceLibrary: true,
-    knowledgeBase: true,
-    websiteBubble: false
+    websiteBubble: false,
   });
 
   // Log dashboard access when component mounts
@@ -90,6 +85,32 @@ const DashboardLayout: React.FC = () => {
     if (user?.id) {
       addLogEntry('Dashboard Access', 'User accessed dashboard', user.id);
     }
+  }, [user?.id]);
+
+  // Load real service statuses from Supabase
+  useEffect(() => {
+    if (!user?.id) return;
+    (async () => {
+      try {
+        const { data } = await supabase
+          .from('business_features')
+          .select('ai_receptionist_enabled, phone_system_enabled, sms_enabled, chat_widget_enabled, reminders_config')
+          .eq('user_id', user.id)
+          .single();
+
+        if (data) {
+          setServices({
+            aiReceptionist: data.ai_receptionist_enabled ?? false,
+            phoneSystem: data.phone_system_enabled ?? false,
+            sms: data.sms_enabled ?? false,
+            whatsapp: false,
+            websiteBubble: data.chat_widget_enabled ?? false,
+          });
+        }
+      } catch {
+        // Silently fail — will show defaults (all off)
+      }
+    })();
   }, [user?.id]);
 
   // Scrollbar auto-hide functionality
@@ -235,16 +256,6 @@ const DashboardLayout: React.FC = () => {
     }));
   };
 
-  const toggleService = (key: keyof typeof services) => {
-    const newValue = !services[key];
-    if (user?.id) {
-      logUserAction('Service Toggle', `Toggled ${key} service to ${newValue ? 'enabled' : 'disabled'}`, user.id);
-    }
-    setServices(prev => ({
-      ...prev,
-      [key]: newValue
-    }));
-  };
 
 
   // Handle click outside to close menus
@@ -598,12 +609,12 @@ const DashboardLayout: React.FC = () => {
               </div>
               <button
                 onClick={() => toggleNotification('newLead')}
-                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                   notifications.newLead ? 'bg-blue-600' : 'bg-gray-300'
                 }`}
               >
-                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                               notifications.newLead ? 'translate-x-5' : 'translate-x-0.5'
+                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                  notifications.newLead ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
             </div>
@@ -619,12 +630,12 @@ const DashboardLayout: React.FC = () => {
               </div>
               <button
                 onClick={() => toggleNotification('appointmentBooked')}
-                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                   notifications.appointmentBooked ? 'bg-blue-600' : 'bg-gray-300'
                 }`}
               >
-                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                               notifications.appointmentBooked ? 'translate-x-5' : 'translate-x-0.5'
+                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                  notifications.appointmentBooked ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
             </div>
@@ -640,12 +651,12 @@ const DashboardLayout: React.FC = () => {
               </div>
               <button
                 onClick={() => toggleNotification('missedCall')}
-                             className={`relative w-10 h-5 rounded-full transition-colors ${
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                   notifications.missedCall ? 'bg-blue-600' : 'bg-gray-300'
                 }`}
               >
-                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                               notifications.missedCall ? 'translate-x-5' : 'translate-x-0.5'
+                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                  notifications.missedCall ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
             </div>
@@ -671,42 +682,35 @@ const DashboardLayout: React.FC = () => {
                        </div>
 
                        {([
-                         { key: 'aiReceptionist' as const, label: t('services.aiReceptionist'), icon: <Users className="w-4 h-4" />, configured: true },
-                         { key: 'phoneSystem' as const, label: t('services.phoneSystem'), icon: <Phone className="w-4 h-4" />, configured: true },
-                         { key: 'sms' as const, label: t('services.sms'), icon: <MessageSquare className="w-4 h-4" />, configured: true },
-                         { key: 'whatsapp' as const, label: t('services.whatsapp'), icon: <MessageSquare className="w-4 h-4" />, configured: false },
-                         { key: 'email' as const, label: t('services.email'), icon: <Mail className="w-4 h-4" />, configured: true },
-                         { key: 'calendar' as const, label: t('services.calendar'), icon: <Calendar className="w-4 h-4" />, configured: true },
-                         { key: 'analytics' as const, label: t('services.analytics'), icon: <BarChart3 className="w-4 h-4" />, configured: true },
-                         { key: 'websiteBubble' as const, label: t('services.websiteWidget'), icon: <Globe className="w-4 h-4" />, configured: false },
+                         { key: 'aiReceptionist' as const, label: 'AI Receptionist', icon: <Bot className="w-4 h-4" />, enabled: services.aiReceptionist, configLink: '/dashboard/agents' },
+                         { key: 'phoneSystem' as const, label: 'Phone System', icon: <Phone className="w-4 h-4" />, enabled: services.phoneSystem, configLink: '/dashboard/phone' },
+                         { key: 'sms' as const, label: 'SMS', icon: <MessageSquare className="w-4 h-4" />, enabled: services.sms, configLink: '/dashboard/messages' },
+                         { key: 'websiteBubble' as const, label: 'Website Widget', icon: <Globe className="w-4 h-4" />, enabled: services.websiteBubble, configLink: '/dashboard/chat-widget' },
+                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, enabled: services.whatsapp, configLink: null },
                        ] as const).map((svc) => (
                          <div
                            key={svc.key}
-                           className={`flex items-center justify-between px-3 py-2 ${isDarkMode ? 'hover:bg-[#1a1a1f]' : 'hover:bg-gray-50'}`}
+                           className={`flex items-center justify-between px-3 py-2.5 ${isDarkMode ? 'hover:bg-[#1a1a1f]' : 'hover:bg-gray-50'}`}
                          >
                            <div className="flex items-center gap-2.5">
                              <span className={isDarkMode ? 'text-gray-300' : 'text-gray-700'}>{svc.icon}</span>
                              <span className={`text-sm ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>{svc.label}</span>
                            </div>
 
-                           {svc.configured ? (
-                             <button
-                               onClick={() => toggleService(svc.key)}
-                               className={`relative w-8 h-[18px] rounded-full transition-colors flex-shrink-0 ${
-                                 services[svc.key] ? 'bg-green-500' : 'bg-gray-300'
-                               }`}
-                             >
-                               <div className={`absolute top-[2px] w-[14px] h-[14px] bg-white rounded-full transition-transform shadow-sm ${
-                                 services[svc.key] ? 'translate-x-[15px]' : 'translate-x-[2px]'
-                               }`} />
-                             </button>
-                           ) : (
+                           {svc.enabled ? (
+                             <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
+                               <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                               Active
+                             </span>
+                           ) : svc.configLink ? (
                              <Link
-                               to="/dashboard/settings/services"
+                               to={svc.configLink}
                                className="text-xs font-medium text-blue-600 hover:text-blue-700"
                              >
-                               {t('common.configure')}
+                               Configure
                              </Link>
+                           ) : (
+                             <span className="text-xs text-gray-400">Coming soon</span>
                            )}
                          </div>
                        ))}
