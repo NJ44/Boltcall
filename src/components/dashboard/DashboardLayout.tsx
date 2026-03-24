@@ -302,14 +302,11 @@ const DashboardLayout: React.FC = () => {
   const navItemsMain = [
     { to: '/dashboard', label: t('nav.overview'), icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/leads', label: t('nav.leads'), icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/analytics', label: t('nav.analytics'), icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/calls', label: t('nav.calls'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
-  // COMMUNICATIONS
-  const navItemsCommunications = [
-    { to: '/dashboard/calls', label: t('nav.calls'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/messages', label: t('nav.messages'), icon: <MessagesSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
-  ];
+  // COMMUNICATIONS (kept for reference)
+  const navItemsCommunications: typeof navItemsMain = [];
 
   // SERVICES
   const navItemsServices = [

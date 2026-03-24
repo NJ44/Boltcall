@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
 import { Users, Plus, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield, Phone } from 'lucide-react';
@@ -65,6 +66,7 @@ interface IndustryTemplate {
 }
 
 const AgentsPage: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { showToast } = useToast();
   const { claimReward } = useTokens();
@@ -648,7 +650,10 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             ]}
             data={agents}
             renderRow={(agent) => (
-              <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
+              <div
+                className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6 cursor-pointer"
+                onClick={() => navigate(`/dashboard/agents/${agent.id}`)}
+              >
                 {/* Checkbox */}
                 <input
                   type="checkbox"
@@ -696,7 +701,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 </div>
 
                 {/* Action Icons */}
-                <div className="flex items-center gap-3 md:gap-2">
+                <div className="flex items-center gap-3 md:gap-2" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => setTalkToAgent(agent)}
                     className="text-green-600 hover:text-green-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"

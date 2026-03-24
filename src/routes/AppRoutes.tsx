@@ -27,6 +27,7 @@ const SettingsLayout = React.lazy(() => import('../components/dashboard/Settings
 const DashboardPage = React.lazy(() => import('../pages/dashboard/DashboardPage'));
 const AnalyticsPage = React.lazy(() => import('../pages/dashboard/AnalyticsPage'));
 const AgentsPage = React.lazy(() => import('../pages/dashboard/AgentsPage'));
+const AgentDetailPage = React.lazy(() => import('../pages/dashboard/AgentDetailPage'));
 const ReceptionistPage = React.lazy(() => import('../pages/dashboard/ReceptionistPage'));
 const SmsPage = React.lazy(() => import('../pages/dashboard/SmsPage'));
 const WhatsappPage = React.lazy(() => import('../pages/dashboard/WhatsappPage'));
@@ -239,6 +240,7 @@ const NavigationWrapper: React.FC = () => {
           {/* Starter-gated pages */}
           <Route path="ai-receptionist" element={<PlanGate requiredPlan="starter"><ReceptionistPage /></PlanGate>} />
           <Route path="agents" element={<PlanGate requiredPlan="starter"><AgentsPage /></PlanGate>} />
+          <Route path="agents/:agentId" element={<PlanGate requiredPlan="starter"><AgentDetailPage /></PlanGate>} />
           <Route path="agent-tests" element={<Navigate to="/dashboard/agents" replace />} />
           <Route path="voice-library" element={<PlanGate requiredPlan="starter"><VoiceLibraryPage /></PlanGate>} />
           <Route path="knowledge-base" element={<PlanGate requiredPlan="starter"><KnowledgeBasePage /></PlanGate>} />
