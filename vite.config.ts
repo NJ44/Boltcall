@@ -150,49 +150,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Split heavy libraries into separate chunks to reduce initial load
+          // Only split out heavy libs that have NO React dependency
+          // Everything else uses Vite's default chunking to avoid TDZ errors with React 19
           if (id.includes('node_modules')) {
-            // React core + Radix UI — must be in same chunk to avoid TDZ errors
-            if (id.includes('react-dom') || (id.includes('/react/') && !id.includes('react-router') && !id.includes('react-i18next')) || id.includes('@radix-ui')) {
-              return 'react-core';
-            }
-            // Framer Motion — heavy (~150KB), split out
-            if (id.includes('framer-motion')) {
-              return 'framer';
-            }
-            if (id.includes('gsap')) {
-              return 'gsap';
-            }
-            if (id.includes('@lottiefiles') || id.includes('lottie')) {
-              return 'lottie';
-            }
-            if (id.includes('three') || id.includes('@react-three')) {
-              return 'three';
-            }
-            if (id.includes('@splinetool')) {
-              return 'spline';
-            }
-            if (id.includes('@stripe') || id.includes('stripe')) {
-              return 'stripe';
-            }
-            if (id.includes('recharts') || id.includes('d3-')) {
-              return 'recharts';
-            }
-            if (id.includes('@supabase')) {
-              return 'supabase';
-            }
-            if (id.includes('react-router') || id.includes('@remix-run')) {
-              return 'router';
-            }
-            if (id.includes('i18next') || id.includes('react-i18next')) {
-              return 'i18n';
-            }
-            // UI utility libs — separate chunk
-            if (id.includes('class-variance-authority') || id.includes('clsx') || id.includes('tailwind-merge')) {
-              return 'ui-utils';
-            }
-            // Other node_modules
-            return 'vendor';
+            if (id.includes('gsap')) return 'gsap';
+            if (id.includes('@lottiefiles') || id.includes('lottie')) return 'lottie';
+            if (id.includes('three') || id.includes('@react-three')) return 'three';
+            if (id.includes('@splinetool')) return 'spline';
           }
         },
       },
