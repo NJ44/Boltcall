@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Calculator, TrendingUp, DollarSign, Phone, CheckCircle, XCircle } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Calculator, CheckCircle, XCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -12,7 +12,7 @@ import TableOfContents from '../components/TableOfContents';
 import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const AIReceptionistWorthItROI: React.FC = () => {
-  const { sections, activeSection } = useTableOfContents();
+  const headings = useTableOfContents();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,14 +67,12 @@ const AIReceptionistWorthItROI: React.FC = () => {
                 AI Receptionist
               </span>
               
-              <Breadcrumbs 
+              <Breadcrumbs
                 items={[
                   { label: 'Home', href: '/' },
                   { label: 'Blog', href: '/blog' },
                   { label: 'Is AI Receptionist Worth It?', href: '/blog/ai-receptionist-worth-it-roi' }
                 ]}
-                className="mb-8 justify-center"
-                dark
               />
               
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
@@ -104,7 +102,7 @@ const AIReceptionistWorthItROI: React.FC = () => {
             {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="sticky top-8">
-                <TableOfContents sections={sections} activeSection={activeSection} />
+                <TableOfContents headings={headings} />
               </div>
             </div>
 
@@ -517,4 +515,37 @@ const AIReceptionistWorthItROI: React.FC = () => {
                   <p>This example shows why HVAC companies see such strong AI receptionist ROI—high per-call values and significant missed call volumes create compelling business cases.</p>
                   
                   <p>Use our <Link to="/ai-revenue-calculator" className="text-blue-600 hover:underline">AI Revenue Calculator</Link> to run your specific numbers and see projected ROI for your business.</p>
-                </motion.section
+                </motion.section>
+
+                {/* CTA */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="mt-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-center text-white"
+                >
+                  <h2 className="text-2xl font-bold mb-3">See Your AI Receptionist ROI</h2>
+                  <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+                    Use our free calculator to see exactly how much revenue an AI receptionist could recover for your business.
+                  </p>
+                  <Link
+                    to="/ai-revenue-calculator"
+                    className="inline-flex items-center gap-2 bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors"
+                  >
+                    Calculate Your ROI <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
+    </>
+  );
+};
+
+export default AIReceptionistWorthItROI;
