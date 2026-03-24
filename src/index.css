@@ -504,7 +504,7 @@ button:active,
   }
 
   body {
-    @apply bg-blue-600 text-white;
+    @apply bg-background text-foreground;
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
