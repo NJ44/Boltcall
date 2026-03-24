@@ -11,7 +11,6 @@ import {
   ChevronDown,
   ChevronUp,
   Activity,
-  RefreshCw,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -215,23 +214,9 @@ const AgentTestsPage: React.FC = () => {
       className="space-y-6"
     >
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-3 mb-1">
-            <Shield className="w-7 h-7 text-brand-blue" />
-            <h1 className="text-2xl font-bold text-gray-900">Agent Testing</h1>
-          </div>
-          <p className="text-gray-500 ml-10">
-            Stress-test your AI agents with 12 brutal edge-case scenarios
-          </p>
-        </div>
-        <button
-          onClick={fetchData}
-          className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-          title="Refresh"
-        >
-          <RefreshCw className="w-5 h-5" />
-        </button>
+      <div className="flex items-center gap-3 mb-1">
+        <Shield className="w-7 h-7 text-brand-blue" />
+        <h1 className="text-2xl font-bold text-gray-900">Agent Testing</h1>
       </div>
 
       {/* KPI Cards */}
