@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
-import { Users, Plus, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield } from 'lucide-react';
+import { Users, Plus, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield, Phone } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
 
 import { VoicePicker } from '../../components/ui/voice-picker';
@@ -14,6 +14,7 @@ import { useTokens } from '../../contexts/TokenContext';
 import { generateAgentPrompt, updateRetellAgent } from '../../lib/retell';
 import AgentTestsPage from './AgentTestsPage';
 import { PopButton } from '../../components/ui/pop-button';
+import TalkToAgentModal from '../../components/TalkToAgentModal';
 
 interface Agent {
   id: string;
@@ -79,6 +80,7 @@ const AgentsPage: React.FC = () => {
   const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [regeneratingAgentId, setRegeneratingAgentId] = useState<string | null>(null);
+  const [talkToAgent, setTalkToAgent] = useState<Agent | null>(null);
   const { voices: retellVoices } = useRetellVoices();
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
     name: '',
@@ -696,6 +698,13 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 {/* Action Icons */}
                 <div className="flex items-center gap-3 md:gap-2">
                   <button
+                    onClick={() => setTalkToAgent(agent)}
+                    className="text-green-600 hover:text-green-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
+                    title="Talk to Agent"
+                  >
+                    <Phone className="w-5 h-5 md:w-4 md:h-4" />
+                  </button>
+                  <button
                     onClick={() => handleTestChat(agent)}
                     className="text-blue-600 hover:text-blue-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
                     title="Test Chat"
@@ -1019,6 +1028,14 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           </div>
         </div>
       </ModalShell>
+
+      {/* Talk to Agent Modal */}
+      <TalkToAgentModal
+        open={!!talkToAgent}
+        onClose={() => setTalkToAgent(null)}
+        agentId={(talkToAgent as any)?.retell_agent_id || talkToAgent?.id || ''}
+        agentName={talkToAgent?.name}
+      />
 
       {/* Agent Details Modal - Shows after template selection */}
       <ModalShell

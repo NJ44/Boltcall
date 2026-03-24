@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, HelpCircle, X, Send, ChevronRight } from 'lucide-react';
+import { AlertTriangle, HelpCircle, X, Send, ChevronRight, Phone } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -9,6 +9,9 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
 import FeatureHub from '../../components/dashboard/FeatureHub';
 import { InteractiveOnboardingChecklist, type Step } from '../../components/ui/onboarding-checklist';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+import TalkToAgentModal from '../../components/TalkToAgentModal';
 
 const ONBOARDING_STEPS: Step[] = [
   {
@@ -29,7 +32,10 @@ const ONBOARDING_STORAGE_KEY = 'boltcall-onboarding-completed';
 
 const DashboardPage: React.FC = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [showTalkModal, setShowTalkModal] = useState(false);
+  const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
   const [showHelpChat, setShowHelpChat] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<Array<{text: string, sender: 'user' | 'bot'}>>([]);
@@ -41,6 +47,21 @@ const DashboardPage: React.FC = () => {
   const [showOnboarding, setShowOnboarding] = useState(() => {
     return !localStorage.getItem(ONBOARDING_STORAGE_KEY);
   });
+
+  // Fetch user's primary agent for "Talk to Agent" button
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('agents')
+      .select('id, name, retell_agent_id')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .order('created_at', { ascending: true })
+      .limit(1)
+      .then(({ data }) => {
+        if (data?.[0]) setPrimaryAgent(data[0]);
+      });
+  }, [user?.id]);
 
   // Check if setup was just completed
   useEffect(() => {
@@ -178,6 +199,22 @@ const DashboardPage: React.FC = () => {
               </Link>
             ))}
           </div>
+
+          {/* Talk to Your Agent Button */}
+          {primaryAgent && (
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#1e1e24]">
+              <button
+                onClick={() => setShowTalkModal(true)}
+                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+              >
+                <Phone className="w-5 h-5" />
+                Talk to Your Agent
+              </button>
+              <p className="text-xs text-gray-500 text-center mt-2">
+                Your AI agent will call your phone so you can test it live
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -301,6 +338,16 @@ const DashboardPage: React.FC = () => {
           </>
         )}
       </AnimatePresence>
+
+      {/* Talk to Agent Modal */}
+      {primaryAgent && (
+        <TalkToAgentModal
+          open={showTalkModal}
+          onClose={() => setShowTalkModal(false)}
+          agentId={primaryAgent.retell_agent_id || primaryAgent.id}
+          agentName={primaryAgent.name}
+        />
+      )}
 
       {/* Dock Component - Fixed at bottom middle */}
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full md:w-auto px-2 md:px-0">
