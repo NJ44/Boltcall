@@ -152,8 +152,8 @@ export default defineConfig({
         manualChunks: (id) => {
           // Split heavy libraries into separate chunks to reduce initial load
           if (id.includes('node_modules')) {
-            // React core — small, needed everywhere
-            if (id.includes('react-dom') || (id.includes('/react/') && !id.includes('react-router') && !id.includes('react-i18next'))) {
+            // React core + Radix UI — must be in same chunk to avoid TDZ errors
+            if (id.includes('react-dom') || (id.includes('/react/') && !id.includes('react-router') && !id.includes('react-i18next')) || id.includes('@radix-ui')) {
               return 'react-core';
             }
             // Framer Motion — heavy (~150KB), split out
@@ -187,8 +187,8 @@ export default defineConfig({
             if (id.includes('i18next') || id.includes('react-i18next')) {
               return 'i18n';
             }
-            // Radix UI / utility libs — separate chunk
-            if (id.includes('@radix-ui') || id.includes('class-variance-authority') || id.includes('clsx') || id.includes('tailwind-merge')) {
+            // UI utility libs — separate chunk
+            if (id.includes('class-variance-authority') || id.includes('clsx') || id.includes('tailwind-merge')) {
               return 'ui-utils';
             }
             // Other node_modules
