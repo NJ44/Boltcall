@@ -4,7 +4,6 @@ import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard,
-  BarChart3,
   Bot,
   BookOpen,
   Users,
@@ -27,7 +26,6 @@ import {
   Globe,
   Plug,
   Zap,
-  MessagesSquare,
   Star,
   PhoneMissed,
   Reply,
