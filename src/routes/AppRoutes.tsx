@@ -13,7 +13,6 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import AuthCallback from '../pages/AuthCallback';
-import AIReceptionistWorthItROI from '../pages/AIReceptionistWorthItROI';
 // ── Route-level loading fallback ─────────────────────────────────────────
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -77,6 +76,7 @@ const FreeWebsitePage = React.lazy(() => import('../pages/FreeWebsitePage'));
 const LeadMagnetPage = React.lazy(() => import('../pages/LeadMagnetPage'));
 const LeadMagnetThankYouPage = React.lazy(() => import('../pages/LeadMagnetThankYouPage'));
 const LeadMagnetClaudeCodeOvernightKitPage = React.lazy(() => import('../pages/LeadMagnetClaudeCodeOvernightKitPage'));
+const LeadMagnetAIReceptionistBuyersGuide = React.lazy(() => import('../pages/LeadMagnetAIReceptionistBuyersGuide'));
 const AIRevenueAudit = React.lazy(() => import('../pages/AIRevenueAudit'));
 const AIRevenueResults = React.lazy(() => import('../pages/AIRevenueResults'));
 const SEOAnalyzer = React.lazy(() => import('../pages/SEOAnalyzer'));
@@ -141,6 +141,7 @@ const AiReceptionistCostPricingGuide = React.lazy(() => import('../pages/AiRecep
 const SpeedToLeadGuide = React.lazy(() => import('../pages/SpeedToLeadGuide'));
 const ChatbotVsLivePhoneComparison = React.lazy(() => import('../pages/ChatbotVsLivePhoneComparison'));
 const AiReceptionistForPlumbers = React.lazy(() => import('../pages/AiReceptionistForPlumbers'));
+const AIReceptionistWorthItROI = React.lazy(() => import('../pages/AIReceptionistWorthItROI'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -326,6 +327,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/lead-magnet" element={<LeadMagnetPage />} />
         <Route path="/lead-magnet/thank-you" element={<LeadMagnetThankYouPage />} />
         <Route path="/lead-magnet/claude-code-overnight-kit" element={<LeadMagnetClaudeCodeOvernightKitPage />} />
+        <Route path="/lead-magnet/ai-receptionist-buyers-guide" element={<LeadMagnetAIReceptionistBuyersGuide />} />
         <Route path="/free-website" element={<FreeWebsitePage />} />
         <Route path="/free-website-package" element={<Navigate to="/free-website" replace />} />
         <Route path="/free-website-package/pricing" element={<Navigate to="/pricing" replace />} />
