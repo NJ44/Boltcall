@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Check, Loader2, Zap } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Zap } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
 import { useAuth } from '../contexts/AuthContext';
 import { createUserWorkspaceAndProfile } from '../lib/database';
@@ -100,7 +100,6 @@ const Setup: React.FC = () => {
   } = useSetupStore();
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
   // Form state

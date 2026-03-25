@@ -1,0 +1,43 @@
+{
+  "title": "Análisis",
+  "dateRange": "Rango de Fechas",
+  "last7days": "Últimos 7 Días",
+  "last30days": "Últimos 30 Días",
+  "last90days": "Últimos 90 Días",
+  "custom": "Personalizado",
+  "refresh": "Actualizar",
+  "refreshing": "Actualizando...",
+  "noDataYet": "Aún no hay datos de análisis",
+  "noDataDesc": "Comienza a usar tus servicios de IA para ver datos aquí.",
+
+  "kpi.totalCalls": "Total de Llamadas",
+  "kpi.totalLeads": "Total de Prospectos",
+  "kpi.appointmentsBooked": "Citas Agendadas",
+  "kpi.avgResponseTime": "Tiempo de Respuesta Promedio",
+  "kpi.successRate": "Tasa de Éxito",
+  "kpi.smsSent": "SMS Enviados",
+  "kpi.tokensUsed": "Tokens Usados",
+  "kpi.activeAgents": "Agentes Activos",
+
+  "chart.callsOverTime": "Llamadas a lo Largo del Tiempo",
+  "chart.leadsOverTime": "Prospectos a lo Largo del Tiempo",
+  "chart.bookingsOverTime": "Reservas a lo Largo del Tiempo",
+  "chart.smsOverTime": "SMS Enviados a lo Largo del Tiempo",
+  "chart.successRateOverTime": "Tasa de Éxito a lo Largo del Tiempo",
+
+  "breakdown.callStatus": "Desglose de Estado de Llamadas",
+  "breakdown.answered": "Atendidas",
+  "breakdown.missed": "Perdidas",
+  "breakdown.voicemail": "Buzón de Voz",
+  "breakdown.transferred": "Transferidas",
+
+  "breakdown.leadSource": "Fuentes de Prospectos",
+  "breakdown.aiReceptionist": "Recepcionista IA",
+  "breakdown.speedToLead": "Velocidad al Prospecto",
+  "breakdown.websiteForm": "Formulario Web",
+  "breakdown.googleAds": "Google Ads",
+  "breakdown.facebookAds": "Facebook Ads",
+  "breakdown.missedCall": "Llamada Perdida",
+  "breakdown.manual": "Manual",
+  "breakdown.unknown": "Desconocido"
+}

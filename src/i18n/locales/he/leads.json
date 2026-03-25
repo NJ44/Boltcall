@@ -1,0 +1,46 @@
+{
+  "title": "לידים",
+  "tabs.speedToLead": "מהירות ליד",
+  "tabs.missedCalls": "שיחות שלא נענו",
+  "tabs.reactivation": "הפעלה מחדש",
+
+  "table.name": "שם",
+  "table.phone": "טלפון",
+  "table.email": "אימייל",
+  "table.source": "מקור",
+  "table.status": "סטטוס",
+  "table.date": "תאריך",
+  "table.id": "מזהה",
+  "table.actions": "פעולות",
+
+  "filter.all": "הכל",
+  "filter.new": "חדש",
+  "filter.contacted": "פנייה בוצעה",
+  "filter.qualified": "מתאים",
+  "filter.lost": "אבוד",
+  "filter.pending": "ממתין",
+
+  "search.placeholder": "חפש לידים...",
+  "noLeads": "לא נמצאו לידים",
+  "noLeadsDesc": "לידים יופיעו כאן כשייקלטו על ידי קבלת הפנים או הטפסים שלך.",
+
+  "source.aiReceptionist": "קבלת פנים AI",
+  "source.speedToLead": "מהירות ליד",
+  "source.instantLeadResponse": "מענה מיידי ללידים",
+  "source.websiteForm": "טופס באתר",
+  "source.googleAds": "Google Ads",
+  "source.facebookAds": "Facebook Ads",
+  "source.missedCall": "שיחה שלא נענתה",
+  "source.manual": "ידני",
+  "source.unknown": "לא ידוע",
+
+  "speedToLead.title": "מהירות ליד",
+  "speedToLead.desc": "התקשר אוטומטית ללידים חדשים תוך 60 שניות",
+  "speedToLead.responseTime": "זמן תגובה",
+  "speedToLead.leadsToday": "לידים היום",
+  "speedToLead.callbackRate": "אחוז חזרה",
+
+  "reactivation.title": "הפעלה מחדש של לידים",
+  "reactivation.desc": "AI מתקשר ללידים ישנים ומחדש פגישות עם המעוניינים",
+  "reactivation.noOldLeads": "אין לידים ישנים להפעלה מחדש"
+}

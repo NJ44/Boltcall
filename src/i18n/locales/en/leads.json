@@ -1,0 +1,46 @@
+{
+  "title": "Leads",
+  "tabs.speedToLead": "Speed to Lead",
+  "tabs.missedCalls": "Missed Calls",
+  "tabs.reactivation": "Reactivation",
+
+  "table.name": "Name",
+  "table.phone": "Phone",
+  "table.email": "Email",
+  "table.source": "Source",
+  "table.status": "Status",
+  "table.date": "Date",
+  "table.id": "ID",
+  "table.actions": "Actions",
+
+  "filter.all": "All",
+  "filter.new": "New",
+  "filter.contacted": "Contacted",
+  "filter.qualified": "Qualified",
+  "filter.lost": "Lost",
+  "filter.pending": "Pending",
+
+  "search.placeholder": "Search leads...",
+  "noLeads": "No leads found",
+  "noLeadsDesc": "Leads will appear here once captured by your AI receptionist or forms.",
+
+  "source.aiReceptionist": "AI Receptionist",
+  "source.speedToLead": "Speed to Lead",
+  "source.instantLeadResponse": "Instant Lead Response",
+  "source.websiteForm": "Website Form",
+  "source.googleAds": "Google Ads",
+  "source.facebookAds": "Facebook Ads",
+  "source.missedCall": "Missed Call",
+  "source.manual": "Manual",
+  "source.unknown": "Unknown",
+
+  "speedToLead.title": "Speed to Lead",
+  "speedToLead.desc": "Automatically call back new leads within 60 seconds",
+  "speedToLead.responseTime": "Response Time",
+  "speedToLead.leadsToday": "Leads Today",
+  "speedToLead.callbackRate": "Callback Rate",
+
+  "reactivation.title": "Lead Reactivation",
+  "reactivation.desc": "AI calls your old leads and re-books the ones still interested",
+  "reactivation.noOldLeads": "No old leads to reactivate"
+}

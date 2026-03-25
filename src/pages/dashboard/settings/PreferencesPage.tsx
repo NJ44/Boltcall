@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Moon, Sun, Palette, Save, RefreshCw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Button from '../../../components/ui/Button';
+import LanguageSwitcher from '../../../components/dashboard/LanguageSwitcher';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { supabase } from '../../../lib/supabase';
@@ -15,6 +17,7 @@ const defaultPreferences = {
 };
 
 const PreferencesPage: React.FC = () => {
+  const { t, i18n } = useTranslation(['settings', 'common']);
   const { user } = useAuth();
   const { showToast } = useToast();
   const [preferences, setPreferences] = useState(defaultPreferences);
@@ -23,10 +26,13 @@ const PreferencesPage: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
 
+  // Sync language preference from i18n on mount
+  useEffect(() => {
+    const lang = (i18n.language || 'en').split('-')[0];
+    setPreferences(prev => ({ ...prev, language: lang }));
+  }, [i18n.language]);
+
   // Fetch existing preferences on mount
-  // Preferences are stored as a JSON object in the business_profiles.user_preferences column.
-  // If that column doesn't exist yet, the fetch will still succeed (returns null for unknown cols)
-  // and we fall back to defaults.
   useEffect(() => {
     const fetchPreferences = async () => {
       if (!user?.id) return;
@@ -66,7 +72,6 @@ const PreferencesPage: React.FC = () => {
           .eq('id', businessProfileId);
         if (error) throw error;
       } else {
-        // No business profile yet — create one with just preferences
         const { data: newProfile, error } = await supabase
           .from('business_profiles')
           .insert([{ user_id: user.id, business_name: 'My Business', user_preferences: preferences }])
@@ -75,25 +80,16 @@ const PreferencesPage: React.FC = () => {
         if (error) throw error;
         if (newProfile) setBusinessProfileId(newProfile.id);
       }
-      showToast({ title: 'Saved', message: 'Preferences saved successfully!', variant: 'success', duration: 3000 });
-      setSaveMessage('Preferences saved successfully!');
+      showToast({ title: t('common:save'), message: t('settings:prefsSavedSuccess'), variant: 'success', duration: 3000 });
+      setSaveMessage(t('settings:prefsSavedSuccess'));
       setTimeout(() => setSaveMessage(''), 3000);
     } catch (err) {
       console.error('Error saving preferences:', err);
-      showToast({ title: 'Error', message: 'Failed to save preferences. Please try again.', variant: 'error', duration: 4000 });
+      showToast({ title: t('common:error'), message: t('settings:prefsSaveError'), variant: 'error', duration: 4000 });
     } finally {
       setIsSaving(false);
     }
   };
-
-  const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'es', name: 'Spanish' },
-    { code: 'fr', name: 'French' },
-    { code: 'de', name: 'German' },
-    { code: 'it', name: 'Italian' },
-    { code: 'pt', name: 'Portuguese' }
-  ];
 
   const timezones = [
     { value: 'America/New_York', label: 'Eastern Time (ET)' },
@@ -102,8 +98,13 @@ const PreferencesPage: React.FC = () => {
     { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
     { value: 'Europe/London', label: 'London (GMT)' },
     { value: 'Europe/Paris', label: 'Paris (CET)' },
+    { value: 'Asia/Jerusalem', label: 'Jerusalem (IST)' },
     { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
-    { value: 'Asia/Shanghai', label: 'Shanghai (CST)' }
+    { value: 'Asia/Shanghai', label: 'Shanghai (CST)' },
+    { value: 'America/Mexico_City', label: 'Mexico City (CST)' },
+    { value: 'America/Bogota', label: 'Bogota (COT)' },
+    { value: 'America/Buenos_Aires', label: 'Buenos Aires (ART)' },
+    { value: 'Europe/Madrid', label: 'Madrid (CET)' },
   ];
 
   return (
@@ -116,11 +117,11 @@ const PreferencesPage: React.FC = () => {
           disabled={isSaving}
         >
           {isSaving ? (
-            <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+            <RefreshCw className="w-4 h-4 ltr:mr-2 rtl:ml-2 animate-spin" />
           ) : (
-            <Save className="w-4 h-4 mr-2" />
+            <Save className="w-4 h-4 ltr:mr-2 rtl:ml-2" />
           )}
-          {isSaving ? 'Saving...' : 'Save Changes'}
+          {isSaving ? t('common:saving') : t('common:saveChanges')}
         </Button>
       </div>
 
@@ -138,26 +139,26 @@ const PreferencesPage: React.FC = () => {
       )}
 
       {/* Appearance */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
             <Palette className="w-4 h-4 text-purple-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">Appearance</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('settings:preferences.appearance')}</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">Theme</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('settings:preferences.theme')}</label>
             <div className="space-y-2">
               {[
-                { value: 'light', label: 'Light', icon: Sun },
-                { value: 'dark', label: 'Dark', icon: Moon },
-                { value: 'auto', label: 'Auto', icon: Globe }
+                { value: 'light', label: t('settings:preferences.themeLight'), icon: Sun },
+                { value: 'dark', label: t('settings:preferences.themeDark'), icon: Moon },
+                { value: 'auto', label: t('settings:preferences.themeAuto'), icon: Globe }
               ].map((theme) => {
                 const Icon = theme.icon;
                 return (
-                  <label key={theme.value} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                  <label key={theme.value} className="flex items-center gap-3 p-3 border border-gray-200 dark:border-[#2a2a30] rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a1a1f]">
                     <input
                       type="radio"
                       name="theme"
@@ -166,8 +167,8 @@ const PreferencesPage: React.FC = () => {
                       onChange={(e) => setPreferences(prev => ({ ...prev, theme: e.target.value }))}
                       className="text-blue-600 focus:ring-blue-500"
                     />
-                    <Icon className="w-4 h-4 text-gray-600" />
-                    <span className="text-gray-900">{theme.label}</span>
+                    <Icon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    <span className="text-gray-900 dark:text-white">{theme.label}</span>
                   </label>
                 );
               })}
@@ -178,34 +179,26 @@ const PreferencesPage: React.FC = () => {
       </div>
 
       {/* Language & Region */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
             <Globe className="w-4 h-4 text-blue-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">Language & Region</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('settings:preferences.languageRegion')}</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Language</label>
-            <select
-              value={preferences.language}
-              onChange={(e) => setPreferences(prev => ({ ...prev, language: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              {languages.map((lang) => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.language')}</label>
+            <LanguageSwitcher variant="select" />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Timezone</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.timezone')}</label>
             <select
               value={preferences.timezone}
               onChange={(e) => setPreferences(prev => ({ ...prev, timezone: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[#161619] text-gray-900 dark:text-white"
             >
               {timezones.map((tz) => (
                 <option key={tz.value} value={tz.value}>{tz.label}</option>
@@ -214,11 +207,11 @@ const PreferencesPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Date Format</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.dateFormat')}</label>
             <select
               value={preferences.dateFormat}
               onChange={(e) => setPreferences(prev => ({ ...prev, dateFormat: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[#161619] text-gray-900 dark:text-white"
             >
               <option value="MM/DD/YYYY">MM/DD/YYYY</option>
               <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -227,14 +220,14 @@ const PreferencesPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Time Format</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.timeFormat')}</label>
             <select
               value={preferences.timeFormat}
               onChange={(e) => setPreferences(prev => ({ ...prev, timeFormat: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[#161619] text-gray-900 dark:text-white"
             >
-              <option value="12h">12-hour (AM/PM)</option>
-              <option value="24h">24-hour</option>
+              <option value="12h">{t('settings:preferences.timeFormat12')}</option>
+              <option value="24h">{t('settings:preferences.timeFormat24')}</option>
             </select>
           </div>
         </div>

@@ -36,11 +36,16 @@ import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { supabase } from '../../lib/supabase';
 import { LocationSwitcher } from './LocationSwitcher';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useDirection } from '../../hooks/useDirection';
 import AiAssistant from './AiAssistant';
+import UsageBanner from './UsageBanner';
+import UsageLimitModal from './UsageLimitModal';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
 
 const DashboardLayout: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
+  const dir = useDirection();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
@@ -352,9 +357,9 @@ const DashboardLayout: React.FC = () => {
         <span className={`flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
         </span>
-        {/* Custom tooltip — white card to the right of icon */}
+        {/* Custom tooltip — card to the outside of icon (flips for RTL) */}
         {isCollapsedView && (
-          <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
+          <span className="absolute ltr:left-full rtl:right-full ltr:ml-2 rtl:mr-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
             {item.label}
           </span>
         )}
@@ -372,7 +377,7 @@ const DashboardLayout: React.FC = () => {
           </span>
         )}
         {!isCollapsedView && item.badge && (
-          <span className={`ml-auto px-1.5 py-0.5 text-[9px] font-semibold rounded-full leading-none ${
+          <span className={`ltr:ml-auto rtl:mr-auto px-1.5 py-0.5 text-[9px] font-semibold rounded-full leading-none ${
             item.badge === 'Beta'
               ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
               : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
@@ -391,18 +396,24 @@ const DashboardLayout: React.FC = () => {
          {/* Left Panel - Navigation with Logo at Top */}
          <aside
            data-onboarding="sidebar"
-           className={`fixed lg:static inset-y-0 left-0 z-[9999] transform transition-all duration-300 ease-in-out flex-shrink-0 ${
+           className={`fixed lg:static inset-y-0 ltr:left-0 rtl:right-0 z-[9999] transform transition-all duration-300 ease-in-out flex-shrink-0 ${
              sidebarCollapsed ? 'w-16' : 'w-64'
-           } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40 relative group/sidebar`}
+           } ${sidebarOpen ? 'translate-x-0' : 'ltr:-translate-x-full rtl:translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40 relative group/sidebar`}
          >
           {/* Collapse/Expand toggle arrow — fixed position so it doesn't shift on collapse */}
           <button
             onClick={toggleSidebarCollapse}
             className="hidden lg:flex fixed top-8 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] shadow-md items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200"
-            style={{ left: sidebarCollapsed ? 'calc(4rem + 0.5rem - 20px)' : 'calc(16rem + 0.5rem - 20px)', transition: 'left 300ms ease-in-out' }}
-            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            style={{
+              [dir === 'rtl' ? 'right' : 'left']: sidebarCollapsed ? 'calc(4rem + 0.5rem - 20px)' : 'calc(16rem + 0.5rem - 20px)',
+              transition: dir === 'rtl' ? 'right 300ms ease-in-out' : 'left 300ms ease-in-out',
+            }}
+            aria-label={sidebarCollapsed ? t('topbar.expandSidebar') : t('topbar.collapseSidebar')}
           >
-            {sidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+            {sidebarCollapsed
+              ? (dir === 'rtl' ? <ChevronLeft className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />)
+              : (dir === 'rtl' ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />)
+            }
           </button>
 
           <div className="flex flex-col h-full pt-2 pb-4">
@@ -506,6 +517,12 @@ const DashboardLayout: React.FC = () => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return renderNavItem(item, isActive);
                 })}
+                {/* Language Switcher in sidebar footer */}
+                {!sidebarCollapsed && (
+                  <div className="pt-1">
+                    <LanguageSwitcher variant="icon" />
+                  </div>
+                )}
               </div>
 
             </nav>
@@ -579,7 +596,10 @@ const DashboardLayout: React.FC = () => {
                   <LocationSwitcher />
                 </div>
 
-                {/* Language switcher removed — English only */}
+                {/* Language Switcher in topbar */}
+                <div className="hidden md:block">
+                  <LanguageSwitcher variant="icon" />
+                </div>
                  
                  {/* Notification Dropdown (hidden on mobile — hover doesn't work on touch) */}
                  <div className="relative group hidden md:block">
@@ -872,6 +892,7 @@ const DashboardLayout: React.FC = () => {
 
            {/* Page Content */}
            <div className="p-3 md:p-6">
+             <UsageBanner className="mb-4" />
              <motion.div
                key={location.pathname}
                initial={{ opacity: 0, y: 12 }}
@@ -881,6 +902,7 @@ const DashboardLayout: React.FC = () => {
                <Outlet />
              </motion.div>
           </div>
+          <UsageLimitModal />
 
            {/* AI Assistant - Bottom Right */}
            <AiAssistant />

@@ -10,6 +10,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
+import { useUsageGate } from '../../hooks/useUsageTracking';
 import { PopButton } from '../../components/ui/pop-button';
 
 interface PhoneNumber {
@@ -151,7 +152,13 @@ const PhoneNumbersPage: React.FC = () => {
     }
   };
 
+  const phoneGate = useUsageGate('phone_numbers');
+
   const handleBuyNewNumber = async () => {
+    if (!phoneGate.allowed) {
+      phoneGate.showUpgrade();
+      return;
+    }
     setShowDropdown(false);
     setShowTwilioModal(true);
     await searchTwilioNumbers(searchCountry, searchAreaCode || undefined);

@@ -1,0 +1,43 @@
+{
+  "title": "ניתוח נתונים",
+  "dateRange": "טווח תאריכים",
+  "last7days": "7 ימים אחרונים",
+  "last30days": "30 ימים אחרונים",
+  "last90days": "90 ימים אחרונים",
+  "custom": "מותאם אישית",
+  "refresh": "רענן",
+  "refreshing": "מרענן...",
+  "noDataYet": "אין נתונים עדיין",
+  "noDataDesc": "התחל להשתמש בשירותי ה-AI שלך כדי לראות נתונים כאן.",
+
+  "kpi.totalCalls": "סך שיחות",
+  "kpi.totalLeads": "סך לידים",
+  "kpi.appointmentsBooked": "פגישות שנקבעו",
+  "kpi.avgResponseTime": "זמן תגובה ממוצע",
+  "kpi.successRate": "אחוז הצלחה",
+  "kpi.smsSent": "הודעות SMS שנשלחו",
+  "kpi.tokensUsed": "טוקנים שנוצלו",
+  "kpi.activeAgents": "סוכנים פעילים",
+
+  "chart.callsOverTime": "שיחות לאורך זמן",
+  "chart.leadsOverTime": "לידים לאורך זמן",
+  "chart.bookingsOverTime": "הזמנות לאורך זמן",
+  "chart.smsOverTime": "הודעות SMS לאורך זמן",
+  "chart.successRateOverTime": "אחוז הצלחה לאורך זמן",
+
+  "breakdown.callStatus": "פילוח סטטוס שיחות",
+  "breakdown.answered": "נענו",
+  "breakdown.missed": "לא נענו",
+  "breakdown.voicemail": "תא קולי",
+  "breakdown.transferred": "הועברו",
+
+  "breakdown.leadSource": "מקורות לידים",
+  "breakdown.aiReceptionist": "קבלת פנים AI",
+  "breakdown.speedToLead": "מהירות ליד",
+  "breakdown.websiteForm": "טופס באתר",
+  "breakdown.googleAds": "Google Ads",
+  "breakdown.facebookAds": "Facebook Ads",
+  "breakdown.missedCall": "שיחה שלא נענתה",
+  "breakdown.manual": "ידני",
+  "breakdown.unknown": "לא ידוע"
+}

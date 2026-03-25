@@ -62,6 +62,10 @@ const MembersPage = React.lazy(() => import('../pages/dashboard/settings/Members
 const PlanBillingPage = React.lazy(() => import('../pages/dashboard/settings/PlanBillingPage'));
 const UsagePage = React.lazy(() => import('../pages/dashboard/settings/UsagePage'));
 const NotificationPage = React.lazy(() => import('../pages/dashboard/settings/NotificationPage'));
+const RolesPage = React.lazy(() => import('../pages/dashboard/settings/RolesPage'));
+const ActivityLogPage = React.lazy(() => import('../pages/dashboard/settings/ActivityLogPage'));
+const ApiKeysPage = React.lazy(() => import('../pages/dashboard/settings/ApiKeysPage'));
+const WorkspacePage = React.lazy(() => import('../pages/dashboard/settings/WorkspacePage'));
 
 // ── Lazy loads — Static / info pages ─────────────────────────────────────
 const HelpCenter = React.lazy(() => import('../pages/HelpCenter'));
@@ -316,6 +320,26 @@ const NavigationWrapper: React.FC = () => {
           <Route path="settings/notifications" element={
             <SettingsLayout>
               <NotificationPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/roles" element={
+            <SettingsLayout>
+              <RolesPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/activity-log" element={
+            <SettingsLayout>
+              <ActivityLogPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/api-keys" element={
+            <SettingsLayout>
+              <ApiKeysPage />
+            </SettingsLayout>
+          } />
+          <Route path="settings/workspace" element={
+            <SettingsLayout>
+              <WorkspacePage />
             </SettingsLayout>
           } />
           {/* Redirects for removed settings pages */}

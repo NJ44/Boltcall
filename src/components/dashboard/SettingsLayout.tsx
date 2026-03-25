@@ -20,7 +20,17 @@ const categories = [
     label: 'Account & Settings',
     sidebar: [
       { id: 'general', label: 'General', route: '/dashboard/settings/general' },
+      { id: 'workspace', label: 'Workspace', route: '/dashboard/settings/workspace' },
       { id: 'members', label: 'Members', route: '/dashboard/settings/members' },
+    ],
+  },
+  {
+    id: 'team',
+    label: 'Team & Security',
+    sidebar: [
+      { id: 'roles', label: 'Roles & Permissions', route: '/dashboard/settings/roles' },
+      { id: 'activity-log', label: 'Activity Log', route: '/dashboard/settings/activity-log' },
+      { id: 'api-keys', label: 'API Keys', route: '/dashboard/settings/api-keys' },
     ],
   },
   {

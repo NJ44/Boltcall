@@ -1,0 +1,57 @@
+{
+  "title": "אינטגרציות",
+  "connected": "מחובר",
+  "notConnected": "לא מחובר",
+  "connect": "חבר",
+  "disconnect": "נתק",
+  "configure": "הגדר",
+  "comingSoon": "בקרוב",
+  "lastSync": "סנכרון אחרון",
+  "syncCount": "{{count}} סנכרונים",
+  "noIntegrations": "אין אינטגרציות מחוברות עדיין",
+
+  "hubspot.name": "HubSpot",
+  "hubspot.subtitle": "CRM וניהול לידים",
+  "hubspot.description": "דחוף אוטומטית לידים חדשים ונתוני שיחות ל-HubSpot CRM.",
+  "hubspot.apiLabel": "טוקן אפליקציה פרטית של HubSpot",
+  "hubspot.step1": "עבור ל-HubSpot → הגדרות → אינטגרציות → אפליקציות פרטיות",
+  "hubspot.step2": "צור אפליקציה פרטית חדשה עם הרשאת \"contacts\"",
+  "hubspot.step3": "העתק את טוקן הגישה והדבק אותו למטה",
+
+  "zapier.name": "Zapier",
+  "zapier.subtitle": "חבר 6,000+ אפליקציות",
+  "zapier.description": "שלח נתוני לידים לכל אפליקציה דרך Zapier — Slack, Mailchimp, Airtable ועוד.",
+  "zapier.webhookLabel": "כתובת Webhook של Zapier",
+  "zapier.step1": "צור Zap חדש ב-Zapier",
+  "zapier.step2": "בחר \"Webhooks by Zapier\" כטריגר",
+  "zapier.step3": "בחר \"Catch Hook\" והעתק את כתובת ה-Webhook",
+  "zapier.step4": "הדבק למטה — נשלח נתוני לידים לכתובת זו",
+
+  "googleSheets.name": "Google Sheets",
+  "googleSheets.subtitle": "סנכרון גיליונות",
+  "googleSheets.description": "הוסף אוטומטית לידים חדשים כשורות בגיליון Google Sheets שלך.",
+
+  "slack.name": "Slack",
+  "slack.subtitle": "התראות לצוות",
+  "slack.description": "קבל התראות בזמן אמת על לידים ושיחות בערוצי ה-Slack שלך.",
+
+  "calcom.name": "Cal.com",
+  "calcom.subtitle": "לוח שנה וקביעת תורים",
+  "calcom.description": "חבר את לוח השנה של Cal.com כדי לאפשר קביעת פגישות.",
+
+  "whatsapp.name": "WhatsApp",
+  "whatsapp.subtitle": "הודעות עסקיות",
+  "whatsapp.description": "שלח הודעות WhatsApp אוטומטיות ללידים ולקוחות.",
+
+  "setup.title": "הוראות הגדרה",
+  "setup.apiKey": "מפתח API",
+  "setup.apiKeyPlaceholder": "הדבק את מפתח ה-API כאן",
+  "setup.webhookUrl": "כתובת Webhook",
+  "setup.webhookUrlPlaceholder": "https://hooks.zapier.com/...",
+  "setup.testConnection": "בדוק חיבור",
+  "setup.testing": "בודק...",
+  "setup.connectionSuccess": "החיבור הצליח!",
+  "setup.connectionFailed": "החיבור נכשל. בדוק את הפרטים שלך.",
+  "setup.save": "שמור וחבר",
+  "setup.saving": "מתחבר..."
+}

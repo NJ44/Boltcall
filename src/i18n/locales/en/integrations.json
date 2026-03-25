@@ -1,0 +1,57 @@
+{
+  "title": "Integrations",
+  "connected": "Connected",
+  "notConnected": "Not Connected",
+  "connect": "Connect",
+  "disconnect": "Disconnect",
+  "configure": "Configure",
+  "comingSoon": "Coming Soon",
+  "lastSync": "Last synced",
+  "syncCount": "{{count}} syncs",
+  "noIntegrations": "No integrations connected yet",
+
+  "hubspot.name": "HubSpot",
+  "hubspot.subtitle": "CRM & Lead Management",
+  "hubspot.description": "Automatically push new leads and call data into HubSpot CRM.",
+  "hubspot.apiLabel": "HubSpot Private App Token",
+  "hubspot.step1": "Go to HubSpot → Settings → Integrations → Private Apps",
+  "hubspot.step2": "Create a new private app with \"contacts\" scope",
+  "hubspot.step3": "Copy the access token and paste it below",
+
+  "zapier.name": "Zapier",
+  "zapier.subtitle": "Connect 6,000+ Apps",
+  "zapier.description": "Send lead data to any app via Zapier webhooks — Slack, Mailchimp, Airtable, and more.",
+  "zapier.webhookLabel": "Zapier Webhook URL",
+  "zapier.step1": "Create a new Zap in Zapier",
+  "zapier.step2": "Choose \"Webhooks by Zapier\" as the trigger",
+  "zapier.step3": "Select \"Catch Hook\" and copy the webhook URL",
+  "zapier.step4": "Paste it below — we'll send lead data to this URL",
+
+  "googleSheets.name": "Google Sheets",
+  "googleSheets.subtitle": "Spreadsheet Sync",
+  "googleSheets.description": "Automatically add new leads as rows in your Google Sheets spreadsheet.",
+
+  "slack.name": "Slack",
+  "slack.subtitle": "Team Notifications",
+  "slack.description": "Get real-time lead and call notifications in your Slack channels.",
+
+  "calcom.name": "Cal.com",
+  "calcom.subtitle": "Calendar & Scheduling",
+  "calcom.description": "Connect your Cal.com calendar to enable appointment booking.",
+
+  "whatsapp.name": "WhatsApp",
+  "whatsapp.subtitle": "Business Messaging",
+  "whatsapp.description": "Send automated WhatsApp messages to leads and clients.",
+
+  "setup.title": "Setup Instructions",
+  "setup.apiKey": "API Key",
+  "setup.apiKeyPlaceholder": "Paste your API key here",
+  "setup.webhookUrl": "Webhook URL",
+  "setup.webhookUrlPlaceholder": "https://hooks.zapier.com/...",
+  "setup.testConnection": "Test Connection",
+  "setup.testing": "Testing...",
+  "setup.connectionSuccess": "Connection successful!",
+  "setup.connectionFailed": "Connection failed. Please check your credentials.",
+  "setup.save": "Save & Connect",
+  "setup.saving": "Connecting..."
+}

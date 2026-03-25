@@ -1,0 +1,57 @@
+{
+  "title": "Integraciones",
+  "connected": "Conectado",
+  "notConnected": "No Conectado",
+  "connect": "Conectar",
+  "disconnect": "Desconectar",
+  "configure": "Configurar",
+  "comingSoon": "Próximamente",
+  "lastSync": "Última sincronización",
+  "syncCount": "{{count}} sincronizaciones",
+  "noIntegrations": "Aún no hay integraciones conectadas",
+
+  "hubspot.name": "HubSpot",
+  "hubspot.subtitle": "CRM y Gestión de Prospectos",
+  "hubspot.description": "Envía automáticamente nuevos prospectos y datos de llamadas a HubSpot CRM.",
+  "hubspot.apiLabel": "Token de App Privada de HubSpot",
+  "hubspot.step1": "Ve a HubSpot → Configuración → Integraciones → Apps Privadas",
+  "hubspot.step2": "Crea una nueva app privada con permiso de \"contacts\"",
+  "hubspot.step3": "Copia el token de acceso y pégalo abajo",
+
+  "zapier.name": "Zapier",
+  "zapier.subtitle": "Conecta 6,000+ Apps",
+  "zapier.description": "Envía datos de prospectos a cualquier app vía webhooks de Zapier — Slack, Mailchimp, Airtable y más.",
+  "zapier.webhookLabel": "URL del Webhook de Zapier",
+  "zapier.step1": "Crea un nuevo Zap en Zapier",
+  "zapier.step2": "Elige \"Webhooks by Zapier\" como disparador",
+  "zapier.step3": "Selecciona \"Catch Hook\" y copia la URL del webhook",
+  "zapier.step4": "Pégala abajo — enviaremos datos de prospectos a esta URL",
+
+  "googleSheets.name": "Google Sheets",
+  "googleSheets.subtitle": "Sincronización de Hojas de Cálculo",
+  "googleSheets.description": "Agrega automáticamente nuevos prospectos como filas en tu hoja de Google Sheets.",
+
+  "slack.name": "Slack",
+  "slack.subtitle": "Notificaciones de Equipo",
+  "slack.description": "Recibe notificaciones en tiempo real de prospectos y llamadas en tus canales de Slack.",
+
+  "calcom.name": "Cal.com",
+  "calcom.subtitle": "Calendario y Agendamiento",
+  "calcom.description": "Conecta tu calendario de Cal.com para habilitar la reserva de citas.",
+
+  "whatsapp.name": "WhatsApp",
+  "whatsapp.subtitle": "Mensajería Empresarial",
+  "whatsapp.description": "Envía mensajes automatizados de WhatsApp a prospectos y clientes.",
+
+  "setup.title": "Instrucciones de Configuración",
+  "setup.apiKey": "Clave API",
+  "setup.apiKeyPlaceholder": "Pega tu clave API aquí",
+  "setup.webhookUrl": "URL del Webhook",
+  "setup.webhookUrlPlaceholder": "https://hooks.zapier.com/...",
+  "setup.testConnection": "Probar Conexión",
+  "setup.testing": "Probando...",
+  "setup.connectionSuccess": "¡Conexión exitosa!",
+  "setup.connectionFailed": "Conexión fallida. Verifica tus credenciales.",
+  "setup.save": "Guardar y Conectar",
+  "setup.saving": "Conectando..."
+}

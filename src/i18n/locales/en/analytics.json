@@ -1,0 +1,43 @@
+{
+  "title": "Analytics",
+  "dateRange": "Date Range",
+  "last7days": "Last 7 Days",
+  "last30days": "Last 30 Days",
+  "last90days": "Last 90 Days",
+  "custom": "Custom",
+  "refresh": "Refresh",
+  "refreshing": "Refreshing...",
+  "noDataYet": "No analytics data yet",
+  "noDataDesc": "Start using your AI services to see data here.",
+
+  "kpi.totalCalls": "Total Calls",
+  "kpi.totalLeads": "Total Leads",
+  "kpi.appointmentsBooked": "Appointments Booked",
+  "kpi.avgResponseTime": "Avg Response Time",
+  "kpi.successRate": "Success Rate",
+  "kpi.smsSent": "SMS Sent",
+  "kpi.tokensUsed": "Tokens Used",
+  "kpi.activeAgents": "Active Agents",
+
+  "chart.callsOverTime": "Calls Over Time",
+  "chart.leadsOverTime": "Leads Over Time",
+  "chart.bookingsOverTime": "Bookings Over Time",
+  "chart.smsOverTime": "SMS Sent Over Time",
+  "chart.successRateOverTime": "Success Rate Over Time",
+
+  "breakdown.callStatus": "Call Status Breakdown",
+  "breakdown.answered": "Answered",
+  "breakdown.missed": "Missed",
+  "breakdown.voicemail": "Voicemail",
+  "breakdown.transferred": "Transferred",
+
+  "breakdown.leadSource": "Lead Sources",
+  "breakdown.aiReceptionist": "AI Receptionist",
+  "breakdown.speedToLead": "Speed to Lead",
+  "breakdown.websiteForm": "Website Form",
+  "breakdown.googleAds": "Google Ads",
+  "breakdown.facebookAds": "Facebook Ads",
+  "breakdown.missedCall": "Missed Call",
+  "breakdown.manual": "Manual",
+  "breakdown.unknown": "Unknown"
+}

@@ -1,0 +1,46 @@
+{
+  "title": "Prospectos",
+  "tabs.speedToLead": "Velocidad al Prospecto",
+  "tabs.missedCalls": "Llamadas Perdidas",
+  "tabs.reactivation": "Reactivación",
+
+  "table.name": "Nombre",
+  "table.phone": "Teléfono",
+  "table.email": "Correo",
+  "table.source": "Fuente",
+  "table.status": "Estado",
+  "table.date": "Fecha",
+  "table.id": "ID",
+  "table.actions": "Acciones",
+
+  "filter.all": "Todos",
+  "filter.new": "Nuevo",
+  "filter.contacted": "Contactado",
+  "filter.qualified": "Calificado",
+  "filter.lost": "Perdido",
+  "filter.pending": "Pendiente",
+
+  "search.placeholder": "Buscar prospectos...",
+  "noLeads": "No se encontraron prospectos",
+  "noLeadsDesc": "Los prospectos aparecerán aquí cuando sean capturados por tu recepcionista IA o formularios.",
+
+  "source.aiReceptionist": "Recepcionista IA",
+  "source.speedToLead": "Velocidad al Prospecto",
+  "source.instantLeadResponse": "Respuesta Instantánea",
+  "source.websiteForm": "Formulario Web",
+  "source.googleAds": "Google Ads",
+  "source.facebookAds": "Facebook Ads",
+  "source.missedCall": "Llamada Perdida",
+  "source.manual": "Manual",
+  "source.unknown": "Desconocido",
+
+  "speedToLead.title": "Velocidad al Prospecto",
+  "speedToLead.desc": "Devuelve llamadas automáticamente a nuevos prospectos en 60 segundos",
+  "speedToLead.responseTime": "Tiempo de Respuesta",
+  "speedToLead.leadsToday": "Prospectos Hoy",
+  "speedToLead.callbackRate": "Tasa de Devolución",
+
+  "reactivation.title": "Reactivación de Prospectos",
+  "reactivation.desc": "La IA llama a prospectos antiguos y reagenda a los interesados",
+  "reactivation.noOldLeads": "No hay prospectos antiguos para reactivar"
+}
