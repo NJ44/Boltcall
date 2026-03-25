@@ -150,13 +150,19 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Only split out heavy libs that have NO React dependency
-          // Everything else uses Vite's default chunking to avoid TDZ errors with React 19
           if (id.includes('node_modules')) {
+            // Heavy animation lib — split to avoid bloating main bundle
+            if (id.includes('framer-motion')) return 'framer-motion';
             if (id.includes('gsap')) return 'gsap';
             if (id.includes('@lottiefiles') || id.includes('lottie')) return 'lottie';
-            if (id.includes('three') || id.includes('@react-three')) return 'three';
-            if (id.includes('@splinetool')) return 'spline';
+            // Radix UI primitives — used broadly but heavy together
+            if (id.includes('@radix-ui')) return 'radix';
+            // Supabase client
+            if (id.includes('@supabase')) return 'supabase';
+            // Charts — only used in analytics dashboard
+            if (id.includes('recharts')) return 'recharts';
+            // i18n
+            if (id.includes('i18next')) return 'i18n';
           }
         },
       },

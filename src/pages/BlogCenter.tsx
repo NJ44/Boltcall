@@ -225,7 +225,7 @@ const blogPosts: BlogPost[] = [
     date: 'March 5, 2026',
     readTime: '7 min read',
     category: 'Business Growth',
-    image: '/images/blog/ai-receptionist.png'
+    image: '/images/blog/ai-receptionist.webp'
   },
   {
     title: 'Why <span class="text-blue-600">AI Services</span> Are No Longer Optional',
@@ -234,7 +234,7 @@ const blogPosts: BlogPost[] = [
     date: 'January 15, 2025',
     readTime: '8 min read',
     category: 'Business Strategy',
-    image: '/images/blog/ai-services-pro.png'
+    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'The <span class="text-blue-600">391%</span> Advantage: Responding in 60 Seconds',
@@ -243,7 +243,7 @@ const blogPosts: BlogPost[] = [
     date: 'January 20, 2025',
     readTime: '6 min read',
     category: 'Lead Generation',
-    image: '/images/blog/speed-pro.png'
+    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'Why <span class="text-blue-600">Website Speed</span> Is Everything',
@@ -252,7 +252,7 @@ const blogPosts: BlogPost[] = [
     date: 'January 25, 2025',
     readTime: '7 min read',
     category: 'Website Performance',
-    image: '/images/blog/speed-pro.png'
+    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'Why <span class="text-blue-600">SEO</span> Can\'t Be Ignored',
@@ -261,7 +261,7 @@ const blogPosts: BlogPost[] = [
     date: 'January 30, 2025',
     readTime: '9 min read',
     category: 'SEO Strategy',
-    image: '/images/blog/seo.png'
+    image: '/images/blog/seo.webp'
   },
   {
     title: 'The Complete Guide to <span class="text-blue-600">AI for Local Businesses</span>',
@@ -270,7 +270,7 @@ const blogPosts: BlogPost[] = [
     date: 'February 1, 2025',
     readTime: '12 min read',
     category: 'Complete Guide',
-    image: '/images/blog/ai-services-pro.png'
+    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'Best <span class="text-blue-600">AI Receptionist Tools</span> for Small Businesses (Top 5 Compared)',
@@ -279,7 +279,7 @@ const blogPosts: BlogPost[] = [
     date: 'February 5, 2025',
     readTime: '10 min read',
     category: 'Tool Comparison',
-    image: '/images/blog/ai-receptionist.png'
+    image: '/images/blog/ai-receptionist.webp'
   },
   {
     title: 'How to Make an <span class="text-blue-600">AI Receptionist</span>: A Complete Step-by-Step Guide',
@@ -288,7 +288,7 @@ const blogPosts: BlogPost[] = [
     date: 'February 20, 2025',
     readTime: '10 min read',
     category: 'Technical Guide',
-    image: '/images/blog/ai-services-pro.png'
+    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'Will <span class="text-blue-600">Receptionists</span> Be Replaced by AI? The Future of Front Desk Work',
@@ -297,7 +297,7 @@ const blogPosts: BlogPost[] = [
     date: 'February 25, 2025',
     readTime: '9 min read',
     category: 'Industry Analysis',
-    image: '/images/blog/ai-services-pro.png'
+    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'What Does <span class="text-blue-600">Instant Lead Reply</span> Mean? A Complete Guide',
@@ -306,7 +306,7 @@ const blogPosts: BlogPost[] = [
     date: 'March 1, 2025',
     readTime: '6 min read',
     category: 'Lead Generation',
-    image: '/images/blog/speed-pro.png'
+    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'How to Set Up <span class="text-blue-600">Instant Lead Reply</span> in Your Website/Ads with Boltcall',
@@ -315,7 +315,7 @@ const blogPosts: BlogPost[] = [
     date: 'March 1, 2025',
     readTime: '8 min read',
     category: 'Setup Guide',
-    image: '/images/blog/speed-pro.png'
+    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'How Does <span class="text-blue-600">Instant Lead Reply</span> Work? The Technology Behind the Magic',
@@ -324,7 +324,7 @@ const blogPosts: BlogPost[] = [
     date: 'March 2, 2025',
     readTime: '7 min read',
     category: 'Technology',
-    image: '/images/blog/speed-pro.png'
+    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'Top 10 <span class="text-blue-600">AI Receptionist Agencies</span>: Complete Comparison Guide',
@@ -333,7 +333,7 @@ const blogPosts: BlogPost[] = [
     date: 'March 15, 2025',
     readTime: '15 min read',
     category: 'Tool Comparison',
-    image: '/images/blog/ai-receptionist.png'
+    image: '/images/blog/ai-receptionist.webp'
   },
   {
     title: 'How to Create a <span class="text-blue-600">Gemini Gem</span> Business Assistant (Marketing, Social Media & More)',
@@ -342,7 +342,7 @@ const blogPosts: BlogPost[] = [
     date: 'February 15, 2025',
     readTime: '12 min read',
     category: 'AI Tools Guide',
-    image: '/images/blog/ai-services-pro.png'
+    image: '/images/blog/ai-services-pro.webp'
   },
   // Add more blog posts here as they are created
 ];

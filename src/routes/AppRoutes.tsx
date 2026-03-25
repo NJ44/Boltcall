@@ -8,6 +8,15 @@ import { TokenProvider } from '../contexts/TokenContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import PlanGate from '../components/PlanGate';
 
+// Wraps dashboard routes with subscription/token providers (only needed for authenticated pages)
+const DashboardProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <SubscriptionProvider>
+    <TokenProvider>
+      {children}
+    </TokenProvider>
+  </SubscriptionProvider>
+);
+
 // ── Eager loads (critical path — homepage & auth) ────────────────────────
 import Home from '../pages/Home';
 import Login from '../pages/Login';
@@ -217,7 +226,9 @@ const NavigationWrapper: React.FC = () => {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <DashboardProviders>
+                <Dashboard />
+              </DashboardProviders>
             </ProtectedRoute>
           }
         />
@@ -225,7 +236,9 @@ const NavigationWrapper: React.FC = () => {
           path="/dashboard/*"
           element={
             <ProtectedRoute>
-              <DashboardLayout />
+              <DashboardProviders>
+                <DashboardLayout />
+              </DashboardProviders>
             </ProtectedRoute>
           }
         >
@@ -440,13 +453,9 @@ const NavigationWrapper: React.FC = () => {
 const AppRoutes: React.FC = () => {
   return (
     <AuthProvider>
-      <SubscriptionProvider>
-        <TokenProvider>
-          <Router>
-            <NavigationWrapper />
-          </Router>
-        </TokenProvider>
-      </SubscriptionProvider>
+      <Router>
+        <NavigationWrapper />
+      </Router>
     </AuthProvider>
   );
 };
