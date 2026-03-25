@@ -14,6 +14,8 @@ import {
   Coins,
   CalendarDays,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { BarChart3 } from 'lucide-react';
 import KpiTile from '../../components/dashboard/KpiTile';
 import TimeSeriesCard from '../../components/dashboard/TimeSeriesCard';
 import Card from '../../components/ui/Card';
