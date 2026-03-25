@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Moon, Sun, Palette, Bell, Eye, Shield, Save, RefreshCw } from 'lucide-react';
+import { Globe, Moon, Sun, Palette, Save, RefreshCw } from 'lucide-react';
 import Button from '../../../components/ui/Button';
-import { Magnetic } from '../../../components/ui/magnetic';
-import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { supabase } from '../../../lib/supabase';
@@ -14,23 +12,6 @@ const defaultPreferences = {
   timezone: 'America/New_York',
   dateFormat: 'MM/DD/YYYY',
   timeFormat: '12h',
-  notifications: {
-    email: true,
-    push: true,
-    sms: false,
-    weeklyDigest: true,
-    marketing: false
-  },
-  privacy: {
-    profileVisibility: 'team',
-    dataSharing: false,
-    analytics: true
-  },
-  accessibility: {
-    highContrast: false,
-    reducedMotion: false,
-    fontSize: 'medium'
-  }
 };
 
 const PreferencesPage: React.FC = () => {
@@ -61,13 +42,9 @@ const PreferencesPage: React.FC = () => {
         if (profile) {
           setBusinessProfileId(profile.id);
           if (profile.user_preferences) {
-            // Deep merge with defaults so new keys are always present
             setPreferences(prev => ({
               ...prev,
               ...profile.user_preferences,
-              notifications: { ...prev.notifications, ...(profile.user_preferences.notifications || {}) },
-              privacy: { ...prev.privacy, ...(profile.user_preferences.privacy || {}) },
-              accessibility: { ...prev.accessibility, ...(profile.user_preferences.accessibility || {}) },
             }));
           }
         }
@@ -109,16 +86,6 @@ const PreferencesPage: React.FC = () => {
     }
   };
 
-  const handlePreferenceChange = (section: string, key: string, value: any) => {
-    setPreferences(prev => ({
-      ...prev,
-      [section]: {
-        ...(prev[section as keyof typeof prev] as any),
-        [key]: value
-      }
-    }));
-  };
-
   const languages = [
     { code: 'en', name: 'English' },
     { code: 'es', name: 'Spanish' },
@@ -143,20 +110,18 @@ const PreferencesPage: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <Magnetic>
-          <Button
-            variant="primary"
-            onClick={handleSave}
-            disabled={isSaving}
-          >
-            {isSaving ? (
-              <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-            ) : (
-              <Save className="w-4 h-4 mr-2" />
-            )}
-            {isSaving ? 'Saving...' : 'Save Changes'}
-          </Button>
-        </Magnetic>
+        <Button
+          variant="primary"
+          onClick={handleSave}
+          disabled={isSaving}
+        >
+          {isSaving ? (
+            <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+          ) : (
+            <Save className="w-4 h-4 mr-2" />
+          )}
+          {isSaving ? 'Saving...' : 'Save Changes'}
+        </Button>
       </div>
 
       {saveMessage && (
@@ -209,19 +174,6 @@ const PreferencesPage: React.FC = () => {
             </div>
           </div>
 
-      <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">Font Size</label>
-            <select
-              value={preferences.accessibility.fontSize}
-              onChange={(e) => handlePreferenceChange('accessibility', 'fontSize', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="extra-large">Extra Large</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -288,102 +240,6 @@ const PreferencesPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Notifications */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-            <Bell className="w-4 h-4 text-yellow-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900">Notifications</h2>
-        </div>
-
-        <div className="space-y-4">
-          {[
-            { key: 'email', label: 'Email Notifications', description: 'Receive notifications via email' },
-            { key: 'push', label: 'Push Notifications', description: 'Receive push notifications in your browser' },
-            { key: 'sms', label: 'SMS Notifications', description: 'Receive notifications via SMS' },
-            { key: 'weeklyDigest', label: 'Weekly Digest', description: 'Get a weekly summary of your activity' },
-            { key: 'marketing', label: 'Marketing Updates', description: 'Receive updates about new features and offers' }
-          ].map((notification) => (
-            <div key={notification.key} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-              <div>
-                <h3 className="font-medium text-gray-900">{notification.label}</h3>
-                <p className="text-sm text-gray-600">{notification.description}</p>
-              </div>
-              <PremiumToggle checked={preferences.notifications[notification.key as keyof typeof preferences.notifications]} onChange={(checked) => handlePreferenceChange('notifications', notification.key, checked)} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Privacy & Security */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-            <Shield className="w-4 h-4 text-green-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900">Privacy & Security</h2>
-        </div>
-        
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Profile Visibility</label>
-            <select
-              value={preferences.privacy.profileVisibility}
-              onChange={(e) => handlePreferenceChange('privacy', 'profileVisibility', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="public">Public</option>
-              <option value="team">Team Only</option>
-              <option value="private">Private</option>
-            </select>
-          </div>
-
-          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-            <div>
-              <h3 className="font-medium text-gray-900">Data Sharing</h3>
-              <p className="text-sm text-gray-600">Allow sharing of anonymous usage data to improve our services</p>
-            </div>
-            <PremiumToggle checked={preferences.privacy.dataSharing} onChange={(checked) => handlePreferenceChange('privacy', 'dataSharing', checked)} />
-          </div>
-
-          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-            <div>
-              <h3 className="font-medium text-gray-900">Analytics</h3>
-              <p className="text-sm text-gray-600">Help us improve by sharing analytics data</p>
-            </div>
-            <PremiumToggle checked={preferences.privacy.analytics} onChange={(checked) => handlePreferenceChange('privacy', 'analytics', checked)} />
-        </div>
-        </div>
-      </div>
-
-      {/* Accessibility */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-            <Eye className="w-4 h-4 text-indigo-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900">Accessibility</h2>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-            <div>
-              <h3 className="font-medium text-gray-900">High Contrast Mode</h3>
-              <p className="text-sm text-gray-600">Increase contrast for better readability</p>
-            </div>
-            <PremiumToggle checked={preferences.accessibility.highContrast} onChange={(checked) => handlePreferenceChange('accessibility', 'highContrast', checked)} />
-      </div>
-
-          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
-            <div>
-              <h3 className="font-medium text-gray-900">Reduced Motion</h3>
-              <p className="text-sm text-gray-600">Minimize animations and transitions</p>
-            </div>
-            <PremiumToggle checked={preferences.accessibility.reducedMotion} onChange={(checked) => handlePreferenceChange('accessibility', 'reducedMotion', checked)} />
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { getUserSubscription, getUserInvoices, type PlanLevel } from '../../../lib/stripe';
 import { redirectToCheckout } from '../../../lib/stripe-checkout';
 import { TOKEN_PLANS } from '../../../lib/tokens';
+import { useTokens } from '../../../contexts/TokenContext';
 
 interface Subscription {
   id: string;
@@ -32,6 +33,7 @@ interface Invoice {
 
 const PlanBillingPage: React.FC = () => {
   const { t } = useTranslation();
+  const { totalAvailable, monthlyAllocation, tokensUsed } = useTokens();
   const [activeTab, setActiveTab] = useState<'plan' | 'invoices'>('plan');
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -77,11 +79,10 @@ const PlanBillingPage: React.FC = () => {
 
   const currentPlan = planDetails[currentPlanLevel] || planDetails.free;
 
-  // Usage data (would come from API in production)
+  // Real usage from token context
+  const tokenLimit = monthlyAllocation > 0 ? monthlyAllocation : (TOKEN_PLANS[currentPlanLevel as keyof typeof TOKEN_PLANS]?.monthlyTokens ?? 0);
   const usageItems = [
-    { label: 'AI Conversations', used: 2847, limit: 10000 },
-    { label: 'Phone Calls', used: 1234, limit: 5000 },
-    { label: 'Leads Stored', used: 456, limit: 2000 },
+    { label: 'Tokens Used', used: tokensUsed, limit: tokenLimit || 1000 },
   ];
 
   const handleUpgrade = async (plan: PlanLevel) => {

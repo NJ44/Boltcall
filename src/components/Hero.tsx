@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
 import { InteractiveHoverButton } from './ui/interactive-hover-button';
+import { PopButton } from './ui/pop-button';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
 
@@ -197,7 +198,7 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center pt-12 md:pt-16 lg:pt-20">
+          <div className="relative z-10 text-center pt-20 md:pt-28 lg:pt-36">
             {/* Animated Headline */}
             <div className="flex justify-center mb-6 relative z-10">
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
@@ -277,6 +278,14 @@ const Hero: React.FC = () => {
                 hoverBgClass="bg-brand-blue"
                 hoverTextClass="text-white"
               />
+              <PopButton
+                color="blue"
+                size="lg"
+                onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                className="min-h-11 w-48"
+              >
+                Learn More
+              </PopButton>
             </motion.div>
 
           </div>
