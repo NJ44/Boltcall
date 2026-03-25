@@ -88,6 +88,128 @@ async function syncToHubSpot(apiKey: string, lead: any): Promise<{ success: bool
   }
 }
 
+// ─── GoHighLevel Integration ────────────────────────────────────────────────
+
+async function syncToGoHighLevel(apiKey: string, config: any, lead: any): Promise<{ success: boolean; contactId?: string; error?: string }> {
+  const locationId = config?.location_id;
+  if (!locationId) return { success: false, error: 'No Location ID configured' };
+
+  const baseUrl = 'https://services.leadconnectorhq.com';
+  const authHeaders = {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+    'Version': '2021-07-28',
+  };
+
+  try {
+    // Search for existing contact by email or phone
+    let existingId: string | null = null;
+    const searchQuery = lead.email || lead.phone;
+
+    if (searchQuery) {
+      const searchRes = await fetch(
+        `${baseUrl}/contacts/search/duplicate?locationId=${locationId}&${lead.email ? `email=${encodeURIComponent(lead.email)}` : `phone=${encodeURIComponent(lead.phone)}`}`,
+        { method: 'GET', headers: authHeaders }
+      );
+      if (searchRes.ok) {
+        const searchData = await searchRes.json();
+        if (searchData.contact?.id) existingId = searchData.contact.id;
+      }
+    }
+
+    const contactData: Record<string, any> = {
+      locationId,
+      firstName: lead.first_name || lead.name?.split(' ')[0] || '',
+      lastName: lead.last_name || lead.name?.split(' ').slice(1).join(' ') || '',
+      phone: lead.phone || '',
+      email: lead.email || '',
+      source: lead.source || 'Boltcall AI Receptionist',
+      tags: ['boltcall', 'ai-lead'],
+    };
+
+    if (existingId) {
+      // Update existing contact
+      const res = await fetch(`${baseUrl}/contacts/${existingId}`, {
+        method: 'PUT',
+        headers: authHeaders,
+        body: JSON.stringify(contactData),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`GHL update failed: ${res.status} - ${errText}`);
+      }
+      return { success: true, contactId: existingId };
+    } else {
+      // Create new contact
+      const res = await fetch(`${baseUrl}/contacts/`, {
+        method: 'POST',
+        headers: authHeaders,
+        body: JSON.stringify(contactData),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`GHL create failed: ${res.status} - ${errText}`);
+      }
+      const data = await res.json();
+      return { success: true, contactId: data.contact?.id };
+    }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'GoHighLevel sync failed' };
+  }
+}
+
+// ─── Pipedrive Integration ──────────────────────────────────────────────────
+
+async function syncToPipedrive(apiToken: string, lead: any): Promise<{ success: boolean; personId?: number; error?: string }> {
+  try {
+    const name = lead.name || [lead.first_name, lead.last_name].filter(Boolean).join(' ') || 'Unknown';
+
+    // Search for existing person by email or phone
+    let existingId: number | null = null;
+    if (lead.email) {
+      const searchRes = await fetch(
+        `https://api.pipedrive.com/v1/persons/search?term=${encodeURIComponent(lead.email)}&fields=email&api_token=${apiToken}`
+      );
+      if (searchRes.ok) {
+        const searchData = await searchRes.json();
+        if (searchData.data?.items?.length > 0) {
+          existingId = searchData.data.items[0].item?.id;
+        }
+      }
+    }
+
+    const personData: Record<string, any> = {
+      name,
+      email: lead.email ? [{ value: lead.email, primary: true }] : undefined,
+      phone: lead.phone ? [{ value: lead.phone, primary: true }] : undefined,
+    };
+
+    if (existingId) {
+      const res = await fetch(`https://api.pipedrive.com/v1/persons/${existingId}?api_token=${apiToken}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(personData),
+      });
+      if (!res.ok) throw new Error(`Pipedrive update failed: ${res.status}`);
+      return { success: true, personId: existingId };
+    } else {
+      const res = await fetch(`https://api.pipedrive.com/v1/persons?api_token=${apiToken}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(personData),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Pipedrive create failed: ${res.status} - ${errText}`);
+      }
+      const data = await res.json();
+      return { success: true, personId: data.data?.id };
+    }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'Pipedrive sync failed' };
+  }
+}
+
 // ─── Zapier Webhook Integration ─────────────────────────────────────────────
 
 async function syncToZapier(webhookUrl: string, lead: any, eventType: string): Promise<{ success: boolean; error?: string }> {
@@ -529,6 +651,20 @@ export const handler: Handler = async (event) => {
         return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `HubSpot auth failed: ${res.status}` }) };
       }
 
+      if (provider === 'gohighlevel') {
+        if (!testApiKey) return { statusCode: 400, headers, body: JSON.stringify({ error: 'apiKey required for GoHighLevel' }) };
+        const locationId = testConfig?.location_id;
+        if (!locationId) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Location ID required for GoHighLevel' }) };
+        const res = await fetch(`https://services.leadconnectorhq.com/contacts/?locationId=${locationId}&limit=1`, {
+          headers: { 'Authorization': `Bearer ${testApiKey}`, 'Version': '2021-07-28' },
+        });
+        if (res.ok) {
+          return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: 'GoHighLevel connection verified' }) };
+        }
+        const errText = await res.text();
+        return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `GoHighLevel auth failed: ${res.status} - ${errText}` }) };
+      }
+
       if (provider === 'zapier') {
         if (!testWebhookUrl) return { statusCode: 400, headers, body: JSON.stringify({ error: 'webhookUrl required for Zapier' }) };
         const result = await syncToZapier(testWebhookUrl, { name: 'Test Lead', email: 'test@boltcall.org', phone: '+447700000000', source: 'test' }, 'test');
@@ -591,6 +727,23 @@ export const handler: Handler = async (event) => {
         return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `Email address ${testApiKey} verified` }) };
       }
 
+      if (provider === 'pipedrive') {
+        if (!testApiKey) return { statusCode: 400, headers, body: JSON.stringify({ error: 'apiKey required for Pipedrive' }) };
+        const res = await fetch(`https://api.pipedrive.com/v1/users/me?api_token=${testApiKey}`);
+        if (res.ok) {
+          const data = await res.json();
+          const userName = data.data?.name || 'User';
+          return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `Pipedrive connected as ${userName}` }) };
+        }
+        return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `Pipedrive auth failed: ${res.status}` }) };
+      }
+
+      if (provider === 'make') {
+        if (!testWebhookUrl) return { statusCode: 400, headers, body: JSON.stringify({ error: 'webhookUrl required for Make.com' }) };
+        const result = await syncToZapier(testWebhookUrl, { name: 'Test Lead', email: 'test@boltcall.org', phone: '+447700000000', source: 'test' }, 'test');
+        return { statusCode: 200, headers, body: JSON.stringify(result) };
+      }
+
       if (provider === 'google_calendar') {
         // OAuth-based test: use the stored access token from config
         const accessToken = testConfig?.access_token;
@@ -642,7 +795,33 @@ export const handler: Handler = async (event) => {
             }
             break;
 
+          case 'gohighlevel':
+            if (integration.api_key) {
+              const ghlResult = await syncToGoHighLevel(integration.api_key, integration.config || {}, lead);
+              result = ghlResult;
+            } else {
+              result = { success: false, error: 'No API key' };
+            }
+            break;
+
           case 'zapier':
+            if (integration.webhook_url) {
+              result = await syncToZapier(integration.webhook_url, lead, 'new_lead');
+            } else {
+              result = { success: false, error: 'No webhook URL' };
+            }
+            break;
+
+          case 'pipedrive':
+            if (integration.api_key) {
+              const pdResult = await syncToPipedrive(integration.api_key, lead);
+              result = pdResult;
+            } else {
+              result = { success: false, error: 'No API key' };
+            }
+            break;
+
+          case 'make':
             if (integration.webhook_url) {
               result = await syncToZapier(integration.webhook_url, lead, 'new_lead');
             } else {
