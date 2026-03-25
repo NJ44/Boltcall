@@ -302,6 +302,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard', label: t('nav.overview'), icon: <LayoutDashboard className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/leads', label: t('nav.leads'), icon: <Zap className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/calls', label: t('nav.calls'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/deep-analytics', label: 'Deep Analytics', icon: <BarChart3 className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // COMMUNICATIONS (kept for reference)
