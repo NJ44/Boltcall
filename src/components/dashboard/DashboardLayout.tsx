@@ -169,6 +169,7 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/chat-widget': t('page.chatWidget'),
       '/dashboard/integrations': t('page.integrations'),
       '/dashboard/analytics': t('page.analytics'),
+      '/dashboard/deep-analytics': 'Deep Analytics',
       '/dashboard/settings': t('page.settings'),
       '/dashboard/settings/members': t('page.teamMembers'),
       '/dashboard/settings/plan-billing': t('page.planBilling'),
