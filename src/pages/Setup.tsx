@@ -153,22 +153,29 @@ const Setup: React.FC = () => {
       return;
     }
 
-    setIsSubmitting(true);
     setError('');
 
-    try {
-      // Update store
-      updateBusinessProfile({
-        businessName,
-        websiteUrl,
-        mainCategory: industry.toLowerCase(),
-        country,
-        languages: 'en',
-        serviceAreas: [],
-        openingHours: {},
-      });
+    // Navigate to loading page immediately — no button loading state
+    navigate('/setup/loading');
 
-      // Create workspace + business profile
+    // Update store
+    updateBusinessProfile({
+      businessName,
+      websiteUrl,
+      mainCategory: industry.toLowerCase(),
+      country,
+      languages: 'en',
+      serviceAreas: [],
+      openingHours: {},
+    });
+
+    markStepCompleted(1);
+    markStepCompleted(2);
+    complete();
+    updateReview({ isLaunched: true });
+
+    // Fire all async work in background — loading page handles the UX
+    try {
       const { workspace, businessProfile } =
         await createUserWorkspaceAndProfile(user.id, {
           business_name: businessName,
@@ -180,7 +187,6 @@ const Setup: React.FC = () => {
           languages: ['en'],
         });
 
-      // Create primary location
       let locationId: string | undefined;
       try {
         const location = await LocationService.create({
@@ -211,14 +217,6 @@ const Setup: React.FC = () => {
         locationId,
       });
 
-      // Mark setup complete and navigate to loading
-      markStepCompleted(1);
-      markStepCompleted(2);
-      complete();
-      updateReview({ isLaunched: true });
-      navigate('/setup/loading');
-
-      // Fire agent creation in background — create both inbound + outbound
       const agentBaseData = {
         businessName,
         websiteUrl,
@@ -235,14 +233,12 @@ const Setup: React.FC = () => {
         policies: storeKnowledgeBase.policies,
       };
 
-      // 1. Inbound agent — answers incoming calls
       createAgentAndKnowledgeBase({
         ...agentBaseData,
         agentType: 'inbound',
         agentName: `${businessName} AI Receptionist`,
       }).catch((e) => console.error('Inbound agent creation failed:', e));
 
-      // 2. Outbound agent — speed-to-lead follow-up calls
       createAgentAndKnowledgeBase({
         ...agentBaseData,
         agentType: 'speed_to_lead',
@@ -262,13 +258,7 @@ const Setup: React.FC = () => {
         }),
       }).catch((e) => console.error('Setup launch failed:', e));
     } catch (err) {
-      console.error('Setup error:', err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'Something went wrong. Please try again.'
-      );
-      setIsSubmitting(false);
+      console.error('Setup error (background):', err);
     }
   };
 
@@ -574,17 +564,12 @@ const Setup: React.FC = () => {
                         ? handleSubmit
                         : nextStep
                     }
-                    disabled={!isStepValid() || isSubmitting}
+                    disabled={!isStepValid()}
                     className={cn(
                       'flex items-center gap-1 transition-all duration-300 rounded-2xl'
                     )}
                   >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />{' '}
-                        Setting up...
-                      </>
-                    ) : currentStep === steps.length - 1 ? (
+                    {currentStep === steps.length - 1 ? (
                       <>
                         <Zap className="h-4 w-4" /> Launch
                       </>

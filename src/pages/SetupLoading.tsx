@@ -5,12 +5,12 @@ import { Zap } from 'lucide-react';
 const TOTAL_SEGMENTS = 20;
 
 const LOADER_WORDS = [
-  'Analyzing',
   'Building',
+  'Creating',
+  'Refining',
   'Configuring',
   'Connecting',
   'Polishing',
-  'Finalizing',
 ];
 
 const LOADING_STEPS = [
@@ -141,8 +141,8 @@ const SetupLoading: React.FC = () => {
     // Start word cycling
     runWordLoader();
 
-    // Animate progress from 0 to 100 over ~12 seconds
-    const totalDuration = 12000;
+    // Animate progress from 0 to 100 over ~10 seconds
+    const totalDuration = 10000;
     const intervalMs = 80;
     const steps = totalDuration / intervalMs;
     const increment = 100 / steps;
