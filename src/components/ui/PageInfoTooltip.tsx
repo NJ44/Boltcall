@@ -14,7 +14,7 @@ const PageInfoTooltip: React.FC<PageInfoTooltipProps> = ({ text }) => {
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <HelpCircle className="w-4 h-4 text-gray-400 hover:text-gray-500 cursor-help transition-colors" />
+      <HelpCircle className="w-3.5 h-3.5 text-gray-400 hover:text-gray-500 cursor-help transition-colors" />
       <div
         className={`absolute right-0 top-full mt-2 z-50 w-56 px-3 py-2 text-xs leading-relaxed text-gray-600 bg-white rounded-lg shadow-lg border border-gray-100 pointer-events-none transition-opacity duration-150 ${
           visible ? 'opacity-100' : 'opacity-0'

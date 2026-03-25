@@ -10,7 +10,6 @@ import {
   Shield,
   ChevronDown,
   ChevronUp,
-  Activity,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -217,28 +216,6 @@ const AgentTestsPage: React.FC = () => {
       <div className="flex items-center gap-3 mb-1">
         <Shield className="w-7 h-7 text-brand-blue" />
         <h1 className="text-2xl font-bold text-gray-900">Agent Testing</h1>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-3 gap-4">
-        <KpiCard
-          icon={<Activity className="w-5 h-5 text-blue-600" />}
-          label="Total Tests Run"
-          value={String(testRunRecords.length)}
-          bg="bg-blue-50"
-        />
-        <KpiCard
-          icon={<CheckCircle className="w-5 h-5 text-green-600" />}
-          label="All Passed"
-          value={String(testRunRecords.filter(r => r.scenarios_failed === 0).length)}
-          bg="bg-green-50"
-        />
-        <KpiCard
-          icon={<XCircle className="w-5 h-5 text-red-600" />}
-          label="Had Issues"
-          value={String(testRunRecords.filter(r => r.scenarios_failed > 0).length)}
-          bg="bg-red-50"
-        />
       </div>
 
       {loading ? (
@@ -448,21 +425,5 @@ const AgentTestsPage: React.FC = () => {
     </motion.div>
   );
 };
-
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
-
-const KpiCard: React.FC<{ icon: React.ReactNode; label: string; value: string; bg: string }> = ({ icon, label, value, bg }) => (
-  <div className="bg-white rounded-lg shadow-sm border p-4">
-    <div className="flex items-center gap-3">
-      <div className={`p-2.5 rounded-lg ${bg}`}>{icon}</div>
-      <div>
-        <p className="text-xs text-gray-500">{label}</p>
-        <p className="text-xl font-bold text-gray-900">{value}</p>
-      </div>
-    </div>
-  </div>
-);
 
 export default AgentTestsPage;

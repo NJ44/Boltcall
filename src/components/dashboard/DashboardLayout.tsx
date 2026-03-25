@@ -566,7 +566,9 @@ const DashboardLayout: React.FC = () => {
                      {getPageName()}
                    </h1>
                    {getPageTooltip() && (
-                     <PageInfoTooltip text={getPageTooltip()!} />
+                     <span className="self-start -mt-1 ml-0.5">
+                       <PageInfoTooltip text={getPageTooltip()!} />
+                     </span>
                    )}
                  </div>
                </div>

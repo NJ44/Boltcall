@@ -1487,7 +1487,7 @@ const KnowledgeBasePage: React.FC = () => {
                   value={quizAnswers[q.key] || ''}
                   onChange={(e) => setQuizAnswers(prev => ({ ...prev, [q.key]: e.target.value }))}
                   placeholder={q.placeholder}
-                  className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
+                  className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none text-gray-900"
                   autoFocus
                 />
               ) : (
@@ -1496,7 +1496,7 @@ const KnowledgeBasePage: React.FC = () => {
                   value={quizAnswers[q.key] || ''}
                   onChange={(e) => setQuizAnswers(prev => ({ ...prev, [q.key]: e.target.value }))}
                   placeholder={q.placeholder}
-                  className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900"
                   autoFocus
                 />
               )}
