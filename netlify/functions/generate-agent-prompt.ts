@@ -1186,14 +1186,22 @@ function formatServices(services: Array<{ name: string; duration: number; price:
   if (!services?.length) return '';
   const l = LOCALE[lang];
   return services
-    .map(s => `- ${s.name}: ${s.duration} ${l.minutes}, $${s.price}`)
+    .map((s, i) => `<document index="${i + 1}" title="${s.name}" category="services">
+${lang === 'es'
+  ? `P: ¿Cuánto cuesta ${s.name} y cuánto dura?
+R: ${s.name} dura ${s.duration} ${l.minutes} y cuesta $${s.price}.`
+  : `Q: How much does ${s.name} cost and how long does it take?
+A: ${s.name} takes ${s.duration} ${l.minutes} and costs $${s.price}.`}
+</document>`)
     .join('\n');
 }
 
 function formatFAQs(faqs: Array<{ question: string; answer: string }>, lang: 'en' | 'es' = 'en'): string {
   if (!faqs?.length) return '';
-  const prefix = lang === 'es' ? { q: 'P', a: 'R' } : { q: 'Q', a: 'A' };
-  return faqs.map(f => `${prefix.q}: ${f.question}\n${prefix.a}: ${f.answer}`).join('\n\n');
+  return faqs.map((f, i) => `<document index="${i + 1}" title="${f.question}" category="faq">
+${lang === 'es' ? 'P' : 'Q'}: ${f.question}
+${lang === 'es' ? 'R' : 'A'}: ${f.answer}
+</document>`).join('\n');
 }
 
 // ─── Inbound Prompt Builder ──────────────────────────────────────────────────
@@ -1391,22 +1399,44 @@ ${l.commonQuestionsReady}
 `;
   }
 
-  // ── Knowledge Base ──
+  // ── Knowledge Base (XML-in-Markdown format for optimal retrieval) ──
   if (kb?.services?.length || kb?.faqs?.length || kb?.policies) {
-    prompt += `## ${l.businessKnowledge}\n\n`;
+    prompt += `## ${l.businessKnowledge}
+${lang === 'es'
+  ? 'A continuación está tu base de conocimiento estructurada. Cada documento contiene una pregunta y respuesta. Usa esta información para responder con precisión, pero REFORMULA las respuestas en tu propio tono y estilo — nunca leas textualmente.'
+  : 'Below is your structured knowledge base. Each document contains a question and answer. Use this information to answer accurately, but REPHRASE answers in your own tone and style — never read them verbatim.'}
+
+<knowledge_base>
+`;
+    let docIndex = 1;
     if (kb.services?.length) {
-      prompt += `### ${l.servicesPricing}\n${formatServices(kb.services, lang)}\n\n`;
+      prompt += formatServices(kb.services, lang) + '\n';
+      docIndex += kb.services.length;
     }
     if (kb.faqs?.length) {
-      prompt += `### ${l.faqsHeader}\n${formatFAQs(kb.faqs, lang)}\n\n`;
+      // Re-index FAQs to continue from services
+      prompt += kb.faqs.map((f, i) => `<document index="${docIndex + i}" title="${f.question}" category="faq">
+${lang === 'es' ? 'P' : 'Q'}: ${f.question}
+${lang === 'es' ? 'R' : 'A'}: ${f.answer}
+</document>`).join('\n') + '\n';
+      docIndex += kb.faqs.length;
     }
     if (kb.policies) {
-      prompt += `### ${l.policiesHeader}\n`;
-      if (kb.policies.cancellation) prompt += `- ${l.cancellation}: ${kb.policies.cancellation}\n`;
-      if (kb.policies.reschedule) prompt += `- ${l.reschedule}: ${kb.policies.reschedule}\n`;
-      if (kb.policies.deposit) prompt += `- ${l.deposit}: ${kb.policies.deposit}\n`;
-      prompt += '\n';
+      const policyParts: string[] = [];
+      if (kb.policies.cancellation) policyParts.push(`${l.cancellation}: ${kb.policies.cancellation}`);
+      if (kb.policies.reschedule) policyParts.push(`${l.reschedule}: ${kb.policies.reschedule}`);
+      if (kb.policies.deposit) policyParts.push(`${l.deposit}: ${kb.policies.deposit}`);
+      if (policyParts.length) {
+        prompt += `<document index="${docIndex}" title="${lang === 'es' ? 'Políticas del Negocio' : 'Business Policies'}" category="policies">
+${lang === 'es' ? 'P: ¿Cuáles son las políticas del negocio?' : 'Q: What are the business policies?'}
+${lang === 'es' ? 'R' : 'A'}: ${policyParts.join('. ')}.
+</document>
+`;
+      }
     }
+    prompt += `</knowledge_base>
+
+`;
   }
 
   // ── Opening Hours ──

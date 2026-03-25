@@ -430,13 +430,14 @@ export const handler: Handler = async (event) => {
           generalPrompt = buildAgentPrompt(body.business_name, body.country);
         }
 
-        // Inject KB text directly into the prompt (Tier 1)
+        // Inject KB text directly into the prompt (Tier 1 — XML document format)
         if (body.knowledge_base_texts?.length) {
-          generalPrompt += '\n\n## Business Knowledge Base\n';
+          generalPrompt += '\n\n## Business Knowledge Base\nBelow is your structured knowledge base. Each document contains a question and answer. Use this information to answer accurately, but REPHRASE answers in your own tone and style — never read them verbatim.\n\n<knowledge_base>\n';
           for (const text of body.knowledge_base_texts) {
             const content = typeof text === 'string' ? text : text.text || text.content || '';
-            if (content) generalPrompt += `${content}\n\n`;
+            if (content) generalPrompt += `${content}\n`;
           }
+          generalPrompt += '</knowledge_base>\n';
         }
 
         // Step 3: Determine response engine

@@ -69,44 +69,80 @@ interface CreateKnowledgeBaseData {
 }
 
 // Build knowledge base texts from business data
+// Uses XML document format for optimal retrieval and natural phrasing
 function buildKnowledgeBaseTexts(data: CreateKnowledgeBaseData): RetellKnowledgeBaseText[] {
   const texts: RetellKnowledgeBaseText[] = [];
+  let docIndex = 1;
+
+  // Business info as Q&A document
+  const hoursText = Object.entries(data.openingHours).map(([day, hours]: [string, any]) => {
+    if (hours.closed) return `${day}: Closed`;
+    return `${day}: ${hours.open} - ${hours.close}`;
+  }).join(', ');
 
   texts.push({
     title: 'Business Information',
-    text: `Business Name: ${data.businessName}\nCategory: ${data.mainCategory}\nCountry: ${data.country}\nService Areas: ${data.serviceAreas.join(', ')}\n\nLanguages Supported: ${data.languages.join(', ')}\n\nOpening Hours:\n${Object.entries(data.openingHours).map(([day, hours]: [string, any]) => {
-      if (hours.closed) return `${day}: Closed`;
-      return `${day}: ${hours.open} - ${hours.close}`;
-    }).join('\n')}`,
+    text: `<document index="${docIndex}" title="Business Information" category="business_info">
+Q: What is this business and where is it located?
+A: ${data.businessName} is a ${data.mainCategory} business serving ${data.serviceAreas.join(', ')}. We support ${data.languages.join(', ')}.${data.websiteUrl ? ` Visit ${data.websiteUrl} for more information.` : ''}${data.addressLine1 ? ` Located at ${data.addressLine1}${data.city ? `, ${data.city}` : ''}${data.state ? `, ${data.state}` : ''}.` : ''}
+</document>`,
   });
+  docIndex++;
 
-  if (data.services?.length) {
-    texts.push({
-      title: 'Services Offered',
-      text: `Our services include:\n${data.services.map(s =>
-        `• ${s.name} - Duration: ${s.duration} minutes, Price: $${s.price}`
-      ).join('\n')}`,
-    });
-  }
-
-  if (data.faqs?.length) {
-    texts.push({
-      title: 'Frequently Asked Questions',
-      text: data.faqs.map(faq => `Q: ${faq.question}\nA: ${faq.answer}`).join('\n\n'),
-    });
-  }
-
-  if (data.policies) {
-    texts.push({
-      title: 'Business Policies',
-      text: `Cancellation Policy: ${data.policies.cancellation}\n\nReschedule Policy: ${data.policies.reschedule}\n\nDeposit Policy: ${data.policies.deposit}`,
-    });
-  }
-
+  // Opening hours as Q&A
   texts.push({
-    title: 'General Business Information',
-    text: `We are a ${data.mainCategory} business serving ${data.serviceAreas.join(', ')}. We support multiple languages: ${data.languages.join(', ')}.\n${data.websiteUrl ? `Visit our website at ${data.websiteUrl} for more information.` : ''}\n\nOur AI assistant is here to help you with:\n- Answering questions about our services\n- Providing information about our business hours\n- Helping with appointment scheduling\n- Explaining our policies and procedures\n- Connecting you with the right team member`,
+    title: 'Opening Hours',
+    text: `<document index="${docIndex}" title="Opening Hours" category="business_info">
+Q: What are the business hours?
+A: Our hours are: ${hoursText}. If you're calling outside these hours, I can help you book during our next available time.
+</document>`,
   });
+  docIndex++;
+
+  // Each service as its own Q&A document
+  if (data.services?.length) {
+    for (const s of data.services) {
+      texts.push({
+        title: `Service: ${s.name}`,
+        text: `<document index="${docIndex}" title="${s.name}" category="services">
+Q: How much does ${s.name} cost and how long does it take?
+A: ${s.name} takes ${s.duration} minutes and costs $${s.price}.
+</document>`,
+      });
+      docIndex++;
+    }
+  }
+
+  // Each FAQ as its own document
+  if (data.faqs?.length) {
+    for (const faq of data.faqs) {
+      texts.push({
+        title: `FAQ: ${faq.question}`,
+        text: `<document index="${docIndex}" title="${faq.question}" category="faq">
+Q: ${faq.question}
+A: ${faq.answer}
+</document>`,
+      });
+      docIndex++;
+    }
+  }
+
+  // Policies as a single document
+  if (data.policies) {
+    const policyParts: string[] = [];
+    if (data.policies.cancellation) policyParts.push(`Cancellation: ${data.policies.cancellation}`);
+    if (data.policies.reschedule) policyParts.push(`Reschedule: ${data.policies.reschedule}`);
+    if (data.policies.deposit) policyParts.push(`Deposit: ${data.policies.deposit}`);
+    if (policyParts.length) {
+      texts.push({
+        title: 'Business Policies',
+        text: `<document index="${docIndex}" title="Business Policies" category="policies">
+Q: What are the business policies?
+A: ${policyParts.join('. ')}.
+</document>`,
+      });
+    }
+  }
 
   return texts;
 }

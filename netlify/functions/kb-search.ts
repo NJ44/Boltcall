@@ -214,7 +214,7 @@ export const handler: Handler = async (event) => {
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, added: results.filter(r => r.success).length, total: entries.length, results }) };
     }
 
-    // ─── GET_PROMPT_KB: Get Tier 1 entries formatted for prompt ─────
+    // ─── GET_PROMPT_KB: Get Tier 1 entries formatted for prompt (XML document format) ─────
     if (action === 'get_prompt_kb') {
       const { userId } = body;
       if (!userId) {
@@ -231,27 +231,34 @@ export const handler: Handler = async (event) => {
 
       if (error) throw error;
 
-      // Format as prompt text grouped by category
-      const grouped: Record<string, Array<{ title: string; content: string }>> = {};
-      for (const entry of (data || [])) {
-        const cat = entry.category || 'General';
-        if (!grouped[cat]) grouped[cat] = [];
-        grouped[cat].push({ title: entry.title, content: entry.content });
-      }
-
+      // Format as XML-in-markdown knowledge base for optimal retrieval
+      // Each entry becomes a numbered document with title and category
+      const entries = data || [];
       let promptText = '';
-      for (const [category, entries] of Object.entries(grouped)) {
-        promptText += `### ${category}\n`;
-        for (const entry of entries) {
-          promptText += `**${entry.title}:** ${entry.content}\n`;
+
+      if (entries.length > 0) {
+        promptText = '<knowledge_base>\n';
+        for (let i = 0; i < entries.length; i++) {
+          const entry = entries[i];
+          const content = entry.content || '';
+          // If content already has XML document tags, include as-is
+          if (content.includes('<document')) {
+            promptText += content + '\n';
+          } else {
+            // Wrap plain content in XML document format
+            promptText += `<document index="${i + 1}" title="${(entry.title || '').replace(/"/g, '&quot;')}" category="${entry.category || 'general'}">
+Q: ${entry.title}
+A: ${content}
+</document>\n`;
+          }
         }
-        promptText += '\n';
+        promptText += '</knowledge_base>';
       }
 
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ success: true, promptText: promptText.trim(), entryCount: data?.length || 0 }),
+        body: JSON.stringify({ success: true, promptText: promptText.trim(), entryCount: entries.length }),
       };
     }
 
