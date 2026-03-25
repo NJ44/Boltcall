@@ -35,6 +35,7 @@ const DashboardLayout = React.lazy(() => import('../components/dashboard/Dashboa
 const SettingsLayout = React.lazy(() => import('../components/dashboard/SettingsLayout'));
 const DashboardPage = React.lazy(() => import('../pages/dashboard/DashboardPage'));
 const AnalyticsPage = React.lazy(() => import('../pages/dashboard/AnalyticsPage'));
+const DeepAnalyticsPage = React.lazy(() => import('../pages/dashboard/DeepAnalyticsPage'));
 const AgentsPage = React.lazy(() => import('../pages/dashboard/AgentsPage'));
 const AgentDetailPage = React.lazy(() => import('../pages/dashboard/AgentDetailPage'));
 const ReceptionistPage = React.lazy(() => import('../pages/dashboard/ReceptionistPage'));
