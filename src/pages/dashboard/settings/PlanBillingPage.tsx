@@ -33,7 +33,7 @@ interface Invoice {
 
 const PlanBillingPage: React.FC = () => {
   const { t } = useTranslation();
-  const { totalAvailable, monthlyAllocation, tokensUsed } = useTokens();
+  const { monthlyAllocation, tokensUsed } = useTokens();
   const [activeTab, setActiveTab] = useState<'plan' | 'invoices'>('plan');
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
