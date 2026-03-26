@@ -4,13 +4,15 @@ import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
   Phone, PhoneCall, PhoneOff, Clock, Calendar, CheckCircle2,
   Settings, Volume2, BookOpen, ArrowRight, BarChart3,
-  TrendingUp, Users, Headphones, AlertCircle
+  TrendingUp, Users, Headphones, AlertCircle, X, Mic, Brain, Hash,
+  Pencil, ExternalLink, Zap
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { PopButton } from '../../components/ui/pop-button';
 import { StatusBadge } from '../../components/ui/status-badge';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ReceptionistStats {
   totalCalls: number;
@@ -28,12 +30,44 @@ interface AgentInfo {
   created_at?: string;
 }
 
+const SETUP_STEPS = [
+  {
+    icon: Brain,
+    title: 'Business Details',
+    description: 'Tell your AI about your business — name, services, hours, and FAQs so it can answer calls accurately.',
+    color: 'text-blue-600',
+    bg: 'bg-blue-50 dark:bg-blue-950/30',
+  },
+  {
+    icon: Mic,
+    title: 'Choose a Voice',
+    description: 'Pick from a library of natural-sounding voices. Preview each one before you decide.',
+    color: 'text-purple-600',
+    bg: 'bg-purple-50 dark:bg-purple-950/30',
+  },
+  {
+    icon: Hash,
+    title: 'Assign a Phone Number',
+    description: 'Get a local or toll-free number, or forward your existing line to the AI receptionist.',
+    color: 'text-green-600',
+    bg: 'bg-green-50 dark:bg-green-950/30',
+  },
+  {
+    icon: Calendar,
+    title: 'Connect Calendar',
+    description: 'Link Cal.com or Google Calendar so the AI can check availability and book appointments live.',
+    color: 'text-amber-600',
+    bg: 'bg-amber-50 dark:bg-amber-950/30',
+  },
+];
+
 const AIReceptionistDashboardPage: React.FC = () => {
   const { user } = useAuth();
   useTranslation();
   const [agent, setAgent] = useState<AgentInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEnabled, setIsEnabled] = useState(false);
+  const [showSetupModal, setShowSetupModal] = useState(false);
   const [stats] = useState<ReceptionistStats>({
     totalCalls: 0,
     answeredCalls: 0,
@@ -79,12 +113,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      {/* Status Badge */}
-      <div className="flex items-center justify-end">
-        <StatusBadge status={isEnabled ? 'active' : 'inactive'} />
-      </div>
-
-      {/* No Agent Setup CTA */}
+      {/* ── No Agent — Setup CTA ── */}
       {!agent && (
         <div className="bg-white dark:bg-[#111114] rounded-xl border border-gray-200 dark:border-[#1e1e24] p-8 text-center">
           <div className="w-16 h-16 bg-blue-50 dark:bg-blue-950/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -96,18 +125,30 @@ const AIReceptionistDashboardPage: React.FC = () => {
           <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6">
             Create an AI agent to start answering calls automatically. Choose a voice, connect your knowledge base, and assign a phone number.
           </p>
-          <PopButton color="blue" asChild>
-            <Link to="/dashboard/agents" className="gap-2">
-              Create Agent
+          <PopButton color="blue" onClick={() => setShowSetupModal(true)}>
+            <span className="flex items-center gap-2">
+              Start Setup
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </span>
           </PopButton>
         </div>
       )}
 
-      {/* Agent Active — Stats + Quick Actions */}
+      {/* ── Agent Active — Organized Details ── */}
       {agent && (
         <>
+          {/* Status + Configure */}
+          <div className="flex items-center justify-between">
+            <StatusBadge status={isEnabled ? 'active' : 'inactive'} />
+            <Link
+              to="/dashboard/agents"
+              className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 font-medium transition-colors"
+            >
+              <Settings className="w-3.5 h-3.5" />
+              Configure
+            </Link>
+          </div>
+
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
@@ -131,25 +172,16 @@ const AIReceptionistDashboardPage: React.FC = () => {
             ))}
           </div>
 
-          {/* Receptionist Info Card */}
+          {/* Receptionist Details Card */}
           <div className="bg-white dark:bg-[#111114] rounded-xl border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-200 dark:border-[#1e1e24] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center">
-                  <Headphones className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{agent.name}</h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">AI Receptionist</p>
-                </div>
+            <div className="px-5 py-4 border-b border-gray-200 dark:border-[#1e1e24] flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center">
+                <Headphones className="w-5 h-5 text-blue-600" />
               </div>
-              <Link
-                to="/dashboard/agents"
-                className="text-xs text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors flex items-center gap-1"
-              >
-                <Settings className="w-3.5 h-3.5" />
-                Configure
-              </Link>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{agent.name}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">AI Receptionist</p>
+              </div>
             </div>
 
             <div className="p-5">
@@ -180,6 +212,18 @@ const AIReceptionistDashboardPage: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Agent meta info */}
+              {agent.created_at && (
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-[#1e1e24] flex items-center gap-4 text-xs text-gray-400">
+                  <span>Created {new Date(agent.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  {agent.voice_id && <span>Voice ID: {agent.voice_id.slice(0, 8)}...</span>}
+                  <span className={`inline-flex items-center gap-1 ${agent.status === 'active' ? 'text-green-600' : 'text-gray-400'}`}>
+                    <Zap className="w-3 h-3" />
+                    {agent.status}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -228,6 +272,80 @@ const AIReceptionistDashboardPage: React.FC = () => {
           )}
         </>
       )}
+
+      {/* Setup Modal */}
+      <AnimatePresence>
+        {showSetupModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40"
+              onClick={() => setShowSetupModal(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            >
+              <div className="bg-white dark:bg-[#111114] rounded-2xl border border-gray-200 dark:border-[#1e1e24] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+                {/* Modal Header */}
+                <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-[#1e1e24]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-xl flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-semibold text-gray-900 dark:text-white">AI Receptionist Setup</h2>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Here's what we'll configure</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowSetupModal(false)}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-400" />
+                  </button>
+                </div>
+
+                {/* Steps */}
+                <div className="px-6 py-5 space-y-4">
+                  {SETUP_STEPS.map((step, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className={`w-10 h-10 rounded-xl ${step.bg} flex items-center justify-center flex-shrink-0`}>
+                        <step.icon className={`w-5 h-5 ${step.color}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-medium text-gray-400">Step {i + 1}</span>
+                        </div>
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white mt-0.5">{step.title}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">{step.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Footer */}
+                <div className="px-6 py-4 border-t border-gray-200 dark:border-[#1e1e24] flex items-center justify-between gap-3">
+                  <p className="text-xs text-gray-400">Takes about 5 minutes</p>
+                  <Link
+                    to="/dashboard/agents"
+                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
+                    onClick={() => setShowSetupModal(false)}
+                  >
+                    Let's Go
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -613,9 +613,6 @@ const IntegrationHubTab: React.FC = () => {
                         onError={() => setImgErrors(prev => new Set(prev).add(integration.id))}
                       />
                     )}
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${catMeta.color}`}>
-                      {catMeta.icon} {catMeta.label}
-                    </span>
                   </div>
                   {connected && (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
