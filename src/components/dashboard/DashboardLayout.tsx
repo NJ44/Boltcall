@@ -359,7 +359,7 @@ const DashboardLayout: React.FC = () => {
         </span>
         {/* Custom tooltip — card to the outside of icon (flips for RTL) */}
         {isCollapsedView && (
-          <span className="absolute ltr:left-full rtl:right-full ltr:ml-2 rtl:mr-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
+          <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
             {item.label}
           </span>
         )}
@@ -377,7 +377,7 @@ const DashboardLayout: React.FC = () => {
           </span>
         )}
         {!isCollapsedView && item.badge && (
-          <span className={`ltr:ml-auto rtl:mr-auto px-1.5 py-0.5 text-[9px] font-semibold rounded-full leading-none ${
+          <span className={`ml-auto px-1.5 py-0.5 text-[9px] font-semibold rounded-full leading-none ${
             item.badge === 'Beta'
               ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
               : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
@@ -396,9 +396,9 @@ const DashboardLayout: React.FC = () => {
          {/* Left Panel - Navigation with Logo at Top */}
          <aside
            data-onboarding="sidebar"
-           className={`fixed lg:static inset-y-0 ltr:left-0 rtl:right-0 z-[9999] transform transition-all duration-300 ease-in-out flex-shrink-0 ${
+           className={`fixed lg:static inset-y-0 left-0 z-[9999] transform transition-all duration-300 ease-in-out flex-shrink-0 ${
              sidebarCollapsed ? 'w-16' : 'w-64'
-           } ${sidebarOpen ? 'translate-x-0' : 'ltr:-translate-x-full rtl:translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40 relative group/sidebar`}
+           } ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} bg-white dark:bg-[#111114] rounded-2xl shadow-lg m-2 dashboard-sidebar lg:z-40 relative group/sidebar`}
          >
           {/* Collapse/Expand toggle arrow — fixed position so it doesn't shift on collapse */}
           <button
