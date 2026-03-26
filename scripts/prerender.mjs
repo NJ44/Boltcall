@@ -147,9 +147,11 @@ async function prerender() {
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
   };
 
-  // Check for Netlify CI environment
-  if (process.env.NETLIFY || process.env.CI) {
-    // Try common system chromium paths on Netlify's Ubuntu image
+  // On Netlify CI, use Chromium installed by netlify-plugin-chromium
+  if (process.env.CHROMIUM_PATH) {
+    console.log(`Using Chromium from plugin: ${process.env.CHROMIUM_PATH}`);
+    launchOptions.executablePath = process.env.CHROMIUM_PATH;
+  } else if (process.env.NETLIFY || process.env.CI) {
     const { execSync } = await import('child_process');
     try {
       const chromePath = execSync('which chromium-browser || which chromium || which google-chrome-stable || which google-chrome', { encoding: 'utf8' }).trim();

@@ -1,3 +1,7 @@
+# Install Chromium for prerender script
+[[plugins]]
+  package = "netlify-plugin-chromium"
+
 [build]
   publish = "dist"
   command = "npm run build:prerender"
@@ -47,13 +51,7 @@
 [functions."sequence-processor"]
   schedule = "*/5 * * * *"
 
-# Redirect API calls to functions before the SPA catch-all
-# NOTE: This redirect uses force=true to take precedence over the SPA catch-all above
-[[redirects]]
-  from = "/.netlify/functions/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-  force = true
+# Netlify handles /.netlify/functions/* routing automatically — no redirect needed
 
 # Long cache for hashed static assets
 [[headers]]
