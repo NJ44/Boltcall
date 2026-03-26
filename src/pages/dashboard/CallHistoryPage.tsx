@@ -219,7 +219,7 @@ const CallHistoryPage: React.FC = () => {
     <div className="space-y-6">
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow-sm border p-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-100 rounded-lg">
@@ -353,123 +353,189 @@ const CallHistoryPage: React.FC = () => {
             <span className="ml-3 text-gray-600">No calls found</span>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Call Details
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Agent
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Duration
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Sentiment
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Quality
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCalls.map((call) => (
-                  <motion.tr
-                    key={call.call_id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="hover:bg-gray-50"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-gray-100 rounded-lg">
-                          {call.direction === 'inbound' ? (
-                            <PhoneIncoming className="w-4 h-4 text-green-600" />
-                          ) : (
-                            <PhoneOutgoing className="w-4 h-4 text-blue-600" />
+          <>
+            {/* Mobile Card View */}
+            <div className="md:hidden divide-y divide-gray-200">
+              {filteredCalls.map((call) => (
+                <motion.div
+                  key={call.call_id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="p-4 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-gray-100 rounded-lg">
+                        {call.direction === 'inbound' ? (
+                          <PhoneIncoming className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <PhoneOutgoing className="w-4 h-4 text-blue-600" />
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {call.call_id.slice(0, 8)}...
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {formatDate(call.start_timestamp)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setSelectedCall(call);
+                          setShowDetailsModal(true);
+                        }}
+                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      {call.recording_url && (
+                        <a
+                          href={call.recording_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 text-green-600 hover:bg-green-50 rounded-lg"
+                        >
+                          <Play className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(call.call_status)}`}>
+                      {getStatusIcon(call.call_status)}
+                      {call.call_status}
+                    </span>
+                    <span className="text-sm text-gray-600 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      {formatDuration(call.duration_ms)}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Call Details
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Agent
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Duration
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Sentiment
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Quality
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredCalls.map((call) => (
+                    <motion.tr
+                      key={call.call_id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="hover:bg-gray-50"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 bg-gray-100 rounded-lg">
+                            {call.direction === 'inbound' ? (
+                              <PhoneIncoming className="w-4 h-4 text-green-600" />
+                            ) : (
+                              <PhoneOutgoing className="w-4 h-4 text-blue-600" />
+                            )}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">
+                              {call.call_id.slice(0, 8)}...
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {formatDate(call.start_timestamp)}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <p className="text-sm font-medium text-gray-900">{call.agent_name}</p>
+                        <p className="text-xs text-gray-500">{call.call_type}</p>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(call.call_status)}`}>
+                          {getStatusIcon(call.call_status)}
+                          {call.call_status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {formatDuration(call.duration_ms)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {call.call_analysis?.user_sentiment ? (
+                          <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getSentimentColor(call.call_analysis.user_sentiment)}`}>
+                            {call.call_analysis.user_sentiment}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-gray-400">N/A</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="group relative flex items-center gap-2">
+                          <span className={`w-3 h-3 rounded-full ${getQualityDotColor(getCallQuality(call))}`} />
+                          <span className="text-xs text-gray-500">{getQualityLabel(getCallQuality(call))}</span>
+                          {call.call_analysis?.call_summary && (
+                            <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-10 w-64">
+                              <div className="bg-gray-900 text-white text-xs rounded-lg p-3 shadow-lg">
+                                <p className="line-clamp-3">{call.call_analysis.call_summary}</p>
+                              </div>
+                            </div>
                           )}
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">
-                            {call.call_id.slice(0, 8)}...
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {formatDate(call.start_timestamp)}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <p className="text-sm font-medium text-gray-900">{call.agent_name}</p>
-                      <p className="text-xs text-gray-500">{call.call_type}</p>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(call.call_status)}`}>
-                        {getStatusIcon(call.call_status)}
-                        {call.call_status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatDuration(call.duration_ms)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {call.call_analysis?.user_sentiment ? (
-                        <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getSentimentColor(call.call_analysis.user_sentiment)}`}>
-                          {call.call_analysis.user_sentiment}
-                        </span>
-                      ) : (
-                        <span className="text-xs text-gray-400">N/A</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="group relative flex items-center gap-2">
-                        <span className={`w-3 h-3 rounded-full ${getQualityDotColor(getCallQuality(call))}`} />
-                        <span className="text-xs text-gray-500">{getQualityLabel(getCallQuality(call))}</span>
-                        {call.call_analysis?.call_summary && (
-                          <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-10 w-64">
-                            <div className="bg-gray-900 text-white text-xs rounded-lg p-3 shadow-lg">
-                              <p className="line-clamp-3">{call.call_analysis.call_summary}</p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => {
-                            setSelectedCall(call);
-                            setShowDetailsModal(true);
-                          }}
-                          className="text-blue-600 hover:text-blue-900"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        {call.recording_url && (
-                          <a
-                            href={call.recording_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-600 hover:text-green-900"
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              setSelectedCall(call);
+                              setShowDetailsModal(true);
+                            }}
+                            className="text-blue-600 hover:text-blue-900"
                           >
-                            <Play className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          {call.recording_url && (
+                            <a
+                              href={call.recording_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-green-600 hover:text-green-900"
+                            >
+                              <Play className="w-4 h-4" />
+                            </a>
+                          )}
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 

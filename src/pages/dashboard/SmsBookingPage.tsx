@@ -211,65 +211,65 @@ const SmsBookingPage: React.FC = () => {
             { key: 'actions', label: 'Actions', width: '5%' }
           ]}
           renderRow={(booking) => (
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
               {/* Recipient & Type */}
-              <div className="flex items-center gap-3 flex-1">
+              <div className="flex items-center gap-3 sm:flex-1 min-w-0">
                 <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <MessageSquare className="w-5 h-5 text-green-600" />
                 </div>
-                <div>
-                  <div className="text-sm font-medium text-gray-900">{booking.clientName}</div>
+                <div className="min-w-0">
+                  <div className="text-sm font-medium text-gray-900 truncate">{booking.clientName}</div>
                   <div className="text-sm text-gray-500">{booking.service}</div>
                   {booking.notes && (
                     <div className="flex items-center gap-2 mt-1">
-                      <Phone className="w-3 h-3 text-gray-400" />
-                      <span className="text-xs text-gray-500">{booking.notes}</span>
+                      <Phone className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                      <span className="text-xs text-gray-500 truncate">{booking.notes}</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Sent At */}
-              <div className="flex items-center gap-2 flex-1">
-                <Calendar className="w-4 h-4 text-gray-400" />
-                <div>
-                  <div className="text-sm text-gray-900">{booking.appointmentDate}</div>
-                  <div className="text-sm text-gray-500">{booking.appointmentTime}</div>
+              {/* Sent At + Status + Delivery — row on mobile */}
+              <div className="flex flex-wrap items-center gap-3 sm:contents pl-13 sm:pl-0">
+                <div className="flex items-center gap-2 sm:flex-1">
+                  <Calendar className="w-4 h-4 text-gray-400" />
+                  <div>
+                    <div className="text-sm text-gray-900">{booking.appointmentDate}</div>
+                    <div className="text-sm text-gray-500">{booking.appointmentTime}</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 sm:flex-1">
+                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                    booking.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {booking.status === 'active' ? 'Delivered' : 'Failed'}
+                  </span>
+                  {booking.reminderSent && (
+                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                      Sent
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 sm:flex-1">
+                  <Clock className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm text-gray-900 capitalize">{booking.reminderTime}</span>
                 </div>
               </div>
 
-              {/* Status */}
-              <div className="flex items-center gap-2 flex-1">
-                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                  booking.status === 'active'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-gray-100 text-gray-800'
-                }`}>
-                  {booking.status === 'active' ? 'Delivered' : 'Failed'}
-                </span>
-                {booking.reminderSent && (
-                  <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                    Sent
-                  </span>
-                )}
-              </div>
-
-              {/* Delivery Status */}
-              <div className="flex items-center gap-2 flex-1">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-900 capitalize">{booking.reminderTime}</span>
-              </div>
-
               {/* Message */}
-              <div className="text-sm text-gray-900 flex-1 truncate">
+              <div className="text-sm text-gray-900 sm:flex-1 truncate pl-13 sm:pl-0">
                 {booking.reminderText}
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 pl-13 sm:pl-0 flex-shrink-0">
                 <button
                   onClick={() => handleRescheduleBooking(booking)}
-                  className="text-blue-600 hover:text-blue-900 transition-colors"
+                  className="text-blue-600 hover:text-blue-900 transition-colors p-1.5"
                 >
                   <Edit className="w-4 h-4" />
                 </button>
@@ -278,7 +278,7 @@ const SmsBookingPage: React.FC = () => {
                     setSelectedBooking(booking);
                     setShowDeleteModal(true);
                   }}
-                  className="text-red-600 hover:text-red-900 transition-colors"
+                  className="text-red-600 hover:text-red-900 transition-colors p-1.5"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -415,7 +415,7 @@ const SmsBookingPage: React.FC = () => {
         }
       >
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Date</label>
               <input

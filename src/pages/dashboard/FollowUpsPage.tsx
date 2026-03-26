@@ -366,9 +366,9 @@ const FollowUpsContent: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
             <RotateCw className="w-4 h-4 text-blue-600" />
           </div>
           <div>
@@ -439,7 +439,7 @@ const FollowUpsContent: React.FC = () => {
               className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
               onClick={() => openEnrollments(seq)}
             >
-              <div className="p-5 flex items-center justify-between">
+              <div className="p-4 sm:p-5 flex items-center justify-between gap-2">
                 {/* Left side */}
                 <div className="flex items-center gap-4 min-w-0">
                   <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -879,7 +879,7 @@ const StepEditor: React.FC<StepEditorProps> = ({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
         {/* Channel */}
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1">Channel</label>
@@ -1003,16 +1003,16 @@ const EnrollmentsPanel: React.FC<EnrollmentsPanelProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={onBack}
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">{sequence.name}</h2>
+          <div className="min-w-0">
+            <h2 className="text-xl font-semibold text-gray-900 truncate">{sequence.name}</h2>
             <div className="flex items-center gap-2 mt-0.5">
               <span
                 className={`px-2 py-0.5 rounded-full text-xs font-medium ${
@@ -1061,8 +1061,8 @@ const EnrollmentsPanel: React.FC<EnrollmentsPanelProps> = ({
 
       {/* Enrollment list */}
       {!loading && enrollments.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-x-auto">
+          <table className="w-full text-sm min-w-[600px]">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
                 <th className="text-left px-5 py-3 font-medium text-gray-500">Contact</th>

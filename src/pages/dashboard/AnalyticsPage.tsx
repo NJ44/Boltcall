@@ -220,7 +220,7 @@ const AnalyticsPage: React.FC = () => {
 
       {/* Header with date range picker and refresh */}
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1 overflow-x-auto scrollbar-hide">
           {(['7d', '30d', '90d'] as DateRange[]).map((r) => (
             <button
               key={r}
@@ -248,24 +248,24 @@ const AnalyticsPage: React.FC = () => {
         </div>
         <div className="flex items-center gap-3">
           {showCustomPicker && (
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
               <input
                 type="date"
                 value={customStart}
                 onChange={(e) => setCustomStart(e.target.value)}
-                className="px-2 py-1.5 text-sm rounded-lg border border-border"
+                className="px-2 py-1.5 text-sm rounded-lg border border-border w-full sm:w-auto"
               />
-              <span className="text-text-muted text-sm">to</span>
+              <span className="text-text-muted text-sm hidden sm:inline">to</span>
               <input
                 type="date"
                 value={customEnd}
                 onChange={(e) => setCustomEnd(e.target.value)}
-                className="px-2 py-1.5 text-sm rounded-lg border border-border"
+                className="px-2 py-1.5 text-sm rounded-lg border border-border w-full sm:w-auto"
               />
               <button
                 onClick={() => { if (customStart && customEnd) setDateRange('custom'); }}
                 disabled={!customStart || !customEnd}
-                className="px-3 py-1.5 text-sm font-medium rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 text-sm font-medium rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors disabled:opacity-50 w-full sm:w-auto"
               >
                 Apply
               </button>

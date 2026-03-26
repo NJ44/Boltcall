@@ -139,7 +139,7 @@ const PreferencesPage: React.FC = () => {
       )}
 
       {/* Appearance */}
-      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
+      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-4 md:p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
             <Palette className="w-4 h-4 text-purple-600" />
@@ -179,7 +179,7 @@ const PreferencesPage: React.FC = () => {
       </div>
 
       {/* Language & Region */}
-      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
+      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-4 md:p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
             <Globe className="w-4 h-4 text-blue-600" />

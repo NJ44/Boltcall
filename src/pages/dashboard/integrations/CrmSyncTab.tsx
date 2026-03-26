@@ -373,14 +373,14 @@ const CrmSyncTab: React.FC = () => {
                   )}
                   <div>
                     <h3 className="text-base font-semibold text-gray-900 dark:text-white">{crm.name}</h3>
-                    <div className="flex items-center gap-3 mt-1">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1">
                       {connected ? (
                         <>
                           <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 dark:text-green-400">
                             <Check className="w-3 h-3" /> Connected
                           </span>
                           {saved?.last_sync_at && (
-                            <span className="text-xs text-gray-400 flex items-center gap-1">
+                            <span className="text-xs text-gray-400 flex items-center gap-1 hidden sm:flex">
                               <Clock className="w-3 h-3" /> Last sync {new Date(saved.last_sync_at).toLocaleString()}
                             </span>
                           )}
@@ -466,7 +466,7 @@ const CrmSyncTab: React.FC = () => {
                       {connected && (
                         <div>
                           {/* Sub-tabs */}
-                          <div className="flex border-b border-gray-200 dark:border-[#2a2a30] px-5">
+                          <div className="flex border-b border-gray-200 dark:border-[#2a2a30] px-3 sm:px-5 overflow-x-auto">
                             {[
                               { id: 'settings' as const, label: 'Sync Settings', icon: <Settings className="w-3.5 h-3.5" /> },
                               { id: 'mapping' as const, label: 'Field Mapping', icon: <Map className="w-3.5 h-3.5" /> },
@@ -581,12 +581,12 @@ const CrmSyncTab: React.FC = () => {
                               </p>
                               <div className="space-y-3">
                                 {crm.fields.map((field) => (
-                                  <div key={field.boltcall} className="flex items-center gap-3">
-                                    <div className="w-1/3">
+                                  <div key={field.boltcall} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <div className="sm:w-1/3">
                                       <span className="text-sm font-medium text-gray-900 dark:text-white">{field.label}</span>
                                       <span className="text-xs text-gray-400 block">{field.boltcall}</span>
                                     </div>
-                                    <ArrowRight className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                                    <ArrowRight className="w-4 h-4 text-gray-300 flex-shrink-0 hidden sm:block" />
                                     <select
                                       value={editFieldMapping[field.boltcall] || field.defaultMap}
                                       onChange={(e) => setEditFieldMapping(prev => ({ ...prev, [field.boltcall]: e.target.value }))}

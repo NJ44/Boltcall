@@ -290,27 +290,28 @@ const MembersPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Team Members</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Team Members</h1>
           <p className="text-sm text-gray-500 mt-1">Manage your workspace team</p>
         </div>
         <PermissionGate permission="settings.members">
           <div className="flex items-center gap-2">
             <PopButton onClick={() => setShowBulkInviteModal(true)}>
               <Users className="w-4 h-4 mr-2" />
-              Bulk Invite
+              <span className="hidden sm:inline">Bulk Invite</span>
+              <span className="sm:hidden">Bulk</span>
             </PopButton>
             <PopButton color="blue" onClick={() => setShowInviteModal(true)}>
               <UserPlus className="w-4 h-4 mr-2" />
-              Invite Member
+              Invite
             </PopButton>
           </div>
         </PermissionGate>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {[
           { label: 'Total Members', value: totalCount, color: 'bg-blue-50 text-blue-700' },
           { label: 'Active', value: activeCount, color: 'bg-green-50 text-green-700' },
@@ -325,7 +326,7 @@ const MembersPage: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -336,26 +337,28 @@ const MembersPage: React.FC = () => {
             className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-        <select
-          value={filterRole}
-          onChange={(e) => setFilterRole(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">All Roles</option>
-          {PREDEFINED_ROLES.map((r) => (
-            <option key={r.slug} value={r.slug}>{r.name}</option>
-          ))}
-        </select>
-        <select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">All Statuses</option>
-          <option value="active">Active</option>
-          <option value="invited">Invited</option>
-          <option value="suspended">Suspended</option>
-        </select>
+        <div className="flex items-center gap-3">
+          <select
+            value={filterRole}
+            onChange={(e) => setFilterRole(e.target.value)}
+            className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Roles</option>
+            {PREDEFINED_ROLES.map((r) => (
+              <option key={r.slug} value={r.slug}>{r.name}</option>
+            ))}
+          </select>
+          <select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Statuses</option>
+            <option value="active">Active</option>
+            <option value="invited">Invited</option>
+            <option value="suspended">Suspended</option>
+          </select>
+        </div>
       </div>
 
       {/* ─── Pending Invitations ──────────────────────────────── */}
@@ -369,23 +372,23 @@ const MembersPage: React.FC = () => {
             {pendingMembers.map((member) => {
               const roleInfo = getRoleInfo(member.role);
               return (
-                <div key={member.id} className="flex items-center justify-between px-5 py-3">
+                <div key={member.id} className="flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-5 py-3 gap-2 sm:gap-0">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center">
+                    <div className="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Mail className="w-4 h-4 text-amber-600" />
                     </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-900">
+                    <div className="min-w-0">
+                      <span className="text-sm font-medium text-gray-900 truncate block">
                         {member.name || member.email}
                       </span>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <span>{member.email}</span>
-                        <span className="text-gray-300">|</span>
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0 text-xs text-gray-500">
+                        <span className="truncate">{member.email}</span>
+                        <span className="hidden sm:inline text-gray-300">|</span>
                         <span>Invited {formatDate(member.invited_at)}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 ml-12 sm:ml-0">
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${roleInfo.color}`}>
                       {roleInfo.name}
                     </span>
@@ -393,7 +396,7 @@ const MembersPage: React.FC = () => {
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => handleResendInvite(member)}
-                          className="px-2.5 py-1 text-xs font-medium text-amber-700 bg-amber-100 hover:bg-amber-200 rounded-md transition-colors"
+                          className="px-2.5 py-1.5 text-xs font-medium text-amber-700 bg-amber-100 hover:bg-amber-200 rounded-md transition-colors"
                         >
                           Resend
                         </button>
@@ -402,7 +405,7 @@ const MembersPage: React.FC = () => {
                             setSelectedMember(member);
                             setShowDeleteModal(true);
                           }}
-                          className="px-2.5 py-1 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-colors"
+                          className="px-2.5 py-1.5 text-xs font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-colors"
                         >
                           Revoke
                         </button>
@@ -422,12 +425,12 @@ const MembersPage: React.FC = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Active</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member</th>
+                <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                <th className="hidden sm:table-cell px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
+                <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Active</th>
+                <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -448,46 +451,46 @@ const MembersPage: React.FC = () => {
                       setShowDetailPanel(true);
                     }}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 md:px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                           member.avatar_url ? '' : 'bg-gray-200'
                         }`}>
                           {member.avatar_url ? (
-                            <img src={member.avatar_url} alt="" className="w-10 h-10 rounded-full object-cover" />
+                            <img src={member.avatar_url} alt="" className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover" />
                           ) : (
-                            <User className="w-5 h-5 text-gray-600" />
+                            <User className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
                           )}
                         </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium text-gray-900 truncate">
                             {member.name || member.email.split('@')[0]}
                           </div>
-                          <div className="text-sm text-gray-500">{member.email}</div>
+                          <div className="text-xs sm:text-sm text-gray-500 truncate">{member.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 md:px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${roleInfo.color}`}>
                           {roleInfo.icon}
                         </div>
-                        <span className="text-sm text-gray-900">{roleInfo.name}</span>
+                        <span className="text-sm text-gray-900 hidden sm:inline">{roleInfo.name}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="hidden sm:table-cell px-3 md:px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}>
                         {statusInfo.icon}
                         {statusInfo.label}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(member.accepted_at || member.invited_at)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatLastActive(member.last_active)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm" onClick={(e) => e.stopPropagation()}>
+                    <td className="px-3 md:px-6 py-4 whitespace-nowrap text-sm" onClick={(e) => e.stopPropagation()}>
                       {isMemberOwner ? (
                         <span className="text-xs text-gray-400">\u2014</span>
                       ) : canManageMembers ? (

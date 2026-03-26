@@ -183,7 +183,7 @@ const RemindersPage: React.FC = () => {
           ) : (
             <div className="divide-y divide-gray-50">
               {scheduledReminders.map((msg) => (
-                <div key={msg.id} className="flex items-center justify-between px-6 py-4">
+                <div key={msg.id} className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-4 gap-2">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">
                       {msg.recipient_phone || msg.recipient_email || 'Unknown'}
@@ -194,7 +194,7 @@ const RemindersPage: React.FC = () => {
                         : msg.message_body}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                  <div className="flex items-center gap-3 flex-shrink-0">
                     <span className="text-xs text-gray-500">
                       {new Date(msg.scheduled_for).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}{' '}
                       {new Date(msg.scheduled_for).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}

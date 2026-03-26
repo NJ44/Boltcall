@@ -326,13 +326,13 @@ const GoogleCalendarTab: React.FC = () => {
     <div className="space-y-6 px-6 pb-6">
       {/* Connection status card */}
       <div className="bg-white dark:bg-[#111114] rounded-xl border border-green-200 dark:border-green-900/50 p-5">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
               <Calendar className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="text-base font-semibold text-gray-900 dark:text-white">{config.calendar_name || 'Google Calendar'}</h3>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                   <Check className="w-3 h-3" /> Connected
@@ -341,7 +341,7 @@ const GoogleCalendarTab: React.FC = () => {
               <p className="text-sm text-gray-500 dark:text-gray-400">{config.user_email || 'primary'}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <button
               onClick={handleSyncNow}
               disabled={syncing}
@@ -351,7 +351,7 @@ const GoogleCalendarTab: React.FC = () => {
               Sync Now
             </button>
             {integration?.last_sync_at && (
-              <span className="text-xs text-gray-400 flex items-center gap-1">
+              <span className="text-xs text-gray-400 flex items-center gap-1 hidden sm:flex">
                 <Clock className="w-3 h-3" />
                 Last sync {new Date(integration.last_sync_at).toLocaleString()}
               </span>
@@ -361,7 +361,7 @@ const GoogleCalendarTab: React.FC = () => {
       </div>
 
       {/* Section tabs */}
-      <div className="flex border-b border-gray-200 dark:border-[#2a2a30]">
+      <div className="flex border-b border-gray-200 dark:border-[#2a2a30] overflow-x-auto">
         {[
           { id: 'overview' as const, label: 'Overview', icon: <CalendarDays className="w-3.5 h-3.5" /> },
           { id: 'settings' as const, label: 'Sync Settings', icon: <Settings className="w-3.5 h-3.5" /> },
@@ -454,7 +454,7 @@ const GoogleCalendarTab: React.FC = () => {
           {/* Sync frequency */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Sync Frequency</label>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { value: 'realtime', label: 'Real-time', desc: 'Instant sync on every event' },
                 { value: '5min', label: 'Every 5 min', desc: 'Batch sync every 5 minutes' },
@@ -481,7 +481,7 @@ const GoogleCalendarTab: React.FC = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Conflict Resolution</label>
               <p className="text-xs text-gray-400 mb-3">When the same event is modified in both systems, which version wins?</p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
                   { value: 'boltcall_wins', label: 'Boltcall wins', desc: 'Boltcall changes take priority' },
                   { value: 'google_wins', label: 'Google wins', desc: 'Google Calendar changes take priority' },
@@ -562,13 +562,13 @@ const GoogleCalendarTab: React.FC = () => {
           </div>
 
           {/* Save + Disconnect */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-[#2a2a30]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-gray-200 dark:border-[#2a2a30]">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleDisconnect}
                 className="flex items-center gap-1.5 text-xs text-red-600 hover:text-red-700"
               >
-                <Unplug className="w-3.5 h-3.5" /> Disconnect Google Calendar
+                <Unplug className="w-3.5 h-3.5" /> Disconnect
               </button>
               <button
                 onClick={handleConnect}
@@ -581,7 +581,7 @@ const GoogleCalendarTab: React.FC = () => {
             <button
               onClick={handleSaveSettings}
               disabled={saving}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 w-full sm:w-auto justify-center"
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
               Save Settings

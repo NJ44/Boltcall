@@ -200,9 +200,9 @@ const RolesPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Roles & Permissions</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">Roles & Permissions</h1>
           <p className="text-sm text-gray-500 mt-1">Define what each team role can access</p>
         </div>
         <div className="flex items-center gap-2">
@@ -373,7 +373,7 @@ const RolesPage: React.FC = () => {
         >
           <div className="space-y-5 max-h-[60vh] overflow-y-auto pr-1">
             {/* Basic Info */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Role Name *</label>
                 <input

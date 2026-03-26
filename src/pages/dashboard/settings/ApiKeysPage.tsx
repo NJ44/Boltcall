@@ -169,9 +169,9 @@ const ApiKeysPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">API Keys</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">API Keys</h1>
           <p className="text-sm text-gray-500 mt-1">Manage programmatic access to your workspace</p>
         </div>
         <PopButton color="blue" onClick={() => { resetForm(); setShowCreateModal(true); }}>
@@ -218,14 +218,14 @@ const ApiKeysPage: React.FC = () => {
                         {key.status}
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
-                      <div className="flex items-center gap-1.5">
-                        <code className="bg-gray-100 px-2 py-0.5 rounded text-xs font-mono">
+                    <div className="mt-2 flex flex-wrap items-center gap-2 md:gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <code className="bg-gray-100 px-2 py-0.5 rounded text-xs font-mono truncate max-w-[160px] sm:max-w-none inline-block align-middle">
                           {key.key_prefix}{'*'.repeat(24)}
                         </code>
                         <button
                           onClick={() => copyToClipboard(key.key_prefix + '...', key.id)}
-                          className="p-1 hover:bg-gray-100 rounded"
+                          className="p-1.5 hover:bg-gray-100 rounded flex-shrink-0"
                           title="Copy prefix"
                         >
                           {copiedKeyId === key.id ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -243,7 +243,7 @@ const ApiKeysPage: React.FC = () => {
                       )}
                     </div>
                     {/* Usage stats */}
-                    <div className="mt-2 flex items-center gap-4">
+                    <div className="mt-2 flex flex-wrap items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-1 text-xs text-gray-400">
                         <BarChart3 className="w-3.5 h-3.5" />
                         <span>24h: {key.usage_24h || 0}</span>

@@ -285,7 +285,7 @@ document.getElementById("lead-form")
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-[28rem] bg-white shadow-xl z-50 overflow-y-auto rounded-l-3xl"
+              className="fixed right-0 top-0 h-full w-full sm:w-[28rem] bg-white shadow-xl z-50 overflow-y-auto rounded-l-none sm:rounded-l-3xl"
             >
               <div className="p-6">
                 {/* Header */}

@@ -292,7 +292,7 @@ const NotificationPage: React.FC = () => {
       )}
 
       {/* General Settings */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
             <Settings className="w-4 h-4 text-blue-600" />
@@ -335,7 +335,7 @@ const NotificationPage: React.FC = () => {
       </div>
 
       {/* Channel Settings */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
             <Bell className="w-4 h-4 text-green-600" />
@@ -360,17 +360,17 @@ const NotificationPage: React.FC = () => {
               </div>
 
               {notificationSettings.channels[channel.key as keyof typeof notificationSettings.channels].enabled && (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {notificationTypes.map((type) => (
-                    <div key={type.key} className="flex items-center gap-2">
-                      <label className="relative inline-flex items-center cursor-pointer">
+                    <div key={type.key} className="flex items-center gap-2 py-0.5">
+                      <label className="relative inline-flex items-center cursor-pointer p-1 -m-1">
                         <input
                           type="checkbox"
                           checked={notificationSettings.channels[channel.key as keyof typeof notificationSettings.channels][type.key as keyof typeof notificationSettings.channels[keyof typeof notificationSettings.channels]]}
                           onChange={(e) => handleSettingChange(['channels', channel.key, type.key], e.target.checked)}
                           className="sr-only peer"
                         />
-                        <div className="w-4 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded peer peer-checked:bg-blue-600"></div>
+                        <div className="w-5 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded peer peer-checked:bg-blue-600"></div>
                       </label>
                       <span className="text-sm text-gray-700">{type.title}</span>
                     </div>
@@ -383,7 +383,7 @@ const NotificationPage: React.FC = () => {
       </div>
 
       {/* Quiet Hours */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
             <Clock className="w-4 h-4 text-purple-600" />
@@ -426,7 +426,7 @@ const NotificationPage: React.FC = () => {
       </div>
 
       {/* Test Notifications */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
             <Bell className="w-4 h-4 text-yellow-600" />

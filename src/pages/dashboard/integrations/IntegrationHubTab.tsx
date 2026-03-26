@@ -518,7 +518,7 @@ const IntegrationHubTab: React.FC = () => {
   return (
     <div className="space-y-6 px-6 pb-6">
       {/* Stats row */}
-      <div className="flex items-center gap-6">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-6">
         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
           <div className="w-2 h-2 rounded-full bg-green-500" />
           <span>{connectedCount} connected</span>
@@ -545,10 +545,10 @@ const IntegrationHubTab: React.FC = () => {
             className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#111114] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-1 -mb-1">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors flex-shrink-0 ${
               !selectedCategory ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-[#1a1a1f] dark:text-gray-400'
             }`}
           >
@@ -558,7 +558,7 @@ const IntegrationHubTab: React.FC = () => {
             <button
               key={key}
               onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors flex-shrink-0 ${
                 selectedCategory === key ? meta.color : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-[#1a1a1f] dark:text-gray-400'
               }`}
             >
@@ -688,7 +688,7 @@ const IntegrationHubTab: React.FC = () => {
                 animate={{ x: 0 }}
                 exit={{ x: '100%' }}
                 transition={{ type: 'tween', ease: [0.25, 0.46, 0.45, 0.94], duration: 0.4 }}
-                className="fixed right-0 top-0 h-screen w-96 bg-white dark:bg-[#111114] shadow-xl z-50 overflow-y-auto rounded-l-3xl"
+                className="fixed right-0 top-0 h-screen w-full sm:w-96 bg-white dark:bg-[#111114] shadow-xl z-50 overflow-y-auto rounded-l-none sm:rounded-l-3xl"
               >
                 <div className="p-6">
                   {/* Header */}

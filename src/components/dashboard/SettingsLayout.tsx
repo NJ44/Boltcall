@@ -58,9 +58,9 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col h-full">
       {/* Page Header */}
-      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-5 pb-0">
+      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-4 md:px-6 pt-5 pb-0">
         {/* Top Tabs — category-level navigation */}
-        <nav className="flex gap-6 -mb-px">
+        <nav className="flex gap-6 -mb-px overflow-x-auto scrollbar-hide">
             {categories.map((cat) => {
               const isActive = cat.id === activeCategory.id;
               // Default route is first sidebar item
@@ -90,10 +90,35 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
           </nav>
       </div>
 
+      {/* Mobile sidebar — horizontal pill strip */}
+      <div className="md:hidden bg-white border-b border-gray-200 px-4 py-3 overflow-x-auto scrollbar-hide">
+        <div className="flex gap-2">
+          {activeCategory.sidebar.map((item) => {
+            const isActive =
+              location.pathname === item.route ||
+              location.pathname.startsWith(item.route + '/');
+
+            return (
+              <Link
+                key={item.id}
+                to={item.route}
+                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Body — sidebar + content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar */}
-        <div className="w-56 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
+        {/* Left Sidebar — desktop only */}
+        <div className="hidden md:block w-56 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
           <nav className="py-5 px-4 space-y-1">
             {activeCategory.sidebar.map((item) => {
               const isActive =
@@ -119,7 +144,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto bg-gray-50">
-          <div className="p-10 md:p-12 max-w-5xl">
+          <div className="p-4 md:p-12 max-w-5xl">
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0, y: 12 }}

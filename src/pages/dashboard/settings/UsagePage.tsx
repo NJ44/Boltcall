@@ -329,7 +329,7 @@ const UsagePage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.15 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6"
       >
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2.5">
@@ -368,7 +368,7 @@ const UsagePage: React.FC = () => {
         {/* Plan comparison row */}
         {nextPlan && nextPlanConfig && (
           <div className="mt-6 pt-5 border-t border-gray-100">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-medium text-gray-700">
                   Need more capacity?
@@ -381,7 +381,7 @@ const UsagePage: React.FC = () => {
               </div>
               <Link
                 to="/dashboard/settings/plan-billing"
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap flex-shrink-0"
               >
                 Upgrade <ArrowRight className="w-3 h-3" />
               </Link>
@@ -395,7 +395,7 @@ const UsagePage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.2 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6"
       >
         <div className="flex items-center gap-2.5 mb-5">
           <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -497,7 +497,7 @@ const UsagePage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.25 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6"
       >
         <h2 className="text-sm font-semibold text-gray-900 mb-4">Plan Limits Comparison</h2>
         <div className="overflow-x-auto">
@@ -584,7 +584,7 @@ const UsagePage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
@@ -633,7 +633,7 @@ const UsagePage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.35 }}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">

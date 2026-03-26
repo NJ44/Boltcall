@@ -142,9 +142,9 @@ const ActivityLogPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Activity Log</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">Activity Log</h1>
           <p className="text-sm text-gray-500 mt-1">Track all actions across your workspace</p>
         </div>
         <div className="flex items-center gap-2">
@@ -265,7 +265,7 @@ const ActivityLogPage: React.FC = () => {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.02 }}
-                  className="flex items-start gap-4 px-5 py-3.5 hover:bg-gray-50 transition-colors"
+                  className="flex items-start gap-3 sm:gap-4 px-3 sm:px-5 py-3.5 hover:bg-gray-50 transition-colors"
                 >
                   <div className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${colorCls}`}>
                     {icon}
@@ -295,8 +295,8 @@ const ActivityLogPage: React.FC = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between px-5 py-3 border-t border-gray-200 bg-gray-50">
-            <span className="text-sm text-gray-500">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 sm:px-5 py-3 border-t border-gray-200 bg-gray-50">
+            <span className="text-xs sm:text-sm text-gray-500">
               Showing {page * PAGE_SIZE + 1}\u2013{Math.min((page + 1) * PAGE_SIZE, activityLogsTotalCount)} of {activityLogsTotalCount}
             </span>
             <div className="flex items-center gap-2">

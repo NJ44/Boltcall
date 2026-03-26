@@ -205,13 +205,14 @@ const LeadsTable: React.FC<LeadsTableProps> = ({ data, onRowClick, className = '
       transition={{ duration: 0.3 }}
       className={className}
     >
-      <Card className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-semibold text-text-main">Leads</h3>
+      <Card className="p-3 sm:p-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h3 className="text-lg sm:text-xl font-semibold text-text-main">Leads</h3>
           <div className="flex items-center space-x-4">
             <Button onClick={handleExportCSV} variant="outline" size="sm" className="flex items-center gap-2">
               <Download className="w-4 h-4" />
-              Export CSV
+              <span className="hidden sm:inline">Export CSV</span>
+              <span className="sm:hidden">Export</span>
             </Button>
           </div>
         </div>
@@ -269,8 +270,8 @@ const LeadsTable: React.FC<LeadsTableProps> = ({ data, onRowClick, className = '
           </table>
         </div>
         
-        <div className="flex items-center justify-between mt-4">
-          <div className="text-sm text-text-muted">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4 gap-3">
+          <div className="text-xs sm:text-sm text-text-muted">
             Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
             {Math.min(
               (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,

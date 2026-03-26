@@ -45,17 +45,17 @@ const ModalShell: React.FC<ModalShellProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-0 z-[102] flex items-center justify-center p-4 pointer-events-none"
+            className="fixed inset-0 z-[102] flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none"
           >
             <div
               className={cn(
-                'relative w-full rounded-xl bg-white dark:bg-gray-900 shadow-xl shadow-black/5 border border-gray-200 dark:border-gray-800 pointer-events-auto',
+                'relative w-full rounded-t-xl sm:rounded-xl bg-white dark:bg-gray-900 shadow-xl shadow-black/5 border border-gray-200 dark:border-gray-800 pointer-events-auto max-h-[90vh] sm:max-h-[85vh] flex flex-col',
                 maxWidth,
                 className
               )}
             >
               {/* Header */}
-              <div className="flex items-start justify-between p-6 pb-0">
+              <div className="flex items-start justify-between p-4 sm:p-6 pb-0 flex-shrink-0">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     {title}
@@ -76,11 +76,11 @@ const ModalShell: React.FC<ModalShellProps> = ({
               </div>
 
               {/* Body */}
-              <div className="p-6">{children}</div>
+              <div className="p-4 sm:p-6 overflow-y-auto flex-1">{children}</div>
 
               {/* Footer */}
               {footer && (
-                <div className="flex justify-end gap-3 border-t border-gray-100 dark:border-gray-800 px-6 py-4">
+                <div className="flex justify-end gap-3 border-t border-gray-100 dark:border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0">
                   {footer}
                 </div>
               )}

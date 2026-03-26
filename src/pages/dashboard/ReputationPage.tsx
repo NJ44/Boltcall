@@ -174,7 +174,7 @@ const ReputationPage: React.FC = () => {
       )}
 
       {/* ── Settings Card ── */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-6">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6 space-y-6">
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -301,7 +301,7 @@ const ReputationPage: React.FC = () => {
       </div>
 
       {/* ── Recent Review Requests ── */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
             <MessageSquare className="w-4 h-4 text-purple-600" />
@@ -320,11 +320,11 @@ const ReputationPage: React.FC = () => {
         ) : (
           <div className="space-y-2">
             {reviewRequests.map((msg) => (
-              <div key={msg.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div key={msg.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg bg-gray-50 gap-1 sm:gap-0">
                 <span className="text-sm text-gray-900 truncate">
                   {msg.recipient_phone || msg.recipient_email || 'Unknown'}
                 </span>
-                <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                <div className="flex items-center gap-3 flex-shrink-0">
                   <span className="text-xs text-gray-500">
                     {new Date(msg.scheduled_for).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </span>

@@ -21,9 +21,9 @@ const IntegrationsPage: React.FC = () => {
   return (
     <div className="flex flex-col h-full">
       {/* Tab Bar */}
-      <div className="bg-white dark:bg-[#111114] border-b border-gray-200 dark:border-[#1e1e24] flex-shrink-0 px-6 pt-4 pb-0">
+      <div className="bg-white dark:bg-[#111114] border-b border-gray-200 dark:border-[#1e1e24] flex-shrink-0 px-3 md:px-6 pt-4 pb-0">
         <div className="flex items-center justify-between mb-0">
-          <nav className="flex gap-4 -mb-px">
+          <nav className="flex gap-4 -mb-px overflow-x-auto scrollbar-hide whitespace-nowrap">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (

@@ -253,13 +253,13 @@ const GeneralPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
             <Building2 className="w-5 h-5 text-blue-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">{t('general.businessInfo')}</h2>
+          <h2 className="text-lg md:text-xl font-semibold text-gray-900">{t('general.businessInfo')}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -356,13 +356,13 @@ const GeneralPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
             <MapPin className="w-5 h-5 text-green-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">{t('general.address')}</h2>
+          <h2 className="text-lg md:text-xl font-semibold text-gray-900">{t('general.address')}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -455,22 +455,22 @@ const GeneralPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="bg-white rounded-lg border border-red-200 p-6"
+        className="bg-white rounded-lg border border-red-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
             <AlertTriangle className="w-5 h-5 text-red-600" />
           </div>
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">{t('general.deleteAccount')}</h2>
+            <h2 className="text-lg md:text-xl font-semibold text-gray-900">{t('general.deleteAccount')}</h2>
             <p className="text-sm text-gray-600 mt-1">{t('general.deleteAccountDesc')}</p>
           </div>
         </div>
 
         <div className="border-t border-red-200 pt-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Delete Workspace</h3>
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1">Delete Workspace</h3>
               <p className="text-sm text-gray-600">
                 Once you delete a workspace, there is no going back. Please be certain.
               </p>

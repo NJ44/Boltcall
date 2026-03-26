@@ -147,7 +147,7 @@ const WorkspacePage: React.FC = () => {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Workspace Settings</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900">Workspace Settings</h1>
         <p className="text-sm text-gray-500 mt-1">Configure your workspace identity and defaults</p>
       </div>
 
@@ -156,13 +156,13 @@ const WorkspacePage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-lg border border-gray-200 p-6"
+        className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
             <Building2 className="w-5 h-5 text-blue-600" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-900">Workspace Identity</h2>
+          <h2 className="text-lg md:text-xl font-semibold text-gray-900">Workspace Identity</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -246,21 +246,21 @@ const WorkspacePage: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-lg border border-red-200 p-6"
+          className="bg-white rounded-lg border border-red-200 p-4 md:p-6"
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
               <AlertTriangle className="w-5 h-5 text-red-600" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-gray-900">Danger Zone</h2>
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900">Danger Zone</h2>
               <p className="text-sm text-gray-500 mt-0.5">Irreversible and destructive actions</p>
             </div>
           </div>
 
           <div className="space-y-4 divide-y divide-red-100">
             {/* Transfer Ownership */}
-            <div className="flex items-center justify-between pt-4 first:pt-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 first:pt-0">
               <div>
                 <h3 className="text-sm font-semibold text-gray-900">Transfer Ownership</h3>
                 <p className="text-xs text-gray-500 mt-0.5">Transfer workspace ownership to another admin</p>
@@ -272,7 +272,7 @@ const WorkspacePage: React.FC = () => {
             </div>
 
             {/* Delete Workspace */}
-            <div className="flex items-center justify-between pt-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4">
               <div>
                 <h3 className="text-sm font-semibold text-gray-900">Delete Workspace</h3>
                 <p className="text-xs text-gray-500 mt-0.5">Permanently delete this workspace and all its data</p>

@@ -268,7 +268,7 @@ const WebhooksTab: React.FC = () => {
   return (
     <div className="space-y-6 px-6 pb-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Create webhooks to send real-time event data to Zapier, Make.com, or any external system.
@@ -276,7 +276,7 @@ const WebhooksTab: React.FC = () => {
         </div>
         <button
           onClick={() => setShowCreateForm(!showCreateForm)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex-shrink-0"
         >
           {showCreateForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
           {showCreateForm ? 'Cancel' : 'Create Webhook'}
@@ -392,8 +392,8 @@ const WebhooksTab: React.FC = () => {
             return (
               <div key={webhook.id} className="bg-white dark:bg-[#111114] rounded-xl border border-gray-200 dark:border-[#2a2a30] overflow-hidden">
                 {/* Webhook header */}
-                <div className="flex items-center justify-between p-4">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="flex items-center justify-between p-3 sm:p-4 gap-2">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                     <button
                       onClick={() => {
                         setExpandedWebhook(isExpanded ? null : webhook.id);
@@ -418,7 +418,7 @@ const WebhooksTab: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 ml-4">
+                  <div className="flex items-center gap-1 sm:gap-2 ml-2 sm:ml-4 flex-shrink-0">
                     {/* Active toggle */}
                     <button
                       onClick={() => handleToggle(webhook)}
@@ -499,7 +499,7 @@ const WebhooksTab: React.FC = () => {
                     >
                       <div className="border-t border-gray-200 dark:border-[#2a2a30]">
                         {/* Webhook details */}
-                        <div className="px-4 py-3 bg-gray-50 dark:bg-[#0a0a0c] grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                        <div className="px-3 sm:px-4 py-3 bg-gray-50 dark:bg-[#0a0a0c] grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-xs">
                           <div>
                             <span className="text-gray-500">Status</span>
                             <p className={`font-medium ${webhook.is_active ? 'text-green-600' : 'text-gray-400'}`}>

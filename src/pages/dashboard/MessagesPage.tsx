@@ -22,10 +22,10 @@ const MessagesPage: React.FC = () => {
   return (
     <div className="flex flex-col h-full">
       {/* Tab Bar */}
-      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-4 pb-0">
-        <div className="flex items-center gap-1 mb-0">
-          <h1 className="text-xl font-semibold text-gray-900 mr-6">Messages</h1>
-          <nav className="flex gap-4 -mb-px flex-1">
+      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-3 md:px-6 pt-4 pb-0 overflow-x-auto">
+        <div className="flex flex-col gap-1 mb-0 sm:flex-row sm:items-center">
+          <h1 className="text-lg md:text-xl font-semibold text-gray-900 sm:mr-6">Messages</h1>
+          <nav className="flex gap-3 md:gap-4 -mb-px flex-1">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (

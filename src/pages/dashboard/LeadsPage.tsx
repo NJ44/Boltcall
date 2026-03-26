@@ -19,9 +19,9 @@ const LeadsPage: React.FC = () => {
   return (
     <div className="flex flex-col h-full">
       {/* Tab Bar */}
-      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-6 pt-4 pb-0">
+      <div className="bg-white border-b border-gray-200 flex-shrink-0 px-3 md:px-6 pt-4 pb-0 overflow-x-auto">
         <div className="flex items-center justify-between mb-0">
-          <nav className="flex gap-4 -mb-px">
+          <nav className="flex gap-3 md:gap-4 -mb-px">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
