@@ -385,6 +385,35 @@ export const handler: Handler = async (event) => {
 
       // Create both KB + Agent in one call
       if (action === 'create_full') {
+        // Step 0: Scrape website with Firecrawl if URL provided — adds rich content to KB
+        if (body.website_url) {
+          try {
+            const scrapeBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+            const scrapeRes = await fetch(`${scrapeBaseUrl}/.netlify/functions/firecrawl-scrape`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url: body.website_url }),
+            });
+
+            if (scrapeRes.ok) {
+              const scraped = await scrapeRes.json();
+              const scrapedContent = scraped.markdown || scraped.content || '';
+
+              if (scrapedContent && scrapedContent.length > 100) {
+                // Add scraped website content as a KB entry
+                if (!body.knowledge_base_texts) body.knowledge_base_texts = [];
+                body.knowledge_base_texts.push({
+                  title: `Website Content — ${scraped.title || body.website_url}`,
+                  text: scrapedContent.substring(0, 30000), // Limit to 30k chars for prompt
+                });
+                console.log(`[retell-agents] Scraped website via ${scraped.source || 'unknown'}: ${scrapedContent.length} chars`);
+              }
+            }
+          } catch (scrapeErr) {
+            console.error('[retell-agents] Website scrape failed (non-blocking):', scrapeErr);
+          }
+        }
+
         // Step 1: Store KB in Supabase (NOT Retell — saves $64+/mo)
         // Tier 1 (prompt) entries get injected into the LLM prompt
         // Tier 2 (search) entries are searchable via search_knowledge_base tool
@@ -537,7 +566,7 @@ export const handler: Handler = async (event) => {
           headers,
           body: JSON.stringify({
             success: true,
-            knowledge_base_id: kb.knowledge_base_id,
+            knowledge_base_id: supabaseKbId || null,
             agent_id: agent.agent_id,
             agent,
             prompt_used: body.prompt_config ? 'professional' : body.general_prompt ? 'custom' : 'legacy',

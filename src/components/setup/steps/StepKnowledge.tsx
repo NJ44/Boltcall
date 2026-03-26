@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { FileText, BookOpen, Loader2, CheckCircle, CheckCircle2, Circle, AlertTriangle, Target, ChevronDown, ChevronUp, X, Plus, HelpCircle, Shield, Wrench } from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { FileText, BookOpen, Loader2, CheckCircle, CheckCircle2, Circle, AlertTriangle, Target, ChevronDown, ChevronUp, X, Plus, HelpCircle, Shield, Wrench, Globe, Sparkles } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { useToast } from '../../../contexts/ToastContext';
 import { supabase } from '../../../lib/supabase';
@@ -8,10 +8,115 @@ import { FileUploadCompact } from '../../ui/file-upload-compact';
 import Button from '../../ui/Button';
 import { calculateKBCompleteness } from '../kbCompleteness';
 
+const FUNCTIONS_BASE = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
+
 const StepKnowledge: React.FC = () => {
   const { businessProfile, updateBusinessProfile, knowledgeBase, updateKnowledgeBase, account } = useSetupStore();
   const { showToast } = useToast();
   const [uploading, setUploading] = useState(false);
+  const [scanning, setScanning] = useState(false);
+  const [scanSource, setScanSource] = useState<string>('');
+
+  // Auto-scrape the user's website and pre-fill services/FAQs
+  const handleScanWebsite = useCallback(async () => {
+    const url = businessProfile.websiteUrl?.trim();
+    if (!url) {
+      showToast({ title: 'No URL', message: 'Enter your website URL first', variant: 'error', duration: 3000 });
+      return;
+    }
+
+    setScanning(true);
+    setScanSource('');
+
+    try {
+      showToast({ title: 'Scanning website...', message: 'AI is reading your website to auto-fill your knowledge base', variant: 'default', duration: 15000 });
+
+      const res = await fetch(`${FUNCTIONS_BASE}/scrape-url`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+
+      const scraped = await res.json();
+      const content = scraped.markdown || scraped.content || '';
+      setScanSource(scraped.source || 'basic');
+
+      if (!content || content.length < 50) {
+        showToast({ title: 'Low content', message: 'Could not extract much from this website. Try adding info manually.', variant: 'error', duration: 4000 });
+        setScanning(false);
+        return;
+      }
+
+      // Use Claude to extract structured data from the scraped content
+      const extractRes = await fetch(`${FUNCTIONS_BASE}/ai-extract-kb`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content,
+          businessName: businessProfile.businessName,
+          category: businessProfile.mainCategory,
+        }),
+      });
+
+      if (extractRes.ok) {
+        const extracted = await extractRes.json();
+
+        // Pre-fill services if found and current list is empty
+        if (extracted.services?.length && knowledgeBase.services.length === 0) {
+          updateKnowledgeBase({ services: extracted.services });
+        }
+
+        // Pre-fill FAQs if found and current list is empty
+        if (extracted.faqs?.length && knowledgeBase.faqs.length === 0) {
+          updateKnowledgeBase({ faqs: extracted.faqs });
+        }
+
+        // Pre-fill policies if found and current policies are empty
+        if (extracted.policies) {
+          const currentPolicies = knowledgeBase.policies;
+          const newPolicies = { ...currentPolicies };
+          if (!currentPolicies.cancellation && extracted.policies.cancellation) newPolicies.cancellation = extracted.policies.cancellation;
+          if (!currentPolicies.reschedule && extracted.policies.reschedule) newPolicies.reschedule = extracted.policies.reschedule;
+          if (!currentPolicies.deposit && extracted.policies.deposit) newPolicies.deposit = extracted.policies.deposit;
+          updateKnowledgeBase({ policies: newPolicies });
+        }
+
+        const parts = [];
+        if (extracted.services?.length) parts.push(`${extracted.services.length} services`);
+        if (extracted.faqs?.length) parts.push(`${extracted.faqs.length} FAQs`);
+        if (extracted.policies) parts.push('policies');
+
+        showToast({
+          title: 'Website scanned!',
+          message: parts.length > 0
+            ? `Found ${parts.join(', ')}. Review and edit below.`
+            : 'Website scraped but no structured data found. Add info manually.',
+          variant: parts.length > 0 ? 'success' : 'default',
+          duration: 5000,
+        });
+      } else {
+        // AI extraction failed — still save raw content as a KB document
+        showToast({
+          title: 'Partial scan',
+          message: 'Website scraped but AI extraction unavailable. Content saved for your agent.',
+          variant: 'default',
+          duration: 4000,
+        });
+      }
+    } catch (error) {
+      console.error('Website scan error:', error);
+      showToast({
+        title: 'Scan failed',
+        message: 'Could not scan website. You can add info manually below.',
+        variant: 'error',
+        duration: 4000,
+      });
+    } finally {
+      setScanning(false);
+    }
+  }, [businessProfile.websiteUrl, businessProfile.businessName, businessProfile.mainCategory, knowledgeBase, updateKnowledgeBase, showToast]);
 
   // KB Completeness
   const completeness = useMemo(
@@ -193,7 +298,7 @@ const StepKnowledge: React.FC = () => {
         )}
       </div>
 
-      {/* Website input */}
+      {/* Website input + Scan button */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
           <div className="flex items-center gap-2">
@@ -201,15 +306,40 @@ const StepKnowledge: React.FC = () => {
             Business website
           </div>
         </label>
-        <StyledInput
-          type="url"
-          value={businessProfile.websiteUrl}
-          onChange={(e) => updateBusinessProfile({ websiteUrl: e.target.value })}
-          placeholder="https://yourbusiness.com"
-          name="websiteUrl"
-        />
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <StyledInput
+              type="url"
+              value={businessProfile.websiteUrl}
+              onChange={(e) => updateBusinessProfile({ websiteUrl: e.target.value })}
+              placeholder="https://yourbusiness.com"
+              name="websiteUrl"
+            />
+          </div>
+          <Button
+            onClick={handleScanWebsite}
+            disabled={scanning || !businessProfile.websiteUrl?.trim()}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-1.5 whitespace-nowrap px-4 h-[42px]"
+          >
+            {scanning ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Scanning...
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-4 h-4" />
+                Scan Website
+              </>
+            )}
+          </Button>
+        </div>
         <p className="mt-1 text-sm text-gray-500">
-          Your AI will scrape this to learn about your business automatically.
+          {scanSource
+            ? `Last scan: powered by ${scanSource === 'firecrawl' ? 'Firecrawl AI' : scanSource === 'n8n' ? 'n8n scraper' : 'basic scraper'}`
+            : 'Enter your URL and click "Scan Website" to auto-fill services, FAQs, and policies.'}
         </p>
       </div>
 
