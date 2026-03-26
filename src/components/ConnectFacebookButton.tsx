@@ -1,20 +1,24 @@
 import React from 'react';
 import Button from './ui/Button';
+import { useAuth } from '../contexts/AuthContext';
 
 interface ConnectFacebookButtonProps {
   onClick?: () => void;
   className?: string;
 }
 
-const ConnectFacebookButton: React.FC<ConnectFacebookButtonProps> = ({ 
-  onClick, 
-  className = "" 
+const ConnectFacebookButton: React.FC<ConnectFacebookButtonProps> = ({
+  onClick,
+  className = ""
 }) => {
+  const { user } = useAuth();
+
   const handleConnect = async () => {
     try {
-      const response = await fetch("/.netlify/functions/facebook-auth-start");
+      const userId = user?.id || '';
+      const response = await fetch(`/.netlify/functions/facebook-auth-start?user_id=${encodeURIComponent(userId)}`);
       const { url } = await response.json();
-      
+
       if (url) {
         window.location.href = url;
       } else {
@@ -23,7 +27,7 @@ const ConnectFacebookButton: React.FC<ConnectFacebookButtonProps> = ({
     } catch (error) {
       console.error('Error starting Facebook OAuth:', error);
     }
-    
+
     // Call the optional onClick prop if provided
     if (onClick) {
       onClick();

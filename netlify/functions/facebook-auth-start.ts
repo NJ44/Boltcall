@@ -47,13 +47,17 @@ export const handler: Handler = async (event) => {
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
   const redirectUri = encodeURIComponent(`${baseUrl}/.netlify/functions/facebook-auth-callback`);
-  const state = crypto.randomBytes(16).toString('hex');
+
+  // Embed user_id in the state param so the callback can associate the connection
+  const userId = event.queryStringParameters?.user_id || '';
+  const csrfToken = crypto.randomBytes(16).toString('hex');
+  const state = Buffer.from(JSON.stringify({ csrf: csrfToken, user_id: userId })).toString('base64');
 
   const url =
     `https://www.facebook.com/v20.0/dialog/oauth` +
     `?client_id=${clientId}` +
     `&redirect_uri=${redirectUri}` +
-    `&state=${state}` +
+    `&state=${encodeURIComponent(state)}` +
     `&scope=${SCOPES}`;
 
   return {

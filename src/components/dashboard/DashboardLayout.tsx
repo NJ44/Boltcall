@@ -154,6 +154,13 @@ const DashboardLayout: React.FC = () => {
   const { logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
 
+  // Scroll main content to top on route change
+  useEffect(() => {
+    if (mainContentRef.current) {
+      mainContentRef.current.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
   // Get current page name based on route
   const getPageName = () => {
     const path = location.pathname;

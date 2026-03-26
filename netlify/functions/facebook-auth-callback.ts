@@ -62,9 +62,15 @@ export const handler: Handler = async (event) => {
     return redirect('/dashboard/instant-lead-reply?fb=missing_code');
   }
 
-  // user_id should be embedded in the state or passed as a query param
-  // For now we expect it as a query parameter appended by the frontend
-  const userId = params.user_id;
+  // Extract user_id from the state parameter (base64-encoded JSON)
+  let userId: string | undefined;
+  try {
+    const stateData = JSON.parse(Buffer.from(params.state || '', 'base64').toString('utf-8'));
+    userId = stateData.user_id;
+  } catch {
+    // Fallback to query param if state parsing fails
+    userId = params.user_id;
+  }
 
   const appId = process.env.FB_APP_ID;
   const appSecret = process.env.FB_APP_SECRET;
