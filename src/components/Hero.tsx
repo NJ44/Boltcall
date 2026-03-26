@@ -207,7 +207,7 @@ const Hero: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap pl-4 md:pl-8">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap pl-8 md:pl-16">
                   <motion.span
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -276,13 +276,6 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <InteractiveHoverButton
-                text="Start free"
-                onClick={() => navigate('/signup')}
-                className="min-h-11 w-48 border-gray-300 bg-white text-gray-900 py-2.5 px-6"
-                hoverBgClass="bg-brand-blue"
-                hoverTextClass="text-white"
-              />
               <PopButton
                 color="blue"
                 size="lg"
@@ -291,6 +284,13 @@ const Hero: React.FC = () => {
               >
                 Learn More
               </PopButton>
+              <InteractiveHoverButton
+                text="Start free"
+                onClick={() => navigate('/signup')}
+                className="min-h-11 w-48 border-gray-300 bg-white text-gray-900 py-2.5 px-6"
+                hoverBgClass="bg-brand-blue"
+                hoverTextClass="text-white"
+              />
             </motion.div>
 
           </div>

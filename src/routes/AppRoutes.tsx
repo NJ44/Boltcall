@@ -110,6 +110,7 @@ const SolarSpeedToLeadPlaybookThankYou = React.lazy(() => import('../pages/Solar
 const VoiceAgentOnboarding = React.lazy(() => import('../pages/VoiceAgentOnboarding'));
 const AiReadinessScorecard = React.lazy(() => import('../pages/AiReadinessScorecard'));
 const AiReceptionistRoi = React.lazy(() => import('../pages/AiReceptionistRoi'));
+const FiveMinuteResponsePlaybook = React.lazy(() => import('../pages/FiveMinuteResponsePlaybook'));
 
 // ── Lazy loads — Speed Test funnel ───────────────────────────────────────
 const SpeedTestLanding = React.lazy(() => import('../pages/speed-test/SpeedTestLanding'));
@@ -460,6 +461,8 @@ const NavigationWrapper: React.FC = () => {
         {/* Solar Speed-to-Lead Playbook */}
         <Route path="/solar-speed-playbook" element={<SolarSpeedToLeadPlaybook />} />
         <Route path="/solar-speed-playbook/thank-you" element={<SolarSpeedToLeadPlaybookThankYou />} />
+        {/* 5-Minute Response Playbook lead magnet */}
+        <Route path="/tools/5-minute-response-playbook" element={<FiveMinuteResponsePlaybook />} />
         {/* All niche tools now served by dynamic route from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
