@@ -376,8 +376,8 @@ const PhoneNumbersPage: React.FC = () => {
       >
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
           {/* Custom Header with Dropdown */}
-          <div className="p-6">
-            <div className="flex items-center justify-between">
+          <div className="p-3 md:p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4 flex-1">
                 {/* Search Input */}
                 <div className="relative flex-1 max-w-xs">
@@ -401,7 +401,7 @@ const PhoneNumbersPage: React.FC = () => {
                     onClick={handleAddPhoneNumber}
                     className="gap-2"
                   >
-                    <span className="font-bold">Add Phone Number</span>
+                    <span className="font-bold text-sm sm:text-base">Add Phone Number</span>
                     <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                   </PopButton>
                   
@@ -525,10 +525,10 @@ const PhoneNumbersPage: React.FC = () => {
         open={showTwilioModal}
         onClose={() => setShowTwilioModal(false)}
         title="Buy a New Phone Number"
-        maxWidth="max-w-2xl"
+        maxWidth="max-w-md"
       >
         {/* Search Controls */}
-        <div className="flex gap-3 mb-4">
+        <div className="flex flex-col gap-3 mb-4 sm:flex-row">
           <div className="flex-1">
             <label className="block text-xs font-medium text-gray-500 mb-1">Country</label>
             <select
@@ -587,20 +587,20 @@ const PhoneNumbersPage: React.FC = () => {
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:bg-blue-50 transition-colors"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Phone className="w-5 h-5 text-blue-600" />
                     </div>
-                    <div>
-                      <div className="font-semibold text-gray-900">{number.phone_number}</div>
-                      <div className="text-sm text-gray-600">
+                    <div className="min-w-0">
+                      <div className="font-semibold text-gray-900 truncate">{number.phone_number}</div>
+                      <div className="text-sm text-gray-600 truncate">
                         {[number.locality, number.region].filter(Boolean).join(', ') || 'N/A'}
                         {number.friendly_name ? ` \u2022 ${number.friendly_name}` : ''}
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="text-left sm:text-right flex items-center gap-3 sm:block">
                     <div className="font-semibold text-gray-900">{number.monthly_cost}/mo</div>
                     <PopButton color="blue" size="sm"
                       onClick={() => handlePurchaseNumber(number)}
@@ -639,7 +639,7 @@ const PhoneNumbersPage: React.FC = () => {
         onClose={() => setShowSipModal(false)}
         title="Connect Your Phone Number"
         description="Forward calls from your existing number to your AI receptionist."
-        maxWidth="max-w-2xl"
+        maxWidth="max-w-md"
         footer={
           <>
             <PopButton
