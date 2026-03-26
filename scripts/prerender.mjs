@@ -10,7 +10,7 @@
  * React hydrates on the client, so the SPA still works for humans.
  */
 
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import { createServer } from 'http';
 import { readFile, writeFile, mkdir, access } from 'fs/promises';
 import { join, dirname } from 'path';
@@ -141,28 +141,40 @@ async function prerender() {
   console.log(`Prerendering ${ROUTES.length} routes...\n`);
 
   const server = await startServer();
-  // On Netlify CI, use the system Chromium if puppeteer's bundled one isn't found
-  const launchOptions = {
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
-  };
-
-  // On Netlify CI, use Chromium installed by netlify-plugin-chromium
-  if (process.env.CHROMIUM_PATH) {
-    console.log(`Using Chromium from plugin: ${process.env.CHROMIUM_PATH}`);
-    launchOptions.executablePath = process.env.CHROMIUM_PATH;
-  } else if (process.env.NETLIFY || process.env.CI) {
+  // Resolve Chromium executable — use @sparticuz/chromium on CI, local Chrome otherwise
+  let executablePath;
+  if (process.env.NETLIFY || process.env.CI) {
+    const chromium = await import('@sparticuz/chromium');
+    executablePath = await chromium.default.executablePath();
+    console.log(`Using @sparticuz/chromium: ${executablePath}`);
+  } else {
+    // Local dev — find system Chrome
     const { execSync } = await import('child_process');
     try {
-      const chromePath = execSync('which chromium-browser || which chromium || which google-chrome-stable || which google-chrome', { encoding: 'utf8' }).trim();
-      if (chromePath) {
-        console.log(`Using system Chrome: ${chromePath}`);
-        launchOptions.executablePath = chromePath;
+      if (process.platform === 'win32') {
+        const paths = [
+          process.env['PROGRAMFILES'] + '\\Google\\Chrome\\Application\\chrome.exe',
+          process.env['PROGRAMFILES(X86)'] + '\\Google\\Chrome\\Application\\chrome.exe',
+          process.env['LOCALAPPDATA'] + '\\Google\\Chrome\\Application\\chrome.exe',
+        ];
+        const { existsSync } = await import('fs');
+        executablePath = paths.find(p => existsSync(p));
+      } else {
+        executablePath = execSync('which chromium-browser || which chromium || which google-chrome-stable || which google-chrome', { encoding: 'utf8' }).trim();
       }
-    } catch {
-      console.log('No system Chrome found, using puppeteer bundled Chromium');
+    } catch { /* fall through */ }
+    if (!executablePath) {
+      console.error('No Chrome/Chromium found locally. Install Chrome or run on Netlify CI.');
+      process.exit(1);
     }
+    console.log(`Using local Chrome: ${executablePath}`);
   }
+
+  const launchOptions = {
+    headless: true,
+    executablePath,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+  };
 
   const browser = await puppeteer.launch(launchOptions);
 
