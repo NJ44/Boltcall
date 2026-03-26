@@ -36,7 +36,6 @@ import { ToastProvider } from '../../contexts/ToastContext';
 import { addLogEntry, logUserAction } from '../../lib/logging';
 import { supabase } from '../../lib/supabase';
 import { LocationSwitcher } from './LocationSwitcher';
-import LanguageSwitcher from './LanguageSwitcher';
 import { useDirection } from '../../hooks/useDirection';
 import AiAssistant from './AiAssistant';
 import UsageBanner from './UsageBanner';
@@ -44,7 +43,7 @@ import UsageLimitModal from './UsageLimitModal';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
 
 const DashboardLayout: React.FC = () => {
-  const { t, i18n } = useTranslation('common');
+  const { t } = useTranslation('common');
   const dir = useDirection();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
