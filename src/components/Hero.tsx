@@ -105,9 +105,9 @@ const FloatingIcon = React.memo(({
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
-        delay: index * 0.08,
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
+        delay: 1.2 + index * 0.1,
+        duration: 0.7,
+        ease: [0.25, 0.1, 0.25, 1],
       }}
       className={cn('absolute', iconData.className)}
     >
@@ -200,27 +200,32 @@ const Hero: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10 text-center pt-20 md:pt-28 lg:pt-36">
             {/* Animated Headline */}
-            <div className="flex justify-center mb-6 relative z-10">
+            <motion.div
+              className="flex justify-center mb-6 relative z-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap pl-4 md:pl-8">
                   <motion.span
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.625, delay: 0.2, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                   >
                     NEVER
                   </motion.span>
                   <motion.span
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.625, delay: 0.3, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
                   >
                     MISS
                   </motion.span>
                   <motion.span
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.625, delay: 0.4, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                   >
                     A
                   </motion.span>
@@ -251,14 +256,14 @@ const Hero: React.FC = () => {
                   </span>
                 </h1>
               </div>
-            </div>
+            </motion.div>
 
             {/* Subheadline */}
             <motion.p
               className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.7, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
             >
               We answer calls 24/7, respond to website visitors instantly, and book appointments for you.
             </motion.p>
@@ -267,9 +272,9 @@ const Hero: React.FC = () => {
             {/* CTA Buttons */}
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-10"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0 }}
+              transition={{ duration: 0.7, delay: 0.95, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <InteractiveHoverButton
                 text="Start free"
