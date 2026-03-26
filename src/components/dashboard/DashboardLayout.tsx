@@ -308,13 +308,10 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/calls', label: t('nav.calls'), icon: <Phone className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
-  // COMMUNICATIONS (kept for reference)
-  const navItemsCommunications: typeof navItemsMain = [];
-
   // SERVICES
   const navItemsServices = [
     { to: '/dashboard/ai-receptionist', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('common.beta') as string },
+    { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('beta') as string },
     { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
@@ -494,19 +491,6 @@ const DashboardLayout: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Communications */}
-                <div className="mb-4">
-                  {!(sidebarCollapsed) && (
-                    <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.communications')}</p>
-                  )}
-                  {sidebarCollapsed && <div className="border-t border-gray-200 dark:border-[#1e1e24] my-2 mx-2" />}
-                  <div className="space-y-1">
-                    {navItemsCommunications.map((item) => {
-                      const isActive = location.pathname === item.to;
-                      return renderNavItem(item, isActive);
-                    })}
-                  </div>
-                </div>
 
 
               </div>
@@ -879,7 +863,7 @@ const DashboardLayout: React.FC = () => {
                             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            {t('common.logout')}
+                            {t('logout')}
                           </button>
                         </div>
                       </motion.div>

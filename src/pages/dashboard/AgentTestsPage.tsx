@@ -215,7 +215,7 @@ const AgentTestsPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center gap-3 mb-1">
         <Shield className="w-7 h-7 text-brand-blue" />
-        <h1 className="text-2xl font-bold text-gray-900">Agent Testing</h1>
+        <h1 className="text-2xl font-bold text-gray-900"></h1>
       </div>
 
       {loading ? (
