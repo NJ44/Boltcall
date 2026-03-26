@@ -40,6 +40,7 @@ import { useDirection } from '../../hooks/useDirection';
 import AiAssistant from './AiAssistant';
 import UsageBanner from './UsageBanner';
 import UsageLimitModal from './UsageLimitModal';
+import TrialExpiryPopup from './TrialExpiryPopup';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
 
 const DashboardLayout: React.FC = () => {
@@ -877,6 +878,7 @@ const DashboardLayout: React.FC = () => {
              </motion.div>
           </div>
           <UsageLimitModal />
+          <TrialExpiryPopup />
 
            {/* AI Assistant - Bottom Right */}
            <AiAssistant />
