@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Star, Loader2, AlertCircle, MessageSquare, ArrowRight, X,
-  Globe, Smartphone, MousePointerClick, Clock, Pencil, CheckCircle2,
+  Globe, Smartphone, MousePointerClick, Clock, Pencil,
   Send, ExternalLink, ToggleLeft, ToggleRight
 } from 'lucide-react';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';

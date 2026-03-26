@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { FileText, BookOpen, Loader2, CheckCircle, CheckCircle2, Circle, AlertTriangle, Target, ChevronDown, ChevronUp, X, Plus, HelpCircle, Shield, Wrench, Globe, Sparkles } from 'lucide-react';
+import { FileText, BookOpen, Loader2, CheckCircle, CheckCircle2, Circle, AlertTriangle, Target, ChevronDown, ChevronUp, X, Plus, HelpCircle, Shield, Wrench, Sparkles } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { useToast } from '../../../contexts/ToastContext';
 import { supabase } from '../../../lib/supabase';

@@ -5,7 +5,7 @@ import {
   Phone, PhoneCall, PhoneOff, Clock, Calendar, CheckCircle2,
   Settings, Volume2, BookOpen, ArrowRight, BarChart3,
   TrendingUp, Users, Headphones, AlertCircle, X, Mic, Brain, Hash,
-  Pencil, ExternalLink, Zap
+  Zap
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';

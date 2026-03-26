@@ -581,7 +581,6 @@ const IntegrationHubTab: React.FC = () => {
             const connected = isConnected(integration.id);
             const syncInfo = getSyncInfo(integration.id);
             const comingSoon = integration.type === 'coming_soon';
-            const catMeta = CATEGORY_META[integration.category];
 
             return (
               <div
