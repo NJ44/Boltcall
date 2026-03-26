@@ -5,12 +5,12 @@ import { Zap } from 'lucide-react';
 const TOTAL_SEGMENTS = 20;
 
 const LOADER_WORDS = [
+  'Analyzing',
   'Building',
-  'Creating',
-  'Refining',
-  'Configuring',
-  'Connecting',
+  'Formatting',
+  'Packaging',
   'Polishing',
+  'Finalizing',
 ];
 
 const LOADING_STEPS = [
@@ -330,9 +330,9 @@ const SetupLoading: React.FC = () => {
             <Zap />
           </div>
 
-          <div className="setup-loading-title">Setting up your dashboard</div>
+          <div className="setup-loading-title">Preparing your dashboard</div>
           <div className="setup-loading-subtitle">
-            Configuring AI receptionist, connecting services...
+            Crafting automations, connecting services, loading integrations...
           </div>
 
           <div className="setup-word-loader" ref={wordLoaderRef} />
