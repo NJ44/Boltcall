@@ -74,13 +74,16 @@ const DashboardLayout: React.FC = () => {
     systemAlert: false
   });
 
-  // Services status — loaded from Supabase business_features
+  // Services status — loaded from Supabase business_features + facebook_page_connections
   const [services, setServices] = useState({
     aiReceptionist: false,
     phoneSystem: false,
     sms: false,
     whatsapp: false,
     websiteBubble: false,
+    reminders: false,
+    reputation: false,
+    instantLeadResponse: false,
   });
 
   // Log dashboard access when component mounts
@@ -95,21 +98,29 @@ const DashboardLayout: React.FC = () => {
     if (!user?.id) return;
     (async () => {
       try {
-        const { data } = await supabase
-          .from('business_features')
-          .select('ai_receptionist_enabled, phone_system_enabled, sms_enabled, chat_widget_enabled, reminders_config')
-          .eq('user_id', user.id)
-          .single();
+        const [{ data: features }, { data: fbConnections }] = await Promise.all([
+          supabase
+            .from('business_features')
+            .select('ai_receptionist_enabled, phone_system_enabled, sms_enabled, chat_widget_enabled, reminders_enabled, reminders_config, reputation_manager_enabled, reputation_manager_config')
+            .eq('user_id', user.id)
+            .single(),
+          supabase
+            .from('facebook_page_connections')
+            .select('id')
+            .or(`workspace_id.eq.${user.id},user_id.eq.${user.id}`)
+            .limit(1),
+        ]);
 
-        if (data) {
-          setServices({
-            aiReceptionist: data.ai_receptionist_enabled ?? false,
-            phoneSystem: data.phone_system_enabled ?? false,
-            sms: data.sms_enabled ?? false,
-            whatsapp: false,
-            websiteBubble: data.chat_widget_enabled ?? false,
-          });
-        }
+        setServices({
+          aiReceptionist: features?.ai_receptionist_enabled ?? false,
+          phoneSystem: features?.phone_system_enabled ?? false,
+          sms: features?.sms_enabled ?? false,
+          whatsapp: false,
+          websiteBubble: features?.chat_widget_enabled ?? false,
+          reminders: features?.reminders_enabled ?? false,
+          reputation: !!(features?.reputation_manager_enabled || features?.reputation_manager_config?.google_review_url),
+          instantLeadResponse: (fbConnections?.length ?? 0) > 0,
+        });
       } catch {
         // Silently fail — will show defaults (all off)
       }
@@ -317,11 +328,11 @@ const DashboardLayout: React.FC = () => {
 
   // SERVICES
   const navItemsServices = [
-    { to: '/dashboard/ai-receptionist', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('beta') as string },
-    { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" /> },
-    { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/ai-receptionist', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.aiReceptionist },
+    { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('beta') as string, needsSetup: !services.phoneSystem },
+    { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.reminders },
+    { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.reputation },
+    { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.instantLeadResponse },
   ];
 
   // SETUP
@@ -358,8 +369,11 @@ const DashboardLayout: React.FC = () => {
               : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
         }`}
       >
-        <span className={`flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
+        <span className={`relative flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
+          {item.needsSetup && (
+            <span className="absolute -top-1.5 -right-1.5 w-2 h-2 rounded-full bg-orange-400 border border-white dark:border-[#111114]" />
+          )}
         </span>
         {/* Custom tooltip — card to the outside of icon (flips for RTL) */}
         {isCollapsedView && (
