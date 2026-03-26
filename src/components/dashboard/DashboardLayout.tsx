@@ -453,7 +453,7 @@ const DashboardLayout: React.FC = () => {
 
             
             {/* Navigation */}
-            <nav className={`flex-1 flex flex-col ${sidebarCollapsed ? '' : 'overflow-y-auto'} dashboard-sidebar`} aria-label="Main navigation">
+            <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
               <div className="flex-1 px-2">
                 {/* Main */}
                 <div className="space-y-1 mb-4">
@@ -501,12 +501,6 @@ const DashboardLayout: React.FC = () => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return renderNavItem(item, isActive);
                 })}
-                {/* Language Switcher in sidebar footer */}
-                {!sidebarCollapsed && (
-                  <div className="pt-1">
-                    <LanguageSwitcher variant="icon" />
-                  </div>
-                )}
               </div>
 
             </nav>
@@ -580,10 +574,6 @@ const DashboardLayout: React.FC = () => {
                   <LocationSwitcher />
                 </div>
 
-                {/* Language Switcher in topbar */}
-                <div className="hidden md:block">
-                  <LanguageSwitcher variant="icon" />
-                </div>
                  
                  {/* Notification Dropdown (hidden on mobile — hover doesn't work on touch) */}
                  <div className="relative group hidden md:block">
@@ -786,32 +776,6 @@ const DashboardLayout: React.FC = () => {
                           </button>
                         </div>
 
-                        {/* Language Switcher */}
-                        <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800">
-                          <div className="text-xs font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
-                            <Globe className="w-3.5 h-3.5 text-gray-400" />
-                            {t('topbar.language')}
-                          </div>
-                          <div className="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-0.5">
-                            {[
-                              { code: 'en', label: 'EN' },
-                              { code: 'he', label: 'HE' },
-                              { code: 'es', label: 'ES' },
-                            ].map((lang) => (
-                              <button
-                                key={lang.code}
-                                onClick={() => i18n.changeLanguage(lang.code)}
-                                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                                  i18n.language?.startsWith(lang.code)
-                                    ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                                    : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-                                }`}
-                              >
-                                {lang.label}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
 
                         {/* Theme Switcher */}
                         <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800">
