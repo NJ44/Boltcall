@@ -250,11 +250,9 @@ export function PricingTable({
                 >
                   {plan.isCustom ? "Contact Us" : "Start 7-Day Free Trial"}
                 </button>
-                {!plan.isCustom && (
-                  <p className={cn("text-[10px] mt-1.5 text-center", plan.isCustom ? "text-gray-400" : "text-zinc-500")}>
-                    No credit card required for trial
-                  </p>
-                )}
+                <p className={cn("text-[10px] mt-1.5 text-center", plan.isCustom ? "text-transparent select-none" : "text-zinc-500")}>
+                  {plan.isCustom ? "\u00A0" : "No credit card required for trial"}
+                </p>
               </div>
             </div>
           ))}
@@ -277,6 +275,20 @@ export function PricingTable({
                       style={{ marginLeft: '0px' }}
                     >
                       {plan.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Tokens row */}
+              <div className="flex items-center p-4 bg-blue-50/50">
+                <div className="flex-1 text-sm pl-4 font-semibold text-gray-900">Tokens included</div>
+                <div className="flex items-center text-sm" style={{ gap: '80px', paddingRight: '16px' }}>
+                  {plans.filter(plan => !plan.excludeFromTable).map((plan) => (
+                    <div
+                      key={plan.level}
+                      className="w-20 flex justify-center items-center py-6 text-xs font-semibold text-blue-700"
+                    >
+                      {plan.tokens || '—'}
                     </div>
                   ))}
                 </div>
