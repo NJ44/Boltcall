@@ -32,7 +32,7 @@ const HowItWorks: React.FC = () => {
   return (
     <section 
       id="how-it-works" 
-      className="relative py-16 bg-transparent -mt-32"
+      className="relative py-16 bg-transparent mt-[200px]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
