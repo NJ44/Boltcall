@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, PartyPopper, Zap, X } from "lucide-react";
-import { Button } from "./Button";
+import { ChevronLeft, ChevronRight, PartyPopper, Zap } from "lucide-react";
 import confetti from "canvas-confetti";
 
 
@@ -112,45 +111,10 @@ const CoachmarkOverlay = ({
   }, [onClose, onNext, onPrev, onComplete, isFirst, isLast]);
 
   if (!targetPosition) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[9998] bg-black/50 flex items-center justify-center"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="coachmark-title"
-      >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] rounded-xl p-6 max-w-md mx-4 shadow-lg"
-        >
-          <h3 id="coachmark-title" className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">
-            {step.title}
-          </h3>
-          <p className="text-gray-500 mb-4">
-            This element isn't visible right now. Skip to the next step.
-          </p>
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" size="sm" onClick={onClose}>
-              Skip Tour
-            </Button>
-            {!isLast ? (
-              <Button size="sm" onClick={onNext} className="bg-blue-600 text-white hover:bg-blue-700">
-                Next
-              </Button>
-            ) : (
-              <Button size="sm" onClick={onComplete} className="bg-blue-600 text-white hover:bg-blue-700">
-                Done
-              </Button>
-            )}
-          </div>
-        </motion.div>
-      </motion.div>
-    );
+    // Element not visible — auto-skip to next step
+    if (!isLast) onNext();
+    else onComplete();
+    return null;
   }
 
   const { top, left, width, height } = targetPosition;
@@ -165,20 +129,10 @@ const CoachmarkOverlay = ({
       className="fixed inset-0 z-[9998] pointer-events-none"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="coachmark-title"
       style={{
         background: `radial-gradient(circle at ${left + width/2}px ${top + height/2}px, transparent ${Math.max(width, height)/2 + spotlightPadding}px, rgba(0,0,0,0.7) ${Math.max(width, height)/2 + spotlightPadding + 1}px)`
       }}
     >
-      {/* Skip button top-right */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 pointer-events-auto z-[10000] text-white/70 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
-        aria-label="Skip tour"
-      >
-        <X className="h-5 w-5" />
-      </button>
-
       {/* Spotlight border ring */}
       <div
         className="absolute border-2 border-white rounded-lg z-[9999]"
@@ -191,114 +145,49 @@ const CoachmarkOverlay = ({
         }}
       />
 
-      {/* Tooltip card */}
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0, y: 10 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.8, opacity: 0, y: 10 }}
-        transition={{
-          type: "spring",
-          damping: 25,
-          stiffness: 400,
-          opacity: { duration: 0.15 }
-        }}
-        className="absolute bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-[#2a2a30] rounded-xl p-4 shadow-2xl max-w-sm pointer-events-auto z-[9999]"
-        style={(() => {
-          const cardWidth = 340;
-          const cardHeight = 180;
-          const margin = 16;
-
-          const positions = [
-            { top: top + height + margin, left: left + (width / 2) - (cardWidth / 2), priority: 1 },
-            { top: top - cardHeight - margin, left: left + (width / 2) - (cardWidth / 2), priority: 2 },
-            { top: top + (height / 2) - (cardHeight / 2), left: left + width + margin, priority: 3 },
-            { top: top + (height / 2) - (cardHeight / 2), left: left - cardWidth - margin, priority: 4 }
-          ];
-
-          const bestPosition = positions
-            .map(pos => ({
-              ...pos,
-              fitsHorizontally: pos.left >= margin && pos.left + cardWidth <= window.innerWidth - margin,
-              fitsVertically: pos.top >= margin && pos.top + cardHeight <= window.innerHeight - margin,
-            }))
-            .filter(pos => pos.fitsHorizontally && pos.fitsVertically)
-            .sort((a, b) => a.priority - b.priority)[0];
-
-          if (bestPosition) {
-            return { top: bestPosition.top, left: bestPosition.left };
-          }
-
-          return {
-            top: Math.max(margin, Math.min(top + height + margin, window.innerHeight - cardHeight - margin)),
-            left: Math.max(margin, Math.min(left + (width / 2) - (cardWidth / 2), window.innerWidth - cardWidth - margin))
-          };
-        })()}
-      >
-        <div className="mb-3">
-          <h3 id="coachmark-title" className="font-semibold text-base mb-1 text-gray-900 dark:text-white">
-            {step.title}
-          </h3>
-          <p className="text-xs text-gray-400">
-            Step {stepIndex + 1} of {totalSteps}
-          </p>
-        </div>
-
-        {step.description && (
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-            {step.description}
-          </p>
+      {/* Bottom center nav bar — dots + Prev/Next */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-auto z-[9999] flex items-center gap-4 bg-white rounded-full px-4 py-2 shadow-2xl">
+        {!isFirst && (
+          <button
+            onClick={onPrev}
+            aria-label="Previous step"
+            className="flex items-center gap-1 text-sm font-medium text-black hover:text-gray-600 transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4 text-black" />
+            Prev
+          </button>
         )}
 
-        <div className="flex items-center justify-between">
-          {/* Step dots */}
-          <div className="flex items-center gap-1.5">
-            {Array.from({ length: totalSteps }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  i === stepIndex ? 'bg-blue-600' : i < stepIndex ? 'bg-blue-300' : 'bg-gray-300 dark:bg-gray-600'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Nav buttons */}
-          <div className="flex items-center gap-2">
-            {!isFirst && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onPrev}
-                aria-label="Previous step"
-                className="h-8 px-3 text-xs text-black"
-              >
-                <ChevronLeft className="h-3.5 w-3.5 mr-1 text-black" />
-                Prev
-              </Button>
-            )}
-            {isLast ? (
-              <Button
-                size="sm"
-                onClick={onComplete}
-                aria-label="Complete onboarding"
-                className="h-8 px-4 text-xs bg-blue-600 text-white hover:bg-blue-700"
-              >
-                Done
-              </Button>
-            ) : (
-              <Button
-                size="sm"
-                onClick={onNext}
-                aria-label="Next step"
-                className="h-8 px-3 text-xs text-black border border-gray-300 bg-white hover:bg-gray-50"
-              >
-                Next
-                <ChevronRight className="h-3.5 w-3.5 ml-1 text-black" />
-              </Button>
-            )}
-          </div>
+        <div className="flex items-center gap-1.5">
+          {Array.from({ length: totalSteps }).map((_, i) => (
+            <div
+              key={i}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                i === stepIndex ? 'bg-blue-600' : i < stepIndex ? 'bg-blue-300' : 'bg-gray-300'
+              }`}
+            />
+          ))}
         </div>
-      </motion.div>
+
+        {isLast ? (
+          <button
+            onClick={onComplete}
+            aria-label="Complete onboarding"
+            className="flex items-center gap-1 text-sm font-medium text-black hover:text-gray-600 transition-colors"
+          >
+            Done
+          </button>
+        ) : (
+          <button
+            onClick={onNext}
+            aria-label="Next step"
+            className="flex items-center gap-1 text-sm font-medium text-black hover:text-gray-600 transition-colors"
+          >
+            Next
+            <ChevronRight className="h-4 w-4 text-black" />
+          </button>
+        )}
+      </div>
     </motion.div>
   );
 };
