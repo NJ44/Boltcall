@@ -96,8 +96,6 @@ const ADDON_FEATURES: FeatureCard[] = [
   },
 ];
 
-const FEATURES: FeatureCard[] = [...CORE_FEATURES, ...ADDON_FEATURES];
-
 // Readiness data collected from DB
 interface ReadinessData {
   hasAgent: boolean;
