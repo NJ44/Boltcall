@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Moon, Sun, Palette, Save, RefreshCw } from 'lucide-react';
+import { Globe, Moon, Sun, Palette, Save, RefreshCw, Smartphone, Monitor, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Button from '../../../components/ui/Button';
 import LanguageSwitcher from '../../../components/dashboard/LanguageSwitcher';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { supabase } from '../../../lib/supabase';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
 
 const defaultPreferences = {
   theme: 'light',
@@ -25,6 +30,48 @@ const PreferencesPage: React.FC = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+
+  // PWA install state
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const [isInstalling, setIsInstalling] = useState(false);
+  const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+
+  useEffect(() => {
+    // Check if already running as installed PWA
+    if (window.matchMedia('(display-mode: standalone)').matches || (navigator as any).standalone === true) {
+      setIsInstalled(true);
+      return;
+    }
+
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+
+    // Detect when app gets installed
+    window.addEventListener('appinstalled', () => setIsInstalled(true));
+
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) return;
+    setIsInstalling(true);
+    try {
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstalled(true);
+        showToast({ title: 'Installed', message: 'Boltcall has been installed on your device!', variant: 'success', duration: 3000 });
+      }
+      setDeferredPrompt(null);
+    } finally {
+      setIsInstalling(false);
+    }
+  };
 
   // Sync language preference from i18n on mount
   useEffect(() => {
@@ -253,6 +300,52 @@ const PreferencesPage: React.FC = () => {
               <option value="24h">{t('settings:preferences.timeFormat24')}</option>
             </select>
           </div>
+        </div>
+      </div>
+
+      {/* Desktop App */}
+      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-4 md:p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+            <Monitor className="w-4 h-4 text-blue-600" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Desktop App</h2>
+        </div>
+
+        <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-[#2a2a30] rounded-lg">
+          <div className="flex items-center gap-4">
+            <img src="/boltcall_icon.png" alt="Boltcall" className="w-12 h-12 rounded-xl" loading="lazy" />
+            <div>
+              <h3 className="font-medium text-gray-900 dark:text-white">Install Boltcall</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {isInstalled
+                  ? 'Boltcall is installed on your device.'
+                  : isIOS
+                    ? 'Tap the share button in Safari, then "Add to Home Screen".'
+                    : 'Install Boltcall as a desktop app for quick access.'}
+              </p>
+            </div>
+          </div>
+
+          {isInstalled ? (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium rounded-lg">
+              <Check className="w-4 h-4" />
+              Installed
+            </span>
+          ) : !isIOS && deferredPrompt ? (
+            <Button
+              variant="primary"
+              onClick={handleInstallApp}
+              disabled={isInstalling}
+            >
+              <Smartphone className="w-4 h-4 mr-2" />
+              {isInstalling ? 'Installing...' : 'Install'}
+            </Button>
+          ) : !isIOS ? (
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              Not available in this browser
+            </span>
+          ) : null}
         </div>
       </div>
 
