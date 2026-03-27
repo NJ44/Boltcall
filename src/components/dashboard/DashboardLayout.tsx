@@ -337,7 +337,7 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.reminders },
     { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.reputation },
     { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.instantLeadResponse },
-    { to: '/dashboard/email', label: 'AI Email', icon: <Mail className="w-3.5 h-3.5 scale-[0.95]" />, badge: 'Coming Soon' },
+    { to: '/dashboard/email', label: 'AI Email', icon: <Mail className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
   // SETUP
