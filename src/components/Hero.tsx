@@ -198,7 +198,7 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center pt-20 md:pt-28 lg:pt-36">
+          <div className="relative z-10 text-center pt-8 md:pt-12 lg:pt-16">
             {/* Animated Headline */}
             <motion.div
               className="flex justify-center mb-6 relative z-10"
