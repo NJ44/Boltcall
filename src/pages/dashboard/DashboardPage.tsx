@@ -15,16 +15,22 @@ import TalkToAgentModal from '../../components/TalkToAgentModal';
 
 const ONBOARDING_STEPS: Step[] = [
   {
-    id: 'enable-receptionist',
-    title: 'Enable Your AI Receptionist',
-    description: 'Turn on the AI Receptionist to start handling calls, booking appointments, and answering questions automatically.',
-    targetSelector: '[data-onboarding="feature-voice_agent"]',
+    id: 'services-section',
+    title: 'Services',
+    description: 'Enable and configure your AI-powered services — receptionist, missed call handling, reminders, reputation management, and instant lead response.',
+    targetSelector: '[data-onboarding="section-services"]',
   },
   {
-    id: 'test-receptionist',
-    title: 'Test Your Receptionist',
-    description: 'Try a test call to hear your AI receptionist in action and make sure everything sounds right.',
-    targetSelector: '[data-onboarding="nav-agent-tests"]',
+    id: 'setup-section',
+    title: 'Setup',
+    description: 'Manage your AI agents, knowledge base, phone numbers, and integrations. This is where you configure everything under the hood.',
+    targetSelector: '[data-onboarding="section-setup"]',
+  },
+  {
+    id: 'profile-settings',
+    title: 'Profile & Settings',
+    description: 'Update your business profile, billing, team members, notifications, and workspace preferences.',
+    targetSelector: '[data-onboarding="nav-settings"]',
   },
 ];
 

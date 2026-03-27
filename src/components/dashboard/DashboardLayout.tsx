@@ -347,7 +347,7 @@ const DashboardLayout: React.FC = () => {
   ];
 
   const navItemsFooter = [
-    { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" /> },
+    { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" />, onboardingId: 'nav-settings' },
     { to: '/help-center', label: t('nav.helpCenter'), icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
   ];
 
@@ -360,7 +360,7 @@ const DashboardLayout: React.FC = () => {
       <Link
         key={item.to}
         to={item.to}
-        data-onboarding={`nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+        data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
         onClick={closeSidebar}
         className={`relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
           isActive
@@ -488,7 +488,7 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Setup */}
-                <div className="mb-4">
+                <div className="mb-4" data-onboarding="section-setup">
                   {!(sidebarCollapsed) && (
                     <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.setup')}</p>
                   )}
@@ -502,7 +502,7 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                 {/* Services */}
-                <div className="mb-4">
+                <div className="mb-4" data-onboarding="section-services">
                   {!(sidebarCollapsed) && (
                     <p className={`px-2 mb-1 text-[10px] font-semibold uppercase tracking-wider ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('nav.section.services')}</p>
                   )}

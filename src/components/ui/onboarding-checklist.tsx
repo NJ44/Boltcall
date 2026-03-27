@@ -270,9 +270,9 @@ const CoachmarkOverlay = ({
                 size="sm"
                 onClick={onPrev}
                 aria-label="Previous step"
-                className="h-8 px-3 text-xs"
+                className="h-8 px-3 text-xs text-black"
               >
-                <ChevronLeft className="h-3.5 w-3.5 mr-1" />
+                <ChevronLeft className="h-3.5 w-3.5 mr-1 text-black" />
                 Prev
               </Button>
             )}
@@ -290,10 +290,10 @@ const CoachmarkOverlay = ({
                 size="sm"
                 onClick={onNext}
                 aria-label="Next step"
-                className="h-8 px-3 text-xs bg-blue-600 text-white hover:bg-blue-700"
+                className="h-8 px-3 text-xs text-black border border-gray-300 bg-white hover:bg-gray-50"
               >
                 Next
-                <ChevronRight className="h-3.5 w-3.5 ml-1" />
+                <ChevronRight className="h-3.5 w-3.5 ml-1 text-black" />
               </Button>
             )}
           </div>
