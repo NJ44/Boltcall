@@ -133,7 +133,7 @@ export const signInWithGoogle = async (): Promise<User> => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${window.location.origin}/dashboard`,
+      redirectTo: `${window.location.origin}/auth/callback`,
       scopes: 'openid email profile',
       queryParams: { access_type: 'offline', prompt: 'consent' }
     }
@@ -146,7 +146,7 @@ export const signInWithMicrosoft = async (): Promise<User> => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'azure',
     options: {
-      redirectTo: `${window.location.origin}/dashboard`,
+      redirectTo: `${window.location.origin}/auth/callback`,
       scopes: 'openid email profile',
       queryParams: { access_type: 'offline', prompt: 'consent' }
     }
@@ -159,7 +159,7 @@ export const signInWithFacebook = async (): Promise<User> => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'facebook',
     options: {
-      redirectTo: `${window.location.origin}/dashboard`,
+      redirectTo: `${window.location.origin}/auth/callback`,
       scopes: 'email,public_profile',
     }
   });

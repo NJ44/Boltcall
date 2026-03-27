@@ -94,9 +94,11 @@ export default function AuthSwitch({
   const navigate = useNavigate();
   const location = useLocation();
   const rawRedirect = new URLSearchParams(location.search).get("redirect");
-  const redirectTo = rawRedirect && rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
+  const baseRedirect = rawRedirect && rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
     ? rawRedirect
     : defaultRedirect;
+  // Signup must always go to /setup regardless of which page the form is on
+  const redirectTo = mode === "signup" ? "/setup" : baseRedirect;
 
   const loginForm = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
   const signupForm = useForm<SignupFormData>({ resolver: zodResolver(signupSchema) });

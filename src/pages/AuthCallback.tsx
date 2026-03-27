@@ -16,22 +16,28 @@ const AuthCallback: React.FC = () => {
       try {
         // Get the session from the URL hash
         const { data: { session }, error } = await supabase.auth.getSession();
-        
+
         if (error) {
           console.error('Auth callback error:', error);
-          navigate('/setup');
+          navigate('/login');
           return;
         }
 
         if (session) {
-          // Redirect back to setup page after successful OAuth
-          navigate('/setup');
+          // Check if user has completed setup
+          const { data: profile } = await supabase
+            .from('business_profiles')
+            .select('id')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+
+          navigate(profile ? '/dashboard' : '/setup');
         } else {
-          navigate('/setup');
+          navigate('/login');
         }
       } catch (error) {
         console.error('Error handling auth callback:', error);
-        navigate('/setup');
+        navigate('/login');
       }
     };
 
