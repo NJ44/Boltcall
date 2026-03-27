@@ -188,6 +188,7 @@ const SmartWebsitePage = React.lazy(() => import('../pages/features/SmartWebsite
 const Strike = React.lazy(() => import('../pages/Strike'));
 const Challenge = React.lazy(() => import('../pages/Challenge'));
 const ButtonDemoPage = React.lazy(() => import('../pages/ButtonDemoPage'));
+const DemoFlowPage = React.lazy(() => import('../pages/DemoFlowPage'));
 const DrHazakLandingPage = React.lazy(() => import('../pages/DrHazakLandingPage'));
 
 const NavigationWrapper: React.FC = () => {
@@ -453,6 +454,7 @@ const NavigationWrapper: React.FC = () => {
         {/* Demo Pages */}
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/button-demo" element={<ButtonDemoPage />} />
+        <Route path="/demo" element={<DemoFlowPage />} />
         <Route path="/funnel-optimizer" element={<FunnelOptimizer />} />
         <Route path="/funnel-optimiser" element={<FunnelOptimiser />} />
         <Route path="/strike-ai" element={<Strike />} />
