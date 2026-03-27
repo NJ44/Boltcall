@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Mail, Plus, Trash2, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import {
-  getEmailAccounts,
   startGmailAuth,
   startOutlookAuth,
   disconnectEmailAccount,

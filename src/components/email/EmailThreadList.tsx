@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, MailOpen, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Mail, MailOpen, CheckCircle, XCircle } from 'lucide-react';
 import type { EmailThread } from '../../lib/emailService';
 
 interface Props {

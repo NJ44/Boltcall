@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bot, CheckCircle, XCircle, Edit3, Send, RefreshCw } from 'lucide-react';
+import { Bot, CheckCircle, XCircle, Edit3, Send } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { approveDraft, rejectDraft, editAndSend, type EmailMessage } from '../../lib/emailService';
 
