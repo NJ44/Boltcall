@@ -40,6 +40,7 @@ const AgentDetailPage = React.lazy(() => import('../pages/dashboard/AgentDetailP
 const ReceptionistPage = React.lazy(() => import('../pages/dashboard/ReceptionistPage'));
 const SmsPage = React.lazy(() => import('../pages/dashboard/SmsPage'));
 const WhatsappPage = React.lazy(() => import('../pages/dashboard/WhatsappPage'));
+const EmailPage = React.lazy(() => import('../pages/dashboard/EmailPage'));
 const SettingsPage = React.lazy(() => import('../pages/dashboard/SettingsPage'));
 const KnowledgeBasePage = React.lazy(() => import('../pages/dashboard/KnowledgeBasePage'));
 const PhoneNumbersPage = React.lazy(() => import('../pages/dashboard/PhoneNumbersPage'));
@@ -277,6 +278,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="calcom" element={<PlanGate requiredPlan="pro"><CalcomPage /></PlanGate>} />
           <Route path="sms" element={<PlanGate requiredPlan="pro"><SmsPage /></PlanGate>} />
           <Route path="whatsapp" element={<PlanGate requiredPlan="pro"><WhatsappPage /></PlanGate>} />
+          <Route path="email" element={<PlanGate requiredPlan="pro"><EmailPage /></PlanGate>} />
 
           {/* Redirects from old paths to new merged pages */}
           <Route path="speed-to-lead" element={<Navigate to="/dashboard/leads" replace />} />

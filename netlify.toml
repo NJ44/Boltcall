@@ -45,6 +45,10 @@
 [functions."sequence-processor"]
   schedule = "*/5 * * * *"
 
+# Run email inbox poller every 3 minutes to fetch new lead emails
+[functions."email-inbox-poller"]
+  schedule = "*/3 * * * *"
+
 # Netlify handles /.netlify/functions/* routing automatically — no redirect needed
 
 # Long cache for hashed static assets

@@ -1,0 +1,74 @@
+import { Handler } from '@netlify/functions';
+import crypto from 'crypto';
+
+/**
+ * Gmail OAuth — Step 1: Generate the OAuth authorization URL.
+ *
+ * The frontend calls this function to get the Gmail OAuth URL.
+ * After authorization, Google redirects to the callback function.
+ *
+ * Environment variables:
+ *   - GOOGLE_CLIENT_ID — Google OAuth Client ID
+ *   - URL or DEPLOY_URL — Netlify site URL (auto-set by Netlify)
+ *
+ * Query parameters:
+ *   - user_id — Supabase auth user ID to associate with the connection
+ */
+
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Content-Type': 'application/json',
+};
+
+const SCOPES = [
+  'https://www.googleapis.com/auth/gmail.readonly',
+  'https://www.googleapis.com/auth/gmail.send',
+  'https://www.googleapis.com/auth/userinfo.email',
+].join(' ');
+
+export const handler: Handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
+  if (event.httpMethod !== 'GET') {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
+
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  if (!clientId) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'GOOGLE_CLIENT_ID not configured' }),
+    };
+  }
+
+  const userId = event.queryStringParameters?.user_id || '';
+  const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+  const redirectUri = `${baseUrl}/.netlify/functions/gmail-auth-callback`;
+
+  // Encode user_id + nonce in state for CSRF protection and user association
+  const nonce = crypto.randomBytes(16).toString('hex');
+  const state = Buffer.from(JSON.stringify({ userId, nonce })).toString('base64url');
+
+  const params = new URLSearchParams({
+    client_id: clientId,
+    redirect_uri: redirectUri,
+    response_type: 'code',
+    scope: SCOPES,
+    access_type: 'offline',      // Get refresh_token
+    prompt: 'consent',           // Always show consent to get refresh_token
+    state,
+  });
+
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({ url, state: nonce }),
+  };
+};

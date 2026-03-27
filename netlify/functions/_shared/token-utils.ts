@@ -11,6 +11,8 @@ export type TokenCategory =
   | 'ai_chat_message'
   | 'sms_sent'
   | 'email_sent'
+  | 'email_received'
+  | 'email_ai_draft'
   | 'outbound_call'
   | 'lead_processed'
   | 'kb_document_sync'
@@ -21,6 +23,8 @@ export const TOKEN_COSTS: Record<TokenCategory, number> = {
   ai_chat_message: 1,
   sms_sent: 5,
   email_sent: 3,
+  email_received: 1,
+  email_ai_draft: 8,
   outbound_call: 15,
   lead_processed: 2,
   kb_document_sync: 3,
