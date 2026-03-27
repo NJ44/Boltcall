@@ -3,31 +3,6 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MessageSquare, Megaphone, Globe, Calendar, Bell, PhoneForwarded, Bot } from 'lucide-react';
 import { updateMetaDescription } from '../lib/utils';
 
-/* ─── animated glow line (SVG path with travelling dot) ────────────────── */
-const GlowLine: React.FC<{ path: string; delay?: number }> = ({ path, delay = 0 }) => (
-  <g>
-    {/* base line */}
-    <path d={path} stroke="#1e3a5f" strokeWidth="2" fill="none" opacity="0.3" />
-    {/* glow trail */}
-    <path
-      d={path}
-      stroke="url(#blueGlow)"
-      strokeWidth="3"
-      fill="none"
-      strokeDasharray="20 180"
-      strokeLinecap="round"
-      className="animate-flow"
-      style={{ animationDelay: `${delay}s` }}
-    />
-    {/* bright dot */}
-    <circle r="4" fill="#60a5fa" className="animate-flow-dot" style={{ animationDelay: `${delay}s` }}>
-      <animateMotion dur="3s" repeatCount="indefinite" begin={`${delay}s`}>
-        <mpath href={`#${CSS.escape(path)}`} />
-      </animateMotion>
-    </circle>
-  </g>
-);
-
 /* ─── animated glow line using unique IDs for animateMotion ────────────── */
 const GlowLineWithId: React.FC<{ id: string; path: string; delay?: number }> = ({ id, path, delay = 0 }) => (
   <g>
