@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, PartyPopper, Zap, X } from "lucide-react";
 import { Button } from "./Button";
@@ -441,24 +442,23 @@ export function InteractiveOnboardingChecklist({
         )}
       </AnimatePresence>
 
-      {/* Celebration overlay */}
-      <AnimatePresence>
-        {showCelebration && (
-          <>
+      {/* Celebration overlay — portaled to body to escape parent transforms */}
+      {createPortal(
+        <AnimatePresence>
+          {showCelebration && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/40 z-[60]"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[61]"
+              className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/40"
             >
-              <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full mx-4 text-center">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full mx-4 text-center"
+              >
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <PartyPopper className="w-10 h-10 text-white" />
                 </div>
@@ -482,11 +482,12 @@ export function InteractiveOnboardingChecklist({
                 >
                   Go to Dashboard
                 </button>
-              </div>
+              </motion.div>
             </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }

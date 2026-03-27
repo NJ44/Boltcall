@@ -101,6 +101,7 @@ const Setup: React.FC = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Form state
   const [businessName, setBusinessName] = useState('');
@@ -115,11 +116,12 @@ const Setup: React.FC = () => {
     );
   }, []);
 
+  // Redirect already-completed users to dashboard (but not during submit flow)
   useEffect(() => {
-    if (isCompleted) {
+    if (isCompleted && !isSubmitting) {
       navigate('/dashboard', { replace: true });
     }
-  }, [isCompleted, navigate]);
+  }, [isCompleted, isSubmitting, navigate]);
 
   const isStepValid = () => {
     switch (currentStep) {
@@ -153,6 +155,7 @@ const Setup: React.FC = () => {
     }
 
     setError('');
+    setIsSubmitting(true);
 
     // Navigate to loading page immediately — no button loading state
     navigate('/setup/loading');
