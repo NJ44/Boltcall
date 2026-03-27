@@ -10,6 +10,7 @@ export interface BusinessProfileData {
   workspace_id: string;
   user_id: string;
   business_name: string;
+  owner_name?: string | null;
   website_url?: string;
   main_category: string;
   country: string;

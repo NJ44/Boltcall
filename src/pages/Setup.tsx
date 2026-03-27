@@ -105,6 +105,7 @@ const Setup: React.FC = () => {
 
   // Form state
   const [businessName, setBusinessName] = useState('');
+  const [ownerName, setOwnerName] = useState('');
   const [industry, setIndustry] = useState('');
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [country, setCountry] = useState('');
@@ -181,6 +182,7 @@ const Setup: React.FC = () => {
       const { workspace, businessProfile } =
         await createUserWorkspaceAndProfile(user.id, {
           business_name: businessName,
+          owner_name: ownerName || null,
           website_url: websiteUrl,
           main_category: industry.toLowerCase(),
           country,
@@ -379,6 +381,16 @@ const Setup: React.FC = () => {
                           />
                         </motion.div>
                         <motion.div variants={fadeInUp} className="space-y-2">
+                          <Label htmlFor="ownerName">Your Name</Label>
+                          <Input
+                            id="ownerName"
+                            placeholder="e.g. John Smith"
+                            value={ownerName}
+                            onChange={(e) => setOwnerName(e.target.value)}
+                            className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                          />
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="space-y-2">
                           <Label htmlFor="industry">Industry</Label>
                           <Select
                             value={industry}
@@ -487,6 +499,21 @@ const Setup: React.FC = () => {
                               </p>
                             </div>
                           </div>
+                          {ownerName && (
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                                <Check className="h-3.5 w-3.5 text-primary" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium">
+                                  {ownerName}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  Business owner
+                                </p>
+                              </div>
+                            </div>
+                          )}
                           <div className="flex items-center gap-3">
                             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
                               <Check className="h-3.5 w-3.5 text-primary" />
