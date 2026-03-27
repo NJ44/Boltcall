@@ -13,7 +13,7 @@ import ModalShell from '../../../components/ui/modal-shell';
 import { UnsavedChanges } from '../../../components/ui/unsaved-changes';
 
 const GeneralPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('settings');
   const { showToast } = useToast();
   const { user } = useAuth();
   const { claimReward } = useTokens();

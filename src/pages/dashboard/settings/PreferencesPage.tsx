@@ -48,10 +48,19 @@ const PreferencesPage: React.FC = () => {
         if (profile) {
           setBusinessProfileId(profile.id);
           if (profile.user_preferences) {
+            const prefs = profile.user_preferences;
             setPreferences(prev => ({
               ...prev,
-              ...profile.user_preferences,
+              ...prefs,
             }));
+            // Apply saved theme on load
+            if (prefs.theme === 'dark') {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('darkMode', 'true');
+            } else if (prefs.theme === 'light') {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('darkMode', 'false');
+            }
           }
         }
       } catch (err) {
@@ -80,6 +89,20 @@ const PreferencesPage: React.FC = () => {
         if (error) throw error;
         if (newProfile) setBusinessProfileId(newProfile.id);
       }
+      // Apply theme immediately
+      if (preferences.theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('darkMode', 'true');
+      } else if (preferences.theme === 'light') {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('darkMode', 'false');
+      } else {
+        // Auto: follow system preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', prefersDark);
+        localStorage.setItem('darkMode', String(prefersDark));
+      }
+
       showToast({ title: t('common:save'), message: t('settings:prefsSavedSuccess'), variant: 'success', duration: 3000 });
       setSaveMessage(t('settings:prefsSavedSuccess'));
       setTimeout(() => setSaveMessage(''), 3000);

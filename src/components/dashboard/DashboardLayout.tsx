@@ -165,11 +165,14 @@ const DashboardLayout: React.FC = () => {
   const { logout } = useAuth();
   const mainContentRef = useRef<HTMLElement>(null);
 
-  // Scroll main content to top on route change
+  // Scroll main content to top on route change + update page title
   useEffect(() => {
     if (mainContentRef.current) {
       mainContentRef.current.scrollTo(0, 0);
     }
+    // Update document title based on current page
+    const pageName = getPageName();
+    document.title = `${pageName} | Boltcall Dashboard`;
   }, [location.pathname]);
 
   // Get current page name based on route

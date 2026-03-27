@@ -31,7 +31,7 @@ const ONBOARDING_STEPS: Step[] = [
 const ONBOARDING_STORAGE_KEY = 'boltcall-onboarding-completed';
 
 const DashboardPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('dashboard');
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showTalkModal, setShowTalkModal] = useState(false);
@@ -127,7 +127,12 @@ const DashboardPage: React.FC = () => {
       <InteractiveOnboardingChecklist
         steps={ONBOARDING_STEPS}
         open={showOnboarding}
-        onOpenChange={setShowOnboarding}
+        onOpenChange={(open) => {
+          setShowOnboarding(open);
+          if (!open) {
+            localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+          }
+        }}
         onFinish={() => {
           localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
           setShowOnboarding(false);
