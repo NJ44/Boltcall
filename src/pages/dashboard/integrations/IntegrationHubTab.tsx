@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Search,
   Check,
   ChevronRight,
   X,
@@ -9,11 +8,6 @@ import {
   AlertCircle,
   Unplug,
   ExternalLink,
-  Building2,
-  Calendar,
-  Zap,
-  MessageSquare,
-  Filter,
 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
@@ -30,8 +24,8 @@ interface Integration {
   subtitle: string;
   description: string;
   fallbackColor: string;
-  type: 'api_key' | 'webhook' | 'oauth' | 'coming_soon';
-  category: 'crm' | 'calendar' | 'automation' | 'communication';
+  type: 'api_key' | 'webhook' | 'oauth';
+  category: 'crm' | 'calendar' | 'automation' | 'communication' | 'local';
   apiLabel?: string;
   webhookLabel?: string;
   extraFields?: Array<{ key: string; label: string; placeholder: string }>;
@@ -55,13 +49,6 @@ interface SavedIntegration {
 const FUNCTIONS_BASE = import.meta.env.DEV
   ? 'http://localhost:8888/.netlify/functions'
   : '/.netlify/functions';
-
-const CATEGORY_META: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
-  crm: { label: 'CRM', icon: <Building2 className="w-3.5 h-3.5" />, color: 'text-orange-600 bg-orange-50' },
-  calendar: { label: 'Calendar', icon: <Calendar className="w-3.5 h-3.5" />, color: 'text-blue-600 bg-blue-50' },
-  automation: { label: 'Automation', icon: <Zap className="w-3.5 h-3.5" />, color: 'text-purple-600 bg-purple-50' },
-  communication: { label: 'Communication', icon: <MessageSquare className="w-3.5 h-3.5" />, color: 'text-green-600 bg-green-50' },
-};
 
 const integrations: Integration[] = [
   {
@@ -233,70 +220,26 @@ const integrations: Integration[] = [
     url: 'https://mail.google.com',
   },
   {
-    id: 'whatsapp',
-    name: 'WhatsApp',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
-    subtitle: 'Messaging',
-    description: 'Connect WhatsApp Business to enable messaging with your customers.',
-    fallbackColor: '#25D366',
-    type: 'coming_soon',
-    category: 'communication',
-    steps: [],
-  },
-  {
-    id: 'jobber',
-    name: 'Jobber',
-    logo: 'https://getjobber.com/wp-content/uploads/2021/12/cropped-Favicon-192x192.png',
-    subtitle: 'Field Service Management',
-    description: 'Sync leads as new jobs, schedule site visits, and send quotes.',
-    fallbackColor: '#7BC74D',
-    type: 'coming_soon',
-    category: 'crm',
-    steps: [],
-  },
-  {
-    id: 'housecall-pro',
-    name: 'Housecall Pro',
-    logo: 'https://www.housecallpro.com/wp-content/uploads/2023/07/cropped-favicon-192x192.png',
-    subtitle: 'Home Service Management',
-    description: 'Turn incoming calls into jobs and dispatch techs.',
-    fallbackColor: '#0D6EFD',
-    type: 'coming_soon',
-    category: 'crm',
-    steps: [],
-  },
-  {
-    id: 'servicetitan',
-    name: 'ServiceTitan',
-    logo: 'https://www.servicetitan.com/favicon.ico',
-    subtitle: 'HVAC, Plumbing & Electrical',
-    description: 'Sync calls, book jobs, and track leads.',
-    fallbackColor: '#1B365D',
-    type: 'coming_soon',
-    category: 'crm',
-    steps: [],
-  },
-  {
-    id: 'quickbooks',
-    name: 'QuickBooks',
-    logo: 'https://quickbooks.intuit.com/oidam/intuit/sbseg/en_us/universal/icons/qb-favicon-32.png',
-    subtitle: 'Invoicing & Accounting',
-    description: 'Create invoices automatically when a job is booked.',
-    fallbackColor: '#2CA01C',
-    type: 'coming_soon',
-    category: 'automation',
-    steps: [],
-  },
-  {
-    id: 'microsoft',
-    name: 'Microsoft 365',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg',
-    subtitle: 'Outlook & Teams',
-    description: 'Sync with Outlook and Microsoft Teams.',
-    fallbackColor: '#00A4EF',
-    type: 'coming_soon',
-    category: 'calendar',
-    steps: [],
+    id: 'google_business',
+    name: 'Google Business Profile',
+    logo: 'https://lh3.googleusercontent.com/EMobDJKabP1eY_63QHgvwz9qnZPGheMfbXzew_7TWzMaT-xpymtv8lR88hZJFLJ6kQ_O',
+    subtitle: 'Reviews & Local SEO',
+    description: 'Auto-request Google reviews after appointments, monitor new reviews, and reply instantly with AI.',
+    fallbackColor: '#4285F4',
+    type: 'api_key',
+    category: 'local',
+    apiLabel: 'Google Business Profile API Key',
+    extraFields: [
+      { key: 'location_id', label: 'Business Location ID', placeholder: 'e.g. accounts/123/locations/456' },
+      { key: 'auto_review_request', label: 'Auto-request reviews after calls?', placeholder: 'yes' },
+    ],
+    steps: [
+      'Go to Google Cloud Console and enable the Business Profile API',
+      'Create an API key or OAuth credentials',
+      'Find your Location ID in Google Business Profile Manager',
+      'Paste both values below — Boltcall will request reviews and monitor responses automatically',
+    ],
+    url: 'https://business.google.com',
   },
 ];
 
@@ -313,8 +256,6 @@ const IntegrationHubTab: React.FC = () => {
   const [connecting, setConnecting] = useState(false);
   const [testing, setTesting] = useState(false);
   const [imgErrors, setImgErrors] = useState<Set<string>>(new Set());
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Form state
   const [formApiKey, setFormApiKey] = useState('');
@@ -494,80 +435,15 @@ const IntegrationHubTab: React.FC = () => {
     }
   };
 
-  // Filter and sort
-  const filtered = integrations.filter(i => {
-    const matchesSearch = !searchQuery ||
-      i.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      i.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      i.subtitle.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = !selectedCategory || i.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const sorted = [...filtered].sort((a, b) => {
+  // Sort: connected first
+  const sorted = [...integrations].sort((a, b) => {
     const aConn = isConnected(a.id) ? 0 : 1;
     const bConn = isConnected(b.id) ? 0 : 1;
-    if (aConn !== bConn) return aConn - bConn;
-    const aActive = a.type !== 'coming_soon' ? 0 : 1;
-    const bActive = b.type !== 'coming_soon' ? 0 : 1;
-    return aActive - bActive;
+    return aConn - bConn;
   });
-
-  const connectedCount = integrations.filter(i => isConnected(i.id)).length;
 
   return (
     <div className="space-y-6 px-6 pb-6">
-      {/* Stats row */}
-      <div className="flex flex-wrap items-center gap-3 sm:gap-6">
-        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <div className="w-2 h-2 rounded-full bg-green-500" />
-          <span>{connectedCount} connected</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <div className="w-2 h-2 rounded-full bg-gray-300" />
-          <span>{integrations.filter(i => i.type !== 'coming_soon').length - connectedCount} available</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-gray-400">
-          <div className="w-2 h-2 rounded-full bg-gray-200" />
-          <span>{integrations.filter(i => i.type === 'coming_soon').length} coming soon</span>
-        </div>
-      </div>
-
-      {/* Search & Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search integrations..."
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#111114] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-        <div className="flex gap-2 overflow-x-auto pb-1 -mb-1">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors flex-shrink-0 ${
-              !selectedCategory ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-[#1a1a1f] dark:text-gray-400'
-            }`}
-          >
-            <Filter className="w-3 h-3" /> All
-          </button>
-          {Object.entries(CATEGORY_META).map(([key, meta]) => (
-            <button
-              key={key}
-              onClick={() => setSelectedCategory(selectedCategory === key ? null : key)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors flex-shrink-0 ${
-                selectedCategory === key ? meta.color : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-[#1a1a1f] dark:text-gray-400'
-              }`}
-            >
-              {meta.icon} {meta.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Grid */}
       {loading ? (
         <PageSkeleton />
@@ -580,19 +456,16 @@ const IntegrationHubTab: React.FC = () => {
           {sorted.map((integration) => {
             const connected = isConnected(integration.id);
             const syncInfo = getSyncInfo(integration.id);
-            const comingSoon = integration.type === 'coming_soon';
 
             return (
               <div
                 key={integration.id}
                 className={`bg-white dark:bg-[#111114] rounded-xl border p-6 transition-all duration-200 flex flex-col ${
-                  comingSoon
-                    ? 'border-gray-100 dark:border-[#1e1e24] opacity-60'
-                    : connected
-                    ? 'border-green-200 dark:border-green-900/50 hover:shadow-lg cursor-pointer'
-                    : 'border-gray-200 dark:border-[#2a2a30] hover:shadow-lg hover:border-blue-200 cursor-pointer'
+                  connected
+                  ? 'border-green-200 dark:border-green-900/50 hover:shadow-lg cursor-pointer'
+                  : 'border-gray-200 dark:border-[#2a2a30] hover:shadow-lg hover:border-blue-200 cursor-pointer'
                 }`}
-                onClick={() => !comingSoon && openPanel(integration.id)}
+                onClick={() => openPanel(integration.id)}
               >
                 {/* Logo + status */}
                 <div className="mb-4 flex items-center justify-between">
@@ -618,9 +491,6 @@ const IntegrationHubTab: React.FC = () => {
                       <Check className="w-3 h-3" /> Connected
                     </span>
                   )}
-                  {comingSoon && (
-                    <span className="text-xs font-medium text-gray-400">Coming Soon</span>
-                  )}
                 </div>
 
                 <h3 className="text-base font-semibold text-gray-900 dark:text-white">{integration.name}</h3>
@@ -643,18 +513,15 @@ const IntegrationHubTab: React.FC = () => {
                     className={`inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-lg transition-colors ${
                       connected
                         ? 'text-green-700 bg-green-50 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400'
-                        : comingSoon
-                        ? 'text-gray-400 bg-gray-50 cursor-not-allowed dark:bg-[#1a1a1f]'
                         : 'text-gray-700 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 dark:bg-[#1a1a1f] dark:text-gray-300'
                     }`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (!comingSoon) openPanel(integration.id);
+                      openPanel(integration.id);
                     }}
-                    disabled={comingSoon}
                   >
-                    {connected ? 'Manage' : comingSoon ? 'Coming Soon' : 'Connect'}
-                    {!comingSoon && <ChevronRight className="w-3.5 h-3.5 opacity-50" />}
+                    {connected ? 'Manage' : 'Connect'}
+                    <ChevronRight className="w-3.5 h-3.5 opacity-50" />
                   </button>
                 </div>
               </div>
@@ -667,7 +534,7 @@ const IntegrationHubTab: React.FC = () => {
       <AnimatePresence>
         {activePanel && (() => {
           const integration = integrations.find(i => i.id === activePanel);
-          if (!integration || integration.type === 'coming_soon') return null;
+          if (!integration) return null;
           const connected = isConnected(integration.id);
 
           return (

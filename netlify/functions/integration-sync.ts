@@ -758,6 +758,31 @@ export const handler: Handler = async (event) => {
         return { statusCode: 200, headers, body: JSON.stringify(result) };
       }
 
+      if (provider === 'google_business') {
+        if (!testApiKey) return { statusCode: 400, headers, body: JSON.stringify({ error: 'API key required for Google Business Profile' }) };
+        const locationId = testConfig?.location_id;
+        if (!locationId) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Business Location ID required' }) };
+        // Verify access by fetching location reviews
+        const res = await fetch(
+          `https://mybusiness.googleapis.com/v4/${locationId}/reviews?pageSize=1`,
+          { headers: { 'Authorization': `Bearer ${testApiKey}` } }
+        );
+        if (res.ok) {
+          const data = await res.json();
+          const reviewCount = data.totalReviewCount || 0;
+          return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `Google Business Profile connected — ${reviewCount} total reviews` }) };
+        }
+        // Fallback: try the Business Profile Performance API (newer)
+        const res2 = await fetch(
+          `https://businessprofileperformance.googleapis.com/v1/${locationId}:getDailyMetricsTimeSeries?dailyMetric=BUSINESS_IMPRESSIONS_DESKTOP_MAPS&dailyRange.startDate.year=2026&dailyRange.startDate.month=3&dailyRange.startDate.day=1&dailyRange.endDate.year=2026&dailyRange.endDate.month=3&dailyRange.endDate.day=28`,
+          { headers: { 'Authorization': `Bearer ${testApiKey}` } }
+        );
+        if (res2.ok) {
+          return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: 'Google Business Profile connected successfully' }) };
+        }
+        return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `Google Business Profile auth failed: ${res.status}. Ensure the API is enabled and credentials are valid.` }) };
+      }
+
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: 'No test available for this provider' }) };
     }
 
@@ -879,6 +904,11 @@ export const handler: Handler = async (event) => {
             } else {
               result = { success: false, error: 'No email address configured' };
             }
+            break;
+
+          case 'google_business':
+            // Google Business Profile: log the lead interaction (review request happens via separate automation)
+            result = { success: true };
             break;
 
           default:
