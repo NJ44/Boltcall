@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
-import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, FolderOpen, Building2, Star, Users, Pencil } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, FolderOpen, Building2, Users, Pencil } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
 
 import { FileUpload } from '@/components/ui/file-upload';
@@ -1780,7 +1780,7 @@ const KnowledgeBasePage: React.FC = () => {
 
       {/* Create Folder Modal */}
       <ModalShell
-        isOpen={showCreateFolderModal}
+        open={showCreateFolderModal}
         onClose={() => { setShowCreateFolderModal(false); setNewFolderName(''); }}
         title="Create New Folder"
       >

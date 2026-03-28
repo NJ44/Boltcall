@@ -87,7 +87,7 @@ const AgentsPage: React.FC = () => {
   const [showAgentDetailsModal, setShowAgentDetailsModal] = useState(false);
   const [selectedAgentForTest, setSelectedAgentForTest] = useState<Agent | null>(null);
   const [selectedAgentDetails, setSelectedAgentDetails] = useState<Agent | null>(null);
-  const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
+  const [_userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [kbFolders, setKbFolders] = useState<KbFolderOption[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [regeneratingAgentId, setRegeneratingAgentId] = useState<string | null>(null);

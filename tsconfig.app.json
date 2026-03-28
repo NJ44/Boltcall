@@ -34,6 +34,10 @@
   "exclude": [
     "src/components/ui/dotted-surface.tsx",
     "src/components/ui/fluid-blob.tsx",
-    "src/components/ui/splite.tsx"
+    "src/components/ui/splite.tsx",
+    "src/**/*.test.*",
+    "src/**/*.spec.*",
+    "src/**/__tests__/**",
+    "src/test/**"
   ]
 }
