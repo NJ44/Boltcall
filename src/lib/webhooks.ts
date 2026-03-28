@@ -28,6 +28,8 @@ export interface CreateAgentResponse {
   agentId?: string;
   agent_id?: string;
   knowledge_base_id?: string;
+  supabase_agent_id?: string;
+  kb_folder_id?: string;
   message?: string;
   cekura_test?: CekuraTestResult;
 }
@@ -73,6 +75,8 @@ export const createAgentAndKnowledgeBase = async (data: {
   agentType?: string;
   agentName?: string;
   transferNumber?: string;
+  voiceId?: string;
+  kbFolderId?: string;
 }): Promise<CreateAgentResponse> => {
   // Build rich knowledge base texts from business data
   const knowledgeBaseTexts = [
@@ -139,6 +143,14 @@ export const createAgentAndKnowledgeBase = async (data: {
       language: data.languages.includes('en') ? 'en-US' : data.languages[0] || 'en-US',
       knowledge_base_texts: knowledgeBaseTexts,
       prompt_config: promptConfig,
+      // Agent + KB folder params
+      user_id: data.clientId,
+      business_profile_id: data.businessProfileId,
+      agent_type: data.agentType || 'inbound',
+      agent_name: data.agentName,
+      voice_id: data.voiceId,
+      transfer_number: data.transferNumber,
+      kb_folder_id: data.kbFolderId || null,
     }),
   });
 
@@ -153,6 +165,8 @@ export const createAgentAndKnowledgeBase = async (data: {
     agentId: result.agent_id,
     agent_id: result.agent_id,
     knowledge_base_id: result.knowledge_base_id,
+    supabase_agent_id: result.supabase_agent_id,
+    kb_folder_id: result.kb_folder_id,
     message: `Agent created with ${result.prompt_used || 'professional'} prompt`,
     cekura_test: result.cekura_test,
   };

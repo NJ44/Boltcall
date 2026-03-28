@@ -169,6 +169,7 @@ export const handler: Handler = async (event) => {
           tags: tags || [],
           status: 'active',
           embedding: embedding ? JSON.stringify(embedding) : null,
+          kb_folder_id: body.kb_folder_id || null,
         })
         .select('id, title, category, tier')
         .single();
@@ -204,6 +205,7 @@ export const handler: Handler = async (event) => {
             tags: entry.tags || [],
             status: 'active',
             embedding: embedding ? JSON.stringify(embedding) : null,
+            kb_folder_id: body.kb_folder_id || entry.kb_folder_id || null,
           })
           .select('id, title, tier')
           .single();
@@ -215,19 +217,34 @@ export const handler: Handler = async (event) => {
     }
 
     // ─── GET_PROMPT_KB: Get Tier 1 entries formatted for prompt (XML document format) ─────
+    // Optional: pass agentId to scope to that agent's linked KB folders
     if (action === 'get_prompt_kb') {
-      const { userId } = body;
+      const { userId, agentId } = body;
       if (!userId) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
       }
 
-      const { data, error } = await supabase
+      let query = supabase
         .from('knowledge_base')
         .select('title, content, category')
         .eq('user_id', userId)
         .eq('tier', 'prompt')
-        .eq('status', 'active')
-        .order('category', { ascending: true });
+        .eq('status', 'active');
+
+      // If agentId provided, scope to that agent's folders
+      if (agentId) {
+        const { data: folderLinks } = await supabase
+          .from('agent_kb_folders')
+          .select('kb_folder_id')
+          .eq('agent_id', agentId);
+
+        if (folderLinks && folderLinks.length > 0) {
+          const folderIds = folderLinks.map(l => l.kb_folder_id);
+          query = query.in('kb_folder_id', folderIds);
+        }
+      }
+
+      const { data, error } = await query.order('category', { ascending: true });
 
       if (error) throw error;
 
@@ -263,16 +280,23 @@ A: ${content}
     }
 
     // ─── LIST: List all KB entries for a user ───────────────────────
+    // Optional: pass kb_folder_id to filter by folder
     if (action === 'list') {
-      const { userId } = body;
+      const { userId, kb_folder_id } = body;
       if (!userId) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
       }
 
-      const { data, error } = await supabase
+      let query = supabase
         .from('knowledge_base')
-        .select('id, title, content, category, tier, tags, status, usage_count, created_at, updated_at')
-        .eq('user_id', userId)
+        .select('id, title, content, category, tier, tags, status, usage_count, kb_folder_id, created_at, updated_at')
+        .eq('user_id', userId);
+
+      if (kb_folder_id) {
+        query = query.eq('kb_folder_id', kb_folder_id);
+      }
+
+      const { data, error } = await query
         .order('tier', { ascending: true })
         .order('category', { ascending: true });
 
@@ -328,7 +352,241 @@ A: ${content}
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, entry: data }) };
     }
 
-    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: search, add, add_batch, get_prompt_kb, list, delete, update' }) };
+    // ═══════════════════════════════════════════════════════════════
+    // KB FOLDER ACTIONS
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─── LIST_FOLDERS: Get all folders for a user with doc counts ──
+    if (action === 'list_folders') {
+      const { userId } = body;
+      if (!userId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
+      }
+
+      // Get folders
+      const { data: folders, error: fErr } = await supabase
+        .from('kb_folders')
+        .select('id, name, description, icon, is_default, created_at, updated_at')
+        .eq('user_id', userId)
+        .order('is_default', { ascending: false })
+        .order('name', { ascending: true });
+
+      if (fErr) throw fErr;
+
+      // Get doc counts per folder
+      const folderIds = (folders || []).map(f => f.id);
+      let docCounts: Record<string, number> = {};
+      if (folderIds.length > 0) {
+        const { data: counts } = await supabase
+          .from('knowledge_base')
+          .select('kb_folder_id')
+          .eq('user_id', userId)
+          .eq('status', 'active')
+          .in('kb_folder_id', folderIds);
+
+        if (counts) {
+          for (const row of counts) {
+            docCounts[row.kb_folder_id] = (docCounts[row.kb_folder_id] || 0) + 1;
+          }
+        }
+      }
+
+      // Get agent links per folder
+      let agentLinks: Record<string, Array<{ agent_id: string; agent_name: string }>> = {};
+      if (folderIds.length > 0) {
+        const { data: links } = await supabase
+          .from('agent_kb_folders')
+          .select('kb_folder_id, agent_id, agents(id, name)')
+          .in('kb_folder_id', folderIds);
+
+        if (links) {
+          for (const link of links) {
+            if (!agentLinks[link.kb_folder_id]) agentLinks[link.kb_folder_id] = [];
+            const agentData = link.agents as any;
+            agentLinks[link.kb_folder_id].push({
+              agent_id: link.agent_id,
+              agent_name: agentData?.name || 'Unknown',
+            });
+          }
+        }
+      }
+
+      const enriched = (folders || []).map(f => ({
+        ...f,
+        doc_count: docCounts[f.id] || 0,
+        agents: agentLinks[f.id] || [],
+      }));
+
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, folders: enriched }) };
+    }
+
+    // ─── CREATE_FOLDER: Create a new KB folder ────────────────────
+    if (action === 'create_folder') {
+      const { userId, name, description, icon } = body;
+      if (!userId || !name) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and name required' }) };
+      }
+
+      const profileId = await getProfileId(userId);
+      if (!profileId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'No business profile found' }) };
+      }
+
+      const { data, error } = await supabase
+        .from('kb_folders')
+        .insert({
+          business_profile_id: profileId,
+          user_id: userId,
+          name,
+          description: description || null,
+          icon: icon || 'folder',
+          is_default: false,
+        })
+        .select('id, name, description, icon, is_default')
+        .single();
+
+      if (error) throw error;
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, folder: data }) };
+    }
+
+    // ─── UPDATE_FOLDER: Update a KB folder ────────────────────────
+    if (action === 'update_folder') {
+      const { userId, folderId, name, description, icon } = body;
+      if (!userId || !folderId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and folderId required' }) };
+      }
+
+      const updates: any = { updated_at: new Date().toISOString() };
+      if (name) updates.name = name;
+      if (description !== undefined) updates.description = description;
+      if (icon) updates.icon = icon;
+
+      const { data, error } = await supabase
+        .from('kb_folders')
+        .update(updates)
+        .eq('id', folderId)
+        .eq('user_id', userId)
+        .select('id, name, description, icon')
+        .single();
+
+      if (error) throw error;
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, folder: data }) };
+    }
+
+    // ─── DELETE_FOLDER: Delete a KB folder ────────────────────────
+    if (action === 'delete_folder') {
+      const { userId, folderId, deleteDocs } = body;
+      if (!userId || !folderId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and folderId required' }) };
+      }
+
+      // Don't allow deleting the default folder
+      const { data: folder } = await supabase
+        .from('kb_folders')
+        .select('is_default')
+        .eq('id', folderId)
+        .eq('user_id', userId)
+        .single();
+
+      if (folder?.is_default) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Cannot delete the default Business Profile folder' }) };
+      }
+
+      if (deleteDocs) {
+        // Delete all docs in the folder
+        await supabase
+          .from('knowledge_base')
+          .delete()
+          .eq('kb_folder_id', folderId)
+          .eq('user_id', userId);
+      } else {
+        // Orphan docs (set kb_folder_id to null)
+        await supabase
+          .from('knowledge_base')
+          .update({ kb_folder_id: null })
+          .eq('kb_folder_id', folderId)
+          .eq('user_id', userId);
+      }
+
+      // Delete folder (cascades to agent_kb_folders)
+      const { error } = await supabase
+        .from('kb_folders')
+        .delete()
+        .eq('id', folderId)
+        .eq('user_id', userId);
+
+      if (error) throw error;
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+    }
+
+    // ─── MOVE_DOCS: Move docs between folders ─────────────────────
+    if (action === 'move_docs') {
+      const { userId, docIds, targetFolderId } = body;
+      if (!userId || !docIds?.length) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId and docIds required' }) };
+      }
+
+      const { error } = await supabase
+        .from('knowledge_base')
+        .update({ kb_folder_id: targetFolderId || null })
+        .eq('user_id', userId)
+        .in('id', docIds);
+
+      if (error) throw error;
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, moved: docIds.length }) };
+    }
+
+    // ─── LINK_AGENT_FOLDER: Link an agent to a KB folder ──────────
+    if (action === 'link_agent_folder') {
+      const { agentId, kbFolderId } = body;
+      if (!agentId || !kbFolderId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'agentId and kbFolderId required' }) };
+      }
+
+      const { error } = await supabase
+        .from('agent_kb_folders')
+        .upsert({ agent_id: agentId, kb_folder_id: kbFolderId }, { onConflict: 'agent_id,kb_folder_id' });
+
+      if (error) throw error;
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+    }
+
+    // ─── UNLINK_AGENT_FOLDER: Unlink an agent from a KB folder ────
+    if (action === 'unlink_agent_folder') {
+      const { agentId, kbFolderId } = body;
+      if (!agentId || !kbFolderId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'agentId and kbFolderId required' }) };
+      }
+
+      const { error } = await supabase
+        .from('agent_kb_folders')
+        .delete()
+        .eq('agent_id', agentId)
+        .eq('kb_folder_id', kbFolderId);
+
+      if (error) throw error;
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+    }
+
+    // ─── GET_AGENT_FOLDERS: Get KB folders linked to an agent ──────
+    if (action === 'get_agent_folders') {
+      const { agentId } = body;
+      if (!agentId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'agentId required' }) };
+      }
+
+      const { data, error } = await supabase
+        .from('agent_kb_folders')
+        .select('kb_folder_id, kb_folders(id, name, description, icon, is_default)')
+        .eq('agent_id', agentId);
+
+      if (error) throw error;
+
+      const folders = (data || []).map(d => d.kb_folders).filter(Boolean);
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, folders }) };
+    }
+
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: search, add, add_batch, get_prompt_kb, list, delete, update, list_folders, create_folder, update_folder, delete_folder, move_docs, link_agent_folder, unlink_agent_folder, get_agent_folders' }) };
 
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : (typeof err === 'object' ? JSON.stringify(err) : String(err));

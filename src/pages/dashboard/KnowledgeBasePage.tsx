@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
-import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, FolderOpen, Building2, Star, Users, Pencil } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
 
 import { FileUpload } from '@/components/ui/file-upload';
@@ -12,6 +12,20 @@ import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import { CheckCircle2, Circle, Sparkles, ArrowRight } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
+
+const FUNCTIONS_BASE_KB = import.meta.env.DEV
+  ? 'http://localhost:8888/.netlify/functions'
+  : '/.netlify/functions';
+
+interface KbFolder {
+  id: string;
+  name: string;
+  description: string | null;
+  icon: string;
+  is_default: boolean;
+  doc_count: number;
+  agents: Array<{ agent_id: string; agent_name: string }>;
+}
 
 const FUNCTIONS_BASE = import.meta.env.DEV
   ? 'http://localhost:8888/.netlify/functions'
@@ -88,6 +102,92 @@ const KnowledgeBasePage: React.FC = () => {
   const [showDocumentEditor, setShowDocumentEditor] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [businessProfileId, setBusinessProfileId] = useState<string | null>(null);
+
+  // KB Folders state
+  const [folders, setFolders] = useState<KbFolder[]>([]);
+  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+  const [showCreateFolderModal, setShowCreateFolderModal] = useState(false);
+  const [newFolderName, setNewFolderName] = useState('');
+  const [renamingFolderId, setRenamingFolderId] = useState<string | null>(null);
+  const [renamingFolderName, setRenamingFolderName] = useState('');
+
+  // Fetch KB folders
+  const fetchFolders = useCallback(async () => {
+    if (!user?.id) return;
+    try {
+      const res = await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'list_folders', userId: user.id }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setFolders(data.folders || []);
+        // Auto-select default folder if none selected
+        if (!selectedFolderId && data.folders?.length > 0) {
+          const defaultFolder = data.folders.find((f: KbFolder) => f.is_default);
+          setSelectedFolderId(defaultFolder?.id || data.folders[0].id);
+        }
+      }
+    } catch (err) {
+      console.error('Error fetching folders:', err);
+    }
+  }, [user?.id, selectedFolderId]);
+
+  const handleCreateFolder = async () => {
+    if (!newFolderName.trim() || !user?.id) return;
+    try {
+      const res = await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_folder', userId: user.id, name: newFolderName.trim() }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        showToast({ title: 'Folder created', message: `"${newFolderName}" is ready`, variant: 'success', duration: 3000 });
+        setNewFolderName('');
+        setShowCreateFolderModal(false);
+        await fetchFolders();
+        setSelectedFolderId(data.folder?.id || null);
+      }
+    } catch (err) {
+      showToast({ title: 'Error', message: 'Failed to create folder', variant: 'error', duration: 3000 });
+    }
+  };
+
+  const handleRenameFolder = async (folderId: string, name: string) => {
+    if (!name.trim() || !user?.id) return;
+    try {
+      await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'update_folder', userId: user.id, folderId, name: name.trim() }),
+      });
+      setRenamingFolderId(null);
+      fetchFolders();
+    } catch (err) {
+      showToast({ title: 'Error', message: 'Failed to rename folder', variant: 'error', duration: 3000 });
+    }
+  };
+
+  const handleDeleteFolder = async (folderId: string) => {
+    if (!user?.id) return;
+    try {
+      await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete_folder', userId: user.id, folderId, deleteDocs: false }),
+      });
+      showToast({ title: 'Folder deleted', message: 'Documents moved to unassigned', variant: 'success', duration: 3000 });
+      if (selectedFolderId === folderId) setSelectedFolderId(null);
+      fetchFolders();
+      fetchDocuments();
+    } catch (err) {
+      showToast({ title: 'Error', message: 'Failed to delete folder', variant: 'error', duration: 3000 });
+    }
+  };
+
+  const selectedFolder = folders.find(f => f.id === selectedFolderId) || null;
 
   // KB Completeness state
   const [kbCompleteness, setKbCompleteness] = useState<{
@@ -223,6 +323,7 @@ const KnowledgeBasePage: React.FC = () => {
           tags: entry.tags,
           status: 'active',
           priority: 3,
+          kb_folder_id: selectedFolderId || null,
         });
       }
 
@@ -258,7 +359,7 @@ const KnowledgeBasePage: React.FC = () => {
     };
   }, []);
   
-  // Fetch documents from Supabase
+  // Fetch documents from Supabase (filtered by selected folder)
   const fetchDocuments = async () => {
     if (!user?.id) {
       setIsLoading(false);
@@ -267,11 +368,16 @@ const KnowledgeBasePage: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const { data, error } = await supabase
+      let query = supabase
         .from('knowledge_base')
         .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+        .eq('user_id', user.id);
+
+      if (selectedFolderId) {
+        query = query.eq('kb_folder_id', selectedFolderId);
+      }
+
+      const { data, error } = await query.order('created_at', { ascending: false });
 
       if (error) {
         console.error('Error fetching documents:', error);
@@ -418,11 +524,18 @@ const KnowledgeBasePage: React.FC = () => {
   };
 
   useEffect(() => {
+    fetchFolders();
     fetchDocuments();
     fetchCompleteness();
     fetchBusinessProfileId();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
+
+  // Refetch documents when folder selection changes
+  useEffect(() => {
+    fetchDocuments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFolderId]);
 
   // New Knowledge Base handlers
   const handleCloseNewKnowledgeBase = () => {
@@ -484,7 +597,19 @@ const KnowledgeBasePage: React.FC = () => {
     }
 
     try {
-      showToast({ title: 'Saving...', message: 'Processing documents...', variant: 'default', duration: 10000 });
+      showToast({ title: 'Saving...', message: 'Creating folder & processing documents...', variant: 'default', duration: 10000 });
+
+      // Create a KB folder first
+      const folderRes = await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_folder', userId: user.id, name: knowledgeBaseName.trim() }),
+      });
+      let newFolderId: string | null = null;
+      if (folderRes.ok) {
+        const folderData = await folderRes.json();
+        newFolderId = folderData.folder?.id || null;
+      }
 
       // Process each document - scrape URLs and read files
       const documentsToInsert = await Promise.all(kbDocuments.map(async (doc) => {
@@ -520,6 +645,7 @@ const KnowledgeBasePage: React.FC = () => {
           content_type: doc.type === 'file' ? 'file' : 'text',
           status: 'active',
           tags: [knowledgeBaseName.trim()],
+          kb_folder_id: newFolderId,
           source: doc.type === 'url' ? doc.url : doc.type === 'file' ? doc.file?.name : 'manual'
         };
       }));
@@ -562,6 +688,7 @@ const KnowledgeBasePage: React.FC = () => {
       }
 
       handleCloseNewKnowledgeBase();
+      fetchFolders();
       fetchDocuments();
       syncToRetell();
     } catch (error) {
@@ -621,7 +748,8 @@ const KnowledgeBasePage: React.FC = () => {
           content,
           content_type: 'text',
           status: 'active',
-          source: urlInput
+          source: urlInput,
+          kb_folder_id: selectedFolderId || null,
         }])
         .select()
         .single();
@@ -696,7 +824,8 @@ const KnowledgeBasePage: React.FC = () => {
           content,
           content_type: 'file',
           status: 'active',
-          source: fileInput.name
+          source: fileInput.name,
+          kb_folder_id: selectedFolderId || null,
         }])
         .select()
         .single();
@@ -764,7 +893,8 @@ const KnowledgeBasePage: React.FC = () => {
           title: blankPageTitle.trim(),
           content: '',
           content_type: 'text',
-          status: 'draft'
+          status: 'draft',
+          kb_folder_id: selectedFolderId || null,
         }])
         .select()
         .single();
@@ -896,7 +1026,150 @@ const KnowledgeBasePage: React.FC = () => {
   }
 
   return (
-    <div className="space-y-4 md:space-y-6 px-1 md:px-0">
+    <div className="flex gap-6 px-1 md:px-0">
+      {/* ─── FOLDER SIDEBAR ─── */}
+      <div className="w-56 flex-shrink-0 hidden lg:block">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sticky top-24">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-900">Folders</h3>
+            <button
+              onClick={() => setShowCreateFolderModal(true)}
+              className="p-1 rounded-md hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors"
+              title="New folder"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* All Documents option */}
+          <button
+            onClick={() => setSelectedFolderId(null)}
+            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors mb-1 ${
+              !selectedFolderId ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <FileText className="w-4 h-4 flex-shrink-0" />
+            <span className="truncate">All Documents</span>
+          </button>
+
+          {/* Folder list */}
+          <div className="space-y-0.5">
+            {folders.map((folder) => (
+              <div key={folder.id} className="group relative">
+                {renamingFolderId === folder.id ? (
+                  <div className="flex items-center gap-1 px-2 py-1">
+                    <input
+                      type="text"
+                      value={renamingFolderName}
+                      onChange={(e) => setRenamingFolderName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleRenameFolder(folder.id, renamingFolderName);
+                        if (e.key === 'Escape') setRenamingFolderId(null);
+                      }}
+                      onBlur={() => handleRenameFolder(folder.id, renamingFolderName)}
+                      className="flex-1 text-sm border rounded px-1.5 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-400 min-w-0"
+                      autoFocus
+                    />
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setSelectedFolderId(folder.id)}
+                    className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+                      selectedFolderId === folder.id
+                        ? 'bg-blue-50 text-blue-700 font-medium'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    {folder.is_default ? (
+                      <Building2 className="w-4 h-4 flex-shrink-0" />
+                    ) : (
+                      <FolderOpen className="w-4 h-4 flex-shrink-0" />
+                    )}
+                    <span className="truncate flex-1 text-left">{folder.name}</span>
+                    <span className="text-xs text-gray-400 flex-shrink-0">{folder.doc_count}</span>
+
+                    {/* Edit/delete actions on hover */}
+                    {!folder.is_default && (
+                      <div className="hidden group-hover:flex items-center gap-0.5 flex-shrink-0">
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRenamingFolderId(folder.id);
+                            setRenamingFolderName(folder.name);
+                          }}
+                          className="p-0.5 rounded hover:bg-gray-200"
+                        >
+                          <Pencil className="w-3 h-3" />
+                        </span>
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (confirm(`Delete "${folder.name}"? Documents will be moved to unassigned.`)) {
+                              handleDeleteFolder(folder.id);
+                            }
+                          }}
+                          className="p-0.5 rounded hover:bg-red-100 text-red-500"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </span>
+                      </div>
+                    )}
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {folders.length === 0 && (
+            <p className="text-xs text-gray-400 text-center py-3">No folders yet</p>
+          )}
+
+          {/* Agents using selected folder */}
+          {selectedFolder && selectedFolder.agents.length > 0 && (
+            <div className="mt-4 pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-1.5 mb-2">
+                <Users className="w-3.5 h-3.5 text-gray-400" />
+                <span className="text-xs font-medium text-gray-500">Connected Agents</span>
+              </div>
+              <div className="space-y-1">
+                {selectedFolder.agents.map((a) => (
+                  <div key={a.agent_id} className="text-xs text-gray-600 flex items-center gap-1.5 pl-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
+                    {a.agent_name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ─── MAIN CONTENT ─── */}
+      <div className="flex-1 min-w-0 space-y-4 md:space-y-6">
+
+      {/* Mobile folder selector */}
+      <div className="lg:hidden bg-white rounded-xl shadow-sm border border-gray-100 p-3">
+        <div className="flex items-center gap-2">
+          <FolderOpen className="w-4 h-4 text-gray-500" />
+          <select
+            value={selectedFolderId || ''}
+            onChange={(e) => setSelectedFolderId(e.target.value || null)}
+            className="flex-1 text-sm border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="">All Documents</option>
+            {folders.map((f) => (
+              <option key={f.id} value={f.id}>{f.name} ({f.doc_count})</option>
+            ))}
+          </select>
+          <button
+            onClick={() => setShowCreateFolderModal(true)}
+            className="p-1.5 rounded-lg border hover:bg-gray-50"
+          >
+            <Plus className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
       {/* KB Completeness Banner */}
       {kbCompleteness.score < 100 && (
         <motion.div
@@ -1504,6 +1777,45 @@ const KnowledgeBasePage: React.FC = () => {
           );
         })()}
       </ModalShell>
+
+      {/* Create Folder Modal */}
+      <ModalShell
+        isOpen={showCreateFolderModal}
+        onClose={() => { setShowCreateFolderModal(false); setNewFolderName(''); }}
+        title="Create New Folder"
+      >
+        <div className="space-y-4 p-2">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Folder Name</label>
+            <input
+              type="text"
+              value={newFolderName}
+              onChange={(e) => setNewFolderName(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleCreateFolder(); }}
+              placeholder="e.g. Product Catalog, HR Policies..."
+              className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900"
+              autoFocus
+            />
+          </div>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => { setShowCreateFolderModal(false); setNewFolderName(''); }}
+              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreateFolder}
+              disabled={!newFolderName.trim()}
+              className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50"
+            >
+              Create Folder
+            </button>
+          </div>
+        </div>
+      </ModalShell>
+
+      </div>{/* close main content */}
     </div>
   );
 };

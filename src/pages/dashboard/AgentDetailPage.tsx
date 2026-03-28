@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Phone, PhoneForwarded, Save, Loader2 } from 'lucide-react';
+import { ArrowLeft, Phone, PhoneForwarded, Save, Loader2, FolderOpen } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -56,6 +56,50 @@ const AgentDetailPage: React.FC = () => {
   const [voiceId, setVoiceId] = useState('');
   const [transferPhone, setTransferPhone] = useState('');
 
+  // KB Folders state
+  const [agentFolders, setAgentFolders] = useState<Array<{ id: string; name: string; is_default: boolean }>>([]);
+  const [allFolders, setAllFolders] = useState<Array<{ id: string; name: string; is_default: boolean }>>([]);
+  const [foldersLoading, setFoldersLoading] = useState(false);
+
+  const FUNC_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
+
+  const fetchAgentFolders = useCallback(async () => {
+    if (!agentId) return;
+    setFoldersLoading(true);
+    try {
+      const res = await fetch(`${FUNC_BASE}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'get_agent_folders', agentId }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAgentFolders(data.folders || []);
+      }
+    } catch (err) {
+      console.error('Error fetching agent folders:', err);
+    } finally {
+      setFoldersLoading(false);
+    }
+  }, [agentId, FUNC_BASE]);
+
+  const fetchAllFolders = useCallback(async () => {
+    if (!user?.id) return;
+    try {
+      const res = await fetch(`${FUNC_BASE}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'list_folders', userId: user.id }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAllFolders((data.folders || []).map((f: any) => ({ id: f.id, name: f.name, is_default: f.is_default })));
+      }
+    } catch (err) {
+      console.error('Error fetching all folders:', err);
+    }
+  }, [user?.id, FUNC_BASE]);
+
   // Load agent data
   useEffect(() => {
     const fetchAgent = async () => {
@@ -90,6 +134,12 @@ const AgentDetailPage: React.FC = () => {
 
     fetchAgent();
   }, [user?.id, agentId]);
+
+  // Load KB folders
+  useEffect(() => {
+    fetchAgentFolders();
+    fetchAllFolders();
+  }, [fetchAgentFolders, fetchAllFolders]);
 
   // Load recent calls
   useEffect(() => {
@@ -292,6 +342,72 @@ const AgentDetailPage: React.FC = () => {
           className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="+1 (555) 123-4567"
         />
+      </motion.div>
+
+      {/* Knowledge Base Folders */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.28 }}
+        className="bg-white dark:bg-[#111114] border border-gray-200 dark:border-[#1e1e24] rounded-xl p-5"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Knowledge Base Folders</h3>
+            <p className="text-xs text-gray-500 mt-0.5">Which folders does this agent have access to?</p>
+          </div>
+        </div>
+        {agentFolders.length === 0 && !foldersLoading ? (
+          <p className="text-sm text-gray-400 py-2">No folders linked. Agent has no KB access.</p>
+        ) : foldersLoading ? (
+          <div className="flex items-center gap-2 py-2">
+            <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+            <span className="text-sm text-gray-500">Loading folders...</span>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {allFolders.map((folder) => {
+              const isLinked = agentFolders.some(af => af.id === folder.id);
+              return (
+                <label
+                  key={folder.id}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg border cursor-pointer transition-colors ${
+                    isLinked
+                      ? 'border-blue-200 bg-blue-50/50 dark:bg-blue-950/20'
+                      : 'border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-900'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isLinked}
+                    onChange={async () => {
+                      const FUNC = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
+                      if (isLinked) {
+                        await fetch(`${FUNC}/kb-search`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ action: 'unlink_agent_folder', agentId: agent.id, kbFolderId: folder.id }),
+                        });
+                      } else {
+                        await fetch(`${FUNC}/kb-search`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ action: 'link_agent_folder', agentId: agent.id, kbFolderId: folder.id }),
+                        });
+                      }
+                      fetchAgentFolders();
+                    }}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white flex-1">{folder.name}</span>
+                  {folder.is_default && (
+                    <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">Default</span>
+                  )}
+                </label>
+              );
+            })}
+          </div>
+        )}
       </motion.div>
 
       {/* Test Agent */}

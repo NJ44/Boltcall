@@ -1,5 +1,13 @@
 import { Handler } from '@netlify/functions';
 import Retell from 'retell-sdk';
+import { createClient } from '@supabase/supabase-js';
+
+function getSupabaseAdmin() {
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -561,6 +569,93 @@ export const handler: Handler = async (event) => {
           cekuraSetup = { success: false, error: testErr instanceof Error ? testErr.message : 'Cekura setup failed' };
         }
 
+        // Step 6: Save agent to Supabase agents table + create/link KB folder
+        let supabaseAgentId: string | null = null;
+        let kbFolderId: string | null = body.kb_folder_id || null;
+
+        const sb = getSupabaseAdmin();
+        if (sb && body.user_id) {
+          try {
+            // 6a: Insert agent row into Supabase
+            const agentDirection = (body.agent_type || 'inbound').startsWith('outbound') ? 'outbound' : 'inbound';
+            const agentName = body.agent_name || `${body.business_name} AI Receptionist`;
+            const { data: agentRow, error: agentErr } = await sb
+              .from('agents')
+              .insert({
+                user_id: body.user_id,
+                business_profile_id: body.business_profile_id || null,
+                name: agentName,
+                description: body.agent_type === 'inbound'
+                  ? 'Answers incoming calls — booking, FAQs, transfers'
+                  : `Outbound agent — ${body.agent_type || 'speed to lead'}`,
+                agent_type: 'ai_receptionist',
+                status: 'active',
+                voice_id: agent.voice_id || body.voice_id || null,
+                language: body.language || 'en',
+                retell_agent_id: agent.agent_id,
+              })
+              .select('id')
+              .single();
+
+            if (agentErr) {
+              console.error('[retell-agents] Supabase agent insert failed:', agentErr);
+            } else {
+              supabaseAgentId = agentRow.id;
+              console.log(`[retell-agents] Saved agent to Supabase: ${supabaseAgentId}`);
+            }
+
+            // 6b: Create "Business Profile" KB folder (or reuse if kb_folder_id passed)
+            if (!kbFolderId && body.business_profile_id) {
+              const { data: folderRow, error: folderErr } = await sb
+                .from('kb_folders')
+                .insert({
+                  business_profile_id: body.business_profile_id,
+                  user_id: body.user_id,
+                  name: 'Business Profile',
+                  description: 'Your core business information, services, FAQs, and policies',
+                  icon: 'building',
+                  is_default: true,
+                })
+                .select('id')
+                .single();
+
+              if (folderErr) {
+                console.error('[retell-agents] KB folder creation failed:', folderErr);
+              } else {
+                kbFolderId = folderRow.id;
+                console.log(`[retell-agents] Created KB folder: ${kbFolderId}`);
+              }
+            }
+
+            // 6c: Assign KB docs to the folder
+            if (kbFolderId) {
+              const { error: updateErr } = await sb
+                .from('knowledge_base')
+                .update({ kb_folder_id: kbFolderId })
+                .eq('user_id', body.user_id)
+                .is('kb_folder_id', null);
+
+              if (updateErr) {
+                console.error('[retell-agents] KB doc folder assignment failed:', updateErr);
+              }
+            }
+
+            // 6d: Link agent to KB folder
+            if (supabaseAgentId && kbFolderId) {
+              const { error: linkErr } = await sb
+                .from('agent_kb_folders')
+                .insert({ agent_id: supabaseAgentId, kb_folder_id: kbFolderId })
+                .select();
+
+              if (linkErr) {
+                console.error('[retell-agents] Agent-folder link failed:', linkErr);
+              }
+            }
+          } catch (dbErr) {
+            console.error('[retell-agents] Supabase operations failed:', dbErr);
+          }
+        }
+
         return {
           statusCode: 200,
           headers,
@@ -568,6 +663,8 @@ export const handler: Handler = async (event) => {
             success: true,
             knowledge_base_id: supabaseKbId || null,
             agent_id: agent.agent_id,
+            supabase_agent_id: supabaseAgentId,
+            kb_folder_id: kbFolderId,
             agent,
             prompt_used: body.prompt_config ? 'professional' : body.general_prompt ? 'custom' : 'legacy',
             cekura_setup: cekuraSetup,

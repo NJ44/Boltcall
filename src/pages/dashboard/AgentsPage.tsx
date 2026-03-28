@@ -34,6 +34,7 @@ interface CreateAgentForm {
   name: string;
   voice: string;
   knowledgeBase: string;
+  kbFolderIds: string[];
   phoneNumber: string;
   humanTransferPhone: string;
   direction: 'inbound' | 'outbound';
@@ -43,6 +44,13 @@ interface CreateAgentForm {
 interface KnowledgeBase {
   id: string;
   name: string;
+}
+
+interface KbFolderOption {
+  id: string;
+  name: string;
+  is_default: boolean;
+  doc_count: number;
 }
 
 interface PhoneNumber {
@@ -80,6 +88,7 @@ const AgentsPage: React.FC = () => {
   const [selectedAgentForTest, setSelectedAgentForTest] = useState<Agent | null>(null);
   const [selectedAgentDetails, setSelectedAgentDetails] = useState<Agent | null>(null);
   const [userKnowledgeBases, setUserKnowledgeBases] = useState<KnowledgeBase[]>([]);
+  const [kbFolders, setKbFolders] = useState<KbFolderOption[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [regeneratingAgentId, setRegeneratingAgentId] = useState<string | null>(null);
   const [talkToAgent, setTalkToAgent] = useState<Agent | null>(null);
@@ -88,6 +97,7 @@ const AgentsPage: React.FC = () => {
     name: '',
     voice: '',
     knowledgeBase: '',
+    kbFolderIds: [],
     phoneNumber: '',
     humanTransferPhone: '',
     direction: 'inbound',
@@ -238,6 +248,7 @@ const AgentsPage: React.FC = () => {
       name: '',
       voice: '',
       knowledgeBase: '',
+      kbFolderIds: [],
       phoneNumber: '',
       humanTransferPhone: '',
       direction: 'inbound',
@@ -289,6 +300,19 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
         console.error('Error creating agent:', error);
         showToast({ title: 'Error', message: 'Failed to create agent. Please try again.', variant: 'error', duration: 4000 });
         return;
+      }
+
+      // Link agent to default KB folder(s)
+      try {
+        const defaultFolder = kbFolders.find(f => f.is_default);
+        if (defaultFolder && newAgent?.id) {
+          await supabase.from('agent_kb_folders').insert({
+            agent_id: newAgent.id,
+            kb_folder_id: defaultFolder.id,
+          });
+        }
+      } catch (linkErr) {
+        console.warn('Could not link KB folder:', linkErr);
       }
 
       // Fetch the created agent with all details
@@ -517,6 +541,31 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
     };
 
     fetchKnowledgeBases();
+
+    // Also fetch KB folders
+    const fetchKbFolders = async () => {
+      if (!user?.id) return;
+      try {
+        const FUNC_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
+        const res = await fetch(`${FUNC_BASE}/kb-search`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'list_folders', userId: user.id }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setKbFolders((data.folders || []).map((f: any) => ({
+            id: f.id,
+            name: f.name,
+            is_default: f.is_default,
+            doc_count: f.doc_count || 0,
+          })));
+        }
+      } catch (err) {
+        console.error('Error fetching KB folders:', err);
+      }
+    };
+    fetchKbFolders();
   }, [user?.id]);
 
   // Fetch user's phone numbers
@@ -801,23 +850,37 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             />
           </div>
 
-          {/* Knowledge Base Choice */}
+          {/* KB Folders */}
           <div>
             <label className="block text-sm font-medium text-zinc-700 mb-2">
-              Knowledge Base *
+              Knowledge Base Folders
             </label>
-            <select
-              value={createForm.knowledgeBase}
-              onChange={(e) => handleInputChange('knowledgeBase', e.target.value)}
-              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-zinc-900"
-            >
-              <option value="" className="text-zinc-900">Select knowledge base</option>
-              {userKnowledgeBases.map((kb) => (
-                <option key={kb.id} value={kb.id} className="text-zinc-900">
-                  {kb.name}
-                </option>
-              ))}
-            </select>
+            {kbFolders.length === 0 ? (
+              <p className="text-sm text-zinc-500">No KB folders yet. Create one in the Knowledge Base page.</p>
+            ) : (
+              <div className="space-y-2 max-h-40 overflow-y-auto border border-zinc-200 rounded-lg p-2">
+                {kbFolders.map((folder) => (
+                  <label key={folder.id} className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-zinc-50 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={createForm.kbFolderIds.includes(folder.id)}
+                      onChange={(e) => {
+                        const ids = e.target.checked
+                          ? [...createForm.kbFolderIds, folder.id]
+                          : createForm.kbFolderIds.filter(id => id !== folder.id);
+                        setCreateForm(prev => ({ ...prev, kbFolderIds: ids }));
+                      }}
+                      className="rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-zinc-900 flex-1">{folder.name}</span>
+                    <span className="text-xs text-zinc-400">{folder.doc_count} docs</span>
+                    {folder.is_default && (
+                      <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">Default</span>
+                    )}
+                  </label>
+                ))}
+              </div>
+            )}
             <p className="text-sm text-blue-600 mt-2">
               <a
                 href="/dashboard/knowledge-base"
@@ -825,7 +888,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 rel="noopener noreferrer"
                 className="hover:text-blue-800 underline"
               >
-                Create a new knowledge base
+                Manage knowledge base folders
               </a>
             </p>
           </div>
