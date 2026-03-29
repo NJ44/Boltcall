@@ -11,9 +11,18 @@ function getServiceClient() {
 }
 
 /**
+ * Build a deterministic thread ID from two phone numbers.
+ * Sorted so the same pair always produces the same thread ID.
+ */
+function buildThreadId(phone1: string, phone2: string): string {
+  const sorted = [phone1, phone2].sort();
+  return `${sorted[0]}_${sorted[1]}`;
+}
+
+/**
  * Twilio Inbound SMS Webhook
- * Receives incoming SMS messages from Twilio and stores them in sms_conversations.
- * Configure this URL as the SMS webhook on your Twilio phone numbers.
+ * Receives incoming SMS messages from Twilio, stores them in sms_conversations,
+ * handles appointment confirmations/cancellations, and triggers AI auto-reply.
  * URL: /.netlify/functions/twilio-inbound-sms
  */
 export const handler: Handler = async (event) => {
@@ -64,8 +73,11 @@ export const handler: Handler = async (event) => {
       if (mediaUrl) mediaUrls.push(mediaUrl);
     }
 
+    // Build thread ID for conversation grouping
+    const threadId = buildThreadId(from, to);
+
     // Store the inbound message
-    const { error: insertError } = await supabase
+    const { data: insertedMsg, error: insertError } = await supabase
       .from('sms_conversations')
       .insert({
         user_id: userId,
@@ -77,7 +89,10 @@ export const handler: Handler = async (event) => {
         twilio_sid: messageSid,
         media_urls: mediaUrls.length > 0 ? mediaUrls : null,
         status: 'received',
-      });
+        thread_id: threadId,
+      })
+      .select('id')
+      .single();
 
     if (insertError) {
       console.error('[twilio-inbound-sms] Failed to store message:', insertError);
@@ -85,7 +100,6 @@ export const handler: Handler = async (event) => {
     }
 
     // Check if this is a reply to a scheduled message (appointment confirmation, etc.)
-    // Look for keywords that indicate confirmation or cancellation
     const lowerBody = body.toLowerCase().trim();
     const isConfirm = /^(yes|confirm|ok|y|sure|1)$/i.test(lowerBody);
     const isCancel = /^(no|cancel|n|stop|2)$/i.test(lowerBody);
@@ -117,7 +131,38 @@ export const handler: Handler = async (event) => {
       }
     }
 
-    // Return TwiML acknowledgment (no auto-reply for now)
+    // ─── Trigger AI Auto-Reply ────────────────────────────────────
+    // Fire-and-forget: call the SMS AI responder asynchronously.
+    // We don't await this because Twilio requires a fast TwiML response.
+    if (userId && insertedMsg?.id) {
+      // Check if SMS AI is enabled for this user
+      const { data: smsSettings } = await supabase
+        .from('sms_settings')
+        .select('is_enabled')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (smsSettings?.is_enabled !== false) {
+        // Determine the base URL for the AI responder function
+        const siteUrl = process.env.URL || process.env.DEPLOY_URL || '';
+        if (siteUrl) {
+          // Fire-and-forget — don't await, don't block TwiML response
+          fetch(`${siteUrl}/.netlify/functions/sms-ai-responder`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              messageId: insertedMsg.id,
+              userId,
+              action: 'generate',
+            }),
+          }).catch(err => {
+            console.error('[twilio-inbound-sms] Failed to trigger AI responder:', err);
+          });
+        }
+      }
+    }
+
+    // Return TwiML acknowledgment (AI reply is sent separately via Twilio REST API)
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'text/xml' },

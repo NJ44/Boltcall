@@ -98,6 +98,134 @@ export async function getSmsHistory(params?: {
   return response.json();
 }
 
+// === SMS AI Responder ===
+
+export interface SmsAiResponse {
+  success: boolean;
+  draftStatus?: string;
+  reply?: string;
+  qualification?: {
+    intent: string;
+    score: number;
+    reason: string;
+    suggested_action: string;
+    booking_intent?: boolean;
+    suggested_slot?: string;
+    service_requested?: string;
+  };
+  booking?: {
+    wants_to_book: boolean;
+    suggested_slot: string | null;
+    service_requested: string | null;
+  } | null;
+  messageId?: string;
+  threadId?: string;
+  message?: string;
+  skipped?: boolean;
+  status?: string;
+}
+
+/**
+ * Generate an AI response for an inbound SMS message
+ */
+export async function generateSmsAiReply(
+  messageId: string,
+  userId: string,
+  action: 'generate' | 'regenerate' = 'generate'
+): Promise<SmsAiResponse> {
+  const response = await fetch(`${FUNCTIONS_BASE}/sms-ai-responder`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messageId, userId, action }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error || `AI responder failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Approve an AI-generated SMS draft and send it
+ */
+export async function approveSmsAiDraft(messageId: string, userId: string): Promise<{ success: boolean; sid?: string }> {
+  const response = await fetch(`${FUNCTIONS_BASE}/sms-ai-responder`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messageId, userId, action: 'approve' }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error || `Approve failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Reject an AI-generated SMS draft
+ */
+export async function rejectSmsAiDraft(messageId: string, userId: string): Promise<{ success: boolean }> {
+  const response = await fetch(`${FUNCTIONS_BASE}/sms-ai-responder`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messageId, userId, action: 'reject' }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error || `Reject failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Enroll a contact in a follow-up SMS sequence
+ */
+export async function enrollInSequence(params: {
+  sequenceId: string;
+  contactPhone: string;
+  contactName?: string;
+  contactEmail?: string;
+  userId: string;
+  leadId?: string;
+}): Promise<{ success: boolean; enrollmentId?: string; nextStepAt?: string }> {
+  const response = await fetch(`${FUNCTIONS_BASE}/sms-sequence-processor`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'enroll', ...params }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error || `Enroll failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Manually trigger sequence processing
+ */
+export async function processSequences(): Promise<{ processed: number; failed: number }> {
+  const response = await fetch(`${FUNCTIONS_BASE}/sms-sequence-processor`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'process' }),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error || `Process failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
 // === Phone Numbers ===
 
 export interface OwnedPhoneNumber {
