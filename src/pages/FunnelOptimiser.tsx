@@ -53,6 +53,8 @@ const FunnelOptimiser = () => {
       if (!response.ok) throw new Error('Webhook failed');
     } catch (err) {
       console.error('Funnel report webhook error:', err);
+      setIsSubmitting(false);
+      return;
     }
     setIsSubmitting(false);
     setIsSubmitted(true);
@@ -83,7 +85,7 @@ const FunnelOptimiser = () => {
             <input
               type="number"
               value={visitors}
-              onChange={(e) => setVisitors(Number(e.target.value))}
+              onChange={(e) => setVisitors(Math.max(1, Number(e.target.value) || 1))}
               className="bg-transparent font-mono text-xl font-bold text-white outline-none w-full"
             />
           </div>
