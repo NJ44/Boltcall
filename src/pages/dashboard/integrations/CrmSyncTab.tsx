@@ -110,7 +110,7 @@ const CRM_PROVIDERS: CrmProvider[] = [
   {
     id: 'pipedrive',
     name: 'Pipedrive',
-    logo: 'https://www.pipedrive.com/favicon.ico',
+    logo: '/pipedrive_logo.png',
     fallbackColor: '#017737',
     apiLabel: 'Pipedrive API Token',
     steps: [
