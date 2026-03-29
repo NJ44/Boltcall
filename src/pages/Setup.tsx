@@ -170,7 +170,7 @@ const Setup: React.FC = () => {
 
   // Form state
   const [businessName, setBusinessName] = useState('');
-  const [ownerName, setOwnerName] = useState('');
+  const [ownerName, _setOwnerName] = useState('');
   const [industry, setIndustry] = useState('');
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [country, setCountry] = useState('');
