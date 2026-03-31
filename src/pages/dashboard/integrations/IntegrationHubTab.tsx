@@ -46,9 +46,7 @@ interface SavedIntegration {
 // Integration definitions
 // ---------------------------------------------------------------------------
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const integrations: Integration[] = [
   {
