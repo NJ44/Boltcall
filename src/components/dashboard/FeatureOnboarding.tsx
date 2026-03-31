@@ -66,16 +66,6 @@ const FeatureOnboarding: React.FC<FeatureOnboardingProps> = ({
   // Show onboarding screen
   return (
     <>
-      {showConfetti && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.3}
-        />
-      )}
-
       <AnimatePresence>
         {showSuccessPopup && (
           <>
