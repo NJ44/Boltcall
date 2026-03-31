@@ -4,10 +4,7 @@ import { useSetupStore } from '../../stores/setupStore';
 import { useToast } from '../../contexts/ToastContext';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../lib/api';
 
 const PreviewPanel: React.FC = () => {
   const { account, businessProfile, calendar, callFlow, knowledgeBase } = useSetupStore();
