@@ -16,7 +16,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
  *   { tool_call_id, content: "..." }
  */
 
-const CAL_API_KEY = process.env.CAL_API_KEY || 'cal_live_876a71577c2ff7baaca243a7e0178a83';
+const CAL_API_KEY = process.env.CAL_API_KEY || '';
 const CAL_BASE_URL = 'https://api.cal.com/v1';
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
 
