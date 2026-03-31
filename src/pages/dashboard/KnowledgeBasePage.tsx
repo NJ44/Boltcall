@@ -13,9 +13,7 @@ import { useTokens } from '../../contexts/TokenContext';
 import { CheckCircle2, Circle, Sparkles, ArrowRight } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 
-const FUNCTIONS_BASE_KB = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../lib/api';
 
 interface KbFolder {
   id: string;
