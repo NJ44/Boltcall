@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { Phone, Check, Loader2, ShieldCheck, ShieldX } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
