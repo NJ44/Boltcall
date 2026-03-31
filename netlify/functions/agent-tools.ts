@@ -1,6 +1,5 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
-import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
+import { deductTokens, getSupabase, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError, notifyInfo } from './_shared/notify';
 
 /**
