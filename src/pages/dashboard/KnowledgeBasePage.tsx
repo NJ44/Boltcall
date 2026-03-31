@@ -25,10 +25,6 @@ interface KbFolder {
   agents: Array<{ agent_id: string; agent_name: string }>;
 }
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
-
 interface Document {
   id: string;
   name: string;
