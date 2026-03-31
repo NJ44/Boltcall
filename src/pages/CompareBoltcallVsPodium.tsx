@@ -87,9 +87,23 @@ const CompareBoltcallVsPodium: React.FC = () => {
     });
     document.head.appendChild(faqScript);
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       document.head.removeChild(articleScript);
       document.head.removeChild(faqScript);
+      speakableScript.remove();
     };
   }, []);
 
@@ -155,7 +169,7 @@ const CompareBoltcallVsPodium: React.FC = () => {
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* AEO Direct Answer Block */}
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-10">
+          <div className="speakable-intro bg-blue-50 border-l-4 border-blue-500 p-6 mb-10">
             <p className="text-lg font-medium text-gray-900">
               <strong>Quick Answer:</strong> Boltcall is better for small local businesses that want an affordable all-in-one AI receptionist with phone answering, chatbot, and speed-to-lead automation starting at $389/month. Podium is better for larger businesses focused primarily on review management and messaging, but costs $300+ per month for fewer AI features.
             </p>

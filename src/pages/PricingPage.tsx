@@ -20,9 +20,23 @@ const PricingPage: React.FC = () => {
     }
     link.href = 'https://boltcall.org/pricing';
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       const el = document.querySelector("link[rel='canonical']");
       if (el) el.remove();
+      speakableScript.remove();
     };
   }, []);
 
@@ -31,7 +45,7 @@ const PricingPage: React.FC = () => {
       <GiveawayBar />
       <Header />
       <main className="pt-20">
-        <h1 className="sr-only">Boltcall AI Receptionist Pricing Plans</h1>
+        <h1 className="speakable-intro sr-only">Boltcall AI Receptionist Pricing Plans</h1>
         <Pricing />
       </main>
       <Footer />

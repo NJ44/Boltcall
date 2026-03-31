@@ -26,6 +26,22 @@ const Home: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Receptionist: 24/7 Booking & Lead Capture | Boltcall';
     updateMetaDescription('Never miss a call or lead. AI receptionist answers 24/7, books appointments instantly, captures leads automatically. Start free today.');
+
+    const speakableSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    };
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify(speakableSchema);
+    document.head.appendChild(speakableScript);
+
+    return () => { speakableScript.remove(); };
   }, []);
 
   return (

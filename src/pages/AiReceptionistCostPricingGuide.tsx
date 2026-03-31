@@ -51,8 +51,22 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
     script.text = JSON.stringify(jsonLd);
     document.head.appendChild(script);
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       document.head.removeChild(script);
+      speakableScript.remove();
     };
   }, []);
 
@@ -123,7 +137,7 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Direct Answer Block */}
                 <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-12">
                   <h3 className="text-lg font-semibold text-blue-800 mb-2">Quick Answer</h3>
-                  <p className="text-gray-700">
+                  <p className="speakable-intro text-gray-700">
                     AI receptionist pricing typically ranges from $200-$800 per month, depending on features and call volume. Most small businesses pay between $300-$500 monthly for comprehensive AI phone answering services with unlimited calls.
                   </p>
                 </div>

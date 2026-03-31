@@ -52,8 +52,22 @@ const SpeedToLeadGuide: React.FC = () => {
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       document.head.removeChild(script);
+      speakableScript.remove();
     };
   }, []);
 
@@ -123,7 +137,7 @@ const SpeedToLeadGuide: React.FC = () => {
               className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-12"
             >
               <h2 className="text-lg font-semibold text-blue-900 mb-3">Quick Answer</h2>
-              <p className="text-blue-800">
+              <p className="speakable-intro text-blue-800">
                 Speed to lead local business strategies deliver 400% higher conversion rates than slow responders. Businesses responding within 5 minutes convert 9x more leads than those responding after 30 minutes, making response time the highest-impact metric for local business growth.
               </p>
             </motion.div>

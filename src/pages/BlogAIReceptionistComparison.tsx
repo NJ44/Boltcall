@@ -54,9 +54,23 @@ const BlogAIReceptionistComparison: React.FC = () => {
     script.text = JSON.stringify(articleSchema);
     document.head.appendChild(script);
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
+      speakableScript.remove();
     };
   }, []);
   const tools = [
@@ -205,9 +219,9 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="prose prose-lg max-w-none mb-12"
         >
-          <p className="text-xl text-gray-700 leading-relaxed font-medium">
-            Choosing the right AI receptionist tool can transform how your business handles customer 
-            inquiries. But with so many options, how do you know which one fits your needs? We've 
+          <p className="speakable-intro text-xl text-gray-700 leading-relaxed font-medium">
+            Choosing the right AI receptionist tool can transform how your business handles customer
+            inquiries. But with so many options, how do you know which one fits your needs? We've
             compared the top 5 AI receptionist tools for small businesses to help you make the right choice.
           </p>
         </motion.div>

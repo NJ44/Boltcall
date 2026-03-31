@@ -114,6 +114,13 @@ const AiReceptionistRoi = React.lazy(() => import('../pages/AiReceptionistRoi'))
 const FiveMinuteResponsePlaybook = React.lazy(() => import('../pages/FiveMinuteResponsePlaybook'));
 const VetClinicRevenueCalculator = React.lazy(() => import('../pages/VetClinicRevenueCalculator'));
 const HowToAIPhoneAnsweringVetClinic = React.lazy(() => import('../pages/HowToAIPhoneAnsweringVetClinic'));
+const FAQAIReceptionistHVAC = React.lazy(() => import('../pages/FAQAIReceptionistHVAC'));
+const FAQAIReceptionistDentist = React.lazy(() => import('../pages/FAQAIReceptionistDentist'));
+const FAQAIReceptionistPlumber = React.lazy(() => import('../pages/FAQAIReceptionistPlumber'));
+const FAQAIReceptionistLawyer = React.lazy(() => import('../pages/FAQAIReceptionistLawyer'));
+const FAQAIReceptionistMedSpa = React.lazy(() => import('../pages/FAQAIReceptionistMedSpa'));
+const FAQAIReceptionistSolar = React.lazy(() => import('../pages/FAQAIReceptionistSolar'));
+const FAQAIReceptionistVet = React.lazy(() => import('../pages/FAQAIReceptionistVet'));
 
 // ── Lazy loads — Speed Test funnel ───────────────────────────────────────
 const SpeedTestLanding = React.lazy(() => import('../pages/speed-test/SpeedTestLanding'));
@@ -160,6 +167,7 @@ const SpeedToLeadGuide = React.lazy(() => import('../pages/SpeedToLeadGuide'));
 const ChatbotVsLivePhoneComparison = React.lazy(() => import('../pages/ChatbotVsLivePhoneComparison'));
 const AiReceptionistForPlumbers = React.lazy(() => import('../pages/AiReceptionistForPlumbers'));
 const AIReceptionistWorthItROI = React.lazy(() => import('../pages/AIReceptionistWorthItROI'));
+const MissedCallsStatistics2026 = React.lazy(() => import('../pages/MissedCallsStatistics2026'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -422,6 +430,7 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/ai-chatbot-vs-live-chat-phone-comparison" element={<ChatbotVsLivePhoneComparison />} />
             <Route path="/blog/ai-receptionist-for-plumbers" element={<AiReceptionistForPlumbers />} />
             <Route path="/blog/ai-receptionist-worth-it-roi" element={<AIReceptionistWorthItROI />} />
+            <Route path="/blog/missed-calls-statistics-local-business-2026" element={<MissedCallsStatistics2026 />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
@@ -473,6 +482,14 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/vet-clinic-revenue-calculator" element={<VetClinicRevenueCalculator />} />
         {/* Vet Clinic AI Phone Answering How-To (AEO page) */}
         <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
+        {/* Industry FAQ AEO pages */}
+        <Route path="/blog/ai-receptionist-hvac-faq" element={<FAQAIReceptionistHVAC />} />
+        <Route path="/blog/ai-receptionist-dentist-faq" element={<FAQAIReceptionistDentist />} />
+        <Route path="/blog/ai-receptionist-plumber-faq" element={<FAQAIReceptionistPlumber />} />
+        <Route path="/blog/ai-receptionist-lawyer-faq" element={<FAQAIReceptionistLawyer />} />
+        <Route path="/blog/ai-receptionist-medspa-faq" element={<FAQAIReceptionistMedSpa />} />
+        <Route path="/blog/ai-receptionist-solar-faq" element={<FAQAIReceptionistSolar />} />
+        <Route path="/blog/ai-receptionist-vet-faq" element={<FAQAIReceptionistVet />} />
         {/* All niche tools now served by dynamic route from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />

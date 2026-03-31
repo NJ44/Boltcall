@@ -57,9 +57,23 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
     script.text = JSON.stringify(articleSchema);
     document.head.appendChild(script);
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
+      speakableScript.remove();
     };
   }, []);
 
@@ -117,7 +131,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="prose prose-lg max-w-none mb-12"
         >
-          <p className="text-xl text-gray-700 leading-relaxed font-medium">
+          <p className="speakable-intro text-xl text-gray-700 leading-relaxed font-medium">
             You've heard about AI receptionists answering calls, booking appointments, and handling customer inquiries—but how do they actually work? This guide breaks down the technology and processes that power modern AI receptionist systems, from speech recognition to intelligent response generation.
           </p>
         </motion.div>

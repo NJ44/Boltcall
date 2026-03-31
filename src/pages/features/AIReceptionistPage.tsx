@@ -14,6 +14,21 @@ const AIReceptionistPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'AI Receptionist for Calls & Messages | Boltcall';
     updateMetaDescription('AI receptionist handles calls and messages 24/7. Never miss a call, book appointments automatically, capture leads. Start free today.');
+
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
+    return () => { speakableScript.remove(); };
   }, []);
   return (
     <div className="min-h-screen bg-white">
@@ -43,7 +58,7 @@ const AIReceptionistPage: React.FC = () => {
               Never Miss a Call with <span className="text-blue-600">AI Receptionist</span>
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="speakable-intro text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
               Your AI receptionist answers calls 24/7, schedules appointments, and provides instant support—so you never miss an opportunity.
             </p>
           </motion.div>

@@ -102,11 +102,25 @@ const CompareBoltcallVsGoHighLevel: React.FC = () => {
     faqScript.text = JSON.stringify(faqSchema);
     document.head.appendChild(faqScript);
 
+    const speakableScript = document.createElement('script');
+    speakableScript.type = 'application/ld+json';
+    speakableScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": document.title,
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".speakable-intro"]
+      }
+    });
+    document.head.appendChild(speakableScript);
+
     return () => {
       const s1 = document.getElementById('article-schema');
       if (s1) s1.remove();
       const s2 = document.getElementById('faq-schema');
       if (s2) s2.remove();
+      speakableScript.remove();
     };
   }, []);
 
@@ -160,7 +174,7 @@ const CompareBoltcallVsGoHighLevel: React.FC = () => {
           </h1>
 
           {/* AEO Direct Answer Block */}
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg">
+          <div className="speakable-intro bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg">
             <p className="text-gray-800 leading-relaxed font-medium">
               <strong>Boltcall</strong> is a focused AI receptionist platform that answers calls, captures leads, and automates follow-ups for local businesses starting at $389/month with 24-hour setup. <strong>GoHighLevel</strong> is a comprehensive CRM and marketing platform starting at $97/month but requires significant setup time, technical knowledge, and is designed primarily for agencies, not individual small businesses.
             </p>
