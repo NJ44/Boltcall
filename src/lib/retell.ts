@@ -1,8 +1,6 @@
 // Retell AI API integration — proxied through Netlify functions for security
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from './api';
 
 export interface RetellKnowledgeBaseText {
   text: string;
