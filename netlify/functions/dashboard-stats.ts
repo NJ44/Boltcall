@@ -11,12 +11,6 @@ const headers = {
 
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
-  return createClient(url, key);
-}
-
 async function getRetellStats(apiKey: string) {
   try {
     const client = new Retell({ apiKey });
