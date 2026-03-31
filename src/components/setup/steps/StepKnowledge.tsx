@@ -7,10 +7,7 @@ import StyledInput from '../../ui/StyledInput';
 import { FileUploadCompact } from '../../ui/file-upload-compact';
 import Button from '../../ui/Button';
 import { calculateKBCompleteness } from '../kbCompleteness';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const StepKnowledge: React.FC = () => {
   const { businessProfile, updateBusinessProfile, knowledgeBase, updateKnowledgeBase, account } = useSetupStore();

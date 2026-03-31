@@ -64,9 +64,7 @@ interface TestRunRecord {
 // API helpers
 // ---------------------------------------------------------------------------
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../lib/api';
 
 async function runAgentTests(agentId: string): Promise<TestRunResult> {
   const res = await fetch(`${FUNCTIONS_BASE}/agent-test`, {

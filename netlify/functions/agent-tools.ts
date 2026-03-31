@@ -1,6 +1,5 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
-import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
+import { deductTokens, getSupabase, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError, notifyInfo } from './_shared/notify';
 
 /**
@@ -16,7 +15,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
  *   { tool_call_id, content: "..." }
  */
 
-const CAL_API_KEY = process.env.CAL_API_KEY || 'cal_live_876a71577c2ff7baaca243a7e0178a83';
+const CAL_API_KEY = process.env.CAL_API_KEY || '';
 const CAL_BASE_URL = 'https://api.cal.com/v1';
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
 
@@ -26,12 +25,6 @@ const headers = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Content-Type': 'application/json',
 };
-
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || '';
-  return createClient(url, key);
-}
 
 // ── Cal.com helpers ──
 

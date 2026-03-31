@@ -21,10 +21,7 @@ import {
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { PageSkeleton } from '../../../components/ui/loading-skeleton';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../../lib/api';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -110,7 +107,7 @@ const CRM_PROVIDERS: CrmProvider[] = [
   {
     id: 'pipedrive',
     name: 'Pipedrive',
-    logo: 'https://www.pipedrive.com/favicon.ico',
+    logo: '/pipedrive_logo.png',
     fallbackColor: '#017737',
     apiLabel: 'Pipedrive API Token',
     steps: [

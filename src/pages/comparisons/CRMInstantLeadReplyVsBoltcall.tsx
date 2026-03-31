@@ -5,6 +5,7 @@ import { Calendar, Clock, CheckCircle, XCircle, Zap, Clock as ClockIcon } from '
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import FinalCTA, { COMPARISON_CTA } from '../../components/FinalCTA';
 import GiveawayBar from '../../components/GiveawayBar';
 
 const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
@@ -617,6 +618,7 @@ const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
         </motion.section>
       </article>
 
+      <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </div>
   );

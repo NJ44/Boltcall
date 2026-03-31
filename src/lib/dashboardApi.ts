@@ -1,10 +1,7 @@
 // Dashboard API client — fetches real data from Netlify function + Supabase
 
 import { supabase } from './supabase';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from './api';
 
 export interface DashboardStats {
   timestamp: string;

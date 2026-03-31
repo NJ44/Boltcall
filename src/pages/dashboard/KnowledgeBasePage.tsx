@@ -13,9 +13,7 @@ import { useTokens } from '../../contexts/TokenContext';
 import { CheckCircle2, Circle, Sparkles, ArrowRight } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 
-const FUNCTIONS_BASE_KB = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../lib/api';
 
 interface KbFolder {
   id: string;
@@ -26,10 +24,6 @@ interface KbFolder {
   doc_count: number;
   agents: Array<{ agent_id: string; agent_name: string }>;
 }
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
 
 interface Document {
   id: string;
@@ -115,7 +109,7 @@ const KnowledgeBasePage: React.FC = () => {
   const fetchFolders = useCallback(async () => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+      const res = await fetch(`${FUNCTIONS_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'list_folders', userId: user.id }),
@@ -137,7 +131,7 @@ const KnowledgeBasePage: React.FC = () => {
   const handleCreateFolder = async () => {
     if (!newFolderName.trim() || !user?.id) return;
     try {
-      const res = await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+      const res = await fetch(`${FUNCTIONS_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'create_folder', userId: user.id, name: newFolderName.trim() }),
@@ -158,7 +152,7 @@ const KnowledgeBasePage: React.FC = () => {
   const handleRenameFolder = async (folderId: string, name: string) => {
     if (!name.trim() || !user?.id) return;
     try {
-      await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+      await fetch(`${FUNCTIONS_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'update_folder', userId: user.id, folderId, name: name.trim() }),
@@ -173,7 +167,7 @@ const KnowledgeBasePage: React.FC = () => {
   const handleDeleteFolder = async (folderId: string) => {
     if (!user?.id) return;
     try {
-      await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+      await fetch(`${FUNCTIONS_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'delete_folder', userId: user.id, folderId, deleteDocs: false }),
@@ -600,7 +594,7 @@ const KnowledgeBasePage: React.FC = () => {
       showToast({ title: 'Saving...', message: 'Creating folder & processing documents...', variant: 'default', duration: 10000 });
 
       // Create a KB folder first
-      const folderRes = await fetch(`${FUNCTIONS_BASE_KB}/kb-search`, {
+      const folderRes = await fetch(`${FUNCTIONS_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'create_folder', userId: user.id, name: knowledgeBaseName.trim() }),

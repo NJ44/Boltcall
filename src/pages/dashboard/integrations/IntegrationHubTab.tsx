@@ -46,9 +46,7 @@ interface SavedIntegration {
 // Integration definitions
 // ---------------------------------------------------------------------------
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const integrations: Integration[] = [
   {
@@ -71,7 +69,7 @@ const integrations: Integration[] = [
   {
     id: 'pipedrive',
     name: 'Pipedrive',
-    logo: 'https://www.pipedrive.com/favicon.ico',
+    logo: '/pipedrive_logo.png',
     subtitle: 'Sales CRM & Pipeline',
     description: 'Sync leads and deals to Pipedrive. Track your sales pipeline automatically.',
     fallbackColor: '#017737',
@@ -88,7 +86,7 @@ const integrations: Integration[] = [
   {
     id: 'gohighlevel',
     name: 'GoHighLevel',
-    logo: 'https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/46gdOFrGTIjMRVPj1F1W/media/65a6ca3e05e980b49c4e505a.png',
+    logo: '/gohighlevel_logo.png',
     subtitle: 'All-in-One Local Business CRM',
     description: 'Push leads into GoHighLevel CRM, trigger automations, and manage your pipeline.',
     fallbackColor: '#FF6B35',

@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_shared/token-utils';
 
 /**
  * Google Calendar OAuth — Step 2: Exchange the authorization code for tokens.
@@ -18,13 +18,6 @@ import { createClient } from '@supabase/supabase-js';
  *   - SUPABASE_SERVICE_KEY — Supabase service-role key
  *   - URL or DEPLOY_URL — Netlify site URL
  */
-
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
-  return createClient(url, key);
-}
 
 function redirect(path: string) {
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';

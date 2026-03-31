@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, ArrowRight, DollarSign, Zap, Shield, Star } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FinalCTA, { COMPARISON_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -614,6 +615,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
         </div>
       </main>
 
+      <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </>
   );

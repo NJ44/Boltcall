@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
+import { getSupabase } from './_shared/token-utils';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
@@ -23,15 +24,6 @@ const headers = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Content-Type': 'application/json',
 };
-
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) {
-    throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
-  }
-  return createClient(url, key);
-}
 
 // Normalize incoming lead data from various formats into our leads table schema
 // Table columns: id, source, first_name, last_name, email, phone, status, call_status,

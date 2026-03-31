@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
 import Retell from 'retell-sdk';
+import { getSupabase } from './_shared/token-utils';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -10,12 +10,6 @@ const headers = {
 };
 
 const TWILIO_API_BASE = 'https://api.twilio.com/2010-04-01';
-
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
-  return createClient(url, key);
-}
 
 async function getRetellStats(apiKey: string) {
   try {

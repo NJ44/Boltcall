@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
 
 interface BreakdownItem {
@@ -676,6 +677,7 @@ const SolarProfitCalculator: React.FC = () => {
           </div>
         </div>
       </main>
+      <FinalCTA {...CALCULATOR_CTA} />
       <Footer />
     </div>
   );

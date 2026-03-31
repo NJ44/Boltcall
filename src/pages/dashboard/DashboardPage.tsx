@@ -4,7 +4,7 @@ import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Confetti from 'react-confetti';
+import confetti from 'canvas-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
 import FeatureHub from '../../components/dashboard/FeatureHub';
@@ -47,7 +47,6 @@ const DashboardPage: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<Array<{text: string, sender: 'user' | 'bot'}>>([]);
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   // Onboarding tour — show on first visit
   const [showOnboarding, setShowOnboarding] = useState(() => {
@@ -85,14 +84,16 @@ const DashboardPage: React.FC = () => {
     }
   }, [searchParams, setSearchParams]);
 
-  // Update window size for confetti
+  // Fire confetti effect when showConfetti becomes true
   useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    if (!showConfetti) return;
+    confetti({
+      particleCount: 500,
+      spread: 160,
+      gravity: 0.3,
+      origin: { y: 0.4 },
+    });
+  }, [showConfetti]);
 
   const handleSendMessage = () => {
     if (chatMessage.trim()) {
@@ -111,17 +112,6 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-4 px-1 md:px-0">
-
-      {/* Confetti */}
-      {showConfetti && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.3}
-        />
-      )}
 
       {/* Setup Completion Popup */}
       <SetupCompletionPopup

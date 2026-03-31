@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
+import { getSupabase } from './_shared/token-utils';
 
 /**
  * Knowledge Base Search Function
@@ -28,13 +28,6 @@ const headers = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Content-Type': 'application/json; charset=utf-8',
 };
-
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) throw new Error('Missing Supabase credentials');
-  return createClient(url, key);
-}
 
 // Generate embedding — tries OpenAI, falls back to Supabase Edge Function
 async function getEmbedding(text: string): Promise<number[] | null> {

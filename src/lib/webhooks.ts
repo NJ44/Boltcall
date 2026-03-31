@@ -2,10 +2,7 @@
 // Uses Netlify functions to proxy all API calls (keeps secrets server-side)
 
 import { searchAvailableNumbers, purchasePhoneNumber as purchaseTwilioNumber } from './twilio';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from './api';
 
 export interface PhoneNumber {
   phone_number: string;

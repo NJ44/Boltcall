@@ -16,7 +16,9 @@ export type TokenCategory =
   | 'outbound_call'
   | 'lead_processed'
   | 'kb_document_sync'
-  | 'web_scrape';
+  | 'web_scrape'
+  | 'ai_self_heal'
+  | 'ai_kb_extract';
 
 export const TOKEN_COSTS: Record<TokenCategory, number> = {
   ai_voice_minute: 10,
@@ -29,6 +31,8 @@ export const TOKEN_COSTS: Record<TokenCategory, number> = {
   lead_processed: 2,
   kb_document_sync: 3,
   web_scrape: 5,
+  ai_self_heal: 20,
+  ai_kb_extract: 5,
 };
 
 interface DeductResult {
