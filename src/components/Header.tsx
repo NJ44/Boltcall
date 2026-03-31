@@ -346,20 +346,9 @@ const Header: React.FC = () => {
     if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses') || location.pathname === '/free-website-package') {
       setIsOverBlueBackground(true);
     } else {
-      // RAF-throttled scroll listener to prevent jank
-      let scrollRafId: number | null = null;
-      const throttledScroll = () => {
-        if (scrollRafId === null) {
-          scrollRafId = requestAnimationFrame(() => {
-            scrollRafId = null;
-            handleScroll();
-          });
-        }
-      };
-      window.addEventListener('scroll', throttledScroll, { passive: true });
+      window.addEventListener('scroll', handleScroll, { passive: true });
       return () => {
-        window.removeEventListener('scroll', throttledScroll);
-        if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+        window.removeEventListener('scroll', handleScroll);
       };
     }
     return () => {};
