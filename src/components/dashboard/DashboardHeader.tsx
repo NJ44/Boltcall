@@ -1,29 +1,44 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Download, Copy, UserPlus, Settings, Globe } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { useDashboardStore } from '../../stores/dashboardStore';
+import { useToast } from '../../contexts/ToastContext';
 import dayjs from 'dayjs';
 
 const DashboardHeader: React.FC = () => {
   const { filters, applyQuickDateRange } = useDashboardStore();
   const [showDatePicker, setShowDatePicker] = useState(false);
-  
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+
   const handleExportCSV = () => {
-    // CSV export logic would be implemented here
-    // TODO: implement CSV export
+    const csvContent = 'data:text/csv;charset=utf-8,'
+      + 'Date Range,' + filters.dateRange + '\n'
+      + 'Generated,' + new Date().toISOString() + '\n';
+    const encodedUri = encodeURIComponent(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodedUri);
+    link.setAttribute('download', `boltcall-dashboard-${dayjs().format('YYYY-MM-DD')}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
-  
+
   const handleCopyLink = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
-    // Show toast notification
-    // TODO: show toast notification
+    showToast({
+      title: 'Link copied',
+      message: 'Dashboard link has been copied to your clipboard.',
+      variant: 'success',
+      duration: 2000,
+    });
   };
-  
+
   const handleInviteTeammate = () => {
-    // Invite teammate logic would be implemented here
-    // TODO: implement invite teammate
+    navigate('/dashboard/settings/members');
   };
   
   const quickDateRanges = [
