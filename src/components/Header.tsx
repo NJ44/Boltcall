@@ -78,6 +78,15 @@ const Header: React.FC = () => {
     let cachedHeader: Element | null = null;
 
     const handleScroll = () => {
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+      requestAnimationFrame(() => {
+        scrollLogic();
+        tickingRef.current = false;
+      });
+    };
+
+    const scrollLogic = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // When scrolled past the announcement bar (64px), make header stick to top
       // On Strike page, always sticky since there's no announcement bar
