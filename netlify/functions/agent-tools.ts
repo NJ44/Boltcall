@@ -26,12 +26,6 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || '';
-  return createClient(url, key);
-}
-
 // ── Cal.com helpers ──
 
 let cachedEventTypeId: number | null = null;
