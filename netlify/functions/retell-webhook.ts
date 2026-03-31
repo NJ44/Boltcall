@@ -27,15 +27,6 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) {
-    throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
-  }
-  return createClient(url, key);
-}
-
 function isMissedCall(call: any): boolean {
   if (call.call_status === 'not_connected') return true;
   if (call.call_status === 'error') return true;
