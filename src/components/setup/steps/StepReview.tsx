@@ -5,10 +5,7 @@ import { CheckCircle, Edit, Globe } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
 import { useAuth } from '../../../contexts/AuthContext';
 import PageLoader from '../../PageLoader';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const StepReview: React.FC = () => {
   const navigate = useNavigate();
