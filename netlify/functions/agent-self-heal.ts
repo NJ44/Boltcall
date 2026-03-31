@@ -28,13 +28,6 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) throw new Error('Missing Supabase credentials');
-  return createClient(url, key);
-}
-
 async function retellFetch(path: string, options: RequestInit = {}) {
   const res = await fetch(`${RETELL_API}${path}`, {
     ...options,
