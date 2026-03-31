@@ -1,8 +1,6 @@
 // Twilio SMS & Phone Numbers client — proxied through Netlify functions
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from './api';
 
 // === SMS ===
 
