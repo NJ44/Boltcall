@@ -47,7 +47,6 @@ const DashboardPage: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<Array<{text: string, sender: 'user' | 'bot'}>>([]);
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   // Onboarding tour — show on first visit
   const [showOnboarding, setShowOnboarding] = useState(() => {
