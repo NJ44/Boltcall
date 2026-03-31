@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
+import { getSupabase } from './_shared/token-utils';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
