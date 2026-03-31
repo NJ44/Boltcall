@@ -17,6 +17,7 @@ const Header: React.FC = () => {
   const [mobileResources, setMobileResources] = useState(false);
   const resourcesRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
+  const tickingRef = useRef(false);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
