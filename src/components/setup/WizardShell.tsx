@@ -12,10 +12,7 @@ import { LocationService } from '../../lib/locations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { calculateKBCompleteness } from './kbCompleteness';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../../lib/api';
 
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepBusinessProfile = React.lazy(() => import('./steps/StepBusinessProfile'));
