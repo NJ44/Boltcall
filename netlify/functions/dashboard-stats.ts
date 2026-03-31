@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
 import Retell from 'retell-sdk';
+import { getSupabase } from './_shared/token-utils';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
