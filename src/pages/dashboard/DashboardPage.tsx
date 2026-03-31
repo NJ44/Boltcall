@@ -113,17 +113,6 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-4 px-1 md:px-0">
 
-      {/* Confetti */}
-      {showConfetti && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.3}
-        />
-      )}
-
       {/* Setup Completion Popup */}
       <SetupCompletionPopup
         isOpen={showCompletionPopup}
