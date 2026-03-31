@@ -25,15 +25,6 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) {
-    throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
-  }
-  return createClient(url, key);
-}
-
 // Normalize incoming lead data from various formats into our leads table schema
 // Table columns: id, source, first_name, last_name, email, phone, status, call_status,
 // call_id, call_duration, sms_sent, sms_sid, raw_data, last_contact_at, created_at
