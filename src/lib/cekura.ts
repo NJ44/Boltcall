@@ -1,8 +1,6 @@
 // Cekura phone verification client — proxied through Netlify function
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from './api';
 
 export interface VerificationResult {
   success: boolean;
