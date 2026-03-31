@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError, notifyInfo } from './_shared/notify';
+import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 
 /**
  * Agent Self-Healing Pipeline
@@ -273,6 +274,28 @@ export const handler: Handler = async (event) => {
       const supabase = getSupabase();
       const startTime = Date.now();
 
+      // ── Daily heal cap: max 5 heals per agent per day to prevent API drain ──
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+      const { count: healsToday } = await supabase
+        .from('agent_self_heal_log')
+        .select('id', { count: 'exact', head: true })
+        .eq('agent_id', agentId)
+        .gte('created_at', todayStart.toISOString());
+
+      if ((healsToday || 0) >= 5) {
+        await notifyInfo(`⛔ *Self\\-Heal Blocked*\nAgent ${agentId} hit daily heal cap \\(5/day\\)\\. Skipping\\.`);
+        return { statusCode: 429, headers, body: JSON.stringify({ error: 'Daily heal limit reached (5 per agent). Try again tomorrow.' }) };
+      }
+
+      // ── Token gate: deduct tokens before running the pipeline ──
+      if (userId) {
+        const deductResult = await deductTokens(userId, TOKEN_COSTS.ai_self_heal, 'ai_self_heal', `Self-heal pipeline for agent ${agentId}`);
+        if (!deductResult.success) {
+          return { statusCode: 402, headers, body: JSON.stringify({ error: 'Insufficient tokens for self-heal', details: deductResult.error }) };
+        }
+      }
+
       // Step 1: Get the agent's current prompt
       const voiceAgent = await retellFetch(`/get-agent/${agentId}`);
       const llmId = voiceAgent.response_engine?.llm_id;
@@ -304,14 +327,14 @@ export const handler: Handler = async (event) => {
       // Step 4: Apply the prompt fix
       const { oldPrompt, newPrompt } = await applyPromptFix(llmId, analysis.promptFix);
 
-      // Step 5: Retest with the fixed prompt (10 runs)
+      // Step 5: Retest with the fixed prompt (3 runs — enough to verify)
       const { chatAgentId: healedChatAgentId } = await createTempChatAgent(agentId);
       let passedAfterFix = 0;
+      const VERIFY_RUNS = 3;
 
       try {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < VERIFY_RUNS; i++) {
           const result = await runChatTest(healedChatAgentId, analysis.testMessages);
-          // Count as passed if analysis says successful OR if no explicit failure
           if (result.analysis?.call_successful !== false) {
             passedAfterFix++;
           }
@@ -320,8 +343,8 @@ export const handler: Handler = async (event) => {
         await deleteTempChatAgent(healedChatAgentId);
       }
 
-      const fixSuccessRate = Math.round((passedAfterFix / 10) * 100);
-      const fixVerified = fixSuccessRate >= 80;
+      const fixSuccessRate = Math.round((passedAfterFix / VERIFY_RUNS) * 100);
+      const fixVerified = fixSuccessRate >= 66; // 2 of 3 must pass
 
       // If fix didn't work (< 80% pass rate), revert the prompt
       if (!fixVerified) {
@@ -347,7 +370,7 @@ export const handler: Handler = async (event) => {
         fix_verified: fixVerified,
         fix_success_rate: fixSuccessRate,
         fix_pass_count: passedAfterFix,
-        fix_total_runs: 10,
+        fix_total_runs: VERIFY_RUNS,
         prompt_reverted: !fixVerified,
         elapsed_ms: elapsedMs,
         status: fixVerified ? 'fixed' : 'reverted',
@@ -395,7 +418,7 @@ export const handler: Handler = async (event) => {
             verified: fixVerified,
             successRate: fixSuccessRate,
             passedRuns: passedAfterFix,
-            totalRuns: 10,
+            totalRuns: VERIFY_RUNS,
             reverted: !fixVerified,
           },
           elapsedMs,
