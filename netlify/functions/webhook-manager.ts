@@ -1,7 +1,7 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import { notifyError } from './_shared/notify';
+import { getSupabase } from './_shared/token-utils';
 
 /**
  * Webhook Manager Function
