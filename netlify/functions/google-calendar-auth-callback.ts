@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_shared/token-utils';
 
 /**
  * Google Calendar OAuth — Step 2: Exchange the authorization code for tokens.
