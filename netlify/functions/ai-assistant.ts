@@ -11,12 +11,6 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
-  return createClient(url, key);
-}
-
 function getClaude() {
   const apiKey = process.env.ANTHROPIC_API_KEY || '';
   return new Anthropic({ apiKey });
