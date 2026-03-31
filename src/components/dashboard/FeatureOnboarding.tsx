@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
-import Confetti from 'react-confetti';
+import confetti from 'canvas-confetti';
 import { CheckCircle } from 'lucide-react';
 
 interface FeatureOnboardingProps {
