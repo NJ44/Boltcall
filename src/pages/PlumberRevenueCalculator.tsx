@@ -23,6 +23,7 @@ import {
 import { updateMetaDescription } from '../lib/utils';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
 
 const fmt = new Intl.NumberFormat('en-US', {
@@ -791,6 +792,7 @@ const PlumberRevenueCalculator: React.FC = () => {
         </motion.div>
       </section>
 
+      <FinalCTA {...CALCULATOR_CTA} />
       <Footer />
     </div>
   );

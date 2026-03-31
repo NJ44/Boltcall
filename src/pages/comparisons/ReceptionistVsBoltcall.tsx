@@ -5,6 +5,7 @@ import { Calendar, Clock, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import FinalCTA, { COMPARISON_CTA } from '../../components/FinalCTA';
 import GiveawayBar from '../../components/GiveawayBar';
 
 const ReceptionistVsBoltcall: React.FC = () => {
@@ -292,6 +293,7 @@ const ReceptionistVsBoltcall: React.FC = () => {
         </motion.section>
       </article>
 
+      <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </div>
   );
