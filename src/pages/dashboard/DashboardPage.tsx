@@ -4,7 +4,7 @@ import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Confetti from 'react-confetti';
+import confetti from 'canvas-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AppleStyleDock } from '../../components/ui/dock-demo';
 import FeatureHub from '../../components/dashboard/FeatureHub';
