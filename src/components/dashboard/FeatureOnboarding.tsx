@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
-import Confetti from 'react-confetti';
+import confetti from 'canvas-confetti';
 import { CheckCircle } from 'lucide-react';
 
 interface FeatureOnboardingProps {
@@ -24,29 +24,23 @@ const FeatureOnboarding: React.FC<FeatureOnboardingProps> = ({
   const [isActivated, setIsActivated] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     // Check if feature is already activated
     const activated = localStorage.getItem(`feature_${featureKey}_activated`) === 'true';
     setIsActivated(activated);
-
-    // Set window size for confetti
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   }, [featureKey]);
+
+  // Fire confetti effect when showConfetti becomes true
+  useEffect(() => {
+    if (!showConfetti) return;
+    confetti({
+      particleCount: 500,
+      spread: 160,
+      gravity: 0.3,
+      origin: { y: 0.4 },
+    });
+  }, [showConfetti]);
 
   const handleActivate = () => {
     // Mark as activated
@@ -72,16 +66,6 @@ const FeatureOnboarding: React.FC<FeatureOnboardingProps> = ({
   // Show onboarding screen
   return (
     <>
-      {showConfetti && (
-        <Confetti
-          width={windowSize.width}
-          height={windowSize.height}
-          recycle={false}
-          numberOfPieces={500}
-          gravity={0.3}
-        />
-      )}
-
       <AnimatePresence>
         {showSuccessPopup && (
           <>

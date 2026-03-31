@@ -1,8 +1,7 @@
 import { Handler } from '@netlify/functions';
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
 import Retell from 'retell-sdk';
-import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
+import { deductTokens, getSupabase, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 
 const headers = {
@@ -11,12 +10,6 @@ const headers = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Content-Type': 'application/json',
 };
-
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
-  return createClient(url, key);
-}
 
 function getClaude() {
   const apiKey = process.env.ANTHROPIC_API_KEY || '';

@@ -57,8 +57,8 @@ vi.mock('react-i18next', () => ({
 }));
 
 // Mock confetti
-vi.mock('react-confetti', () => ({
-  default: () => null,
+vi.mock('canvas-confetti', () => ({
+  default: vi.fn(),
 }));
 
 // Mock sub-components that have complex dependencies

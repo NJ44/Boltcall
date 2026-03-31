@@ -50,9 +50,7 @@ import {
 import { VoicePicker } from '../components/ui/voice-picker';
 import { useRetellVoices } from '../hooks/useRetellVoices';
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../lib/api';
 
 const steps = [
   { id: 'overview', title: 'Overview' },

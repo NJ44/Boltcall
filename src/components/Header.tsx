@@ -17,6 +17,7 @@ const Header: React.FC = () => {
   const [mobileResources, setMobileResources] = useState(false);
   const resourcesRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
+  const tickingRef = useRef(false);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -77,6 +78,15 @@ const Header: React.FC = () => {
     let cachedHeader: Element | null = null;
 
     const handleScroll = () => {
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+      requestAnimationFrame(() => {
+        scrollLogic();
+        tickingRef.current = false;
+      });
+    };
+
+    const scrollLogic = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       // When scrolled past the announcement bar (64px), make header stick to top
       // On Strike page, always sticky since there's no announcement bar
@@ -336,20 +346,9 @@ const Header: React.FC = () => {
     if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses') || location.pathname === '/free-website-package') {
       setIsOverBlueBackground(true);
     } else {
-      // RAF-throttled scroll listener to prevent jank
-      let scrollRafId: number | null = null;
-      const throttledScroll = () => {
-        if (scrollRafId === null) {
-          scrollRafId = requestAnimationFrame(() => {
-            scrollRafId = null;
-            handleScroll();
-          });
-        }
-      };
-      window.addEventListener('scroll', throttledScroll, { passive: true });
+      window.addEventListener('scroll', handleScroll, { passive: true });
       return () => {
-        window.removeEventListener('scroll', throttledScroll);
-        if (scrollRafId !== null) cancelAnimationFrame(scrollRafId);
+        window.removeEventListener('scroll', handleScroll);
       };
     }
     return () => {};
@@ -920,4 +919,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
