@@ -1,9 +1,7 @@
 // Cekura full agent testing — proxied through Netlify function
 // Runs automated voice simulations against Retell agents
 
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from './api';
 
 export interface CekuraTestRun {
   id: number;
