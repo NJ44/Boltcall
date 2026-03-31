@@ -13,77 +13,86 @@ const PricingSection: React.FC = () => {
   const plans = [
     {
       title: 'Starter',
-      subtitle: 'Speed-to-Lead',
-      priceMonthlyUsd: 99,
-      priceAnnualUsd: 948, // ~20% discount
-      priceMonthlyIls: 370,
-      priceAnnualIls: 3560,
+      subtitle: 'AI Lead Catcher',
+      priceMonthlyUsd: 659,
+      priceAnnualUsd: 5931,
+      priceMonthlyIls: 2470,
+      priceAnnualIls: 22230,
       features: [
-        'Instant SMS to new leads',
-        'Qualification + nurturing (3–5 smart questions)',
-        'Auto-booking to Google Calendar',
-        'Owner notifications (SMS + email)'
+        '1 AI agent — SMS, email & chat in one setup',
+        'Qualifies & nurtures leads automatically',
+        'Auto-booking to Google or Outlook',
+        '3-step follow-up sequence (SMS + email)',
+        'Owner alerts (SMS + email)'
       ],
-      tokens: '1,000 tokens/mo',
-      limits: '1 calendar, 300 conversations, 1,000 SMS/mo',
-      support: 'Chat/email (24-48h)',
+      limits: '1 user · 1 calendar · 300 conversations · 1,000 SMS/mo',
+      support: 'Email/chat (48h)',
       ctaLabel: 'Start 7-Day Free Trial',
       popular: false
     },
     {
       title: 'Pro',
       subtitle: 'AI Front Desk',
-      priceMonthlyUsd: 179,
-      priceAnnualUsd: 1716,
-      priceMonthlyIls: 670,
-      priceAnnualIls: 6440,
+      priceMonthlyUsd: 977,
+      priceAnnualUsd: 8793,
+      priceMonthlyIls: 3660,
+      priceAnnualIls: 32940,
       features: [
         'Everything in Starter',
-        'AI receptionist (voice) + live transfer',
-        'Dashboard (response time, booked jobs, missed leads, transcripts)',
-        'Call transcripts with intent tags'
+        '3 AI agents — voice calls + outbound campaigns',
+        'Live transfer to human when needed',
+        '1 CRM integration + Zapier/Make',
+        'Full analytics, transcripts & call recordings',
+        'Google review requests (post-appointment)'
       ],
-      tokens: '3,000 tokens/mo',
-      limits: '2 calendars, 2 users, 300 voice mins, 2,500 SMS/mo',
-      support: 'Priority chat (24h target)',
+      limits: '2 users · 2 calendars · 300 voice mins · 2,500 SMS/mo',
+      support: 'Priority chat (24h) + onboarding call',
       guarantee: '10 extra bookings in 30 days or your money back.',
       ctaLabel: 'Start 7-Day Free Trial',
       popular: true
     },
     {
       title: 'Ultimate',
-      subtitle: 'Growth Ops',
-      priceMonthlyUsd: 249,
-      priceAnnualUsd: 2388,
-      priceMonthlyIls: 940,
-      priceAnnualIls: 8960,
+      subtitle: 'Done-For-You Growth Engine',
+      priceMonthlyUsd: 4997,
+      priceAnnualUsd: 44973,
+      priceMonthlyIls: 18740,
+      priceAnnualIls: 168660,
       features: [
-        'Everything in Pro (same core outcomes)',
-        'We set it up for you (done in 48h)',
-        'VIP support (same-day + phone/WhatsApp)',
-        'Quarterly strategy review (scripts, funnels, offers)',
-        'Branded voice (custom greeting voice + name)',
-        'Compliance pack (recording notice & retention presets)'
+        'Everything in Pro',
+        'We run your ads (Meta + Google)',
+        'Full funnel: Ads → AI Agent → Booked appointments',
+        'Unlimited agents, all channels incl. WhatsApp & DMs',
+        'Done-for-you setup in 48h + branded voice',
+        'Dedicated account manager + quarterly strategy reviews'
       ],
-      tokens: '10,000 tokens/mo',
-      limits: '4 calendars, 5 users, 900 voice mins, 6,000 SMS/mo',
-      support: 'Multi-location ready (add locations at $199/750 each)',
+      limits: '5 users · 4 calendars · 900 voice mins · 6,000 SMS/mo',
+      support: 'VIP same-day · phone + WhatsApp · add locations at $750/ea',
       ctaLabel: 'Start 7-Day Free Trial',
       popular: false
     }
   ];
 
   const comparisonFeatures = [
-    { name: 'Instant SMS + booking', starter: true, pro: true, ultimate: true },
-    { name: 'AI receptionist (voice)', starter: false, pro: true, ultimate: true },
+    { name: 'AI agent — one setup, every channel', starter: true, pro: true, ultimate: true },
+    { name: 'SMS, email & website chat', starter: true, pro: true, ultimate: true },
+    { name: 'Lead qualification + auto-booking', starter: true, pro: true, ultimate: true },
+    { name: 'Multi-step follow-up sequences', starter: true, pro: true, ultimate: true },
+    { name: 'AI voice calls (inbound + outbound)', starter: false, pro: true, ultimate: true },
     { name: 'Live transfer to human', starter: false, pro: true, ultimate: true },
-    { name: 'Dashboard + transcripts', starter: false, pro: true, ultimate: true },
+    { name: 'CRM integration + Zapier/Make', starter: false, pro: true, ultimate: true },
+    { name: 'Call transcripts & recordings', starter: false, pro: true, ultimate: true },
+    { name: 'Google review requests', starter: false, pro: true, ultimate: true },
     { name: 'Money-back guarantee', starter: false, pro: true, ultimate: true },
-    { name: 'VIP phone/WhatsApp support', starter: false, pro: false, ultimate: true },
-    { name: 'We set it up for you (48h)', starter: false, pro: false, ultimate: true },
-    { name: 'Quarterly strategy call', starter: false, pro: false, ultimate: true },
-    { name: 'Custom branded voice', starter: false, pro: false, ultimate: true },
-    { name: 'Calendars / Users', starter: '1 / 1', pro: '2 / 2', ultimate: '4 / 5' },
+    { name: 'We run your ads (Meta + Google)', starter: false, pro: false, ultimate: true },
+    { name: 'Full funnel: Ads → AI → Bookings', starter: false, pro: false, ultimate: true },
+    { name: 'WhatsApp + Facebook/Instagram DMs', starter: false, pro: false, ultimate: true },
+    { name: 'Done-for-you setup in 48h', starter: false, pro: false, ultimate: true },
+    { name: 'Dedicated account manager', starter: false, pro: false, ultimate: true },
+    { name: 'Quarterly strategy reviews', starter: false, pro: false, ultimate: true },
+    { name: 'Branded voice + compliance pack', starter: false, pro: false, ultimate: true },
+    { name: 'AI agents', starter: '1', pro: '3', ultimate: 'Unlimited' },
+    { name: 'Users / Calendars', starter: '1 / 1', pro: '2 / 2', ultimate: '5 / 4' },
     { name: 'Voice minutes / SMS', starter: '— / 1,000', pro: '300 / 2,500', ultimate: '900 / 6,000' }
   ];
 
@@ -110,7 +119,7 @@ const PricingSection: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Pro has everything most teams need. Ultimate adds white-glove polish.
+            One AI agent. Every channel. Set up once. Pick how far you want us to take it.
           </motion.p>
 
           {/* Billing Toggle */}
@@ -228,12 +237,6 @@ const PricingSection: React.FC = () => {
                   <p className="text-green-600 text-sm mt-1">3 months free</p>
                 )}
               </div>
-
-              {plan.tokens && (
-                <div className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold mb-4">
-                  {plan.tokens}
-                </div>
-              )}
 
               <Button
                 onClick={handlePlanSelect}

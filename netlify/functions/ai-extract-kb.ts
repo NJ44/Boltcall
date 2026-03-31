@@ -1,4 +1,5 @@
 import type { Handler } from '@netlify/functions';
+import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
 
@@ -19,10 +20,18 @@ const handler: Handler = async (event) => {
   }
 
   try {
-    const { content, businessName, category } = JSON.parse(event.body || '{}');
+    const { content, businessName, category, userId } = JSON.parse(event.body || '{}');
 
     if (!content) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'Content is required' }) };
+    }
+
+    // Token gate: deduct before calling Claude
+    if (userId) {
+      const deductResult = await deductTokens(userId, TOKEN_COSTS.ai_kb_extract, 'ai_kb_extract', `KB extraction for ${businessName || 'unknown'}`);
+      if (!deductResult.success) {
+        return { statusCode: 402, headers, body: JSON.stringify({ error: 'Insufficient tokens for KB extraction', details: deductResult.error }) };
+      }
     }
 
     // Truncate content to avoid token limits
