@@ -1,7 +1,6 @@
 import { Handler } from '@netlify/functions';
-import { createClient } from '@supabase/supabase-js';
 import { notifyError, notifyInfo } from './_shared/notify';
-import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
+import { deductTokens, getSupabase, TOKEN_COSTS } from './_shared/token-utils';
 
 /**
  * Agent Self-Healing Pipeline
