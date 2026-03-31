@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
-import { Users, Phone, Calendar, LucideIcon } from 'lucide-react';
+import { Users, Phone, Calendar } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 export interface FinalCTAProps {
   headline?: string;
@@ -14,28 +15,28 @@ export interface FinalCTAProps {
 // ── Presets for different page types ────────────────────────────────────────
 export const CALCULATOR_CTA: FinalCTAProps = {
   headline: 'Stop Losing Revenue to Missed Calls.',
-  description: 'See how much you're leaving on the table. Set up your AI receptionist in 5 minutes — it's free.',
+  description: "See how much you're leaving on the table. Set up your AI receptionist in 5 minutes. It's free.",
   buttonText: 'Start the free setup',
   buttonHref: '/signup',
 };
 
 export const HOW_TO_CTA: FinalCTAProps = {
   headline: 'See It Working in 5 Minutes.',
-  description: 'Set up your AI receptionist now. It answers calls, books appointments, and follows up — automatically.',
+  description: 'Set up your AI receptionist now. It answers calls, books appointments, and follows up automatically.',
   buttonText: 'Try it free',
   buttonHref: '/signup',
 };
 
 export const COMPARISON_CTA: FinalCTAProps = {
   headline: 'Ready to Switch?',
-  description: 'Try Boltcall free — no contract, no commitment. See the difference in your first week.',
+  description: 'Try Boltcall free. No contract, no commitment. See the difference in your first week.',
   buttonText: 'Start free',
   buttonHref: '/signup',
 };
 
 export const BLOG_CTA: FinalCTAProps = {
   headline: 'Put This Into Practice Today.',
-  description: 'Boltcall handles calls, texts, and bookings for you — 24/7. Free to set up, no contract.',
+  description: 'Boltcall handles calls, texts, and bookings for you 24/7. Free to set up, no contract.',
   buttonText: 'Get started free',
   buttonHref: '/signup',
 };

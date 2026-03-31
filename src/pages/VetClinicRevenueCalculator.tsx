@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   Stethoscope, CalendarX2, PhoneOff, TrendingUp,
   DollarSign, Users, Clock, Send, Zap, BarChart3,
-  CheckCircle, AlertTriangle, ArrowRight, Heart,
+  CheckCircle, AlertTriangle,
   Calendar, UserX, Phone
 } from 'lucide-react';
 import Header from '../components/Header';
@@ -541,7 +541,7 @@ const VetClinicRevenueCalculator: React.FC = () => {
               },
               {
                 stat: '$1,800',
-                text: 'The average lifetime value of a new vet client — one missed call costs more than a year of AI',
+                text: 'The average lifetime value of a new vet client -- one missed call costs more than a year of AI',
                 icon: DollarSign,
               },
               {
@@ -578,7 +578,7 @@ const VetClinicRevenueCalculator: React.FC = () => {
                 {
                   num: '01',
                   title: 'AI Appointment Reminders',
-                  desc: 'Smart SMS and voice reminders sent at the perfect time — with easy confirm/reschedule links. Reduce no-shows by up to 55% without adding front desk workload.',
+                  desc: 'Smart SMS and voice reminders sent at the perfect time -- with easy confirm/reschedule links. Reduce no-shows by up to 55% without adding front desk workload.',
                   icon: Calendar,
                   color: 'from-teal-500/15 to-teal-500/5',
                   borderColor: 'border-teal-500/20',
@@ -587,7 +587,7 @@ const VetClinicRevenueCalculator: React.FC = () => {
                 {
                   num: '02',
                   title: '24/7 AI Receptionist',
-                  desc: 'Never miss a call from a worried pet owner. AI answers every ring — after hours, during surgery, on weekends — and books the appointment or takes a message instantly.',
+                  desc: 'Never miss a call from a worried pet owner. AI answers every ring -- after hours, during surgery, on weekends -- and books the appointment or takes a message instantly.',
                   icon: Phone,
                   color: 'from-blue-500/15 to-blue-500/5',
                   borderColor: 'border-blue-500/20',
