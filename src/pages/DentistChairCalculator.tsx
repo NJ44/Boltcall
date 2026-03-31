@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
 
 const fadeUp = {
@@ -932,6 +933,7 @@ const DentistChairCalculator: React.FC = () => {
         </section>
       </main>
 
+      <FinalCTA {...CALCULATOR_CTA} />
       <Footer />
     </div>
   );

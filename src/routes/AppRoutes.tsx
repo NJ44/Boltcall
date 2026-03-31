@@ -112,6 +112,8 @@ const VoiceAgentOnboarding = React.lazy(() => import('../pages/VoiceAgentOnboard
 const AiReadinessScorecard = React.lazy(() => import('../pages/AiReadinessScorecard'));
 const AiReceptionistRoi = React.lazy(() => import('../pages/AiReceptionistRoi'));
 const FiveMinuteResponsePlaybook = React.lazy(() => import('../pages/FiveMinuteResponsePlaybook'));
+const VetClinicRevenueCalculator = React.lazy(() => import('../pages/VetClinicRevenueCalculator'));
+const HowToAIPhoneAnsweringVetClinic = React.lazy(() => import('../pages/HowToAIPhoneAnsweringVetClinic'));
 
 // ── Lazy loads — Speed Test funnel ───────────────────────────────────────
 const SpeedTestLanding = React.lazy(() => import('../pages/speed-test/SpeedTestLanding'));
@@ -467,6 +469,10 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/solar-speed-playbook/thank-you" element={<SolarSpeedToLeadPlaybookThankYou />} />
         {/* 5-Minute Response Playbook lead magnet */}
         <Route path="/tools/5-minute-response-playbook" element={<FiveMinuteResponsePlaybook />} />
+        {/* Vet Clinic Revenue Calculator */}
+        <Route path="/tools/vet-clinic-revenue-calculator" element={<VetClinicRevenueCalculator />} />
+        {/* Vet Clinic AI Phone Answering How-To (AEO page) */}
+        <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
         {/* All niche tools now served by dynamic route from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />
