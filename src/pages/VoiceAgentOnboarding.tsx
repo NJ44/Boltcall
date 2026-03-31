@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Bot, Building2, ArrowRight, ArrowLeft, Loader2, CheckCircle2, Zap, Shield, MessageSquare } from 'lucide-react';
-
-const FUNCTIONS_BASE = import.meta.env.DEV
-  ? 'http://localhost:8888/.netlify/functions'
-  : '/.netlify/functions';
+import { FUNCTIONS_BASE } from '../lib/api';
 
 type FormData = {
   name: string;
