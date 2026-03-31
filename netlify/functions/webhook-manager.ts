@@ -23,13 +23,6 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) throw new Error('Missing Supabase credentials');
-  return createClient(url, key);
-}
-
 const TRIGGER_EVENTS = [
   'new_lead',
   'missed_call',
