@@ -19,13 +19,6 @@ import { getSupabase } from './_shared/token-utils';
  *   - URL or DEPLOY_URL — Netlify site URL
  */
 
-function getSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
-  return createClient(url, key);
-}
-
 function redirect(path: string) {
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
   return {
