@@ -1,37 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AnimatedNumberCountdownCompact from '@/components/ui/countdown-number-compact';
 
 const GiveawayBar: React.FC = () => {
-  // Calculate end date (14 days from now, matching giveaway page)
-  const endDate = new Date();
-  endDate.setDate(endDate.getDate() + 14);
-
   return (
-    <Link to="/giveaway" className="block">
-      <div className="relative bg-blue-600 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none drop-shadow-none ring-0 border-none outline-none" style={{ minHeight: '43px', contain: 'layout style', boxShadow: 'none' }}>
+    <Link to="/challenge" className="block">
+      <div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none drop-shadow-none ring-0 border-none outline-none" style={{ minHeight: '43px', contain: 'layout style', boxShadow: 'none' }}>
         <div className="relative z-10">
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-            <div className="flex flex-col sm:flex-row items-center justify-between py-0.5 sm:py-2 gap-0.5 sm:gap-0" style={{ minHeight: '43px' }}>
-              {/* Left side - Announcement content */}
+            <div className="flex items-center justify-between py-0.5 sm:py-2 gap-0.5 sm:gap-0" style={{ minHeight: '43px' }}>
+              {/* Left side */}
               <div className="flex items-center space-x-1 sm:space-x-3">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className="font-bold text-xs sm:text-lg">🌸 Spring Giveaway 🌸</span>
-                  <span className="text-[10px] sm:text-sm lg:text-base opacity-90">
-                    Win a <strong>6 months Pro subscription</strong>
+                  <span className="font-bold text-xs sm:text-lg text-yellow-400">Break My AI Challenge</span>
+                  <span className="text-[10px] sm:text-sm lg:text-base text-gray-300">
+                    Crack the code in 60 seconds. Win a <strong className="text-white">free website</strong>.
                   </span>
                 </div>
               </div>
 
-              {/* Right side - Giveaway Countdown */}
-              <div className="flex items-center space-x-1 sm:space-x-3 text-[10px] sm:text-sm">
-                <span className="font-medium hidden sm:inline">Until giveaway:</span>
-                <div className="bg-white/20 px-1.5 sm:px-3 py-0.5 sm:py-1.5 rounded-lg min-w-[120px] sm:min-w-[140px]">
-                  <AnimatedNumberCountdownCompact
-                    endDate={endDate}
-                    className="text-white [&_span]:text-white"
-                  />
-                </div>
+              {/* Right side - CTA */}
+              <div className="flex items-center">
+                <span className="bg-blue-600 hover:bg-blue-500 transition-colors text-white text-[10px] sm:text-sm font-bold px-2 sm:px-4 py-1 sm:py-1.5 rounded-lg whitespace-nowrap">
+                  Try Now
+                </span>
               </div>
             </div>
           </div>
