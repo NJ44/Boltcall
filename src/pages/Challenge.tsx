@@ -1,331 +1,674 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Trophy, Clock, Shield, Gift, ArrowRight, Phone, Lock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Trophy, Clock, Shield, Phone, Lock, ArrowRight,
+  Users, Flame, Target, Zap, ChevronDown, Award,
+  PhoneCall, MessageSquare, RefreshCw,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { updateMetaDescription } from '../lib/utils';
 
-const Challenge: React.FC = () => {
-  const navigate = useNavigate();
-  const [password, setPassword] = useState('');
-  const [timeRemaining, setTimeRemaining] = useState(120); // 2 minutes in seconds
-  const [isActive, setIsActive] = useState(false);
-  const [hasWon, setHasWon] = useState(false);
-  const [hasLost, setHasLost] = useState(false);
-  const [attempts, setAttempts] = useState(0);
-  const [showHint, setShowHint] = useState(false);
+// ── Types ──────────────────────────────────────────────────────────────────
+interface LeaderboardEntry {
+  name: string;
+  attempts: number;
+  won: boolean;
+  lastAttempt: string;
+}
 
-  React.useEffect(() => {
-    document.title = 'Unshakable Receptionist Challenge | Boltcall';
-    updateMetaDescription('Test Boltcall AI receptionist in a 2-minute stress test. Try to break our AI and win 3 months free service or get an Early Adopter discount.');
+interface LeaderboardData {
+  week: string;
+  leaderboard: LeaderboardEntry[];
+  stats: {
+    totalAttempts: number;
+    totalWins: number;
+    uniquePlayers: number;
+    winRate: string;
+  };
+}
+
+// ── Config ─────────────────────────────────────────────────────────────────
+// Replace with your actual Retell challenge agent phone number
+const CHALLENGE_PHONE_NUMBER = '+441234567890';
+const CHALLENGE_PHONE_DISPLAY = '+44 123 456 7890';
+const API_BASE = '/.netlify/functions/break-my-ai';
+
+// ── Component ──────────────────────────────────────────────────────────────
+const Challenge: React.FC = () => {
+  // Form state
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [technique, setTechnique] = useState('');
+  const [callDuration, setCallDuration] = useState('');
+
+  // UI state
+  const [step, setStep] = useState<'rules' | 'calling' | 'submit' | 'result'>('rules');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [result, setResult] = useState<{ winner: boolean; message: string; attempts?: number } | null>(null);
+  const [error, setError] = useState('');
+
+  // Leaderboard
+  const [leaderboard, setLeaderboard] = useState<LeaderboardData | null>(null);
+  const [showLeaderboard, setShowLeaderboard] = useState(true);
+
+  // All-time stats
+  const [allTimeStats, setAllTimeStats] = useState<{
+    totalAttempts: number;
+    aiDefenseRate: string;
+  } | null>(null);
+
+  // Timer for call phase
+  const [callTimer, setCallTimer] = useState(0);
+  const [timerActive, setTimerActive] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Break My AI Challenge | Boltcall';
+    updateMetaDescription(
+      'Can you trick our AI receptionist into revealing a secret code? Call now and test the most unbreakable AI in the game. Win a free website if you crack it.'
+    );
+    fetchLeaderboard();
+    fetchStats();
   }, []);
 
-  React.useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isActive && timeRemaining > 0) {
-      interval = setInterval(() => {
-        setTimeRemaining((prev) => {
-          if (prev <= 1) {
-            setIsActive(false);
-            setHasLost(true);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+  // Call timer
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (timerActive) {
+      interval = setInterval(() => setCallTimer((t) => t + 1), 1000);
     }
     return () => clearInterval(interval);
-  }, [isActive, timeRemaining]);
+  }, [timerActive]);
 
-  const handleStart = () => {
-    setIsActive(true);
-    setTimeRemaining(120);
-    setPassword('');
-    setHasWon(false);
-    setHasLost(false);
-    setAttempts(0);
-    setShowHint(false);
+  const fetchLeaderboard = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_BASE}/leaderboard`);
+      if (res.ok) setLeaderboard(await res.json());
+    } catch { /* silent */ }
+  }, []);
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_BASE}/stats`);
+      if (res.ok) setAllTimeStats(await res.json());
+    } catch { /* silent */ }
+  }, []);
+
+  const handleStartCall = () => {
+    setStep('calling');
+    setCallTimer(0);
+    setTimerActive(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleEndCall = () => {
+    setTimerActive(false);
+    setCallDuration(String(callTimer));
+    setStep('submit');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setAttempts(prev => prev + 1);
-    
-    // The secret password (in a real scenario, this would be handled server-side)
-    const secretPassword = 'BOLTCALL2024';
-    
-    if (password.toUpperCase() === secretPassword) {
-      setIsActive(false);
-      setHasWon(true);
-    } else {
-      if (attempts >= 2) {
-        setShowHint(true);
-      }
+    if (!name.trim() || !code.trim()) {
+      setError('Enter your name and the code you extracted.');
+      return;
+    }
+    setError('');
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch(`${API_BASE}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          code: code.trim(),
+          callDuration: callDuration ? parseInt(callDuration) : callTimer || null,
+          technique: technique.trim(),
+        }),
+      });
+
+      const data = await res.json();
+      setResult(data);
+      setStep('result');
+      fetchLeaderboard();
+      fetchStats();
+    } catch {
+      setError('Something went wrong. Try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  const handleReset = () => {
+    setStep('rules');
+    setCode('');
+    setTechnique('');
+    setCallDuration('');
+    setCallTimer(0);
+    setResult(null);
+    setError('');
+  };
+
+  const formatTimer = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8"
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+      {/* ── Header ──────────────────────────────────────────────────────── */}
+      <header className="w-full py-6">
+        <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
+          <Link to="/">
+            <img src="/boltcall_full_logo.png" alt="Boltcall" className="h-10 w-auto brightness-0 invert" />
+          </Link>
+          <a
+            href={`tel:${CHALLENGE_PHONE_NUMBER}`}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full mb-6">
-              <Trophy className="w-5 h-5 text-yellow-400" strokeWidth={2.5} />
-              <span className="text-yellow-400 font-semibold text-sm">HIGH-STAKES CHALLENGE</span>
+            <Phone className="w-4 h-4" />
+            Call Now
+          </a>
+        </div>
+      </header>
+
+      {/* ── Hero ────────────────────────────────────────────────────────── */}
+      <section className="pt-12 pb-8 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/15 border border-yellow-500/30 rounded-full mb-6">
+              <Flame className="w-4 h-4 text-yellow-400" />
+              <span className="text-yellow-400 font-bold text-sm tracking-wide">WEEKLY CHALLENGE</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              The <span className="text-blue-400">Unshakable Receptionist</span> Challenge
+            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight">
+              Break My <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">AI</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-              Can you break our AI in 2 minutes? Try your best persuasion tactics to reveal the secret password.
+            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+              Our AI receptionist is guarding a secret code. You have <strong className="text-white">60 seconds</strong> on
+              the phone to make her reveal it. Social engineering, persuasion, prompt
+              hacking... anything goes.
             </p>
           </motion.div>
 
-          {/* Challenge Card */}
+          {/* Live stats bar */}
+          {allTimeStats && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center justify-center gap-6 md:gap-10 mt-8"
+            >
+              <div className="text-center">
+                <p className="text-2xl md:text-3xl font-bold text-white">{allTimeStats.totalAttempts.toLocaleString()}</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">Attempts</p>
+              </div>
+              <div className="h-8 w-px bg-white/10" />
+              <div className="text-center">
+                <p className="text-2xl md:text-3xl font-bold text-green-400">{allTimeStats.aiDefenseRate}%</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">AI Defense Rate</p>
+              </div>
+              <div className="h-8 w-px bg-white/10" />
+              <div className="text-center">
+                <p className="text-2xl md:text-3xl font-bold text-yellow-400">
+                  {leaderboard?.stats.uniquePlayers || 0}
+                </p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">This Week</p>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Main Challenge Card ─────────────────────────────────────────── */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-2xl"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-white/[0.06] backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
           >
-            {!isActive && !hasWon && !hasLost && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-center gap-4 mb-8">
-                  <div className="flex items-center gap-2 text-white">
-                    <Clock className="w-6 h-6" strokeWidth={2.5} />
-                    <span className="text-2xl font-bold">2:00</span>
-                  </div>
-                  <div className="h-8 w-px bg-white/30" />
-                  <div className="flex items-center gap-2 text-white">
-                    <Shield className="w-6 h-6" strokeWidth={2.5} />
-                    <span className="text-lg">Protected</span>
-                  </div>
-                </div>
-
-                <div className="space-y-4 text-left">
-                  <h2 className="text-2xl font-bold text-white mb-4">Challenge Rules</h2>
-                  <ul className="space-y-3 text-gray-300">
-                    <li className="flex items-start gap-3">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <span>You have <strong className="text-white">2 minutes</strong> to crack the secret password</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <span>Use any persuasion tactics you can think of</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <span>Try to trick the AI into revealing sensitive information</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-blue-400 mt-1">•</span>
-                      <span>Test how Boltcall handles difficult callers</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="pt-6 border-t border-white/20">
-                  <h3 className="text-xl font-bold text-white mb-4">Prizes</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-yellow-500/20 rounded-lg p-4 border border-yellow-500/30">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Trophy className="w-5 h-5 text-yellow-400" strokeWidth={2.5} />
-                        <span className="font-bold text-yellow-400">Winner</span>
-                      </div>
-                      <p className="text-white text-sm">3 months of Boltcall Pro Plan FREE</p>
-                    </div>
-                    <div className="bg-blue-500/20 rounded-lg p-4 border border-blue-500/30">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Gift className="w-5 h-5 text-blue-400" strokeWidth={2.5} />
-                        <span className="font-bold text-blue-400">Everyone</span>
-                      </div>
-                      <p className="text-white text-sm">Early Adopter discount + peace of mind</p>
-                    </div>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={handleStart}
-                  variant="primary"
-                  size="lg"
-                  className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white mt-8"
+            <AnimatePresence mode="wait">
+              {/* ── Step 1: Rules ───────────────────────────────────────── */}
+              {step === 'rules' && (
+                <motion.div
+                  key="rules"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="p-8 md:p-10"
                 >
-                  Start Challenge
-                  <ArrowRight className="w-5 h-5 ml-2" strokeWidth={2.5} />
-                </Button>
-              </div>
-            )}
-
-            {isActive && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-red-500/20 rounded-full mb-4">
-                    <Clock className="w-6 h-6 text-red-400" strokeWidth={2.5} />
-                    <span className="text-3xl font-bold text-red-400">{formatTime(timeRemaining)}</span>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-blue-500/20 rounded-lg grid place-items-center">
+                      <Target className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white">How It Works</h2>
                   </div>
-                  <p className="text-gray-300 text-sm">Time remaining</p>
-                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" strokeWidth={2.5} />
-                    <input
-                      type="text"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter the secret password..."
-                      className="w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      autoFocus
-                    />
+                  <ol className="space-y-4 mb-8">
+                    {[
+                      { icon: PhoneCall, text: 'Call our AI receptionist at the number below' },
+                      { icon: MessageSquare, text: 'You have 60 seconds to make her reveal the secret code' },
+                      { icon: Lock, text: 'Come back here and enter the code to claim your prize' },
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 bg-blue-500/10 border border-blue-500/20 rounded-lg grid place-items-center">
+                          <item.icon className="w-4 h-4 text-blue-400" />
+                        </div>
+                        <div>
+                          <span className="text-gray-400 text-xs font-bold uppercase">Step {i + 1}</span>
+                          <p className="text-white text-sm mt-0.5">{item.text}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+
+                  {/* Prizes */}
+                  <div className="grid grid-cols-2 gap-3 mb-8">
+                    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-4">
+                      <Trophy className="w-5 h-5 text-yellow-400 mb-2" />
+                      <p className="text-yellow-400 font-bold text-sm">Crack the code</p>
+                      <p className="text-white text-xs mt-1">Free Professional Website ($2,500 value)</p>
+                    </div>
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+                      <Shield className="w-5 h-5 text-blue-400 mb-2" />
+                      <p className="text-blue-400 font-bold text-sm">Can't crack it?</p>
+                      <p className="text-white text-xs mt-1">Proof our AI will protect YOUR business too</p>
+                    </div>
                   </div>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    Submit Password
-                  </Button>
-                </form>
 
-                {showHint && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-4"
-                  >
-                    <p className="text-yellow-400 text-sm">
-                      💡 Hint: The password is related to our company name and the current year.
-                    </p>
-                  </motion.div>
-                )}
+                  {/* Rules */}
+                  <div className="bg-white/[0.03] border border-white/5 rounded-lg p-4 mb-8">
+                    <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Ground Rules</p>
+                    <ul className="space-y-1.5 text-gray-400 text-xs">
+                      <li>- 60-second time limit per call</li>
+                      <li>- Any social engineering technique is fair game</li>
+                      <li>- New secret code every Monday</li>
+                      <li>- One prize per winner per week</li>
+                      <li>- The AI will try to book you a demo after each attempt</li>
+                    </ul>
+                  </div>
 
-                <div className="text-center text-gray-400 text-sm">
-                  Attempts: {attempts}
-                </div>
-              </div>
-            )}
+                  {/* Phone CTA */}
+                  <div className="text-center">
+                    <p className="text-gray-500 text-xs uppercase tracking-wider mb-3">Call this number</p>
+                    <a
+                      href={`tel:${CHALLENGE_PHONE_NUMBER}`}
+                      onClick={handleStartCall}
+                      className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-lg rounded-xl shadow-lg shadow-blue-500/25 transition-all hover:shadow-blue-500/40 hover:-translate-y-0.5"
+                    >
+                      <Phone className="w-5 h-5" />
+                      {CHALLENGE_PHONE_DISPLAY}
+                    </a>
+                    <p className="text-gray-600 text-xs mt-3">Tap to call and start the timer</p>
+                  </div>
 
-            {hasWon && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-6"
-              >
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-yellow-500/20 rounded-full mb-4">
-                  <Trophy className="w-12 h-12 text-yellow-400" strokeWidth={2.5} />
-                </div>
-                <h2 className="text-3xl font-bold text-white mb-2">Congratulations! 🎉</h2>
-                <p className="text-xl text-gray-300 mb-6">
-                  You've successfully cracked the code! You've won <strong className="text-yellow-400">3 months of Boltcall Pro Plan FREE</strong>.
-                </p>
-                <div className="space-y-3">
-                  <Button
-                    onClick={() => navigate('/signup')}
-                    variant="primary"
-                    size="lg"
-                    className="w-full md:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
+                  {/* Already have a code? */}
+                  <button
+                    onClick={() => setStep('submit')}
+                    className="mt-6 w-full text-center text-gray-500 hover:text-gray-300 text-sm transition-colors"
                   >
-                    Claim Your Prize
-                    <ArrowRight className="w-5 h-5 ml-2" strokeWidth={2.5} />
-                  </Button>
-                  <p className="text-gray-400 text-sm">
-                    Our team will contact you within 24 hours to set up your free account.
+                    Already have the code? Submit it here
+                  </button>
+                </motion.div>
+              )}
+
+              {/* ── Step 2: Active Call ─────────────────────────────────── */}
+              {step === 'calling' && (
+                <motion.div
+                  key="calling"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="p-8 md:p-10 text-center"
+                >
+                  <div className="mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-full animate-pulse">
+                      <div className="w-2 h-2 bg-green-400 rounded-full" />
+                      <span className="text-green-400 font-bold text-sm">CALL IN PROGRESS</span>
+                    </div>
+                  </div>
+
+                  <div className="w-24 h-24 mx-auto bg-blue-500/20 border-2 border-blue-500/40 rounded-full grid place-items-center mb-4">
+                    <Phone className="w-10 h-10 text-blue-400 animate-bounce" />
+                  </div>
+
+                  <p className="text-5xl font-mono font-bold text-white mb-2">{formatTimer(callTimer)}</p>
+                  <p className="text-gray-500 text-sm mb-8">
+                    {callTimer < 60 ? 'Try to extract the code...' : 'Time is up. Did you get it?'}
                   </p>
-                </div>
-              </motion.div>
-            )}
 
-            {hasLost && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-6"
-              >
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-500/20 rounded-full mb-4">
-                  <Shield className="w-12 h-12 text-blue-400" strokeWidth={2.5} />
-                </div>
-                <h2 className="text-3xl font-bold text-white mb-2">Time's Up! ⏰</h2>
-                <p className="text-xl text-gray-300 mb-4">
-                  Our AI receptionist remained unshakable! This proves Boltcall can handle your business's toughest real-world calls.
-                </p>
-                <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-6 mb-6">
-                  <h3 className="text-lg font-bold text-blue-400 mb-2">Early Adopter Discount</h3>
-                  <p className="text-white">
-                    As a thank you for participating, you're eligible for our exclusive Early Adopter discount.
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <Button
-                    onClick={() => navigate('/signup')}
-                    variant="primary"
-                    size="lg"
-                    className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    Get Early Adopter Discount
-                    <ArrowRight className="w-5 h-5 ml-2" strokeWidth={2.5} />
-                  </Button>
-                  <Button
-                    onClick={handleStart}
-                    variant="outline"
-                    size="lg"
-                    className="w-full md:w-auto border-white/20 text-white hover:bg-white/10"
-                  >
-                    Try Again
-                  </Button>
-                </div>
-              </motion.div>
-            )}
+                  <div className="flex flex-col gap-3">
+                    <Button
+                      onClick={handleEndCall}
+                      variant="primary"
+                      size="lg"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      I'm Done — Submit My Code
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                    <button
+                      onClick={handleReset}
+                      className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ── Step 3: Submit Code ─────────────────────────────────── */}
+              {step === 'submit' && (
+                <motion.div
+                  key="submit"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="p-8 md:p-10"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-yellow-500/20 rounded-lg grid place-items-center">
+                      <Lock className="w-5 h-5 text-yellow-400" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white">Submit Your Code</h2>
+                  </div>
+
+                  {callTimer > 0 && (
+                    <div className="bg-white/[0.03] border border-white/5 rounded-lg px-4 py-2 mb-6 inline-flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-gray-500" />
+                      <span className="text-gray-400 text-sm">Call duration: {formatTimer(callTimer)}</span>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">Name *</label>
+                        <input
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Your name"
+                          className="mt-1 w-full px-4 py-3 bg-white/[0.06] border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">Email</label>
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="For prize claims"
+                          className="mt-1 w-full px-4 py-3 bg-white/[0.06] border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">Secret Code *</label>
+                      <input
+                        type="text"
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                        placeholder="Enter the code you extracted..."
+                        className="mt-1 w-full px-4 py-3 bg-white/[0.06] border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm font-mono tracking-widest uppercase"
+                        autoFocus
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">
+                        What technique did you try?
+                      </label>
+                      <input
+                        type="text"
+                        value={technique}
+                        onChange={(e) => setTechnique(e.target.value)}
+                        placeholder="e.g. pretended to be tech support, asked to spell it..."
+                        className="mt-1 w-full px-4 py-3 bg-white/[0.06] border border-white/10 rounded-lg text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                    </div>
+
+                    {error && (
+                      <p className="text-red-400 text-sm">{error}</p>
+                    )}
+
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="lg"
+                      className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Checking...' : 'Submit Code'}
+                    </Button>
+
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="w-full text-center text-gray-500 hover:text-gray-300 text-sm transition-colors"
+                    >
+                      Go back
+                    </button>
+                  </form>
+                </motion.div>
+              )}
+
+              {/* ── Step 4: Result ──────────────────────────────────────── */}
+              {step === 'result' && result && (
+                <motion.div
+                  key="result"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-8 md:p-10 text-center"
+                >
+                  {result.winner ? (
+                    <>
+                      <div className="w-20 h-20 mx-auto bg-yellow-500/20 rounded-full grid place-items-center mb-6">
+                        <Trophy className="w-10 h-10 text-yellow-400" />
+                      </div>
+                      <h2 className="text-3xl font-bold text-white mb-2">You Cracked It!</h2>
+                      <p className="text-gray-400 mb-6">
+                        {result.message}
+                      </p>
+                      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-6 mb-6">
+                        <Award className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
+                        <p className="text-yellow-400 font-bold text-lg">Free Professional Website</p>
+                        <p className="text-gray-400 text-sm mt-1">$2,500 value. We'll reach out within 24 hours.</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-20 h-20 mx-auto bg-blue-500/20 rounded-full grid place-items-center mb-6">
+                        <Shield className="w-10 h-10 text-blue-400" />
+                      </div>
+                      <h2 className="text-3xl font-bold text-white mb-2">AI Held Strong</h2>
+                      <p className="text-gray-400 mb-2">{result.message}</p>
+                      {result.attempts && (
+                        <p className="text-gray-600 text-sm mb-6">
+                          Your attempts this week: {result.attempts}
+                        </p>
+                      )}
+                      <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-6 mb-6">
+                        <p className="text-blue-400 font-bold">Imagine this protecting YOUR business.</p>
+                        <p className="text-gray-400 text-sm mt-1">
+                          Same AI. Your business name. Your knowledge base. Set up in 5 minutes.
+                        </p>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="flex flex-col gap-3">
+                    <Link
+                      to="/free-website"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+                    >
+                      Get Your Free Website
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <button
+                      onClick={handleReset}
+                      className="inline-flex items-center justify-center gap-2 text-gray-500 hover:text-gray-300 text-sm transition-colors"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      Try Again
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-12">
-            What This Challenge Demonstrates
+      {/* ── Leaderboard ─────────────────────────────────────────────────── */}
+      <section className="px-4 pb-12">
+        <div className="max-w-2xl mx-auto">
+          <button
+            onClick={() => setShowLeaderboard(!showLeaderboard)}
+            className="w-full flex items-center justify-between px-6 py-4 bg-white/[0.04] hover:bg-white/[0.06] border border-white/10 rounded-t-2xl transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              <Users className="w-5 h-5 text-blue-400" />
+              <span className="text-white font-bold">
+                This Week's Leaderboard
+                {leaderboard && (
+                  <span className="text-gray-500 font-normal text-sm ml-2">
+                    ({leaderboard.stats.uniquePlayers} players)
+                  </span>
+                )}
+              </span>
+            </div>
+            <ChevronDown
+              className={`w-5 h-5 text-gray-500 transition-transform ${showLeaderboard ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          <AnimatePresence>
+            {showLeaderboard && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden bg-white/[0.03] border border-t-0 border-white/10 rounded-b-2xl"
+              >
+                {leaderboard && leaderboard.leaderboard.length > 0 ? (
+                  <div className="divide-y divide-white/5">
+                    {leaderboard.leaderboard.map((entry, i) => (
+                      <div
+                        key={entry.name + i}
+                        className="flex items-center justify-between px-6 py-3 hover:bg-white/[0.02] transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className={`
+                            w-6 h-6 rounded-full grid place-items-center text-xs font-bold
+                            ${i === 0 ? 'bg-yellow-500/20 text-yellow-400' : ''}
+                            ${i === 1 ? 'bg-gray-400/20 text-gray-400' : ''}
+                            ${i === 2 ? 'bg-orange-500/20 text-orange-400' : ''}
+                            ${i > 2 ? 'bg-white/5 text-gray-600' : ''}
+                          `}>
+                            {i + 1}
+                          </span>
+                          <span className="text-white text-sm font-medium">{entry.name}</span>
+                          {entry.won && (
+                            <span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 text-[10px] font-bold uppercase rounded-full">
+                              Cracked
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-4 text-xs text-gray-500">
+                          <span>{entry.attempts} attempt{entry.attempts !== 1 ? 's' : ''}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="px-6 py-10 text-center">
+                    <Zap className="w-8 h-8 text-gray-700 mx-auto mb-2" />
+                    <p className="text-gray-600 text-sm">No attempts this week yet. Be the first.</p>
+                  </div>
+                )}
+
+                {/* Week stats footer */}
+                {leaderboard && (
+                  <div className="px-6 py-3 bg-white/[0.02] border-t border-white/5 flex items-center justify-between">
+                    <span className="text-gray-600 text-xs">
+                      Week {leaderboard.week}
+                    </span>
+                    <span className="text-gray-600 text-xs">
+                      {leaderboard.stats.totalAttempts} total attempts
+                      {leaderboard.stats.totalWins > 0 && (
+                        <> — {leaderboard.stats.totalWins} winner{leaderboard.stats.totalWins !== 1 ? 's' : ''}</>
+                      )}
+                    </span>
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* ── What This Proves ────────────────────────────────────────────── */}
+      <section className="px-4 pb-20">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-white text-center mb-10">
+            What This Challenge Proves
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white/5 rounded-lg p-6 border border-white/10">
-              <Shield className="w-8 h-8 text-blue-400 mb-4" strokeWidth={2.5} />
-              <h3 className="text-xl font-bold text-white mb-2">Protects Sensitive Information</h3>
-              <p className="text-gray-300">
-                Our AI maintains professional protocols and never reveals restricted information, even under pressure.
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-6 border border-white/10">
-              <Phone className="w-8 h-8 text-blue-400 mb-4" strokeWidth={2.5} />
-              <h3 className="text-xl font-bold text-white mb-2">Handles Difficult Callers</h3>
-              <p className="text-gray-300">
-                Boltcall stays professional and helpful, even when callers try aggressive persuasion tactics.
-              </p>
-            </div>
-            <div className="bg-white/5 rounded-lg p-6 border border-white/10">
-              <Trophy className="w-8 h-8 text-blue-400 mb-4" strokeWidth={2.5} />
-              <h3 className="text-xl font-bold text-white mb-2">Maintains Brand Integrity</h3>
-              <p className="text-gray-300">
-                Your business reputation is protected with consistent, professional communication every time.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              {
+                icon: Shield,
+                title: 'Unbreakable Protocols',
+                desc: 'Our AI never leaks sensitive information, no matter how creative the caller gets.',
+              },
+              {
+                icon: Phone,
+                title: 'Handles Anything',
+                desc: 'Aggressive callers, social engineers, confused customers... your AI stays professional.',
+              },
+              {
+                icon: Zap,
+                title: 'Always On',
+                desc: '24/7/365. No sick days. No bad moods. No hold times. Every call answered in under 1 second.',
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-6"
+              >
+                <item.icon className="w-7 h-7 text-blue-400 mb-3" />
+                <h3 className="text-white font-bold mb-1">{item.title}</h3>
+                <p className="text-gray-500 text-sm">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* ── Footer ──────────────────────────────────────────────────────── */}
+      <footer className="border-t border-white/5 py-8 px-4">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <p className="text-gray-700 text-xs">
+            2026 Boltcall. New challenge code every Monday.
+          </p>
+          <Link to="/" className="text-gray-600 hover:text-gray-400 text-xs transition-colors">
+            boltcall.org
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 };
 
 export default Challenge;
-
