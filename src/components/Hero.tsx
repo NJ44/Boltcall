@@ -133,7 +133,6 @@ const FloatingIcon = React.memo(({
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const navigate = useNavigate();
   const [titleNumber, setTitleNumber] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
 
