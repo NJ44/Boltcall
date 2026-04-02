@@ -2,8 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
-import { InteractiveHoverButton } from './ui/interactive-hover-button';
-import { PopButton } from './ui/pop-button';
+import { Link } from 'react-router-dom';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
 
