@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
-import { InteractiveHoverButton } from './ui/interactive-hover-button';
-import { PopButton } from './ui/pop-button';
 import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
 
@@ -135,7 +133,6 @@ const FloatingIcon = React.memo(({
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const navigate = useNavigate();
   const [titleNumber, setTitleNumber] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -260,7 +257,7 @@ const Hero: React.FC = () => {
 
             {/* Subheadline */}
             <motion.p
-              className="speakable-intro text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
+              className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
@@ -276,21 +273,18 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <PopButton
-                color="blue"
-                size="lg"
+              <button
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                className="min-h-11 w-48"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
               >
                 Learn More
-              </PopButton>
-              <InteractiveHoverButton
-                text="Start free"
-                onClick={() => navigate('/signup')}
-                className="min-h-11 w-48 border-gray-300 bg-white text-gray-900 py-2.5 px-6"
-                hoverBgClass="bg-brand-blue"
-                hoverTextClass="text-white"
-              />
+              </button>
+              <Link
+                to="/signup"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
+              >
+                Start Free
+              </Link>
             </motion.div>
 
           </div>
