@@ -13,12 +13,13 @@ vi.mock('../_shared/token-utils', () => ({
 import { handler } from '../record-usage';
 
 function makeEvent(overrides: any = {}) {
+  const { body, ...rest } = overrides;
   return {
-    httpMethod: overrides.httpMethod || 'POST',
-    headers: overrides.headers || {},
-    queryStringParameters: overrides.queryStringParameters || null,
-    body: overrides.body ? JSON.stringify(overrides.body) : null,
-    ...overrides,
+    httpMethod: rest.httpMethod || 'POST',
+    headers: rest.headers || {},
+    queryStringParameters: rest.queryStringParameters || null,
+    body: body !== undefined ? JSON.stringify(body) : null,
+    ...rest,
   } as any;
 }
 
