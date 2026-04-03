@@ -112,7 +112,7 @@ export default function FeedbackSlider({ isOpen, onClose, onSubmit }: FeedbackSl
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 bg-black/40"
-              onClick={() => setIsOpen(false)}
+              onClick={onClose}
             />
 
             {/* Panel */}
@@ -130,7 +130,7 @@ export default function FeedbackSlider({ isOpen, onClose, onSubmit }: FeedbackSl
               >
                 {/* Close button */}
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={onClose}
                   className="absolute right-4 top-4 z-10 rounded-full bg-black/10 p-2 transition-colors hover:bg-black/20"
                 >
                   <X className="h-5 w-5" style={{ color: currentAnim.titleColor }} />
