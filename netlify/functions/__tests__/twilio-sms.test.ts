@@ -19,12 +19,13 @@ process.env.TWILIO_FROM_NUMBER = '+15551234567';
 import { handler } from '../twilio-sms';
 
 function makeEvent(overrides: any = {}) {
+  const { body, ...rest } = overrides;
   return {
-    httpMethod: overrides.httpMethod || 'POST',
-    headers: overrides.headers || {},
+    httpMethod: rest.httpMethod || 'POST',
+    headers: rest.headers || {},
     queryStringParameters: null,
-    body: overrides.body ? JSON.stringify(overrides.body) : null,
-    ...overrides,
+    body: body !== undefined ? JSON.stringify(body) : null,
+    ...rest,
   } as any;
 }
 
