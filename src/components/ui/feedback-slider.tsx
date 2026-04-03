@@ -60,7 +60,7 @@ const animationStates = [
   },
 ];
 
-const HandDrawnSmileIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const HandDrawnSmileIcon = (props: React.ComponentProps<typeof motion.svg>) => (
   <motion.svg
     width="100%"
     height="100%"
@@ -89,7 +89,7 @@ export default function FeedbackSlider({ isOpen, onClose, onSubmit }: FeedbackSl
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const currentAnim = animationStates[selectedIndex];
-  const transition = { type: "spring", stiffness: 300, damping: 30 };
+  const transition = { type: "spring" as const, stiffness: 300, damping: 30 };
 
   const handleSubmit = () => {
     onSubmit?.(ratingMap[selectedIndex]);
