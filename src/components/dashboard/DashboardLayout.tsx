@@ -56,6 +56,7 @@ const DashboardLayout: React.FC = () => {
   // sidebarHovered removed — collapsed sidebar shows tooltips instead of expanding
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   // Language switcher removed
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
