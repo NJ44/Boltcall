@@ -140,7 +140,15 @@ describe('Feature pages — smoke tests', () => {
 });
 
 describe('Comparison pages — smoke tests', () => {
-  it('Comparisons hub renders without crashing', () => {
-    expect(() => renderInRouter(Comparisons)).not.toThrow();
-  });
+  const comparisonPages: [string, React.ComponentType][] = [
+    ['TraditionalCallCentersVsBoltcall', TraditionalCallCentersVsBoltcall],
+    ['ReceptionistVsBoltcall', ReceptionistVsBoltcall],
+    ['VoicemailVsBoltcall', VoicemailVsBoltcall],
+  ];
+
+  for (const [name, Page] of comparisonPages) {
+    it(`${name} renders without crashing`, () => {
+      expect(() => renderInRouter(Page)).not.toThrow();
+    });
+  }
 });
