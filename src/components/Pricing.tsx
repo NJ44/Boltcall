@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { PricingTable } from './ui/pricing-table';
 import WhisperText from './ui/whisper-text';
-import type { PlanLevel } from '../lib/stripe';
-import { redirectToCheckout } from '../lib/stripe-checkout';
 
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+
+  // PayPal payment page routes per plan level
+  const PAYPAL_PLAN_ROUTES: Record<string, string> = {
+    starter: '/payment/elite-starter',
+    pro: '/payment/pro',
+    ultimate: '/contact',
+    custom: '/contact',
+  };
 
   // PricingTable data
   const pricingFeatures = [
@@ -35,14 +40,14 @@ const Pricing: React.FC = () => {
     {
       name: "Starter",
       level: "starter",
-      price: { monthly: 649, yearly: 5841 },
+      price: { monthly: 99, yearly: 948 },
       description: "Perfect for getting started with lead management.",
       tokens: "1,000 tokens/mo",
     },
     {
       name: "Pro",
       level: "pro",
-      price: { monthly: 997, yearly: 8973 },
+      price: { monthly: 179, yearly: 1716 },
       popular: true,
       description: "Everything in Starter plus:",
       tokens: "3,000 tokens/mo",
@@ -50,7 +55,7 @@ const Pricing: React.FC = () => {
     {
       name: "Ultimate",
       level: "all",
-      price: { monthly: 4997, yearly: 44973 },
+      price: { monthly: 249, yearly: 2388 },
       description: "Everything in Pro plus:",
       tokens: "10,000 tokens/mo",
     },
@@ -114,28 +119,17 @@ const Pricing: React.FC = () => {
           plans={pricingPlans}
           defaultPlan="pro"
           defaultInterval="monthly"
-          onPlanSelect={async (plan, interval) => {
-            if (isLoading) return;
-            setIsLoading(true);
-            try {
-              // Map plan levels to Stripe plan names
-              const planMap: Record<string, string> = {
-                starter: 'starter',
-                pro: 'pro',
-                all: 'ultimate',
-              };
-              const stripePlan = planMap[plan] || plan;
-              await redirectToCheckout({
-                plan: stripePlan as PlanLevel,
-                interval: interval || 'monthly',
-              });
-            } catch (error) {
-              console.error('Checkout error:', error);
-              // Fallback to signup page if Stripe isn't configured yet
-              navigate('/signup');
-            } finally {
-              setIsLoading(false);
-            }
+          onPlanSelect={(plan) => {
+            // Map pricing-table levels to plan keys
+            const planMap: Record<string, string> = {
+              starter: 'starter',
+              pro: 'pro',
+              all: 'ultimate',
+              custom: 'custom',
+            };
+            const planKey = planMap[plan] || plan;
+            const route = PAYPAL_PLAN_ROUTES[planKey] || '/pricing';
+            navigate(route);
           }}
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"

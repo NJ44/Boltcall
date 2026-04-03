@@ -113,6 +113,20 @@ const AiReadinessScorecard = React.lazy(() => import('../pages/AiReadinessScorec
 const AiReceptionistRoi = React.lazy(() => import('../pages/AiReceptionistRoi'));
 const FiveMinuteResponsePlaybook = React.lazy(() => import('../pages/FiveMinuteResponsePlaybook'));
 const VetClinicRevenueCalculator = React.lazy(() => import('../pages/VetClinicRevenueCalculator'));
+const ChiropractorPatientRecoveryCalculator = React.lazy(() => import('../pages/ChiropractorPatientRecoveryCalculator'));
+const DentistChairCalculator = React.lazy(() => import('../pages/DentistChairCalculator'));
+const HVACOverflowCalculator = React.lazy(() => import('../pages/HVACOverflowCalculator'));
+const AutoRepairMissedCallCalculator = React.lazy(() => import('../pages/AutoRepairMissedCallCalculator'));
+const LawyerIntakeCalculator = React.lazy(() => import('../pages/LawyerIntakeCalculator'));
+const MedSpaRebookingCalculator = React.lazy(() => import('../pages/MedSpaRebookingCalculator'));
+const PlumberRevenueCalculator = React.lazy(() => import('../pages/PlumberRevenueCalculator'));
+const RealEstateSpeedScorecard = React.lazy(() => import('../pages/RealEstateSpeedScorecard'));
+const InsuranceLeadResponseScorecard = React.lazy(() => import('../pages/InsuranceLeadResponseScorecard'));
+const CleaningServiceBookingCalculator = React.lazy(() => import('../pages/CleaningServiceBookingCalculator'));
+const LandscapingSeasonalRevenueCalculator = React.lazy(() => import('../pages/LandscapingSeasonalRevenueCalculator'));
+const SolarProfitCalculator = React.lazy(() => import('../pages/SolarProfitCalculator'));
+const SolarQuoteGenerator = React.lazy(() => import('../pages/SolarQuoteGenerator'));
+const SolarSalesCloser = React.lazy(() => import('../pages/SolarSalesCloser'));
 const HowToAIPhoneAnsweringVetClinic = React.lazy(() => import('../pages/HowToAIPhoneAnsweringVetClinic'));
 const FAQAIReceptionistHVAC = React.lazy(() => import('../pages/FAQAIReceptionistHVAC'));
 const FAQAIReceptionistDentist = React.lazy(() => import('../pages/FAQAIReceptionistDentist'));
@@ -480,6 +494,10 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/5-minute-response-playbook" element={<FiveMinuteResponsePlaybook />} />
         {/* Vet Clinic Revenue Calculator */}
         <Route path="/tools/vet-clinic-revenue-calculator" element={<VetClinicRevenueCalculator />} />
+        {/* Chiropractor Patient Recovery Calculator */}
+        <Route path="/tools/chiropractor-patient-recovery-calculator" element={<ChiropractorPatientRecoveryCalculator />} />
+        {/* Auto Repair Missed Call Calculator */}
+        <Route path="/tools/auto-repair-missed-call-calculator" element={<AutoRepairMissedCallCalculator />} />
         {/* Vet Clinic AI Phone Answering How-To (AEO page) */}
         <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
         {/* Industry FAQ AEO pages */}
@@ -490,6 +508,20 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/ai-receptionist-medspa-faq" element={<FAQAIReceptionistMedSpa />} />
         <Route path="/blog/ai-receptionist-solar-faq" element={<FAQAIReceptionistSolar />} />
         <Route path="/blog/ai-receptionist-vet-faq" element={<FAQAIReceptionistVet />} />
+        {/* Industry-specific calculators */}
+        <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
+        <Route path="/tools/hvac-overflow-calculator" element={<HVACOverflowCalculator />} />
+        <Route path="/tools/lawyer-intake-calculator" element={<LawyerIntakeCalculator />} />
+        <Route path="/tools/medspa-rebooking-calculator" element={<MedSpaRebookingCalculator />} />
+        <Route path="/tools/plumber-revenue-calculator" element={<PlumberRevenueCalculator />} />
+        <Route path="/tools/real-estate-speed-scorecard" element={<RealEstateSpeedScorecard />} />
+        <Route path="/tools/insurance-lead-response-scorecard" element={<InsuranceLeadResponseScorecard />} />
+        <Route path="/tools/cleaning-service-booking-calculator" element={<CleaningServiceBookingCalculator />} />
+        <Route path="/tools/solar-profit-calculator" element={<SolarProfitCalculator />} />
+        <Route path="/tools/solar-quote-generator" element={<SolarQuoteGenerator />} />
+        <Route path="/tools/solar-sales-closer" element={<SolarSalesCloser />} />
+        {/* Landscaping Seasonal Revenue Calculator */}
+        <Route path="/tools/landscaping-seasonal-revenue-calculator" element={<LandscapingSeasonalRevenueCalculator />} />
         {/* All niche tools now served by dynamic route from Supabase */}
         <Route path="/tools/:slug" element={<NicheToolPage />} />
         <Route path="/voice-agent-setup" element={<VoiceAgentOnboarding />} />

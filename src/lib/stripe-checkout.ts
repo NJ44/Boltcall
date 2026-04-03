@@ -53,19 +53,21 @@ export async function redirectToCheckout({ plan, interval }: CheckoutParams) {
 }
 
 /**
- * Open Stripe Customer Portal for managing subscription
+ * Open PayPal subscription management.
+ * PayPal doesn't have an embeddable portal — users manage subscriptions at paypal.com.
  */
 export async function openCustomerPortal() {
   const { getUserSubscription } = await import('./stripe');
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return;
-
-  // Get customer ID from subscription
   const sub = await getUserSubscription();
-  if (!sub?.stripe_customer_id) {
-    throw new Error('No active subscription found');
-  }
 
-  // For now, redirect to contact. In production, create a portal session via Netlify function
-  window.location.href = '/contact';
+  if (sub?.paypal_subscription_id) {
+    // Direct link to manage this specific PayPal subscription
+    window.open(
+      `https://www.paypal.com/myaccount/autopay/connect/${sub.paypal_subscription_id}`,
+      '_blank'
+    );
+  } else {
+    // Fallback: general PayPal subscription management
+    window.open('https://www.paypal.com/myaccount/autopay', '_blank');
+  }
 }

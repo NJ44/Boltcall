@@ -109,6 +109,23 @@ const ROUTES = [
   '/blog/why-speed-matters',
   '/blog/why-website-speed-is-everything',
   '/blog/will-receptionists-be-replaced-by-ai',
+  // Industry-specific calculators
+  '/tools/dentist-chair-calculator',
+  '/tools/hvac-overflow-calculator',
+  '/tools/lawyer-intake-calculator',
+  '/tools/medspa-rebooking-calculator',
+  '/tools/plumber-revenue-calculator',
+  '/tools/real-estate-speed-scorecard',
+  '/tools/solar-profit-calculator',
+  '/tools/solar-quote-generator',
+  '/tools/solar-sales-closer',
+  '/tools/5-minute-response-playbook',
+  '/tools/vet-clinic-revenue-calculator',
+  '/tools/insurance-lead-response-scorecard',
+  '/tools/chiropractor-patient-recovery-calculator',
+  '/tools/auto-repair-missed-call-calculator',
+  '/tools/cleaning-service-booking-calculator',
+  '/tools/landscaping-seasonal-revenue-calculator',
 ];
 
 // Simple static file server

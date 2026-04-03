@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap, Coins } from 'lucide-react';
+import { CreditCard, Download, CheckCircle, Loader2, ExternalLink, Zap, Coins, Settings } from 'lucide-react';
 import { PopButton } from '../../../components/ui/pop-button';
 import { PageSkeleton } from '../../../components/ui/loading-skeleton';
 import { useTranslation } from 'react-i18next';
 import { getUserSubscription, getUserInvoices, type PlanLevel } from '../../../lib/stripe';
-import { redirectToCheckout } from '../../../lib/stripe-checkout';
+import { openCustomerPortal } from '../../../lib/stripe-checkout';
 import { TOKEN_PLANS } from '../../../lib/tokens';
 import { useTokens } from '../../../contexts/TokenContext';
 
@@ -16,6 +16,7 @@ interface Subscription {
   status: string;
   current_period_end: string;
   stripe_customer_id: string;
+  paypal_subscription_id?: string;
 }
 
 interface Invoice {
@@ -39,6 +40,7 @@ const PlanBillingPage: React.FC = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
   const [upgrading, setUpgrading] = useState<string | null>(null);
+  const [portalLoading, setPortalLoading] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -85,15 +87,18 @@ const PlanBillingPage: React.FC = () => {
     { label: 'Tokens Used', used: tokensUsed, limit: tokenLimit || 1000 },
   ];
 
-  const handleUpgrade = async (plan: PlanLevel) => {
+  // PayPal payment page routes per plan
+  const PAYPAL_PLAN_ROUTES: Record<string, string> = {
+    starter: '/payment/elite-starter',
+    pro: '/payment/pro',
+    ultimate: '/contact', // Contact us for Ultimate
+    enterprise: '/contact',
+  };
+
+  const handleUpgrade = (plan: PlanLevel) => {
     setUpgrading(plan);
-    try {
-      await redirectToCheckout({ plan, interval: currentInterval });
-    } catch (error) {
-      console.error('Upgrade error:', error);
-    } finally {
-      setUpgrading(null);
-    }
+    const route = PAYPAL_PLAN_ROUTES[plan] || '/pricing';
+    window.location.href = route;
   };
 
   const formatDate = (dateStr: string) => {
@@ -220,6 +225,43 @@ const PlanBillingPage: React.FC = () => {
                 </PopButton>
                 <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800">
                   Save 20%
+                </span>
+              </div>
+            )}
+
+            {/* Manage Subscription (portal: update payment, cancel, etc.) */}
+            {subscription && (
+              <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-3">
+                <PopButton
+                  color="default"
+                  size="sm"
+                  disabled={portalLoading}
+                  onClick={async () => {
+                    setPortalLoading(true);
+                    try {
+                      await openCustomerPortal();
+                    } catch (error) {
+                      console.error('Portal error:', error);
+                    } finally {
+                      setPortalLoading(false);
+                    }
+                  }}
+                  className="gap-2"
+                >
+                  {portalLoading ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      Loading...
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Settings className="w-3.5 h-3.5" />
+                      Manage Subscription
+                    </span>
+                  )}
+                </PopButton>
+                <span className="text-xs text-gray-500">
+                  Update payment method, cancel, or change plan
                 </span>
               </div>
             )}

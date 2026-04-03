@@ -243,12 +243,15 @@ async function handlePaymentSaleCompleted(resource: any) {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function mapPayPalPlanToLevel(planId: string): string {
-  // Map your PayPal plan IDs to Boltcall plan levels
-  // Update these when you create subscription plans in PayPal
+  // Map PayPal plan/button IDs to Boltcall plan levels
+  // Hosted button IDs: 6QXWAZWNEVEV2 = Starter, FUL2XPWPEMFUY = Pro
   const planMap: Record<string, string> = {
+    '6QXWAZWNEVEV2': 'starter',
+    'FUL2XPWPEMFUY': 'pro',
+    // Add PayPal subscription plan IDs here when created:
     // 'P-XXXXX': 'starter',
     // 'P-XXXXX': 'pro',
-    // 'P-XXXXX': 'agency',
+    // 'P-XXXXX': 'ultimate',
   };
   return planMap[planId] || 'starter';
 }

@@ -11,8 +11,10 @@ const PRICE_MAP: Record<string, string | undefined> = {
   'starter_yearly': process.env.STRIPE_PRICE_STARTER_YEARLY,
   'pro_monthly': process.env.STRIPE_PRICE_PRO_MONTHLY,
   'pro_yearly': process.env.STRIPE_PRICE_PRO_YEARLY,
-  'agency_monthly': process.env.STRIPE_PRICE_AGENCY_MONTHLY,
-  'agency_yearly': process.env.STRIPE_PRICE_AGENCY_YEARLY,
+  'ultimate_monthly': process.env.STRIPE_PRICE_ULTIMATE_MONTHLY,
+  'ultimate_yearly': process.env.STRIPE_PRICE_ULTIMATE_YEARLY,
+  'enterprise_monthly': process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY,
+  'enterprise_yearly': process.env.STRIPE_PRICE_ENTERPRISE_YEARLY,
 };
 
 const handler: Handler = async (event) => {
@@ -58,8 +60,8 @@ const handler: Handler = async (event) => {
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: successUrl || `${event.headers.origin || 'https://tryboltcall.com'}/dashboard/settings/plan-billing?session_id={CHECKOUT_SESSION_ID}&success=true`,
-      cancel_url: cancelUrl || `${event.headers.origin || 'https://tryboltcall.com'}/pricing?canceled=true`,
+      success_url: successUrl || `${event.headers.origin || 'https://boltcall.org'}/dashboard/settings/plan-billing?session_id={CHECKOUT_SESSION_ID}&success=true`,
+      cancel_url: cancelUrl || `${event.headers.origin || 'https://boltcall.org'}/pricing?canceled=true`,
       metadata: {
         userId: userId || '',
         plan,
