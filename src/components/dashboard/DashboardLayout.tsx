@@ -937,7 +937,7 @@ const DashboardLayout: React.FC = () => {
            <AiAssistant />
 
            {/* Feedback Slider - Bottom sliding panel */}
-           <FeedbackSlider />
+           <FeedbackSlider isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
          </main>
           </div>
         </div>
