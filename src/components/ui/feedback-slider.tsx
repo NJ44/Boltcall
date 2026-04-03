@@ -95,22 +95,13 @@ export default function FeedbackSlider({ isOpen, onClose, onSubmit }: FeedbackSl
     onSubmit?.(ratingMap[selectedIndex]);
     setSubmitted(true);
     setTimeout(() => {
-      setIsOpen(false);
+      onClose();
       setTimeout(() => setSubmitted(false), 400);
     }, 1500);
   };
 
   return (
     <>
-      {/* Floating trigger button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-20 z-40 flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl active:scale-95"
-      >
-        <MessageSquarePlus className="h-4 w-4" />
-        Feedback
-      </button>
-
       {/* Bottom-sliding panel */}
       <AnimatePresence>
         {isOpen && (
