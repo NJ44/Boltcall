@@ -386,6 +386,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/partners" element={<Partners />} />
 
         {/* Speed Test Funnel */}
         <Route path="/speed-test" element={<SpeedTestLanding />} />
