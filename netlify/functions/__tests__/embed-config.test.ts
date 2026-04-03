@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+// Set env vars FIRST — embed-config reads them at module level
+vi.stubEnv('SUPABASE_URL', 'https://test.supabase.co');
+vi.stubEnv('SUPABASE_SERVICE_KEY', 'test-service-key');
+vi.stubEnv('VITE_SUPABASE_ANON_KEY', 'test-anon-key');
+
 // Mock Supabase
 const mockSingle = vi.fn();
 const mockEq = vi.fn(() => ({ single: mockSingle }));
@@ -11,10 +16,6 @@ vi.mock('@supabase/supabase-js', () => ({
     from: mockFrom,
   }),
 }));
-
-// Set env vars before import
-process.env.SUPABASE_URL = 'https://test.supabase.co';
-process.env.SUPABASE_SERVICE_KEY = 'test-key';
 
 import { handler } from '../embed-config';
 
@@ -58,7 +59,7 @@ describe('embed-config function', () => {
     expect(JSON.parse(res!.body!).error).toBe('Invalid token format');
   });
 
-  it('accepts valid 32-char hex token', async () => {
+  it('accepts valid 32-char hex token and returns config', async () => {
     const validToken = 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4';
     mockSingle.mockResolvedValue({
       data: {
