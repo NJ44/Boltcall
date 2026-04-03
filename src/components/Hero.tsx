@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
-import ModalVideo from './ModalVideo';
 import { cn } from '../lib/utils';
+
+// Lazy-load ModalVideo since it's only shown on user interaction
+const ModalVideo = React.lazy(() => import('./ModalVideo'));
 
 // Business-related icon components using lucide-react
 const IconPhone = (props: React.SVGProps<SVGSVGElement>) => <Phone {...props} strokeWidth={2.5} />;
@@ -31,103 +32,64 @@ const heroIcons: IconData[] = [
   { id: 9, icon: IconClock, className: 'top-[82%] md:top-[60%] left-[15%] md:left-[2%]' },
 ];
 
-// Stable random durations per icon (avoids recalculation on re-render)
+// Stable float durations per icon
 const floatDurations = heroIcons.map((_, i) => 5 + ((i * 3.7) % 5));
 
-// A single icon component with its own motion logic
+// CSS keyframes injected once
+const styleId = 'hero-float-keyframes';
+if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
+  const style = document.createElement('style');
+  style.id = styleId;
+  style.textContent = `
+    @keyframes heroFadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heroFadeInScale {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes heroFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(6px, -8px) rotate(5deg); }
+      50% { transform: translate(0, 0) rotate(0deg); }
+      75% { transform: translate(-6px, 8px) rotate(-5deg); }
+    }
+    @keyframes heroWordFadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// A single floating icon — pure CSS animation
 const FloatingIcon = React.memo(({
-  mouseX,
-  mouseY,
   iconData,
   index,
 }: {
-  mouseX: React.MutableRefObject<number>;
-  mouseY: React.MutableRefObject<number>;
   iconData: IconData;
   index: number;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  // Motion values for the icon's position, with spring physics for smooth movement
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 300, damping: 20 });
-  const springY = useSpring(y, { stiffness: 300, damping: 20 });
-
-  // Single RAF-throttled mousemove listener instead of one per icon
-  useEffect(() => {
-    let rafId: number | null = null;
-
-    const update = () => {
-      rafId = null;
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const dx = mouseX.current - (rect.left + rect.width / 2);
-        const dy = mouseY.current - (rect.top + rect.height / 2);
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < 150) {
-          const angle = Math.atan2(dy, dx);
-          const force = (1 - distance / 150) * 50;
-          x.set(-Math.cos(angle) * force);
-          y.set(-Math.sin(angle) * force);
-        } else {
-          x.set(0);
-          y.set(0);
-        }
-      }
-    };
-
-    const handleMouseMove = () => {
-      if (rafId === null) {
-        rafId = requestAnimationFrame(update);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
-  }, [x, y, mouseX, mouseY]);
-
   return (
-    <motion.div
-      ref={ref}
-      key={iconData.id}
-      style={{
-        x: springX,
-        y: springY,
-        willChange: 'transform',
-      }}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        delay: 1.2 + index * 0.1,
-        duration: 0.7,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+    <div
       className={cn('absolute', iconData.className)}
+      style={{
+        opacity: 0,
+        animation: `heroFadeInScale 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) ${1.2 + index * 0.1}s forwards`,
+        willChange: 'transform, opacity',
+      }}
     >
-      {/* Inner wrapper for the continuous floating animation */}
-      <motion.div
+      <div
         className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 p-3 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50"
-        style={{ willChange: 'transform' }}
-        animate={{
-          y: [0, -8, 0, 8, 0],
-          x: [0, 6, 0, -6, 0],
-          rotate: [0, 5, 0, -5, 0],
-        }}
-        transition={{
-          duration: floatDurations[index],
-          repeat: Infinity,
-          repeatType: 'mirror',
-          ease: 'easeInOut',
+        style={{
+          animation: `heroFloat ${floatDurations[index]}s ease-in-out infinite alternate`,
+          willChange: 'transform',
         }}
       >
         <iconData.icon className="w-8 h-8 md:w-10 md:h-10 text-blue-600" />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 });
 
@@ -135,10 +97,6 @@ const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [titleNumber, setTitleNumber] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
-
-  // Refs to track the raw mouse position
-  const mouseX = useRef(0);
-  const mouseY = useRef(0);
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -166,11 +124,6 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    mouseX.current = event.clientX;
-    mouseY.current = event.clientY;
-  };
-
   return (
     <>
       {/* White cover to hide the blue body background above the hero */}
@@ -179,15 +132,12 @@ const Hero: React.FC = () => {
         id="hero"
         className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-visible z-[1] bg-white py-12 md:py-16 lg:py-24"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
-        onMouseMove={handleMouseMove}
       >
         {/* Container for the background floating icons */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           {heroIcons.slice(0, isMobile ? 3 : heroIcons.length).map((iconData, index) => (
             <FloatingIcon
               key={iconData.id}
-              mouseX={mouseX}
-              mouseY={mouseY}
               iconData={iconData}
               index={index}
             />
@@ -197,81 +147,83 @@ const Hero: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10 text-center pt-8 md:pt-12 lg:pt-16">
             {/* Animated Headline */}
-            <motion.div
+            <div
               className="flex justify-center mb-6 relative z-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s forwards',
+              }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap pl-8 md:pl-16">
-                  <motion.span
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                  <span
+                    style={{
+                      opacity: 0,
+                      animation: 'heroWordFadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s forwards',
+                    }}
                   >
                     NEVER
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                  </span>
+                  <span
+                    style={{
+                      opacity: 0,
+                      animation: 'heroWordFadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.35s forwards',
+                    }}
                   >
                     MISS
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                  </span>
+                  <span
+                    style={{
+                      opacity: 0,
+                      animation: 'heroWordFadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s forwards',
+                    }}
                   >
                     A
-                  </motion.span>
+                  </span>
 
                   <span className="relative inline-flex items-center justify-start overflow-hidden h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint', width: '4.5em' }}>
                     {titles.map((title, index) => (
-                      <motion.span
+                      <span
                         key={index}
                         className="absolute left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
-                        initial={{ opacity: 0, y: "-100" }}
-                        transition={{ type: "spring", stiffness: 50 }}
-                        animate={
-                          titleNumber === index
-                            ? {
-                              y: 0,
-                              opacity: 1,
-                            }
-                            : {
-                              y: titleNumber > index ? -150 : 150,
-                              opacity: 0,
-                            }
-                        }
-                        style={{ willChange: 'transform, opacity' }}
+                        style={{
+                          transition: 'transform 0.5s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.4s ease',
+                          opacity: titleNumber === index ? 1 : 0,
+                          transform: titleNumber === index
+                            ? 'translateY(0)'
+                            : titleNumber > index
+                              ? 'translateY(-150px)'
+                              : 'translateY(150px)',
+                          willChange: 'transform, opacity',
+                        }}
                       >
                         {title}
-                      </motion.span>
+                      </span>
                     ))}
                   </span>
                 </h1>
               </div>
-            </motion.div>
+            </div>
 
             {/* Subheadline */}
-            <motion.p
+            <p
               className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.7s forwards',
+              }}
             >
               We answer calls 24/7, respond to website visitors instantly, and book appointments for you.
-            </motion.p>
+            </p>
 
 
             {/* CTA Buttons */}
-            <motion.div
+            <div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.95, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.95s forwards',
+              }}
             >
               <button
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
@@ -283,18 +235,22 @@ const Hero: React.FC = () => {
                 to="/signup"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
               >
-                Start for Free
+                Start Free
               </Link>
-            </motion.div>
+            </div>
 
           </div>
         </div>
 
-        {/* Video Modal */}
-        <ModalVideo
-          isOpen={isVideoOpen}
-          onClose={() => setIsVideoOpen(false)}
-        />
+        {/* Video Modal — lazy loaded */}
+        {isVideoOpen && (
+          <React.Suspense fallback={null}>
+            <ModalVideo
+              isOpen={isVideoOpen}
+              onClose={() => setIsVideoOpen(false)}
+            />
+          </React.Suspense>
+        )}
       </section>
     </>
   );

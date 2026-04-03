@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSubscription } from '../contexts/SubscriptionContext';
-import { motion } from 'framer-motion';
 import type { PlanLevel } from '../lib/stripe';
 import { PLAN_INFO } from '../lib/stripe';
 
@@ -46,11 +45,8 @@ const PlanGate: React.FC<PlanGateProps> = ({ requiredPlan, children }) => {
   const monthlyPrice = PLAN_INFO[requiredPlan].monthlyPrice;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="min-h-[400px] flex items-center justify-center p-6"
+    <div
+      className="min-h-[400px] flex items-center justify-center p-6 animate-[fadeIn_0.4s_ease-in-out_forwards]"
     >
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg border border-gray-100 p-8 text-center">
         <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -80,7 +76,7 @@ const PlanGate: React.FC<PlanGateProps> = ({ requiredPlan, children }) => {
           Back to Dashboard
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

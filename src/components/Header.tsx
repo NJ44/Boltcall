@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase, FileText } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -374,13 +373,24 @@ const Header: React.FC = () => {
     };
   }, [isResourcesOpen, isFeaturesOpen]);
 
+  // Underline component for nav links (CSS-only hover effect)
+  const NavUnderline = ({ isBlue }: { isBlue: boolean }) => (
+    <span
+      className={`absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-[576ms] ease-in-out ${isBlue ? 'bg-white' : 'bg-brand-blue'}`}
+    />
+  );
+
+  // Underline for dropdown items
+  const DropdownUnderline = ({ isBlue }: { isBlue: boolean }) => (
+    <span
+      className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${isBlue ? 'bg-white' : 'bg-blue-600'}`}
+    />
+  );
+
   return (
-    <motion.header
+    <header
       className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0 ${location.pathname === '/strike-ai' || location.pathname === '/free-website-package' ? 'top-0' : (isSticky ? 'top-0' : 'top-0 md:top-[43px]')
         }`}
-      initial={{ y: 0 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
       style={{ contain: 'layout style' }}
     >
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
@@ -389,9 +399,8 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             {/* Logo */}
             <Link to="/">
-              <motion.div
-                className="flex items-center cursor-pointer"
-                whileHover={{ scale: 1.05 }}
+              <div
+                className="flex items-center cursor-pointer transition-transform duration-200 hover:scale-105"
               >
                 <picture>
                   <source srcSet="/boltcall_full_logo.webp" type="image/webp" />
@@ -405,7 +414,7 @@ const Header: React.FC = () => {
                     fetchPriority="high"
                   />
                 </picture>
-              </motion.div>
+              </div>
             </Link>
 
             {/* Desktop Navigation - Moved to left */}
@@ -417,119 +426,71 @@ const Header: React.FC = () => {
                 onMouseEnter={() => setIsFeaturesOpen(true)}
                 onMouseLeave={() => setIsFeaturesOpen(false)}
               >
-                <motion.button
+                <button
                   className={`group relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                     }`}
-                  whileHover="hover"
-                  initial="initial"
                 >
                   Features
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isFeaturesOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
-                  <motion.div
-                    className={`absolute bottom-0 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
-                      }`}
-                    variants={{
-                      initial: { width: 0 },
-                      hover: { width: "100%" }
-                    }}
-                    transition={{ duration: 0.576, ease: "easeInOut" }}
-                  />
-                </motion.button>
+                  <NavUnderline isBlue={isOverBlueBackground} />
+                </button>
 
-                <AnimatePresence>
-                  {isFeaturesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className={`absolute top-full left-0 mt-1 w-64 rounded-lg shadow-xl border ${isOverBlueBackground
-                        ? 'bg-gray-800 border-gray-700'
-                        : 'bg-white border-gray-200'
-                        } py-3 px-2 z-[120]`}
-                    >
-                      {featuresItems.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <motion.div
-                            key={item.href}
-                            className="relative group"
-                            whileHover="hover"
-                            initial="initial"
-                          >
-                            <Link
-                              to={item.href}
-                              onClick={() => {
-                                setIsFeaturesOpen(false);
-                                setIsMenuOpen(false);
-                              }}
-                              className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${isOverBlueBackground
-                                ? 'text-gray-300 hover:text-white'
-                                : 'text-gray-700 hover:text-gray-900'
-                                }`}
-                            >
-                              <Icon className="w-3 h-3 flex-shrink-0 -mt-[4px]" />
-                              <span className="relative inline-block pb-1">
-                                {item.label}
-                                <motion.div
-                                  className={`absolute -bottom-1 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                                    }`}
-                                  variants={{
-                                    initial: { width: 0 },
-                                    hover: { width: "100%" }
-                                  }}
-                                  transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                                />
-                              </span>
-                            </Link>
-                          </motion.div>
-                        );
-                      })}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  className={`absolute top-full left-0 mt-1 w-64 rounded-lg shadow-xl border ${isOverBlueBackground
+                    ? 'bg-gray-800 border-gray-700'
+                    : 'bg-white border-gray-200'
+                    } py-3 px-2 z-[120] transition-all duration-200 ease-in-out ${isFeaturesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
+                >
+                  {featuresItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div
+                        key={item.href}
+                        className="relative group"
+                      >
+                        <Link
+                          to={item.href}
+                          onClick={() => {
+                            setIsFeaturesOpen(false);
+                            setIsMenuOpen(false);
+                          }}
+                          className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${isOverBlueBackground
+                            ? 'text-gray-300 hover:text-white'
+                            : 'text-gray-700 hover:text-gray-900'
+                            }`}
+                        >
+                          <Icon className="w-3 h-3 flex-shrink-0 -mt-[4px]" />
+                          <span className="relative inline-block pb-1">
+                            {item.label}
+                            <DropdownUnderline isBlue={isOverBlueBackground} />
+                          </span>
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* About Link */}
-              <motion.button
+              <button
                 onClick={() => handleNavClick('/about')}
                 className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                   }`}
-                whileHover="hover"
-                initial="initial"
               >
                 About
-                <motion.div
-                  className={`absolute bottom-0 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
-                    }`}
-                  variants={{
-                    initial: { width: 0 },
-                    hover: { width: "100%" }
-                  }}
-                  transition={{ duration: 0.576, ease: "easeInOut" }}
-                />
-              </motion.button>
+                <NavUnderline isBlue={isOverBlueBackground} />
+              </button>
 
               {navItems.map((item) => (
-                <motion.button
+                <button
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
                   className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                     }`}
-                  whileHover="hover"
-                  initial="initial"
                 >
                   {item.label}
-                  <motion.div
-                    className={`absolute bottom-0 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
-                      }`}
-                    variants={{
-                      initial: { width: 0 },
-                      hover: { width: "100%" }
-                    }}
-                    transition={{ duration: 0.576, ease: "easeInOut" }}
-                  />
-                </motion.button>
+                  <NavUnderline isBlue={isOverBlueBackground} />
+                </button>
               ))}
 
               {/* Resources Dropdown */}
@@ -539,187 +500,149 @@ const Header: React.FC = () => {
                 onMouseEnter={() => setIsResourcesOpen(true)}
                 onMouseLeave={() => setIsResourcesOpen(false)}
               >
-                <motion.button
+                <button
                   className={`group relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                     }`}
-                  whileHover="hover"
-                  initial="initial"
                 >
                   Resources
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} strokeWidth={2.5} />
-                  <motion.div
-                    className={`absolute bottom-0 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
-                      }`}
-                    variants={{
-                      initial: { width: 0 },
-                      hover: { width: "100%" }
-                    }}
-                    transition={{ duration: 0.576, ease: "easeInOut" }}
-                  />
-                </motion.button>
+                  <NavUnderline isBlue={isOverBlueBackground} />
+                </button>
 
-                <AnimatePresence>
-                  {isResourcesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                      className={`absolute top-full left-[calc(50%-300px)] transform -translate-x-1/2 mt-1 rounded-lg shadow-xl border ${isOverBlueBackground
-                        ? 'bg-gray-800 border-gray-700'
-                        : 'bg-white border-gray-200'
-                        } py-4 px-6 z-[120] flex items-stretch`}
-                    >
-                      {/* Content Section */}
-                      <div className="flex-1 min-w-[198px] py-4">
-                        <div className="px-6 py-2">
-                          <p className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
-                            }`}>
-                            Content
-                          </p>
-                        </div>
+                <div
+                  className={`absolute top-full left-[calc(50%-300px)] transform -translate-x-1/2 mt-1 rounded-lg shadow-xl border ${isOverBlueBackground
+                    ? 'bg-gray-800 border-gray-700'
+                    : 'bg-white border-gray-200'
+                    } py-4 px-6 z-[120] flex items-stretch transition-all duration-200 ease-in-out ${isResourcesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
+                >
+                  {/* Content Section */}
+                  <div className="flex-1 min-w-[198px] py-4">
+                    <div className="px-6 py-2">
+                      <p className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                        }`}>
+                        Content
+                      </p>
+                    </div>
 
-                        {resourcesItems.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <motion.div
-                              key={item.href}
-                              className="relative group"
-                              whileHover="hover"
-                              initial="initial"
-                            >
-                              <Link
-                                to={item.href}
-                                onClick={() => {
-                                  setIsResourcesOpen(false);
-                                  setIsMenuOpen(false);
-                                }}
-                                className={`flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
-                                  ? 'text-gray-300 hover:text-white'
-                                  : 'text-gray-700 hover:text-gray-900'
-                                  }`}
-                              >
-                                <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
-                                <span className="relative inline-block pb-1">
-                                  {item.label}
-                                  <motion.div
-                                    className={`absolute -bottom-1 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                                      }`}
-                                    variants={{
-                                      initial: { width: 0 },
-                                      hover: { width: "100%" }
-                                    }}
-                                    transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                                  />
-                                </span>
-                              </Link>
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Vertical Separator */}
-                      <div className={`border-l ${isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
-                        }`} />
-
-                      {/* Free Tools Section */}
-                      <div className="flex-1 min-w-[240px] py-4">
-                        <div className="px-4 py-2">
-                          <p className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
-                            }`}>
-                            Free Tools
-                          </p>
-                        </div>
-
-                        {freeToolsItems.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <motion.div
-                              key={item.href}
-                              className="relative group"
-                              whileHover="hover"
-                              initial="initial"
-                            >
-                              <Link
-                                to={item.href}
-                                onClick={() => {
-                                  setIsResourcesOpen(false);
-                                  setIsMenuOpen(false);
-                                }}
-                                className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${isOverBlueBackground
-                                  ? 'text-gray-300 hover:text-white'
-                                  : 'text-gray-700 hover:text-gray-900'
-                                  }`}
-                              >
-                                <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
-                                <span className="relative inline-block pb-1 whitespace-nowrap">
-                                  {item.label}
-                                  <motion.div
-                                    className={`absolute -bottom-1 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-blue-600'
-                                      }`}
-                                    variants={{
-                                      initial: { width: 0 },
-                                      hover: { width: "100%" }
-                                    }}
-                                    transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                                  />
-                                </span>
-                              </Link>
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Vertical Separator */}
-                      <div className={`border-l ${isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
-                        }`} />
-
-                      {/* Strike AI Announcement Section */}
-                      <div className="flex-1 min-w-[320px] px-3 py-4 flex">
-                        <Link
-                          to="/strike-ai"
-                          onClick={() => {
-                            setIsResourcesOpen(false);
-                            setIsMenuOpen(false);
-                          }}
-                          className="block w-full"
+                    {resourcesItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <div
+                          key={item.href}
+                          className="relative group"
                         >
-                          <div
-                            className={`h-full rounded-2xl p-6 border-2 transition-all hover:translate-y-[-2px] hover:shadow-2xl ${isOverBlueBackground
-                              ? 'bg-white border-gray-900 shadow-xl'
-                              : 'bg-white border-gray-900 shadow-xl'
+                          <Link
+                            to={item.href}
+                            onClick={() => {
+                              setIsResourcesOpen(false);
+                              setIsMenuOpen(false);
+                            }}
+                            className={`flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                              ? 'text-gray-300 hover:text-white'
+                              : 'text-gray-700 hover:text-gray-900'
                               }`}
                           >
-                            <div className="flex items-center gap-3 mb-4">
-                              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
-                                <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
-                              </div>
-                              <div>
-                                <span className="font-bold text-sm uppercase tracking-wider text-black block">
-                                  New: Strike AI
-                                </span>
-                                <span className="text-xs text-gray-600 block mt-0.5">
-                                  Now Available
-                                </span>
-                              </div>
-                            </div>
+                            <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
+                            <span className="relative inline-block pb-1">
+                              {item.label}
+                              <DropdownUnderline isBlue={isOverBlueBackground} />
+                            </span>
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  </div>
 
-                            <p className="text-sm leading-relaxed text-gray-700 mb-5">
-                              Strike, our intelligent AI assistant, is now available. Get instant answers and assistance powered by advanced AI.
-                            </p>
+                  {/* Vertical Separator */}
+                  <div className={`border-l ${isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
+                    }`} />
 
-                            <div className="mt-auto flex justify-end">
-                              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-black text-white text-sm font-semibold shadow-md hover:bg-gray-900 transition-colors w-full justify-center">
-                                Try Strike AI
-                                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-                              </div>
-                            </div>
+                  {/* Free Tools Section */}
+                  <div className="flex-1 min-w-[240px] py-4">
+                    <div className="px-4 py-2">
+                      <p className={`text-sm font-semibold uppercase tracking-wider ${isOverBlueBackground ? 'text-gray-400' : 'text-gray-500'
+                        }`}>
+                        Free Tools
+                      </p>
+                    </div>
+
+                    {freeToolsItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <div
+                          key={item.href}
+                          className="relative group"
+                        >
+                          <Link
+                            to={item.href}
+                            onClick={() => {
+                              setIsResourcesOpen(false);
+                              setIsMenuOpen(false);
+                            }}
+                            className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                              ? 'text-gray-300 hover:text-white'
+                              : 'text-gray-700 hover:text-gray-900'
+                              }`}
+                          >
+                            <Icon className="w-3.5 h-3.5 flex-shrink-0 -mt-[4px]" />
+                            <span className="relative inline-block pb-1 whitespace-nowrap">
+                              {item.label}
+                              <DropdownUnderline isBlue={isOverBlueBackground} />
+                            </span>
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Vertical Separator */}
+                  <div className={`border-l ${isOverBlueBackground ? 'border-gray-700' : 'border-gray-200'
+                    }`} />
+
+                  {/* Strike AI Announcement Section */}
+                  <div className="flex-1 min-w-[320px] px-3 py-4 flex">
+                    <Link
+                      to="/strike-ai"
+                      onClick={() => {
+                        setIsResourcesOpen(false);
+                        setIsMenuOpen(false);
+                      }}
+                      className="block w-full"
+                    >
+                      <div
+                        className={`h-full rounded-2xl p-6 border-2 transition-all hover:translate-y-[-2px] hover:shadow-2xl ${isOverBlueBackground
+                          ? 'bg-white border-gray-900 shadow-xl'
+                          : 'bg-white border-gray-900 shadow-xl'
+                          }`}
+                      >
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black border-2 border-gray-900">
+                            <Sparkles className="w-5 h-5 text-white" strokeWidth={2.5} />
                           </div>
-                        </Link>
+                          <div>
+                            <span className="font-bold text-sm uppercase tracking-wider text-black block">
+                              New: Strike AI
+                            </span>
+                            <span className="text-xs text-gray-600 block mt-0.5">
+                              Now Available
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="text-sm leading-relaxed text-gray-700 mb-5">
+                          Strike, our intelligent AI assistant, is now available. Get instant answers and assistance powered by advanced AI.
+                        </p>
+
+                        <div className="mt-auto flex justify-end">
+                          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-black text-white text-sm font-semibold shadow-md hover:bg-gray-900 transition-colors w-full justify-center">
+                            Try Strike AI
+                            <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                          </div>
+                        </div>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </nav>
           </div>
@@ -737,10 +660,8 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <motion.div
-                  className="relative"
-                  whileHover="hover"
-                  initial="initial"
+                <div
+                  className="relative group"
                 >
                   <Link
                     to="/login"
@@ -748,17 +669,12 @@ const Header: React.FC = () => {
                       }`}
                   >
                     Login
-                    <motion.div
-                      className={`absolute bottom-0 left-0 h-0.5 ${isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
+                    <span
+                      className={`absolute bottom-0 left-0 h-0.5 w-0 opacity-0 group-hover:w-full group-hover:opacity-100 transition-all duration-300 ease-in-out ${isOverBlueBackground ? 'bg-white' : 'bg-brand-blue'
                         }`}
-                      variants={{
-                        initial: { width: 0, opacity: 0 },
-                        hover: { width: "100%", opacity: 1 }
-                      }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
                     />
                   </Link>
-                </motion.div>
+                </div>
                 <InteractiveHoverButton
                   text="Start Now"
                   onClick={() => handleNavClick('/signup')}
@@ -776,146 +692,138 @@ const Header: React.FC = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            <motion.div
-              animate={{ rotate: isMenuOpen ? 90 : 0 }}
-              transition={{ duration: 0.3 }}
+            <div
+              className="transition-transform duration-300"
+              style={{ transform: isMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
             >
               {isMenuOpen ? (
                 <X size={18} strokeWidth={2.5} className="text-gray-800" />
               ) : (
                 <Menu size={18} strokeWidth={2.5} className="text-gray-800" />
               )}
-            </motion.div>
+            </div>
           </button>
         </div>
 
         {/* Mobile menu — simple fullscreen overlay */}
         {typeof document !== 'undefined' && createPortal(
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                className="md:hidden fixed inset-0 z-[9999] bg-white overflow-y-auto"
-                initial={{ opacity: 0, x: '100%' }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: '100%' }}
-                transition={{ duration: 0.25, ease: 'easeOut' }}
-              >
-                {/* Close button */}
+          <div
+            className={`md:hidden fixed inset-0 z-[9999] bg-white overflow-y-auto transition-all duration-250 ease-out ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'}`}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-gray-100"
+              aria-label="Close menu"
+            >
+              <X size={20} strokeWidth={2.5} className="text-gray-800" />
+            </button>
+
+            <div className="px-6 pt-16 pb-8 space-y-1">
+              {/* Main links + dropdowns */}
+              {[
+                { label: 'About', href: '/about' },
+                ...navItems,
+              ].map((item) => (
                 <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="absolute top-4 right-4 z-10 p-2 rounded-full bg-gray-100"
-                  aria-label="Close menu"
+                  key={item.label}
+                  onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
                 >
-                  <X size={20} strokeWidth={2.5} className="text-gray-800" />
+                  {item.label}
                 </button>
+              ))}
 
-                <div className="px-6 pt-16 pb-8 space-y-1">
-                  {/* Main links + dropdowns */}
-                  {[
-                    { label: 'About', href: '/about' },
-                    ...navItems,
-                  ].map((item) => (
-                    <button
-                      key={item.label}
-                      onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                      className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-
-                  {/* Features dropdown */}
-                  <div>
-                    <button
-                      onClick={() => setMobileFeatures(!mobileFeatures)}
-                      className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
-                    >
-                      Features
-                      <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileFeatures ? 'rotate-180' : ''}`} />
-                    </button>
-                    {mobileFeatures && (
-                      <div className="pl-2 space-y-0.5 mt-1">
-                        {featuresItems.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <button
-                              key={item.href}
-                              onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                              className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
-                            >
-                              <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                              <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Resources dropdown */}
-                  <div>
-                    <button
-                      onClick={() => setMobileResources(!mobileResources)}
-                      className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
-                    >
-                      Resources
-                      <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileResources ? 'rotate-180' : ''}`} />
-                    </button>
-                    {mobileResources && (
-                      <div className="pl-2 space-y-0.5 mt-1">
-                        {resourcesItems.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <button
-                              key={item.href}
-                              onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                              className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
-                            >
-                              <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                              <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="h-px bg-gray-200 mt-4" />
-
-                  {/* Auth */}
-                  <div className="space-y-3 pt-4">
-                    {isAuthenticated ? (
-                      <button
-                        onClick={() => { handleNavClick('/dashboard'); setIsMenuOpen(false); }}
-                        className="w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
-                      >
-                        Dashboard
-                      </button>
-                    ) : (
-                      <>
+              {/* Features dropdown */}
+              <div>
+                <button
+                  onClick={() => setMobileFeatures(!mobileFeatures)}
+                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
+                >
+                  Features
+                  <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileFeatures ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileFeatures && (
+                  <div className="pl-2 space-y-0.5 mt-1">
+                    {featuresItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
                         <button
-                          onClick={() => { handleNavClick('/login'); setIsMenuOpen(false); }}
-                          className="w-full py-3 text-base font-semibold text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                          key={item.href}
+                          onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                          className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
                         >
-                          Login
+                          <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                          <span className="text-sm font-medium text-gray-700">{item.label}</span>
                         </button>
-                        <button
-                          onClick={() => { handleNavClick('/signup'); setIsMenuOpen(false); }}
-                          className="w-full py-3 text-base font-bold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
-                        >
-                          Start now
-                        </button>
-                      </>
-                    )}
+                      );
+                    })}
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>,
+                )}
+              </div>
+
+              {/* Resources dropdown */}
+              <div>
+                <button
+                  onClick={() => setMobileResources(!mobileResources)}
+                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
+                >
+                  Resources
+                  <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileResources ? 'rotate-180' : ''}`} />
+                </button>
+                {mobileResources && (
+                  <div className="pl-2 space-y-0.5 mt-1">
+                    {resourcesItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <button
+                          key={item.href}
+                          onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                          className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
+                        >
+                          <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                          <span className="text-sm font-medium text-gray-700">{item.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <div className="h-px bg-gray-200 mt-4" />
+
+              {/* Auth */}
+              <div className="space-y-3 pt-4">
+                {isAuthenticated ? (
+                  <button
+                    onClick={() => { handleNavClick('/dashboard'); setIsMenuOpen(false); }}
+                    className="w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                  >
+                    Dashboard
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => { handleNavClick('/login'); setIsMenuOpen(false); }}
+                      className="w-full py-3 text-base font-semibold text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      Login
+                    </button>
+                    <button
+                      onClick={() => { handleNavClick('/signup'); setIsMenuOpen(false); }}
+                      className="w-full py-3 text-base font-bold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                    >
+                      Start now
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>,
           document.body
         )}
       </div>
-    </motion.header>
+    </header>
   );
 };
 

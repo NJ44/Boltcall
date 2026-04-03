@@ -151,7 +151,10 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // Heavy animation lib — split to avoid bloating main bundle
+            // React core — shared by everything, cache-friendly as its own chunk
+            if (id.includes('react-dom')) return 'react-dom';
+            if (id.includes('react-router')) return 'react-router';
+            // Heavy animation libs — split so they only load when lazy components need them
             if (id.includes('framer-motion')) return 'framer-motion';
             if (id.includes('gsap')) return 'gsap';
             if (id.includes('@lottiefiles') || id.includes('lottie')) return 'lottie';
@@ -163,11 +166,15 @@ export default defineConfig({
             if (id.includes('recharts')) return 'recharts';
             // i18n
             if (id.includes('i18next')) return 'i18n';
+            // React Hook Form + Zod — only used in forms/setup
+            if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) return 'forms';
+            // Lucide icons — tree-shaken but still sizeable
+            if (id.includes('lucide-react')) return 'icons';
           }
         },
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 800,
   },
   server: {
     proxy: {

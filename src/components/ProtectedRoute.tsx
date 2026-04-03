@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
-import { motion } from 'framer-motion';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -52,11 +51,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (isLoading || (isAuthenticated && setupCheck === 'loading')) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-center text-blue-600"
+        <div
+          className="text-center text-blue-600 animate-[fadeIn_0.5s_ease-in-out_forwards]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" height="100px" width="100px" viewBox="0 0 200 200" className="pencil mx-auto">
             <defs>
@@ -85,7 +81,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
               </g>
             </g>
           </svg>
-        </motion.div>
+        </div>
       </div>
     );
   }

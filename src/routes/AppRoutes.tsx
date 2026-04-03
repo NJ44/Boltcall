@@ -17,11 +17,12 @@ const DashboardProviders: React.FC<{ children: React.ReactNode }> = ({ children 
   </SubscriptionProvider>
 );
 
-// ── Eager loads (critical path — homepage & auth) ────────────────────────
+// ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import AuthCallback from '../pages/AuthCallback';
+// ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
+const Login = React.lazy(() => import('../pages/Login'));
+const Signup = React.lazy(() => import('../pages/Signup'));
+const AuthCallback = React.lazy(() => import('../pages/AuthCallback'));
 // ── Route-level loading fallback ─────────────────────────────────────────
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
