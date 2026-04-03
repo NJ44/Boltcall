@@ -41,7 +41,7 @@ const Pricing: React.FC = () => {
       name: "Starter",
       level: "starter",
       price: { monthly: 99, yearly: 948 },
-      description: "Perfect for getting started with lead management.",
+      description: "Get started with lead management.",
       tokens: "1,000 tokens/mo",
     },
     {
