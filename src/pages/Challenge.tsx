@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Trophy, Clock, Shield, Phone, Lock, ArrowRight,
-  Users, Target, Zap, ChevronDown, Award,
+  Users, Target, Zap, Award,
   PhoneCall, MessageSquare, RefreshCw, CheckCircle2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -51,7 +51,7 @@ const Challenge: React.FC = () => {
 
   // Leaderboard
   const [leaderboard, setLeaderboard] = useState<LeaderboardData | null>(null);
-  const [showLeaderboard, setShowLeaderboard] = useState(true);
+
 
   // All-time stats
   const [allTimeStats, setAllTimeStats] = useState<{
@@ -254,10 +254,6 @@ const Challenge: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full mb-6">
-                  <Target className="w-4 h-4 text-blue-600" />
-                  <span className="text-blue-600 font-bold text-sm tracking-wide">WEEKLY CHALLENGE</span>
-                </div>
                 <h1 className="text-3xl md:text-5xl font-bold text-[#0B1220] mb-4 leading-tight">
                   Break Our AI: Can You Trick Our Receptionist?
                 </h1>
@@ -612,94 +608,6 @@ const Challenge: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Leaderboard ───────────────────────────────────────────── */}
-        <section className="pb-16 lg:pb-24 bg-gray-50">
-          <div className="py-16 lg:py-24">
-            <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-              <button
-                onClick={() => setShowLeaderboard(!showLeaderboard)}
-                className="w-full flex items-center justify-between px-6 py-4 bg-white hover:bg-gray-50 border border-gray-200 rounded-t-xl transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-blue-600" />
-                  <span className="text-[#0B1220] font-bold">
-                    This Week's Leaderboard
-                    {leaderboard && (
-                      <span className="text-gray-500 font-normal text-sm ml-2">
-                        ({leaderboard.stats.uniquePlayers} players)
-                      </span>
-                    )}
-                  </span>
-                </div>
-                <ChevronDown
-                  className={`w-5 h-5 text-gray-400 transition-transform ${showLeaderboard ? 'rotate-180' : ''}`}
-                />
-              </button>
-
-              <AnimatePresence>
-                {showLeaderboard && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden bg-white border border-t-0 border-gray-200 rounded-b-xl"
-                  >
-                    {leaderboard && leaderboard.leaderboard.length > 0 ? (
-                      <div className="divide-y divide-gray-100">
-                        {leaderboard.leaderboard.map((entry, i) => (
-                          <div
-                            key={entry.name + i}
-                            className="flex items-center justify-between px-6 py-3 hover:bg-gray-50 transition-colors"
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className={`
-                                w-6 h-6 rounded-full grid place-items-center text-xs font-bold
-                                ${i === 0 ? 'bg-blue-100 text-blue-600' : ''}
-                                ${i === 1 ? 'bg-gray-200 text-gray-600' : ''}
-                                ${i === 2 ? 'bg-blue-50 text-blue-500' : ''}
-                                ${i > 2 ? 'bg-gray-100 text-gray-500' : ''}
-                              `}>
-                                {i + 1}
-                              </span>
-                              <span className="text-[#0B1220] text-sm font-medium">{entry.name}</span>
-                              {entry.won && (
-                                <span className="px-2 py-0.5 bg-blue-100 text-blue-600 text-[10px] font-bold uppercase rounded-full">
-                                  Cracked
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-4 text-xs text-gray-500">
-                              <span>{entry.attempts} attempt{entry.attempts !== 1 ? 's' : ''}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="px-6 py-10 text-center">
-                        <Zap className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                        <p className="text-gray-500 text-sm">No attempts this week yet. Be the first.</p>
-                      </div>
-                    )}
-
-                    {leaderboard && (
-                      <div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-                        <span className="text-gray-500 text-xs">
-                          Week {leaderboard.week}
-                        </span>
-                        <span className="text-gray-500 text-xs">
-                          {leaderboard.stats.totalAttempts} total attempts
-                          {leaderboard.stats.totalWins > 0 && (
-                            <> — {leaderboard.stats.totalWins} winner{leaderboard.stats.totalWins !== 1 ? 's' : ''}</>
-                          )}
-                        </span>
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </section>
 
         {/* ── What This Challenge Proves ─────────────────────────────── */}
         <section className="py-16 lg:py-24">
