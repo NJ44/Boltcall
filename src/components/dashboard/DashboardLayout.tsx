@@ -909,6 +909,9 @@ const DashboardLayout: React.FC = () => {
 
            {/* AI Assistant - Bottom Right */}
            <AiAssistant />
+
+           {/* Feedback Slider - Bottom sliding panel */}
+           <FeedbackSlider />
          </main>
           </div>
         </div>
