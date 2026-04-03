@@ -156,7 +156,6 @@ export default defineConfig({
             if (id.includes('react-router')) return 'react-router';
             // Heavy animation libs — split so they only load when lazy components need them
             if (id.includes('framer-motion')) return 'framer-motion';
-            if (id.includes('gsap')) return 'gsap';
             if (id.includes('@lottiefiles') || id.includes('lottie')) return 'lottie';
             // Radix UI primitives — used broadly but heavy together
             if (id.includes('@radix-ui')) return 'radix';
