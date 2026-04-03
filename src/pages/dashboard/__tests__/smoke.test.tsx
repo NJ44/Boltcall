@@ -62,24 +62,37 @@ vi.mock('../../../contexts/TokenContext', () => ({
   TokenProvider: ({ children }: any) => <>{children}</>,
 }));
 
+// Deep Supabase mock that supports arbitrary chaining
+function createChainMock(): any {
+  const chain: any = new Proxy(
+    {},
+    {
+      get(_target, prop) {
+        // Terminal methods that return promises
+        if (prop === 'then') return undefined; // not a thenable itself
+        if (prop === 'single' || prop === 'maybeSingle') {
+          return () => Promise.resolve({ data: null, error: null });
+        }
+        // Methods that return chain
+        return (..._args: any[]) => {
+          // If it looks like a terminal aggregate, resolve
+          if (prop === 'limit') return Promise.resolve({ data: [], error: null, count: 0 });
+          return chain;
+        };
+      },
+    }
+  );
+  return chain;
+}
+
 vi.mock('../../../lib/supabase', () => ({
   supabase: {
     from: () => ({
-      select: () => ({
-        eq: () => ({
-          eq: () => ({ order: () => ({ limit: () => Promise.resolve({ data: [], error: null }) }) }),
-          single: () => Promise.resolve({ data: null, error: null }),
-          order: () => ({ limit: () => Promise.resolve({ data: [], error: null }) }),
-          in: () => Promise.resolve({ data: [], count: 0, error: null }),
-          neq: () => ({ order: () => ({ limit: () => Promise.resolve({ data: [], error: null }) }) }),
-          gte: () => ({ lte: () => Promise.resolve({ data: [], error: null }) }),
-        }),
-        single: () => Promise.resolve({ data: null, error: null }),
-        order: () => ({ limit: () => Promise.resolve({ data: [], error: null }) }),
-      }),
-      insert: () => ({ select: () => ({ single: () => Promise.resolve({ data: {}, error: null }) }) }),
-      update: () => ({ eq: () => Promise.resolve({ error: null }) }),
-      delete: () => ({ eq: () => Promise.resolve({ error: null }) }),
+      select: (..._a: any[]) => createChainMock(),
+      insert: (..._a: any[]) => createChainMock(),
+      update: (..._a: any[]) => createChainMock(),
+      upsert: (..._a: any[]) => createChainMock(),
+      delete: (..._a: any[]) => createChainMock(),
     }),
     auth: {
       getUser: () => Promise.resolve({ data: { user: { id: 'test-user' } }, error: null }),
