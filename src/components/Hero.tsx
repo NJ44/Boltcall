@@ -120,7 +120,7 @@ const Hero: React.FC = () => {
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 2000);
+    }, 3500);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
 
@@ -187,7 +187,7 @@ const Hero: React.FC = () => {
                         key={index}
                         className="absolute left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         style={{
-                          transition: 'transform 0.5s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.4s ease',
+                          transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1), opacity 0.6s ease-in-out',
                           opacity: titleNumber === index ? 1 : 0,
                           transform: titleNumber === index
                             ? 'translateY(0)'
