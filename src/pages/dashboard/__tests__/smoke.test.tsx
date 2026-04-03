@@ -140,6 +140,18 @@ vi.mock('sonner', () => ({
   Toaster: () => null,
 }));
 
+// Mock ToastContext
+vi.mock('../../../contexts/ToastContext', () => ({
+  useToast: () => ({
+    toast: vi.fn(),
+    success: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    warning: vi.fn(),
+  }),
+  ToastProvider: ({ children }: any) => <>{children}</>,
+}));
+
 // Mock global fetch
 global.fetch = vi.fn().mockResolvedValue({
   ok: true,
