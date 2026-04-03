@@ -108,7 +108,9 @@ import LeadReactivationPage from '../features/LeadReactivationPage';
 import SmartWebsitePage from '../features/SmartWebsitePage';
 
 // Comparison pages
-import Comparisons from '../comparisons/Comparisons';
+import TraditionalCallCentersVsBoltcall from '../comparisons/TraditionalCallCentersVsBoltcall';
+import ReceptionistVsBoltcall from '../comparisons/ReceptionistVsBoltcall';
+import VoicemailVsBoltcall from '../comparisons/VoicemailVsBoltcall';
 
 const renderInRouter = (Page: React.ComponentType) => {
   return render(
