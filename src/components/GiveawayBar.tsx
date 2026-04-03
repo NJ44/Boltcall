@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const GiveawayBar: React.FC = () => {
   return (
     <Link to="/challenge" className="block">
-      <div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none drop-shadow-none ring-0 border-none outline-none" style={{ minHeight: '43px', contain: 'layout style', boxShadow: 'none' }}>
+      <div className="relative bg-blue-600 text-white fixed top-0 left-0 right-0 z-50 cursor-pointer shadow-none drop-shadow-none ring-0 border-none outline-none" style={{ minHeight: '43px', contain: 'layout style', boxShadow: 'none' }}>
         <div className="relative z-10">
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
             <div className="flex items-center justify-between py-0.5 sm:py-2 gap-0.5 sm:gap-0" style={{ minHeight: '43px' }}>
