@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Trophy, Clock, Shield, Phone, Lock, ArrowRight,
-  Users, Target, Zap, ChevronDown, Award,
+  Users, Zap, Award,
   PhoneCall, MessageSquare, RefreshCw, CheckCircle2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
