@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquarePlus } from "lucide-react";
+import { X } from "lucide-react";
 
 const animationStates = [
   {
