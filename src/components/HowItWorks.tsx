@@ -80,7 +80,7 @@ const HowItWorks: React.FC = () => {
           </div>
 
           {/* Sticky Cards */}
-          <ContainerScroll className="space-y-11 py-4 ml-0 md:ml-16 -mt-[50px]" style={{ minHeight: '100vh' }}>
+          <ContainerScroll className="space-y-[40vh] py-4 ml-0 md:ml-16 -mt-[50px]" style={{ minHeight: '200vh' }}>
             {PROCESS_PHASES.map((phase, index) => (
               <CardSticky
                 key={phase.id}
