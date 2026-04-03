@@ -43,6 +43,7 @@ import UsageBanner from './UsageBanner';
 import UsageLimitModal from './UsageLimitModal';
 import TrialExpiryPopup from './TrialExpiryPopup';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
+import FeedbackSlider from '../ui/feedback-slider';
 
 const DashboardLayout: React.FC = () => {
   const { t, i18n } = useTranslation('common');
