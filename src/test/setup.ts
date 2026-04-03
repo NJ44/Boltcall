@@ -43,5 +43,7 @@ Object.defineProperty(window, 'ResizeObserver', {
   value: MockResizeObserver,
 })
 
-// Mock scrollIntoView
+// Mock scroll methods
 Element.prototype.scrollIntoView = vi.fn()
+Element.prototype.scrollBy = vi.fn()
+Element.prototype.scrollTo = vi.fn()
