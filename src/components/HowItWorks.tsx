@@ -87,7 +87,7 @@ const HowItWorks: React.FC = () => {
                 index={index + 2}
                 incrementY={14}
                 className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-full md:max-w-[440px] ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
-                style={{ top: '150px', bottom: 'auto', minHeight: '280px' }}
+                style={{ top: `${150 + index * 20}px`, bottom: 'auto', minHeight: '280px' }}
               >
                 <div className="relative z-10 p-4 md:p-7 h-full">
                   {/* Full width content */}
