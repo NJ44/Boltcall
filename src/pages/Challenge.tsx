@@ -51,7 +51,7 @@ const Challenge: React.FC = () => {
 
   // Leaderboard
   const [leaderboard, setLeaderboard] = useState<LeaderboardData | null>(null);
-  const [showLeaderboard, setShowLeaderboard] = useState(true);
+
 
   // All-time stats
   const [allTimeStats, setAllTimeStats] = useState<{
