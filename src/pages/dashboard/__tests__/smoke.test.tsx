@@ -121,6 +121,18 @@ vi.mock('../../../components/TalkToAgentModal', () => ({ default: () => null }))
 vi.mock('../../../components/ui/empty-state', () => ({ EmptyState: ({ title }: any) => <div>{title}</div> }));
 vi.mock('../../../components/dashboard/VoiceLibrary', () => ({ default: () => <div>VoiceLibrary</div> }));
 
+// Mock sonner toast
+vi.mock('sonner', () => ({
+  toast: { success: vi.fn(), error: vi.fn(), info: vi.fn() },
+  Toaster: () => null,
+}));
+
+// Mock global fetch
+global.fetch = vi.fn().mockResolvedValue({
+  ok: true,
+  json: () => Promise.resolve({ data: [] }),
+});
+
 // ── Dashboard page imports ─────────────────────────────────────────────────
 
 import AnalyticsPage from '../AnalyticsPage';
