@@ -43,6 +43,7 @@ import UsageBanner from './UsageBanner';
 import UsageLimitModal from './UsageLimitModal';
 import TrialExpiryPopup from './TrialExpiryPopup';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
+import FeedbackSlider from '../ui/feedback-slider';
 
 const DashboardLayout: React.FC = () => {
   const { t, i18n } = useTranslation('common');
@@ -55,6 +56,7 @@ const DashboardLayout: React.FC = () => {
   // sidebarHovered removed — collapsed sidebar shows tooltips instead of expanding
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   // Language switcher removed
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
@@ -527,6 +529,31 @@ const DashboardLayout: React.FC = () => {
                   const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
                   return renderNavItem(item, isActive);
                 })}
+
+                {/* Give Us Feedback */}
+                <button
+                  onClick={() => setShowFeedback(true)}
+                  className={`relative flex items-center w-full ${sidebarCollapsed ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
+                    isDarkMode
+                      ? 'text-white hover:bg-[#1a1a1f]'
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+                  }`}
+                >
+                  <span className={`relative flex items-center ${sidebarCollapsed ? '' : '-mt-[5px]'}`}>
+                    <MessageSquare className="w-5 h-5 scale-[0.95] text-blue-500" />
+                  </span>
+                  {sidebarCollapsed && (
+                    <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
+                      Give Us Feedback
+                    </span>
+                  )}
+                  {!sidebarCollapsed && (
+                    <span className="relative pb-1">
+                      Give Us Feedback
+                      <div className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 w-0 group-hover:w-full" style={{ transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }} />
+                    </span>
+                  )}
+                </button>
               </div>
 
             </nav>
@@ -908,6 +935,9 @@ const DashboardLayout: React.FC = () => {
 
            {/* AI Assistant - Bottom Right */}
            <AiAssistant />
+
+           {/* Feedback Slider - Bottom sliding panel */}
+           <FeedbackSlider isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
          </main>
           </div>
         </div>
