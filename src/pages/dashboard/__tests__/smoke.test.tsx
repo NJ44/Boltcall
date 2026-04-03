@@ -64,21 +64,18 @@ vi.mock('../../../contexts/TokenContext', () => ({
 
 // Deep Supabase mock that supports arbitrary chaining
 function createChainMock(): any {
+  const resolved = Promise.resolve({ data: [], error: null, count: 0 });
   const chain: any = new Proxy(
     {},
     {
       get(_target, prop) {
-        // Terminal methods that return promises
-        if (prop === 'then') return undefined; // not a thenable itself
+        if (prop === 'then') return resolved.then.bind(resolved);
+        if (prop === 'catch') return resolved.catch.bind(resolved);
+        if (prop === 'finally') return resolved.finally.bind(resolved);
         if (prop === 'single' || prop === 'maybeSingle') {
           return () => Promise.resolve({ data: null, error: null });
         }
-        // Methods that return chain
-        return (..._args: any[]) => {
-          // If it looks like a terminal aggregate, resolve
-          if (prop === 'limit') return Promise.resolve({ data: [], error: null, count: 0 });
-          return chain;
-        };
+        return (..._args: any[]) => chain;
       },
     }
   );
