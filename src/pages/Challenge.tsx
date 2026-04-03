@@ -254,10 +254,6 @@ const Challenge: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full mb-6">
-                  <Target className="w-4 h-4 text-blue-600" />
-                  <span className="text-blue-600 font-bold text-sm tracking-wide">WEEKLY CHALLENGE</span>
-                </div>
                 <h1 className="text-3xl md:text-5xl font-bold text-[#0B1220] mb-4 leading-tight">
                   Break Our AI: Can You Trick Our Receptionist?
                 </h1>
