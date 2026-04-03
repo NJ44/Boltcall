@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { AlarmClock, RefreshCcw, Megaphone, MessageSquare, Globe } from 'lucide-react';
+import { AlarmClock, RefreshCcw, Megaphone, MessageSquare, Globe, Phone } from 'lucide-react';
 
 const FreeSetup: React.FC = () => {
   const navigate = useNavigate();
@@ -10,43 +10,37 @@ const FreeSetup: React.FC = () => {
       title: 'Reminders',
       description: 'Reduce no-shows automatically.',
       icon: AlarmClock,
-      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
-      gradient: 'from-blue-500/10 to-blue-600/5',
+      href: '/features/automated-reminders',
     },
     {
       title: 'Follow Ups',
       description: 'Keep conversations warm.',
       icon: RefreshCcw,
-      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
-      gradient: 'from-purple-500/10 to-purple-600/5',
+      href: '/features/ai-follow-up-system',
     },
     {
       title: 'Ads',
       description: 'Turn clicks into calls.',
       icon: Megaphone,
-      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
-      gradient: 'from-orange-500/10 to-orange-600/5',
+      href: '/features/instant-form-reply',
     },
     {
       title: 'SMS',
       description: 'Two-way texting that books.',
       icon: MessageSquare,
-      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
-      gradient: 'from-green-500/10 to-green-600/5',
+      href: '/features/sms-booking-assistant',
     },
     {
       title: 'Website',
       description: 'Book meetings on your site.',
       icon: Globe,
-      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
-      gradient: 'from-cyan-500/10 to-cyan-600/5',
+      href: '/features/website-widget',
     },
     {
       title: 'AI Receptionist',
       description: 'Answer and route every call.',
-      icon: MessageSquare,
-      accent: 'bg-blue-500/15 text-blue-300 border-blue-400/40',
-      gradient: 'from-indigo-500/10 to-indigo-600/5',
+      icon: Phone,
+      href: '/features/ai-receptionist',
     },
   ];
 
@@ -106,20 +100,19 @@ const FreeSetup: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {features.map((feature) => (
-                <div
+                <button
                   key={feature.title}
-                  className="flex flex-col gap-1.5 rounded-lg bg-white px-3 py-2.5 shadow-md border border-gray-200 h-full min-h-[100px]"
+                  onClick={() => navigate(feature.href)}
+                  className="flex items-center gap-3 px-5 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200 cursor-pointer text-left"
                 >
-                  <div className="flex items-center gap-2.5">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-md">
-                      <feature.icon className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <h3 className="text-base font-semibold text-gray-900 leading-none">{feature.title}</h3>
+                  <feature.icon className="h-5 w-5 text-blue-600 shrink-0" />
+                  <div>
+                    <h3 className="text-sm font-bold leading-none">{feature.title}</h3>
+                    <p className="text-[11px] text-gray-500 mt-1 font-normal">{feature.description}</p>
                   </div>
-                  <p className="text-[11px] text-gray-600 leading-relaxed">{feature.description}</p>
-                </div>
+                </button>
               ))}
             </div>
           </motion.div>
