@@ -210,6 +210,9 @@ const WebsiteChatVoiceWidgetPage = React.lazy(() => import('../pages/features/We
 const LeadReactivationFeaturePage = React.lazy(() => import('../pages/features/LeadReactivationPage'));
 const SmartWebsitePage = React.lazy(() => import('../pages/features/SmartWebsitePage'));
 
+// ── Lazy loads — Partners ────────────────────────────────────────────────
+const Partners = React.lazy(() => import('../pages/Partners'));
+
 // ── Lazy loads — Demo / misc pages ───────────────────────────────────────
 const Strike = React.lazy(() => import('../pages/Strike'));
 const Challenge = React.lazy(() => import('../pages/Challenge'));
@@ -383,6 +386,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/partners" element={<Partners />} />
 
         {/* Speed Test Funnel */}
         <Route path="/speed-test" element={<SpeedTestLanding />} />

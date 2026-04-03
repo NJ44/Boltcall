@@ -53,6 +53,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
     company: [
       { label: 'Contact', href: '/contact' },
       { label: 'About', href: '/about' },
+      { label: 'Partners', href: '/partners' },
       { label: 'Privacy Policy', href: '/privacy-policy' },
       { label: 'Terms of Service', href: '/terms-of-service' }
     ],
