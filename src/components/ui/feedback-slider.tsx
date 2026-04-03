@@ -78,13 +78,14 @@ const HandDrawnSmileIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export interface FeedbackSliderProps {
+  isOpen: boolean;
+  onClose: () => void;
   onSubmit?: (rating: "bad" | "not_bad" | "good") => void;
 }
 
 const ratingMap = ["bad", "not_bad", "good"] as const;
 
-export default function FeedbackSlider({ onSubmit }: FeedbackSliderProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function FeedbackSlider({ isOpen, onClose, onSubmit }: FeedbackSliderProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const currentAnim = animationStates[selectedIndex];
