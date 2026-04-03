@@ -85,11 +85,16 @@ vi.mock('recharts', () => ({
   Legend: () => null, Cell: () => null,
 }));
 
+const gsapInstance = {
+  registerPlugin: vi.fn(), to: vi.fn(), fromTo: vi.fn(), set: vi.fn(),
+  timeline: () => ({ to: vi.fn(), fromTo: vi.fn(), kill: vi.fn(), set: vi.fn() }),
+};
 vi.mock('gsap', () => ({
-  default: {
-    registerPlugin: vi.fn(), to: vi.fn(), fromTo: vi.fn(), set: vi.fn(),
-    timeline: () => ({ to: vi.fn(), fromTo: vi.fn(), kill: vi.fn(), set: vi.fn() }),
-  },
+  default: gsapInstance,
+  gsap: gsapInstance,
+}));
+
+vi.mock('gsap/ScrollTrigger', () => ({
   ScrollTrigger: { create: vi.fn(), refresh: vi.fn(), getAll: () => [], kill: vi.fn() },
 }));
 
