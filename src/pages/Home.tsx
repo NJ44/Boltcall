@@ -45,7 +45,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative bg-brand-blue">
       {/* Giveaway Bar (hidden on mobile) */}
       <div className="hidden md:block">
         <GiveawayBar />

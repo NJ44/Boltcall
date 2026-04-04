@@ -126,8 +126,6 @@ const Hero: React.FC = () => {
 
   return (
     <>
-      {/* White cover to hide the blue body background above the hero */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-white z-[0]" />
       <section
         id="hero"
         className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-visible z-[1] bg-white py-12 md:py-16 lg:py-24"
@@ -187,14 +185,13 @@ const Hero: React.FC = () => {
                         key={index}
                         className="absolute left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         style={{
-                          transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1), opacity 0.6s ease-in-out',
-                          opacity: titleNumber === index ? 1 : 0,
+                          transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
                           transform: titleNumber === index
                             ? 'translateY(0)'
                             : titleNumber > index
                               ? 'translateY(-150px)'
                               : 'translateY(150px)',
-                          willChange: 'transform, opacity',
+                          willChange: 'transform',
                         }}
                       >
                         {title}
