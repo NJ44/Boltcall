@@ -139,10 +139,12 @@ const DashboardPage: React.FC = () => {
           setShowOnboarding(open);
           if (!open) {
             localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+            supabase.auth.updateUser({ data: { onboarding_completed: true } });
           }
         }}
         onFinish={() => {
           localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+          supabase.auth.updateUser({ data: { onboarding_completed: true } });
           setShowOnboarding(false);
         }}
       />
