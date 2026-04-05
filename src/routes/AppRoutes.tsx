@@ -80,6 +80,7 @@ const Setup = React.lazy(() => import('../pages/Setup'));
 const SetupLoading = React.lazy(() => import('../pages/SetupLoading'));
 const PricingPage = React.lazy(() => import('../pages/PricingPage'));
 const Documentation = React.lazy(() => import('../pages/Documentation'));
+const ApiDocsPage = React.lazy(() => import('../pages/ApiDocsPage'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
 const AdminPanel = React.lazy(() => import('../pages/AdminPanel'));
 
