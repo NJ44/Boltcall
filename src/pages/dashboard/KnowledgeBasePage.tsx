@@ -639,16 +639,6 @@ const KnowledgeBasePage: React.FC = () => {
       return;
     }
 
-    if (kbDocuments.length === 0) {
-      showToast({
-        title: 'Error',
-        message: 'Please add at least one document',
-        variant: 'error',
-        duration: 3000
-      });
-      return;
-    }
-
     try {
       showToast({ title: 'Saving...', message: 'Creating folder & processing documents...', variant: 'default', duration: 10000 });
 
