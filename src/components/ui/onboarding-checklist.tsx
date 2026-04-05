@@ -129,10 +129,31 @@ const CoachmarkOverlay = ({
       className="fixed inset-0 z-[9998] pointer-events-none"
       role="dialog"
       aria-modal="true"
-      style={{
-        background: `radial-gradient(circle at ${left + width/2}px ${top + height/2}px, transparent ${Math.max(width, height)/2 + spotlightPadding}px, rgba(0,0,0,0.7) ${Math.max(width, height)/2 + spotlightPadding + 1}px)`
-      }}
     >
+      {/* Rectangular spotlight mask */}
+      <svg className="absolute inset-0 w-full h-full">
+        <defs>
+          <mask id={`spotlight-mask-${stepIndex}`}>
+            <rect width="100%" height="100%" fill="white" />
+            <rect
+              x={left - spotlightPadding}
+              y={top - spotlightPadding}
+              width={width + spotlightPadding * 2}
+              height={height + spotlightPadding * 2}
+              rx={8}
+              ry={8}
+              fill="black"
+            />
+          </mask>
+        </defs>
+        <rect
+          width="100%"
+          height="100%"
+          fill="rgba(0,0,0,0.7)"
+          mask={`url(#spotlight-mask-${stepIndex})`}
+        />
+      </svg>
+
       {/* Spotlight border ring */}
       <div
         className="absolute border-2 border-white rounded-lg z-[9999]"
