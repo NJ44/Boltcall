@@ -413,6 +413,7 @@ const NavigationWrapper: React.FC = () => {
         {/* /smart-website removed — duplicate of free-website concept */}
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
+        <Route path="/api-docs" element={<ApiDocsPage />} />
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/newsletter" element={<Navigate to="/" replace />} />
         <Route path="/blog/the-new-reality-for-local-businesses" element={<Blog />} />
