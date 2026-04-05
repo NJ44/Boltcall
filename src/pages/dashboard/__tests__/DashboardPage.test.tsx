@@ -66,10 +66,6 @@ vi.mock('../../../components/SetupCompletionPopup', () => ({
   default: () => null,
 }));
 
-vi.mock('../../../components/ui/dock-demo', () => ({
-  AppleStyleDock: () => <div data-testid="apple-dock">Dock</div>,
-}));
-
 vi.mock('../../../components/dashboard/FeatureHub', () => ({
   default: () => <div data-testid="feature-hub">Feature Hub</div>,
 }));

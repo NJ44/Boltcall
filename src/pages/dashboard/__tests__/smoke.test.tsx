@@ -124,7 +124,6 @@ vi.mock('recharts', () => ({
 
 // Mock heavy dashboard sub-components
 vi.mock('../../../components/SetupCompletionPopup', () => ({ default: () => null }));
-vi.mock('../../../components/ui/dock-demo', () => ({ AppleStyleDock: () => null }));
 vi.mock('../../../components/dashboard/FeatureHub', () => ({ default: () => null }));
 vi.mock('../../../components/ui/onboarding-checklist', () => ({ InteractiveOnboardingChecklist: () => null }));
 vi.mock('../../../components/TalkToAgentModal', () => ({ default: () => null }));
