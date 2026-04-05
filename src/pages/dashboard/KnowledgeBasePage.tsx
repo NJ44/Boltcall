@@ -1529,7 +1529,7 @@ const KnowledgeBasePage: React.FC = () => {
             </PopButton>
             <PopButton color="blue"
               onClick={handleSaveNewKnowledgeBase}
-              disabled={!knowledgeBaseName.trim() || kbDocuments.length === 0}
+              disabled={!knowledgeBaseName.trim()}
               className="gap-2"
             >
               <Save className="w-4 h-4" />
