@@ -19,9 +19,9 @@ function createChainMock(resolvedData: any = [], resolvedError: any = null) {
   return chain;
 }
 
-const mockSupabase = {
-  from: vi.fn().mockReturnValue(createChainMock()),
-};
+const mockSupabase = vi.hoisted(() => ({
+  from: vi.fn(),
+}));
 
 vi.mock('../supabase', () => ({ supabase: mockSupabase }));
 
