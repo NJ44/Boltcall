@@ -57,6 +57,13 @@ export const handler: Handler = async (event) => {
     const body = JSON.parse(event.body || '{}');
     const { action } = body;
 
+    // Resolve userId from API key if present (Zapier)
+    const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+    if (auth.hasKey && !auth.userId) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+    }
+    if (auth.userId) body.user_id = auth.userId;
+
     // Send a single SMS
     if (action === 'send') {
       const { to, from, message } = body;
