@@ -349,10 +349,6 @@ const DashboardPage: React.FC = () => {
         />
       )}
 
-      {/* Dock Component - Fixed at bottom middle */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full md:w-auto px-2 md:px-0">
-        <AppleStyleDock />
-      </div>
     </div>
   );
 };
