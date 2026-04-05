@@ -13,6 +13,7 @@ const categories = [
     sidebar: [
       { id: 'plan-billing', label: 'Billing', route: '/dashboard/settings/plan-billing' },
       { id: 'usage', label: 'Usage', route: '/dashboard/settings/usage' },
+      { id: 'packages', label: 'Packages', route: '/dashboard/settings/packages' },
     ],
   },
   {
