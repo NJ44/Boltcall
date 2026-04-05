@@ -35,7 +35,7 @@ vi.stubGlobal('crypto', { randomUUID: () => 'mock-uuid-1234' });
 import { ChatService } from '../chats';
 
 describe('ChatService — Create', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('createChat inserts with default fields', async () => {
     const mockChat = { id: 'chat_1', status: 'active', chat_history: [], message_count: 0 };
@@ -61,7 +61,7 @@ describe('ChatService — Create', () => {
 });
 
 describe('ChatService — Read', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('getChats returns array', async () => {
     mockSupabase.from.mockReturnValue(createChainMock([{ id: 'c1' }, { id: 'c2' }]));
@@ -122,7 +122,7 @@ describe('ChatService — Read', () => {
 });
 
 describe('ChatService — Update', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('updateChat sends update', async () => {
     const updated = { id: 'c1', status: 'paused' };
@@ -164,7 +164,7 @@ describe('ChatService — Update', () => {
 });
 
 describe('ChatService — Messages', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('addMessage appends to chat history', async () => {
     // getChatById mock
@@ -223,7 +223,7 @@ describe('ChatService — Messages', () => {
 });
 
 describe('ChatService — Delete', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('deleteChat removes from Supabase', async () => {
     mockSupabase.from.mockReturnValue(createChainMock(null));
@@ -240,7 +240,7 @@ describe('ChatService — Delete', () => {
 });
 
 describe('ChatService — Search', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('searchChats returns results with relevance score', async () => {
     mockSupabase.from.mockReturnValue(createChainMock([
@@ -262,7 +262,7 @@ describe('ChatService — Search', () => {
 });
 
 describe('ChatService — Stats', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('getChatStats computes all aggregates', async () => {
     const chats = [
