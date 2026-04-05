@@ -120,7 +120,7 @@ const Hero: React.FC = () => {
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 3500);
+    }, 1750);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
 
