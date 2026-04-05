@@ -210,12 +210,6 @@ const AgentTestsPage: React.FC = () => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-1">
-        <Shield className="w-7 h-7 text-brand-blue" />
-        <h1 className="text-2xl font-bold text-gray-900"></h1>
-      </div>
-
       {loading ? (
         <PageSkeleton />
       ) : agents.length === 0 ? (
