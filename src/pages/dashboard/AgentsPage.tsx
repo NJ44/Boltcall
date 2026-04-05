@@ -135,7 +135,8 @@ const AgentsPage: React.FC = () => {
     phoneNumber: '',
     humanTransferPhone: '',
     direction: 'inbound',
-    language: ''
+    language: '',
+    agentType: 'inbound'
   });
 
   // Industry-specific agent templates
