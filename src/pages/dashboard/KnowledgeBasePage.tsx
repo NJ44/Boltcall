@@ -1552,6 +1552,167 @@ const KnowledgeBasePage: React.FC = () => {
           />
         </div>
 
+        {/* Website Scan */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Website URL
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="url"
+              value={kbWebsiteUrl}
+              onChange={(e) => setKbWebsiteUrl(e.target.value)}
+              placeholder="https://yourbusiness.com"
+              className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+            <PopButton
+              color="blue"
+              onClick={handleKbScanWebsite}
+              disabled={kbScanning || !kbWebsiteUrl.trim()}
+              className="gap-1.5 whitespace-nowrap"
+            >
+              {kbScanning ? (
+                <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Scanning...</>
+              ) : (
+                <><Sparkles className="w-4 h-4" /> Scan</>
+              )}
+            </PopButton>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">AI reads your website and auto-fills services, FAQs, and policies</p>
+        </div>
+
+        {/* Services */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Services & Pricing</label>
+            <button
+              type="button"
+              onClick={() => setKbServices(prev => [...prev, { name: '', duration: 30, price: 0 }])}
+              className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+            >
+              <Plus className="w-3 h-3" /> Add Service
+            </button>
+          </div>
+          {kbServices.length === 0 ? (
+            <p className="text-xs text-gray-400 py-2">No services added yet. Scan your website or add manually.</p>
+          ) : (
+            <div className="space-y-2">
+              {kbServices.map((service, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <input
+                    value={service.name}
+                    onChange={(e) => { const s = [...kbServices]; s[i] = { ...s[i], name: e.target.value }; setKbServices(s); }}
+                    placeholder="Service name"
+                    className="flex-1 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                  <input
+                    type="number"
+                    value={String(service.duration)}
+                    onChange={(e) => { const s = [...kbServices]; s[i] = { ...s[i], duration: parseInt(e.target.value) || 0 }; setKbServices(s); }}
+                    placeholder="Min"
+                    className="w-16 px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                  <div className="relative w-20">
+                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 text-xs">$</span>
+                    <input
+                      type="number"
+                      value={String(service.price)}
+                      onChange={(e) => { const s = [...kbServices]; s[i] = { ...s[i], price: parseInt(e.target.value) || 0 }; setKbServices(s); }}
+                      className="w-full pl-5 pr-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <button onClick={() => setKbServices(prev => prev.filter((_, idx) => idx !== i))} className="p-1 text-gray-400 hover:text-red-500">
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* FAQs */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">FAQs</label>
+            <button
+              type="button"
+              onClick={() => setKbFaqs(prev => [...prev, { question: '', answer: '' }])}
+              className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+            >
+              <Plus className="w-3 h-3" /> Add FAQ
+            </button>
+          </div>
+          {kbFaqs.length === 0 ? (
+            <p className="text-xs text-gray-400 py-2">No FAQs added yet. Scan your website or add manually.</p>
+          ) : (
+            <div className="space-y-2">
+              {kbFaqs.map((faq, i) => (
+                <div key={i} className="rounded-lg border border-gray-200 dark:border-gray-600 p-3 space-y-1.5 relative">
+                  <button onClick={() => setKbFaqs(prev => prev.filter((_, idx) => idx !== i))} className="absolute top-2 right-2 p-0.5 text-gray-400 hover:text-red-500">
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                  <input
+                    value={faq.question}
+                    onChange={(e) => { const f = [...kbFaqs]; f[i] = { ...f[i], question: e.target.value }; setKbFaqs(f); }}
+                    placeholder="Question"
+                    className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                  <textarea
+                    value={faq.answer}
+                    onChange={(e) => { const f = [...kbFaqs]; f[i] = { ...f[i], answer: e.target.value }; setKbFaqs(f); }}
+                    placeholder="Answer"
+                    rows={2}
+                    className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Policies */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Policies</label>
+          <div className="space-y-2">
+            <div>
+              <label className="text-xs text-gray-500 dark:text-gray-400">Cancellation</label>
+              <textarea
+                value={kbPolicies.cancellation}
+                onChange={(e) => setKbPolicies(prev => ({ ...prev, cancellation: e.target.value }))}
+                placeholder="24-hour notice required..."
+                rows={2}
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500 dark:text-gray-400">Reschedule</label>
+              <textarea
+                value={kbPolicies.reschedule}
+                onChange={(e) => setKbPolicies(prev => ({ ...prev, reschedule: e.target.value }))}
+                placeholder="Can reschedule up to 12 hours before..."
+                rows={2}
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500 dark:text-gray-400">Deposit / Payment</label>
+              <textarea
+                value={kbPolicies.deposit}
+                onChange={(e) => setKbPolicies(prev => ({ ...prev, deposit: e.target.value }))}
+                placeholder="$50 deposit required..."
+                rows={2}
+                className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-gray-200 dark:border-gray-600" /></div>
+          <div className="relative flex justify-center text-xs uppercase"><span className="bg-white dark:bg-gray-800 px-2 text-gray-400">Documents</span></div>
+        </div>
+
         {/* Add Documents Button */}
         <div className="mb-6">
           <div className="relative" ref={kbDropdownRef}>
