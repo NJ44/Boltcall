@@ -287,7 +287,8 @@ const AgentsPage: React.FC = () => {
       phoneNumber: '',
       humanTransferPhone: '',
       direction: 'inbound',
-      language: ''
+      language: '',
+      agentType: 'inbound'
     });
     setShowCreateModal(false);
   };
