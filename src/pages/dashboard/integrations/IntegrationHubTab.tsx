@@ -220,7 +220,7 @@ const integrations: Integration[] = [
   {
     id: 'google_business',
     name: 'Google Business Profile',
-    logo: 'https://lh3.googleusercontent.com/EMobDJKabP1eY_63QHgvwz9qnZPGheMfbXzew_7TWzMaT-xpymtv8lR88hZJFLJ6kQ_O',
+    logo: '/google_business_logo.svg',
     subtitle: 'Reviews & Local SEO',
     description: 'Auto-request Google reviews after appointments, monitor new reviews, and reply instantly with AI.',
     fallbackColor: '#4285F4',

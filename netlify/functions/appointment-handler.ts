@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
+import { fireWebhooks } from './_shared/fire-webhooks';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
 
@@ -149,6 +150,18 @@ export const handler: Handler = async (event) => {
 
       const appointmentId = appt.id;
       const messagesToInsert: any[] = [];
+
+      // Fire appointment_booked webhook
+      fireWebhooks(userId, 'appointment_booked', {
+        id: appointmentId,
+        customer_name: attendeeName,
+        customer_email: attendeeEmail,
+        customer_phone: attendeePhone,
+        start_time: startTime,
+        end_time: endTime,
+        service: eventTitle,
+        booking_id: bookingId,
+      });
 
       // 2. Check reminders config
       const { data: bf } = await supabase

@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
+import { fireWebhooks } from './_shared/fire-webhooks';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
@@ -176,6 +177,19 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
         errors.push(`Insert failed for leadgen_id=${leadgen_id}: ${insertErr.message}`);
       } else {
         results.push(data);
+        // Fire user webhooks for Facebook leads
+        if (userId && data) {
+          fireWebhooks(userId, 'new_lead', {
+            id: data.id,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            phone: data.phone,
+            source: data.source,
+            status: data.status,
+            created_at: data.created_at,
+          });
+        }
       }
     }
   }
@@ -263,6 +277,20 @@ export const handler: Handler = async (event) => {
           headers,
           body: JSON.stringify({ error: 'Failed to insert lead. Our team has been notified.' }),
         };
+      }
+
+      // Fire user webhooks (Zapier, Make, etc.)
+      if (lead.user_id && data) {
+        fireWebhooks(lead.user_id, 'new_lead', {
+          id: data.id,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          phone: data.phone,
+          source: data.source,
+          status: data.status,
+          created_at: data.created_at,
+        });
       }
 
       // Sync lead to connected CRMs (fire-and-forget)

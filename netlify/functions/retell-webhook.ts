@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
+import { fireWebhooks } from './_shared/fire-webhooks';
 
 /**
  * Retell Post-Call Webhook
@@ -175,6 +176,26 @@ export const handler: Handler = async (event) => {
     // Check if this is a missed call
     if (!isMissedCall(call)) {
       console.log(`[retell-webhook] Call ${call.call_id} is not a missed call (status=${call.call_status}, duration=${call.duration_ms}ms)`);
+
+      // Fire call_completed webhook for non-missed calls
+      if (call.call_status === 'ended' && (call.duration_ms || 0) > 0) {
+        const supabaseForWebhook = getSupabase();
+        const { data: agentOwner } = await supabaseForWebhook
+          .from('agents')
+          .select('user_id')
+          .filter('api_keys->>retell_agent_id', 'eq', agentId)
+          .single();
+        if (agentOwner?.user_id) {
+          fireWebhooks(agentOwner.user_id, 'call_completed', {
+            id: call.call_id,
+            caller_number: call.from_number || null,
+            duration_seconds: Math.round((call.duration_ms || 0) / 1000),
+            summary: call.call_analysis?.call_summary || null,
+            sentiment: call.call_analysis?.user_sentiment || null,
+          });
+        }
+      }
+
       return {
         statusCode: 200,
         headers,
@@ -246,6 +267,17 @@ export const handler: Handler = async (event) => {
         callerPhone, userId, callId: call.call_id, callStatus: call.call_status,
       });
     }
+
+    // Fire missed_call webhook
+    fireWebhooks(userId, 'missed_call', {
+      id: call.call_id,
+      caller_number: callerPhone,
+      caller_name: null,
+      duration_seconds: 0,
+      reason: call.call_status === 'ended' ? 'short_call' : 'no_answer',
+      called_at: new Date().toISOString(),
+      lead_id: lead?.id || null,
+    });
 
     // Sync lead to connected CRMs (fire-and-forget)
     if (lead?.id && userId) {
