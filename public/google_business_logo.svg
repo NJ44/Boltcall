@@ -1,22 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
-  <!-- Google Business Profile Icon -->
-  <!-- Building -->
-  <path d="M32 88v72a8 8 0 0 0 8 8h112a8 8 0 0 0 8-8V88" fill="#E8F0FE"/>
-  <path d="M32 88v72a8 8 0 0 0 8 8h112a8 8 0 0 0 8-8V88" fill="none" stroke="#4285F4" stroke-width="4"/>
-  <!-- Door -->
-  <rect x="76" y="120" width="40" height="48" rx="4" fill="#4285F4"/>
-  <circle cx="108" cy="144" r="3" fill="white"/>
-  <!-- Windows -->
-  <rect x="44" y="108" width="24" height="24" rx="3" fill="#4285F4" opacity="0.25" stroke="#4285F4" stroke-width="2"/>
-  <rect x="124" y="108" width="24" height="24" rx="3" fill="#4285F4" opacity="0.25" stroke="#4285F4" stroke-width="2"/>
-  <!-- Roof base -->
-  <rect x="24" y="32" width="144" height="12" rx="4" fill="#4285F4"/>
-  <!-- Awning scallops (Google colors) -->
-  <ellipse cx="48" cy="60" rx="24" ry="28" fill="#EA4335"/>
-  <ellipse cx="48" cy="56" rx="24" ry="24" fill="#EA4335"/>
-  <path d="M24 44h48v12c0 13.3-10.7 24-24 24S24 69.3 24 56V44z" fill="#EA4335"/>
-  <path d="M72 44h48v12c0 13.3-10.7 24-24 24S72 69.3 72 56V44z" fill="#FBBC05"/>
-  <path d="M120 44h48v12c0 13.3-10.7 24-24 24s-24-10.7-24-24V44z" fill="#34A853"/>
-  <!-- Awning overlay for cleaner top edge -->
-  <rect x="24" y="36" width="144" height="10" fill="#4285F4"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <path d="M43.6 20H24v8h11.2C34 33.2 29.6 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 2.9l6-6C34 5.2 29.3 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21c12.1 0 20-8.5 20-20.5 0-1.5-.2-2.8-.4-3.5z" fill="#4285F4"/>
+  <path d="M5.3 14.7l7 5.1C14 15.5 18.6 12 24 12c3 0 5.7 1.1 7.8 2.9l6-6C34 5.2 29.3 3 24 3 15.8 3 8.7 7.8 5.3 14.7z" fill="#EA4335"/>
+  <path d="M24 45c5.2 0 9.9-1.8 13.6-4.9l-6.5-5.5C29 36.4 26.6 37.3 24 37.3c-5.5 0-10.2-3.7-11.8-8.8l-7 5.4C8.5 40.2 15.7 45 24 45z" fill="#34A853"/>
+  <path d="M44.5 20H24v8.5h11.8c-1 3.1-3 5.5-5.7 7.1l6.5 5.5c3.8-3.5 6.4-8.8 6.4-15.6 0-1.5-.2-3-.5-4.5z" fill="#FBBC05"/>
 </svg>
