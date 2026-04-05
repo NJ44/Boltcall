@@ -375,9 +375,13 @@ const NavigationWrapper: React.FC = () => {
               <WorkspacePage />
             </SettingsLayout>
           } />
+          <Route path="settings/packages" element={
+            <SettingsLayout>
+              <PackagesPage />
+            </SettingsLayout>
+          } />
           {/* Redirects for removed settings pages */}
           <Route path="settings/billing" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
-          <Route path="settings/packages" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
           <Route path="settings/notification-preferences" element={<Navigate to="/dashboard/settings/notifications" replace />} />
           <Route path="settings/services" element={<Navigate to="/dashboard/settings/general" replace />} />
         </Route>
