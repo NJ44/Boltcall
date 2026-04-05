@@ -34,7 +34,7 @@ import {
 } from '../database';
 
 describe('Workspace — Create', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('createWorkspace inserts and returns workspace', async () => {
     const ws = { id: 'ws_1', name: 'Acme Dental', slug: 'acme-dental', user_id: 'u1', created_at: '2026-04-05' };
@@ -78,7 +78,7 @@ describe('Workspace — Create', () => {
 });
 
 describe('Business Profile — Create', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('createBusinessProfile inserts and returns profile', async () => {
     const bp = { id: 'bp_1', business_name: 'Acme Dental', workspace_id: 'ws_1' };
@@ -101,7 +101,7 @@ describe('Business Profile — Create', () => {
 });
 
 describe('Workspace + Profile — Combined', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('createUserWorkspaceAndProfile creates both and returns them', async () => {
     const ws = { id: 'ws_1', name: 'Acme', slug: 'acme-abc-123', user_id: 'u1', created_at: '2026-04-05' };
@@ -148,7 +148,7 @@ describe('Workspace + Profile — Combined', () => {
 });
 
 describe('Workspace & Profile — Read', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('getUserWorkspaces returns array ordered by date', async () => {
     const workspaces = [
