@@ -83,7 +83,14 @@ const KnowledgeBasePage: React.FC = () => {
   const [kbDocuments, setKbDocuments] = useState<KnowledgeBaseDocument[]>([]);
   const [showKbDocumentDropdown, setShowKbDocumentDropdown] = useState(false);
   const kbDropdownRef = useRef<HTMLDivElement>(null);
-  
+
+  // KB Setup form state (for New KB modal)
+  const [kbWebsiteUrl, setKbWebsiteUrl] = useState('');
+  const [kbScanning, setKbScanning] = useState(false);
+  const [kbServices, setKbServices] = useState<Array<{ name: string; duration: number; price: number }>>([]);
+  const [kbFaqs, setKbFaqs] = useState<Array<{ question: string; answer: string }>>([]);
+  const [kbPolicies, setKbPolicies] = useState({ cancellation: '', reschedule: '', deposit: '' });
+
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
