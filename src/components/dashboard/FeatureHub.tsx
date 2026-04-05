@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // motion removed — cards are now minimal rows
 import { Link } from 'react-router-dom';
 import {
-  Phone, MessageSquare, Zap, Clock, Users, Star,
+  Phone, MessageSquare, Zap, Users,
   Loader2, AlertCircle,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
