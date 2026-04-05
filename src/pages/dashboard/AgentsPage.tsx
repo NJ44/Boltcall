@@ -39,6 +39,7 @@ interface CreateAgentForm {
   humanTransferPhone: string;
   direction: 'inbound' | 'outbound';
   language: string;
+  agentType: string;
 }
 
 interface KnowledgeBase {
