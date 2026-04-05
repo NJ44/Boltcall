@@ -21,12 +21,12 @@ function createChainMock(resolvedData: any = [], resolvedError: any = null) {
   return chain;
 }
 
-const mockSupabase = {
+const mockSupabase = vi.hoisted(() => ({
   auth: {
     getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'user_1' } } }),
   },
-  from: vi.fn().mockReturnValue(createChainMock()),
-};
+  from: vi.fn(),
+}));
 
 vi.mock('../supabase', () => ({ supabase: mockSupabase }));
 
