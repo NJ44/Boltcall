@@ -337,25 +337,19 @@ export function InteractiveOnboardingChecklist({
             step={activeStep}
             stepIndex={activeStepIndex}
             totalSteps={totalSteps}
-            isFirst={!hasPrevIncompleteStep}
-            isLast={!hasNextIncompleteStep}
+            isFirst={isFirstStep}
+            isLast={isLastStep}
             onNext={() => {
-              for (let i = activeStepIndex + 1; i < totalSteps; i++) {
-                if (!completedSteps.has(steps[i].id)) {
-                  setActiveCoachmark(steps[i].id);
-                  return;
-                }
+              if (activeStepIndex < totalSteps - 1) {
+                setActiveCoachmark(steps[activeStepIndex + 1].id);
               }
             }}
             onPrev={() => {
-              for (let i = activeStepIndex - 1; i >= 0; i--) {
-                if (!completedSteps.has(steps[i].id)) {
-                  setActiveCoachmark(steps[i].id);
-                  return;
-                }
+              if (activeStepIndex > 0) {
+                setActiveCoachmark(steps[activeStepIndex - 1].id);
               }
             }}
-            onComplete={() => handleCompleteStep(activeStep.id)}
+            onComplete={handleFinishTour}
             onClose={handleClose}
           />
         )}
