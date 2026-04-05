@@ -61,7 +61,11 @@ export const handler: Handler = async (event) => {
       }
 
       // GET /retell-calls — list recent calls (no body needed)
+      const listFilter: Record<string, any> = {};
+      if (userAgentIds?.length) listFilter.agent_id = userAgentIds;
+
       const calls = await client.call.list({
+        filter_criteria: Object.keys(listFilter).length ? listFilter : undefined,
         sort_order: 'descending',
         limit: 50,
       });
