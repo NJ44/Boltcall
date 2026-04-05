@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 const BREVO_API_BASE = 'https://api.brevo.com/v3';
 
@@ -70,6 +71,13 @@ export const handler: Handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
     const action = body.action || 'send';
+
+    // Resolve userId from API key if present (Zapier)
+    const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+    if (auth.hasKey && !auth.userId) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+    }
+    if (auth.userId) body.userId = auth.userId;
 
     if (action === 'send') {
       const { to, subject, htmlContent, textContent, fromName, fromEmail, userId, metadata } = body;

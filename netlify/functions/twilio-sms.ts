@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { deductTokens, deductTokensBatch, TOKEN_COSTS } from './_shared/token-utils';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -55,6 +56,13 @@ export const handler: Handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
     const { action } = body;
+
+    // Resolve userId from API key if present (Zapier)
+    const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+    if (auth.hasKey && !auth.userId) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+    }
+    if (auth.userId) body.user_id = auth.userId;
 
     // Send a single SMS
     if (action === 'send') {

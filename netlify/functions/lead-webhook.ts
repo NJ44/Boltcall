@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { fireWebhooks } from './_shared/fire-webhooks';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
@@ -247,7 +248,12 @@ export const handler: Handler = async (event) => {
     }
 
     // Generic / Web Form lead submission
-    // user_id is optional but recommended for per-user lead filtering
+    // Resolve userId from API key if present (Zapier sends bc_ key)
+    const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+    if (auth.hasKey && !auth.userId) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+    }
+    if (auth.userId) body.user_id = auth.userId;
 
     // Validate: need at least email or phone
     if (!body.email && !body.phone && !body.phone_number) {

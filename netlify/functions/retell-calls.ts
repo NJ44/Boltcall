@@ -1,5 +1,7 @@
 import { Handler } from '@netlify/functions';
 import Retell from 'retell-sdk';
+import { authenticateApiKey } from './_shared/validate-api-key';
+import { getSupabase } from './_shared/token-utils';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -11,6 +13,27 @@ const headers = {
 export const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
+  }
+
+  // Optional API key auth — if present, scope calls to user's agents
+  const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+  if (auth.hasKey && !auth.userId) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+  }
+
+  // If authenticated, look up the user's Retell agent IDs to filter results
+  let userAgentIds: string[] | null = null;
+  if (auth.userId) {
+    const supabase = getSupabase();
+    const { data: agents } = await supabase
+      .from('agents')
+      .select('api_keys')
+      .eq('user_id', auth.userId);
+    if (agents?.length) {
+      userAgentIds = agents
+        .map((a: any) => a.api_keys?.retell_agent_id)
+        .filter(Boolean);
+    }
   }
 
   const apiKey = process.env.RETELL_API_KEY;
@@ -38,7 +61,11 @@ export const handler: Handler = async (event) => {
       }
 
       // GET /retell-calls — list recent calls (no body needed)
+      const listFilter: Record<string, any> = {};
+      if (userAgentIds?.length) listFilter.agent_id = userAgentIds;
+
       const calls = await client.call.list({
+        filter_criteria: Object.keys(listFilter).length ? listFilter : undefined,
         sort_order: 'descending',
         limit: 50,
       });
@@ -57,6 +84,9 @@ export const handler: Handler = async (event) => {
 
       if (body.agent_ids?.length) {
         filterCriteria.agent_id = body.agent_ids;
+      } else if (userAgentIds?.length) {
+        // Scope to authenticated user's agents
+        filterCriteria.agent_id = userAgentIds;
       }
       if (body.call_status?.length) {
         filterCriteria.call_status = body.call_status;

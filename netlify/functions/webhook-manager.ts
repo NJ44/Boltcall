@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import crypto from 'crypto';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 /**
  * Webhook Manager Function
@@ -162,6 +163,14 @@ export const handler: Handler = async (event) => {
     const body = JSON.parse(event.body || '{}');
     const { action } = body;
     const supabase = getSupabase();
+
+    // Resolve userId: API key auth takes priority, then body.userId
+    const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+    if (auth.hasKey && !auth.userId) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+    }
+    // Inject resolved userId into body so all downstream destructuring picks it up
+    if (auth.userId) body.userId = auth.userId;
 
     // ─── LIST ────────────────────────────────────────────────────────
     if (action === 'list') {
