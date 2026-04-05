@@ -33,7 +33,10 @@ vi.mock('../supabase', () => ({ supabase: mockSupabase }));
 import { CallbackService } from '../callbacks';
 
 describe('CallbackService — Create', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockSupabase.from.mockReturnValue(createChainMock());
+  });
 
   it('createCallback inserts into callbacks table', async () => {
     const mockCallback = { id: 'cb_1', client_name: 'John', status: 'pending' };
