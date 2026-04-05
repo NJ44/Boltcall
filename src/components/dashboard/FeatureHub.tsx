@@ -72,29 +72,6 @@ const CORE_FEATURES: FeatureCard[] = [
   },
 ];
 
-// Add-on Operations Pack — Reminders + Reputation
-const ADDON_FEATURES: FeatureCard[] = [
-  {
-    key: 'reminders',
-    name: 'Appointment Reminders',
-    description: 'Text and email clients before their appointment — reduces no-shows',
-    icon: Clock,
-    color: 'text-green-600',
-    bgColor: 'bg-green-50',
-    configLink: '/dashboard/reminders',
-    needsEmbed: false,
-  },
-  {
-    key: 'reputation_manager',
-    name: 'Google Reviews',
-    description: 'Automatically ask happy customers for a 5-star Google review',
-    icon: Star,
-    color: 'text-yellow-600',
-    bgColor: 'bg-yellow-50',
-    configLink: '/dashboard/reputation',
-    needsEmbed: true,
-  },
-];
 
 // Readiness data collected from DB
 interface ReadinessData {
