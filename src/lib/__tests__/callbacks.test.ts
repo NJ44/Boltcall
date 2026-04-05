@@ -64,7 +64,7 @@ describe('CallbackService — Create', () => {
 });
 
 describe('CallbackService — Read', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('getCallbacks returns array of callbacks', async () => {
     const mockCallbacks = [
@@ -133,7 +133,7 @@ describe('CallbackService — Read', () => {
 });
 
 describe('CallbackService — Update', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('updateCallback sends update to Supabase', async () => {
     const updated = { id: 'cb_1', status: 'scheduled' };
@@ -182,7 +182,7 @@ describe('CallbackService — Update', () => {
 });
 
 describe('CallbackService — Delete', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('deleteCallback removes from Supabase', async () => {
     mockSupabase.from.mockReturnValue(createChainMock(null));
@@ -201,7 +201,7 @@ describe('CallbackService — Delete', () => {
 });
 
 describe('CallbackService — Stats', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('getCallbackStats computes correct aggregates', async () => {
     const callbacks = [
