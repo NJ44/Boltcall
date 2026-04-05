@@ -45,7 +45,7 @@ import {
 } from '../dashboardApi';
 
 describe('fetchDashboardStats', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('fetches stats with auth header', async () => {
     mockFetch.mockReturnValue(Promise.resolve({
@@ -78,7 +78,7 @@ describe('fetchDashboardStats', () => {
 });
 
 describe('fetchDailyMetrics', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('fetches with default 30 day limit', async () => {
     mockSupabase.from.mockReturnValue(createChainMock([
@@ -106,7 +106,7 @@ describe('fetchDailyMetrics', () => {
 });
 
 describe('fetchBusinessHealth', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('calls get_business_health RPC', async () => {
     mockSupabase.rpc.mockResolvedValue({ data: { score: 92 }, error: null });
@@ -125,7 +125,7 @@ describe('fetchBusinessHealth', () => {
 });
 
 describe('fetchCallbackStats', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('aggregates callback statuses', async () => {
     const callbacks = [
@@ -155,7 +155,7 @@ describe('fetchCallbackStats', () => {
 });
 
 describe('fetchChatStats', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('aggregates chat statuses', async () => {
     const chats = [
@@ -177,7 +177,7 @@ describe('fetchChatStats', () => {
 });
 
 describe('fetchLeads', () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => { vi.clearAllMocks(); mockSupabase.from.mockReturnValue(createChainMock()); });
 
   it('fetches leads with optional filters', async () => {
     mockSupabase.from.mockReturnValue(createChainMock([{ id: 'l1' }, { id: 'l2' }]));
