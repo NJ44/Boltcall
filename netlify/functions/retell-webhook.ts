@@ -176,6 +176,26 @@ export const handler: Handler = async (event) => {
     // Check if this is a missed call
     if (!isMissedCall(call)) {
       console.log(`[retell-webhook] Call ${call.call_id} is not a missed call (status=${call.call_status}, duration=${call.duration_ms}ms)`);
+
+      // Fire call_completed webhook for non-missed calls
+      if (call.call_status === 'ended' && (call.duration_ms || 0) > 0) {
+        const supabaseForWebhook = getSupabase();
+        const { data: agentOwner } = await supabaseForWebhook
+          .from('agents')
+          .select('user_id')
+          .filter('api_keys->>retell_agent_id', 'eq', agentId)
+          .single();
+        if (agentOwner?.user_id) {
+          fireWebhooks(agentOwner.user_id, 'call_completed', {
+            id: call.call_id,
+            caller_number: call.from_number || null,
+            duration_seconds: Math.round((call.duration_ms || 0) / 1000),
+            summary: call.call_analysis?.call_summary || null,
+            sentiment: call.call_analysis?.user_sentiment || null,
+          });
+        }
+      }
+
       return {
         statusCode: 200,
         headers,
