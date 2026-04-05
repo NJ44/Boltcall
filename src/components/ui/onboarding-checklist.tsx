@@ -20,7 +20,6 @@ export interface InteractiveOnboardingChecklistProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?(open: boolean): void;
-  onCompleteStep?(id: string): void;
   onFinish?(): void;
 }
 
@@ -111,7 +110,6 @@ const CoachmarkOverlay = ({
   }, [onClose, onNext, onPrev, onComplete, isFirst, isLast]);
 
   if (!targetPosition) {
-    // Element not visible — auto-skip to next step
     if (!isLast) onNext();
     else onComplete();
     return null;
@@ -129,10 +127,31 @@ const CoachmarkOverlay = ({
       className="fixed inset-0 z-[9998] pointer-events-none"
       role="dialog"
       aria-modal="true"
-      style={{
-        background: `radial-gradient(circle at ${left + width/2}px ${top + height/2}px, transparent ${Math.max(width, height)/2 + spotlightPadding}px, rgba(0,0,0,0.7) ${Math.max(width, height)/2 + spotlightPadding + 1}px)`
-      }}
     >
+      {/* Rectangular spotlight mask */}
+      <svg className="absolute inset-0 w-full h-full">
+        <defs>
+          <mask id={`spotlight-mask-${stepIndex}`}>
+            <rect width="100%" height="100%" fill="white" />
+            <rect
+              x={left - spotlightPadding}
+              y={top - spotlightPadding}
+              width={width + spotlightPadding * 2}
+              height={height + spotlightPadding * 2}
+              rx={8}
+              ry={8}
+              fill="black"
+            />
+          </mask>
+        </defs>
+        <rect
+          width="100%"
+          height="100%"
+          fill="rgba(0,0,0,0.7)"
+          mask={`url(#spotlight-mask-${stepIndex})`}
+        />
+      </svg>
+
       {/* Spotlight border ring */}
       <div
         className="absolute border-2 border-white rounded-lg z-[9999]"
@@ -145,7 +164,7 @@ const CoachmarkOverlay = ({
         }}
       />
 
-      {/* Bottom center nav bar — dots + Prev/Next */}
+      {/* Bottom center nav bar */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-auto z-[9999] flex items-center gap-4 bg-white rounded-full px-4 py-2 shadow-2xl">
         {!isFirst && (
           <button
@@ -198,78 +217,24 @@ export function InteractiveOnboardingChecklist({
   open: controlledOpen,
   defaultOpen = false,
   onOpenChange,
-  onCompleteStep,
   onFinish,
 }: InteractiveOnboardingChecklistProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [internalCompletedSteps, setInternalCompletedSteps] = useState<Set<string>>(new Set());
-
-  const completedSteps = new Set([
-    ...steps.filter(step => step.completed).map(step => step.id),
-    ...internalCompletedSteps
-  ]);
   const [activeCoachmark, setActiveCoachmark] = useState<string | null>(null);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
 
-  const advanceToNextStep = useCallback((completedStepId: string) => {
-    const newCompletedSteps = new Set([
-      ...steps.filter(step => step.completed).map(step => step.id),
-      ...internalCompletedSteps,
-      completedStepId
-    ]);
-
-    const currentStepIndex = steps.findIndex(step => step.id === completedStepId);
-    const nextIncompleteStep = steps.slice(currentStepIndex + 1).find(step => !newCompletedSteps.has(step.id));
-
-    if (nextIncompleteStep) {
-      setActiveCoachmark(nextIncompleteStep.id);
-    } else {
-      setActiveCoachmark(null);
-    }
-
-    const completedAllSteps = steps.filter(step => newCompletedSteps.has(step.id));
-
-    if (completedAllSteps.length === steps.length) {
-      const end = Date.now() + 3 * 1000;
-      const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
-      const frame = () => {
-        if (Date.now() > end) return;
-        confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
-        confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
-        requestAnimationFrame(frame);
-      };
-      frame();
-      setShowCelebration(true);
-    }
-  }, [steps, internalCompletedSteps]);
-
-  // Auto-start first step when opened
+  // Auto-start first step when opened (skip if celebration is showing)
   useEffect(() => {
-    if (open && !activeCoachmark) {
-      const firstIncompleteStep = steps.find(step => !completedSteps.has(step.id));
-      if (firstIncompleteStep) {
-        const timer = setTimeout(() => {
-          setActiveCoachmark(firstIncompleteStep.id);
-        }, 400);
-        return () => clearTimeout(timer);
-      }
+    if (open && !activeCoachmark && !showCelebration) {
+      const timer = setTimeout(() => {
+        setActiveCoachmark(steps[0]?.id ?? null);
+      }, 400);
+      return () => clearTimeout(timer);
     }
-  }, [open, activeCoachmark, steps, completedSteps]);
-
-  // Skip completed steps
-  useEffect(() => {
-    if (activeCoachmark) {
-      const activeStep = steps.find(s => s.id === activeCoachmark);
-      if (activeStep && activeStep.completed) {
-        setTimeout(() => {
-          advanceToNextStep(activeCoachmark);
-        }, 500);
-      }
-    }
-  }, [steps, activeCoachmark, advanceToNextStep]);
+  }, [open, activeCoachmark, showCelebration, steps]);
 
   const handleClose = () => {
     setActiveCoachmark(null);
@@ -279,22 +244,26 @@ export function InteractiveOnboardingChecklist({
     onOpenChange?.(false);
   };
 
-  const handleCompleteStep = (stepId: string) => {
-    setInternalCompletedSteps(prev => new Set([...prev, stepId]));
-    onCompleteStep?.(stepId);
-    setTimeout(() => {
-      advanceToNextStep(stepId);
-    }, 500);
+  const handleFinishTour = () => {
+    setActiveCoachmark(null);
+    const end = Date.now() + 3 * 1000;
+    const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
+    const frame = () => {
+      if (Date.now() > end) return;
+      confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
+      confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
+      requestAnimationFrame(frame);
+    };
+    frame();
+    setShowCelebration(true);
   };
 
   const activeStep = activeCoachmark ? steps.find(s => s.id === activeCoachmark) : null;
   const activeStepIndex = activeStep ? steps.indexOf(activeStep) : -1;
   const totalSteps = steps.length;
 
-  const hasPrevIncompleteStep = activeStepIndex > 0 &&
-    steps.slice(0, activeStepIndex).some(step => !completedSteps.has(step.id));
-  const hasNextIncompleteStep = activeStepIndex < totalSteps - 1 &&
-    steps.slice(activeStepIndex + 1).some(step => !completedSteps.has(step.id));
+  const isFirstStep = activeStepIndex === 0;
+  const isLastStep = activeStepIndex === totalSteps - 1;
 
   if (!open) return null;
 
@@ -307,31 +276,25 @@ export function InteractiveOnboardingChecklist({
             step={activeStep}
             stepIndex={activeStepIndex}
             totalSteps={totalSteps}
-            isFirst={!hasPrevIncompleteStep}
-            isLast={!hasNextIncompleteStep}
+            isFirst={isFirstStep}
+            isLast={isLastStep}
             onNext={() => {
-              for (let i = activeStepIndex + 1; i < totalSteps; i++) {
-                if (!completedSteps.has(steps[i].id)) {
-                  setActiveCoachmark(steps[i].id);
-                  return;
-                }
+              if (activeStepIndex < totalSteps - 1) {
+                setActiveCoachmark(steps[activeStepIndex + 1].id);
               }
             }}
             onPrev={() => {
-              for (let i = activeStepIndex - 1; i >= 0; i--) {
-                if (!completedSteps.has(steps[i].id)) {
-                  setActiveCoachmark(steps[i].id);
-                  return;
-                }
+              if (activeStepIndex > 0) {
+                setActiveCoachmark(steps[activeStepIndex - 1].id);
               }
             }}
-            onComplete={() => handleCompleteStep(activeStep.id)}
+            onComplete={handleFinishTour}
             onClose={handleClose}
           />
         )}
       </AnimatePresence>
 
-      {/* Celebration overlay — portaled to body to escape parent transforms */}
+      {/* Celebration overlay */}
       {createPortal(
         <AnimatePresence>
           {showCelebration && (
