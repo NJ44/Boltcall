@@ -80,6 +80,7 @@ const Setup = React.lazy(() => import('../pages/Setup'));
 const SetupLoading = React.lazy(() => import('../pages/SetupLoading'));
 const PricingPage = React.lazy(() => import('../pages/PricingPage'));
 const Documentation = React.lazy(() => import('../pages/Documentation'));
+const ApiDocsPage = React.lazy(() => import('../pages/ApiDocsPage'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
 const AdminPanel = React.lazy(() => import('../pages/AdminPanel'));
 
@@ -412,6 +413,7 @@ const NavigationWrapper: React.FC = () => {
         {/* /smart-website removed — duplicate of free-website concept */}
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
+        <Route path="/api-docs" element={<ApiDocsPage />} />
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/newsletter" element={<Navigate to="/" replace />} />
         <Route path="/blog/the-new-reality-for-local-businesses" element={<Blog />} />
