@@ -22,13 +22,13 @@ function createChainMock(resolvedData: any = [], resolvedError: any = null) {
   return chain;
 }
 
-const mockSupabase = {
+const mockSupabase = vi.hoisted(() => ({
   auth: {
     getSession: vi.fn().mockResolvedValue({ data: { session: { access_token: 'tok_123' } } }),
   },
-  from: vi.fn().mockReturnValue(createChainMock()),
+  from: vi.fn(),
   rpc: vi.fn().mockResolvedValue({ data: { score: 85 }, error: null }),
-};
+}));
 
 vi.mock('../supabase', () => ({ supabase: mockSupabase }));
 
