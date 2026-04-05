@@ -859,6 +859,50 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             </p>
           </div>
 
+          {/* Agent Type */}
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Agent Type *
+            </label>
+            <div className="grid grid-cols-1 gap-2">
+              {AGENT_TYPES.map((type) => {
+                const Icon = type.value === 'inbound' ? PhoneIncoming : PhoneOutgoing;
+                return (
+                  <label
+                    key={type.value}
+                    className={`flex items-start gap-3 rounded-xl border p-3 cursor-pointer transition-all ${
+                      createForm.agentType === type.value
+                        ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-500'
+                        : 'border-zinc-200 hover:bg-zinc-50'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="agentType"
+                      value={type.value}
+                      checked={createForm.agentType === type.value}
+                      onChange={() => {
+                        setCreateForm(prev => ({
+                          ...prev,
+                          agentType: type.value,
+                          direction: type.value === 'inbound' ? 'inbound' : 'outbound'
+                        }));
+                      }}
+                      className="mt-0.5 text-blue-600 focus:ring-blue-500"
+                    />
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <Icon className="h-4 w-4 text-zinc-400 flex-shrink-0" />
+                      <div>
+                        <span className="text-sm font-medium text-zinc-900">{type.label}</span>
+                        <p className="text-xs text-zinc-500">{type.description}</p>
+                      </div>
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Agent Name */}
           <div>
             <label className="block text-sm font-medium text-zinc-700 mb-2">
