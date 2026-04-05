@@ -20,7 +20,6 @@ export interface InteractiveOnboardingChecklistProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?(open: boolean): void;
-  onCompleteStep?(id: string): void;
   onFinish?(): void;
 }
 
@@ -219,53 +218,14 @@ export function InteractiveOnboardingChecklist({
   open: controlledOpen,
   defaultOpen = false,
   onOpenChange,
-  onCompleteStep,
   onFinish,
 }: InteractiveOnboardingChecklistProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [internalCompletedSteps, setInternalCompletedSteps] = useState<Set<string>>(new Set());
-
-  const completedSteps = new Set([
-    ...steps.filter(step => step.completed).map(step => step.id),
-    ...internalCompletedSteps
-  ]);
   const [activeCoachmark, setActiveCoachmark] = useState<string | null>(null);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
-
-  const advanceToNextStep = useCallback((completedStepId: string) => {
-    const newCompletedSteps = new Set([
-      ...steps.filter(step => step.completed).map(step => step.id),
-      ...internalCompletedSteps,
-      completedStepId
-    ]);
-
-    const currentStepIndex = steps.findIndex(step => step.id === completedStepId);
-    const nextIncompleteStep = steps.slice(currentStepIndex + 1).find(step => !newCompletedSteps.has(step.id));
-
-    if (nextIncompleteStep) {
-      setActiveCoachmark(nextIncompleteStep.id);
-    } else {
-      setActiveCoachmark(null);
-    }
-
-    const completedAllSteps = steps.filter(step => newCompletedSteps.has(step.id));
-
-    if (completedAllSteps.length === steps.length) {
-      const end = Date.now() + 3 * 1000;
-      const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
-      const frame = () => {
-        if (Date.now() > end) return;
-        confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
-        confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
-        requestAnimationFrame(frame);
-      };
-      frame();
-      setShowCelebration(true);
-    }
-  }, [steps, internalCompletedSteps]);
 
   // Auto-start first step when opened (skip if celebration is showing)
   useEffect(() => {
@@ -277,32 +237,12 @@ export function InteractiveOnboardingChecklist({
     }
   }, [open, activeCoachmark, showCelebration, steps]);
 
-  // Skip completed steps
-  useEffect(() => {
-    if (activeCoachmark) {
-      const activeStep = steps.find(s => s.id === activeCoachmark);
-      if (activeStep && activeStep.completed) {
-        setTimeout(() => {
-          advanceToNextStep(activeCoachmark);
-        }, 500);
-      }
-    }
-  }, [steps, activeCoachmark, advanceToNextStep]);
-
   const handleClose = () => {
     setActiveCoachmark(null);
     if (!isControlled) {
       setInternalOpen(false);
     }
     onOpenChange?.(false);
-  };
-
-  const handleCompleteStep = (stepId: string) => {
-    setInternalCompletedSteps(prev => new Set([...prev, stepId]));
-    onCompleteStep?.(stepId);
-    setTimeout(() => {
-      advanceToNextStep(stepId);
-    }, 500);
   };
 
   const handleFinishTour = () => {
