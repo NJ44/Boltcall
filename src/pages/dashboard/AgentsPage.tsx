@@ -1006,37 +1006,6 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             />
           </div>
 
-          {/* Inbound/Outbound */}
-          <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-2">
-              Call Direction *
-            </label>
-            <div className="flex flex-col gap-2 md:flex-row md:gap-4">
-              <label className="flex items-center text-zinc-900 text-sm md:text-base">
-                <input
-                  type="radio"
-                  name="direction"
-                  value="inbound"
-                  checked={createForm.direction === 'inbound'}
-                  onChange={(e) => handleInputChange('direction', e.target.value as 'inbound' | 'outbound')}
-                  className="mr-2"
-                />
-                Inbound (Receives calls)
-              </label>
-              <label className="flex items-center text-zinc-900 text-sm md:text-base">
-                <input
-                  type="radio"
-                  name="direction"
-                  value="outbound"
-                  checked={createForm.direction === 'outbound'}
-                  onChange={(e) => handleInputChange('direction', e.target.value as 'inbound' | 'outbound')}
-                  className="mr-2"
-                />
-                Outbound (Makes calls)
-              </label>
-            </div>
-          </div>
-
           {/* Language */}
           <div>
             <label className="block text-sm font-medium text-zinc-700 mb-2">
