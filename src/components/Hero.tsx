@@ -29,7 +29,7 @@ const heroIcons: IconData[] = [
   { id: 6, icon: IconUsers, className: 'top-[68%] md:top-[45%] left-[3%] md:left-[5%]' },
   { id: 7, icon: IconTarget, className: 'top-[80%] md:top-[65%] right-[15%] md:right-[20%]' },
   { id: 8, icon: IconSMS2, className: 'top-[72%] md:top-[50%] right-[1%] md:right-[2%]' },
-  { id: 9, icon: IconClock, className: 'top-[82%] md:top-[60%] left-[15%] md:left-[2%]' },
+  { id: 9, icon: IconClock, className: 'top-[82%] md:top-[70%] right-[5%] md:right-[4%]' },
 ];
 
 // Stable float durations per icon
