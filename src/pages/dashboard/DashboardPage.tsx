@@ -6,7 +6,6 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import confetti from 'canvas-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
-import { AppleStyleDock } from '../../components/ui/dock-demo';
 import FeatureHub from '../../components/dashboard/FeatureHub';
 import { InteractiveOnboardingChecklist, type Step } from '../../components/ui/onboarding-checklist';
 import { supabase } from '../../lib/supabase';
