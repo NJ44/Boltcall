@@ -84,6 +84,9 @@ export const handler: Handler = async (event) => {
 
       if (body.agent_ids?.length) {
         filterCriteria.agent_id = body.agent_ids;
+      } else if (userAgentIds?.length) {
+        // Scope to authenticated user's agents
+        filterCriteria.agent_id = userAgentIds;
       }
       if (body.call_status?.length) {
         filterCriteria.call_status = body.call_status;
