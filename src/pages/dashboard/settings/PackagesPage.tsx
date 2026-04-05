@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Clock, Star, Globe, MessageSquare,
+  Clock, Star, MessageSquare,
   Loader2, AlertCircle, Package,
 } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';

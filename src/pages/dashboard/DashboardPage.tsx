@@ -3,7 +3,6 @@ import { AlertTriangle, HelpCircle, X, Send, ChevronRight, Phone } from 'lucide-
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import confetti from 'canvas-confetti';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import FeatureHub from '../../components/dashboard/FeatureHub';
@@ -36,7 +35,6 @@ const ONBOARDING_STEPS: Step[] = [
 const ONBOARDING_STORAGE_KEY = 'boltcall-onboarding-completed';
 
 const DashboardPage: React.FC = () => {
-  const { t } = useTranslation('dashboard');
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showTalkModal, setShowTalkModal] = useState(false);
@@ -59,6 +57,19 @@ const DashboardPage: React.FC = () => {
     supabase.auth.getUser().then(({ data }) => {
       if (data.user?.user_metadata?.onboarding_completed) {
         localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+            supabase.auth.updateUser({ data: { onboarding_completed: true } });
+        setShowOnboarding(false);
+      }
+    });
+  }, [user?.id]);
+
+  // Check Supabase for onboarding completion (handles cross-device/browser)
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user?.user_metadata?.onboarding_completed) {
+        localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+            supabase.auth.updateUser({ data: { onboarding_completed: true } });
         setShowOnboarding(false);
       }
     });
@@ -139,10 +150,12 @@ const DashboardPage: React.FC = () => {
           if (!open) {
             localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
             supabase.auth.updateUser({ data: { onboarding_completed: true } });
+            supabase.auth.updateUser({ data: { onboarding_completed: true } });
           }
         }}
         onFinish={() => {
           localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+            supabase.auth.updateUser({ data: { onboarding_completed: true } });
           supabase.auth.updateUser({ data: { onboarding_completed: true } });
           setShowOnboarding(false);
         }}
