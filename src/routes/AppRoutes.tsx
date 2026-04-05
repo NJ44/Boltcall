@@ -68,6 +68,7 @@ const RolesPage = React.lazy(() => import('../pages/dashboard/settings/RolesPage
 const ActivityLogPage = React.lazy(() => import('../pages/dashboard/settings/ActivityLogPage'));
 const ApiKeysPage = React.lazy(() => import('../pages/dashboard/settings/ApiKeysPage'));
 const WorkspacePage = React.lazy(() => import('../pages/dashboard/settings/WorkspacePage'));
+const PackagesPage = React.lazy(() => import('../pages/dashboard/settings/PackagesPage'));
 
 // ── Lazy loads — Static / info pages ─────────────────────────────────────
 const HelpCenter = React.lazy(() => import('../pages/HelpCenter'));
