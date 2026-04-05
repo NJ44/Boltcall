@@ -151,6 +151,18 @@ export const handler: Handler = async (event) => {
       const appointmentId = appt.id;
       const messagesToInsert: any[] = [];
 
+      // Fire appointment_booked webhook
+      fireWebhooks(userId, 'appointment_booked', {
+        id: appointmentId,
+        customer_name: attendeeName,
+        customer_email: attendeeEmail,
+        customer_phone: attendeePhone,
+        start_time: startTime,
+        end_time: endTime,
+        service: eventTitle,
+        booking_id: bookingId,
+      });
+
       // 2. Check reminders config
       const { data: bf } = await supabase
         .from('business_features')
