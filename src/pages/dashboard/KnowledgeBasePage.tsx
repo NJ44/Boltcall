@@ -595,6 +595,11 @@ const KnowledgeBasePage: React.FC = () => {
     setFileInput(null);
     setBlankPageTitle('');
     setPopupType(null);
+    setKbWebsiteUrl('');
+    setKbScanning(false);
+    setKbServices([]);
+    setKbFaqs([]);
+    setKbPolicies({ cancellation: '', reschedule: '', deposit: '' });
   };
 
   const handleAddKbDocument = () => {
