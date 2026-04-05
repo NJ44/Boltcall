@@ -177,6 +177,19 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
         errors.push(`Insert failed for leadgen_id=${leadgen_id}: ${insertErr.message}`);
       } else {
         results.push(data);
+        // Fire user webhooks for Facebook leads
+        if (userId && data) {
+          fireWebhooks(userId, 'new_lead', {
+            id: data.id,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            phone: data.phone,
+            source: data.source,
+            status: data.status,
+            created_at: data.created_at,
+          });
+        }
       }
     }
   }
