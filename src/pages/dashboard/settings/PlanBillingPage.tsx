@@ -91,14 +91,33 @@ const PlanBillingPage: React.FC = () => {
   const PAYPAL_PLAN_ROUTES: Record<string, string> = {
     starter: '/payment/elite-starter',
     pro: '/payment/pro',
-    ultimate: '/contact', // Contact us for Ultimate
+    ultimate: '/contact',
     enterprise: '/contact',
   };
 
-  const handleUpgrade = (plan: PlanLevel) => {
+  const PLAN_RANK: Record<string, number> = {
+    free: 0, starter: 1, pro: 2, ultimate: 3, enterprise: 4,
+  };
+
+  const isUpgrade = (targetPlan: string) =>
+    (PLAN_RANK[targetPlan] ?? 0) > (PLAN_RANK[currentPlanLevel] ?? 0);
+
+  const handlePlanChange = async (plan: PlanLevel) => {
     setUpgrading(plan);
-    const route = PAYPAL_PLAN_ROUTES[plan] || '/pricing';
-    window.location.href = route;
+    if (isUpgrade(plan)) {
+      // Upgrade: go to PayPal payment page
+      const route = PAYPAL_PLAN_ROUTES[plan] || '/pricing';
+      window.location.href = route;
+    } else {
+      // Downgrade: open PayPal subscription management to change plan
+      try {
+        await openCustomerPortal();
+      } catch (error) {
+        console.error('Portal error:', error);
+      } finally {
+        setUpgrading(null);
+      }
+    }
   };
 
   const formatDate = (dateStr: string) => {
@@ -212,16 +231,22 @@ const PlanBillingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Upgrade to annual CTA */}
+            {/* Upgrade to annual CTA — opens PayPal to manage billing cycle */}
             {currentInterval === 'monthly' && subscription && (
               <div className="mt-6">
                 <PopButton
                   color="blue"
                   size="sm"
-                  onClick={() => handleUpgrade(currentPlanLevel as PlanLevel)}
+                  onClick={async () => {
+                    try {
+                      await openCustomerPortal();
+                    } catch (error) {
+                      console.error('Portal error:', error);
+                    }
+                  }}
                   className="gap-2"
                 >
-                  Upgrade to annual
+                  Switch to annual
                 </PopButton>
                 <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800">
                   Save 20%
@@ -350,9 +375,9 @@ const PlanBillingPage: React.FC = () => {
                       )}
 
                       <PopButton
-                        color={isCurrent ? 'default' : 'blue'}
+                        color={isCurrent ? 'default' : isUpgrade(level) ? 'blue' : 'default'}
                         disabled={isCurrent || upgrading !== null}
-                        onClick={() => !isCurrent && handleUpgrade(level)}
+                        onClick={() => !isCurrent && handlePlanChange(level)}
                         className="mt-4 w-full"
                       >
                         {upgrading === level ? (
@@ -362,8 +387,10 @@ const PlanBillingPage: React.FC = () => {
                           </span>
                         ) : isCurrent ? (
                           'Current Plan'
-                        ) : (
+                        ) : isUpgrade(level) ? (
                           'Upgrade'
+                        ) : (
+                          'Downgrade'
                         )}
                       </PopButton>
                     </div>
