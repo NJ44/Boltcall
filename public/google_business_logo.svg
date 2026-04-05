@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Google Business Profile official icon -->
+  <!-- Storefront shape -->
+  <path d="M44 11H4l-2 9h0a5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0 5 5 5 5 0 0 0 5-5h0z" fill="#4285F4"/>
+  <path d="M2 20v0a5 5 0 0 0 5 5 5 5 0 0 0 5-5" fill="#EA4335"/>
+  <path d="M12 20a5 5 0 0 0 5 5 5 5 0 0 0 5-5" fill="#FBBC05"/>
+  <path d="M22 20a5 5 0 0 0 5 5 5 5 0 0 0 5-5" fill="#FBBC05"/>
+  <path d="M32 20a5 5 0 0 0 5 5 5 5 0 0 0 5-5" fill="#34A853"/>
+  <!-- Building body -->
+  <path d="M4 25v17a2 2 0 0 0 2 2h36a2 2 0 0 0 2-2V25a7 7 0 0 1-5 2 7 7 0 0 1-5-2 7 7 0 0 1-5 2 7 7 0 0 1-5-2 7 7 0 0 1-5 2 7 7 0 0 1-5-2 7 7 0 0 1-5 2 7 7 0 0 1-5-2z" fill="#4285F4" opacity="0.2"/>
+  <rect x="4" y="25" width="40" height="19" rx="2" fill="white" opacity="0.0"/>
+  <path d="M4 24v18a2 2 0 0 0 2 2h36a2 2 0 0 0 2-2V24" fill="none" stroke="#4285F4" stroke-width="2"/>
+  <!-- Door -->
+  <rect x="19" y="32" width="10" height="12" rx="1" fill="#4285F4"/>
+  <!-- Window -->
+  <rect x="8" y="30" width="8" height="8" rx="1" fill="#4285F4" opacity="0.3"/>
+  <rect x="32" y="30" width="8" height="8" rx="1" fill="#4285F4" opacity="0.3"/>
+  <!-- Roof line -->
+  <rect x="2" y="9" width="44" height="3" rx="1" fill="#4285F4"/>
+</svg>
