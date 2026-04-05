@@ -68,6 +68,7 @@ const RolesPage = React.lazy(() => import('../pages/dashboard/settings/RolesPage
 const ActivityLogPage = React.lazy(() => import('../pages/dashboard/settings/ActivityLogPage'));
 const ApiKeysPage = React.lazy(() => import('../pages/dashboard/settings/ApiKeysPage'));
 const WorkspacePage = React.lazy(() => import('../pages/dashboard/settings/WorkspacePage'));
+const PackagesPage = React.lazy(() => import('../pages/dashboard/settings/PackagesPage'));
 
 // ── Lazy loads — Static / info pages ─────────────────────────────────────
 const HelpCenter = React.lazy(() => import('../pages/HelpCenter'));
@@ -374,9 +375,13 @@ const NavigationWrapper: React.FC = () => {
               <WorkspacePage />
             </SettingsLayout>
           } />
+          <Route path="settings/packages" element={
+            <SettingsLayout>
+              <PackagesPage />
+            </SettingsLayout>
+          } />
           {/* Redirects for removed settings pages */}
           <Route path="settings/billing" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
-          <Route path="settings/packages" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
           <Route path="settings/notification-preferences" element={<Navigate to="/dashboard/settings/notifications" replace />} />
           <Route path="settings/services" element={<Navigate to="/dashboard/settings/general" replace />} />
         </Route>
