@@ -1,44 +1,101 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
-import { ContainerScroll, CardSticky } from './ui/cards-stack';
-
 
 const PROCESS_PHASES = [
   {
     id: "process-1",
     title: "Capture the lead",
-      description:
-        "Your helper answers the phone all day and all night. It talks to people who call you. It talks to people who fill out forms on your website. It talks to people who see your ads. It gets their name and phone number. It never misses anyone.",
-    animationUrl: "/AI_assistant.lottie"
+    description:
+      "Your helper answers the phone all day and all night. It talks to people who call you. It talks to people who fill out forms on your website. It talks to people who see your ads. It gets their name and phone number. It never misses anyone.",
   },
   {
     id: "process-2",
     title: "Find serious buyers",
-      description:
-        "Your helper talks to people like a real person. It asks them questions. It finds out what they need, when they want help, and if they're ready to move forward. It separates the serious buyers from the tire-kickers — so you only spend time on people who are ready.",
-    animationUrl: "/statistics_on_tab.lottie"
+    description:
+      "Your helper talks to people like a real person. It asks them questions. It finds out what they need, when they want help, and if they're ready to move forward. It separates the serious buyers from the tire-kickers — so you only spend time on people who are ready.",
   },
   {
     id: "process-3",
     title: "Book appointments",
-      description:
-        "When someone wants to meet with you, your helper books them. It looks at your calendar. It finds a time that works. It tells them when to come. It sends them a reminder so they don't forget.",
-    animationUrl: "/sms_agent.lottie"
+    description:
+      "When someone wants to meet with you, your helper books them. It looks at your calendar. It finds a time that works. It tells them when to come. It sends them a reminder so they don't forget.",
   },
 ];
 
 const HowItWorks: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    let ctx: any;
+
+    const init = async () => {
+      const gsapModule = await import('gsap');
+      const stModule = await import('gsap/ScrollTrigger');
+      const gsap = gsapModule.gsap;
+      const ScrollTrigger = stModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Connect Lenis to ScrollTrigger if active
+      if (window.lenis) {
+        window.lenis.on('scroll', ScrollTrigger.update);
+      }
+
+      ctx = gsap.context(() => {
+        const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
+
+        cards.forEach((card, i) => {
+          // Pin each card so they stack as user scrolls
+          ScrollTrigger.create({
+            trigger: card,
+            start: `top ${150 + i * 30}px`,
+            endTrigger: sectionRef.current,
+            end: 'bottom bottom',
+            pin: true,
+            pinSpacing: i < cards.length - 1,
+          });
+
+          // Animate cards in from below
+          gsap.fromTo(
+            card,
+            { y: 60, opacity: 0, scale: 0.96 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.5,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                end: 'top 55%',
+                scrub: 1,
+              },
+            }
+          );
+        });
+      }, sectionRef);
+    };
+
+    init();
+
+    return () => {
+      ctx?.revert();
+    };
+  }, []);
+
   return (
-    <section 
-      id="how-it-works" 
+    <section
+      ref={sectionRef}
+      id="how-it-works"
       className="relative py-16 bg-transparent mt-[200px]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
           {/* Section Header - Sticky Sidebar */}
           <div className="left-0 md:sticky ml-4 pt-12 md:pt-0 pr-2" style={{ top: '150px', height: 'fit-content' }}>
-            <motion.h5 
+            <motion.h5
               className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +125,7 @@ const HowItWorks: React.FC = () => {
                 style={{ fontSize: '1.155em' }}
               />
             </h2>
-            <motion.p 
+            <motion.p
               className="max-w-prose text-base md:text-lg leading-relaxed text-white/80 mt-5 ml-5"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -79,18 +136,16 @@ const HowItWorks: React.FC = () => {
             </motion.p>
           </div>
 
-          {/* Sticky Cards */}
-          <ContainerScroll className="space-y-[40vh] py-4 ml-0 md:ml-16 -mt-[50px]" style={{ minHeight: '200vh' }}>
+          {/* Scroll-Pinned Stacking Cards */}
+          <div className="py-4 ml-0 md:ml-16">
             {PROCESS_PHASES.map((phase, index) => (
-              <CardSticky
+              <div
                 key={phase.id}
-                index={index + 2}
-                incrementY={14}
-                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-full md:max-w-[440px] ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
-                style={{ top: `${150 + index * 20}px`, bottom: 'auto', minHeight: '280px' }}
+                ref={(el) => { cardsRef.current[index] = el; }}
+                className={`rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden max-w-full md:max-w-[440px] relative ${index < PROCESS_PHASES.length - 1 ? 'mb-16' : ''} ${index === 0 ? 'mt-20 md:mt-0' : ''}`}
+                style={{ minHeight: '280px', zIndex: index + 1 }}
               >
                 <div className="relative z-10 p-4 md:p-7 h-full">
-                  {/* Full width content */}
                   <div className="w-full">
                     <div className="flex items-center justify-between mb-3">
                       <h2 className="text-[calc(1.25rem*0.97*0.97*0.97)] md:text-[calc(1.875rem*0.97*0.97*0.97)] lg:text-[calc(2.25rem*0.97*0.97*0.97)] font-bold tracking-tight text-gray-900">
@@ -107,9 +162,9 @@ const HowItWorks: React.FC = () => {
                 </div>
                 {/* Blue gradient from bottom */}
                 <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-blue-100 via-blue-50/60 to-transparent pointer-events-none z-0" />
-              </CardSticky>
+              </div>
             ))}
-          </ContainerScroll>
+          </div>
         </div>
       </div>
     </section>
