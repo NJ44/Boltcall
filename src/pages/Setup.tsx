@@ -100,7 +100,6 @@ const Setup: React.FC = () => {
     isCompleted,
     updateBusinessProfile,
     updateAccount,
-    agentConfig,
     knowledgeBase,
     complete,
     updateReview,
