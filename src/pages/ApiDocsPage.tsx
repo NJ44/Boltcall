@@ -549,7 +549,7 @@ const ApiDocsPage: React.FC = () => {
             items={[
               { label: 'Home', href: '/' },
               { label: 'Resources', href: '/documentation' },
-              { label: 'API Documentation', href: '/api-docs' },
+              { label: 'API Documentation', href: '/api-documentation' },
             ]}
           />
           <div className="text-center">
