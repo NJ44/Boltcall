@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SettingsLayoutProps {
   children?: React.ReactNode;
@@ -13,7 +13,6 @@ const categories = [
     sidebar: [
       { id: 'plan-billing', label: 'Billing', route: '/dashboard/settings/plan-billing' },
       { id: 'usage', label: 'Usage', route: '/dashboard/settings/usage' },
-      { id: 'packages', label: 'Packages', route: '/dashboard/settings/packages' },
     ],
   },
   {
@@ -39,6 +38,7 @@ const categories = [
     label: 'Preferences',
     sidebar: [
       { id: 'preferences', label: 'Appearance & Region', route: '/dashboard/settings/preferences' },
+      { id: 'packages', label: 'Packages', route: '/dashboard/settings/packages' },
       { id: 'notifications', label: 'Notifications', route: '/dashboard/settings/notifications' },
     ],
   },
@@ -146,14 +146,17 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
         {/* Content */}
         <div className="flex-1 overflow-y-auto bg-gray-50">
           <div className="p-4 md:p-12 max-w-5xl">
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-            >
-              {children || <Outlet />}
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15, ease: 'easeInOut' }}
+              >
+                {children || <Outlet />}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Globe, Moon, Sun, Palette, Save, RefreshCw, Smartphone, Monitor, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Globe, Moon, Sun, Save, RefreshCw, Smartphone, Monitor, Check, Clock, Calendar, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Button from '../../../components/ui/Button';
 import LanguageSwitcher from '../../../components/dashboard/LanguageSwitcher';
@@ -177,147 +177,173 @@ const PreferencesPage: React.FC = () => {
     { value: 'Europe/Madrid', label: 'Madrid (CET)' },
   ];
 
+  const selectClass = "w-full h-11 px-4 pr-10 bg-white dark:bg-[#161619] border border-gray-200 dark:border-[#2a2a30] rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none cursor-pointer outline-none";
+
   return (
-    <div className="space-y-8">
-      {/* Header */}
+    <div className="space-y-6 max-w-3xl">
+      {/* Header with sticky save bar */}
       <div className="flex items-center justify-between">
-        <Button
-          variant="primary"
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">Preferences</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Customize your workspace appearance and regional settings.</p>
+        </div>
+        <button
           onClick={handleSave}
           disabled={isSaving}
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-medium rounded-xl shadow-sm shadow-blue-600/20 transition-all active:scale-[0.98]"
         >
           {isSaving ? (
-            <RefreshCw className="w-4 h-4 ltr:mr-2 rtl:ml-2 animate-spin" />
+            <RefreshCw className="w-4 h-4 animate-spin" />
           ) : (
-            <Save className="w-4 h-4 ltr:mr-2 rtl:ml-2" />
+            <Save className="w-4 h-4" />
           )}
           {isSaving ? t('common:saving') : t('common:saveChanges')}
-        </Button>
+        </button>
       </div>
 
-      {saveMessage && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-green-50 border border-green-200 rounded-lg p-4"
-        >
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-green-800 font-medium">{saveMessage}</span>
-          </div>
-        </motion.div>
-      )}
+      {/* Save success message */}
+      <AnimatePresence>
+        {saveMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="flex items-center gap-2.5 px-4 py-3 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/40 rounded-xl"
+          >
+            <div className="flex items-center justify-center w-5 h-5 bg-emerald-500 rounded-full">
+              <Check className="w-3 h-3 text-white" />
+            </div>
+            <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">{saveMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Appearance */}
-      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-4 md:p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-            <Palette className="w-4 h-4 text-purple-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('settings:preferences.appearance')}</h2>
-        </div>
+      <div className="bg-white dark:bg-[#111114] rounded-2xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
+        <h2 className="text-base font-semibold text-gray-900 dark:text-white">{t('settings:preferences.appearance')}</h2>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 mb-5">Choose how Boltcall looks on your device.</p>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('settings:preferences.theme')}</label>
-            <div className="space-y-2">
-              {[
-                { value: 'light', label: t('settings:preferences.themeLight'), icon: Sun },
-                { value: 'dark', label: t('settings:preferences.themeDark'), icon: Moon },
-                { value: 'auto', label: t('settings:preferences.themeAuto'), icon: Globe }
-              ].map((theme) => {
-                const Icon = theme.icon;
-                return (
-                  <label key={theme.value} className="flex items-center gap-3 p-3 border border-gray-200 dark:border-[#2a2a30] rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a1a1f]">
-                    <input
-                      type="radio"
-                      name="theme"
-                      value={theme.value}
-                      checked={preferences.theme === theme.value}
-                      onChange={(e) => setPreferences(prev => ({ ...prev, theme: e.target.value }))}
-                      className="text-blue-600 focus:ring-blue-500"
-                    />
-                    <Icon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                    <span className="text-gray-900 dark:text-white">{theme.label}</span>
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('settings:preferences.theme')}</label>
+        <div className="relative flex bg-gray-100 dark:bg-[#1a1a1f] rounded-xl p-1">
+          {[
+            { value: 'light', label: t('settings:preferences.themeLight'), icon: Sun },
+            { value: 'dark', label: t('settings:preferences.themeDark'), icon: Moon },
+            { value: 'auto', label: t('settings:preferences.themeAuto'), icon: Monitor },
+          ].map((theme) => {
+            const Icon = theme.icon;
+            const isSelected = preferences.theme === theme.value;
+            return (
+              <button
+                key={theme.value}
+                onClick={() => setPreferences(prev => ({ ...prev, theme: theme.value }))}
+                className={`relative flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-colors z-10 ${
+                  isSelected ? 'text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                }`}
+              >
+                {isSelected && (
+                  <motion.div
+                    layoutId="theme-selector"
+                    className="absolute inset-0 bg-blue-600 rounded-lg"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative flex items-center gap-2">
+                  <Icon className="w-4 h-4" />
+                  {theme.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Language & Region */}
-      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-4 md:p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-            <Globe className="w-4 h-4 text-blue-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('settings:preferences.languageRegion')}</h2>
-        </div>
+      <div className="bg-white dark:bg-[#111114] rounded-2xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
+        <h2 className="text-base font-semibold text-gray-900 dark:text-white">{t('settings:preferences.languageRegion')}</h2>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 mb-5">Set your language, timezone, and formatting preferences.</p>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-5">
+          {/* Language */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.language')}</label>
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Globe className="w-3.5 h-3.5 text-gray-400" />
+              {t('settings:preferences.language')}
+            </label>
             <LanguageSwitcher variant="select" />
           </div>
 
+          {/* Timezone */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.timezone')}</label>
-            <select
-              value={preferences.timezone}
-              onChange={(e) => setPreferences(prev => ({ ...prev, timezone: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[#161619] text-gray-900 dark:text-white"
-            >
-              {timezones.map((tz) => (
-                <option key={tz.value} value={tz.value}>{tz.label}</option>
-              ))}
-            </select>
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Globe className="w-3.5 h-3.5 text-gray-400" />
+              {t('settings:preferences.timezone')}
+            </label>
+            <div className="relative">
+              <select
+                value={preferences.timezone}
+                onChange={(e) => setPreferences(prev => ({ ...prev, timezone: e.target.value }))}
+                className={selectClass}
+              >
+                {timezones.map((tz) => (
+                  <option key={tz.value} value={tz.value}>{tz.label}</option>
+                ))}
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            </div>
           </div>
 
+          {/* Date Format */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.dateFormat')}</label>
-            <select
-              value={preferences.dateFormat}
-              onChange={(e) => setPreferences(prev => ({ ...prev, dateFormat: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[#161619] text-gray-900 dark:text-white"
-            >
-              <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-              <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-              <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-            </select>
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Calendar className="w-3.5 h-3.5 text-gray-400" />
+              {t('settings:preferences.dateFormat')}
+            </label>
+            <div className="relative">
+              <select
+                value={preferences.dateFormat}
+                onChange={(e) => setPreferences(prev => ({ ...prev, dateFormat: e.target.value }))}
+                className={selectClass}
+              >
+                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            </div>
           </div>
 
+          {/* Time Format */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('settings:preferences.timeFormat')}</label>
-            <select
-              value={preferences.timeFormat}
-              onChange={(e) => setPreferences(prev => ({ ...prev, timeFormat: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-[#161619] text-gray-900 dark:text-white"
-            >
-              <option value="12h">{t('settings:preferences.timeFormat12')}</option>
-              <option value="24h">{t('settings:preferences.timeFormat24')}</option>
-            </select>
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <Clock className="w-3.5 h-3.5 text-gray-400" />
+              {t('settings:preferences.timeFormat')}
+            </label>
+            <div className="relative">
+              <select
+                value={preferences.timeFormat}
+                onChange={(e) => setPreferences(prev => ({ ...prev, timeFormat: e.target.value }))}
+                className={selectClass}
+              >
+                <option value="12h">{t('settings:preferences.timeFormat12')}</option>
+                <option value="24h">{t('settings:preferences.timeFormat24')}</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Desktop App */}
-      <div className="bg-white dark:bg-[#111114] rounded-xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-4 md:p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-            <Monitor className="w-4 h-4 text-blue-600" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Desktop App</h2>
-        </div>
+      <div className="bg-white dark:bg-[#111114] rounded-2xl shadow-sm border border-gray-200 dark:border-[#2a2a30] p-6">
+        <h2 className="text-base font-semibold text-gray-900 dark:text-white mb-1">Desktop App</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">Install Boltcall as a native-like app on your device.</p>
 
-        <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-[#2a2a30] rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[#161619] border border-gray-200 dark:border-[#2a2a30] rounded-xl">
           <div className="flex items-center gap-4">
             <img src="/boltcall_icon.png" alt="Boltcall" className="w-12 h-12 rounded-xl" loading="lazy" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">Install Boltcall</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {isInstalled
                   ? 'Boltcall is installed on your device.'
                   : isIOS
@@ -328,7 +354,7 @@ const PreferencesPage: React.FC = () => {
           </div>
 
           {isInstalled ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium rounded-lg">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium rounded-lg">
               <Check className="w-4 h-4" />
               Installed
             </span>
@@ -348,7 +374,6 @@ const PreferencesPage: React.FC = () => {
           ) : null}
         </div>
       </div>
-
     </div>
   );
 };
