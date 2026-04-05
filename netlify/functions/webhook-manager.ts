@@ -169,11 +169,12 @@ export const handler: Handler = async (event) => {
     if (auth.hasKey && !auth.userId) {
       return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
     }
-    const resolvedUserId = auth.userId || body.userId;
+    // Inject resolved userId into body so all downstream destructuring picks it up
+    if (auth.userId) body.userId = auth.userId;
 
     // ─── LIST ────────────────────────────────────────────────────────
     if (action === 'list') {
-      const userId = resolvedUserId;
+      const { userId } = body;
       if (!userId) return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
 
       const { data, error } = await supabase
