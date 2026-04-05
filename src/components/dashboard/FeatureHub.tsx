@@ -309,62 +309,6 @@ const FeatureHub: React.FC = () => {
         </div>
       </div>
 
-      {/* Operations Pack Add-on — Reminders + Reputation */}
-      <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
-        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Operations Pack</h2>
-            <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 px-2 py-0.5 rounded-full uppercase tracking-wide">
-              Add-on
-            </span>
-          </div>
-          <span className="text-xs text-gray-400 font-medium">
-            {ADDON_FEATURES.filter(f => features[f.key]).length}/{ADDON_FEATURES.length} active
-          </span>
-        </div>
-
-        <div className="divide-y divide-gray-100 dark:divide-[#1e1e24]">
-          {ADDON_FEATURES.map((feature) => {
-            const Icon = feature.icon;
-            const enabled = features[feature.key];
-            const isToggling = toggling === feature.key;
-
-            return (
-              <div
-                key={feature.key}
-                data-onboarding={`feature-${feature.key}`}
-                className="flex items-center justify-between px-4 py-3"
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-lg ${feature.bgColor} flex items-center justify-center`}>
-                    <Icon className={`w-4 h-4 ${feature.color}`} />
-                  </div>
-                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{feature.name}</span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  {!enabled && (
-                    <Link
-                      to={feature.configLink}
-                      className="text-xs text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
-                    >
-                      Configure
-                    </Link>
-                  )}
-                  {isToggling ? (
-                    <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
-                  ) : (
-                    <PremiumToggle
-                      checked={enabled}
-                      onChange={() => toggleFeature(feature.key)}
-                    />
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 };
