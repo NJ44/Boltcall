@@ -266,6 +266,20 @@ export const handler: Handler = async (event) => {
         };
       }
 
+      // Fire user webhooks (Zapier, Make, etc.)
+      if (lead.user_id && data) {
+        fireWebhooks(lead.user_id, 'new_lead', {
+          id: data.id,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          phone: data.phone,
+          source: data.source,
+          status: data.status,
+          created_at: data.created_at,
+        });
+      }
+
       // Sync lead to connected CRMs (fire-and-forget)
       if (lead.user_id) {
         const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
