@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { deductTokens, deductTokensBatch, TOKEN_COSTS } from './_shared/token-utils';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
