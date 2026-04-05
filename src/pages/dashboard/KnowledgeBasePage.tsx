@@ -693,6 +693,73 @@ const KnowledgeBasePage: React.FC = () => {
         };
       }));
 
+      // Add KB entries from services/FAQs/policies
+      if (kbServices.length > 0) {
+        const servicesContent = kbServices
+          .map(s => `${s.name} — ${s.duration} min — $${s.price}`)
+          .join('\n');
+        documentsToInsert.push({
+          user_id: user.id,
+          business_profile_id: businessProfileId,
+          title: 'Services & Pricing',
+          content: servicesContent,
+          content_type: 'text',
+          status: 'active',
+          tags: [knowledgeBaseName.trim()],
+          kb_folder_id: newFolderId,
+          source: 'manual'
+        });
+      }
+
+      if (kbFaqs.length > 0) {
+        const faqsContent = kbFaqs
+          .map(f => `Q: ${f.question}\nA: ${f.answer}`)
+          .join('\n\n');
+        documentsToInsert.push({
+          user_id: user.id,
+          business_profile_id: businessProfileId,
+          title: 'Frequently Asked Questions',
+          content: faqsContent,
+          content_type: 'text',
+          status: 'active',
+          tags: [knowledgeBaseName.trim()],
+          kb_folder_id: newFolderId,
+          source: 'manual'
+        });
+      }
+
+      if (kbPolicies.cancellation.trim() || kbPolicies.reschedule.trim() || kbPolicies.deposit.trim()) {
+        const policyParts: string[] = [];
+        if (kbPolicies.cancellation.trim()) policyParts.push(`Cancellation: ${kbPolicies.cancellation.trim()}`);
+        if (kbPolicies.reschedule.trim()) policyParts.push(`Reschedule: ${kbPolicies.reschedule.trim()}`);
+        if (kbPolicies.deposit.trim()) policyParts.push(`Deposit/Payment: ${kbPolicies.deposit.trim()}`);
+        documentsToInsert.push({
+          user_id: user.id,
+          business_profile_id: businessProfileId,
+          title: 'Business Policies',
+          content: policyParts.join('\n\n'),
+          content_type: 'text',
+          status: 'active',
+          tags: [knowledgeBaseName.trim()],
+          kb_folder_id: newFolderId,
+          source: 'manual'
+        });
+      }
+
+      if (documentsToInsert.length === 0) {
+        showToast({
+          title: 'Success',
+          message: 'Knowledge base folder created',
+          variant: 'success',
+          duration: 3000
+        });
+        handleCloseNewKnowledgeBase();
+        fetchFolders();
+        fetchDocuments();
+        syncToRetell();
+        return;
+      }
+
       const { error } = await supabase
         .from('knowledge_base')
         .insert(documentsToInsert)
