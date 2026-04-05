@@ -129,10 +129,31 @@ const CoachmarkOverlay = ({
       className="fixed inset-0 z-[9998] pointer-events-none"
       role="dialog"
       aria-modal="true"
-      style={{
-        background: `radial-gradient(circle at ${left + width/2}px ${top + height/2}px, transparent ${Math.max(width, height)/2 + spotlightPadding}px, rgba(0,0,0,0.7) ${Math.max(width, height)/2 + spotlightPadding + 1}px)`
-      }}
     >
+      {/* Rectangular spotlight mask */}
+      <svg className="absolute inset-0 w-full h-full">
+        <defs>
+          <mask id={`spotlight-mask-${stepIndex}`}>
+            <rect width="100%" height="100%" fill="white" />
+            <rect
+              x={left - spotlightPadding}
+              y={top - spotlightPadding}
+              width={width + spotlightPadding * 2}
+              height={height + spotlightPadding * 2}
+              rx={8}
+              ry={8}
+              fill="black"
+            />
+          </mask>
+        </defs>
+        <rect
+          width="100%"
+          height="100%"
+          fill="rgba(0,0,0,0.7)"
+          mask={`url(#spotlight-mask-${stepIndex})`}
+        />
+      </svg>
+
       {/* Spotlight border ring */}
       <div
         className="absolute border-2 border-white rounded-lg z-[9999]"
@@ -248,16 +269,13 @@ export function InteractiveOnboardingChecklist({
 
   // Auto-start first step when opened
   useEffect(() => {
-    if (open && !activeCoachmark) {
-      const firstIncompleteStep = steps.find(step => !completedSteps.has(step.id));
-      if (firstIncompleteStep) {
-        const timer = setTimeout(() => {
-          setActiveCoachmark(firstIncompleteStep.id);
-        }, 400);
-        return () => clearTimeout(timer);
-      }
+    if (open && !activeCoachmark && !showCelebration) {
+      const timer = setTimeout(() => {
+        setActiveCoachmark(steps[0]?.id ?? null);
+      }, 400);
+      return () => clearTimeout(timer);
     }
-  }, [open, activeCoachmark, steps, completedSteps]);
+  }, [open, activeCoachmark, showCelebration, steps]);
 
   // Skip completed steps
   useEffect(() => {
@@ -287,14 +305,26 @@ export function InteractiveOnboardingChecklist({
     }, 500);
   };
 
+  const handleFinishTour = () => {
+    setActiveCoachmark(null);
+    const end = Date.now() + 3 * 1000;
+    const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
+    const frame = () => {
+      if (Date.now() > end) return;
+      confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
+      confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
+      requestAnimationFrame(frame);
+    };
+    frame();
+    setShowCelebration(true);
+  };
+
   const activeStep = activeCoachmark ? steps.find(s => s.id === activeCoachmark) : null;
   const activeStepIndex = activeStep ? steps.indexOf(activeStep) : -1;
   const totalSteps = steps.length;
 
-  const hasPrevIncompleteStep = activeStepIndex > 0 &&
-    steps.slice(0, activeStepIndex).some(step => !completedSteps.has(step.id));
-  const hasNextIncompleteStep = activeStepIndex < totalSteps - 1 &&
-    steps.slice(activeStepIndex + 1).some(step => !completedSteps.has(step.id));
+  const isFirstStep = activeStepIndex === 0;
+  const isLastStep = activeStepIndex === totalSteps - 1;
 
   if (!open) return null;
 
@@ -307,25 +337,19 @@ export function InteractiveOnboardingChecklist({
             step={activeStep}
             stepIndex={activeStepIndex}
             totalSteps={totalSteps}
-            isFirst={!hasPrevIncompleteStep}
-            isLast={!hasNextIncompleteStep}
+            isFirst={isFirstStep}
+            isLast={isLastStep}
             onNext={() => {
-              for (let i = activeStepIndex + 1; i < totalSteps; i++) {
-                if (!completedSteps.has(steps[i].id)) {
-                  setActiveCoachmark(steps[i].id);
-                  return;
-                }
+              if (activeStepIndex < totalSteps - 1) {
+                setActiveCoachmark(steps[activeStepIndex + 1].id);
               }
             }}
             onPrev={() => {
-              for (let i = activeStepIndex - 1; i >= 0; i--) {
-                if (!completedSteps.has(steps[i].id)) {
-                  setActiveCoachmark(steps[i].id);
-                  return;
-                }
+              if (activeStepIndex > 0) {
+                setActiveCoachmark(steps[activeStepIndex - 1].id);
               }
             }}
-            onComplete={() => handleCompleteStep(activeStep.id)}
+            onComplete={handleFinishTour}
             onClose={handleClose}
           />
         )}

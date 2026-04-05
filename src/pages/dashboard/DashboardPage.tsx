@@ -47,10 +47,22 @@ const DashboardPage: React.FC = () => {
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
-  // Onboarding tour — show on first visit
+  // Onboarding tour — show on first visit (localStorage as fast cache, Supabase as source of truth)
   const [showOnboarding, setShowOnboarding] = useState(() => {
+    // Fast check: if localStorage says done, skip immediately
     return !localStorage.getItem(ONBOARDING_STORAGE_KEY);
   });
+
+  // Check Supabase for onboarding completion (handles cross-device/browser)
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user?.user_metadata?.onboarding_completed) {
+        localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+        setShowOnboarding(false);
+      }
+    });
+  }, [user?.id]);
 
   // Fetch user's primary agent for "Talk to Agent" button
   useEffect(() => {
@@ -126,10 +138,12 @@ const DashboardPage: React.FC = () => {
           setShowOnboarding(open);
           if (!open) {
             localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+            supabase.auth.updateUser({ data: { onboarding_completed: true } });
           }
         }}
         onFinish={() => {
           localStorage.setItem(ONBOARDING_STORAGE_KEY, 'true');
+          supabase.auth.updateUser({ data: { onboarding_completed: true } });
           setShowOnboarding(false);
         }}
       />
