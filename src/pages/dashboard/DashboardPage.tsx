@@ -207,7 +207,7 @@ const DashboardPage: React.FC = () => {
                       to={step.link}
                       className="inline-block px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-md transition-colors whitespace-nowrap"
                     >
-                      +10 credits
+                      +10 tokens
                     </Link>
                   </div>
                 )}
