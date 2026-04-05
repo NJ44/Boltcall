@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 const BREVO_API_BASE = 'https://api.brevo.com/v3';
 
