@@ -60,6 +60,39 @@ interface PhoneNumber {
   assigned_agent_name?: string;
 }
 
+const AGENT_TYPES = [
+  {
+    value: 'inbound',
+    label: 'Inbound Receptionist',
+    description: 'Answers incoming calls — booking, FAQs, transfers',
+    icon: 'PhoneIncoming',
+  },
+  {
+    value: 'outbound_speed_to_lead',
+    label: 'Speed to Lead',
+    description: 'Calls new leads within minutes of form submission',
+    icon: 'PhoneOutgoing',
+  },
+  {
+    value: 'outbound_reactivation',
+    label: 'Reactivation',
+    description: 'Re-engages past leads or dormant customers',
+    icon: 'PhoneOutgoing',
+  },
+  {
+    value: 'outbound_reminder',
+    label: 'Appointment Reminder',
+    description: 'Confirms upcoming appointments',
+    icon: 'PhoneOutgoing',
+  },
+  {
+    value: 'outbound_review',
+    label: 'Review Request',
+    description: 'Asks satisfied customers for a Google review',
+    icon: 'PhoneOutgoing',
+  },
+];
+
 interface IndustryTemplate {
   id: string;
   name: string;
