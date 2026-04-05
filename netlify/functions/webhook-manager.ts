@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import crypto from 'crypto';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
+import { authenticateApiKey } from './_shared/validate-api-key';
 
 /**
  * Webhook Manager Function
