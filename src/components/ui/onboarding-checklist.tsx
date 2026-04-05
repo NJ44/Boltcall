@@ -269,16 +269,13 @@ export function InteractiveOnboardingChecklist({
 
   // Auto-start first step when opened
   useEffect(() => {
-    if (open && !activeCoachmark) {
-      const firstIncompleteStep = steps.find(step => !completedSteps.has(step.id));
-      if (firstIncompleteStep) {
-        const timer = setTimeout(() => {
-          setActiveCoachmark(firstIncompleteStep.id);
-        }, 400);
-        return () => clearTimeout(timer);
-      }
+    if (open && !activeCoachmark && !showCelebration) {
+      const timer = setTimeout(() => {
+        setActiveCoachmark(steps[0]?.id ?? null);
+      }, 400);
+      return () => clearTimeout(timer);
     }
-  }, [open, activeCoachmark, steps, completedSteps]);
+  }, [open, activeCoachmark, showCelebration, steps]);
 
   // Skip completed steps
   useEffect(() => {
