@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
+import { fireWebhooks } from './_shared/fire-webhooks';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
 
