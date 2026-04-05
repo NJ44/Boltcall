@@ -308,14 +308,26 @@ export function InteractiveOnboardingChecklist({
     }, 500);
   };
 
+  const handleFinishTour = () => {
+    setActiveCoachmark(null);
+    const end = Date.now() + 3 * 1000;
+    const colors = ["#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#DBEAFE"];
+    const frame = () => {
+      if (Date.now() > end) return;
+      confetti({ particleCount: 2, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
+      confetti({ particleCount: 2, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
+      requestAnimationFrame(frame);
+    };
+    frame();
+    setShowCelebration(true);
+  };
+
   const activeStep = activeCoachmark ? steps.find(s => s.id === activeCoachmark) : null;
   const activeStepIndex = activeStep ? steps.indexOf(activeStep) : -1;
   const totalSteps = steps.length;
 
-  const hasPrevIncompleteStep = activeStepIndex > 0 &&
-    steps.slice(0, activeStepIndex).some(step => !completedSteps.has(step.id));
-  const hasNextIncompleteStep = activeStepIndex < totalSteps - 1 &&
-    steps.slice(activeStepIndex + 1).some(step => !completedSteps.has(step.id));
+  const isFirstStep = activeStepIndex === 0;
+  const isLastStep = activeStepIndex === totalSteps - 1;
 
   if (!open) return null;
 
