@@ -164,9 +164,16 @@ export const handler: Handler = async (event) => {
     const { action } = body;
     const supabase = getSupabase();
 
+    // Resolve userId: API key auth takes priority, then body.userId
+    const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
+    if (auth.hasKey && !auth.userId) {
+      return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
+    }
+    const resolvedUserId = auth.userId || body.userId;
+
     // ─── LIST ────────────────────────────────────────────────────────
     if (action === 'list') {
-      const { userId } = body;
+      const userId = resolvedUserId;
       if (!userId) return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
 
       const { data, error } = await supabase
