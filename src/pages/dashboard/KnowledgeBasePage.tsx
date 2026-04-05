@@ -538,6 +538,53 @@ const KnowledgeBasePage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFolderId]);
 
+  // KB website scan handler
+  const handleKbScanWebsite = async () => {
+    const url = kbWebsiteUrl.trim();
+    if (!url) return;
+    setKbScanning(true);
+    try {
+      showToast({ title: 'Scanning website...', message: 'AI is reading your website to auto-fill services & FAQs', variant: 'default', duration: 15000 });
+      const res = await fetch(`${FUNCTIONS_BASE}/scrape-url`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+      const scraped = await res.json();
+      const content = scraped.markdown || scraped.content || '';
+      if (!content || content.length < 50) {
+        showToast({ title: 'Low content', message: 'Could not extract much. Try adding info manually.', variant: 'error', duration: 4000 });
+        setKbScanning(false);
+        return;
+      }
+      const extractRes = await fetch(`${FUNCTIONS_BASE}/ai-extract-kb`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content, businessName: knowledgeBaseName, category: businessIndustry }),
+      });
+      if (extractRes.ok) {
+        const extracted = await extractRes.json();
+        if (extracted.services?.length) setKbServices(extracted.services);
+        if (extracted.faqs?.length) setKbFaqs(extracted.faqs);
+        if (extracted.policies) {
+          setKbPolicies(prev => ({
+            cancellation: extracted.policies.cancellation || prev.cancellation,
+            reschedule: extracted.policies.reschedule || prev.reschedule,
+            deposit: extracted.policies.deposit || prev.deposit,
+          }));
+        }
+        const parts: string[] = [];
+        if (extracted.services?.length) parts.push(`${extracted.services.length} services`);
+        if (extracted.faqs?.length) parts.push(`${extracted.faqs.length} FAQs`);
+        showToast({ title: 'Website scanned!', message: parts.length > 0 ? `Found ${parts.join(', ')}. Review below.` : 'No structured data found.', variant: parts.length > 0 ? 'success' : 'default', duration: 5000 });
+      }
+    } catch {
+      showToast({ title: 'Scan failed', message: 'Could not scan website. Add info manually.', variant: 'error', duration: 4000 });
+    } finally {
+      setKbScanning(false);
+    }
+  };
+
   // New Knowledge Base handlers
   const handleCloseNewKnowledgeBase = () => {
     setShowNewKnowledgeBaseModal(false);
