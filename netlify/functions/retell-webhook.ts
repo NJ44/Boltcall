@@ -268,6 +268,17 @@ export const handler: Handler = async (event) => {
       });
     }
 
+    // Fire missed_call webhook
+    fireWebhooks(userId, 'missed_call', {
+      id: call.call_id,
+      caller_number: callerPhone,
+      caller_name: null,
+      duration_seconds: 0,
+      reason: call.call_status === 'ended' ? 'short_call' : 'no_answer',
+      called_at: new Date().toISOString(),
+      lead_id: lead?.id || null,
+    });
+
     // Sync lead to connected CRMs (fire-and-forget)
     if (lead?.id && userId) {
       const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
