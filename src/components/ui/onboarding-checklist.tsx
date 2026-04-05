@@ -110,7 +110,6 @@ const CoachmarkOverlay = ({
   }, [onClose, onNext, onPrev, onComplete, isFirst, isLast]);
 
   if (!targetPosition) {
-    // Element not visible — auto-skip to next step
     if (!isLast) onNext();
     else onComplete();
     return null;
@@ -165,7 +164,7 @@ const CoachmarkOverlay = ({
         }}
       />
 
-      {/* Bottom center nav bar — dots + Prev/Next */}
+      {/* Bottom center nav bar */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-auto z-[9999] flex items-center gap-4 bg-white rounded-full px-4 py-2 shadow-2xl">
         {!isFirst && (
           <button
@@ -295,7 +294,7 @@ export function InteractiveOnboardingChecklist({
         )}
       </AnimatePresence>
 
-      {/* Celebration overlay — portaled to body to escape parent transforms */}
+      {/* Celebration overlay */}
       {createPortal(
         <AnimatePresence>
           {showCelebration && (
