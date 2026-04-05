@@ -267,7 +267,7 @@ export function InteractiveOnboardingChecklist({
     }
   }, [steps, internalCompletedSteps]);
 
-  // Auto-start first step when opened
+  // Auto-start first step when opened (skip if celebration is showing)
   useEffect(() => {
     if (open && !activeCoachmark && !showCelebration) {
       const timer = setTimeout(() => {
