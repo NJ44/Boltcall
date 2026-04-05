@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
+import { fireWebhooks } from './_shared/fire-webhooks';
 
 /**
  * Retell Post-Call Webhook
