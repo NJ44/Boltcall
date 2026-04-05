@@ -151,7 +151,7 @@ const DashboardPage: React.FC = () => {
       {/* Setup Guide Section */}
       <div data-onboarding="setup-guide" className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
         <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('dashboard.setupGuide')}</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Setup Guide</h2>
         </div>
 
         <div className="p-4">
@@ -163,6 +163,7 @@ const DashboardPage: React.FC = () => {
               { id: 4, title: 'Configure Phone Numbers', description: 'Set up your phone numbers', link: '/dashboard/phone-numbers', completed: true },
               { id: 5, title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', completed: false, timeEstimate: 'About 1 min' },
               { id: 6, title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents', completed: false, timeEstimate: 'About 1 min' },
+              { id: 7, title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', completed: false, timeEstimate: 'About 1 min' },
             ].map((step) => (
               <Link
                 key={step.id}
