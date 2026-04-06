@@ -67,7 +67,6 @@ const Contact: React.FC = () => {
 
       setIsSubmitted(true);
       reset();
-      setSelectedInterests([]);
       setTimeout(() => setIsSubmitted(false), 3000);
     } catch (error) {
       console.error('Error submitting contact form:', error);
