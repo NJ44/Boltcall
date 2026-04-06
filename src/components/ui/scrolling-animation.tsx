@@ -28,11 +28,10 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   const updateProgress = useCallback(() => {
     if (!sectionRef.current) return
     const rect = sectionRef.current.getBoundingClientRect()
-    const viewportH = window.innerHeight
-    // Animation starts when the section's top reaches the middle of the viewport
-    // and completes 500px of scroll later
-    const scrolledPast = viewportH * 0.5 - rect.top
-    const progress = Math.max(0, Math.min(scrolledPast / 500, 1))
+    // Animation starts when sticky engages (rect.top <= 0) and
+    // completes over 400px of scroll while content is pinned
+    const scrolledPast = Math.max(0, -rect.top)
+    const progress = Math.min(scrolledPast / 400, 1)
     setAnimationProgress(progress)
     rafRef.current = requestAnimationFrame(updateProgress)
   }, [])
