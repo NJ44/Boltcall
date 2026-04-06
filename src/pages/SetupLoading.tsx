@@ -280,7 +280,7 @@ const SetupLoading: React.FC = () => {
         }
         .setup-loading-step {
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.75rem;
+          font-size: 0.9rem;
           color: #9ca3af;
           text-align: center;
           min-height: 1.2em;
