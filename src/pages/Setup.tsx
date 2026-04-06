@@ -38,7 +38,8 @@ import {
 import { FUNCTIONS_BASE } from '../lib/api';
 
 const steps = [
-  { id: 'profile', title: 'Business Profile' },
+  { id: 'personal', title: 'Personal Profile' },
+  { id: 'business', title: 'Business Profile' },
   { id: 'launch', title: 'Review & Launch' },
 ];
 
