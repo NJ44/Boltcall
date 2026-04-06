@@ -104,6 +104,7 @@ const Setup: React.FC = () => {
     complete,
     updateReview,
     markStepCompleted,
+    reset,
   } = useSetupStore();
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -117,6 +118,15 @@ const Setup: React.FC = () => {
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [country, setCountry] = useState('');
 
+  // If the user lands on /setup, clear any stale "completed" flag from a
+  // previous session so we don't immediately redirect back to /dashboard.
+  useEffect(() => {
+    if (isCompleted && !isSubmitting) {
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     document.title = 'Set Up Your AI Receptionist — Boltcall';
     updateMetaDescription(
@@ -124,11 +134,6 @@ const Setup: React.FC = () => {
     );
   }, []);
 
-  useEffect(() => {
-    if (isCompleted && !isSubmitting) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [isCompleted, isSubmitting, navigate]);
 
   const isStepValid = () => {
     switch (currentStep) {
