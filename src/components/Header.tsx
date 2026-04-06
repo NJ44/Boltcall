@@ -510,7 +510,7 @@ const Header: React.FC = () => {
                 </button>
 
                 <div
-                  className={`absolute top-full left-[calc(50%-300px)] transform -translate-x-1/2 mt-1 rounded-lg shadow-xl border ${isOverBlueBackground
+                  className={`absolute top-full right-0 mt-1 rounded-lg shadow-xl border ${isOverBlueBackground
                     ? 'bg-gray-800 border-gray-700'
                     : 'bg-white border-gray-200'
                     } py-4 px-6 z-[120] flex items-stretch transition-all duration-200 ease-in-out ${isResourcesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
