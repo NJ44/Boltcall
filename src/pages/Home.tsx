@@ -80,6 +80,10 @@ const Home: React.FC = () => {
             </div>
 
             <div className="relative md:-top-[255px]">
+              <IntegrationHero />
+            </div>
+
+            <div className="relative md:-top-[255px]">
               <Pricing />
             </div>
 
