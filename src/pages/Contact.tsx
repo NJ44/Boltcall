@@ -150,7 +150,7 @@ const Contact: React.FC = () => {
         <div className="relative lg:absolute lg:top-0 lg:bottom-0 lg:right-0 w-full lg:w-[55%] z-[5] flex flex-col items-center justify-center px-6 py-8 sm:px-12 sm:py-10 lg:py-0">
           {/* Mobile header with Lottie */}
           <div className="lg:hidden text-center mb-4">
-            <div className="w-20 h-20 mx-auto mb-2">
+            <div className="w-32 h-32 mx-auto mb-2">
               <LazyLottie
                 src="/Email.lottie"
                 loop
