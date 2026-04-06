@@ -154,7 +154,7 @@ const SpeedToLeadGuide: React.FC = () => {
               </p>
 
               <p>
-                Whether you're a plumber racing against three competitors for an emergency call, a dentist competing for a new patient, or an HVAC contractor bidding on a commercial project, the business that responds first wins. Period. This comprehensive guide reveals why <Link to="/blog/speed-to-lead" className="text-blue-600 hover:underline">speed to lead</Link> has become the ultimate competitive advantage for local businesses and how Boltcall's AI receptionist helps businesses achieve instant response times 24/7.
+                Whether you're a plumber racing against three competitors for an emergency call, a dentist competing for a new patient, or an HVAC contractor bidding on a commercial project, the business that responds first wins. Period. This comprehensive guide reveals why <Link to="/blog/speed-to-lead-local-business" className="text-blue-600 hover:underline">speed to lead</Link> has become the ultimate competitive advantage for local businesses and how Boltcall's AI receptionist helps businesses achieve instant response times 24/7.
               </p>
             </motion.div>
 
@@ -267,7 +267,7 @@ const SpeedToLeadGuide: React.FC = () => {
               </div>
 
               <p className="text-gray-700">
-                The math is brutal but simple: every minute you delay response, your conversion rate drops. Every lead that goes to a competitor costs you not just that job, but all future referrals and repeat business from that customer. For most local businesses, this represents tens of thousands in lost revenue annually—money that could be recovered with better <Link to="/blog/never-miss-a-call-again" className="text-blue-600 hover:underline">lead response systems</Link>.
+                The math is brutal but simple: every minute you delay response, your conversion rate drops. Every lead that goes to a competitor costs you not just that job, but all future referrals and repeat business from that customer. For most local businesses, this represents tens of thousands in lost revenue annually—money that could be recovered with better <Link to="/blog/missed-calls-statistics-local-business-2026" className="text-blue-600 hover:underline">lead response systems</Link>.
               </p>
             </motion.section>
 
@@ -408,7 +408,7 @@ const SpeedToLeadGuide: React.FC = () => {
               </div>
 
               <p className="text-gray-700 mb-6">
-                The speed-focused approach delivers 4x more customers at 58% lower cost per customer, despite having higher cost per lead. This is why successful local businesses invest in systems like <Link to="/how-it-works" className="text-blue-600 hover:underline">AI receptionists</Link> rather than just cheaper advertising.
+                The speed-focused approach delivers 4x more customers at 58% lower cost per customer, despite having higher cost per lead. This is why successful local businesses invest in systems like <Link to="/features/ai-receptionist" className="text-blue-600 hover:underline">AI receptionists</Link> rather than just cheaper advertising.
               </p>
 
               <div className="bg-green-50 border border-green-200 rounded-lg p-6">
@@ -516,7 +516,7 @@ const SpeedToLeadGuide: React.FC = () => {
               </div>
 
               <p className="text-gray-700">
-                These response times are impossible for human staff to match consistently. More importantly, AI receptionists maintain this speed during peak times, after hours, and during emergencies when leads are most valuable. This is why businesses using <Link to="/blog/ai-vs-answering-service" className="text-blue-600 hover:underline">AI receptionists consistently outperform</Link> those relying on traditional reception methods.
+                These response times are impossible for human staff to match consistently. More importantly, AI receptionists maintain this speed during peak times, after hours, and during emergencies when leads are most valuable. This is why businesses using <Link to="/comparisons/answering-services-vs-boltcall" className="text-blue-600 hover:underline">AI receptionists consistently outperform</Link> those relying on traditional reception methods.
               </p>
             </motion.section>
 
