@@ -154,7 +154,7 @@ const HowItWorks: React.FC = () => {
           </div>
 
           {/* Scroll-Pinned Stacking Cards */}
-          <div className="py-4 ml-0 md:ml-16">
+          <div ref={cardsContainerRef} className="py-4 ml-0 md:ml-16">
             {PROCESS_PHASES.map((phase, index) => (
               <div
                 key={phase.id}
