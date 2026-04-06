@@ -25,6 +25,8 @@ const PROCESS_PHASES = [
 
 const HowItWorks: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
