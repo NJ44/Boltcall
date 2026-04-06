@@ -18,8 +18,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       return;
     }
 
-    // Skip check if already on setup page
-    if (location.pathname === '/setup') {
+    // Skip check if already on setup pages (including loading screen)
+    if (location.pathname.startsWith('/setup')) {
       setSetupCheck('completed');
       return;
     }
