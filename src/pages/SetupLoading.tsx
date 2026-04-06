@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Zap } from 'lucide-react';
 
 const TOTAL_SEGMENTS = 20;
 
@@ -196,53 +195,18 @@ const SetupLoading: React.FC = () => {
         }
         .setup-loading-content {
           width: 100%;
-          max-width: 420px;
+          max-width: 560px;
           padding: 0 2rem;
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 2rem;
-        }
-        .setup-loading-icon {
-          width: 56px;
-          height: 56px;
-          background: linear-gradient(135deg, #2563eb, #38bdf8);
-          border-radius: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: setup-icon-pulse 2s ease-in-out infinite;
-        }
-        @keyframes setup-icon-pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-        .setup-loading-icon svg {
-          width: 28px;
-          height: 28px;
-          color: white;
-        }
-        .setup-loading-title {
-          font-family: system-ui, -apple-system, sans-serif;
-          font-size: 1.25rem;
-          font-weight: 700;
-          color: #111827;
-          text-align: center;
-          letter-spacing: -0.02em;
-        }
-        .setup-loading-subtitle {
-          font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.85rem;
-          color: #9ca3af;
-          text-align: center;
-          margin-top: -1rem;
-          line-height: 1.5;
+          gap: 2.5rem;
         }
 
         /* Word Loader */
         .setup-word-loader {
           position: relative;
-          height: 3rem;
+          height: 4rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -252,9 +216,9 @@ const SetupLoading: React.FC = () => {
         .setup-word {
           position: absolute;
           display: flex;
-          gap: 2px;
+          gap: 3px;
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 1.4rem;
+          font-size: 2rem;
           font-weight: 700;
           letter-spacing: 0.08em;
           color: #111827;
@@ -274,7 +238,7 @@ const SetupLoading: React.FC = () => {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
+          gap: 1rem;
         }
         .setup-progress-header {
           display: flex;
@@ -283,26 +247,26 @@ const SetupLoading: React.FC = () => {
         }
         .setup-progress-label {
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.78rem;
+          font-size: 0.95rem;
           font-weight: 500;
           color: #9ca3af;
         }
         .setup-progress-pct {
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.78rem;
+          font-size: 0.95rem;
           font-weight: 600;
           color: #111827;
           font-variant-numeric: tabular-nums;
         }
         .setup-segmented-bar {
           display: flex;
-          gap: 3px;
+          gap: 4px;
           padding: 2px 0;
         }
         .setup-seg {
           flex: 1;
-          height: 12px;
-          border-radius: 4px;
+          height: 16px;
+          border-radius: 5px;
           background: #e5e7eb;
           opacity: 0.5;
           transition: background 0.4s ease, opacity 0.4s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
@@ -316,7 +280,7 @@ const SetupLoading: React.FC = () => {
         }
         .setup-loading-step {
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.75rem;
+          font-size: 0.9rem;
           color: #9ca3af;
           text-align: center;
           min-height: 1.2em;
@@ -326,15 +290,6 @@ const SetupLoading: React.FC = () => {
 
       <div className={`setup-loading-page ${fadeOut ? 'fade-out' : ''}`}>
         <div className="setup-loading-content">
-          <div className="setup-loading-icon">
-            <Zap />
-          </div>
-
-          <div className="setup-loading-title">Preparing your dashboard</div>
-          <div className="setup-loading-subtitle">
-            Crafting automations, connecting services, loading integrations...
-          </div>
-
           <div className="setup-word-loader" ref={wordLoaderRef} />
 
           <div className="setup-progress-wrapper">
