@@ -13,7 +13,7 @@ import TableOfContents from '../components/TableOfContents';
 import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const SpeedToLeadGuide: React.FC = () => {
-  const { activeSection, sectionsRef } = useTableOfContents();
+  const headings = useTableOfContents();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -160,7 +160,6 @@ const SpeedToLeadGuide: React.FC = () => {
 
             {/* Why Speed to Lead Matters More Than Lead Quality */}
             <motion.section
-              ref={(el) => sectionsRef.current[0] = el}
               id="why-speed-matters"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -207,7 +206,6 @@ const SpeedToLeadGuide: React.FC = () => {
 
             {/* The Cost of Slow Response Times */}
             <motion.section
-              ref={(el) => sectionsRef.current[1] = el}
               id="cost-of-slow-response"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -275,7 +273,6 @@ const SpeedToLeadGuide: React.FC = () => {
 
             {/* How Fast Should Local Businesses Respond to Leads */}
             <motion.section
-              ref={(el) => sectionsRef.current[2] = el}
               id="response-time-benchmarks"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -343,7 +340,6 @@ const SpeedToLeadGuide: React.FC = () => {
 
             {/* Speed to Lead vs. Cost Per Lead */}
             <motion.section
-              ref={(el) => sectionsRef.current[3] = el}
               id="speed-vs-cost"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -425,7 +421,6 @@ const SpeedToLeadGuide: React.FC = () => {
 
             {/* Why AI Receptionists Win the Speed Game */}
             <motion.section
-              ref={(el) => sectionsRef.current[4] = el}
               id="ai-advantage"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -527,7 +522,6 @@ const SpeedToLeadGuide: React.FC = () => {
 
             {/* Speed to Lead by Industry */}
             <motion.section
-              ref={(el) => sectionsRef.current[5] = el}
               id="industry-benchmarks"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

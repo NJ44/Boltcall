@@ -13,7 +13,7 @@ import TableOfContents from '../components/TableOfContents';
 import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const AiReceptionistCostPricingGuide: React.FC = () => {
-  const { activeSection, sectionsRef } = useTableOfContents();
+  const headings = useTableOfContents();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -145,7 +145,6 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Section 1 */}
                 <motion.section
                   id="what-is-ai-receptionist"
-                  ref={el => sectionsRef.current[0] = el}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -192,7 +191,6 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Section 2 */}
                 <motion.section
                   id="pricing-models"
-                  ref={el => sectionsRef.current[1] = el}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -250,7 +248,6 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Section 3 */}
                 <motion.section
                   id="boltcall-pricing"
-                  ref={el => sectionsRef.current[2] = el}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -344,7 +341,6 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Section 4 */}
                 <motion.section
                   id="ai-vs-traditional"
-                  ref={el => sectionsRef.current[3] = el}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -433,7 +429,6 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Section 5 */}
                 <motion.section
                   id="roi-calculation"
-                  ref={el => sectionsRef.current[4] = el}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
@@ -501,7 +496,6 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                 {/* Section 6 */}
                 <motion.section
                   id="hidden-costs"
-                  ref={el => sectionsRef.current[5] = el}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}

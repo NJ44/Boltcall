@@ -13,7 +13,7 @@ import TableOfContents from '../components/TableOfContents';
 import { useTableOfContents } from '../hooks/useTableOfContents';
 
 const ChatbotVsLivePhoneComparison: React.FC = () => {
-  const { activeSection, sectionRefs } = useTableOfContents();
+  const headings = useTableOfContents();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -117,7 +117,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Introduction */}
               <motion.section 
-                ref={el => sectionRefs.current[0] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
@@ -132,7 +131,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Section 1 */}
               <motion.section 
-                ref={el => sectionRefs.current[1] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
@@ -165,7 +163,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Section 2 */}
               <motion.section 
-                ref={el => sectionRefs.current[2] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
@@ -228,7 +225,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Section 3 */}
               <motion.section 
-                ref={el => sectionRefs.current[3] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
@@ -274,7 +270,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Section 4 */}
               <motion.section 
-                ref={el => sectionRefs.current[4] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
@@ -331,7 +326,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Section 5 */}
               <motion.section 
-                ref={el => sectionRefs.current[5] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
@@ -399,7 +393,6 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
 
               {/* Section 6 */}
               <motion.section 
-                ref={el => sectionRefs.current[6] = el}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"
