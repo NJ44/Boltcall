@@ -199,8 +199,8 @@ const Setup: React.FC = () => {
       const { workspace, businessProfile } =
         await createUserWorkspaceAndProfile(user.id, {
           business_name: businessName,
-          owner_name: ownerName || null,
-          website_url: websiteUrl,
+          owner_name: fullName || null,
+          website_url: null,
           main_category: industry.toLowerCase(),
           country,
           service_areas: [],
