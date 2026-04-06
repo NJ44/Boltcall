@@ -325,15 +325,6 @@ const SetupLoading: React.FC = () => {
 
       <div className={`setup-loading-page ${fadeOut ? 'fade-out' : ''}`}>
         <div className="setup-loading-content">
-          <div className="setup-loading-icon">
-            <Zap />
-          </div>
-
-          <div className="setup-loading-title">Preparing your dashboard</div>
-          <div className="setup-loading-subtitle">
-            Crafting automations, connecting services, loading integrations...
-          </div>
-
           <div className="setup-word-loader" ref={wordLoaderRef} />
 
           <div className="setup-progress-wrapper">
