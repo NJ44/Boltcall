@@ -53,14 +53,6 @@ const Contact: React.FC = () => {
     resolver: zodResolver(contactSchema)
   });
 
-  const interestOptions: TTag[] = [
-    { key: 'lead-generation', name: 'Lead Generation' },
-    { key: 'ads-campaigns', name: 'Ads Campaigns' },
-    { key: 'speed-to-lead', name: 'Speed to Lead' },
-    { key: 'ai-receptionist', name: 'AI Receptionist' },
-    { key: 'agents', name: 'Agents' },
-  ];
-
   const onSubmit = async (data: ContactFormData) => {
     try {
       setIsLoading(true);
