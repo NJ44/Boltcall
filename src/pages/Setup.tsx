@@ -240,7 +240,7 @@ const Setup: React.FC = () => {
 
       const agentBaseData = {
         businessName,
-        websiteUrl,
+        websiteUrl: '',
         mainCategory: industry.toLowerCase(),
         country,
         serviceAreas: [],
