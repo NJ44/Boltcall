@@ -176,9 +176,13 @@ const Setup: React.FC = () => {
     setIsSubmitting(true);
     navigate('/setup/loading');
 
+    updateAccount({
+      fullName,
+      workEmail,
+    });
+
     updateBusinessProfile({
       businessName,
-      websiteUrl,
       mainCategory: industry.toLowerCase(),
       country,
       languages: 'en',
