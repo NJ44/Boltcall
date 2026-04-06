@@ -106,6 +106,8 @@ const config: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         blob: "blob 2s ease-in-out infinite",
+        "integration-scroll-left": "integration-scroll-left 30s linear infinite",
+        "integration-scroll-right": "integration-scroll-right 30s linear infinite",
       },
       keyframes: {
         aurora: {
