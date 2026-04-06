@@ -46,6 +46,20 @@ const HowItWorks: React.FC = () => {
 
       ctx = gsap.context(() => {
         const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
+        const cardsContainer = cardsContainerRef.current;
+
+        // Pin the sidebar header for the entire cards scroll duration
+        if (sidebarRef.current && cardsContainer) {
+          ScrollTrigger.create({
+            trigger: sidebarRef.current,
+            start: 'top 150px',
+            endTrigger: cardsContainer,
+            end: 'bottom bottom',
+            pin: true,
+            pinSpacing: false,
+            pinType: 'transform',
+          });
+        }
 
         cards.forEach((card, i) => {
           const pinTop = 150 + i * 30;
