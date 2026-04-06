@@ -7,7 +7,8 @@ import {
   ChevronRight,
   Check,
   Zap,
-  Globe,
+  User,
+  Building2,
 } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
 import { useAuth } from '../contexts/AuthContext';
