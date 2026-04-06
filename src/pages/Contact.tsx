@@ -180,22 +180,6 @@ const Contact: React.FC = () => {
                 placeholder="Email"
                 error={errors.email?.message}
               />
-              <PillInput
-                {...register('phoneNumber')}
-                type="tel"
-                placeholder="Phone Number"
-                error={errors.phoneNumber?.message}
-              />
-              <div>
-                <MultipleSelect
-                  tags={interestOptions}
-                  defaultValue={selectedInterests}
-                  onChange={(items) => {
-                    setSelectedInterests(items);
-                    setValue('interests', items);
-                  }}
-                />
-              </div>
               <div>
                 <textarea
                   {...register('message')}
