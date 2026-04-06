@@ -106,6 +106,8 @@ const config: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         blob: "blob 2s ease-in-out infinite",
+        "integration-scroll-left": "integration-scroll-left 30s linear infinite",
+        "integration-scroll-right": "integration-scroll-right 30s linear infinite",
       },
       keyframes: {
         aurora: {
@@ -137,6 +139,14 @@ const config: Config = {
         blob: {
           "0%, 100%": { transform: "translateY(10px)" },
           "50%": { transform: "translate(-10px)" },
+        },
+        "integration-scroll-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "integration-scroll-right": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
         },
       },
     }

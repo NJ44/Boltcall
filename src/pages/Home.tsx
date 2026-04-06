@@ -8,6 +8,7 @@ import Hero from '../components/Hero';
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
 const FreeSetup = lazy(() => import('../components/FreeSetup'));
 const Pricing = lazy(() => import('../components/Pricing'));
+const IntegrationHero = lazy(() => import('../components/ui/integration-hero'));
 const FAQ = lazy(() => import('../components/FAQ'));
 const FinalCTA = lazy(() => import('../components/FinalCTA'));
 const Footer = lazy(() => import('../components/Footer'));
@@ -76,6 +77,10 @@ const Home: React.FC = () => {
 
             <div className="relative md:-top-[255px]">
               <FreeSetup />
+            </div>
+
+            <div className="relative md:-top-[255px]">
+              <IntegrationHero />
             </div>
 
             <div className="relative md:-top-[255px]">
