@@ -195,47 +195,12 @@ const SetupLoading: React.FC = () => {
         }
         .setup-loading-content {
           width: 100%;
-          max-width: 420px;
+          max-width: 560px;
           padding: 0 2rem;
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 2rem;
-        }
-        .setup-loading-icon {
-          width: 56px;
-          height: 56px;
-          background: linear-gradient(135deg, #2563eb, #38bdf8);
-          border-radius: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: setup-icon-pulse 2s ease-in-out infinite;
-        }
-        @keyframes setup-icon-pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-        .setup-loading-icon svg {
-          width: 28px;
-          height: 28px;
-          color: white;
-        }
-        .setup-loading-title {
-          font-family: system-ui, -apple-system, sans-serif;
-          font-size: 1.25rem;
-          font-weight: 700;
-          color: #111827;
-          text-align: center;
-          letter-spacing: -0.02em;
-        }
-        .setup-loading-subtitle {
-          font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.85rem;
-          color: #9ca3af;
-          text-align: center;
-          margin-top: -1rem;
-          line-height: 1.5;
+          gap: 2.5rem;
         }
 
         /* Word Loader */
