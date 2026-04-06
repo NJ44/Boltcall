@@ -206,7 +206,7 @@ const SetupLoading: React.FC = () => {
         /* Word Loader */
         .setup-word-loader {
           position: relative;
-          height: 3rem;
+          height: 4rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -216,9 +216,9 @@ const SetupLoading: React.FC = () => {
         .setup-word {
           position: absolute;
           display: flex;
-          gap: 2px;
+          gap: 3px;
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 1.4rem;
+          font-size: 2rem;
           font-weight: 700;
           letter-spacing: 0.08em;
           color: #111827;
