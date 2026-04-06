@@ -47,7 +47,7 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   const startAngle = -Math.PI / 2
 
   return (
-    <div ref={sectionRef} className="min-h-[150vh]">
+    <div ref={sectionRef} className="min-h-[130vh]">
       <div className="h-screen flex items-center justify-center p-8 sticky top-0">
         <div className="relative">
           {/* Outer ring */}
