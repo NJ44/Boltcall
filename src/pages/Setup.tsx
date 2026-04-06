@@ -377,38 +377,36 @@ const Setup: React.FC = () => {
                   exit="exit"
                   variants={contentVariants}
                 >
-                  {/* ─── STEP 0: BUSINESS PROFILE ─── */}
+                  {/* ─── STEP 0: PERSONAL PROFILE ─── */}
                   {currentStep === 0 && (
                     <>
                       <CardHeader>
-                        <CardTitle>Business Profile</CardTitle>
+                        <CardTitle>Personal Profile</CardTitle>
                         <CardDescription>
-                          Tell us about your business
+                          Tell us about yourself
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-6">
-                        <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <div className="space-y-1.5">
-                            <Label htmlFor="businessName">Business Name *</Label>
-                            <Input
-                              id="businessName"
-                              placeholder="e.g. Smith Dental"
-                              value={businessName}
-                              onChange={(e) => setBusinessName(e.target.value)}
-                              autoFocus
-                            />
-                          </div>
-                          <div className="space-y-1.5">
-                            <Label htmlFor="industry">Industry *</Label>
-                            <Select value={industry} onValueChange={setIndustry}>
-                              <SelectTrigger id="industry"><SelectValue placeholder="Select" /></SelectTrigger>
-                              <SelectContent>
-                                {INDUSTRY_OPTIONS.map((opt) => (
-                                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
+                        <motion.div variants={fadeInUp} className="space-y-1.5">
+                          <Label htmlFor="fullName">Full Name *</Label>
+                          <Input
+                            id="fullName"
+                            placeholder="e.g. John Smith"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            autoFocus
+                          />
+                        </motion.div>
+
+                        <motion.div variants={fadeInUp} className="space-y-1.5">
+                          <Label htmlFor="workEmail">Work Email *</Label>
+                          <Input
+                            id="workEmail"
+                            type="email"
+                            placeholder="john@yourbusiness.com"
+                            value={workEmail}
+                            onChange={(e) => setWorkEmail(e.target.value)}
+                          />
                         </motion.div>
 
                         <motion.div variants={fadeInUp} className="space-y-1.5">
@@ -422,69 +420,90 @@ const Setup: React.FC = () => {
                             </SelectContent>
                           </Select>
                         </motion.div>
+                      </CardContent>
+                    </>
+                  )}
+
+                  {/* ─── STEP 1: BUSINESS PROFILE ─── */}
+                  {currentStep === 1 && (
+                    <>
+                      <CardHeader>
+                        <CardTitle>Business Profile</CardTitle>
+                        <CardDescription>
+                          Tell us about your business
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        <motion.div variants={fadeInUp} className="space-y-1.5">
+                          <Label htmlFor="businessName">Business Name *</Label>
+                          <Input
+                            id="businessName"
+                            placeholder="e.g. Smith Dental"
+                            value={businessName}
+                            onChange={(e) => setBusinessName(e.target.value)}
+                            autoFocus
+                          />
+                        </motion.div>
 
                         <motion.div variants={fadeInUp} className="space-y-1.5">
-                          <Label htmlFor="websiteUrl" className="flex items-center gap-2">
-                            <Globe className="h-4 w-4" /> Website URL
-                          </Label>
-                          <Input
-                            id="websiteUrl"
-                            type="url"
-                            placeholder="https://yourbusiness.com"
-                            value={websiteUrl}
-                            onChange={(e) => setWebsiteUrl(e.target.value)}
-                          />
-                          <p className="text-xs text-muted-foreground">
-                            We'll use this to auto-populate your knowledge base
-                          </p>
+                          <Label htmlFor="industry">Industry *</Label>
+                          <Select value={industry} onValueChange={setIndustry}>
+                            <SelectTrigger id="industry"><SelectValue placeholder="Select your industry" /></SelectTrigger>
+                            <SelectContent>
+                              {INDUSTRY_OPTIONS.map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </motion.div>
                       </CardContent>
                     </>
                   )}
 
-                  {/* ─── STEP 1: REVIEW & LAUNCH ─── */}
-                  {currentStep === 1 && (
+                  {/* ─── STEP 2: REVIEW & LAUNCH ─── */}
+                  {currentStep === 2 && (
                     <>
                       <CardHeader>
                         <CardTitle>Ready to launch</CardTitle>
                         <CardDescription>
-                          Review your business info and go live
+                          Review your info and go live
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
+                        {/* Personal Profile summary */}
                         <motion.div
                           variants={fadeInUp}
                           className="rounded-xl border p-4 space-y-3"
                         >
-                          {/* Business */}
                           <div className="flex items-center gap-3">
                             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                              <Check className="h-3.5 w-3.5 text-primary" />
+                              <User className="h-3.5 w-3.5 text-primary" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">{fullName}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {workEmail} &middot; {COUNTRY_OPTIONS.find((o) => o.value === country)?.label}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        {/* Business Profile summary */}
+                        <motion.div
+                          variants={fadeInUp}
+                          className="rounded-xl border p-4 space-y-3"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                              <Building2 className="h-3.5 w-3.5 text-primary" />
                             </div>
                             <div>
                               <p className="text-sm font-medium">{businessName}</p>
                               <p className="text-xs text-muted-foreground">
-                                {INDUSTRY_OPTIONS.find((o) => o.value === industry)?.label} &middot; {COUNTRY_OPTIONS.find((o) => o.value === country)?.label}
+                                {INDUSTRY_OPTIONS.find((o) => o.value === industry)?.label}
                               </p>
                             </div>
                           </div>
-
-                          {/* Website URL */}
-                          {websiteUrl && (
-                            <div className="flex items-center gap-3">
-                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
-                                <Check className="h-3.5 w-3.5 text-primary" />
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium truncate max-w-[320px]">
-                                  {websiteUrl}
-                                </p>
-                                <p className="text-xs text-muted-foreground">
-                                  AI will learn from your website
-                                </p>
-                              </div>
-                            </div>
-                          )}
                         </motion.div>
 
                         <motion.p variants={fadeInUp} className="text-xs text-muted-foreground leading-relaxed">
