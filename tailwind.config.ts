@@ -140,6 +140,14 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(10px)" },
           "50%": { transform: "translate(-10px)" },
         },
+        "integration-scroll-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "integration-scroll-right": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
       },
     }
   },
