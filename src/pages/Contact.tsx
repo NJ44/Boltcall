@@ -7,8 +7,7 @@ import { z } from 'zod';
 import { Send } from 'lucide-react';
 import LazyLottie from '../components/ui/LazyLottie';
 import { Link } from 'react-router-dom';
-import Card from '../components/ui/Card';
-import StyledInput from '../components/ui/StyledInput';
+import { cn } from '../lib/utils';
 import { MultipleSelect } from '../components/ui/multiple-select';
 import type { TTag } from '../components/ui/multiple-select';
 
@@ -21,6 +20,25 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
+
+const PillInput = ({
+  error: fieldError,
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement> & {
+  error?: string;
+}) => (
+  <div>
+    <input
+      {...props}
+      className={cn(
+        "w-full px-5 py-3 bg-gray-100/80 rounded-full text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200"
+      )}
+    />
+    {fieldError && (
+      <p className="mt-1 ml-4 text-xs text-red-500">{fieldError}</p>
+    )}
+  </div>
+);
 
 const Contact: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,205 +71,185 @@ const Contact: React.FC = () => {
   const onSubmit = async (data: ContactFormData) => {
     try {
       setIsLoading(true);
-      
-      // POST to n8n webhook
+
       const response = await fetch('https://n8n.srv974118.hstgr.cloud/webhook/9073ec26-3576-4fd4-9b63-a65c1d73250e', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
+      if (!response.ok) throw new Error('Failed to submit form');
 
       setIsSubmitted(true);
       reset();
       setSelectedInterests([]);
-      
-      // Reset success message after 3 seconds
       setTimeout(() => setIsSubmitted(false), 3000);
     } catch (error) {
       console.error('Error submitting contact form:', error);
-      // You might want to show an error message to the user here
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      {/* Logo in top left corner */}
-      <div className="absolute top-0 left-0 z-10 p-4" style={{ transform: 'translate(-10px, -20px)' }}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 px-4 py-6 sm:p-4 overflow-hidden">
+      {/* Logo */}
+      <div className="absolute top-4 left-5 z-30 hidden lg:block">
         <Link to="/">
-          <img 
-            src="/boltcall_full_logo.png" 
-            alt="Boltcall" 
-            className="h-16 w-auto"
+          <img
+            src="/boltcall_full_logo.png"
+            alt="Boltcall"
+            className="h-10 w-auto brightness-0 invert"
           />
         </Link>
       </div>
-      
-      <div className="max-w-7xl mx-auto">
-        <div className="min-h-screen flex">
-          {/* Left Panel - White Background with Title and Animation */}
-          <div className="hidden lg:flex lg:w-1/2 bg-white flex-col items-center justify-center p-12">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mt-16"
-            >
-              <h1 className="text-5xl font-bold text-zinc-900 mb-8">GET IN <span className="text-blue-600">TOUCH</span></h1>
-              <div className="w-96 h-96 mt-16">
-                <LazyLottie
-                  src="/Email.lottie"
-                  loop
-                  autoplay
-                  style={{
-                    width: '100%',
-                    height: '100%'
+
+      {/* Card */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="relative w-full max-w-[860px] min-h-0 lg:h-[540px] rounded-[20px] sm:rounded-[28px] shadow-2xl overflow-hidden bg-white"
+      >
+        {/* Gradient panel with curved clip-path (desktop only) */}
+        <div className="absolute inset-0 z-10 hidden lg:block pointer-events-none">
+          <div
+            className="absolute top-0 bottom-0 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800"
+            style={{
+              width: "100%",
+              height: "100%",
+              clipPath: "ellipse(42% 100% at 5% 50%)",
+            }}
+          />
+        </div>
+
+        {/* Gradient panel content with Lottie (desktop only) */}
+        <div className="absolute top-0 bottom-0 left-0 w-[45%] z-20 hidden lg:flex flex-col items-center justify-center pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center px-8 text-white"
+          >
+            <h1 className="text-2xl font-bold mb-2">Get in Touch</h1>
+            <p className="text-white/80 text-sm leading-relaxed mb-4 max-w-[240px] mx-auto">
+              Have a question or want to learn more? We'd love to hear from you.
+            </p>
+            <div className="w-48 h-48 mx-auto">
+              <LazyLottie
+                src="/Email.lottie"
+                loop
+                autoplay
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Form side */}
+        <div className="relative lg:absolute lg:top-0 lg:bottom-0 lg:right-0 w-full lg:w-[55%] z-[5] flex flex-col items-center justify-center px-6 py-8 sm:px-12 sm:py-10 lg:py-0">
+          {/* Mobile header with Lottie */}
+          <div className="lg:hidden text-center mb-4">
+            <div className="w-20 h-20 mx-auto mb-2">
+              <LazyLottie
+                src="/Email.lottie"
+                loop
+                autoplay
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">Get in Touch</h1>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="w-full max-w-[380px]"
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5 hidden lg:block">
+              Contact Us
+            </h2>
+
+            {/* Success Message */}
+            {isSubmitted && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-green-50 rounded-full px-4 py-2 mb-4"
+              >
+                <p className="text-green-600 text-xs text-center font-medium">
+                  Message sent successfully! We'll get back to you soon.
+                </p>
+              </motion.div>
+            )}
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+              <PillInput
+                {...register('name')}
+                placeholder="Full Name"
+                error={errors.name?.message}
+              />
+              <PillInput
+                {...register('email')}
+                type="email"
+                placeholder="Email"
+                error={errors.email?.message}
+              />
+              <PillInput
+                {...register('phoneNumber')}
+                type="tel"
+                placeholder="Phone Number"
+                error={errors.phoneNumber?.message}
+              />
+              <div>
+                <MultipleSelect
+                  tags={interestOptions}
+                  defaultValue={selectedInterests}
+                  onChange={(items) => {
+                    setSelectedInterests(items);
+                    setValue('interests', items);
                   }}
                 />
               </div>
-            </motion.div>
-          </div>
-
-          {/* Right Panel - Blue Background with Contact Form */}
-          <div className="w-full lg:w-1/2 bg-blue-600 flex items-start justify-center pt-8 p-6">
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="w-full max-w-lg"
-            >
-              <Card className="p-4 bg-white shadow-2xl border-0">
-                {/* Header */}
-
-                {/* Success Message */}
-                {isSubmitted && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6"
-                  >
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-green-800 font-medium">Message sent successfully!</p>
-                        <p className="text-green-700 text-sm">We'll get back to you soon.</p>
-                      </div>
-                    </div>
-                  </motion.div>
+              <div>
+                <textarea
+                  {...register('message')}
+                  placeholder="Your message..."
+                  rows={3}
+                  className="w-full px-5 py-3 bg-gray-100/80 rounded-2xl text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200 resize-none"
+                />
+                {errors.message && (
+                  <p className="mt-1 ml-4 text-xs text-red-500">{errors.message.message}</p>
                 )}
+              </div>
+              <div className="pt-1">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-52 mx-auto block py-3 rounded-full bg-blue-600 text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center gap-2">
+                      <Send className="w-4 h-4" />
+                      Send Message
+                    </span>
+                  )}
+                </button>
+              </div>
+            </form>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-                  {/* Name */}
-                  <div>
-                    <StyledInput
-                      {...register('name')}
-                      placeholder="Name"
-                      name="name"
-                      required
-                    />
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                    )}
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <StyledInput
-                      {...register('email')}
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      required
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  {/* Phone Number */}
-                  <div>
-                    <StyledInput
-                      {...register('phoneNumber')}
-                      type="tel"
-                      placeholder="Phone Number"
-                      name="phoneNumber"
-                      required
-                    />
-                    {errors.phoneNumber && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phoneNumber.message}</p>
-                    )}
-                  </div>
-
-                  {/* Interests Multi-select */}
-                  <div>
-                    <MultipleSelect
-                      tags={interestOptions}
-                      defaultValue={selectedInterests}
-                      onChange={(items) => {
-                        setSelectedInterests(items);
-                        setValue('interests', items);
-                      }}
-                    />
-                    {errors.interests && (
-                      <p className="mt-1 text-sm text-red-600">{errors.interests.message}</p>
-                    )}
-                  </div>
-
-                  {/* Message */}
-                  <div className="mb-3">
-                    <textarea
-                      {...register('message')}
-                      placeholder="Message"
-                      name="message"
-                      required
-                      rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-black"
-                    />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
-                    )}
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="flex justify-start">
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center gap-2"
-                    >
-                      {isLoading ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          Send Message
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
-
-              </Card>
-            </motion.div>
-          </div>
+            <p className="text-gray-400 text-xs text-center mt-4">
+              We typically respond within 24 hours.
+            </p>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
