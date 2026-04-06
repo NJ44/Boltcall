@@ -135,7 +135,7 @@ const Contact: React.FC = () => {
             <p className="text-white/80 text-sm leading-relaxed mb-4 max-w-[240px] mx-auto">
               Have a question or want to learn more? We'd love to hear from you.
             </p>
-            <div className="w-48 h-48 mx-auto">
+            <div className="w-72 h-72 mx-auto">
               <LazyLottie
                 src="/Email.lottie"
                 loop
