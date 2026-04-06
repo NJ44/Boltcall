@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
   ChevronRight,
-  Check,
+
   Zap,
   User,
   Building2,
@@ -199,8 +199,8 @@ const Setup: React.FC = () => {
       const { workspace, businessProfile } =
         await createUserWorkspaceAndProfile(user.id, {
           business_name: businessName,
-          owner_name: fullName || null,
-          website_url: null,
+          owner_name: fullName || undefined,
+          website_url: undefined,
           main_category: industry.toLowerCase(),
           country,
           service_areas: [],

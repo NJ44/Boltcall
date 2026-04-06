@@ -1,5 +1,4 @@
 import { Button } from "./button-shadcn";
-import React from "react";
 
 const ICONS_ROW1 = [
   "https://cdn-icons-png.flaticon.com/512/5968/5968854.png",   // Slack
