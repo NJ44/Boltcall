@@ -113,12 +113,14 @@ const Setup: React.FC = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Form state
-  const [businessName, setBusinessName] = useState('');
-  const [ownerName, _setOwnerName] = useState('');
-  const [industry, setIndustry] = useState('');
-  const [websiteUrl, setWebsiteUrl] = useState('');
+  // Form state — Step 1: Personal Profile
+  const [fullName, setFullName] = useState('');
+  const [workEmail, setWorkEmail] = useState('');
   const [country, setCountry] = useState('');
+
+  // Form state — Step 2: Business Profile
+  const [businessName, setBusinessName] = useState('');
+  const [industry, setIndustry] = useState('');
 
   // If the user lands on /setup, clear any stale "completed" flag from a
   // previous session so we don't immediately redirect back to /dashboard.
