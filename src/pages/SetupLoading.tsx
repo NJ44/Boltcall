@@ -238,7 +238,7 @@ const SetupLoading: React.FC = () => {
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
+          gap: 1rem;
         }
         .setup-progress-header {
           display: flex;
@@ -247,26 +247,26 @@ const SetupLoading: React.FC = () => {
         }
         .setup-progress-label {
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.78rem;
+          font-size: 0.95rem;
           font-weight: 500;
           color: #9ca3af;
         }
         .setup-progress-pct {
           font-family: system-ui, -apple-system, sans-serif;
-          font-size: 0.78rem;
+          font-size: 0.95rem;
           font-weight: 600;
           color: #111827;
           font-variant-numeric: tabular-nums;
         }
         .setup-segmented-bar {
           display: flex;
-          gap: 3px;
+          gap: 4px;
           padding: 2px 0;
         }
         .setup-seg {
           flex: 1;
-          height: 12px;
-          border-radius: 4px;
+          height: 16px;
+          border-radius: 5px;
           background: #e5e7eb;
           opacity: 0.5;
           transition: background 0.4s ease, opacity 0.4s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
