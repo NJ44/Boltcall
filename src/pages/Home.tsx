@@ -8,6 +8,7 @@ import Hero from '../components/Hero';
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
 const FreeSetup = lazy(() => import('../components/FreeSetup'));
 const Pricing = lazy(() => import('../components/Pricing'));
+const IntegrationHero = lazy(() => import('../components/ui/integration-hero'));
 const FAQ = lazy(() => import('../components/FAQ'));
 const FinalCTA = lazy(() => import('../components/FinalCTA'));
 const Footer = lazy(() => import('../components/Footer'));
