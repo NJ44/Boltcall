@@ -24,6 +24,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       return;
     }
 
+    // If arriving from setup loading screen, skip the DB check
+    const params = new URLSearchParams(location.search);
+    if (params.get('setupCompleted') === 'true') {
+      setSetupCheck('completed');
+      return;
+    }
+
     // Check if user has completed setup (has a business_profiles row)
     const checkSetup = async () => {
       try {
