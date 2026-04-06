@@ -110,8 +110,8 @@ const HowItWorks: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid md:grid-cols-2 md:gap-8 xl:gap-12">
-          {/* Section Header - Sticky Sidebar */}
-          <div className="left-0 md:sticky ml-4 pt-12 md:pt-0 pr-2" style={{ top: '150px', height: 'fit-content' }}>
+          {/* Section Header - Pinned Sidebar */}
+          <div ref={sidebarRef} className="left-0 ml-4 pt-12 md:pt-0 pr-2" style={{ height: 'fit-content' }}>
             <motion.h5
               className="text-sm uppercase tracking-wide font-medium text-white/70 mb-4 ml-5"
               initial={{ opacity: 0, y: 20 }}
