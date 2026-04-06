@@ -141,9 +141,11 @@ const Setup: React.FC = () => {
 
   const isStepValid = () => {
     switch (currentStep) {
-      case 0: // Business Profile
-        return businessName.trim().length >= 2 && industry.length > 0 && country.length > 0;
-      case 1: // Review & Launch
+      case 0: // Personal Profile
+        return fullName.trim().length >= 2 && workEmail.trim().length > 3 && country.length > 0;
+      case 1: // Business Profile
+        return businessName.trim().length >= 2 && industry.length > 0;
+      case 2: // Review & Launch
         return true;
       default:
         return true;
