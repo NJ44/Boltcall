@@ -211,10 +211,6 @@ const Contact: React.FC = () => {
                 </button>
               </div>
             </form>
-
-            <p className="text-gray-400 text-xs text-center mt-4">
-              We typically respond within 24 hours.
-            </p>
           </motion.div>
         </div>
       </motion.div>
