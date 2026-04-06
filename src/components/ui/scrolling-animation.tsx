@@ -30,9 +30,9 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
     const rect = sectionRef.current.getBoundingClientRect()
     const viewportH = window.innerHeight
     // Animation starts when the section's top reaches the middle of the viewport
-    // and completes 500px of scroll later
+    // and completes 350px of scroll later
     const scrolledPast = viewportH * 0.5 - rect.top
-    const progress = Math.max(0, Math.min(scrolledPast / 500, 1))
+    const progress = Math.max(0, Math.min(scrolledPast / 350, 1))
     setAnimationProgress(progress)
     rafRef.current = requestAnimationFrame(updateProgress)
   }, [])
