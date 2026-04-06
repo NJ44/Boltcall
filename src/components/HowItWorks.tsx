@@ -46,30 +46,31 @@ const HowItWorks: React.FC = () => {
         const cards = cardsRef.current.filter(Boolean) as HTMLDivElement[];
 
         cards.forEach((card, i) => {
-          // Pin each card so they stack as user scrolls
+          const pinTop = 150 + i * 30;
+
+          // Pin each card using transforms (immune to overflow:hidden on ancestors)
           ScrollTrigger.create({
             trigger: card,
-            start: `top ${150 + i * 30}px`,
-            endTrigger: sectionRef.current,
-            end: 'bottom bottom',
+            start: `top ${pinTop}px`,
+            end: `+=${window.innerHeight * 0.5}`,
             pin: true,
-            pinSpacing: i < cards.length - 1,
+            pinSpacing: true,
+            pinType: 'transform',
           });
 
-          // Animate cards in from below
+          // Fade + slide in as card enters viewport
           gsap.fromTo(
             card,
-            { y: 60, opacity: 0, scale: 0.96 },
+            { y: 80, opacity: 0, scale: 0.95 },
             {
               y: 0,
               opacity: 1,
               scale: 1,
-              duration: 0.5,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: card,
-                start: 'top 85%',
-                end: 'top 55%',
+                start: 'top 90%',
+                end: 'top 60%',
                 scrub: 1,
               },
             }
