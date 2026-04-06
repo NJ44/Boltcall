@@ -38,7 +38,6 @@ const PillInput = ({
 const Contact: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedInterests, setSelectedInterests] = useState<TTag[]>([]);
 
   useEffect(() => {
     document.title = 'Contact Boltcall - Get in Touch with Our Team';
