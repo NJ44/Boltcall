@@ -9,7 +9,7 @@ interface SetupCompletionPopupProps {
 }
 
 const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onClose }) => {
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -18,17 +18,17 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[9999]"
+            className="fixed inset-0 bg-black/50 z-[9999]"
             onClick={onClose}
           />
-          
+
           {/* Popup */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.6 }}
-            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[10000] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full mx-4"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10000] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full mx-4"
           >
             <div className="relative p-8">
               {/* Close button */}
@@ -65,7 +65,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-gray-600 mb-6"
                 >
-                  Your AI receptionist setup is complete! Your system is now ready to start receiving calls and booking appointments. 
+                  Your AI receptionist setup is complete! Your system is now ready to start receiving calls and booking appointments.
                   You can manage your settings and view analytics from your dashboard.
                 </motion.p>
 
@@ -87,7 +87,8 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
