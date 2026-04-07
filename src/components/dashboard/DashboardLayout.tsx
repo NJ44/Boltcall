@@ -188,8 +188,7 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/leads': t('page.leads'),
       '/dashboard/calls': t('page.calls'),
       '/dashboard/messages': t('page.messages'),
-      '/dashboard/reminders': t('page.reminders'),
-      '/dashboard/reputation': t('page.reputationManager'),
+      '/dashboard/sms': 'SMS',
       '/dashboard/instant-lead-response': t('page.instantLeadResponse'),
       '/dashboard/agents': t('page.aiAgents'),
       '/dashboard/knowledge-base': t('page.knowledgeBase'),
@@ -226,7 +225,6 @@ const DashboardLayout: React.FC = () => {
   const getPageTooltip = (): string | null => {
     const path = location.pathname;
     const tooltips: Record<string, string> = {
-      '/dashboard/reputation': 'Monitor and manage your online reviews across platforms',
       '/dashboard/chat-widget': 'Add an AI chat widget to your website to capture leads 24/7',
       '/dashboard/integrations': 'Connect your CRM, calendar, and other tools to sync data automatically',
     };
@@ -336,8 +334,7 @@ const DashboardLayout: React.FC = () => {
   const navItemsServices = [
     { to: '/dashboard/ai-receptionist', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.aiReceptionist },
     { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('beta') as string, needsSetup: !services.phoneSystem },
-    { to: '/dashboard/reminders', label: t('nav.reminders'), icon: <Bell className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.reminders },
-    { to: '/dashboard/reputation', label: t('nav.reputation'), icon: <Star className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.reputation },
+    { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.instantLeadResponse },
     { to: '/dashboard/email', label: 'AI Email', icon: <Mail className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
