@@ -124,11 +124,6 @@ const KnowledgeBasePage: React.FC = () => {
       if (res.ok) {
         const data = await res.json();
         setFolders(data.folders || []);
-        // Auto-select default folder if none selected
-        if (!selectedFolderId && data.folders?.length > 0) {
-          const defaultFolder = data.folders.find((f: KbFolder) => f.is_default);
-          setSelectedFolderId(defaultFolder?.id || data.folders[0].id);
-        }
       }
     } catch (err) {
       console.error('Error fetching folders:', err);
