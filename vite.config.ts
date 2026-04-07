@@ -151,25 +151,19 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // React core — shared by everything, cache-friendly as its own chunk
+            // React core — shared by everything, keep as stable cached chunks
             if (id.includes('react-dom')) return 'react-dom';
             if (id.includes('react-router')) return 'react-router';
-            // Heavy animation libs — split so they only load when lazy components need them
-            if (id.includes('framer-motion')) return 'framer-motion';
-            if (id.includes('gsap')) return 'gsap';
-            if (id.includes('@lottiefiles') || id.includes('lottie')) return 'lottie';
-            // Radix UI primitives — used broadly but heavy together
-            if (id.includes('@radix-ui')) return 'radix';
-            // Supabase client
+            // Supabase — needed for auth on every page load
             if (id.includes('@supabase')) return 'supabase';
-            // Charts — only used in analytics dashboard
-            if (id.includes('recharts')) return 'recharts';
-            // i18n
+            // i18n — used across all routes
             if (id.includes('i18next')) return 'i18n';
-            // React Hook Form + Zod — only used in forms/setup
-            if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) return 'forms';
-            // Lucide icons — tree-shaken but still sizeable
+            // Lucide icons — tree-shaken but shared across many components
             if (id.includes('lucide-react')) return 'icons';
+            // NOTE: framer-motion, gsap, lottie, radix, recharts, forms
+            // are NOT assigned manual chunks — Vite naturally code-splits them
+            // into the lazy route chunks that import them, preventing
+            // unnecessary preloading on pages that don't need them.
           }
         },
       },

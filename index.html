@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Preconnect to critical domains -->
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="preconnect" href="https://hbwogktdajorojljkjwg.supabase.co" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -149,29 +148,33 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Deferred analytics: load after page is interactive to not block FCP/LCP -->
+    <!-- Deferred analytics: load well after page is interactive to not block FCP/LCP/TBT -->
     <script>
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          // Google Tag Manager
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-5LWRPT5N');
-
-          // Google Analytics (gtag)
-          var g=document.createElement('script');
-          g.async=true;
-          g.src='https://www.googletagmanager.com/gtag/js?id=G-LY9H4ZQW81';
-          document.head.appendChild(g);
-          g.onload=function(){
-            window.dataLayer=window.dataLayer||[];
-            function gtag(){window.dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-LY9H4ZQW81');
-          };
-        }, 2000);
+      function _loadAnalytics(){
+        if(window._analyticsLoaded)return;window._analyticsLoaded=true;
+        // Google Tag Manager
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5LWRPT5N');
+        // Google Analytics (gtag)
+        var g=document.createElement('script');g.async=true;
+        g.src='https://www.googletagmanager.com/gtag/js?id=G-LY9H4ZQW81';
+        document.head.appendChild(g);
+        g.onload=function(){
+          window.dataLayer=window.dataLayer||[];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js',new Date());gtag('config','G-LY9H4ZQW81');
+        };
+      }
+      // Load analytics only after browser is idle — never block paint/TTI
+      window.addEventListener('load',function(){
+        if(typeof requestIdleCallback==='function'){
+          requestIdleCallback(function(){setTimeout(_loadAnalytics,3000);},{timeout:8000});
+        }else{
+          setTimeout(_loadAnalytics,5000);
+        }
       });
     </script>
   </body>
