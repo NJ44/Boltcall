@@ -675,13 +675,16 @@ const Header: React.FC = () => {
                     />
                   </Link>
                 </div>
-                <InteractiveHoverButton
-                  text="Start Now"
+                <button
                   onClick={() => handleNavClick('/signup')}
-                  className={`!min-h-11 !min-w-[9rem] !w-auto !px-4 !py-2.5 text-sm border ${isOverBlueBackground ? 'border-white/50 bg-white/10 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
-                  hoverBgClass="bg-brand-blue"
-                  hoverTextClass="text-white"
-                />
+                  className={`px-5 py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                    isOverBlueBackground
+                      ? 'bg-white text-brand-blue hover:bg-blue-50'
+                      : 'bg-brand-blue text-white hover:bg-brand-blueDark'
+                  }`}
+                >
+                  Get Started
+                </button>
               </>
             )}
           </div>
