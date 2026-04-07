@@ -16,12 +16,12 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navItems = [
-    { to: '/', label: 'Dashboard', icon: <LayoutDashboard /> },
-    { to: '/analytics', label: 'Analytics', icon: <BarChart3 /> },
-    { to: '/agents', label: 'Agents', icon: <Users /> },
-    { to: '/voice-library', label: 'Voice Library', icon: <Volume2 /> },
-    { to: '/business', label: 'Business Details', icon: <Building2 /> },
-    { to: '/settings', label: 'Settings', icon: <Settings /> },
+    { to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard /> },
+    { to: '/dashboard/analytics', label: 'Analytics', icon: <BarChart3 /> },
+    { to: '/dashboard/agents', label: 'Agents', icon: <Users /> },
+    { to: '/dashboard/voice-library', label: 'Voice Library', icon: <Volume2 /> },
+    { to: '/dashboard/business', label: 'Business Details', icon: <Building2 /> },
+    { to: '/dashboard/settings', label: 'Settings', icon: <Settings /> },
   ];
 
   return (
