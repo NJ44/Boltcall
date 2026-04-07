@@ -221,6 +221,7 @@ const Challenge = React.lazy(() => import('../pages/Challenge'));
 const ButtonDemoPage = React.lazy(() => import('../pages/ButtonDemoPage'));
 const DemoFlowPage = React.lazy(() => import('../pages/DemoFlowPage'));
 const DrHazakLandingPage = React.lazy(() => import('../pages/DrHazakLandingPage'));
+const AgentArchitecturePage = React.lazy(() => import('../pages/AgentArchitecturePage'));
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
@@ -494,6 +495,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/button-demo" element={<ButtonDemoPage />} />
         <Route path="/demo" element={<DemoFlowPage />} />
+        <Route path="/agent-architecture" element={<AgentArchitecturePage />} />
         <Route path="/funnel-optimizer" element={<FunnelOptimizer />} />
         <Route path="/funnel-optimiser" element={<FunnelOptimiser />} />
         <Route path="/strike-ai" element={<Strike />} />
