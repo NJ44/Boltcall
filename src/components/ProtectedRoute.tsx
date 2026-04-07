@@ -7,10 +7,18 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
+const SETUP_COMPLETE_KEY = 'boltcall_setup_complete';
+
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isLoading, isAuthenticated, user } = useAuth();
   const location = useLocation();
-  const [setupCheck, setSetupCheck] = useState<'loading' | 'completed' | 'needed'>('loading');
+  const [setupCheck, setSetupCheck] = useState<'loading' | 'completed' | 'needed'>(() => {
+    // If we already verified setup for this user, skip the loading state entirely
+    if (user?.id && localStorage.getItem(SETUP_COMPLETE_KEY) === user.id) {
+      return 'completed';
+    }
+    return 'loading';
+  });
 
   useEffect(() => {
     if (!isAuthenticated || !user?.id) {
@@ -24,9 +32,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       return;
     }
 
-    // If arriving from setup loading screen, skip the DB check
+    // If we already verified setup for this user, skip the DB check
+    if (localStorage.getItem(SETUP_COMPLETE_KEY) === user.id) {
+      setSetupCheck('completed');
+      return;
+    }
+
+    // If arriving from setup loading screen, cache and skip
     const params = new URLSearchParams(location.search);
     if (params.get('setupCompleted') === 'true') {
+      localStorage.setItem(SETUP_COMPLETE_KEY, user.id);
       setSetupCheck('completed');
       return;
     }
@@ -46,14 +61,20 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           return;
         }
 
-        setSetupCheck(data ? 'completed' : 'needed');
+        if (data) {
+          localStorage.setItem(SETUP_COMPLETE_KEY, user.id);
+          setSetupCheck('completed');
+        } else {
+          localStorage.removeItem(SETUP_COMPLETE_KEY);
+          setSetupCheck('needed');
+        }
       } catch {
         setSetupCheck('completed'); // Don't block on error
       }
     };
 
     checkSetup();
-  }, [isAuthenticated, user?.id, location.pathname]);
+  }, [isAuthenticated, user?.id]);
 
   if (isLoading || (isAuthenticated && setupCheck === 'loading')) {
     return (
