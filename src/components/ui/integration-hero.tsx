@@ -1,21 +1,21 @@
 const ICONS_ROW1 = [
-  "https://cdn-icons-png.flaticon.com/512/2111/2111432.png",   // Zapier
-  "https://cdn-icons-png.flaticon.com/512/281/281764.png",     // Google Maps / GBP
-  "https://cdn-icons-png.flaticon.com/512/281/281763.png",     // Google Calendar
-  "https://cdn-icons-png.flaticon.com/512/732/732084.png",     // Gmail
-  "https://cdn-icons-png.flaticon.com/512/5968/5968841.png",   // Facebook
-  "https://cdn-icons-png.flaticon.com/512/733/733585.png",     // WhatsApp
-  "https://cdn-icons-png.flaticon.com/512/3670/3670382.png",   // Outlook
+  "/icons/integrations/zapier.webp",
+  "/icons/integrations/google-maps.webp",
+  "/icons/integrations/google-calendar.webp",
+  "/icons/integrations/gmail.webp",
+  "/icons/integrations/facebook.webp",
+  "/icons/integrations/whatsapp.webp",
+  "/icons/integrations/outlook.webp",
 ];
 
 const ICONS_ROW2 = [
-  "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",   // Stripe
-  "https://cdn-icons-png.flaticon.com/512/5968/5968854.png",   // Slack
-  "https://cdn-icons-png.flaticon.com/512/888/888841.png",     // HubSpot
-  "https://cdn-icons-png.flaticon.com/512/5968/5968875.png",   // Notion
-  "https://cdn-icons-png.flaticon.com/512/732/732190.png",     // Google Drive
-  "https://cdn-icons-png.flaticon.com/512/174/174857.png",     // LinkedIn
-  "https://cdn-icons-png.flaticon.com/512/732/732221.png",     // Microsoft / Teams
+  "/icons/integrations/stripe.webp",
+  "/icons/integrations/slack.webp",
+  "/icons/integrations/hubspot.webp",
+  "/icons/integrations/notion.webp",
+  "/icons/integrations/google-drive.webp",
+  "/icons/integrations/linkedin.webp",
+  "/icons/integrations/microsoft.webp",
 ];
 
 const repeatedIcons = (icons: string[], repeat = 4) =>
@@ -45,7 +45,7 @@ export default function IntegrationHero() {
                 key={i}
                 className="h-16 w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
-                <img src={src} alt="icon" className="h-10 w-10 object-contain" loading="lazy" />
+                <img src={src} alt="Integration icon" width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -57,7 +57,7 @@ export default function IntegrationHero() {
                 key={i}
                 className="h-16 w-16 flex-shrink-0 rounded-full bg-white shadow-md flex items-center justify-center"
               >
-                <img src={src} alt="icon" className="h-10 w-10 object-contain" loading="lazy" />
+                <img src={src} alt="Integration icon" width={40} height={40} className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
