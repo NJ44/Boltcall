@@ -2029,7 +2029,8 @@ const KnowledgeBasePage: React.FC = () => {
         </div>
       </ModalShell>
 
-      </div>{/* close main content */}
+      </div>
+      )}{/* close selectedFolderId conditional */}
     </div>
   );
 };
