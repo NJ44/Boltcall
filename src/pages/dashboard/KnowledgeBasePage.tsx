@@ -109,8 +109,8 @@ const KnowledgeBasePage: React.FC = () => {
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [showCreateFolderModal, setShowCreateFolderModal] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
-  const [renamingFolderId, setRenamingFolderId] = useState<string | null>(null);
-  const [renamingFolderName, setRenamingFolderName] = useState('');
+  const [_renamingFolderId, setRenamingFolderId] = useState<string | null>(null);
+  const [_renamingFolderName, setRenamingFolderName] = useState('');
 
   // Fetch KB folders
   const fetchFolders = useCallback(async () => {
@@ -151,20 +151,6 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
-  const handleRenameFolder = async (folderId: string, name: string) => {
-    if (!name.trim() || !user?.id) return;
-    try {
-      await fetch(`${FUNCTIONS_BASE}/kb-search`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'update_folder', userId: user.id, folderId, name: name.trim() }),
-      });
-      setRenamingFolderId(null);
-      fetchFolders();
-    } catch (err) {
-      showToast({ title: 'Error', message: 'Failed to rename folder', variant: 'error', duration: 3000 });
-    }
-  };
 
   const handleDeleteFolder = async (folderId: string) => {
     if (!user?.id) return;

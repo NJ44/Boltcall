@@ -5,7 +5,6 @@ import { flushSync } from "react-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card-shadcn";
-import { Button } from "@/components/ui/button-shadcn";
 import {
   ArrowRight,
   Phone,
@@ -17,8 +16,6 @@ import {
   UserPlus,
   Send,
   RotateCcw,
-  PhoneOutgoing,
-  Bell,
   Bot,
   ShieldCheck,
   Zap,

@@ -26,7 +26,6 @@ import {
   Globe,
   Plug,
   Zap,
-  Star,
   PhoneMissed,
   Reply,
   Mail,
