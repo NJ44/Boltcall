@@ -528,6 +528,7 @@ const GeneralPage: React.FC = () => {
 
                   // Delete business profiles for this user
                   await supabase.from('business_profiles').delete().eq('user_id', user.id);
+                  localStorage.removeItem('boltcall_setup_complete');
 
                   // Delete workspaces for this user
                   await supabase.from('workspaces').delete().eq('user_id', user.id);
