@@ -221,6 +221,7 @@ const Challenge = React.lazy(() => import('../pages/Challenge'));
 const ButtonDemoPage = React.lazy(() => import('../pages/ButtonDemoPage'));
 const DemoFlowPage = React.lazy(() => import('../pages/DemoFlowPage'));
 const DrHazakLandingPage = React.lazy(() => import('../pages/DrHazakLandingPage'));
+const AgentArchitecturePage = React.lazy(() => import('../pages/AgentArchitecturePage'));
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
