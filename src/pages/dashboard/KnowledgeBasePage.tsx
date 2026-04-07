@@ -128,7 +128,7 @@ const KnowledgeBasePage: React.FC = () => {
     } catch (err) {
       console.error('Error fetching folders:', err);
     }
-  }, [user?.id, selectedFolderId]);
+  }, [user?.id]);
 
   const handleCreateFolder = async () => {
     if (!newFolderName.trim() || !user?.id) return;
