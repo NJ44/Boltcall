@@ -225,7 +225,6 @@ const DashboardLayout: React.FC = () => {
   const getPageTooltip = (): string | null => {
     const path = location.pathname;
     const tooltips: Record<string, string> = {
-      '/dashboard/reputation': 'Monitor and manage your online reviews across platforms',
       '/dashboard/chat-widget': 'Add an AI chat widget to your website to capture leads 24/7',
       '/dashboard/integrations': 'Connect your CRM, calendar, and other tools to sync data automatically',
     };
