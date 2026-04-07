@@ -18,6 +18,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       return;
     }
 
+    // Once confirmed completed, don't re-check on route changes
+    if (setupCheck === 'completed') return;
+
     // Skip check if already on setup pages (including loading screen)
     if (location.pathname.startsWith('/setup')) {
       setSetupCheck('completed');
@@ -53,7 +56,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     };
 
     checkSetup();
-  }, [isAuthenticated, user?.id, location.pathname]);
+  }, [isAuthenticated, user?.id, location.pathname, setupCheck]);
 
   if (isLoading || (isAuthenticated && setupCheck === 'loading')) {
     return (
