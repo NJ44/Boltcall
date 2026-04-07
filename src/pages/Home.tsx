@@ -75,27 +75,27 @@ const Home: React.FC = () => {
               </Suspense>
             </div>
 
-            <div className="relative md:-top-[255px]">
+            <div className="relative md:-top-[255px] md:mt-24">
               <FreeSetup />
             </div>
 
-            <div className="relative md:-top-[255px]">
+            <div className="relative md:-top-[255px] md:mt-24">
               <IntegrationHero />
             </div>
 
-            <div className="relative md:-top-[255px]">
+            <div className="relative md:-top-[255px] md:mt-24">
               <Pricing />
             </div>
 
-            <div className="relative md:-top-[255px] bg-white -mb-16 md:-mb-16">
+            <div className="relative md:-top-[255px] md:mt-24 bg-white -mb-16 md:-mb-16">
               <FAQ />
             </div>
 
-            <div className="relative md:-top-[255px] bg-white">
+            <div className="relative md:-top-[255px] md:mt-24 bg-white">
               <FinalCTA />
             </div>
 
-            <div className="relative md:-top-[255px]">
+            <div className="relative md:-top-[255px] md:mt-24">
               <Footer />
             </div>
           </Suspense>
