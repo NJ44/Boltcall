@@ -56,6 +56,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               and moving prospects through your sales funnel.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
