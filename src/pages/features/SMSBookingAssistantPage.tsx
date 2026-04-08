@@ -55,6 +55,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               Your SMS Booking Assistant handles everything automatically.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
