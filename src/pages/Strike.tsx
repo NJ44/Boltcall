@@ -465,6 +465,7 @@ const Strike: React.FC = () => {
           </div>
         </div>
       </div>
+      <FAQ />
     </div>
   );
 };
