@@ -25,8 +25,57 @@ const Documentation: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = 'Documentation - API & Integration Guides | Boltcall';
-    updateMetaDescription('Boltcall documentation and API guides. Learn how to integrate Boltcall AI receptionist with your website and apps. View docs.');
+    document.title = 'Boltcall Documentation: Setup, Integrations & AI Features Guide';
+    updateMetaDescription('Complete Boltcall documentation. Step-by-step guides for setup, phone and calendar integrations, AI receptionist configuration, and troubleshooting.');
+
+    // Article schema
+    const articleSchema = document.createElement('script');
+    articleSchema.type = 'application/ld+json';
+    articleSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: 'Boltcall Documentation: Setup, Integrations & AI Features Guide',
+      author: { '@type': 'Organization', name: 'Boltcall Team', url: 'https://boltcall.org' },
+      publisher: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
+      datePublished: '2025-06-01',
+      dateModified: '2026-04-08',
+      description: 'Complete Boltcall documentation covering setup, integrations, AI receptionist features, and troubleshooting.',
+    });
+    document.head.appendChild(articleSchema);
+
+    // FAQ schema
+    const faqSchema = document.createElement('script');
+    faqSchema.type = 'application/ld+json';
+    faqSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'How do I integrate Boltcall with my website?', acceptedAnswer: { '@type': 'Answer', text: 'Connect your phone number, set up your business info, configure your AI assistant, and test the setup. Boltcall integrates with Twilio, Vonage, Google Calendar, Outlook, and WhatsApp.' } },
+        { '@type': 'Question', name: 'What integrations does Boltcall support?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall supports phone system integration (Twilio, Vonage), calendar sync (Google Calendar, Outlook), SMS messaging, and WhatsApp Business API.' } },
+        { '@type': 'Question', name: 'How do I customize the AI receptionist voice?', acceptedAnswer: { '@type': 'Answer', text: 'Select from available voices, preview samples, configure speaking rate and tone, set up custom greetings, and test voice quality — all from the dashboard.' } },
+        { '@type': 'Question', name: 'What AI features are available?', acceptedAnswer: { '@type': 'Answer', text: 'AI receptionist setup, voice customization, conversation intelligence with intent recognition, conversation branching, lead qualification, and automatic appointment booking.' } },
+      ],
+    });
+    document.head.appendChild(faqSchema);
+
+    // BreadcrumbList schema
+    const bcSchema = document.createElement('script');
+    bcSchema.type = 'application/ld+json';
+    bcSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Documentation', item: 'https://boltcall.org/documentation' },
+      ],
+    });
+    document.head.appendChild(bcSchema);
+
+    return () => {
+      document.head.removeChild(articleSchema);
+      document.head.removeChild(faqSchema);
+      document.head.removeChild(bcSchema);
+    };
   }, []);
 
   const toggleSection = (sectionId: string) => {
