@@ -37,8 +37,8 @@ const AeoGlobalIntro: React.FC = () => {
     '/blog/ai-vs-human-receptionist': 'AI vs Human Receptionist | Boltcall',
   };
 
-  const excludedExact = new Set(['/login', '/signup']);
-  const excludedPrefixes = ['/dashboard', '/setup', '/auth/', '/admin', '/payment/'];
+  const articleExact = new Set(['/blog', '/comparisons']);
+  const articlePrefixes = ['/blog/', '/comparisons/', '/compare/'];
   const serviceSchemaRoutes = new Set([
     '/strike-ai',
     '/about',
@@ -74,9 +74,8 @@ const AeoGlobalIntro: React.FC = () => {
   const isComparisonsRoute =
     path === '/comparisons' || path.startsWith('/comparisons/') || path.startsWith('/compare/');
   const isBlogRoute = path === '/blog' || path.startsWith('/blog/');
-  const isExcluded =
-    excludedExact.has(path) || excludedPrefixes.some((prefix) => path.startsWith(prefix));
-  const shouldShow = !isExcluded;
+  const shouldShow =
+    articleExact.has(path) || articlePrefixes.some((prefix) => path.startsWith(prefix));
 
   const title = isComparisonsRoute ? 'Comparison Summary' : 'Page Summary';
 
