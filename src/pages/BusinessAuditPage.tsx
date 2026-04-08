@@ -263,6 +263,7 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             )}
 
+            <FAQ />
             <Footer />
         </div>
     );
