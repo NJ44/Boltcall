@@ -16,8 +16,8 @@ const SpeedTestLanding: React.FC = () => {
   const [websiteUrl, setWebsiteUrl] = useState('');
 
   React.useEffect(() => {
-    document.title = 'Free Website Health Check - Analyze Site Performance';
-    updateMetaDescription('Free website health check analyzes your site performance. Get detailed report on loading times, health metrics, and optimization tips. Check now.');
+    document.title = 'Free Website Health Check Tool | Boltcall';
+    updateMetaDescription('Enter your URL for a free website health check. Analyzes speed, Core Web Vitals, mobile performance, and gives optimization recommendations.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
