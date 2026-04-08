@@ -140,6 +140,14 @@ const AeoGlobalIntro: React.FC = () => {
         item: `https://boltcall.org/${pathParts.slice(0, index + 1).join('/')}`,
       })),
     ];
+    if (breadcrumbItems.length < 2) {
+      breadcrumbItems.push({
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Homepage',
+        item: 'https://boltcall.org/#top',
+      });
+    }
 
     const breadcrumbSchema = {
       '@context': 'https://schema.org',
