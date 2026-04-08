@@ -11,8 +11,22 @@ import GiveawayBar from '../../components/GiveawayBar';
 const TraditionalCallCentersVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Traditional Call Centers vs Boltcall AI Receptionist';
-    updateMetaDescription('Traditional call centers vs Boltcall AI receptionist. Compare costs, features, and service quality. See why AI wins. View now.');
+    document.title = 'Traditional Call Centers vs Boltcall AI Receptionist (2026)';
+    updateMetaDescription('Traditional call centers vs Boltcall AI receptionist. Compare costs, features, availability, and service quality side by side.');
+
+    const bcSchema = document.createElement('script');
+    bcSchema.type = 'application/ld+json';
+    bcSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://boltcall.org/comparisons' },
+        { '@type': 'ListItem', position: 3, name: 'Call Centers vs Boltcall', item: 'https://boltcall.org/comparisons/call-centers-vs-boltcall' },
+      ],
+    });
+    document.head.appendChild(bcSchema);
+    return () => { document.head.removeChild(bcSchema); };
   }, []);
 
   return (
