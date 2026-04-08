@@ -37,7 +37,7 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
         }
       },
       "datePublished": "2025-02-15",
-      "dateModified": "2025-02-15",
+      "dateModified": "2026-04-08",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/is-ai-receptionist-worth-it"
@@ -100,6 +100,10 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
                 <span>8 min read</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span className="text-blue-600 font-medium">Updated April 2026</span>
               </div>
             </div>
           </motion.div>
@@ -442,7 +446,7 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </ul>
 
             <p className="text-lg text-gray-700 leading-relaxed">
-              ...makes an AI receptionist one of the highest-ROI investments a service business can make. Most businesses see a positive return within the first month, with many achieving 10:1 or better ROI ratios.
+              ...makes an AI receptionist one of the highest-ROI investments a service business can make. Most businesses see a positive return within the first month, with many achieving 10:1 or better ROI ratios. Our <Link to="/blog/missed-calls-statistics-local-business-2026" className="text-blue-600 hover:text-blue-700 underline">2026 missed call statistics</Link> show the average local business loses $238 per unanswered call.
             </p>
           </div>
         </motion.div>
@@ -478,6 +482,16 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Related Reading */}
+        <div className="bg-gray-50 rounded-xl p-6 mb-12">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Related Reading</h3>
+          <ul className="space-y-2 text-gray-700">
+            <li><Link to="/blog/best-ai-receptionist-small-business" className="text-blue-600 hover:text-blue-700 underline">Best AI Receptionist for Small Business: Comparison</Link></li>
+            <li><Link to="/pricing" className="text-blue-600 hover:text-blue-700 underline">See Boltcall Pricing Plans</Link></li>
+            <li><Link to="/comparisons/answering-services-vs-boltcall" className="text-blue-600 hover:text-blue-700 underline">Answering Services vs. Boltcall</Link></li>
+          </ul>
+        </div>
           </article>
           
           {/* Table of Contents */}

@@ -344,6 +344,40 @@ const FAQAIReceptionistSolar: React.FC = () => {
                     Learn more <ArrowRight className="h-4 w-4 ml-1" />
                   </div>
                 </Link>
+                <Link
+                  to="/blog/ai-receptionist-hvac-faq"
+                  className="rounded-xl border border-gray-200 bg-white shadow-sm p-6 hover:border-blue-300 hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                      <Zap className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      AI Receptionist FAQ for HVAC Companies
+                    </h3>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">See how HVAC companies use AI receptionists for peak season call handling and emergency dispatch.</p>
+                  <div className="mt-3 flex items-center text-sm font-medium text-blue-600">
+                    Read FAQ <ArrowRight className="h-4 w-4 ml-1" />
+                  </div>
+                </Link>
+                <Link
+                  to="/blog/ai-receptionist-plumber-faq"
+                  className="rounded-xl border border-gray-200 bg-white shadow-sm p-6 hover:border-blue-300 hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                      <Users className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      AI Receptionist FAQ for Plumbers
+                    </h3>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">How plumbing companies use AI receptionists for emergency dispatch and after-hours call handling.</p>
+                  <div className="mt-3 flex items-center text-sm font-medium text-blue-600">
+                    Read FAQ <ArrowRight className="h-4 w-4 ml-1" />
+                  </div>
+                </Link>
               </div>
             </motion.div>
           </div>

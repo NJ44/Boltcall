@@ -262,6 +262,12 @@ const FAQAIReceptionistPlumber: React.FC = () => {
 
   const relatedResources = [
     {
+      href: '/blog/ai-phone-answering-plumbers',
+      title: 'AI Phone Answering for Plumbers: Complete Guide',
+      description: 'Step-by-step guide to setting up AI phone answering for your plumbing business.',
+      icon: Phone,
+    },
+    {
       href: '/tools/plumber-revenue-calculator',
       title: 'Plumber Revenue Calculator',
       description: 'Calculate how much revenue your plumbing company loses to missed calls and slow response times.',
@@ -275,14 +281,20 @@ const FAQAIReceptionistPlumber: React.FC = () => {
     },
     {
       href: '/blog/ai-receptionist-hvac-faq',
-      title: 'AI Receptionist for HVAC Companies',
+      title: 'AI Receptionist FAQ for HVAC Companies',
       description: 'See how HVAC companies use AI receptionists for peak season call handling.',
-      icon: Phone,
+      icon: AlertTriangle,
     },
     {
-      href: '/pricing',
-      title: 'See Pricing Plans',
-      description: 'Transparent pricing for every plumbing business size. No per-call fees, no surprises.',
+      href: '/blog/ai-receptionist-dentist-faq',
+      title: 'AI Receptionist FAQ for Dentists',
+      description: 'How dental offices use AI to handle patient scheduling, insurance questions, and emergency routing.',
+      icon: Star,
+    },
+    {
+      href: '/blog/ai-receptionist-lawyer-faq',
+      title: 'AI Receptionist FAQ for Law Firms',
+      description: 'Learn how law firms use AI to qualify leads, route urgent calls, and capture new clients 24/7.',
       icon: DollarSign,
     },
   ];

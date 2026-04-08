@@ -40,7 +40,7 @@ const BestAiReceptionistSmallBusiness: React.FC = () => {
         }
       },
       "datePublished": "2026-03-14T00:00:00Z",
-      "dateModified": "2026-03-14T00:00:00Z",
+      "dateModified": "2026-04-08T00:00:00Z",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/best-ai-receptionist-small-business"
@@ -94,6 +94,10 @@ const BestAiReceptionistSmallBusiness: React.FC = () => {
                     <Clock className="w-5 h-5 mr-2" />
                     <span>12 min read</span>
                   </div>
+                  <div className="flex items-center">
+                    <Calendar className="w-5 h-5 mr-2" />
+                    <span className="text-blue-600 font-medium">Updated April 2026</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,7 +138,7 @@ const BestAiReceptionistSmallBusiness: React.FC = () => {
                 </p>
                 
                 <p className="text-gray-700 leading-relaxed">
-                  This comprehensive guide evaluates the best AI receptionist solutions for small businesses, comparing features, pricing, and real-world performance. We'll help you find the perfect fit for your business needs and budget.
+                  This comprehensive guide evaluates the best AI receptionist solutions for small businesses, comparing features, pricing, and real-world performance. We'll help you find the perfect fit for your business needs and budget. Not sure if an AI receptionist is right for you? Read our <Link to="/blog/is-ai-receptionist-worth-it" className="text-blue-600 hover:text-blue-700 underline">complete cost-benefit analysis</Link>.
                 </p>
               </motion.section>
 
@@ -392,7 +396,7 @@ const BestAiReceptionistSmallBusiness: React.FC = () => {
                 </div>
 
                 <p className="text-gray-700 leading-relaxed mt-8">
-                  While other platforms excel in specific areas like enterprise features or voice quality, Boltcall's comprehensive approach makes it the best choice for small businesses seeking an all-in-one digital transformation solution.
+                  While other platforms excel in specific areas like enterprise features or voice quality, Boltcall's comprehensive approach makes it the best choice for small businesses seeking an all-in-one digital transformation solution. Compare all plans on our <Link to="/pricing" className="text-blue-600 hover:text-blue-700 underline">pricing page</Link>, or explore our <Link to="/features/ai-receptionist" className="text-blue-600 hover:text-blue-700 underline">AI receptionist features</Link> in detail.
                 </p>
               </motion.section>
 

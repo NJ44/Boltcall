@@ -5,7 +5,7 @@ import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import {
   Phone, Clock, Calendar, Flame, Shield, Zap, CheckCircle,
-  ChevronRight, ChevronDown, ArrowRight, Star, Thermometer, DollarSign
+  ChevronRight, ChevronDown, ArrowRight, Star, Thermometer, DollarSign, Users, Sun
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -274,16 +274,22 @@ const FAQAIReceptionistHVAC: React.FC = () => {
       icon: Zap,
     },
     {
-      href: '/blog/ai-phone-answering-plumbers',
-      title: 'AI Phone Answering for Plumbers',
-      description: 'See how plumbing companies use AI receptionists to capture emergency calls 24/7.',
-      icon: Phone,
+      href: '/blog/ai-receptionist-plumber-faq',
+      title: 'AI Receptionist FAQ for Plumbers',
+      description: 'See how plumbing companies use AI receptionists for emergency dispatch and after-hours calls.',
+      icon: Users,
     },
     {
-      href: '/pricing',
-      title: 'See Pricing Plans',
-      description: 'Transparent pricing for every HVAC business size. No per-call fees, no surprises.',
-      icon: DollarSign,
+      href: '/blog/ai-receptionist-solar-faq',
+      title: 'AI Receptionist FAQ for Solar Companies',
+      description: 'Learn how solar installers use AI to qualify leads and book consultations automatically.',
+      icon: Sun,
+    },
+    {
+      href: '/blog/ai-receptionist-dentist-faq',
+      title: 'AI Receptionist FAQ for Dentists',
+      description: 'How dental offices use AI to handle patient scheduling, insurance, and emergency routing.',
+      icon: Star,
     },
   ];
 

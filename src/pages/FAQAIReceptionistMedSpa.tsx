@@ -365,6 +365,40 @@ const FAQAIReceptionistMedSpa: React.FC = () => {
                     Learn more <ArrowRight className="h-4 w-4 ml-1" />
                   </div>
                 </Link>
+                <Link
+                  to="/blog/ai-receptionist-dentist-faq"
+                  className="rounded-xl border border-gray-200 bg-white shadow-sm p-6 hover:border-blue-300 hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                      <Users className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      AI Receptionist FAQ for Dentists
+                    </h3>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">How dental offices use AI to handle patient scheduling, insurance questions, and HIPAA compliance.</p>
+                  <div className="mt-3 flex items-center text-sm font-medium text-blue-600">
+                    Read FAQ <ArrowRight className="h-4 w-4 ml-1" />
+                  </div>
+                </Link>
+                <Link
+                  to="/blog/ai-receptionist-vet-faq"
+                  className="rounded-xl border border-gray-200 bg-white shadow-sm p-6 hover:border-blue-300 hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                      <Heart className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      AI Receptionist FAQ for Vet Clinics
+                    </h3>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">Discover how veterinary clinics use AI to triage urgent pet care calls and manage appointments 24/7.</p>
+                  <div className="mt-3 flex items-center text-sm font-medium text-blue-600">
+                    Read FAQ <ArrowRight className="h-4 w-4 ml-1" />
+                  </div>
+                </Link>
               </div>
             </motion.div>
           </div>

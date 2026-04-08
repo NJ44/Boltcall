@@ -344,6 +344,78 @@ const blogPosts: BlogPost[] = [
     category: 'AI Tools Guide',
     image: '/images/blog/ai-services-pro.webp'
   },
+  {
+    title: 'State of Missed Calls in Local Business 2026: Statistics & Data',
+    slug: '/blog/missed-calls-statistics-local-business-2026',
+    excerpt: 'Comprehensive statistics on missed calls in local businesses. Data on call volumes, miss rates, revenue impact, and AI receptionist adoption across 7 industries.',
+    date: 'March 31, 2026',
+    readTime: '10 min read',
+    category: 'Industry Research',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'How to Set Up AI Phone Answering for Your Vet Clinic',
+    slug: '/blog/how-to-set-up-ai-phone-answering-vet-clinic',
+    excerpt: 'Step-by-step guide to setting up AI phone answering for veterinary clinics. Reduce missed calls, cut no-shows, and book more appointments automatically.',
+    date: 'March 31, 2026',
+    readTime: '10 min read',
+    category: 'Industry Guide',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Answering Service Benefits for Appointment Scheduling',
+    slug: '/blog/answering-service-scheduling',
+    excerpt: 'Benefits of using an answering service for appointment scheduling. Improve booking rates and reduce no-shows. Learn more.',
+    date: 'February 10, 2025',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Benefits of Outsourced Reception Services',
+    slug: '/blog/benefits-of-outsourced-reception-services',
+    excerpt: 'Benefits of outsourced reception services. Save costs, improve coverage, enhance customer service. Discover advantages now.',
+    date: 'February 10, 2025',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'How to Schedule a Text: Complete SMS Scheduling Guide',
+    slug: '/blog/how-to-schedule-text',
+    excerpt: 'How to schedule appointments by text: complete guide to SMS scheduling options and text-based booking systems. Learn more.',
+    date: 'February 15, 2025',
+    readTime: '8 min read',
+    category: 'Setup Guide',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Effective Phone Call Scripts for Receptionists Guide',
+    slug: '/blog/phone-call-scripts',
+    excerpt: 'Effective phone call scripts for receptionists. Learn proven scripts for handling calls professionally and converting leads. Get started.',
+    date: 'February 10, 2025',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Professional Telephone Etiquette Tips & Best Practices',
+    slug: '/blog/tips-for-professional-telephone-etiquette',
+    excerpt: 'Professional telephone etiquette tips. Learn best practices for phone communication and customer service. Improve now.',
+    date: 'February 10, 2025',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'Understanding Live Answering Service Costs & Pricing',
+    slug: '/blog/understanding-live-answering-service-costs',
+    excerpt: 'Understanding live answering service costs. Compare pricing models, features, and find the best value for your business. View now.',
+    date: 'February 10, 2025',
+    readTime: '8 min read',
+    category: 'AI Receptionist',
+    image: '/og-image.jpg'
+  },
   // Add more blog posts here as they are created
 ];
 

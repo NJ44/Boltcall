@@ -37,7 +37,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
         }
       },
       "datePublished": "2025-02-20",
-      "dateModified": "2025-02-20",
+      "dateModified": "2026-04-08",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/how-to-make-ai-receptionist"
@@ -100,6 +100,10 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
                 <span>10 min read</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span className="text-blue-600 font-medium">Updated April 2026</span>
               </div>
             </div>
           </motion.div>
@@ -637,7 +641,7 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
             </p>
             
             <p className="text-lg text-gray-700 leading-relaxed">
-              If you have a development team and want complete control, building your own can work. But for 95% of businesses, using a proven platform like Boltcall provides faster deployment, better reliability, and ongoing improvements—all at a fraction of the cost of building from scratch.
+              If you have a development team and want complete control, building your own can work. But for 95% of businesses, using a proven platform like Boltcall provides faster deployment, better reliability, and ongoing improvements—all at a fraction of the cost of building from scratch. Explore our <Link to="/features/ai-receptionist" className="text-blue-600 hover:text-blue-700 underline">AI receptionist features</Link> or read <Link to="/blog/is-ai-receptionist-worth-it" className="text-blue-600 hover:text-blue-700 underline">our cost-benefit analysis</Link> to see if it makes sense for your business.
             </p>
           </div>
         </motion.div>
@@ -673,8 +677,18 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Related Reading */}
+        <div className="bg-gray-50 rounded-xl p-6 mb-12">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Related Reading</h3>
+          <ul className="space-y-2 text-gray-700">
+            <li><Link to="/blog/top-10-ai-receptionist-agencies" className="text-blue-600 hover:text-blue-700 underline">Top 10 AI Receptionist Agencies Compared</Link></li>
+            <li><Link to="/pricing" className="text-blue-600 hover:text-blue-700 underline">Boltcall Pricing Plans</Link></li>
+            <li><Link to="/blog/speed-to-lead-local-business" className="text-blue-600 hover:text-blue-700 underline">Speed to Lead: Why Response Time Matters</Link></li>
+          </ul>
+        </div>
           </article>
-          
+
           {/* Table of Contents */}
           <TableOfContents headings={headings} />
         </div>

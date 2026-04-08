@@ -262,6 +262,12 @@ const FAQAIReceptionistDentist: React.FC = () => {
 
   const relatedResources = [
     {
+      href: '/blog/ai-phone-answering-dentists',
+      title: 'AI Phone Answering for Dentists: Complete Guide',
+      description: 'Step-by-step guide to setting up AI phone answering at your dental practice.',
+      icon: Phone,
+    },
+    {
       href: '/tools/dentist-chair-calculator',
       title: 'Dentist Chair Revenue Calculator',
       description: 'Calculate how much revenue your dental practice loses to empty chairs from missed calls and no-shows.',
@@ -274,16 +280,22 @@ const FAQAIReceptionistDentist: React.FC = () => {
       icon: Zap,
     },
     {
-      href: '/features/automated-reminders',
-      title: 'Automated Appointment Reminders',
-      description: 'Reduce no-shows by 30-50% with smart text message reminders sent automatically.',
-      icon: Bell,
+      href: '/blog/ai-receptionist-plumber-faq',
+      title: 'AI Receptionist FAQ for Plumbers',
+      description: 'See how plumbing companies use AI receptionists for emergency dispatch and after-hours calls.',
+      icon: Users,
     },
     {
-      href: '/pricing',
-      title: 'See Pricing Plans',
-      description: 'Transparent pricing for every dental practice size. No per-call fees, no surprises.',
+      href: '/blog/ai-receptionist-medspa-faq',
+      title: 'AI Receptionist FAQ for Med Spas',
+      description: 'Learn how med spas use AI to handle bookings, consultations, and rebooking automatically.',
       icon: Star,
+    },
+    {
+      href: '/blog/ai-receptionist-vet-faq',
+      title: 'AI Receptionist FAQ for Vet Clinics',
+      description: 'Discover how veterinary clinics use AI to triage urgent pet care calls 24/7.',
+      icon: Heart,
     },
   ];
 
