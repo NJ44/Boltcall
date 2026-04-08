@@ -369,6 +369,7 @@ const SEOAuditPDF: React.FC = () => {
         </motion.div>
       </section>
 
+      <FAQ />
       <Footer />
     </div>
   );
