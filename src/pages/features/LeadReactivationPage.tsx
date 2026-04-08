@@ -5,6 +5,8 @@ import { RotateCw, TrendingUp, DollarSign, CheckCircle, ArrowRight } from 'lucid
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
@@ -13,6 +15,17 @@ const LeadReactivationPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Lead Reactivation System for Cold Leads | Boltcall';
     updateMetaDescription('Reactivate cold leads automatically. Send personalized follow-ups, re-engage old prospects, convert more customers. Learn more.');
+  }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'How old can leads be for reactivation?', answer: 'Leads can be reactivated regardless of age. However, the approach may differ. Recent leads (1-3 months old) might need gentle re-engagement, while older leads (6+ months) might need more aggressive campaigns or different messaging. The system can adapt strategies based on lead age and history.' },
+        { question: 'What if leads don\'t want to be contacted?', answer: 'The system respects opt-outs immediately. If a lead unsubscribes or requests no further contact, they\'re removed from reactivation campaigns. It\'s important to maintain positive relationships and respect preferences, even with cold leads.' },
+        { question: 'How long should reactivation campaigns run?', answer: 'Reactivation campaigns typically run for 30-90 days with multiple touchpoints. However, the system can continue nurturing leads indefinitely with periodic check-ins if they don\'t convert. The key is balancing persistence with respect for the lead\'s preferences.' },
+        { question: 'Can I reactivate leads from different sources?', answer: 'Yes. You can upload leads from any source: CRM, email lists, spreadsheets, previous campaigns, or any other source. The system can handle leads from multiple sources and create unified reactivation campaigns or separate campaigns for different sources.' },
+      ]),
+    ]);
   }, []);
   return (
     <div className="min-h-screen bg-white">
