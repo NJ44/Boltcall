@@ -77,6 +77,7 @@ const HelpCenter = React.lazy(() => import('../pages/HelpCenter'));
 const Privacy = React.lazy(() => import('../pages/Privacy'));
 const Terms = React.lazy(() => import('../pages/Terms'));
 const Contact = React.lazy(() => import('../pages/Contact'));
+const BookCall = React.lazy(() => import('../pages/BookCall'));
 const About = React.lazy(() => import('../pages/About'));
 const Setup = React.lazy(() => import('../pages/Setup'));
 const SetupLoading = React.lazy(() => import('../pages/SetupLoading'));
@@ -394,6 +395,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/book-a-call" element={<BookCall />} />
         <Route path="/about" element={<About />} />
         <Route path="/partners" element={<Partners />} />
 

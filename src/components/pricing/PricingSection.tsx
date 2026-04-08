@@ -100,6 +100,10 @@ const PricingSection: React.FC = () => {
     navigate('/signup');
   };
 
+  const handleContactUs = () => {
+    navigate('/book-a-call');
+  };
+
   return (
     <section className="py-16 bg-gradient-to-b from-white to-light-blue">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -246,6 +250,16 @@ const PricingSection: React.FC = () => {
               >
                 {plan.ctaLabel}
               </Button>
+              {plan.title === 'Ultimate' && (
+                <Button
+                  onClick={handleContactUs}
+                  variant="outline"
+                  size="lg"
+                  className="w-full mt-3"
+                >
+                  Book a Call
+                </Button>
+              )}
               <p className="text-xs text-gray-500 mt-2">No credit card required for trial</p>
             </motion.div>
           ))}

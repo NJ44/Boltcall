@@ -18,8 +18,10 @@ import {
   Code,
   Database,
   Bell,
-  Globe
+  Globe,
+  ArrowUpRight
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Documentation: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -200,6 +202,28 @@ const Documentation: React.FC = () => {
             'Configure appointment booking',
             'Test conversation flow'
           ]
+        },
+        {
+          title: 'Reminders',
+          description: 'Automate appointment reminders and reduce no-shows',
+          steps: [
+            'Connect your calendar and booking source',
+            'Set reminder timing rules (24h, 2h, same-day)',
+            'Create SMS and email reminder templates',
+            'Enable confirmation and reschedule links',
+            'Track reminder delivery and response rates'
+          ]
+        },
+        {
+          title: 'Reputation Manager',
+          description: 'Collect reviews and protect your online reputation',
+          steps: [
+            'Enable post-appointment review requests',
+            'Set positive-review routing to Google profile',
+            'Add private feedback flow for low ratings',
+            'Automate follow-ups for unanswered requests',
+            'Monitor review performance in dashboard reports'
+          ]
         }
       ]
     },
@@ -333,10 +357,10 @@ const Documentation: React.FC = () => {
   ];
 
   const quickLinks = [
-    { title: 'API Documentation', icon: <Code className="w-4 h-4" />, href: '#' },
-    { title: 'Webhook Guide', icon: <Globe className="w-4 h-4" />, href: '#' },
-    { title: 'Voice Samples', icon: <Phone className="w-4 h-4" />, href: '#' },
-    { title: 'Integration Status', icon: <Database className="w-4 h-4" />, href: '#' }
+    { title: 'API Documentation', icon: <Code className="w-4 h-4" />, href: '/api-documentation' },
+    { title: 'Webhook Guide', icon: <Globe className="w-4 h-4" />, href: '/documentation#integrations' },
+    { title: 'Voice Samples', icon: <Phone className="w-4 h-4" />, href: '/documentation#ai-features' },
+    { title: 'Integration Status', icon: <Database className="w-4 h-4" />, href: '/documentation#dashboard' }
   ];
 
   return (
@@ -344,17 +368,32 @@ const Documentation: React.FC = () => {
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              <img
+                src="/boltcall_full_logo.png"
+                alt="Boltcall logo"
+                className="h-10 w-auto sm:h-12"
+              />
+              <div>
               <h1 className="text-3xl font-bold text-gray-900">Documentation</h1>
               <p className="text-gray-600 mt-2">Complete guide to setting up and using BoltCall</p>
               <p className="text-sm text-gray-400 mt-1">Written by the Boltcall Team &middot; Last updated April 8, 2026</p>
+              </div>
             </div>
             <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <a
+                href="/documentation#print"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.print();
+                }}
+                className="group flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
                 <FileText className="w-4 h-4" />
                 Download PDF
-              </button>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
             </div>
           </div>
         </div>
@@ -372,11 +411,11 @@ const Documentation: React.FC = () => {
                     <a
                       key={index}
                       href={link.href}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700"
+                      className="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700"
                     >
                       {link.icon}
                       <span className="text-sm">{link.title}</span>
-                      <ExternalLink className="w-3 h-3 ml-auto" />
+                      <ExternalLink className="w-3 h-3 ml-auto transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </a>
                   ))}
                 </div>
@@ -390,6 +429,7 @@ const Documentation: React.FC = () => {
               {sections.map((section, sectionIndex) => (
                 <motion.div
                   key={section.id}
+                  id={section.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: sectionIndex * 0.1 }}
@@ -505,14 +545,22 @@ const Documentation: React.FC = () => {
                     Can't find what you're looking for? Our support team is here to help you get the most out of BoltCall.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                    <Link
+                      to="/contact"
+                      className="group flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                    >
                       <MessageSquare className="w-4 h-4" />
                       Contact Support
-                    </button>
-                    <button className="flex items-center gap-2 px-6 py-3 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors font-medium">
+                      <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </Link>
+                    <Link
+                      to="/book-a-call"
+                      className="group flex items-center gap-2 px-6 py-3 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors font-medium"
+                    >
                       <Calendar className="w-4 h-4" />
                       Schedule Demo
-                    </button>
+                      <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </Link>
                   </div>
                 </div>
               </div>
