@@ -7,6 +7,8 @@ import { PromptBox } from '../components/ui/chatgpt-prompt-input';
 import { cn } from '../lib/utils';
 import { HomeLightning } from '../components/HomeLightning';
 import { FeedbackWidget } from '../components/ui/feedback-widget';
+import FAQ from '../components/FAQ';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 interface Message {
   id: string;
