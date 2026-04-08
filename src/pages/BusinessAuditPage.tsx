@@ -5,6 +5,8 @@ import { Search, Globe, Briefcase, AlertCircle, CheckCircle, Loader, Mail, X } f
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import FAQ from '../components/FAQ';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 const BusinessAuditPage: React.FC = () => {
     const [url, setUrl] = useState('');
