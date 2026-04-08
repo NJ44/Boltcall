@@ -146,7 +146,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
               <span className="text-blue-600">Boltcall vs Calomation</span>: Two AI Receptionist Platforms Compared
             </h1>
             <p className="text-lg text-gray-600">
-              Updated March 2026 &middot; 8 min read
+              By the Boltcall Team &middot; Updated March 2026 &middot; 8 min read
             </p>
           </motion.div>
         </div>
