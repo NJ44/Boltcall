@@ -11,8 +11,22 @@ import GiveawayBar from '../../components/GiveawayBar';
 const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'CRM Instant Lead Reply vs Boltcall Comparison';
-    updateMetaDescription('CRM instant lead reply vs Boltcall. Compare features, pricing, and see which solution works better for your business. View now.');
+    document.title = 'CRM Instant Lead Reply vs Boltcall Comparison (2026)';
+    updateMetaDescription('CRM instant lead reply vs Boltcall. Compare features, speed, pricing, and lead capture. See which solution wins for your business.');
+
+    const bcSchema = document.createElement('script');
+    bcSchema.type = 'application/ld+json';
+    bcSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://boltcall.org/comparisons' },
+        { '@type': 'ListItem', position: 3, name: 'CRM vs Boltcall', item: 'https://boltcall.org/comparisons/crm-vs-boltcall' },
+      ],
+    });
+    document.head.appendChild(bcSchema);
+    return () => { document.head.removeChild(bcSchema); };
   }, []);
 
   return (
