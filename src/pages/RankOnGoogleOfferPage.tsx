@@ -86,6 +86,7 @@ const RankOnGoogleOfferPage = () => {
                     </div>
                 </div>
             </div>
+            <FAQ />
             <Footer />
         </div>
     );
