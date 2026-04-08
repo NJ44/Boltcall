@@ -156,6 +156,7 @@ const Strike: React.FC = () => {
           {messages.length === 0 && (
             <section className="pt-20 md:pt-40 pb-12 px-4 sm:px-6 lg:px-8 relative" style={{ position: 'relative', zIndex: 100 }}>
               <div className="max-w-5xl mx-auto relative">
+                <Breadcrumbs />
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
