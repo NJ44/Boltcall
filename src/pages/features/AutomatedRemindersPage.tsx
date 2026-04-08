@@ -5,6 +5,8 @@ import { Bell, Calendar, TrendingDown, CheckCircle, ArrowRight } from 'lucide-re
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
@@ -13,6 +15,17 @@ const AutomatedRemindersPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Automated Appointment Reminders System | Boltcall';
     updateMetaDescription('Automated appointment reminders reduce no-shows. Send SMS and email reminders automatically before appointments. Start now.');
+  }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'Can I customize reminder messages?', answer: 'Yes. You can customize message templates, tone, content, and timing. You can create different messages for different appointment types, services, or customer segments. The system allows full customization while maintaining professional standards.' },
+        { question: 'What if a customer doesn\'t want reminders?', answer: 'Customers can opt out of reminders at any time. The system respects preferences and won\'t send reminders to customers who have opted out. You can also configure opt-out options in your reminder settings.' },
+        { question: 'How do customers reschedule via reminders?', answer: 'Reminder messages include links or instructions for rescheduling. Customers can click a link to see available times and select a new appointment, or they can reply to the text/email with their preferred new time. The AI handles the rescheduling automatically.' },
+        { question: 'Can reminders include special instructions?', answer: 'Absolutely. Reminders can include preparation instructions, what to bring, directions, parking information, or any other relevant details. You can customize these instructions per appointment type or service.' },
+      ]),
+    ]);
   }, []);
   return (
     <div className="min-h-screen bg-white">
