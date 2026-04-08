@@ -46,20 +46,29 @@ const AIAgentComparison: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-left mb-12"
           >
+            <Breadcrumbs items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: 'AI Agent Comparison', href: '/ai-agent-comparison' },
+            ]} />
+
             <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
               <TrendingUp className="w-4 h-4" />
               <span className="font-semibold">Comparison Guide</span>
             </div>
-            
+
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               AI Agent Comparison: <span className="text-blue-600">Boltcall</span> vs. Traditional Call Centers
             </h1>
-            
-            <div className="flex items-center gap-6 text-sm text-gray-600">
+
+            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+              <span>By the Boltcall Team</span>
+              <span>&middot;</span>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                <span>February 10, 2025</span>
+                <span>Updated April 2026</span>
               </div>
+              <span>&middot;</span>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
                 <span>8 min read</span>
