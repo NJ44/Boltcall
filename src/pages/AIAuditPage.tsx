@@ -584,6 +584,7 @@ const AIAuditPage: React.FC = () => {
         </div>
       </section>
 
+      <FAQ />
       <Footer />
     </div>
   );
