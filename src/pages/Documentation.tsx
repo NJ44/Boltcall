@@ -457,6 +457,37 @@ const Documentation: React.FC = () => {
               ))}
             </div>
 
+            {/* TL;DR Summary */}
+            <div className="mt-12 bg-blue-50 border border-blue-200 rounded-xl p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-2">TL;DR</h2>
+              <p className="text-gray-700">
+                Boltcall is an AI receptionist platform for local businesses. Set up your account in minutes, connect your phone system (Twilio, Vonage), sync your calendar (Google Calendar, Outlook), configure your AI voice and conversation flow, and start capturing leads 24/7. Boltcall handles calls, SMS, WhatsApp, appointment booking, lead qualification, and automated follow-ups — all from one dashboard.
+              </p>
+            </div>
+
+            {/* FAQ Section */}
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+              <div className="space-y-4">
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h3 className="font-semibold text-gray-900 mb-2">How do I integrate Boltcall with my website?</h3>
+                  <p className="text-gray-600 text-sm">Connect your phone number, set up your business info, configure your AI assistant, and test the setup. Boltcall integrates with Twilio, Vonage, Google Calendar, Outlook, and WhatsApp.</p>
+                </div>
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h3 className="font-semibold text-gray-900 mb-2">What integrations does Boltcall support?</h3>
+                  <p className="text-gray-600 text-sm">Boltcall supports phone system integration (Twilio, Vonage), calendar sync (Google Calendar, Outlook), SMS messaging, and WhatsApp Business API.</p>
+                </div>
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h3 className="font-semibold text-gray-900 mb-2">How do I customize the AI receptionist voice?</h3>
+                  <p className="text-gray-600 text-sm">Select from available voices, preview samples, configure speaking rate and tone, set up custom greetings, and test voice quality — all from the dashboard.</p>
+                </div>
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h3 className="font-semibold text-gray-900 mb-2">What AI features are available?</h3>
+                  <p className="text-gray-600 text-sm">AI receptionist setup, voice customization, conversation intelligence with intent recognition, conversation branching, lead qualification, and automatic appointment booking.</p>
+                </div>
+              </div>
+            </div>
+
             {/* Support Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
