@@ -5,6 +5,8 @@ import { TrendingUp, Globe, AlertCircle, CheckCircle, Loader, Mail, X } from 'lu
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import FAQ from '../components/FAQ';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 const ConversionRateOptimizer: React.FC = () => {
   const [url, setUrl] = useState('');
