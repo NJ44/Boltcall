@@ -31,9 +31,9 @@ const SEOAuditPDF: React.FC = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    document.title = 'Free SEO & AEO Audit Report | Boltcall';
+    document.title = 'Free SEO & AEO Audit Tool - Get Your PDF Report | Boltcall';
     updateMetaDescription(
-      'Get a free branded PDF report analyzing your website SEO and AEO (Answer Engine Optimization). Detailed scores, findings, and action plan.'
+      'Enter your URL for a free SEO and AEO (AI Engine Optimization) audit. Get a branded PDF report with scores, keyword rankings, and an action plan.'
     );
   }, []);
 
