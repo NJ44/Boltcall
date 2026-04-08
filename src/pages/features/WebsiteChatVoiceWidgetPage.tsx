@@ -5,6 +5,8 @@ import { MessageCircle, Globe, Users, CheckCircle, ArrowRight } from 'lucide-rea
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
@@ -13,6 +15,17 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Website Chat & Voice Widget for Customer Engagement';
     updateMetaDescription('Website chat and voice widget engages visitors 24/7. Answer questions, book appointments directly from your site. Start now.');
+  }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'Will it slow down my website?', answer: 'No. The widget is lightweight and loads asynchronously, so it doesn\'t impact your website\'s speed or performance. It\'s designed to be fast and efficient, ensuring your site remains fast while providing enhanced functionality.' },
+        { question: 'Can visitors still contact me directly?', answer: 'Yes. The widget can transfer conversations to human agents when needed, or visitors can use your existing contact methods. The widget enhances your communication options without replacing them.' },
+        { question: 'Does it work on mobile devices?', answer: 'Yes. The widget is fully responsive and works perfectly on mobile devices, tablets, and desktops. It adapts to different screen sizes and provides an optimal experience on all devices.' },
+        { question: 'Can I see conversation transcripts?', answer: 'Yes. All conversations are logged and accessible in your dashboard. You can review transcripts, analyze visitor questions, and use insights to improve your website content and customer service.' },
+      ]),
+    ]);
   }, []);
   return (
     <div className="min-h-screen bg-white">
