@@ -4,6 +4,8 @@ import { ThreeDButton } from "@/components/ui/ThreeDButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GiveawayBar from "../components/GiveawayBar";
+import FAQ from "../components/FAQ";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const milestonesData = [
     {
