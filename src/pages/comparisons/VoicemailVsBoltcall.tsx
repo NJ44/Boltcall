@@ -11,8 +11,22 @@ import GiveawayBar from '../../components/GiveawayBar';
 const VoicemailVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Voicemail vs Boltcall AI Receptionist Comparison';
-    updateMetaDescription('Voicemail vs Boltcall AI receptionist. Compare features and see why AI answers calls better than voicemail. Discover more.');
+    document.title = 'Voicemail vs Boltcall AI Receptionist Comparison (2026)';
+    updateMetaDescription('Voicemail vs Boltcall AI receptionist. Compare features, response time, and lead capture. See why AI answers calls better than voicemail.');
+
+    const bcSchema = document.createElement('script');
+    bcSchema.type = 'application/ld+json';
+    bcSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://boltcall.org/comparisons' },
+        { '@type': 'ListItem', position: 3, name: 'Voicemail vs Boltcall', item: 'https://boltcall.org/comparisons/voicemail-vs-boltcall' },
+      ],
+    });
+    document.head.appendChild(bcSchema);
+    return () => { document.head.removeChild(bcSchema); };
   }, []);
 
   return (
