@@ -11,8 +11,22 @@ import GiveawayBar from '../../components/GiveawayBar';
 const ReceptionistVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Human Receptionist vs Boltcall AI Receptionist';
-    updateMetaDescription('Human receptionist vs Boltcall AI receptionist. Compare costs, availability, and capabilities. See the differences. Learn more.');
+    document.title = 'Human Receptionist vs Boltcall AI Receptionist (2026)';
+    updateMetaDescription('Human receptionist vs Boltcall AI receptionist. Compare costs, availability, response time, and lead capture capabilities.');
+
+    const bcSchema = document.createElement('script');
+    bcSchema.type = 'application/ld+json';
+    bcSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://boltcall.org/comparisons' },
+        { '@type': 'ListItem', position: 3, name: 'Receptionist vs Boltcall', item: 'https://boltcall.org/comparisons/receptionist-vs-boltcall' },
+      ],
+    });
+    document.head.appendChild(bcSchema);
+    return () => { document.head.removeChild(bcSchema); };
   }, []);
 
   return (
