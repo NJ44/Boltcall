@@ -55,6 +55,7 @@ const InstantFormReplyPage: React.FC = () => {
               Automatically respond to every form submission within seconds, qualify leads, and book appointments—all without manual work.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
