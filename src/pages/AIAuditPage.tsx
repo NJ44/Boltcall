@@ -5,6 +5,8 @@ import { Loader2, CheckCircle2, Brain, Globe, Phone, Settings, DollarSign } from
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import FAQ from '../components/FAQ';
+import Breadcrumbs from '../components/Breadcrumbs';
 import Button from '../components/ui/Button';
 import DropdownComponent from '../components/ui/dropdown-01';
 import { useNavigate } from 'react-router-dom';
@@ -233,6 +235,7 @@ const AIAuditPage: React.FC = () => {
         <Header />
         <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
+            <Breadcrumbs />
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div className="inline-block bg-blue-50 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
                 Free — No credit card required
@@ -269,6 +272,7 @@ const AIAuditPage: React.FC = () => {
             </motion.div>
           </div>
         </section>
+        <FAQ />
         <Footer />
       </div>
     );
@@ -580,6 +584,7 @@ const AIAuditPage: React.FC = () => {
         </div>
       </section>
 
+      <FAQ />
       <Footer />
     </div>
   );

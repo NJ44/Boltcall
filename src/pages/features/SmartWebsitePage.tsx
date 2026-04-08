@@ -5,6 +5,8 @@ import { Sparkles, Globe, Zap, CheckCircle, ArrowRight, TrendingUp } from 'lucid
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
@@ -14,6 +16,17 @@ const SmartWebsitePage: React.FC = () => {
     document.title = 'Smart Website Optimization & AI Lead Generation';
     updateMetaDescription('Smart website optimization improves speed and conversions automatically. AI optimizes performance, enhances UX. Get started now.');
   }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'Will optimizations break my website?', answer: 'No. All optimizations are tested thoroughly before implementation. The system creates backups and can roll back changes if needed. Optimizations are implemented gradually and monitored to ensure they improve performance without causing issues.' },
+        { question: 'How long until I see results?', answer: 'Some improvements are immediate (like page speed optimizations), while others take time to show results (like SEO improvements or A/B test outcomes). Typically, you\'ll see measurable improvements within 2-4 weeks, with continued improvements over time as the system learns and optimizes.' },
+        { question: 'Can I control what gets optimized?', answer: 'Yes. You can approve or reject optimization suggestions, set boundaries for what can be changed, and maintain control over critical elements. The system provides transparency and gives you final approval on significant changes.' },
+        { question: 'Does it work with any website platform?', answer: 'Yes. Smart Website optimization works with any website platform: WordPress, Shopify, Squarespace, custom HTML, or any other platform. The optimizations are implemented at the code and content level, making them platform-agnostic.' },
+      ]),
+    ]);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -21,7 +34,9 @@ const SmartWebsitePage: React.FC = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
+          <Breadcrumbs />
+          <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,6 +56,7 @@ const SmartWebsitePage: React.FC = () => {
               enhances user experience, and converts more visitors into customers.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 

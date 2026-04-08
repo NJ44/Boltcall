@@ -5,6 +5,8 @@ import { TrendingUp, Globe, AlertCircle, CheckCircle, Loader, Mail, X } from 'lu
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import FAQ from '../components/FAQ';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 const ConversionRateOptimizer: React.FC = () => {
   const [url, setUrl] = useState('');
@@ -116,6 +118,7 @@ const ConversionRateOptimizer: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-4 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -259,6 +262,7 @@ const ConversionRateOptimizer: React.FC = () => {
         </div>
       )}
 
+      <FAQ />
       <Footer />
     </div>
   );

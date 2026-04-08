@@ -5,6 +5,8 @@ import { RefreshCw, TrendingUp, Target, CheckCircle, ArrowRight } from 'lucide-r
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
@@ -14,6 +16,17 @@ const AIFollowUpSystemPage: React.FC = () => {
     document.title = 'AI Follow-Up System for Lead Nurturing | Boltcall';
     updateMetaDescription('AI follow-up system nurtures leads automatically. Send personalized messages, follow up with prospects, convert more. Learn more.');
   }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'How many follow-ups should I send?', answer: 'Research shows that 80% of sales require 5 follow-ups, yet most businesses give up after 2. The AI Follow-Up System can continue nurturing leads for as long as needed, adapting the frequency and content based on engagement levels. The system will automatically reduce frequency if a lead isn\'t engaging and increase it if they show interest.' },
+        { question: 'Will leads know it\'s automated?', answer: 'The messages are designed to feel natural and human-like. However, you can choose to be transparent about using AI assistance or present it as your team. Many businesses find that being transparent builds trust, while others prefer a more human presentation. The choice is yours.' },
+        { question: 'Can I customize follow-up sequences?', answer: 'Yes. You can create custom follow-up sequences for different lead types, industries, or stages in the buyer\'s journey. The system allows full customization while providing AI-powered optimization suggestions based on best practices and your results.' },
+        { question: 'What happens when a lead responds?', answer: 'When a lead responds or shows buying signals, the system can automatically notify your sales team, schedule a call, move the lead to a different nurturing track, or continue the conversation via AI. You configure how different types of responses are handled based on your sales process.' },
+      ]),
+    ]);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -21,7 +34,9 @@ const AIFollowUpSystemPage: React.FC = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
+          <Breadcrumbs />
+          <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,6 +56,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               and moving prospects through your sales funnel.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 

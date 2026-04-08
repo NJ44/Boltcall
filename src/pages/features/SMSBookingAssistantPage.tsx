@@ -5,6 +5,8 @@ import { MessageSquare, Users, Phone, Calendar } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 
 const SMSBookingAssistantPage: React.FC = () => {
@@ -13,6 +15,17 @@ const SMSBookingAssistantPage: React.FC = () => {
     document.title = 'SMS Booking Assistant for Appointments | Boltcall';
     updateMetaDescription('SMS booking assistant handles appointment scheduling via text. Customers book appointments by texting your business. Try free.');
   }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'Do customers need to download an app?', answer: 'No. SMS booking works with any phone that can send text messages. Customers simply text your business number—no apps, accounts, or downloads required. This makes it accessible to everyone, regardless of their technical comfort level.' },
+        { question: 'What if a customer wants to speak to someone?', answer: 'The AI can transfer customers to a phone call or schedule a callback if they prefer to speak with a human. The system is flexible and can adapt to customer preferences, ensuring everyone gets the service they want.' },
+        { question: 'Can it handle complex scheduling rules?', answer: 'Yes. The system can handle buffer times between appointments, different appointment durations, multiple service providers, recurring appointments, and more. You can configure complex scheduling rules to match your business needs.' },
+        { question: 'How does it prevent double-booking?', answer: 'The system checks your calendar in real-time before confirming any appointment. It respects existing appointments, blocked time, and business hours, ensuring every booking is valid and conflict-free. If a time slot becomes unavailable between when it\'s offered and when it\'s confirmed, the system will notify the customer and suggest alternatives.' },
+      ]),
+    ]);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -20,7 +33,9 @@ const SMSBookingAssistantPage: React.FC = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
+          <Breadcrumbs />
+          <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,6 +55,7 @@ const SMSBookingAssistantPage: React.FC = () => {
               Your SMS Booking Assistant handles everything automatically.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 

@@ -4,6 +4,8 @@ import { ThreeDButton } from "@/components/ui/ThreeDButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GiveawayBar from "../components/GiveawayBar";
+import FAQ from "../components/FAQ";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const milestonesData = [
     {
@@ -44,6 +46,7 @@ const RankOnGoogleOfferPage = () => {
             {/* Container for the Hero Content */}
             <div className="flex-grow pt-10 md:pt-16">
                 <div className="container mx-auto px-4 py-8 md:py-12">
+                    <Breadcrumbs />
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Left Column: Text content */}
                         <div className="flex flex-col text-left space-y-6">
@@ -83,6 +86,7 @@ const RankOnGoogleOfferPage = () => {
                     </div>
                 </div>
             </div>
+            <FAQ />
             <Footer />
         </div>
     );

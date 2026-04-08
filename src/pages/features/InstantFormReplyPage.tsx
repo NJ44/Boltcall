@@ -5,6 +5,8 @@ import { FileText, Users, Phone, Calendar } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GiveawayBar from '../../components/GiveawayBar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { createFAQSchema, injectSchemas } from '../../lib/schema';
 import { Link } from 'react-router-dom';
 import { WavePath } from '../../components/ui/wave-path';
 
@@ -14,6 +16,17 @@ const InstantFormReplyPage: React.FC = () => {
     document.title = 'Instant Lead Response System for Small Businesses';
     updateMetaDescription('Automatically respond to form submissions in seconds. Qualify leads instantly, book appointments from forms and ads. Get started now.');
   }, []);
+
+  useEffect(() => {
+    return injectSchemas([
+      createFAQSchema([
+        { question: 'Will customers know they\'re talking to AI?', answer: 'The AI can be transparent about being an AI assistant, or you can configure it to present as a team member. Many businesses find that being transparent builds trust, while others prefer a more human-like presentation. The choice is yours, and you can change it at any time.' },
+        { question: 'What if a customer needs to speak to a human?', answer: 'The AI can seamlessly transfer conversations to human team members when needed. It can also schedule callbacks, take detailed messages, or escalate urgent matters. The system ensures customers always get the help they need, whether from AI or human agents.' },
+        { question: 'Can I customize the responses?', answer: 'Absolutely. You can customize response templates, tone, messaging, and even create different responses for different types of forms or inquiries. The system learns from your preferences and can be trained on your specific business language and terminology.' },
+        { question: 'How quickly does it respond?', answer: 'Responses are sent within 5-10 seconds of form submission. This instant response is crucial for maintaining customer engagement and maximizing conversion rates. The speed is consistent regardless of time of day or volume of submissions.' },
+      ]),
+    ]);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -21,7 +34,9 @@ const InstantFormReplyPage: React.FC = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
+          <Breadcrumbs />
+          <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,6 +55,7 @@ const InstantFormReplyPage: React.FC = () => {
               Automatically respond to every form submission within seconds, qualify leads, and book appointments—all without manual work.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
