@@ -56,6 +56,7 @@ const LeadReactivationPage: React.FC = () => {
               and bring back customers who didn't convert the first time.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
