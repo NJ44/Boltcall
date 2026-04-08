@@ -445,7 +445,7 @@ const Header: React.FC = () => {
                     return (
                       <div
                         key={item.href}
-                        className="relative group"
+                        className="relative"
                       >
                         <Link
                           to={item.href}
@@ -453,7 +453,7 @@ const Header: React.FC = () => {
                             setIsFeaturesOpen(false);
                             setIsMenuOpen(false);
                           }}
-                          className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${isOverBlueBackground
+                          className={`group flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${isOverBlueBackground
                             ? 'text-gray-300 hover:text-white'
                             : 'text-gray-700 hover:text-gray-900'
                             }`}
@@ -528,7 +528,7 @@ const Header: React.FC = () => {
                       return (
                         <div
                           key={item.href}
-                          className="relative group"
+                          className="relative"
                         >
                           <Link
                             to={item.href}
@@ -536,7 +536,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                            className={`group flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
                               ? 'text-gray-300 hover:text-white'
                               : 'text-gray-700 hover:text-gray-900'
                               }`}
@@ -570,7 +570,7 @@ const Header: React.FC = () => {
                       return (
                         <div
                           key={item.href}
-                          className="relative group"
+                          className="relative"
                         >
                           <Link
                             to={item.href}
@@ -578,7 +578,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                            className={`group flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${isOverBlueBackground
                               ? 'text-gray-300 hover:text-white'
                               : 'text-gray-700 hover:text-gray-900'
                               }`}

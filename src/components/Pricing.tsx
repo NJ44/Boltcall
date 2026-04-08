@@ -40,14 +40,14 @@ const Pricing: React.FC = () => {
     {
       name: "Starter",
       level: "starter",
-      price: { monthly: 99, yearly: 948 },
+      price: { monthly: 549, yearly: 4941 },
       description: "Get started with lead management.",
       tokens: "1,000 tokens/mo",
     },
     {
       name: "Pro",
       level: "pro",
-      price: { monthly: 179, yearly: 1716 },
+      price: { monthly: 897, yearly: 8073 },
       popular: true,
       description: "Everything in Starter plus:",
       tokens: "3,000 tokens/mo",
@@ -55,7 +55,7 @@ const Pricing: React.FC = () => {
     {
       name: "Ultimate",
       level: "all",
-      price: { monthly: 249, yearly: 2388 },
+      price: { monthly: 4997, yearly: 44973 },
       description: "Everything in Pro plus:",
       tokens: "10,000 tokens/mo",
     },

@@ -14,10 +14,10 @@ const PricingSection: React.FC = () => {
     {
       title: 'Starter',
       subtitle: 'AI Lead Catcher',
-      priceMonthlyUsd: 659,
-      priceAnnualUsd: 5931,
-      priceMonthlyIls: 2470,
-      priceAnnualIls: 22230,
+      priceMonthlyUsd: 549,
+      priceAnnualUsd: 4941,
+      priceMonthlyIls: 2060,
+      priceAnnualIls: 18540,
       features: [
         '1 AI agent — SMS, email & chat in one setup',
         'Qualifies & nurtures leads automatically',
@@ -33,10 +33,10 @@ const PricingSection: React.FC = () => {
     {
       title: 'Pro',
       subtitle: 'AI Front Desk',
-      priceMonthlyUsd: 977,
-      priceAnnualUsd: 8793,
-      priceMonthlyIls: 3660,
-      priceAnnualIls: 32940,
+      priceMonthlyUsd: 897,
+      priceAnnualUsd: 8073,
+      priceMonthlyIls: 3364,
+      priceAnnualIls: 30276,
       features: [
         'Everything in Starter',
         '3 AI agents — voice calls + outbound campaigns',
