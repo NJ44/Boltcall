@@ -56,6 +56,7 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
               captures leads, and books appointments 24/7.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
