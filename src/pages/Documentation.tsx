@@ -367,14 +367,12 @@ const Documentation: React.FC = () => {
                     )}
                   </button>
 
-                  {expandedSection === section.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="border-t border-gray-200"
-                    >
+                  {/* Always in DOM for SEO; visually hidden when collapsed */}
+                  <div
+                    className={`border-t border-gray-200 overflow-hidden transition-all duration-300 ${
+                      expandedSection === section.id ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
                       <div className="p-6 space-y-6">
                         {section.content.map((item, itemIndex) => (
                           <div key={itemIndex} className="border border-gray-200 rounded-lg p-6">
@@ -404,8 +402,7 @@ const Documentation: React.FC = () => {
                           </div>
                         ))}
                       </div>
-                    </motion.div>
-                  )}
+                  </div>
                 </motion.div>
               ))}
             </div>
