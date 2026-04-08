@@ -272,6 +272,7 @@ const AIAuditPage: React.FC = () => {
             </motion.div>
           </div>
         </section>
+        <FAQ />
         <Footer />
       </div>
     );
