@@ -56,6 +56,7 @@ const SmartWebsitePage: React.FC = () => {
               enhances user experience, and converts more visitors into customers.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
