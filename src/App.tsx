@@ -1,14 +1,20 @@
+import { lazy, Suspense } from 'react';
 import AppRoutes from './routes/AppRoutes';
-import PWAUpdatePrompt from './components/PWAUpdatePrompt';
-import OfflineBanner from './components/OfflineBanner';
 import { ToastProvider } from './contexts/ToastContext';
+
+const PWAUpdatePrompt = lazy(() => import('./components/PWAUpdatePrompt'));
+const OfflineBanner = lazy(() => import('./components/OfflineBanner'));
 
 function App() {
   return (
     <ToastProvider>
-      <OfflineBanner />
+      <Suspense fallback={null}>
+        <OfflineBanner />
+      </Suspense>
       <AppRoutes />
-      <PWAUpdatePrompt />
+      <Suspense fallback={null}>
+        <PWAUpdatePrompt />
+      </Suspense>
     </ToastProvider>
   );
 }

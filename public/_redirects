@@ -1,3 +1,7 @@
+http://boltcall.org/*      https://boltcall.org/:splat      301!
+http://www.boltcall.org/*  https://boltcall.org/:splat      301!
+https://www.boltcall.org/* https://boltcall.org/:splat      301!
+https://boltcall.netlify.app/* https://boltcall.org/:splat  301!
 /sitemap.xml  /sitemap.xml  200!
 /robots.txt   /robots.txt   200!
 /index.amp.html  /index.amp.html  200!

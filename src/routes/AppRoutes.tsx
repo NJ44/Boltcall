@@ -7,6 +7,7 @@ import { SubscriptionProvider } from '../contexts/SubscriptionContext';
 import { TokenProvider } from '../contexts/TokenContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import PlanGate from '../components/PlanGate';
+import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 
 // Wraps dashboard routes with subscription/token providers (only needed for authenticated pages)
 const DashboardProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -256,6 +257,7 @@ const NavigationWrapper: React.FC = () => {
 
   return (
     <Suspense fallback={<PageLoader />}>
+      <AeoGlobalIntro />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
