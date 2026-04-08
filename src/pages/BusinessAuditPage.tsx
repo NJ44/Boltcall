@@ -14,8 +14,8 @@ const BusinessAuditPage: React.FC = () => {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     useEffect(() => {
-        document.title = 'Free Business Audit Tool - Analyze Your Business Online Presence';
-        updateMetaDescription('Free Business audit tool analyzes your business online presence. Get detailed report on reputation, listings, and optimization opportunities. Try free.');
+        document.title = 'Free Business Audit Tool - Online Presence Analysis | Boltcall';
+        updateMetaDescription('Enter your website URL for a free business audit. Analyzes your online reputation, local listings, and website optimization opportunities.');
     }, []);
 
     const validateUrl = (urlString: string): boolean => {
