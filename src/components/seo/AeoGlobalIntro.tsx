@@ -16,6 +16,37 @@ const AeoGlobalIntro: React.FC = () => {
     '/partners',
   ]);
   const contentPrefixes = ['/blog/', '/comparisons/', '/compare/'];
+  const serviceSchemaRoutes = new Set([
+    '/strike-ai',
+    '/about',
+    '/features/lead-reactivation',
+    '/features/smart-website',
+    '/tools/vet-clinic-revenue-calculator',
+    '/features/automated-reminders',
+    '/contact',
+    '/conversion-rate-optimizer',
+    '/newsletter',
+    '/ai-visibility-check',
+    '/tools/chiropractor-patient-recovery-calculator',
+    '/tools/solar-quote-generator',
+    '/speed-test',
+    '/tools/dentist-chair-calculator',
+    '/business-audit',
+    '/pricing',
+    '/features/instant-form-reply',
+    '/tools/medspa-rebooking-calculator',
+    '/tools/auto-repair-missed-call-calculator',
+    '/tools/hvac-overflow-calculator',
+    '/features/sms-booking-assistant',
+    '/rank-on-google-offer',
+    '/features/ai-follow-up-system',
+    '/features/website-widget',
+    '/tools/solar-profit-calculator',
+    '/seo-audit',
+    '/tools/lawyer-intake-calculator',
+    '/ai-revenue-audit',
+    '/features/ai-receptionist',
+  ]);
 
   const isComparisonsRoute =
     path === '/comparisons' || path.startsWith('/comparisons/') || path.startsWith('/compare/');
@@ -31,6 +62,11 @@ const AeoGlobalIntro: React.FC = () => {
     : isBlogRoute
       ? "This article explains how Boltcall's AI receptionist helps local businesses improve response speed, reduce missed leads, and automate follow-ups with less manual overhead."
       : "This page explains how Boltcall helps local businesses automate customer communication, capture more leads, and improve response quality with AI-powered workflows.";
+  const lastUpdated = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   useEffect(() => {
     if (!shouldShow) {
@@ -102,6 +138,45 @@ const AeoGlobalIntro: React.FC = () => {
     };
   }, [path, shouldShow]);
 
+  useEffect(() => {
+    if (!serviceSchemaRoutes.has(path)) {
+      return;
+    }
+
+    const serviceSchemaId = 'aeo-global-service-schema';
+    const existing = document.getElementById(serviceSchemaId);
+    if (existing) existing.remove();
+
+    const pageTitle = document.title || 'Boltcall Service';
+    const metaDescription =
+      document
+        .querySelector('meta[name="description"]')
+        ?.getAttribute('content') ||
+      "Boltcall provides AI-powered business automation services for local businesses.";
+
+    const serviceSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: pageTitle,
+      description: metaDescription,
+      provider: {
+        '@type': 'Organization',
+        name: 'Boltcall',
+        url: 'https://boltcall.org',
+      },
+    };
+
+    const script = document.createElement('script');
+    script.id = serviceSchemaId;
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(serviceSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, [path]);
+
   if (!shouldShow) {
     return null;
   }
@@ -109,7 +184,13 @@ const AeoGlobalIntro: React.FC = () => {
   return (
     <section className="bg-white border-b border-gray-200">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {isComparisonsRoute && (
+          <p className="text-sm text-gray-800 mb-3">
+            This page compares Boltcall's AI receptionist with traditional call centers, human receptionists, and other answering services, highlighting the advantages and disadvantages of each option.
+          </p>
+        )}
         <p className="text-sm text-gray-600 mb-2">Written by the Boltcall Team</p>
+        <p className="text-xs text-gray-500 mb-3">Last updated: {lastUpdated}</p>
         <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-4">
           <p className="text-xs font-semibold text-blue-700 mb-1">TL;DR</p>
           <p className="text-sm text-gray-800">{tldrText}</p>
