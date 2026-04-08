@@ -262,6 +262,7 @@ const ConversionRateOptimizer: React.FC = () => {
         </div>
       )}
 
+      <FAQ />
       <Footer />
     </div>
   );
