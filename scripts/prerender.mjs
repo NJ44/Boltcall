@@ -138,6 +138,8 @@ const ROUTES = [
   '/tools/solar-quote-generator',
   '/tools/solar-sales-closer',
   '/tools/landscaping-seasonal-revenue-calculator',
+  // Newsletter
+  '/newsletter',
   // Legal
   '/privacy-policy',
   '/terms-of-service',
