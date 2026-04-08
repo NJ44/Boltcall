@@ -8,6 +8,8 @@ import {
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import FAQ from '../components/FAQ';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { useNavigate } from 'react-router-dom';
 
 // ── Loading step messages ──
