@@ -4,18 +4,41 @@ import { Link, useLocation } from 'react-router-dom';
 const AeoGlobalIntro: React.FC = () => {
   const location = useLocation();
   const path = location.pathname;
+  const titleOverrides: Record<string, string> = {
+    '/blog/ai-phone-answering-plumbers': 'AI Phone Answering for Plumbers | Boltcall',
+    '/tools/cleaning-service-booking-calculator': 'Cleaning Service Booking Calculator | Boltcall',
+    '/blog/ai-receptionist-vet-faq': 'AI Receptionist for Vet Clinics FAQ | Boltcall',
+    '/compare/boltcall-vs-calomation': 'Boltcall vs Calomation Comparison | Boltcall',
+    '/blog/speed-to-lead-local-business': 'Speed to Lead for Local Businesses | Boltcall',
+    '/compare/boltcall-vs-birdeye': 'Boltcall vs Birdeye Comparison | Boltcall',
+    '/blog/best-ai-receptionist-small-business': 'Best AI Receptionist for Small Business | Boltcall',
+    '/challenge': 'Break Our AI Challenge | Boltcall',
+    '/blog/ai-receptionist-hvac-faq': 'AI Receptionist for HVAC FAQ | Boltcall',
+    '/blog/ai-receptionist-dentist-faq': 'AI Receptionist for Dentists FAQ | Boltcall',
+    '/blog/best-after-hours-answering-service': 'Best After Hours Answering Service | Boltcall',
+    '/blog/ai-receptionist-lawyer-faq': 'AI Receptionist for Law Firms FAQ | Boltcall',
+    '/tools/landscaping-seasonal-revenue-calculator': 'Landscaping Revenue Calculator | Boltcall',
+    '/business-audit': 'Free Business Audit Tool | Boltcall',
+    '/compare/boltcall-vs-smith-ai': 'Boltcall vs Smith.ai Comparison | Boltcall',
+    '/tools/plumber-revenue-calculator': 'Plumber Revenue Calculator | Boltcall',
+    '/blog/ai-receptionist-for-plumbers': 'AI Receptionist for Plumbers Guide | Boltcall',
+    '/blog/ai-chatbot-vs-live-chat-phone-comparison': 'AI Chatbot vs Live Chat vs Phone | Boltcall',
+    '/blog/missed-calls-statistics-local-business-2026': 'Missed Calls Statistics 2026 | Boltcall',
+    '/blog/ai-receptionist-worth-it-roi': 'Is AI Receptionist Worth It? ROI | Boltcall',
+    '/tools/insurance-lead-response-scorecard': 'Insurance Lead Response Scorecard | Boltcall',
+    '/compare/boltcall-vs-podium': 'Boltcall vs Podium Comparison | Boltcall',
+    '/funnel-optimizer': 'Free Funnel Optimizer | Boltcall',
+    '/blog/how-to-set-up-ai-phone-answering-vet-clinic': 'Set Up AI Phone Answering (Vet) | Boltcall',
+    '/blog/ai-chatbot-vs-live-chat-phone-answering': 'AI Chatbot vs Live Chat vs Phone Calls | Boltcall',
+    '/compare/boltcall-vs-emitrr': 'Boltcall vs Emitrr Comparison | Boltcall',
+    '/blog/ai-receptionist-medspa-faq': 'AI Receptionist for Med Spas FAQ | Boltcall',
+    '/blog/ai-receptionist-plumber-faq': 'AI Receptionist for Plumbers FAQ | Boltcall',
+    '/blog/ai-receptionist-solar-faq': 'AI Receptionist for Solar FAQ | Boltcall',
+    '/blog/ai-vs-human-receptionist': 'AI vs Human Receptionist | Boltcall',
+  };
 
-  const contentExact = new Set([
-    '/blog',
-    '/comparisons',
-    '/pricing',
-    '/documentation',
-    '/help-center',
-    '/about',
-    '/contact',
-    '/partners',
-  ]);
-  const contentPrefixes = ['/blog/', '/comparisons/', '/compare/'];
+  const excludedExact = new Set(['/login', '/signup']);
+  const excludedPrefixes = ['/dashboard', '/setup', '/auth/', '/admin', '/payment/'];
   const serviceSchemaRoutes = new Set([
     '/strike-ai',
     '/about',
@@ -51,9 +74,9 @@ const AeoGlobalIntro: React.FC = () => {
   const isComparisonsRoute =
     path === '/comparisons' || path.startsWith('/comparisons/') || path.startsWith('/compare/');
   const isBlogRoute = path === '/blog' || path.startsWith('/blog/');
-  const isContentPage =
-    contentExact.has(path) || contentPrefixes.some((prefix) => path.startsWith(prefix));
-  const shouldShow = isContentPage;
+  const isExcluded =
+    excludedExact.has(path) || excludedPrefixes.some((prefix) => path.startsWith(prefix));
+  const shouldShow = !isExcluded;
 
   const title = isComparisonsRoute ? 'Comparison Summary' : 'Page Summary';
 
@@ -67,6 +90,18 @@ const AeoGlobalIntro: React.FC = () => {
     month: 'long',
     day: 'numeric',
   });
+
+  useEffect(() => {
+    const overrideTitle = titleOverrides[path];
+    if (!overrideTitle) return;
+
+    // Run after route/page effects to keep this override authoritative.
+    const timer = window.setTimeout(() => {
+      document.title = overrideTitle;
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [path]);
 
   useEffect(() => {
     if (!shouldShow) {
@@ -272,6 +307,29 @@ const AeoGlobalIntro: React.FC = () => {
               (local business trust and customer behavior)
             </li>
           </ul>
+        </div>
+        <div className="mt-5 pt-4 border-t border-gray-200">
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Page Context</h3>
+          <div className="space-y-2 text-sm text-gray-700">
+            <p>
+              This page is part of Boltcall&apos;s public knowledge hub for local-business growth, AI
+              receptionist workflows, lead response performance, and customer communication
+              automation. It is designed to provide practical guidance for operators who need
+              clear answers they can apply immediately.
+            </p>
+            <p>
+              The core objective across Boltcall content is helping businesses improve speed-to-lead,
+              reduce missed opportunities, and create more consistent customer experiences across
+              calls, forms, messaging, booking flows, and follow-up systems. Where relevant, pages
+              compare alternatives, explain trade-offs, and show implementation paths.
+            </p>
+            <p>
+              To keep this resource useful for search users and AI answer engines, we provide a
+              concise summary, direct objections handling, structured data, and supporting sources.
+              Content is periodically refreshed to reflect current best practices and newly emerging
+              operational questions from business owners.
+            </p>
+          </div>
         </div>
       </div>
     </section>
