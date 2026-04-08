@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, CheckCircle, TrendingUp, Zap, Users, HelpCircle, Clock as ClockIcon, AlertCircle, Globe } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { updateMetaDescription } from '../lib/utils';
+import { createArticleSchema, createFAQSchema, injectSchemas } from '../lib/schema';
+
+const pageFaqs = [
+  { question: 'Does an AI agent replace a receptionist?', answer: 'For most local businesses, yes — AI agents can handle 80-90% of receptionist tasks. They answer calls, schedule appointments, answer questions, and handle follow-ups. However, AI agents work best when they can transfer complex calls to your team.' },
+  { question: 'Is AI reliable with accents and languages?', answer: "Modern AI agents, including Boltcall, are trained on diverse accents and can handle multiple languages. They're often more consistent than human agents who might struggle with unfamiliar accents." },
+  { question: 'Can I use both AI and a call center?', answer: 'Absolutely. Many businesses use AI agents for initial contact and basic inquiries, then transfer complex calls to human agents or call centers. Boltcall can seamlessly transfer calls to your team or a call center when needed.' },
+  { question: "What happens if the AI can't answer a question?", answer: "Boltcall is designed to handle most common inquiries, but when it encounters something it can't handle, it can transfer the call to your team, take a message, or schedule a callback. You can configure it to escalate specific types of inquiries automatically." },
+];
 
 const AIAgentComparison: React.FC = () => {
+  useEffect(() => {
+    document.title = 'AI Agent Comparison: Boltcall vs Traditional Call Centers (2026)';
+    updateMetaDescription("Compare AI agents vs traditional call centers. See how Boltcall's AI receptionist beats call centers on cost, speed, availability, and lead capture.");
+
+    return injectSchemas([
+      createArticleSchema({
+        headline: 'AI Agent Comparison: Boltcall vs Traditional Call Centers',
+        description: "Compare AI agents vs traditional call centers on cost, speed, availability, and lead capture.",
+        datePublished: '2025-02-10',
+        dateModified: '2026-04-08',
+        url: '/ai-agent-comparison',
+      }),
+      createFAQSchema(pageFaqs),
+    ]);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
