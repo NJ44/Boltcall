@@ -11,8 +11,22 @@ import GiveawayBar from '../../components/GiveawayBar';
 const AnsweringServicesVsBoltcall: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Answering Services vs Boltcall AI Receptionist';
-    updateMetaDescription('Answering services vs Boltcall AI receptionist. Compare pricing, features, and service quality side by side. See comparison.');
+    document.title = 'Answering Services vs Boltcall AI Receptionist (2026)';
+    updateMetaDescription('Answering services vs Boltcall AI receptionist. Compare pricing, features, availability, and service quality side by side.');
+
+    const bcSchema = document.createElement('script');
+    bcSchema.type = 'application/ld+json';
+    bcSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://boltcall.org/comparisons' },
+        { '@type': 'ListItem', position: 3, name: 'Answering Services vs Boltcall', item: 'https://boltcall.org/comparisons/answering-services-vs-boltcall' },
+      ],
+    });
+    document.head.appendChild(bcSchema);
+    return () => { document.head.removeChild(bcSchema); };
   }, []);
 
   return (
