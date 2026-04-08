@@ -56,6 +56,7 @@ const AutomatedRemindersPage: React.FC = () => {
               and protect your revenue.
             </p>
           </motion.div>
+          </div>
         </div>
       </section>
 
