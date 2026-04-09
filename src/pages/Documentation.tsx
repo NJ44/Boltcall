@@ -36,7 +36,7 @@ const Documentation: React.FC = () => {
     articleSchema.textContent = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Article',
-      headline: 'Boltcall Documentation: Setup, Integrations & AI Features Guide',
+      headline: 'Boltcall Documentation: Setup, Integrations & AI Guide',
       author: { '@type': 'Organization', name: 'Boltcall Team', url: 'https://boltcall.org' },
       publisher: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
       datePublished: '2025-06-01',
