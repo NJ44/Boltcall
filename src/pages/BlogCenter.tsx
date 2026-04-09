@@ -458,7 +458,7 @@ const BlogCenter: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/blog/';
+    link.href = 'https://boltcall.org/blog';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");
