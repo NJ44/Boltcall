@@ -665,6 +665,12 @@ const BlogGeminiGemBusinessAssistant: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">
+          <p className="text-sm font-bold text-blue-800 mb-1">Editor's Note — April 2026</p>
+          <p className="text-blue-900 text-sm leading-relaxed">Since this guide was published, Google has expanded Gemini Gems significantly — including better memory, file uploads, and deeper Google Workspace integration. For businesses in 2026, Gems are most effective when paired with purpose-built tools like Boltcall that handle real-time customer communication, since Gems themselves don't connect to live phone systems or CRMs.</p>
+        </div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
