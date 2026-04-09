@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Calendar, Clock, Phone, CheckCircle, TrendingUp, Zap, Users,
-  MessageSquare, DollarSign, BarChart2, Shield, Star, AlertCircle
+  MessageSquare, DollarSign, Shield, AlertCircle
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
