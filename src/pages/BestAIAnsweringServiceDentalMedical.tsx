@@ -19,7 +19,7 @@ const BestAIAnsweringServiceDentalMedical: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Best AI Answering Service for Dental and Medical Practices | Boltcall';
     updateMetaDescription(
-      'Best AI answering service for dental offices and medical practices in 2026. Answer every patient call 24/7, book appointments automatically, and reduce front-desk burden without sacrificing the patient experience.'
+      'Best AI answering service for dental offices and medical practices in 2026. Answer every patient call 24/7, book appointments automatically, and reduce front-desk burden.'
     );
 
     const script = document.createElement('script');
