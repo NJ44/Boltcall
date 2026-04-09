@@ -133,21 +133,21 @@ const getRecommendations = (score: number) => {
   if (score <= 10) {
     return [
       {
-        title: 'Set Up an AI Receptionist',
+        title: 'Recover $50K+ Annually by Answering Every Missed Call',
         description:
-          'Stop missing calls after hours, during lunch, and on weekends. An AI receptionist answers 100% of calls, books appointments, and captures every lead — 24/7.',
+          'Small businesses lose over $50K/year to unanswered calls. An AI receptionist answers 100% of calls after hours, at lunch, and on weekends — so every lead becomes a potential booking.',
         icon: Phone,
       },
       {
-        title: 'Add Speed-to-Lead Automation',
+        title: 'Convert 391% More Leads with Automated Reminders',
         description:
-          'Respond to new inquiries in under 60 seconds with automated SMS and email. Businesses that respond within 5 minutes are 391% more likely to convert.',
+          'Businesses that respond within 5 minutes are 391% more likely to convert. Save time with automated SMS and email follow-ups that engage every new lead in under 60 seconds.',
         icon: Zap,
       },
       {
-        title: 'Automate Your Follow-Ups',
+        title: 'Increase Customer Engagement with AI Follow-Ups',
         description:
-          'Most leads need 5-7 touchpoints before booking. Set up automated follow-up sequences so no lead falls through the cracks.',
+          'Increase customer engagement with AI follow-up sequences that nurture leads through 5-7 touchpoints automatically — so you close more bookings without extra manual effort.',
         icon: MessageSquare,
       },
     ];
@@ -155,42 +155,42 @@ const getRecommendations = (score: number) => {
   if (score <= 20) {
     return [
       {
-        title: 'Close the After-Hours Gap',
+        title: 'Capture the 62% of Calls Coming In After Hours',
         description:
-          'You\'re handling business hours well, but 62% of calls happen outside 9-5. An AI receptionist ensures you never miss a single opportunity.',
+          '62% of calls happen outside 9-5 — and you\'re currently missing most of them. An AI receptionist captures every after-hours lead, turning what used to be lost revenue into new customers.',
         icon: Clock,
       },
       {
-        title: 'Automate Review Collection',
+        title: 'Get 266% More Leads from Google with Automated Reviews',
         description:
-          'Turn happy customers into 5-star reviews automatically. Businesses with 50+ reviews get 266% more leads from Google.',
+          'Businesses with 50+ Google reviews get 266% more leads. Automated review requests turn every happy customer into a 5-star review — without any manual outreach from your team.',
         icon: Star,
       },
       {
-        title: 'Add a Website Chat Widget',
+        title: 'Increase Website Conversions by 45% with Chat',
         description:
-          'Capture website visitors who prefer texting over calling. A chat widget can increase conversions by 45% without any extra effort.',
+          'A website chat widget increases conversions by 45% by engaging visitors who prefer texting over calling — converting more traffic into booked appointments.',
         icon: MessageSquare,
       },
     ];
   }
   return [
     {
-      title: 'Optimize Your AI Stack',
+      title: 'Scale Revenue with AI Lead Scoring and Smart Routing',
       description:
-        'You\'re ahead of the curve. Fine-tune your automations with AI-powered lead scoring, smart routing, and predictive scheduling.',
+        'You\'re ahead of the curve. Unlock the next level by routing your highest-value leads to the right team member instantly — increasing close rates without adding headcount.',
       icon: TrendingUp,
     },
     {
-      title: 'Scale with Data-Driven Decisions',
+      title: 'Cut Ad Waste and Optimize Spend with AI Analytics',
       description:
-        'Use AI analytics to identify your highest-converting channels, optimize ad spend, and predict revenue with accuracy.',
+        'AI analytics identify your highest-converting channels so you stop spending on what doesn\'t work — and double down on what drives revenue.',
       icon: BarChart3,
     },
     {
-      title: 'Reduce Costs with Full Automation',
+      title: 'Save $2,000–$4,000/Month by Replacing Manual Receptionist Tasks',
       description:
-        'Replace manual receptionist tasks with AI to save $2,000-$4,000/month while providing faster, more consistent customer experiences.',
+        'Replace repetitive receptionist tasks with AI to save $2,000-$4,000/month while delivering faster, more consistent customer experiences around the clock.',
       icon: Shield,
     },
   ];
