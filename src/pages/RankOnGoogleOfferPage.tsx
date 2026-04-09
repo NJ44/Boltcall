@@ -1,5 +1,5 @@
 import { AnimatedRoadmap } from "@/components/ui/animated-roadmap";
-
+import { CheckCircle } from "lucide-react";
 import { ThreeDButton } from "@/components/ui/ThreeDButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
