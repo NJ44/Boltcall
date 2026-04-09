@@ -131,7 +131,7 @@ const AeoGlobalIntro: React.FC = () => {
     const headline = document.title || 'Boltcall Article';
     const canonical = path === '/'
       ? 'https://boltcall.org/'
-      : `https://boltcall.org${path}/`;
+      : `https://boltcall.org${path}`;
     const today = new Date().toISOString().split('T')[0];
 
     const articleSchema = {
