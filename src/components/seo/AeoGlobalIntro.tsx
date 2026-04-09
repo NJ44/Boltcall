@@ -69,6 +69,7 @@ const AeoGlobalIntro: React.FC = () => {
     '/tools/lawyer-intake-calculator',
     '/ai-revenue-audit',
     '/features/ai-receptionist',
+    '/tools/solar-sales-closer',
   ]);
 
   const isComparisonsRoute =
