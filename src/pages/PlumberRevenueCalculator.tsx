@@ -156,7 +156,7 @@ const PlumberRevenueCalculator: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Plumber Revenue Calculator — How Much Are You Losing? | Boltcall';
     updateMetaDescription(
-      'Free calculator for plumbing businesses: find out exactly how much revenue you lose from missed after-hours emergency calls. Get a personalized revenue recovery report.'
+      'Free calculator for plumbing businesses: see how much revenue you lose from missed after-hours emergency calls. Get a personalized revenue recovery report.'
     );
   }, []);
 
