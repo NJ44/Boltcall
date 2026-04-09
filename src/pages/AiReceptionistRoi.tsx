@@ -686,20 +686,20 @@ const AiReceptionistRoi: React.FC = () => {
               {[
                 {
                   stat: '62%',
-                  label: 'of calls are missed',
-                  description: 'by small businesses outside of business hours',
+                  label: 'of calls go unanswered',
+                  description: 'outside business hours — every one is potential revenue walking out the door',
                   icon: Phone,
                 },
                 {
                   stat: '$50K+',
-                  label: 'lost per year',
-                  description: 'in revenue from unanswered calls on average',
+                  label: 'recovered annually',
+                  description: 'by businesses that stop missing calls — with AI answering 24/7',
                   icon: TrendingUp,
                 },
                 {
                   stat: '391%',
-                  label: 'higher conversion',
-                  description: 'when you respond to leads within 1 minute',
+                  label: 'more leads converted',
+                  description: 'when you respond within 1 minute — AI makes sub-1-minute response automatic',
                   icon: Zap,
                 },
               ].map((item, idx) => (
