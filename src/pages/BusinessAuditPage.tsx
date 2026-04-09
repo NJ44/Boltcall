@@ -263,6 +263,49 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             )}
 
+            {/* What the Business Audit Covers */}
+            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">What the Business Audit Covers</h2>
+                <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+                    Your online presence is made up of more than just your website. This free audit evaluates the five pillars that determine whether local customers find you, trust you, and choose you over competitors.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+                    {[
+                        { title: 'Website Performance', desc: 'Speed, mobile usability, and technical health. A slow or broken site loses customers before they read your first sentence.' },
+                        { title: 'Local Search Visibility', desc: 'Google Business Profile completeness, local keyword presence, and whether your business appears in the local map pack for relevant searches.' },
+                        { title: 'Online Reputation', desc: 'Review quantity, recency, and average rating across Google, Yelp, and industry directories. Reviews are the #1 trust signal for local buyers.' },
+                        { title: 'Lead Capture & Conversion', desc: 'How easy is it for a visitor to contact you, book an appointment, or request a quote? We identify friction in your booking and inquiry process.' },
+                        { title: 'Competitive Positioning', desc: 'How does your online presence compare to local competitors in your category? We identify gaps where competitors are outranking or outperforming you.' },
+                        { title: 'Content & Authority', desc: 'Whether your website content answers the questions your potential customers are actually searching for — a key signal for both Google and AI answer engines.' },
+                    ].map((item) => (
+                        <div key={item.title} className="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                            <h3 className="text-sm font-semibold text-gray-900 mb-2">{item.title}</h3>
+                            <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* What to Expect */}
+            <section className="bg-blue-50 py-12">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">What to Expect After You Submit</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {[
+                            { step: '1', title: 'Submit Your URL', desc: 'Enter your business website and email. No account required, no credit card, no strings attached.' },
+                            { step: '2', title: 'AI Analyzes Your Business', desc: 'Our system crawls your site and cross-references your online presence across major directories and search results.' },
+                            { step: '3', title: 'Receive Your Report', desc: 'Your personalized audit report arrives in your inbox with scores, findings, and a prioritized list of improvements to make.' },
+                        ].map((item) => (
+                            <div key={item.step} className="bg-white rounded-xl p-5 border border-blue-100 text-center">
+                                <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mx-auto mb-3">{item.step}</div>
+                                <div className="font-semibold text-gray-900 text-sm mb-2">{item.title}</div>
+                                <p className="text-sm text-gray-600">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             <FAQ />
             <Footer />
         </div>
