@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { TrendingUp, AlertTriangle, Download, Mail, Loader, BarChart3, DollarSign, Users, Target } from 'lucide-react';
+import { TrendingUp, AlertTriangle, Download, Mail, Loader, BarChart3, DollarSign, Users, Target, CheckCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
