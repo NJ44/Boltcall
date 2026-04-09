@@ -279,15 +279,15 @@ const FiveMinuteResponsePlaybook: React.FC = () => {
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 text-sm text-blue-300">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                  Data-backed strategies
+                  Increase lead conversion by 391%
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                  Actionable in 5 minutes
+                  Recover $312K in lost revenue/year
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                  Works for any local business
+                  Stop losing leads to competitors today
                 </span>
               </motion.div>
             </motion.div>
