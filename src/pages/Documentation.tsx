@@ -27,7 +27,7 @@ const Documentation: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = 'Boltcall Documentation: Setup, Integrations & AI Features Guide';
+    document.title = 'Boltcall Documentation: Setup, Integrations & AI Guide';
     updateMetaDescription('Complete Boltcall documentation. Step-by-step guides for setup, phone and calendar integrations, AI receptionist configuration, and troubleshooting.');
 
     // Article schema
