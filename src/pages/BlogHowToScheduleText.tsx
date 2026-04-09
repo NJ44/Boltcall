@@ -607,6 +607,12 @@ const BlogHowToScheduleText: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">
+          <p className="text-sm font-bold text-blue-800 mb-1">Editor's Note — April 2026</p>
+          <p className="text-blue-900 text-sm leading-relaxed">SMS scheduling has evolved rapidly. In 2026, AI-powered platforms now handle smart send-time optimization automatically — meaning the "best time to send" is calculated per contact, not per campaign. If you're still manually scheduling texts, you're likely leaving 20-30% of engagement on the table.</p>
+        </div>
+
         {/* Conclusion */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
