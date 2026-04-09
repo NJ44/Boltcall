@@ -90,23 +90,23 @@ const FreeWebsitePage: React.FC = () => {
               <ul className="mt-6 space-y-3 text-white/90 text-[calc(0.875rem*1.1)]">
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>AI Receptionist</span>
+                  <span>Never miss a revenue-generating call with AI Receptionist</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>Google reviews automatic system</span>
+                  <span>Build trust automatically with a steady stream of 5-star Google reviews</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>AI Visibility optimised stracture</span>
+                  <span>Enhance online visibility with AI-optimized site structure</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>SEO optimized for Google ranking</span>
+                  <span>Attract more customers with SEO optimization for Google ranking</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>Instant forms response AI system</span>
+                  <span>Improve customer engagement with instant AI form responses</span>
                 </li>
               </ul>
             </div>
