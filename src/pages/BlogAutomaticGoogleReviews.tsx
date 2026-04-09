@@ -583,6 +583,12 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">
+          <p className="text-sm font-bold text-blue-800 mb-1">Editor's Note — April 2026</p>
+          <p className="text-blue-900 text-sm leading-relaxed">Google's local ranking algorithm now weighs review recency and response rate more heavily than raw review count. In 2026, businesses with automated review flows that generate 8-12 fresh reviews per month consistently outrank competitors sitting on older, larger review pools. Automation isn't just convenient — it's now a core local SEO signal.</p>
+        </div>
+
         {/* Conclusion */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
