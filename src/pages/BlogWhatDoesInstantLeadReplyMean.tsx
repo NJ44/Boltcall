@@ -423,6 +423,12 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           </p>
         </motion.div>
 
+        {/* Editor's Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">
+          <p className="text-sm font-bold text-blue-800 mb-1">Editor's Note — April 2026</p>
+          <p className="text-blue-900 text-sm leading-relaxed">Lead response benchmarks have shifted in 2026. The 60-second threshold remains the gold standard, but top-performing businesses are now achieving sub-10-second AI-powered responses across calls, SMS, and web chat simultaneously. The gap between "fast" and "instant" is closing — and the conversion difference between 5 seconds and 60 seconds is now measurable.</p>
+        </div>
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
