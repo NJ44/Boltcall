@@ -133,6 +133,11 @@ const HelpCenter: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Intro paragraph */}
+        <p className="text-gray-600 text-center max-w-4xl mx-auto mb-12 text-lg leading-relaxed">
+          This Help Center provides essential guides and troubleshooting tips to help users effectively utilize Boltcall's AI receptionist features and resolve common issues.
+        </p>
+
         {/* Documentation CTA */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
