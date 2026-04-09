@@ -112,7 +112,7 @@ const FAQAIReceptionistSolar: React.FC = () => {
         "description": "Everything solar installers need to know about AI receptionists — lead qualification, appointment setting, after-hours handling, and ROI.",
         "author": { "@type": "Organization", "name": "Boltcall" },
         "datePublished": "2026-03-31",
-        "dateModified": "2026-03-31",,
+        "dateModified": "2026-03-31",
         "publisher": {
           "@type": "Organization",
           "name": "Boltcall",
