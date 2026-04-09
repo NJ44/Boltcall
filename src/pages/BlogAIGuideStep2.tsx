@@ -103,6 +103,11 @@ const BlogAIGuideStep2: React.FC = () => {
                 <span>6 min read</span>
               </div>
             </div>
+
+            {/* Author byline */}
+            <p className="text-sm text-gray-500 mt-3">
+              Written by the Boltcall Team &middot; Updated April 2026
+            </p>
           </motion.div>
         </div>
       </section>
