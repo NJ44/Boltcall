@@ -38,8 +38,8 @@ const Newsletter: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    document.title = 'Newsletter - Subscribe for AI Business Tips | Boltcall';
-    updateMetaDescription('Subscribe to Boltcall newsletter for AI business tips, updates, and exclusive offers. Stay informed about AI receptionist news. Join now.');
+    document.title = 'AI Business Newsletter | Weekly Tips & Strategies | Boltcall';
+    updateMetaDescription('Subscribe to the Boltcall newsletter for weekly AI business strategies, productivity tips, and exclusive insights for local business owners. Join free.');
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
