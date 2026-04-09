@@ -112,6 +112,18 @@ export default function ChatbotVsLiveChatVsPhoneAnswering() {
               </p>
             </motion.div>
 
+            {/* Editor's Note */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-amber-50 border-l-4 border-amber-400 p-5 mb-8 rounded-r-lg"
+            >
+              <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-2">Editor's Note — April 2026</p>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                In 2026, AI phone agents have largely replaced static chatbots for high-intent service inquiries, as voice interaction converts 3x better than chat for appointment booking and emergency services. The landscape this article analyzes has shifted significantly: real-time AI voice now handles the role that chatbots once competed for, making the gap between phone-first and chat-first approaches even wider than the data below suggests.
+              </p>
+            </motion.div>
+
             {/* Introduction */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
