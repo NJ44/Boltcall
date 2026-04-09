@@ -85,7 +85,7 @@ const AiReceptionistRoi: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/ai-receptionist-roi/';
+    link.href = 'https://boltcall.org/ai-receptionist-roi';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");
