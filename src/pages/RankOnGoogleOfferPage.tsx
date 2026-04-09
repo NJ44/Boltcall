@@ -62,11 +62,11 @@ const RankOnGoogleOfferPage = () => {
                                 <div className="space-y-2 mt-4 text-sm text-gray-600">
                                     <div className="flex items-center gap-2">
                                         <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                                        <p>The webiste and system are kive in 24 hours.</p>
+                                        <p>The website and system are live in 24 hours.</p>
                                     </div>
                                     <div className="flex items-start gap-2">
                                         <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
-                                        <p>The lead reactivation will cover teh costs of teh first month, if they wont, We will refund the rest</p>
+                                        <p>The lead reactivation will cover the costs of the first month. If it doesn't, we refund the difference.</p>
                                     </div>
                                 </div>
                             </div>
