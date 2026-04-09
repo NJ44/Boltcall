@@ -52,7 +52,7 @@ const HVACOverflowCalculator: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'HVAC Peak Season Revenue Calculator | Boltcall';
+    document.title = 'HVAC Overflow Revenue Calculator — Missed Call Cost Estimator | Boltcall';
     updateMetaDescription(
       'Free HVAC calculator — find out how many installs you lose during peak season when calls go unanswered. Calculate your revenue leak and fix it.'
     );
