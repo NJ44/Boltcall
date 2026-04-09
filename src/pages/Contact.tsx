@@ -76,7 +76,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 px-4 py-6 sm:p-4 overflow-hidden flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 px-4 py-6 sm:p-4 overflow-hidden">
       {/* Logo */}
       <div className="absolute top-4 left-5 z-30 hidden lg:block">
         <Link to="/">
