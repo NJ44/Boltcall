@@ -48,12 +48,12 @@ const ROW_GAP = 68;
 
 const initialNodes: WorkflowNode[] = [
   // Inbound use cases (emerald)
-  { id: "uc-ai-receptionist", type: "use-case", title: "AI Receptionist", description: "Answers inbound calls 24/7, qualifies callers, books appointments", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 } },
-  { id: "uc-sms-inquiry", type: "use-case", title: "SMS Inquiry", description: "Handles inbound text messages — answers questions, books appointments", icon: MessageSquare, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP } },
-  { id: "uc-missed-call", type: "use-case", title: "Missed Call Textback", description: "Sends an instant text when a call goes unanswered", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP * 2 } },
+  { id: "uc-ai-receptionist", type: "use-case", title: "Call Enters", description: "Answers inbound calls 24/7, qualifies callers, books appointments", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 } },
+  { id: "uc-sms-inquiry", type: "use-case", title: "Inbound SMS", description: "Handles inbound text messages — answers questions, books appointments", icon: MessageSquare, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP } },
+  { id: "uc-missed-call", type: "use-case", title: "Missed Call", description: "Sends an instant text when a call goes unanswered", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP * 2 } },
   // Outbound use cases (purple)
-  { id: "uc-instant-ad-reply", type: "use-case", title: "Instant Ad Reply", description: "Responds to Facebook/Google ad leads within seconds via SMS", icon: Megaphone, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 3 } },
-  { id: "uc-instant-web-reply", type: "use-case", title: "Instant Web Reply", description: "Auto-responds to website form submissions and chat inquiries", icon: Globe, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 4 } },
+  { id: "uc-instant-ad-reply", type: "use-case", title: "Ad Lead", description: "Responds to Facebook/Google ad leads within seconds via SMS", icon: Megaphone, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 3 } },
+  { id: "uc-instant-web-reply", type: "use-case", title: "Website Lead", description: "Auto-responds to website form submissions and chat inquiries", icon: Globe, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 4 } },
 
   // Agents
   { id: "agent-inbound", type: "agent", direction: "inbound", title: "Inbound Agent", description: "Handles all incoming leads & customer requests across channels", icon: ShieldCheck, color: "blue", configured: true, position: { x: 290, y: 30 + ROW_GAP } },
