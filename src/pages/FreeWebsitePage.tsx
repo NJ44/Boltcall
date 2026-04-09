@@ -98,7 +98,7 @@ const FreeWebsitePage: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>Enhance online visibility with AI-optimized site structure</span>
+                  <span>Built to <a href="https://web.dev/vitals/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">Google's Core Web Vitals</a> standards for fast loading and high performance</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
