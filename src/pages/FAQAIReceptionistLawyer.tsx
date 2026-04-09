@@ -126,6 +126,12 @@ const FAQAIReceptionistLawyer: React.FC = () => {
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://boltcall.org/blog/ai-receptionist-lawyer-faq"
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/og-image.jpg",
+          "width": 1200,
+          "height": 630
         }
       },
       {
