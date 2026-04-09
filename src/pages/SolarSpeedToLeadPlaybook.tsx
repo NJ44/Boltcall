@@ -237,7 +237,7 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
               Solar <span className="text-blue-600">Speed-to-Lead</span> Playbook
             </h1>
             <p className="text-lg text-gray-600">
-              Enter your numbers. Get a personalized playbook with your exact revenue gap and the fix.
+              Reduce lead response time by 50% and increase conversion rates with instant replies — enter your numbers to see exactly how much revenue you can recover.
             </p>
           </motion.div>
         <motion.div
