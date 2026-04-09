@@ -4,6 +4,7 @@ import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Pricing from '../components/Pricing';
+import { DollarSign, CheckCircle, Zap, Phone, Calendar, Star } from 'lucide-react';
 
 const PricingPage: React.FC = () => {
   useEffect(() => {
