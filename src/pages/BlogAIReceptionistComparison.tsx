@@ -480,6 +480,14 @@ const BlogAIReceptionistComparison: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">The AI receptionist market has matured considerably since this article was first published — several tools that were early-stage in 2025 now offer production-grade voice quality, multi-language support, and deep CRM integrations. In early 2026, the key differentiator between platforms has shifted from basic call handling to intelligent lead qualification and same-call booking capabilities. When evaluating options today, prioritize tools that can both answer and convert within a single call, as this is where the largest ROI gains are being reported.</p>
+          </div>
+        </div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

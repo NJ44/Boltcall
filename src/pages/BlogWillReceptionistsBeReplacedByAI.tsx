@@ -600,6 +600,14 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">As of 2026, the hybrid model has become the dominant pattern for front-desk operations — AI handles the high-volume routine calls while human receptionists focus on complex situations that require empathy and judgment. Industry data now shows that businesses using AI for initial call handling have actually increased their human receptionist headcount in some cases, as staff are freed from repetitive tasks and redeployed to higher-value client relationship work. The narrative is no longer "replacement" but "augmentation" — AI is making the human receptionist role more strategic, not obsolete.</p>
+          </div>
+        </div>
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

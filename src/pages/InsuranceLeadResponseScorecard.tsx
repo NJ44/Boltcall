@@ -380,6 +380,27 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* Benefit-Focused Bullets */}
+        <section className="py-10 bg-slate-950">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-white mb-6">What You'll Get</h2>
+            <ul className="space-y-3">
+              {[
+                "Respond within 5 minutes to increase lead qualification by 21x",
+                "Stop losing $8,000+ monthly to slow lead response",
+                "Benchmark your speed against top insurance agencies",
+                "Get a personalized score and action plan instantly",
+                "Learn the exact follow-up sequence that closes 40% more leads",
+              ].map((benefit, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center mt-0.5">✓</span>
+                  <span className="text-slate-300">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* --- CALCULATOR --- */}
         <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-8">

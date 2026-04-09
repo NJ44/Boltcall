@@ -464,14 +464,22 @@ const BlogSEO: React.FC = () => {
               The Bottom Line
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-              SEO isn't optional anymore—it's essential. Your customers are searching for you. 
-              The question is whether they'll find you or your competitor. By investing in SEO 
-              now, you're investing in your business's future visibility, credibility, and growth. 
-              Start with a free SEO audit, identify your weaknesses, and begin the journey to 
+              SEO isn't optional anymore—it's essential. Your customers are searching for you.
+              The question is whether they'll find you or your competitor. By investing in SEO
+              now, you're investing in your business's future visibility, credibility, and growth.
+              Start with a free SEO audit, identify your weaknesses, and begin the journey to
               better search rankings today.
             </p>
           </div>
         </motion.section>
+
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">SEO in 2026 is increasingly shaped by AI-generated search results — Google's AI Overviews and Perplexity now surface answers directly on the results page, meaning traditional "blue link" traffic has dropped for many informational queries. Local businesses should prioritize Google Business Profile optimization and structured data markup (schema.org) to appear in AI-synthesized answers, as these signals are now weighted heavily in AI search citations. Additionally, page experience signals — especially Core Web Vitals — remain critical ranking factors as Google continues to use them as tiebreakers between semantically similar content.</p>
+          </div>
+        </div>
           </article>
           
           {/* Table of Contents */}

@@ -52,7 +52,7 @@ const HVACOverflowCalculator: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'HVAC Peak Season Revenue Calculator | Boltcall';
+    document.title = 'HVAC Overflow Revenue Calculator — Missed Call Cost Estimator | Boltcall';
     updateMetaDescription(
       'Free HVAC calculator — find out how many installs you lose during peak season when calls go unanswered. Calculate your revenue leak and fix it.'
     );
@@ -699,6 +699,22 @@ const HVACOverflowCalculator: React.FC = () => {
           </motion.div>
         </section>
       </main>
+
+      {/* How the HVAC Overflow Calculator Works */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">How the HVAC Overflow Calculator Works</h2>
+        <div className="space-y-4 text-slate-400 leading-relaxed text-base">
+          <p>
+            This calculator estimates how much revenue your HVAC company loses during peak season from missed overflow calls. When your phones are ringing faster than your team can answer — during a July heat wave or a January cold snap — those unanswered calls don't wait. They call your competitor. Enter your average job value and estimated missed calls during busy periods to see your monthly and annual opportunity cost in real time.
+          </p>
+          <p>
+            The overflow problem is seasonal but the revenue loss is permanent. A homeowner who calls during peak season and can't reach you doesn't call back in three weeks when things slow down — they're already booked with someone else. This calculator separates your peak-season missed calls from your off-peak baseline so you can see exactly how much of your annual revenue leak comes from those critical high-volume months versus the rest of the year.
+          </p>
+          <p>
+            Once you've calculated your overflow gap, the recovery estimate shows what an AI phone agent would recapture by answering every call instantly — day or night, peak or off-peak. Unlike voicemail or call forwarding, an AI agent qualifies the caller, captures their information, and schedules the appointment while your techs are on job sites. The ROI is calculated against Boltcall's fixed monthly cost so you can see your net gain and payback period before committing to anything.
+          </p>
+        </div>
+      </section>
 
       <FinalCTA {...CALCULATOR_CTA} />
 

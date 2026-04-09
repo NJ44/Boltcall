@@ -301,6 +301,63 @@ const FreeWebsitePage: React.FC = () => {
           </div>
         </div>
         </motion.div>
+
+      {/* Benefit-Focused Bullets */}
+      <section className="py-10 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get</h2>
+          <ul className="space-y-3">
+            {[
+              "Attract more customers with a professional, fast-loading website",
+              "Built-in lead capture forms that work 24/7",
+              "Mobile-optimized design that ranks in local search",
+              "Integrated with your AI receptionist from day one",
+              "Launch-ready in 48 hours — no technical skills needed",
+            ].map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mt-0.5">✓</span>
+                <span className="text-gray-700">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">How It Works</h2>
+          <div className="space-y-6">
+            <div className="flex gap-5">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Answer 5 questions about your business</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  Fill out a short form with your business name, location, services, and a few details about how you want to present your brand online. No technical knowledge required — we take care of everything from here.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-5">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">We build your AI-powered site in 48 hours</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  Our team designs a professional, mobile-optimized website tailored to your industry and service area. It's built to Google's Core Web Vitals standards, SEO-optimized for local search, and pre-connected to Boltcall's AI receptionist so you start capturing leads from day one.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-5">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">You review and approve — launch ready</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  We send you a preview link within 48 hours. Review the design, request any changes, and once you're happy, we point the site live to your domain. The entire process requires less than 15 minutes of your time, and you end up with a professional website that would normally cost thousands of dollars.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

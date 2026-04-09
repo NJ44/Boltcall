@@ -340,6 +340,27 @@ const CleaningServiceBookingCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* Benefit-Focused Bullets */}
+        <section className="py-10 bg-slate-950">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-white mb-6">What You'll Get</h2>
+            <ul className="space-y-3">
+              {[
+                "Recover $5,208 in lost monthly revenue from missed booking calls",
+                "Reduce missed calls by 35% with AI answering in 2 rings",
+                "Book more recurring clients without hiring extra office staff",
+                "Capture leads from every referral — even at midnight",
+                "See your exact revenue recovery opportunity now",
+              ].map((benefit, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center mt-0.5">✓</span>
+                  <span className="text-slate-300">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* --- About This Calculator --- */}
         <section className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
           <motion.div

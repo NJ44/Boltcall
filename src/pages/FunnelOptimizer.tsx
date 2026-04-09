@@ -126,6 +126,27 @@ const FunnelOptimizer: React.FC = () => {
         </div>
       </section>
 
+      {/* Benefit-Focused Bullets */}
+      <section className="py-10 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get</h2>
+          <ul className="space-y-3">
+            {[
+              "Find the exact step where you're losing 60-80% of leads",
+              "Increase monthly revenue by fixing 3 common funnel leaks",
+              "Automate follow-ups that recover leads who went silent",
+              "Add AI chat and SMS capture to your website in 24 hours",
+              "Turn a 10% conversion rate into 25% with proven tactics",
+            ].map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mt-0.5">✓</span>
+                <span className="text-gray-700">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* Form + Live Preview */}
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -319,6 +319,12 @@ const BlogSpeed: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">
+          <p className="text-sm font-bold text-blue-800 mb-1">Editor's Note — April 2026</p>
+          <p className="text-blue-900 text-sm leading-relaxed">Speed-to-lead benchmarks have only tightened since this article was written. In 2026, AI-powered response systems have made sub-60-second reply times the baseline expectation — not a differentiator. Businesses still relying on manual follow-up are now operating at a structural disadvantage.</p>
+        </div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

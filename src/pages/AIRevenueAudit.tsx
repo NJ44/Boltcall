@@ -694,6 +694,24 @@ const AIRevenueAudit: React.FC = () => {
       )}
 
       </main>
+      {/* How the Revenue Calculator Works */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">How the Revenue Calculator Works</h2>
+          <div className="space-y-4">
+            <p className="text-gray-700 leading-relaxed">
+              The calculator starts with three core inputs from your business: your monthly lead volume, your average customer lifetime value, and your current lead-to-booking rate. From there, it uses your answers about call handling and response times to estimate how many of those leads are slipping through the cracks — whether because calls go unanswered after hours, inquiries sit too long before a callback, or there's no automated follow-up system in place to re-engage leads who didn't book on first contact.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Once the baseline is established, the calculator models what happens when an AI receptionist fills those gaps. It applies industry-standard capture rates for AI-handled calls and follow-up automation — typically recovering 60 to 80 percent of leads that would otherwise be lost. The result is a monthly revenue recovery estimate: real dollars your business could be bringing in with minimal additional effort or overhead, since the AI handles calls and follow-ups automatically around the clock.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              The final section of the report projects your full ROI from AI implementation. It factors in staffing time saved on scheduling and admin tasks, the cost of the Boltcall subscription, and your estimated net monthly gain — then calculates how quickly the system pays for itself. For most service businesses, payback occurs within the first week of the first month, making this one of the highest-return technology investments available to local business owners today.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>

@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import {
   Sparkles, TrendingDown, TrendingUp, Users, DollarSign,
@@ -176,6 +177,7 @@ const MedSpaRebookingCalculator: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Med Spa Rebooking Calculator | Boltcall';
+    updateMetaDescription('Calculate how much revenue your med spa loses from client attrition and missed rebooking calls. See your exact monthly opportunity cost and get an AI solution to recover it.');
   }, []);
 
   /* ─── CALCULATIONS ─── */

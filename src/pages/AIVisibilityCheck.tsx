@@ -9,7 +9,7 @@ import GiveawayBar from '../components/GiveawayBar';
 const AIVisibilityCheck: React.FC = () => {
   useEffect(() => {
     document.title = 'Free AI Visibility Check - Analyze Your AI Presence';
-    updateMetaDescription('Free AI visibility check analyzes your website AI presence. Get detailed report on AI visibility and optimization opportunities. Start now.');
+    updateMetaDescription('AI visibility check for your business is coming soon. Get notified first and discover how ChatGPT, Perplexity, and Google AI see your brand.');
   }, []);
 
   return (

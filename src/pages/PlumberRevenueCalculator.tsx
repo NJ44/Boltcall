@@ -299,6 +299,27 @@ const PlumberRevenueCalculator: React.FC = () => {
         </div>
       </section>
 
+      {/* Benefit-Focused Bullets */}
+      <section className="py-10 bg-slate-950">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-white mb-6">What You'll Get</h2>
+          <ul className="space-y-3">
+            {[
+              "See your exact revenue loss from missed calls in real-time",
+              "Discover if you're losing $12,000+ per month to voicemail",
+              "Get a personalized plan to capture 90% of emergency calls",
+              "Calculate your ROI from AI before you spend a dollar",
+              "Compare your recovery rate to top plumbing businesses",
+            ].map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mt-0.5">✓</span>
+                <span className="text-slate-300">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ── About This Calculator ── */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-10">
         <motion.div

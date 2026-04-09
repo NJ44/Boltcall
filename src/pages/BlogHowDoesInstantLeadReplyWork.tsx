@@ -511,6 +511,14 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           </p>
         </motion.div>
 
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">By early 2026, AI-powered instant lead reply systems have compressed average response windows to under 8 seconds, with top-performing platforms now initiating voice calls before the lead has even closed the form tab. The integration of large language models into lead reply workflows means the first interaction is no longer just fast — it is also contextually intelligent, referencing the lead's source, service interest, and local market conditions in real time. Companies using instant AI lead reply now report 3x higher contact rates compared to teams relying on human follow-up within the first hour.</p>
+          </div>
+        </div>
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -508,6 +508,12 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
           </p>
         </motion.div>
 
+        {/* Editor's Note */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">
+          <p className="text-sm font-bold text-blue-800 mb-1">Editor's Note — April 2026</p>
+          <p className="text-blue-900 text-sm leading-relaxed">Setup complexity for instant lead reply tools has dropped dramatically in 2026. Modern platforms now offer native no-code integrations with the most popular form builders, ad platforms, and CRMs — meaning the webhook steps described here are often replaced by a single toggle. If you're setting this up today, expect the process to take under 30 minutes.</p>
+        </div>
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

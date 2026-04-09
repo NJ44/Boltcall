@@ -249,7 +249,7 @@ async function prerender() {
       await page.evaluate((r) => {
         document.documentElement.lang = 'en';
         document.documentElement.dir = 'ltr';
-        const canonUrl = 'https://boltcall.org' + (r === '/' ? '/' : r.replace(/\/$/, ''));
+        const canonUrl = 'https://boltcall.org' + (r === '/' ? '/' : r.replace(/\/?$/, '/'));
         const canonical = document.querySelector('link[rel="canonical"]');
         if (canonical) canonical.href = canonUrl;
         const ogUrl = document.querySelector('meta[property="og:url"]');

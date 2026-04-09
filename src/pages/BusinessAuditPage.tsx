@@ -266,6 +266,24 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             )}
 
+            {/* What the Audit Covers */}
+            <section className="py-12 bg-gray-50">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">What Your Business Audit Covers</h2>
+                    <div className="space-y-4">
+                        <p className="text-gray-700 leading-relaxed">
+                            The business audit starts by analyzing your phone response rate — one of the highest-impact factors for local service businesses. Research shows that leads who don't reach a live person within five minutes are significantly less likely to convert. Our report estimates exactly how many potential customers you're losing each month based on your current call handling setup, and it puts a dollar figure on that missed revenue.
+                        </p>
+                        <p className="text-gray-700 leading-relaxed">
+                            Beyond phone performance, the audit reviews your online reputation and Google Business Profile completeness. Incomplete listings, missing categories, and outdated photos all suppress your visibility in local search. We also run a competitor gap analysis to show you where nearby businesses are outranking you and why — giving you a clear picture of what changes will have the biggest impact.
+                        </p>
+                        <p className="text-gray-700 leading-relaxed">
+                            The final piece of the report is a missed call cost estimate — a plain-English calculation that shows what unanswered calls are costing you in real revenue, not just missed opportunities. Every section comes with a prioritized action list so you know exactly what to fix first to start seeing results within 30 days.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* Social Proof */}
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>

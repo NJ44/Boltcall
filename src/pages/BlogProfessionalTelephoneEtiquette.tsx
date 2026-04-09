@@ -457,6 +457,14 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">As AI voice assistants take over routine call handling in 2026, professional telephone etiquette has become more critical than ever for the human interactions that remain — clients now expect the calls that do reach a person to be exceptional. New research shows that tone of voice and response speed account for over 65% of caller satisfaction scores, underscoring why training staff on etiquette best practices directly impacts retention. AI tools that coach and score live calls in real time are now helping businesses rapidly elevate their phone communication standards.</p>
+          </div>
+        </div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

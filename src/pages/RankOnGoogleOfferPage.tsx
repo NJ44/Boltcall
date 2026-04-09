@@ -111,6 +111,27 @@ const RankOnGoogleOfferPage = () => {
                 </div>
             </section>
 
+            {/* How We Help You Rank on Google */}
+            <section className="py-12 bg-gray-50">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">How We Help You Rank on Google</h2>
+                    <div className="space-y-4">
+                        <p className="text-gray-700 leading-relaxed">
+                            We start with your Google Business Profile — the single most important factor for local search visibility. Most GBPs are incomplete or inconsistently formatted, which suppresses rankings in the local map pack. We optimize every field, add geo-tagged photos, build accurate local citations across the major directories, and ensure your business name, address, and phone number are consistent everywhere Google looks. These foundational steps alone move most clients from invisible to page one within 30 to 60 days.
+                        </p>
+                        <p className="text-gray-700 leading-relaxed">
+                            On top of the GBP work, we handle on-page SEO for your website — optimizing title tags, meta descriptions, headers, and internal linking so every page sends the right ranking signals. We also implement a structured review strategy that automatically requests feedback from your customers after each job, steadily building the volume and recency of Google reviews that Google's algorithm heavily weights for local rankings.
+                        </p>
+                        <p className="text-gray-700 leading-relaxed">
+                            Finally, we create AI-assisted content specifically structured to rank in both traditional search and AI-generated answer results. This includes FAQ pages, service area pages, and structured schema markup that helps Google understand exactly what you offer and where you serve. The result is a compounding SEO foundation that keeps generating traffic long after the initial work is done — without requiring you to run paid ads month after month.
+                        </p>
+                        <p className="text-gray-700 leading-relaxed">
+                            Our AI receptionist also captures the calls that come from your improved Google rankings, ensuring every new lead you earn is answered — even at 2am. Better rankings without better lead capture is like turning on a faucet with no bucket underneath.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             <FAQ />
 
             {/* Social Proof */}

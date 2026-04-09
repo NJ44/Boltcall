@@ -40,8 +40,14 @@ const Documentation: React.FC = () => {
       author: { '@type': 'Organization', name: 'Boltcall Team', url: 'https://boltcall.org' },
       publisher: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
       datePublished: '2025-06-01',
-      dateModified: '2026-04-08',
+      dateModified: '2026-04-09',
       description: 'Complete Boltcall documentation covering setup, integrations, AI receptionist features, and troubleshooting.',
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://boltcall.org/og-image.jpg',
+        width: 1200,
+        height: 630,
+      },
     });
     document.head.appendChild(articleSchema);
 

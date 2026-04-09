@@ -385,6 +385,14 @@ const BlogSpeedWebsite: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">Google's 2026 ranking algorithm updates have further tightened Core Web Vitals thresholds — sites now need an LCP under 2.0 seconds (down from 2.5s) to achieve "Good" status and avoid ranking penalties. AI-powered performance optimization tools have emerged that automatically compress images, defer non-critical JavaScript, and pre-fetch pages based on visitor behavior patterns — significantly lowering the technical barrier for small businesses to achieve fast load times. Speed is now also a conversion signal in AI-driven ad platforms: slower landing pages receive reduced ad delivery even when bids are competitive.</p>
+          </div>
+        </div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
