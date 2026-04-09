@@ -262,6 +262,56 @@ const ConversionRateOptimizer: React.FC = () => {
         </div>
       )}
 
+      {/* What This Tool Analyzes */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">What This Tool Analyzes</h2>
+        <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+          Our conversion rate optimizer evaluates every element of your website that affects whether visitors take action — from first impression to final call-to-action. The analysis covers six key areas that consistently separate high-converting sites from average ones.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { title: 'Page Speed & Performance', desc: 'Slow pages lose visitors before they even see your offer. We measure load time, Core Web Vitals, and mobile performance scores that directly impact conversion rates.' },
+            { title: 'Headlines & Value Proposition', desc: 'Your headline is the first thing visitors read. We evaluate clarity, specificity, and whether your value proposition immediately answers "what\'s in it for me?"' },
+            { title: 'Call-to-Action Strength', desc: 'Weak CTAs kill conversions. We assess button copy, placement, contrast, and the friction between a visitor\'s intent and completing your desired action.' },
+            { title: 'Trust Signals & Social Proof', desc: 'Reviews, testimonials, guarantees, and security badges reduce purchase anxiety. We identify which trust elements you\'re missing and where to place them.' },
+            { title: 'Mobile Experience', desc: 'Over 60% of local business searches happen on mobile. We test tap targets, form usability, and layout responsiveness on small screens.' },
+            { title: 'Lead Capture & Forms', desc: 'Every extra form field costs you conversions. We audit your contact forms, booking flows, and lead capture elements for unnecessary friction.' },
+          ].map((item) => (
+            <div key={item.title} className="bg-gray-50 border border-gray-200 rounded-xl p-5">
+              <h3 className="text-base font-semibold text-gray-900 mb-2">{item.title}</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* How to Improve Conversions */}
+      <section className="bg-blue-50 py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">How to Improve Your Conversion Rate</h2>
+          <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+            Most local business websites convert less than 2% of visitors into leads. The businesses that convert at 5–10% aren't spending more on ads — they've fixed the right things on their site. Here's what moves the needle most.
+          </p>
+          <div className="space-y-4">
+            {[
+              { step: '1', title: 'Lead with a clear, specific headline', desc: '"Plumber in Austin — Same-Day Service" outperforms "Welcome to Our Website" by a significant margin. Visitors need to instantly know you serve them.' },
+              { step: '2', title: 'Add a phone number in the header', desc: 'Local businesses with a visible phone number in the top navigation see 20–30% more inbound calls. It\'s the single easiest conversion win.' },
+              { step: '3', title: 'Remove form fields you don\'t need', desc: 'Every extra field reduces form completions by roughly 10–15%. Name, email, and one qualifying question is almost always enough to start the conversation.' },
+              { step: '4', title: 'Show real reviews on every page', desc: 'A minimum of 5 Google reviews displayed on your site with star ratings builds trust faster than any written testimonial you can craft.' },
+              { step: '5', title: 'Make your CTA specific and urgent', desc: '"Book a Free Consultation" converts better than "Contact Us." "Get Your Quote Today" beats "Submit." Specificity and urgency work together.' },
+            ].map((item) => (
+              <div key={item.step} className="flex gap-4 bg-white rounded-xl p-5 border border-blue-100">
+                <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">{item.step}</div>
+                <div>
+                  <div className="font-semibold text-gray-900 text-sm mb-1">{item.title}</div>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <FAQ />
       <Footer />
     </div>

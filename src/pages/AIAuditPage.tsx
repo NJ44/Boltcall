@@ -256,8 +256,33 @@ const AIAuditPage: React.FC = () => {
 
               <p className="text-sm text-gray-400 mt-4">Takes ~2 minutes · Report delivered in ~3 minutes</p>
 
+              {/* 5 Audit Categories */}
+              <div className="mt-12 max-w-3xl mx-auto text-left">
+                <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">5 Areas We Score for Your Business</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                  {[
+                    { Icon: Globe, title: 'Website Presence', desc: 'Speed, mobile experience, content depth, and conversion readiness. A weak website loses leads before they ever contact you.' },
+                    { Icon: Phone, title: 'Customer Communication', desc: 'Call handling, response times, and after-hours coverage. We score how well your business captures inquiries across every channel.' },
+                    { Icon: Settings, title: 'Operations & Automation', desc: 'Manual processes costing you hours each week — from booking to follow-ups. We identify exactly where automation would save the most time.' },
+                    { Icon: Brain, title: 'AI Readiness', desc: 'Your readiness for voice AI, chatbots, automated follow-ups, and AI lead capture. Not all businesses start from the same baseline.' },
+                    { Icon: DollarSign, title: 'Revenue Impact', desc: 'Every gap is quantified in dollars. You\'ll see which fixes will recover the most revenue so you can prioritize the highest-value changes first.' },
+                  ].map((item) => (
+                    <div key={item.title} className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <item.Icon className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                        <span className="text-sm font-semibold text-gray-900">{item.title}</span>
+                      </div>
+                      <p className="text-xs text-gray-600 leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex flex-col justify-center">
+                    <p className="text-xs text-blue-700 font-medium text-center">Each area is scored 0–100 with specific findings and action items in your personalized PDF report.</p>
+                  </div>
+                </div>
+              </div>
+
               {/* Trust signals */}
-              <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
+              <div className="grid grid-cols-3 gap-6 mt-4 max-w-lg mx-auto">
                 {[
                   { value: '100', label: 'Revenue impact scored' },
                   { value: '5', label: 'Growth areas uncovered' },

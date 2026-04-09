@@ -211,6 +211,33 @@ const Strike: React.FC = () => {
                     Your intelligent AI assistant that helps you accomplish more
                   </p>
                 </motion.div>
+
+                {/* Content section — crawlable, explains Strike AI capabilities */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="mt-2 mb-6 max-w-3xl mx-auto text-left"
+                >
+                  <h2 className="text-base sm:text-lg font-semibold text-white/80 mb-3 text-center">What can Strike AI help with?</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[
+                      { title: 'Marketing Strategy', desc: 'Tailored marketing plans, campaign ideas, and channel recommendations for your business type and budget.' },
+                      { title: 'Sales Conversion', desc: 'Scripts, follow-up sequences, and closing tactics to turn more leads into paying customers.' },
+                      { title: 'Google Rankings', desc: 'Quick SEO wins — from optimizing your Google Business Profile to targeting the right local keywords.' },
+                      { title: 'Business Growth', desc: 'Referral programs, upsell offers, retention tactics, and your highest-leverage growth opportunities.' },
+                    ].map((item) => (
+                      <div key={item.title} className="bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-sm">
+                        <div className="text-sm font-semibold text-blue-400 mb-1">{item.title}</div>
+                        <p className="text-xs text-white/70 leading-relaxed">{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-white/50 text-center mt-3">
+                    Strike AI uses specialized agents — each trained on a specific growth area. Select an agent or ask anything to get started.{' '}
+                    <a href="https://openai.com/index/introducing-gpts/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Learn about AI agents</a>.
+                  </p>
+                </motion.div>
               </div>
             </section>
           )}
