@@ -19,6 +19,9 @@ import {
   ShieldCheck,
   Zap,
   Settings,
+  Lock,
+  Bell,
+  Shield,
 } from "lucide-react";
 
 interface WorkflowNode {
@@ -30,6 +33,7 @@ interface WorkflowNode {
   icon: React.ComponentType<{ className?: string }>;
   color: string;
   configured: boolean;
+  locked?: boolean;
   position: { x: number; y: number };
 }
 
@@ -43,34 +47,49 @@ const NODE_HEIGHT = 56;
 const ROW_GAP = 68;
 
 const initialNodes: WorkflowNode[] = [
+  // Inbound use cases (emerald)
   { id: "uc-ai-receptionist", type: "use-case", title: "AI Receptionist", description: "Answers inbound calls 24/7, qualifies callers, books appointments", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 } },
-  { id: "uc-instant-ad-reply", type: "use-case", title: "Instant Ad Reply", description: "Responds to Facebook/Google ad leads within seconds via SMS", icon: Megaphone, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP } },
-  { id: "uc-instant-web-reply", type: "use-case", title: "Instant Web Reply", description: "Auto-responds to website form submissions and chat inquiries", icon: Globe, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP * 2 } },
-  { id: "uc-sms-inquiry", type: "use-case", title: "SMS Inquiry", description: "Handles inbound text messages \u2014 answers questions, books appointments", icon: MessageSquare, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP * 3 } },
-  { id: "uc-missed-call", type: "use-case", title: "Missed Call Textback", description: "Sends an instant text when a call goes unanswered", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP * 4 } },
+  { id: "uc-sms-inquiry", type: "use-case", title: "SMS Inquiry", description: "Handles inbound text messages — answers questions, books appointments", icon: MessageSquare, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP } },
+  { id: "uc-missed-call", type: "use-case", title: "Missed Call Textback", description: "Sends an instant text when a call goes unanswered", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP * 2 } },
+  // Outbound use cases (purple)
+  { id: "uc-instant-ad-reply", type: "use-case", title: "Instant Ad Reply", description: "Responds to Facebook/Google ad leads within seconds via SMS", icon: Megaphone, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 3 } },
+  { id: "uc-instant-web-reply", type: "use-case", title: "Instant Web Reply", description: "Auto-responds to website form submissions and chat inquiries", icon: Globe, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 4 } },
 
+  // Agents
   { id: "agent-inbound", type: "agent", direction: "inbound", title: "Inbound Agent", description: "Handles all incoming leads & customer requests across channels", icon: ShieldCheck, color: "blue", configured: true, position: { x: 290, y: 30 + ROW_GAP } },
   { id: "agent-outbound", type: "agent", direction: "outbound", title: "Outbound Agent", description: "Proactively reaches out to existing leads & past customers", icon: Zap, color: "purple", configured: false, position: { x: 290, y: 30 + ROW_GAP * 3 } },
 
+  // Outputs — configured
   { id: "out-calendar", type: "output", title: "Calendar Booking", description: "Appointment scheduled automatically into your calendar", icon: CalendarCheck, color: "amber", configured: true, position: { x: 550, y: 30 } },
   { id: "out-sms-followup", type: "output", title: "SMS Follow-Up", description: "Instant text confirmation or follow-up sent to the lead", icon: Send, color: "amber", configured: true, position: { x: 550, y: 30 + ROW_GAP } },
   { id: "out-crm", type: "output", title: "CRM Update", description: "Lead record created or updated in your CRM automatically", icon: UserPlus, color: "amber", configured: true, position: { x: 550, y: 30 + ROW_GAP * 2 } },
+  // Outputs — not configured
   { id: "out-review", type: "output", title: "Review Request", description: "Google review prompt sent to customer after service is complete", icon: Star, color: "amber", configured: false, position: { x: 550, y: 30 + ROW_GAP * 3 } },
   { id: "out-reactivation", type: "output", title: "Lead Reactivation", description: "Cold leads re-engaged with personalized SMS or call campaign", icon: RotateCcw, color: "amber", configured: false, position: { x: 550, y: 30 + ROW_GAP * 4 } },
+  // Outputs — locked (premium)
+  { id: "out-reminders", type: "output", title: "Reminders", description: "Automated appointment and follow-up reminders sent to contacts before they're due", icon: Bell, color: "slate", configured: false, locked: true, position: { x: 550, y: 30 + ROW_GAP * 5 } },
+  { id: "out-reputation", type: "output", title: "Reputation Manager", description: "Monitor and respond to reviews across Google, Yelp, and more from one place", icon: Shield, color: "slate", configured: false, locked: true, position: { x: 550, y: 30 + ROW_GAP * 6 } },
 ];
 
 const initialConnections: WorkflowConnection[] = [
+  // Inbound use cases → inbound agent
   { from: "uc-ai-receptionist", to: "agent-inbound" },
-  { from: "uc-instant-ad-reply", to: "agent-inbound" },
-  { from: "uc-instant-web-reply", to: "agent-inbound" },
   { from: "uc-sms-inquiry", to: "agent-inbound" },
   { from: "uc-missed-call", to: "agent-inbound" },
+  // Outbound use cases → outbound agent
+  { from: "uc-instant-ad-reply", to: "agent-outbound" },
+  { from: "uc-instant-web-reply", to: "agent-outbound" },
+  // Inbound agent outputs
   { from: "agent-inbound", to: "out-calendar" },
   { from: "agent-inbound", to: "out-sms-followup" },
   { from: "agent-inbound", to: "out-crm" },
+  // Outbound agent outputs
   { from: "agent-outbound", to: "out-review" },
   { from: "agent-outbound", to: "out-reactivation" },
   { from: "agent-outbound", to: "out-crm" },
+  // Locked outputs (outbound)
+  { from: "agent-outbound", to: "out-reminders" },
+  { from: "agent-outbound", to: "out-reputation" },
 ];
 
 const colorClasses: Record<string, string> = {
@@ -78,12 +97,13 @@ const colorClasses: Record<string, string> = {
   blue: "border-blue-400/40 bg-blue-400/10 text-blue-400",
   amber: "border-amber-400/40 bg-amber-400/10 text-amber-400",
   purple: "border-purple-400/40 bg-purple-400/10 text-purple-400",
+  slate: "border-slate-500/30 bg-slate-500/5 text-slate-400/50",
 };
 
 const columnLabels: Record<string, string> = { "use-case": "USE CASES", agent: "AGENTS", output: "OUTPUTS" };
 const columnColors: Record<string, string> = { "use-case": "text-emerald-400", agent: "text-blue-400", output: "text-amber-400" };
 
-function WorkflowConnectionLine({ from, to, nodes }: { from: string; to: string; nodes: WorkflowNode[] }) {
+function WorkflowConnectionLine({ from, to, nodes, locked }: { from: string; to: string; nodes: WorkflowNode[]; locked?: boolean }) {
   const fromNode = nodes.find((n) => n.id === from);
   const toNode = nodes.find((n) => n.id === to);
   if (!fromNode || !toNode) return null;
@@ -96,22 +116,51 @@ function WorkflowConnectionLine({ from, to, nodes }: { from: string; to: string;
   const d = `M${startX},${startY} C${cp1X},${startY} ${cp2X},${endY} ${endX},${endY}`;
   return (
     <g>
-      <path d={d} fill="none" stroke="currentColor" strokeWidth={1.5} strokeDasharray="6,5" strokeLinecap="round" opacity={0.2} className="text-foreground" />
-      <circle cx={endX} cy={endY} r={2.5} fill="currentColor" opacity={0.35} className="text-foreground" />
+      <path
+        d={d}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+        strokeDasharray="6,5"
+        strokeLinecap="round"
+        opacity={locked ? 0.08 : 0.2}
+        className="text-foreground"
+      />
+      <circle cx={endX} cy={endY} r={2.5} fill="currentColor" opacity={locked ? 0.12 : 0.35} className="text-foreground" />
     </g>
   );
 }
 
-function NodeTooltip({ description }: { description: string }) {
+function NodeTooltip({
+  description,
+  configured,
+  locked,
+}: {
+  description: string;
+  configured: boolean;
+  locked?: boolean;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 4 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 4 }}
       transition={{ duration: 0.15 }}
-      className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-[60] w-48 rounded-lg border border-border/50 bg-background/95 px-3 py-2 text-[10px] leading-relaxed text-foreground/70 shadow-lg backdrop-blur pointer-events-none"
+      className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-[60] w-52 rounded-lg border border-border/50 bg-background/95 px-3 py-2.5 text-[10px] leading-relaxed text-foreground/70 shadow-xl backdrop-blur pointer-events-none"
     >
-      {description}
+      <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-l border-t border-border/50 bg-background/95" />
+      <span className="relative block mb-2">{description}</span>
+      {locked ? (
+        <div className="flex w-full items-center justify-center gap-1 rounded-md border border-amber-400/30 bg-amber-400/10 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-amber-400/90">
+          <Lock className="h-2.5 w-2.5" />
+          Upgrade to Unlock
+        </div>
+      ) : !configured ? (
+        <div className="flex w-full items-center justify-center gap-1 rounded-md border border-foreground/20 bg-foreground/5 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-foreground/60">
+          <Settings className="h-2.5 w-2.5" />
+          Configure
+        </div>
+      ) : null}
     </motion.div>
   );
 }
@@ -195,17 +244,32 @@ export function AgentWorkflowBlock() {
       {/* Canvas */}
       <div
         ref={canvasRef}
-        className="relative h-[420px] w-full overflow-auto rounded-xl border border-border/30 bg-background/40 sm:h-[440px] md:h-[460px]"
-        style={{ minHeight: "420px" }}
+        className="relative h-[520px] w-full overflow-auto rounded-xl border border-border/30 bg-background/40"
+        style={{ minHeight: "520px" }}
         role="region"
         aria-label="Agent architecture canvas"
         tabIndex={0}
       >
         <div className="relative" style={{ minWidth: contentSize.width, minHeight: contentSize.height }}>
-          <svg className="absolute top-0 left-0 pointer-events-none" width={contentSize.width} height={contentSize.height} style={{ overflow: "visible" }} aria-hidden="true">
-            {connections.map((c) => (
-              <WorkflowConnectionLine key={`${c.from}-${c.to}`} from={c.from} to={c.to} nodes={nodes} />
-            ))}
+          <svg
+            className="absolute top-0 left-0 pointer-events-none"
+            width={contentSize.width}
+            height={contentSize.height}
+            style={{ overflow: "visible" }}
+            aria-hidden="true"
+          >
+            {connections.map((c) => {
+              const toNode = nodes.find((n) => n.id === c.to);
+              return (
+                <WorkflowConnectionLine
+                  key={`${c.from}-${c.to}`}
+                  from={c.from}
+                  to={c.to}
+                  nodes={nodes}
+                  locked={toNode?.locked}
+                />
+              );
+            })}
           </svg>
 
           {nodes.map((node) => {
@@ -224,17 +288,23 @@ export function AgentWorkflowBlock() {
                 onDragEnd={handleDragEnd}
                 onHoverStart={() => setHoveredNodeId(node.id)}
                 onHoverEnd={() => setHoveredNodeId(null)}
-                style={{ x: node.position.x, y: node.position.y, width: NODE_WIDTH, transformOrigin: "0 0" }}
+                style={{
+                  x: node.position.x,
+                  y: node.position.y,
+                  width: NODE_WIDTH,
+                  transformOrigin: "0 0",
+                  zIndex: isHovered ? 100 : isDragging ? 50 : 1,
+                }}
                 className="absolute cursor-grab"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.2, delay: nodes.indexOf(node) * 0.03 }}
                 whileHover={{ scale: 1.04 }}
-                whileDrag={{ scale: 1.06, zIndex: 50, cursor: "grabbing" }}
+                whileDrag={{ scale: 1.06, cursor: "grabbing" }}
                 aria-grabbed={isDragging}
               >
                 <Card
-                  className={`group/node relative w-full overflow-visible rounded-lg border ${colorClasses[node.color]} bg-background/70 px-2.5 py-2 backdrop-blur transition-all hover:shadow-lg ${isDragging ? "shadow-xl ring-2 ring-primary/50 " : ""}${node.type === "agent" ? "ring-1 ring-offset-1 ring-offset-background " + (node.direction === "inbound" ? "ring-blue-400/30 " : "ring-purple-400/30 ") : ""}${!node.configured ? "opacity-75 border-dashed" : ""}`}
+                  className={`group/node relative w-full overflow-visible rounded-lg border ${colorClasses[node.color]} bg-background/70 px-2.5 py-2 backdrop-blur transition-all hover:shadow-lg ${isDragging ? "shadow-xl ring-2 ring-primary/50 " : ""}${node.type === "agent" ? "ring-1 ring-offset-1 ring-offset-background " + (node.direction === "inbound" ? "ring-blue-400/30 " : "ring-purple-400/30 ") : ""}${node.locked ? "opacity-40 border-dashed" : !node.configured ? "opacity-75 border-dashed" : ""}`}
                   role="article"
                   aria-label={`${node.type} node: ${node.title}`}
                 >
@@ -256,20 +326,20 @@ export function AgentWorkflowBlock() {
                         >
                           {node.type === "use-case" ? "trigger" : node.type === "agent" ? node.direction : "result"}
                         </Badge>
-                        {!node.configured && (
-                          <button
-                            className="flex items-center gap-0.5 rounded-full border border-foreground/20 bg-foreground/5 px-1.5 py-0 text-[8px] uppercase tracking-[0.1em] text-foreground/50 hover:text-foreground/80 hover:border-foreground/40 transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Settings className="h-2.5 w-2.5" />
-                            Configure
-                          </button>
+                        {node.locked && (
+                          <Lock className="h-2.5 w-2.5 text-amber-400/60" aria-label="Premium feature" />
                         )}
                       </div>
                     </div>
                   </div>
                   <AnimatePresence>
-                    {isHovered && !isDragging && <NodeTooltip description={node.description} />}
+                    {isHovered && !isDragging && (
+                      <NodeTooltip
+                        description={node.description}
+                        configured={node.configured}
+                        locked={node.locked}
+                      />
+                    )}
                   </AnimatePresence>
                 </Card>
               </motion.div>
