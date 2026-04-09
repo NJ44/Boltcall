@@ -15,7 +15,7 @@ import {
   Shield,
   Bot,
   MessageSquare,
-  CheckCircle2,
+  CheckCircle2, CheckCircle,
   XCircle,
   Zap,
   FileText,

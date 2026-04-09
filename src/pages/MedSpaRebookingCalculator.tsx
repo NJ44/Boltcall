@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import {
   Sparkles, TrendingDown, TrendingUp, Users, DollarSign,
   CalendarCheck, Send, ChevronRight, Clock, Heart, Star,
-  AlertTriangle, ArrowRight, CheckCircle2, Syringe, Zap,
+  AlertTriangle, ArrowRight, CheckCircle2, CheckCircle, Syringe, Zap,
   UserMinus, BarChart3
 } from 'lucide-react';
 import Header from '../components/Header';
