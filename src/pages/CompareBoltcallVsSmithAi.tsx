@@ -629,6 +629,39 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
         </div>
       </main>
 
+      {/* Social Proof */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Businesses Say After Switching from Smith.ai</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "Smith.ai was costing us $500+/month and callers still got put on hold. Boltcall is a third of the price, answers instantly, and the AI voice is more natural.", name: "James R.", role: "Law Firm Owner, New York" },
+            { quote: "We switched from Smith.ai because the per-minute billing was unpredictable. Boltcall's flat rate is half the cost and it handles more call types than Smith ever did.", name: "Tony B.", role: "HVAC Business Owner, Michigan" },
+            { quote: "Smith.ai requires human agents for complex calls. Boltcall's AI handles them just as well, 24/7, without the wait times or the premium price tag.", name: "Sarah L.", role: "Dental Practice Manager, California" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Setup completed in 24 hours</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
+          </div>
+        </div>
+      </section>
+
       <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </>
