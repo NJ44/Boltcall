@@ -449,8 +449,7 @@ const FunnelOptimizer: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Want AI to Fix Your Funnel Automatically?</h2>
           <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Boltcall's AI receptionist, speed-to-lead system, and automated follow-ups
-            can improve every stage of your funnel — without hiring more staff.
+            Stop losing revenue to slow response times and leaky funnels. Boltcall's AI receptionist responds within 5 minutes — increasing lead qualification by 21x — so every stage of your funnel converts without hiring more staff.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
