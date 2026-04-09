@@ -15,7 +15,7 @@ const CompareBoltcallVsEmitrr: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Boltcall vs Emitrr: Full AI Suite vs SMS-First Platform (2026)";
-    updateMetaDescription("Boltcall vs Emitrr compared for local businesses. See how Boltcall's AI receptionist with voice, chat, and automation compares to Emitrr's SMS-focused platform.");
+    updateMetaDescription("Boltcall vs Emitrr for local businesses. See how Boltcall's AI receptionist with voice, chat, and automation compares to Emitrr's SMS-focused platform.");
 
     const articleScript = document.createElement('script');
     articleScript.type = 'application/ld+json';
