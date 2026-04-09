@@ -191,6 +191,9 @@ const AIReceptionistWorthItROI = React.lazy(() => import('../pages/AIReceptionis
 const MissedCallsStatistics2026 = React.lazy(() => import('../pages/MissedCallsStatistics2026'));
 const BestAIReceptionistHomeServices = React.lazy(() => import('../pages/BestAIReceptionistHomeServices'));
 const AiAgentSmallBusiness247CallAnswering = React.lazy(() => import('../pages/AiAgentSmallBusiness247CallAnswering'));
+const RoofingMissedCallsLeadCapture = React.lazy(() => import('../pages/RoofingMissedCallsLeadCapture'));
+const HomeServiceGoogleAdsLeadFollowUp = React.lazy(() => import('../pages/HomeServiceGoogleAdsLeadFollowUp'));
+const BestAIAnsweringServiceDentalMedical = React.lazy(() => import('../pages/BestAIAnsweringServiceDentalMedical'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -468,6 +471,9 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/missed-calls-statistics-local-business-2026" element={<MissedCallsStatistics2026 />} />
         <Route path="/blog/best-ai-receptionist-home-services" element={<BestAIReceptionistHomeServices />} />
         <Route path="/blog/ai-agent-for-small-business-24-7-call-answering" element={<AiAgentSmallBusiness247CallAnswering />} />
+        <Route path="/blog/roofing-company-stop-losing-leads-missed-calls" element={<RoofingMissedCallsLeadCapture />} />
+        <Route path="/blog/home-service-google-ads-lead-follow-up" element={<HomeServiceGoogleAdsLeadFollowUp />} />
+        <Route path="/blog/best-ai-answering-service-dental-medical-practice" element={<BestAIAnsweringServiceDentalMedical />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
