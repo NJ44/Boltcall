@@ -266,6 +266,63 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             )}
 
+            {/* Social Proof */}
+            <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
+                <p className="text-gray-500 text-center mb-8 text-sm">Over 500 businesses have used our audit to uncover hidden growth opportunities.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[
+                        {
+                            quote: "The audit immediately showed us we were invisible on Google Maps. Within 30 days of fixing it, our call volume doubled.",
+                            name: "Marcus T.",
+                            role: "HVAC Company Owner, Texas"
+                        },
+                        {
+                            quote: "I had no idea how many leads I was losing until I saw the report. It flagged our slow website and missing review strategy right away.",
+                            name: "Priya S.",
+                            role: "Dental Practice Manager, California"
+                        },
+                        {
+                            quote: "Free, fast, and actually useful. The audit gave us a prioritized list — we focused on the top 3 things and saw results within weeks.",
+                            name: "James R.",
+                            role: "Plumbing Business Owner, Florida"
+                        },
+                    ].map((item) => (
+                        <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                            <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+                            <div>
+                                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                                <p className="text-xs text-gray-500">{item.role}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Trust Signals */}
+            <section className="bg-gray-50 border-t border-gray-100 py-10">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>100% Free — no credit card required</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>Report delivered to your inbox in minutes</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>Your data is never sold or shared</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>Used by 500+ local businesses</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <FAQ />
             <Footer />
         </div>
