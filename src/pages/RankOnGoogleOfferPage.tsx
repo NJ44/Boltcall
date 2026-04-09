@@ -125,6 +125,9 @@ const RankOnGoogleOfferPage = () => {
                         <p className="text-gray-700 leading-relaxed">
                             Finally, we create AI-assisted content specifically structured to rank in both traditional search and AI-generated answer results. This includes FAQ pages, service area pages, and structured schema markup that helps Google understand exactly what you offer and where you serve. The result is a compounding SEO foundation that keeps generating traffic long after the initial work is done — without requiring you to run paid ads month after month.
                         </p>
+                        <p className="text-gray-700 leading-relaxed">
+                            Our AI receptionist also captures the calls that come from your improved Google rankings, ensuring every new lead you earn is answered — even at 2am. Better rankings without better lead capture is like turning on a faucet with no bucket underneath.
+                        </p>
                     </div>
                 </div>
             </section>
