@@ -659,6 +659,122 @@ const AiReceptionistRoi: React.FC = () => {
         </section>
       )}
 
+      {/* ─── Testimonials Section ─────────────────────────────────────── */}
+      <section className="py-16 md:py-20 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+            className="text-center mb-12"
+          >
+            <motion.p variants={fadeInUp} className="text-sm font-medium text-[#2563EB] uppercase tracking-wider mb-3">
+              Real Results
+            </motion.p>
+            <motion.h3 variants={fadeInUp} className="text-2xl md:text-3xl font-bold text-[#0B1220]">
+              What business owners say after switching to AI
+            </motion.h3>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              {
+                quote: "We were missing 15–20 calls a week during busy season. After switching to Boltcall, every call gets answered and we've booked an extra $8,000 in jobs in the first month.",
+                name: "Derek M.",
+                role: "Plumbing & Drain, Ohio",
+                result: "+$8K/mo",
+              },
+              {
+                quote: "I thought a $179/month AI receptionist was expensive — until I realized I was losing $3,000+ per week in missed calls. The ROI calculator was an eye-opener.",
+                name: "Sandra L.",
+                role: "HVAC Company Owner, Arizona",
+                result: "23x ROI",
+              },
+              {
+                quote: "Patients calling after hours used to hit voicemail and call our competitor. Now they get booked automatically. Our no-show rate dropped by 40% too.",
+                name: "Dr. Kevin P.",
+                role: "Dental Practice, Florida",
+                result: "40% fewer no-shows",
+              },
+            ].map((item) => (
+              <motion.div
+                key={item.name}
+                variants={fadeInUp}
+                className="bg-white border-2 border-[#0B1220] rounded-2xl p-6 shadow-[4px_4px_0px_0px_#0B1220] flex flex-col"
+              >
+                <div className="flex-1">
+                  <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+                </div>
+                <div className="border-t border-gray-100 pt-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-[#0B1220]">{item.name}</p>
+                    <p className="text-xs text-gray-500">{item.role}</p>
+                  </div>
+                  <span className="text-xs font-bold text-[#2563EB] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                    {item.result}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── How AI Captures Missed Revenue ───────────────────────────── */}
+      <section className="py-16 md:py-20 bg-[#F8FAFF]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+            className="max-w-3xl mx-auto"
+          >
+            <motion.h3 variants={fadeInUp} className="text-2xl md:text-3xl font-bold text-[#0B1220] text-center mb-10">
+              How an AI receptionist turns missed calls into booked revenue
+            </motion.h3>
+            <div className="space-y-5">
+              {[
+                {
+                  step: '01',
+                  title: 'Answers every call — 24/7, even on weekends',
+                  desc: 'Most local businesses miss 40–60% of calls outside business hours. An AI receptionist answers instantly, any time of day, with zero hold time.',
+                },
+                {
+                  step: '02',
+                  title: 'Qualifies the caller and captures their details',
+                  desc: 'The AI asks the right questions, captures name, contact info, and service need — turning anonymous callers into real leads in your CRM.',
+                },
+                {
+                  step: '03',
+                  title: 'Books appointments directly on your calendar',
+                  desc: 'Callers get booked in real time without waiting for a callback. No back-and-forth, no missed opportunities — just confirmed appointments.',
+                },
+                {
+                  step: '04',
+                  title: 'Sends automated follow-up to reduce no-shows',
+                  desc: 'Reminder texts and confirmation messages keep booked customers from forgetting or going to a competitor before their appointment.',
+                },
+              ].map((item) => (
+                <motion.div
+                  key={item.step}
+                  variants={fadeInUp}
+                  className="flex gap-5 bg-white border border-gray-200 rounded-xl p-5 shadow-sm"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-[#2563EB] text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
+                    {item.step}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-[#0B1220] mb-1">{item.title}</h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ─── Social Proof Section ──────────────────────────────────────── */}
       <section className="py-16 md:py-20 bg-gradient-to-b from-white to-[#DDE2EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

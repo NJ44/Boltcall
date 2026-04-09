@@ -337,6 +337,28 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* --- How to Use This Calculator --- */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="bg-indigo-950/60 border border-indigo-500/20 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 leading-relaxed"
+          >
+            <h2 className="text-xl font-bold text-white">How This Calculator Works</h2>
+            <p>
+              This tool is built specifically for chiropractic clinic owners and practice managers who want to measure revenue losses across three distinct areas: incomplete treatment plans (patients who drop off before finishing their prescribed care), missed inbound calls from new patient leads, and appointment no-shows. Each of these categories represents a separate revenue leak — and most practices are unaware of the true dollar impact until they run the numbers.
+            </p>
+            <p>
+              Enter your clinic's actual figures using the sliders in each section. If you don't know a specific number, the defaults reflect national benchmarks for solo and small group chiropractic practices. The right-side panel calculates your total monthly and annual loss in real time and models the revenue recovery you would see with AI-powered answering, appointment reminders, and patient re-engagement sequences.
+            </p>
+            <p>
+              The methodology is grounded in documented industry data: the average chiropractic practice loses 40–60% of treatment plan revenue to patient attrition, carries a 15–25% no-show rate, and misses roughly a quarter of inbound calls. By understanding where your clinic sits relative to these benchmarks, you can prioritize which leak to address first for the fastest revenue impact. Enter your email below the calculator to receive a personalized recovery plan PDF.
+            </p>
+          </motion.div>
+        </section>
+
         {/* --- CALCULATOR --- */}
         <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-8">
@@ -745,6 +767,30 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
         {/* --- FINAL CTA --- */}
         <FinalCTA {...CALCULATOR_CTA} />
       </main>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>100% Free — no credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Used by 500+ local businesses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Results in 30 days or your money back</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Your data is never sold or shared</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

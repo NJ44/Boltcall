@@ -3,10 +3,30 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
+// Plugin: convert injected <link rel="stylesheet"> to non-blocking preload pattern.
+// Safe for SPAs because <div id="root"> has no visible content until JS renders anyway,
+// so CSS will be fully loaded before React paints anything meaningful.
+const nonBlockingCss = () => ({
+  name: 'non-blocking-css',
+  transformIndexHtml(html: string) {
+    return html.replace(
+      /<link rel="stylesheet" (crossorigin )?href="([^"]+\.css[^"]*)"\s*\/?>/g,
+      (_match: string, crossorigin: string | undefined, href: string) => {
+        const co = crossorigin ? ' crossorigin' : '';
+        return (
+          `<link rel="preload" href="${href}" as="style"${co} onload="this.onload=null;this.rel='stylesheet'">` +
+          `<noscript><link rel="stylesheet" href="${href}"${co}></noscript>`
+        );
+      }
+    );
+  },
+});
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    nonBlockingCss(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: [

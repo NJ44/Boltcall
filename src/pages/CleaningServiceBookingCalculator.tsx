@@ -340,6 +340,28 @@ const CleaningServiceBookingCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* --- About This Calculator --- */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="bg-slate-900 border border-purple-500/20 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 leading-relaxed"
+          >
+            <h2 className="text-xl font-bold text-white">About This Calculator</h2>
+            <p>
+              This booking revenue calculator was built for cleaning service owners — residential, commercial, and mixed operations — who want to understand exactly how much revenue they lose each month to missed inquiry calls, cancellations, and client churn. Unlike generic business calculators, this tool is calibrated to the economics of the cleaning industry: recurring contracts, job-by-job booking patterns, and the high cost of losing a long-term client.
+            </p>
+            <p>
+              The four input sections mirror the four most common revenue drains in a cleaning business: business volume (your baseline), missed booking inquiries (calls you don't answer become competitors' clients), cancellation and churn dynamics (one lost recurring client often represents thousands in annual revenue), and the modeled recovery from AI automation. Adjust the sliders to match your actual operation, or use the defaults if you're estimating. The results panel updates immediately.
+            </p>
+            <p>
+              Pay particular attention to the recurring client churn figure. In the cleaning industry, the difference between an 8-month and a 12-month average client retention is often tens of thousands of dollars in annual recurring revenue for a mid-size operation. Automated follow-up, rebooking prompts after cancellations, and consistent communication are the primary levers that extend average client tenure — and this calculator shows you the exact dollar value of improving each one.
+            </p>
+          </motion.div>
+        </section>
+
         {/* --- CALCULATOR --- */}
         <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-8">
@@ -753,6 +775,30 @@ const CleaningServiceBookingCalculator: React.FC = () => {
         {/* --- FINAL CTA --- */}
         <FinalCTA {...CALCULATOR_CTA} />
       </main>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>100% Free — no credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Used by 500+ local businesses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Results in 30 days or your money back</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Your data is never sold or shared</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

@@ -156,7 +156,7 @@ const PlumberRevenueCalculator: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Plumber Revenue Calculator — How Much Are You Losing? | Boltcall';
     updateMetaDescription(
-      'Free calculator for plumbing businesses: find out exactly how much revenue you lose from missed after-hours emergency calls. Get a personalized revenue recovery report.'
+      'Free calculator for plumbing businesses: see how much revenue you lose from missed after-hours emergency calls. Get a personalized revenue recovery report.'
     );
   }, []);
 
@@ -297,6 +297,25 @@ const PlumberRevenueCalculator: React.FC = () => {
             </span>
           </motion.div>
         </div>
+      </section>
+
+      {/* ── About This Calculator ── */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 pb-10">
+        <motion.div
+          {...fadeUp}
+          className="bg-slate-900/80 border border-blue-500/20 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 leading-relaxed"
+        >
+          <h2 className="text-xl font-bold text-white">About This Calculator</h2>
+          <p>
+            The Plumber Revenue Calculator quantifies the dollar cost of missed emergency calls for plumbing businesses. It accounts for three compounding losses: the direct revenue from the job that went to a competitor, the repeat customer lifetime value that evaporates when a caller books elsewhere and never returns, and the marketing spend wasted generating a lead that was then lost to voicemail. Most plumbing companies dramatically underestimate the third category.
+          </p>
+          <p>
+            Enter your average emergency call job value, how many after-hours and weekend calls you receive, what percentage go to voicemail, and how quickly callers move on to call another plumber. The results panel updates in real time to show your total monthly and annual revenue loss. The "Recovery with AI" section then models what happens when 90% of those missed calls are answered immediately — and calculates the net monthly gain after the cost of an AI receptionist.
+          </p>
+          <p>
+            Use the default values as a starting point if you don't track these numbers precisely. The defaults reflect national averages from plumbing industry research, so the output will give you a reasonable estimate of your potential losses. Adjust the sliders to reflect your specific market — rural operations often see lower call volume but higher per-job values, while urban plumbers may see the opposite. After running your numbers, enter your email to receive a personalized revenue recovery report.
+          </p>
+        </motion.div>
       </section>
 
       {/* ── Calculator ── */}
@@ -793,6 +812,31 @@ const PlumberRevenueCalculator: React.FC = () => {
       </section>
 
       <FinalCTA {...CALCULATOR_CTA} />
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>100% Free — no credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Used by 500+ local businesses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Results in 30 days or your money back</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Your data is never sold or shared</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

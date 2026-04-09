@@ -210,6 +210,27 @@ const Strike: React.FC = () => {
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-4 max-w-3xl mx-auto leading-relaxed">
                     Your intelligent AI assistant that helps you accomplish more
                   </p>
+                  <p className="text-xs text-white/50 max-w-xl mx-auto">
+                    Powered by advanced large language models. Learn more about{' '}
+                    <a
+                      href="https://en.wikipedia.org/wiki/Large_language_model"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-white/80 transition-colors"
+                    >
+                      how AI assistants work
+                    </a>{' '}
+                    or explore{' '}
+                    <a
+                      href="https://www.g2.com/categories/ai-writing-assistant"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-white/80 transition-colors"
+                    >
+                      top-rated AI tools on G2
+                    </a>
+                    .
+                  </p>
                 </motion.div>
 
                 {/* Content section — crawlable, explains Strike AI capabilities */}

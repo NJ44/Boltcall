@@ -115,15 +115,10 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center px-8 text-white"
           >
-            <h1 className="text-2xl font-bold mb-2">Get in Touch</h1>
+            <p className="text-2xl font-bold mb-2">Get in Touch</p>
             <p className="text-white/80 text-sm leading-relaxed mb-4 max-w-[240px] mx-auto">
               Have a question or want to learn more? We'd love to hear from you.
             </p>
-            <div className="flex gap-3 justify-center mb-2">
-              <a href="https://www.linkedin.com/company/boltcall" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white text-xs underline">LinkedIn</a>
-              <a href="https://x.com/boltcallteam" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white text-xs underline">X (Twitter)</a>
-              <a href="https://www.facebook.com/profile.php?id=61582307818752" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white text-xs underline">Facebook</a>
-            </div>
             <div className="w-72 h-72 mx-auto">
               <LazyLottie
                 src="/Email.lottie"
@@ -147,7 +142,7 @@ const Contact: React.FC = () => {
                 style={{ width: '100%', height: '100%' }}
               />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">Get in Touch</h2>
+            <p className="text-2xl font-bold text-gray-900">Get in Touch</p>
           </div>
 
           <motion.div
@@ -156,9 +151,9 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.3, delay: 0.15 }}
             className="w-full max-w-[380px]"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5 hidden lg:block">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5 hidden lg:block">
               Contact Us
-            </h2>
+            </h1>
 
             {/* Success Message */}
             {isSubmitted && (
@@ -216,6 +211,28 @@ const Contact: React.FC = () => {
                 </button>
               </div>
             </form>
+
+            <p className="mt-4 text-center text-xs text-gray-400">
+              See how Boltcall compares on{' '}
+              <a
+                href="https://www.g2.com/categories/ai-sales-assistant"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                G2
+              </a>{' '}
+              or read reviews on{' '}
+              <a
+                href="https://www.capterra.com/p/10010996/Boltcall/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                Capterra
+              </a>
+              .
+            </p>
           </motion.div>
         </div>
       </motion.div>

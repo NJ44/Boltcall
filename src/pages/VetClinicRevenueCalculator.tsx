@@ -245,6 +245,23 @@ const VetClinicRevenueCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* --- How to Use This Calculator --- */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="bg-slate-900 border border-teal-500/20 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 leading-relaxed">
+            <h2 className="text-xl font-bold text-white">How to Use This Calculator</h2>
+            <p>
+              This tool is designed for veterinary clinic owners and practice managers who want to quantify revenue losses from three sources: no-shows and late cancellations, missed inbound calls from potential new clients, and incomplete rebooking after cancellations. Enter your clinic's actual numbers using the sliders — or leave the defaults, which reflect national averages for small to mid-size vet clinics — and watch the results panel update in real time.
+            </p>
+            <p>
+              The methodology accounts for both direct revenue loss (the appointment value itself) and lifetime client value loss (missed new clients who go to a competitor never return). The "Recovery with AI" section models what happens when automated appointment reminders, 24/7 AI call answering, and instant waitlist management are applied to your current numbers — and calculates the net gain after the cost of the system.
+            </p>
+            <p>
+              Most vet clinics are surprised to discover their real monthly loss is two to four times higher than they estimated. No-shows feel like a small nuisance day-to-day, but the compounding effect of 15-20% empty appointment slots across an entire month adds up to thousands of dollars in preventable lost revenue. Use this calculator as your baseline, then enter your email to receive a personalized PDF report with a step-by-step recovery plan.
+            </p>
+          </motion.div>
+        </section>
+
         {/* --- CALCULATOR --- */}
         <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-8">
@@ -626,6 +643,30 @@ const VetClinicRevenueCalculator: React.FC = () => {
         {/* --- FINAL CTA --- */}
         <FinalCTA {...CALCULATOR_CTA} />
       </main>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>100% Free — no credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Used by 500+ local businesses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Results in 30 days or your money back</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Your data is never sold or shared</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

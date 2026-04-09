@@ -19,7 +19,7 @@ const BestAIReceptionistHomeServices: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Best AI Receptionist for Home Services (Plumbers, HVAC, Roofing) | Boltcall';
     updateMetaDescription(
-      'Best AI receptionist for home services in 2026. Capture every call for plumbers, HVAC, roofing, and contractors. 24/7 answering, lead qualification, and appointment booking.'
+      'Best AI receptionist for home services in 2026. Capture every call for plumbers, HVAC, roofing, and contractors. 24/7 answering and lead qualification.'
     );
 
     const script = document.createElement('script');

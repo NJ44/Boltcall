@@ -27,7 +27,7 @@ const Documentation: React.FC = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = 'Boltcall Documentation: Setup, Integrations & AI Features Guide';
+    document.title = 'Boltcall Documentation: Setup, Integrations & AI Guide';
     updateMetaDescription('Complete Boltcall documentation. Step-by-step guides for setup, phone and calendar integrations, AI receptionist configuration, and troubleshooting.');
 
     // Article schema
@@ -36,7 +36,7 @@ const Documentation: React.FC = () => {
     articleSchema.textContent = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Article',
-      headline: 'Boltcall Documentation: Setup, Integrations & AI Features Guide',
+      headline: 'Boltcall Documentation: Setup, Integrations & AI Guide',
       author: { '@type': 'Organization', name: 'Boltcall Team', url: 'https://boltcall.org' },
       publisher: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
       datePublished: '2025-06-01',

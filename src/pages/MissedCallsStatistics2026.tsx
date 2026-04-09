@@ -103,7 +103,7 @@ const MissedCallsStatistics2026: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'State of Missed Calls in Local Business 2026: Statistics & Data | Boltcall';
-    updateMetaDescription('Comprehensive statistics on missed calls in local businesses. Data on call volumes, miss rates, revenue impact, and AI receptionist adoption across 7 industries.');
+    updateMetaDescription('Missed call statistics for local businesses in 2026. Data on miss rates, revenue impact, and AI receptionist adoption across 7 industries. Updated data.');
 
     /* Article schema */
     const articleSchema = {

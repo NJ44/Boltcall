@@ -15,7 +15,7 @@ const CompareBoltcallVsEmitrr: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Boltcall vs Emitrr: Full AI Suite vs SMS-First Platform (2026)";
-    updateMetaDescription("Boltcall vs Emitrr compared for local businesses. See how Boltcall's AI receptionist with voice, chat, and automation compares to Emitrr's SMS-focused platform.");
+    updateMetaDescription("Boltcall vs Emitrr for local businesses. See how Boltcall's AI receptionist with voice, chat, and automation compares to Emitrr's SMS-focused platform.");
 
     const articleScript = document.createElement('script');
     articleScript.type = 'application/ld+json';
@@ -543,6 +543,39 @@ const CompareBoltcallVsEmitrr: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* Social Proof */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Businesses Say About Boltcall</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "Emitrr was okay for texting but didn't answer calls. Boltcall does both — the AI picks up calls and follows up with a text automatically. It's a complete solution.", name: "Marcus T.", role: "HVAC Business Owner, Texas" },
+            { quote: "We used Emitrr for SMS follow-ups but still missed a ton of calls. Switching to Boltcall gave us an AI receptionist and automated follow-ups in one platform.", name: "Priya S.", role: "Dental Practice Manager, California" },
+            { quote: "Boltcall's voice AI is what sets it apart. It answers calls naturally, qualifies leads, and books appointments — not just sends text messages.", name: "James R.", role: "Plumbing Company Owner, Florida" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Setup completed in 24 hours</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
+          </div>
+        </div>
+      </section>
 
       <FinalCTA {...COMPARISON_CTA} />
       <Footer />

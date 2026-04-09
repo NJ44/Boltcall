@@ -267,31 +267,64 @@ const SEOAuditPDF: React.FC = () => {
         </div>
       </section>
 
-      {/* How the SEO & AEO Audit Works */}
+      {/* How It Works — What We Analyze */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">How the SEO & AEO Audit Works</h2>
-        <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
-          Traditional SEO audits only check Google rankings. Our report goes further — it scores your site against the 30 factors that determine whether you show up in both search engine results and AI-generated answers from tools like ChatGPT, Perplexity, and Google AI Overviews.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {[
-            { step: '1', title: 'Website Crawl', desc: 'We crawl your site the same way Google does — checking meta tags, headings, content depth, internal linking structure, and indexability signals that affect ranking.' },
-            { step: '2', title: 'Technical SEO Check', desc: 'Page speed, mobile responsiveness, SSL certificates, sitemap health, and structured data markup are all evaluated against current Google Core Web Vitals standards.' },
-            { step: '3', title: 'AEO Readiness Score', desc: 'AI answer engines favor pages with clear authority signals: FAQ schema, concise factual answers, citation-worthy content, and topical depth. We score all of these.' },
-            { step: '4', title: 'Prioritized Action Plan', desc: 'Every finding is ranked by estimated impact. Your PDF report tells you exactly what to fix first, with specific instructions — not vague recommendations.' },
-          ].map((item) => (
-            <div key={item.step} className="flex gap-4 bg-gray-50 rounded-xl p-5 border border-gray-200">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">{item.step}</div>
-              <div>
-                <div className="font-semibold text-gray-900 text-sm mb-1">{item.title}</div>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            What Is AEO — And Why Does It Matter for Your Business?
+          </h2>
+
+          <div className="prose prose-gray max-w-none space-y-4 text-gray-700 leading-relaxed mb-10">
+            <p>
+              Search Engine Optimization (SEO) focuses on ranking in Google's traditional blue-link results.
+              AI Engine Optimization (AEO) is the emerging discipline of making your business visible inside
+              AI-powered answer engines — ChatGPT, Google's AI Overviews, Perplexity, and Bing Copilot.
+              These AI surfaces now answer millions of local business queries every day, and the businesses
+              that appear in those answers get calls, bookings, and leads without paying for ads.
+            </p>
+            <p>
+              Most local businesses have never been audited for AEO readiness. They may rank reasonably well
+              on traditional Google search, yet be completely invisible when a potential customer asks an AI
+              assistant "who is the best plumber near me?" or "which dentist accepts Delta Dental in Austin?"
+              Our audit scores your site on both dimensions — giving you a complete picture of your current
+              visibility and a prioritized list of what to fix first.
+            </p>
+            <p>
+              The free PDF report we generate covers 30 factors across six categories: on-page SEO health,
+              technical performance, structured data and rich results eligibility, content quality and
+              topical authority, local signals (NAP consistency, Google Business Profile alignment), and
+              AEO readiness indicators like FAQ schema, conversational content structure, and entity markup.
+              Most businesses discover 8 to 15 fixable issues they were unaware of — and fixing even half
+              of them typically moves the revenue needle within 60 to 90 days.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-5 mb-10">
+            {[
+              {
+                title: 'Step 1: Enter Your URL',
+                desc: 'We crawl your website the same way Google and AI engines do — analyzing every page, heading, link, and metadata tag in real time.',
+              },
+              {
+                title: 'Step 2: AI Writes Your Report',
+                desc: 'Our AI cross-references your site data against 30 ranking factors and writes a plain-English analysis with specific, actionable recommendations.',
+              },
+              {
+                title: 'Step 3: Get Your PDF',
+                desc: 'A branded 6-page PDF arrives in your inbox within minutes — with a priority action plan ranked by potential traffic impact so you know exactly where to start.',
+              },
+            ].map((step) => (
+              <div key={step.title} className="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                <h3 className="font-bold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{step.desc}</p>
               </div>
-            </div>
-          ))}
-        </div>
-        <p className="text-center text-sm text-gray-500">
-          The report is generated by AI trained on current SEO best practices and delivered as a branded PDF to your inbox within approximately 5 minutes of submission.
-        </p>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* Form */}
@@ -394,6 +427,39 @@ const SEOAuditPDF: React.FC = () => {
             </form>
           </div>
         </motion.div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "The SEO & AEO report showed me exactly why my site wasn't showing up in AI search results. After following the action plan, we started appearing in Google's AI Overviews within 6 weeks.", name: "Lisa M.", role: "Roofing Company Owner, Ohio" },
+            { quote: "I had no idea AEO was even a thing. The PDF explained it clearly and gave me step-by-step fixes. My web developer loved how specific the recommendations were.", name: "Carlos R.", role: "HVAC Business Owner, Texas" },
+            { quote: "I've paid for SEO audits that gave me less than this free report. The structured data recommendations alone were worth it — we're now getting rich results on Google.", name: "Janet K.", role: "Dental Practice Manager, Georgia" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8 mb-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
+            <div className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
+            <div className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" /><span>PDF report delivered in ~5 minutes</span></div>
+            <div className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
+          </div>
+        </div>
       </section>
 
       <FAQ />

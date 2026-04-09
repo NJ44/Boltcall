@@ -98,8 +98,34 @@ const HelpCenter: React.FC = () => {
     // TODO: implement search functionality
   };
 
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Help Center - Support & Documentation | Boltcall",
+    "description": "Boltcall help center with support articles, FAQs, and documentation. Find answers to common questions about AI receptionist setup, phone configuration, and troubleshooting.",
+    "url": "https://boltcall.org/help-center",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Boltcall",
+      "url": "https://boltcall.org"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Help Center", "item": "https://boltcall.org/help-center" }
+      ]
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* JSON-LD WebPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -267,21 +293,71 @@ const HelpCenter: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* Quick Links – Related Resources */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.1 }}
+          className="mt-16"
+        >
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Related Resources</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {[
+              { label: 'Documentation', to: '/documentation' },
+              { label: 'About Boltcall', to: '/about' },
+              { label: 'Pricing', to: '/pricing' },
+              { label: 'Contact Us', to: '/contact' },
+              { label: 'AI Receptionist', to: '/features/ai-receptionist' },
+            ].map(({ label, to }) => (
+              <Link
+                key={to}
+                to={to}
+                className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
+              >
+                <ArrowRight className="h-4 w-4 shrink-0" />
+                {label}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Contact Support */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          className="mt-16 bg-blue-50 rounded-xl p-8 text-center"
+          className="mt-10 bg-blue-50 rounded-xl p-8 text-center"
         >
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Still need help?</h2>
           <p className="text-gray-600 mb-6">
             Can't find what you're looking for? Our support team is here to help you succeed.
+            You can also explore{' '}
+            <a
+              href="https://www.nngroup.com/articles/contact-us-pages/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline underline-offset-2 hover:text-blue-800"
+            >
+              best practices for reaching support teams
+            </a>{' '}
+            or review the{' '}
+            <a
+              href="https://www.twilio.com/docs/voice/tutorials"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline underline-offset-2 hover:text-blue-800"
+            >
+              Twilio Voice documentation
+            </a>{' '}
+            for telephony-related questions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <Link
+              to="/contact"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            >
               Contact Support
-            </button>
+            </Link>
             <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
               Schedule a Call
             </button>

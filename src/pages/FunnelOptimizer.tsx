@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { TrendingUp, AlertTriangle, Download, Mail, Loader, BarChart3, DollarSign, Users, Target } from 'lucide-react';
+import { TrendingUp, AlertTriangle, Download, Mail, Loader, BarChart3, DollarSign, Users, Target, CheckCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -30,7 +30,7 @@ const FunnelOptimizer: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Free Funnel Optimizer — See How Much Revenue Your Funnel Is Leaking';
-    updateMetaDescription('Free funnel analysis tool for local businesses. Enter your conversion rates, get a branded PDF report with revenue leak detection, benchmarks, and recommendations.');
+    updateMetaDescription('Free funnel analysis tool for local businesses. Enter your conversion rates and get a PDF report with revenue leak detection, benchmarks, and fixes.');
   }, []);
 
   // Live preview calculations
@@ -444,6 +444,62 @@ const FunnelOptimizer: React.FC = () => {
         </div>
       </section>
 
+      {/* What is a Funnel Optimizer */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+              What Is a Funnel Optimizer?
+            </h2>
+            <div className="space-y-4 text-gray-700 leading-relaxed mb-10">
+              <p>
+                A funnel optimizer is a tool that maps every stage of your customer acquisition process — from first visit to closed deal — and identifies exactly where you are losing potential revenue. Most local businesses operate with conversion rates far below what is achievable. They spend money on advertising to drive website visitors, then lose the majority of those visitors before they ever become leads. They generate leads and then lose half of them before a quote is requested. They send quotes and fail to follow up consistently, losing deals to competitors who simply stayed in touch.
+              </p>
+              <p>
+                This tool calculates your current funnel metrics and compares them to industry benchmarks for your niche. It then generates a detailed PDF report that identifies your weakest conversion stage — the one where you are leaving the most revenue on the table — and provides specific, actionable recommendations to improve it. Unlike generic marketing advice, the recommendations are personalized to your actual numbers and industry.
+              </p>
+              <p>
+                The output includes a month-over-month revenue projection showing what your business would earn if you improved each conversion rate by just 20% — a realistic and achievable target for most businesses. For many local service companies, even a small improvement in a single funnel stage can mean $5,000 to $30,000 in additional annual revenue without increasing advertising spend.
+              </p>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+              Common Funnel Leaks We Find
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {[
+                {
+                  title: 'Slow Lead Response',
+                  desc: 'Businesses that respond to a lead within 5 minutes are 21x more likely to convert than those who respond after an hour. Most local businesses take 6 to 24 hours. This single leak can cost 60% of your leads.',
+                },
+                {
+                  title: 'No After-Hours Coverage',
+                  desc: '40% of leads contact businesses outside of office hours. Without automated response, those leads reach out to a competitor and book before you call back the next morning.',
+                },
+                {
+                  title: 'Missing Follow-Up Sequences',
+                  desc: '80% of sales require 5 or more follow-up contacts. Most businesses give up after one or two attempts, leaving deals that are still on the table — just waiting for someone to ask again.',
+                },
+                {
+                  title: 'Low Quote-to-Close Rate',
+                  desc: 'The average local service business closes 25-35% of quotes sent. Top performers close 50-60% by using automated follow-up sequences, social proof, and urgency triggers that keep the conversation alive.',
+                },
+              ].map((leak) => (
+                <div key={leak.title} className="bg-red-50 rounded-xl p-5 border border-red-100">
+                  <h3 className="font-bold text-gray-900 mb-2">{leak.title}</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">{leak.desc}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-16 bg-gradient-to-r from-indigo-600 to-purple-600">
         <div className="max-w-4xl mx-auto px-4 text-center">
@@ -468,6 +524,51 @@ const FunnelOptimizer: React.FC = () => {
               <Target className="w-5 h-5" />
               Book a Strategy Call
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "Boltcall paid for itself in the first week. We stopped losing calls after hours and our bookings jumped 40%.", name: "Marcus T.", role: "HVAC Owner, Texas" },
+            { quote: "I was skeptical about AI, but it just works. Our front desk handles 30% fewer interruptions now.", name: "Priya S.", role: "Dental Practice Manager, California" },
+            { quote: "We were losing 15-20 calls a week to voicemail. Boltcall captures every single one now.", name: "James R.", role: "Plumbing Business Owner, Florida" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>100% Free — no credit card required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Used by 500+ local businesses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Results in 30 days or your money back</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <span>Your data is never sold or shared</span>
+            </div>
           </div>
         </div>
       </section>

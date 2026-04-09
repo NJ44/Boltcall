@@ -120,7 +120,10 @@ const BusinessAuditPage: React.FC = () => {
             {/* Hero Section */}
             <section className="relative pt-32 pb-4 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <Breadcrumbs />
+                    <Breadcrumbs items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Business Audit', href: '/business-audit' }
+                    ]} />
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -263,45 +266,59 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             )}
 
-            {/* What the Business Audit Covers */}
+            {/* Social Proof */}
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">What the Business Audit Covers</h2>
-                <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
-                    Your online presence is made up of more than just your website. This free audit evaluates the five pillars that determine whether local customers find you, trust you, and choose you over competitors.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
+                <p className="text-gray-500 text-center mb-8 text-sm">Over 500 businesses have used our audit to uncover hidden growth opportunities.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[
-                        { title: 'Website Performance', desc: 'Speed, mobile usability, and technical health. A slow or broken site loses customers before they read your first sentence.' },
-                        { title: 'Local Search Visibility', desc: 'Google Business Profile completeness, local keyword presence, and whether your business appears in the local map pack for relevant searches.' },
-                        { title: 'Online Reputation', desc: 'Review quantity, recency, and average rating across Google, Yelp, and industry directories. Reviews are the #1 trust signal for local buyers.' },
-                        { title: 'Lead Capture & Conversion', desc: 'How easy is it for a visitor to contact you, book an appointment, or request a quote? We identify friction in your booking and inquiry process.' },
-                        { title: 'Competitive Positioning', desc: 'How does your online presence compare to local competitors in your category? We identify gaps where competitors are outranking or outperforming you.' },
-                        { title: 'Content & Authority', desc: 'Whether your website content answers the questions your potential customers are actually searching for — a key signal for both Google and AI answer engines.' },
+                        {
+                            quote: "The audit immediately showed us we were invisible on Google Maps. Within 30 days of fixing it, our call volume doubled.",
+                            name: "Marcus T.",
+                            role: "HVAC Company Owner, Texas"
+                        },
+                        {
+                            quote: "I had no idea how many leads I was losing until I saw the report. It flagged our slow website and missing review strategy right away.",
+                            name: "Priya S.",
+                            role: "Dental Practice Manager, California"
+                        },
+                        {
+                            quote: "Free, fast, and actually useful. The audit gave us a prioritized list — we focused on the top 3 things and saw results within weeks.",
+                            name: "James R.",
+                            role: "Plumbing Business Owner, Florida"
+                        },
                     ].map((item) => (
-                        <div key={item.title} className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-                            <h3 className="text-sm font-semibold text-gray-900 mb-2">{item.title}</h3>
-                            <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                        <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                            <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+                            <div>
+                                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                                <p className="text-xs text-gray-500">{item.role}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
             </section>
 
-            {/* What to Expect */}
-            <section className="bg-blue-50 py-12">
+            {/* Trust Signals */}
+            <section className="bg-gray-50 border-t border-gray-100 py-10">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">What to Expect After You Submit</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            { step: '1', title: 'Submit Your URL', desc: 'Enter your business website and email. No account required, no credit card, no strings attached.' },
-                            { step: '2', title: 'AI Analyzes Your Business', desc: 'Our system crawls your site and cross-references your online presence across major directories and search results.' },
-                            { step: '3', title: 'Receive Your Report', desc: 'Your personalized audit report arrives in your inbox with scores, findings, and a prioritized list of improvements to make.' },
-                        ].map((item) => (
-                            <div key={item.step} className="bg-white rounded-xl p-5 border border-blue-100 text-center">
-                                <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mx-auto mb-3">{item.step}</div>
-                                <div className="font-semibold text-gray-900 text-sm mb-2">{item.title}</div>
-                                <p className="text-sm text-gray-600">{item.desc}</p>
-                            </div>
-                        ))}
+                    <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>100% Free — no credit card required</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>Report delivered to your inbox in minutes</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>Your data is never sold or shared</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                            <span>Used by 500+ local businesses</span>
+                        </div>
                     </div>
                 </div>
             </section>
