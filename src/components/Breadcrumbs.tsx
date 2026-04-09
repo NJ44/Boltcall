@@ -92,7 +92,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
       const scriptToRemove = document.getElementById('breadcrumb-schema');
       if (scriptToRemove) scriptToRemove.remove();
     };
-  }, [location.pathname, breadcrumbItems]);
+  }, [location.pathname, items]);
 
   if (breadcrumbItems.length <= 1) return null;
 
