@@ -111,6 +111,27 @@ const FreeWebsitePage: React.FC = () => {
               </ul>
             </div>
 
+            <p className="mt-8 text-xs text-white/50 leading-relaxed">
+              Want to see how a great website boosts rankings? Read{' '}
+              <a
+                href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white/80 transition-colors"
+              >
+                Google's SEO Starter Guide
+              </a>{' '}
+              or browse{' '}
+              <a
+                href="https://www.capterra.com/website-builder-software/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white/80 transition-colors"
+              >
+                website builder reviews on Capterra
+              </a>
+              .
+            </p>
             {/* Disclaimer removed per request */}
           </div>
 
