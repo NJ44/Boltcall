@@ -46,10 +46,30 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
 
   // Generate structured data for breadcrumbs
   useEffect(() => {
+    // Build schema items independently so the JSON-LD always includes the
+    // current page — even for single-segment paths where the last segment is
+    // omitted from the rendered nav (it is the current page, not a link).
+    // This ensures the BreadcrumbList schema always has ≥2 items as required.
+    const schemaItems = (() => {
+      if (items) return items;
+      const pathSegments = location.pathname.split('/').filter(Boolean);
+      const result: BreadcrumbItem[] = [{ label: 'Home', href: '/' }];
+      let currentPath = '';
+      pathSegments.forEach(segment => {
+        currentPath += `/${segment}`;
+        const label = segment
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        result.push({ label, href: currentPath });
+      });
+      return result;
+    })();
+
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "itemListElement": breadcrumbItems.map((item, index) => ({
+      "itemListElement": schemaItems.map((item, index) => ({
         "@type": "ListItem",
         "position": index + 1,
         "name": item.label,
