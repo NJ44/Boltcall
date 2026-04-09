@@ -142,7 +142,7 @@ const Contact: React.FC = () => {
                 style={{ width: '100%', height: '100%' }}
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Get in Touch</h1>
+            <p className="text-2xl font-bold text-gray-900">Get in Touch</p>
           </div>
 
           <motion.div
