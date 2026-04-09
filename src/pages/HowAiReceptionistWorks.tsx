@@ -57,7 +57,7 @@ const HowAiReceptionistWorks: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/how-ai-receptionist-works';
+    link.href = 'https://boltcall.org/how-ai-receptionist-works/';
 
     return () => {
       document.head.removeChild(script);
