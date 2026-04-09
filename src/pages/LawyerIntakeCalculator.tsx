@@ -282,7 +282,7 @@ const LawyerIntakeCalculator: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Law Firm Intake Leak Calculator | Boltcall';
     updateMetaDescription(
-      'Free calculator for law firm owners — discover how many cases you lose each month to missed calls, slow follow-up, and after-hours inquiries. Fix your intake leaks.'
+      'Free calculator for law firms: see how many cases you lose to missed calls, slow follow-up, and after-hours inquiries. Identify and fix your intake leaks.'
     );
   }, []);
 
