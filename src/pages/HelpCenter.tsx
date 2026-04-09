@@ -98,8 +98,34 @@ const HelpCenter: React.FC = () => {
     // TODO: implement search functionality
   };
 
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Help Center - Support & Documentation | Boltcall",
+    "description": "Boltcall help center with support articles, FAQs, and documentation. Find answers to common questions about AI receptionist setup, phone configuration, and troubleshooting.",
+    "url": "https://boltcall.org/help-center",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Boltcall",
+      "url": "https://boltcall.org"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Help Center", "item": "https://boltcall.org/help-center" }
+      ]
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* JSON-LD WebPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
