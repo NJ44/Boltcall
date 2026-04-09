@@ -155,6 +155,12 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
       publisher: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
       datePublished: '2026-04-01',
       dateModified: '2026-04-01',
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://boltcall.org/og-image.jpg',
+        width: 1200,
+        height: 630,
+      },
     });
     document.head.appendChild(articleSchema);
 
