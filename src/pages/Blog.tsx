@@ -38,7 +38,7 @@ const Blog: React.FC = () => {
         }
       },
       "datePublished": "2025-01-15",
-      "dateModified": "2025-01-15",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/the-new-reality-for-local-businesses"
