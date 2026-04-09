@@ -444,6 +444,62 @@ const FunnelOptimizer: React.FC = () => {
         </div>
       </section>
 
+      {/* What is a Funnel Optimizer */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+              What Is a Funnel Optimizer?
+            </h2>
+            <div className="space-y-4 text-gray-700 leading-relaxed mb-10">
+              <p>
+                A funnel optimizer is a tool that maps every stage of your customer acquisition process — from first visit to closed deal — and identifies exactly where you are losing potential revenue. Most local businesses operate with conversion rates far below what is achievable. They spend money on advertising to drive website visitors, then lose the majority of those visitors before they ever become leads. They generate leads and then lose half of them before a quote is requested. They send quotes and fail to follow up consistently, losing deals to competitors who simply stayed in touch.
+              </p>
+              <p>
+                This tool calculates your current funnel metrics and compares them to industry benchmarks for your niche. It then generates a detailed PDF report that identifies your weakest conversion stage — the one where you are leaving the most revenue on the table — and provides specific, actionable recommendations to improve it. Unlike generic marketing advice, the recommendations are personalized to your actual numbers and industry.
+              </p>
+              <p>
+                The output includes a month-over-month revenue projection showing what your business would earn if you improved each conversion rate by just 20% — a realistic and achievable target for most businesses. For many local service companies, even a small improvement in a single funnel stage can mean $5,000 to $30,000 in additional annual revenue without increasing advertising spend.
+              </p>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+              Common Funnel Leaks We Find
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {[
+                {
+                  title: 'Slow Lead Response',
+                  desc: 'Businesses that respond to a lead within 5 minutes are 21x more likely to convert than those who respond after an hour. Most local businesses take 6 to 24 hours. This single leak can cost 60% of your leads.',
+                },
+                {
+                  title: 'No After-Hours Coverage',
+                  desc: '40% of leads contact businesses outside of office hours. Without automated response, those leads reach out to a competitor and book before you call back the next morning.',
+                },
+                {
+                  title: 'Missing Follow-Up Sequences',
+                  desc: '80% of sales require 5 or more follow-up contacts. Most businesses give up after one or two attempts, leaving deals that are still on the table — just waiting for someone to ask again.',
+                },
+                {
+                  title: 'Low Quote-to-Close Rate',
+                  desc: 'The average local service business closes 25-35% of quotes sent. Top performers close 50-60% by using automated follow-up sequences, social proof, and urgency triggers that keep the conversation alive.',
+                },
+              ].map((leak) => (
+                <div key={leak.title} className="bg-red-50 rounded-xl p-5 border border-red-100">
+                  <h3 className="font-bold text-gray-900 mb-2">{leak.title}</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">{leak.desc}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-16 bg-gradient-to-r from-indigo-600 to-purple-600">
         <div className="max-w-4xl mx-auto px-4 text-center">
