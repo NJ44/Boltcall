@@ -37,7 +37,7 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
         }
       },
       "datePublished": "2025-03-01",
-      "dateModified": "2025-03-01",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/setup-instant-lead-reply"

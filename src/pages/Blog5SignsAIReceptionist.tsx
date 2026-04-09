@@ -36,7 +36,7 @@ const Blog5SignsAIReceptionist: React.FC = () => {
         }
       },
       "datePublished": "2026-03-05",
-      "dateModified": "2026-03-05",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/5-signs-you-need-ai-receptionist"

@@ -37,7 +37,7 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
         }
       },
       "datePublished": "2025-03-01",
-      "dateModified": "2025-03-01",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/instant-lead-reply-guide"

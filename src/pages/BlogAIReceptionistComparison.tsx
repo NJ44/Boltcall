@@ -34,7 +34,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
         }
       },
       "datePublished": "2025-02-05",
-      "dateModified": "2025-02-05",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/best-ai-receptionist-tools"

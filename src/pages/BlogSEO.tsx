@@ -37,7 +37,7 @@ const BlogSEO: React.FC = () => {
         }
       },
       "datePublished": "2025-01-30",
-      "dateModified": "2025-01-30",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/complete-guide-to-seo"

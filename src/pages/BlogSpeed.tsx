@@ -37,7 +37,7 @@ const BlogSpeed: React.FC = () => {
         }
       },
       "datePublished": "2025-01-20",
-      "dateModified": "2025-01-20",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/why-speed-matters"

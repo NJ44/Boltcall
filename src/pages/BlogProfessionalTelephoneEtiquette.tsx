@@ -37,7 +37,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
         }
       },
       "datePublished": "2025-02-10",
-      "dateModified": "2025-02-10",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/tips-for-professional-telephone-etiquette"

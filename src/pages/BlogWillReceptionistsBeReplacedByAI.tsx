@@ -37,7 +37,7 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
         }
       },
       "datePublished": "2025-02-25",
-      "dateModified": "2025-02-25",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/will-receptionists-be-replaced-by-ai"

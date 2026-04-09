@@ -39,7 +39,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
         }
       },
       "datePublished": "2025-02-20",
-      "dateModified": "2025-02-20",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/automatic-google-reviews"

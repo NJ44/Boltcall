@@ -25,7 +25,7 @@ const AIAgentComparison: React.FC = () => {
         headline: 'AI Agent Comparison: Boltcall vs Traditional Call Centers',
         description: "Compare AI agents vs traditional call centers on cost, speed, availability, and lead capture.",
         datePublished: '2025-02-10',
-        dateModified: '2026-04-08',
+        dateModified: '2026-04-09',
         url: '/ai-agent-comparison',
       }),
       createFAQSchema(pageFaqs),
