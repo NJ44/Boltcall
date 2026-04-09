@@ -445,6 +445,27 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
         </div>
       </section>
 
+      {/* Benefit-Focused Bullets */}
+      <section className="py-10 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get</h2>
+          <ul className="space-y-3">
+            {[
+              "Cut lead response time from 2 hours to 60 seconds",
+              "Close 30% more solar deals with instant callback automation",
+              "Stop losing prospects to competitors who call back first",
+              "Capture every inbound inquiry — even on weekends",
+              "Deploy your speed playbook in 24 hours",
+            ].map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mt-0.5">✓</span>
+                <span className="text-gray-700">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
