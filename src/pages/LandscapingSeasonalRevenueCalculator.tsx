@@ -650,10 +650,10 @@ const LandscapingSeasonalRevenueCalculator: React.FC = () => {
             <motion.div variants={fadeUp} className="text-left bg-slate-900/60 border border-slate-800 rounded-xl p-5 mb-8">
               <ul className="space-y-3">
                 {[
-                  'Missed call recovery strategy for landscaping companies',
-                  'Off-season revenue playbook (snow, lights, hardscape)',
-                  'Speed-to-lead optimization for quote requests',
-                  'AI receptionist implementation guide for field crews',
+                  'Recover $117,617 annually by capturing missed quote requests',
+                  'Increase quote-to-close rate by 400% with faster responses',
+                  'Boost off-season revenue 15-30% with automated upsell follow-ups',
+                  'Answer every call from the field so no lead goes to a competitor',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
