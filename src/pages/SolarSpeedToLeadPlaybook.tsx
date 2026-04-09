@@ -371,36 +371,36 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
                 >
                   <h3 className="font-bold text-blue-800 mb-3 flex items-center gap-2">
                     <TrendingDown className="w-5 h-5" />
-                    Your Numbers
+                    Your Revenue Opportunity
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-white rounded-lg p-3 text-center">
-                      <div className="text-xs text-gray-500 mb-1">Monthly lead spend</div>
+                      <div className="text-xs text-gray-500 mb-1">Investment at risk monthly</div>
                       <div className="text-lg font-bold text-gray-900">
                         ${monthlySpend.toLocaleString()}
                       </div>
                     </div>
                     <div className="bg-white rounded-lg p-3 text-center">
-                      <div className="text-xs text-gray-500 mb-1">Leads that never close</div>
+                      <div className="text-xs text-gray-500 mb-1">Leads lost to slow response</div>
                       <div className="text-lg font-bold text-blue-600">
                         {wastedLeads} leads
                       </div>
                     </div>
                     <div className="bg-white rounded-lg p-3 text-center">
-                      <div className="text-xs text-gray-500 mb-1">Wasted spend / month</div>
+                      <div className="text-xs text-gray-500 mb-1">Revenue leaking / month</div>
                       <div className="text-lg font-bold text-blue-600">
                         ${wastedMoney.toLocaleString()}
                       </div>
                     </div>
                     <div className="bg-white rounded-lg p-3 text-center">
-                      <div className="text-xs text-gray-500 mb-1">Recoverable revenue</div>
+                      <div className="text-xs text-gray-500 mb-1">Revenue you can recover</div>
                       <div className="text-lg font-bold text-green-600">
                         ${recoverableRevenue.toLocaleString()}
                       </div>
                     </div>
                   </div>
                   <p className="text-xs text-blue-700 mt-3 text-center">
-                    Your playbook will show how to recover this
+                    Faster replies = 50% less response time and more deals closed
                   </p>
                 </motion.div>
               )}
