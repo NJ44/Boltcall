@@ -41,6 +41,43 @@ const AIVisibilityCheck: React.FC = () => {
         </div>
       </section>
 
+      {/* What Is AI Visibility */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">What Is AI Visibility — and Why Does It Matter?</h2>
+        <div className="prose prose-gray max-w-none space-y-4 text-gray-700 leading-relaxed">
+          <p>
+            AI visibility refers to how prominently your business appears when customers use AI-powered tools to find local services. When someone asks ChatGPT, Google's AI Overviews, Perplexity, or Bing Copilot "who is the best plumber near me?" or "find a dentist that accepts Aetna in Austin," the AI surfaces a handful of businesses and ignores the rest. If your business isn't one of the ones mentioned, you're invisible to an entire category of potential customers — even if you rank well on traditional Google search.
+          </p>
+          <p>
+            This shift is happening fast. According to search industry data, AI-generated answers now appear for over 40% of local service queries on Google. These AI answers pull from a combination of structured data on your website, your Google Business Profile, third-party directory listings, review signals, and how well your website content answers the specific questions customers ask. Businesses that optimize for these signals get their name mentioned. Businesses that don't, disappear.
+          </p>
+          <p>
+            Our upcoming AI Visibility Check tool will analyze your business across all the major AI answer engines — including Google's AI Overviews, ChatGPT, Perplexity, and Bing Copilot. You'll get a score for each platform, a list of specific gaps preventing your business from being recommended by AI, and a prioritized action plan to improve your visibility without needing to hire an SEO agency. The tool is being built specifically for local service businesses: plumbers, HVAC companies, dentists, lawyers, roofers, and any business that depends on customers finding them when they need help.
+          </p>
+        </div>
+      </section>
+
+      {/* What We'll Check */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">What the AI Visibility Check Will Cover</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            { icon: Bot, title: 'ChatGPT & Perplexity Mentions', desc: 'Does your business get recommended when customers ask AI chatbots for local service providers in your category and city?' },
+            { icon: Search, title: "Google AI Overviews Presence", desc: 'Are you appearing in Google\'s AI-generated answer boxes that now appear above traditional blue-link results for local queries?' },
+            { icon: Globe, title: 'Structured Data & Entity Signals', desc: 'Does your website have the schema markup, FAQ content, and entity signals that AI engines use to identify and trust local businesses?' },
+            { icon: BarChart3, title: 'Directory & Citation Consistency', desc: 'Are your NAP (name, address, phone) listings consistent across Google, Yelp, Facebook, and the other directories that AI engines cross-reference?' },
+          ].map((item) => (
+            <div key={item.title} className="flex gap-4 bg-blue-50 rounded-xl p-5 border border-blue-100">
+              <item.icon className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Social Proof */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
