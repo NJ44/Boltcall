@@ -434,6 +434,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-guide-for-businesses/level-3-getting-started" element={<BlogAIGuideStep3 />} />
         <Route path="/blog/best-ai-receptionist-tools" element={<BlogAIReceptionistComparison />} />
         <Route path="/blog/how-ai-receptionist-works" element={<BlogAIReceptionistHowItWorks />} />
+        <Route path="/blog/ai-answering-service-small-business" element={<BlogAIAnsweringServiceSmallBusiness />} />
         <Route path="/blog/is-ai-receptionist-worth-it" element={<BlogIsAIReceptionistWorthIt />} />
         <Route path="/blog/how-to-make-ai-receptionist" element={<BlogHowToMakeAIReceptionist />} />
         <Route path="/blog/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
