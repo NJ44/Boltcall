@@ -36,7 +36,7 @@ const BlogAIGuideStep2: React.FC = () => {
         }
       },
       "datePublished": "2025-02-01",
-      "dateModified": "2025-02-01",
+      "dateModified": "2026-04-09",
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/ai-guide-for-businesses/level-2-choosing-ai-tools"
