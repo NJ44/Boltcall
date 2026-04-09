@@ -13,7 +13,7 @@ const BlogAIGuide: React.FC = () => {
     document.title = 'Complete AI Guide for Local Businesses | Boltcall';
     updateMetaDescription('Complete AI guide for local businesses. Transform operations in 3 simple steps. Learn how AI can revolutionize your business today.');
     
-    // Add CollectionPage schema markup
+    // Schemas: CollectionPage + Article
     const collectionSchema = {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
@@ -22,8 +22,32 @@ const BlogAIGuide: React.FC = () => {
       "url": "https://boltcall.org/ai-guide-for-businesses"
     };
 
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Complete AI Guide for Local Businesses: 3-Level Learning Path",
+      "description": "Complete guide to AI for local businesses. Transform operations with AI receptionists, automation tools, and lead capture — covered in 3 practical levels.",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
+      "author": { "@type": "Organization", "name": "Boltcall", "url": "https://boltcall.org" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "logo": { "@type": "ImageObject", "url": "https://boltcall.org/boltcall_full_logo.png" }
+      },
+      "datePublished": "2025-09-01",
+      "dateModified": "2026-04-09",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://boltcall.org/ai-guide-for-businesses" }
+    };
+
     const existingScript = document.getElementById('collection-schema');
     if (existingScript) existingScript.remove();
+    const existingArticle = document.getElementById('ai-guide-article-schema');
+    if (existingArticle) existingArticle.remove();
 
     const script = document.createElement('script');
     script.id = 'collection-schema';
@@ -31,9 +55,17 @@ const BlogAIGuide: React.FC = () => {
     script.text = JSON.stringify(collectionSchema);
     document.head.appendChild(script);
 
+    const articleScript = document.createElement('script');
+    articleScript.id = 'ai-guide-article-schema';
+    articleScript.type = 'application/ld+json';
+    articleScript.text = JSON.stringify(articleSchema);
+    document.head.appendChild(articleScript);
+
     return () => {
       const scriptToRemove = document.getElementById('collection-schema');
       if (scriptToRemove) scriptToRemove.remove();
+      const articleToRemove = document.getElementById('ai-guide-article-schema');
+      if (articleToRemove) articleToRemove.remove();
     };
   }, []);
 
