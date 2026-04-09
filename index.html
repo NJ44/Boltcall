@@ -144,6 +144,15 @@
     }
     </script>
     
+    <!-- Critical inline styles: ensures blank page has correct background/font before
+         the async CSS bundle loads. Prevents flash of unstyled content on first paint. -->
+    <style>
+      *,::before,::after{box-sizing:border-box;margin:0;padding:0}
+      html{-webkit-text-size-adjust:100%}
+      body{background:#fff;color:#111827;font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+      #root{min-height:100vh}
+    </style>
+
     <!-- OpenAI ChatKit — loaded lazily after page interaction -->
     <script>
       // Defer ChatKit until user interacts or after 5s idle
