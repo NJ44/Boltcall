@@ -151,9 +151,9 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.3, delay: 0.15 }}
             className="w-full max-w-[380px]"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5 hidden lg:block">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5 hidden lg:block">
               Contact Us
-            </h2>
+            </h1>
 
             {/* Success Message */}
             {isSubmitted && (
