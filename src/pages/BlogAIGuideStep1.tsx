@@ -322,6 +322,33 @@ const BlogAIGuideStep1: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* FAQ */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: Do I need technical skills to set up AI for my business?</p>
+              <p className="text-gray-700 leading-relaxed">A: No. Modern AI receptionist platforms like Boltcall are built for business owners, not developers. Setup takes under 30 minutes using a guided wizard — no coding or IT support required.</p>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: What types of calls can an AI receptionist handle?</p>
+              <p className="text-gray-700 leading-relaxed">A: AI receptionists can answer general inquiries, book and confirm appointments, collect caller information, send SMS follow-ups, and transfer complex issues to your team — all 24/7.</p>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: How quickly will I see results after adding AI?</p>
+              <p className="text-gray-700 leading-relaxed">A: Most businesses notice fewer missed calls and more booked appointments within the first week. The biggest gains come from capturing after-hours leads that would otherwise go to a competitor.</p>
+            </div>
+          </div>
+        </motion.section>
+
         {/* Navigation to Next Step */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
