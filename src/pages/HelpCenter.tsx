@@ -25,7 +25,7 @@ const HelpCenter: React.FC = () => {
   const helpCategories: HelpCategory[] = [
     {
       id: 'getting-started',
-      title: 'Getting Started',
+      title: 'Step-by-Step Guide to Setting Up Your AI Receptionist',
       description: 'How to setup and best settings for customers to get started with Boltcall',
       articleCount: 5,
       icon: <BookOpen className="w-8 h-8" />,
@@ -34,7 +34,7 @@ const HelpCenter: React.FC = () => {
     },
     {
       id: 'known-issues',
-      title: 'Known Issues and Troubleshooting hub',
+      title: 'Comprehensive Troubleshooting for Call Quality Issues',
       description: 'A place for all known issues that the team is working on fixing and work arounds for the time being.',
       articleCount: 4,
       icon: <AlertTriangle className="w-8 h-8" />,
@@ -43,7 +43,7 @@ const HelpCenter: React.FC = () => {
     },
     {
       id: 'phone-setup',
-      title: 'Phone & Call Setup',
+      title: 'How to Configure Phone Numbers and Verified Caller ID',
       description: 'Phone numbers and Verified Call ID',
       articleCount: 8,
       icon: <Phone className="w-8 h-8" />,
@@ -52,7 +52,7 @@ const HelpCenter: React.FC = () => {
     },
     {
       id: 'how-to-guides',
-      title: 'Boltcall How To Guides',
+      title: 'Practical How-To Guides for Every Boltcall Feature',
       description: 'How to Guides that you might need',
       articleCount: 11,
       icon: <HelpCircle className="w-8 h-8" />,
@@ -133,6 +133,11 @@ const HelpCenter: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Intro paragraph */}
+        <p className="text-gray-600 text-center max-w-4xl mx-auto mb-12 text-lg leading-relaxed">
+          This Help Center provides essential guides and troubleshooting tips to help users effectively utilize Boltcall's AI receptionist features and resolve common issues.
+        </p>
+
         {/* Documentation CTA */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}

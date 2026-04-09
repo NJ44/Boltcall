@@ -448,8 +448,8 @@ const blogPosts: BlogPost[] = [
 
 const BlogCenter: React.FC = () => {
   useEffect(() => {
-    document.title = 'AI Business Tips & Guides Blog | Boltcall';
-    updateMetaDescription('AI business tips and guides to grow your business. Learn proven strategies, best practices, and AI insights. Explore articles now.');
+    document.title = 'AI Receptionist Insights & Guides | Boltcall';
+    updateMetaDescription('Expert guides on AI receptionists, speed-to-lead, missed call recovery, and 24/7 call answering for local businesses. Learn and grow.');
 
     // Add canonical link
     let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
@@ -458,7 +458,7 @@ const BlogCenter: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/blog';
+    link.href = 'https://boltcall.org/blog/';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");

@@ -69,6 +69,7 @@ const AeoGlobalIntro: React.FC = () => {
     '/tools/lawyer-intake-calculator',
     '/ai-revenue-audit',
     '/features/ai-receptionist',
+    '/tools/solar-sales-closer',
   ]);
 
   const isComparisonsRoute =
@@ -102,13 +103,36 @@ const AeoGlobalIntro: React.FC = () => {
     return () => window.clearTimeout(timer);
   }, [path]);
 
+  // Set canonical link tag for ALL pages with trailing slash to match Netlify's
+  // pretty-URL behavior (directory-based prerender creates /page/ -> 301 without slash).
+  useEffect(() => {
+    const canonicalHref = path === '/'
+      ? 'https://boltcall.org/'
+      : `https://boltcall.org${path}/`;
+
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = canonicalHref;
+
+    return () => {
+      const el = document.querySelector("link[rel='canonical']");
+      if (el) el.remove();
+    };
+  }, [path]);
+
   useEffect(() => {
     if (!shouldShow) {
       return;
     }
 
     const headline = document.title || 'Boltcall Article';
-    const canonical = `https://boltcall.org${path}`;
+    const canonical = path === '/'
+      ? 'https://boltcall.org/'
+      : `https://boltcall.org${path}/`;
     const today = new Date().toISOString().split('T')[0];
 
     const articleSchema = {
@@ -120,8 +144,17 @@ const AeoGlobalIntro: React.FC = () => {
         name: 'Boltcall Team',
       },
       datePublished: today,
-      image: 'https://boltcall.org/og-image.jpg',
-      mainEntityOfPage: canonical,
+      dateModified: today,
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://boltcall.org/og-image.jpg',
+        width: 1200,
+        height: 630,
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': canonical,
+      },
     };
 
     const pathParts = path.split('/').filter(Boolean);

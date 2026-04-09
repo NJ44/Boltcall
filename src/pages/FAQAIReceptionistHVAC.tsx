@@ -46,6 +46,12 @@ const FAQAIReceptionistHVAC: React.FC = () => {
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "https://boltcall.org/blog/ai-receptionist-hvac-faq"
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://boltcall.org/og-image.jpg",
+          "width": 1200,
+          "height": 630
         }
       },
       {

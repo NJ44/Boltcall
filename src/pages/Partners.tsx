@@ -141,7 +141,7 @@ const Partners: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/partners';
+    link.href = 'https://boltcall.org/partners/';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");

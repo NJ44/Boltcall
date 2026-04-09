@@ -85,6 +85,12 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
       },
       'articleSection': 'Industry Calculator',
       'keywords': ['chiropractor calculator', 'patient recovery', 'chiropractic revenue', 'AI receptionist chiropractor'],
+      'image': {
+        '@type': 'ImageObject',
+        'url': 'https://boltcall.org/og-image.jpg',
+        'width': 1200,
+        'height': 630,
+      },
     };
 
     const articleScript = document.createElement('script');

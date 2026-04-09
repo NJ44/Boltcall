@@ -103,6 +103,11 @@ const BlogAIGuideStep1: React.FC = () => {
                 <span>8 min read</span>
               </div>
             </div>
+
+            {/* Author byline */}
+            <p className="text-sm text-gray-500 mt-3">
+              Written by the Boltcall Team &middot; Updated April 2026
+            </p>
           </motion.div>
         </div>
       </section>
@@ -111,6 +116,22 @@ const BlogAIGuideStep1: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
+        {/* Intro */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-12"
+        >
+          <p className="text-lg text-gray-700 leading-relaxed">
+            In this first level you'll learn exactly what AI can handle for your service business — from
+            answering calls around the clock to sending automated follow-ups — so you can decide whether
+            AI is the right fit before spending a single dollar. By the end you'll understand the real
+            benefits, the cost vs. value trade-off, and how other local businesses are already using AI
+            to grow.
+          </p>
+        </motion.section>
+
         {/* What AI Can Automate */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -297,6 +318,33 @@ const BlogAIGuideStep1: React.FC = () => {
                 books appointments. We've increased revenue by $15,000 per month just from capturing leads we 
                 used to miss."
               </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* FAQ */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: Do I need technical skills to set up AI for my business?</p>
+              <p className="text-gray-700 leading-relaxed">A: No. Modern AI receptionist platforms like Boltcall are built for business owners, not developers. Setup takes under 30 minutes using a guided wizard — no coding or IT support required.</p>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: What types of calls can an AI receptionist handle?</p>
+              <p className="text-gray-700 leading-relaxed">A: AI receptionists can answer general inquiries, book and confirm appointments, collect caller information, send SMS follow-ups, and transfer complex issues to your team — all 24/7.</p>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: How quickly will I see results after adding AI?</p>
+              <p className="text-gray-700 leading-relaxed">A: Most businesses notice fewer missed calls and more booked appointments within the first week. The biggest gains come from capturing after-hours leads that would otherwise go to a competitor.</p>
             </div>
           </div>
         </motion.section>

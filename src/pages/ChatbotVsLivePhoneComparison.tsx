@@ -41,7 +41,13 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
       datePublished: '2026-03-21',
       dateModified: '2026-03-21',
       url: 'https://boltcall.org/blog/ai-chatbot-vs-live-chat-phone-comparison',
-      mainEntityOfPage: 'https://boltcall.org/blog/ai-chatbot-vs-live-chat-phone-comparison'
+      mainEntityOfPage: 'https://boltcall.org/blog/ai-chatbot-vs-live-chat-phone-comparison',
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://boltcall.org/og-image.jpg',
+        width: 1200,
+        height: 630,
+      }
     };
 
     const script = document.createElement('script');

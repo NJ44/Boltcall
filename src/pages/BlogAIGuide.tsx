@@ -104,7 +104,30 @@ const BlogAIGuide: React.FC = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight text-left">
               The Complete Guide to <span className="text-blue-400">AI for Local Businesses</span>
             </h1>
-            
+
+            {/* Author byline */}
+            <p className="text-sm text-gray-400 mb-6">
+              Written by the Boltcall Team &middot; Updated April 2026
+            </p>
+
+            {/* Intro paragraph */}
+            <p className="text-lg text-gray-300 leading-relaxed mb-6 max-w-2xl">
+              This guide helps local business owners understand how AI can automate their operations,
+              choose the right tools, and get started in under 30 minutes. Whether you run a dental
+              practice, HVAC company, or auto shop, follow the three levels below to go from curious
+              to fully set up.
+            </p>
+
+            {/* TL;DR box */}
+            <div className="bg-blue-900/40 border border-blue-700/50 rounded-lg p-4 mb-2 max-w-2xl">
+              <p className="text-sm text-blue-100">
+                <span className="font-bold text-white">TL;DR:</span> AI can answer your calls, book
+                appointments, and follow up with leads automatically — 24/7. This three-part guide
+                walks you through understanding AI, picking the right tools, and going live in under
+                30 minutes.
+              </p>
+            </div>
+
           </motion.div>
         </div>
       </section>

@@ -103,6 +103,11 @@ const BlogAIGuideStep2: React.FC = () => {
                 <span>6 min read</span>
               </div>
             </div>
+
+            {/* Author byline */}
+            <p className="text-sm text-gray-500 mt-3">
+              Written by the Boltcall Team &middot; Updated April 2026
+            </p>
           </motion.div>
         </div>
       </section>
@@ -381,6 +386,33 @@ const BlogAIGuideStep2: React.FC = () => {
                   <span>Reduced no-shows</span>
                 </li>
               </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* FAQ */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-green-600 rounded-full"></div>
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: Should I use an all-in-one AI platform or separate tools?</p>
+              <p className="text-gray-700 leading-relaxed">A: For most local businesses, an all-in-one platform (calls, SMS, follow-ups in one place) is simpler and cheaper. Separate best-in-class tools make sense only once you have specific needs that a combined platform can't meet.</p>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: How do I know if an AI tool will work with my existing calendar?</p>
+              <p className="text-gray-700 leading-relaxed">A: Check the platform's integrations page before signing up. Most reputable tools support Google Calendar, Cal.com, and Outlook out of the box. Always confirm during a free trial before committing.</p>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
+              <p className="font-bold text-gray-900 mb-2">Q: What is a reasonable monthly budget for AI tools as a small business?</p>
+              <p className="text-gray-700 leading-relaxed">A: Most service businesses see a positive ROI at $50–$150 per month. Start with a starter plan, measure the additional bookings and time saved in the first 30 days, then decide whether to upgrade.</p>
             </div>
           </div>
         </motion.section>
