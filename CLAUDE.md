@@ -72,3 +72,9 @@ dist/            # Build output (do not edit)
 - Lottie animations served from `public/` as `.lottie` files
 - Dashboard pages live in `src/pages/dashboard/`, their sub-components in `src/components/dashboard/`
 - Netlify functions handle server-side logic (webhooks, proxied API calls)
+
+## MANDATORY: Blog Page Creation Rule
+
+**BEFORE writing any blog page** (any file matching `Blog*.tsx` in `src/pages/` or any new `/blog/*` route), you MUST first invoke the Skill tool with `skill: "boltcall-blog-writer"`. This loads the full Searchable 10-section framework, title patterns, visual components, and boilerplate requirements.
+
+No blog page may be written without this skill active. This applies to every new blog post — no exceptions.
