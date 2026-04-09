@@ -257,7 +257,8 @@ const AIAuditPage: React.FC = () => {
               <p className="text-sm text-gray-400 mt-4">Takes ~2 minutes · Report delivered in ~3 minutes</p>
 
               {/* Trust signals */}
-              <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
+              <h2 className="text-lg font-semibold text-gray-700 mt-14 mb-4">What Your Audit Covers</h2>
+              <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto">
                 {[
                   { value: '100', label: 'Revenue impact scored' },
                   { value: '5', label: 'Growth areas uncovered' },
