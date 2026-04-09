@@ -674,6 +674,14 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Editor's Note */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <p className="text-sm font-semibold text-blue-800 mb-1">Editor's Note — April 2026</p>
+            <p className="text-sm text-blue-700">Live answering service pricing has shifted significantly in 2026 as AI-augmented services now undercut traditional per-minute billing models by 40–60%. Many small businesses are switching from legacy per-minute plans to flat-rate AI hybrid services that deliver 24/7 coverage at a predictable monthly cost. When comparing costs today, factor in that AI receptionists handle overflow and after-hours calls at no extra charge — a major advantage over traditional live answering services.</p>
+          </div>
+        </div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
