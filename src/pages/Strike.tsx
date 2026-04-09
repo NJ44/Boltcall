@@ -234,7 +234,8 @@ const Strike: React.FC = () => {
                     ))}
                   </div>
                   <p className="text-xs text-white/50 text-center mt-3">
-                    Strike AI uses specialized agents — each trained on a specific growth area. Select an agent or ask anything to get started.
+                    Strike AI uses specialized agents — each trained on a specific growth area. Select an agent or ask anything to get started.{' '}
+                    <a href="https://openai.com/index/introducing-gpts/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Learn about AI agents</a>.
                   </p>
                 </motion.div>
               </div>
