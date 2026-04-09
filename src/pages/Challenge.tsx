@@ -630,18 +630,18 @@ const Challenge: React.FC = () => {
               {[
                 {
                   icon: Shield,
-                  title: 'Unbreakable Protocols',
-                  desc: 'Our AI never leaks sensitive information, no matter how creative the caller gets. It follows your rules, every time.',
+                  title: 'Protect Every Business Call',
+                  desc: 'Win a $2,500 website by breaking our AI — or prove to yourself that it will shield your business from manipulation and information leaks 24/7.',
                 },
                 {
                   icon: Phone,
-                  title: 'Handles Any Caller',
-                  desc: 'Aggressive callers, social engineers, confused customers... your AI stays professional and on-script without breaking.',
+                  title: 'Never Lose a Lead to a Bad Call',
+                  desc: 'No matter how difficult the caller, your business stays professional and on-script — so you capture every lead without lifting a finger.',
                 },
                 {
                   icon: Zap,
-                  title: 'Always On, Always Ready',
-                  desc: '24/7/365. No sick days. No bad moods. No hold times. Every call answered in under 1 second, including weekends and holidays.',
+                  title: 'Answer Every Call, Win Every Opportunity',
+                  desc: 'Stop missing revenue after hours. Every call answered in under 1 second — weekends, holidays, and overnight — so no opportunity slips through.',
                 },
               ].map((item, i) => (
                 <motion.div

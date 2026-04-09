@@ -209,23 +209,23 @@ const FiveMinuteResponsePlaybook: React.FC = () => {
   const learnings = [
     {
       icon: Zap,
-      title: 'The 1-Minute Rule',
-      description: 'Why 391% more leads convert when you respond in under 60 seconds — and the exact workflow to make it automatic.',
+      title: 'Convert 391% More Leads',
+      description: 'Respond in under 60 seconds and watch your lead conversion skyrocket. Get the exact workflow to make sub-1-minute response fully automatic — without adding headcount.',
     },
     {
       icon: PhoneOff,
-      title: 'The Missed Call Crisis',
-      description: 'How 85% of callers who reach voicemail never call back, and the $312K revenue gap this creates per employee.',
+      title: 'Stop Losing 85% of Voicemail Callers',
+      description: 'When callers hit voicemail, 85% never call back. Recover that lost revenue by answering every call instantly — even after hours and on weekends.',
     },
     {
       icon: DollarSign,
-      title: 'The AI Cost Advantage',
-      description: 'A side-by-side breakdown showing how businesses save $42,612/year by replacing human receptionists with AI.',
+      title: 'Save $42,612/Year vs. Human Staff',
+      description: 'See the exact dollar-for-dollar comparison: AI handles every call at a fraction of the cost, while delivering faster responses than any human receptionist.',
     },
     {
       icon: BookOpen,
-      title: 'Your 5-Minute Action Plan',
-      description: 'A step-by-step checklist to implement sub-1-minute response in your business this week — no coding required.',
+      title: 'Start Converting More Leads This Week',
+      description: 'A step-by-step checklist to capture every lead and outpace your competition — set up in under 5 minutes, no coding or tech skills required.',
     },
   ];
 
@@ -279,15 +279,15 @@ const FiveMinuteResponsePlaybook: React.FC = () => {
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 text-sm text-blue-300">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                  Data-backed strategies
+                  Increase lead conversion by 391%
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                  Actionable in 5 minutes
+                  Recover $312K in lost revenue/year
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                  Works for any local business
+                  Stop losing leads to competitors today
                 </span>
               </motion.div>
             </motion.div>

@@ -801,10 +801,10 @@ const RealEstateSpeedScorecard: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                 {[
-                  'Your speed score breakdown',
-                  'Market-specific response benchmarks',
-                  'Lead follow-up scripts that convert',
-                  '5-minute setup guide for instant response',
+                  'Responding in under 5 minutes leads to 2.6 additional deals per year',
+                  'See exactly how many commissions slow follow-up is costing you',
+                  'Scripts that convert — personalized to your response time grade',
+                  'Set up sub-60-second AI response in under 5 minutes today',
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -928,20 +928,20 @@ const RealEstateSpeedScorecard: React.FC = () => {
             {[
               {
                 num: '01',
-                title: 'Instant AI Text-Back',
-                desc: 'Your lead gets a personalized text within 60 seconds of reaching out — even while you\'re at a showing, in a meeting, or asleep. No more "sorry I missed your call" two hours later.',
+                title: 'Win the Deal in 60 Seconds — Before Any Competitor Responds',
+                desc: 'Your lead gets a personalized text within 60 seconds of reaching out — even while you\'re at a showing. 78% of buyers go with the first agent who responds. Be first, every time.',
                 icon: <Zap className="w-6 h-6 text-emerald-400" />,
               },
               {
                 num: '02',
-                title: 'Intelligent Qualification',
-                desc: 'AI asks the right questions — timeline, budget, pre-approval status — so you only call back the hot leads. Stop wasting time on tire-kickers.',
+                title: 'Stop Wasting Hours on Tire-Kickers, Focus on Buyers Who Close',
+                desc: 'AI qualifies every lead by timeline, budget, and pre-approval status before you call back. Spend your time only on prospects ready to move — not those just browsing.',
                 icon: <Target className="w-6 h-6 text-emerald-400" />,
               },
               {
                 num: '03',
-                title: 'Nurture on Autopilot',
-                desc: 'Leads not ready to buy yet? Automated drip keeps you top of mind with market updates, listings, and check-ins until they\'re ready to move.',
+                title: 'Convert "Not Ready" Leads Into 2.6 Extra Deals Per Year',
+                desc: 'Leads not ready to buy today become closings tomorrow. Automated nurture keeps you top of mind with market updates and check-ins — turning cold leads into future commission.',
                 icon: <MessageSquare className="w-6 h-6 text-emerald-400" />,
               },
             ].map((tip) => (

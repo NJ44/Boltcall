@@ -359,7 +359,7 @@ const FunnelOptimizer: React.FC = () => {
                   {/* Teaser */}
                   <div className="mt-6 p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-center">
                     <p className="text-indigo-300 text-sm">
-                      <span className="font-semibold">Your full report includes:</span> Revenue leak detection, industry benchmarks, compound growth scenarios, and personalized recommendations.
+                      <span className="font-semibold">Increase your monthly revenue</span> by identifying conversion leaks — receive personalized recommendations to boost conversion rates and see compound growth scenarios for your business.
                     </p>
                   </div>
                 </div>
@@ -449,8 +449,7 @@ const FunnelOptimizer: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">Want AI to Fix Your Funnel Automatically?</h2>
           <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Boltcall's AI receptionist, speed-to-lead system, and automated follow-ups
-            can improve every stage of your funnel — without hiring more staff.
+            Stop losing revenue to slow response times and leaky funnels. Boltcall's AI receptionist responds within 5 minutes — increasing lead qualification by 21x — so every stage of your funnel converts without hiring more staff.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

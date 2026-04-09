@@ -235,7 +235,7 @@ const SEOAuditPDF: React.FC = () => {
               Get a professional 6-page PDF analyzing your website for both search engines and AI answer engines.
             </p>
             <p className="text-gray-500 max-w-xl mx-auto">
-              We crawl your site, check 30+ SEO factors, evaluate AEO readiness, and deliver a branded report with scores and an action plan.
+              Improve your website's visibility with a comprehensive 30-factor SEO analysis — uncover what's costing you traffic and get a prioritized action plan to rank higher and get found by AI answer engines.
             </p>
           </motion.div>
         </div>
@@ -245,12 +245,12 @@ const SEOAuditPDF: React.FC = () => {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           {[
-            { icon: Search, label: 'On-Page SEO Analysis', desc: 'Meta tags, headings, content' },
-            { icon: Shield, label: 'Technical SEO Check', desc: 'Speed, SSL, sitemap, robots' },
-            { icon: Bot, label: 'AEO Readiness Score', desc: 'AI engine optimization' },
-            { icon: BarChart3, label: 'Schema Coverage', desc: 'Structured data audit' },
-            { icon: Sparkles, label: 'AI-Written Insights', desc: 'Expert analysis by Claude' },
-            { icon: FileText, label: '30-Day Action Plan', desc: 'Prioritized weekly steps' },
+            { icon: Search, label: 'Rank Higher on Google', desc: 'Fix meta tags, headings & content to drive more traffic' },
+            { icon: Shield, label: 'Remove Technical Barriers', desc: 'Speed, SSL & sitemap issues costing you visitors' },
+            { icon: Bot, label: 'Get Found by AI Engines', desc: 'Score your readiness for AI-driven search results' },
+            { icon: BarChart3, label: 'Unlock Rich Results', desc: 'Structured data that wins more clicks from search' },
+            { icon: Sparkles, label: 'Expert Insights, Instantly', desc: 'AI analysis of exactly what to fix first' },
+            { icon: FileText, label: 'A Clear Growth Roadmap', desc: 'Week-by-week steps to measurably improve rankings' },
           ].map((item) => (
             <motion.div
               key={item.label}

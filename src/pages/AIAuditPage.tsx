@@ -259,9 +259,9 @@ const AIAuditPage: React.FC = () => {
               {/* Trust signals */}
               <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
                 {[
-                  { value: '100', label: 'Point Score' },
-                  { value: '5', label: 'Categories Audited' },
-                  { value: 'Free', label: 'PDF Report' },
+                  { value: '100', label: 'Revenue impact scored' },
+                  { value: '5', label: 'Growth areas uncovered' },
+                  { value: 'Free', label: 'Personalized action plan' },
                 ].map((item) => (
                   <div key={item.label} className="text-center">
                     <div className="text-2xl font-bold text-blue-600">{item.value}</div>

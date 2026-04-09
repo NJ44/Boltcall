@@ -602,10 +602,10 @@ const CleaningServiceBookingCalculator: React.FC = () => {
             <motion.div variants={fadeUp} className="text-left bg-slate-900/60 border border-slate-800 rounded-xl p-5 mb-8">
               <ul className="space-y-3">
                 {[
-                  'Missed call recovery strategy for cleaning companies',
-                  'AI booking automation implementation guide',
-                  'Cancellation reduction playbook',
-                  'Recurring client retention optimization',
+                  'Recover $5,208+ in lost revenue monthly from missed calls',
+                  'Reduce missed calls by 35% with AI answering every inquiry',
+                  'Recover 45% of last-minute cancellations with auto-rescheduling',
+                  'Retain recurring clients longer and increase lifetime value',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />

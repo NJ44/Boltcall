@@ -718,24 +718,24 @@ const PlumberRevenueCalculator: React.FC = () => {
             {[
               {
                 number: '01',
-                title: 'Answer Every Call, 24/7',
+                title: 'Capture 90% of Emergency Calls — Increase Monthly Revenue by $12,869',
                 icon: <Phone className="w-6 h-6" />,
                 description:
-                  'An AI receptionist picks up every call instantly — day, night, weekends, and holidays. It collects the caller\'s name, address, and problem details, then dispatches your on-call technician or schedules the next available slot. No voicemail. No missed revenue.',
+                  'AI answers every emergency call instantly — day, night, weekends, and holidays. It collects the caller\'s name, address, and problem details, then dispatches your on-call technician in seconds. Stop losing $12,869/month to competitors who simply pick up the phone.',
               },
               {
                 number: '02',
-                title: 'Instant Callback System',
+                title: 'Be First in 60 Seconds — Before Homeowners Call Your Competitor',
                 icon: <Zap className="w-6 h-6" />,
                 description:
-                  'Speed-to-lead is everything in plumbing emergencies. When a homeowner has water pouring through their ceiling, they\'re calling every plumber in sight. An automated callback within 60 seconds keeps you first in line — before they even finish dialing your competitor.',
+                  'When a pipe bursts at 2am, homeowners call every plumber they can find. An automated response within 60 seconds puts you first in line — locking in the job before competitors even see the missed call notification.',
               },
               {
                 number: '03',
-                title: 'Automated Follow-Up',
+                title: 'Turn a $1,200 Repair Into a $3,600/Year Customer',
                 icon: <Wrench className="w-6 h-6" />,
                 description:
-                  'Turn one-time emergency fixes into recurring maintenance contracts. Automated follow-up sequences send a check-in 30 days after service, offer seasonal maintenance plans, and request Google reviews — turning a $1,200 repair into a $3,600/year customer.',
+                  'Automated follow-up sequences send a check-in 30 days after service, offer seasonal maintenance plans, and request Google reviews — tripling the lifetime value of every emergency call you capture.',
               },
             ].map((tip, i) => (
               <motion.div
