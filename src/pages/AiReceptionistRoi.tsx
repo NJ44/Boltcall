@@ -252,6 +252,27 @@ const AiReceptionistRoi: React.FC = () => {
         </div>
       </section>
 
+      {/* Benefit-Focused Bullets */}
+      <section className="py-10 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get</h2>
+          <ul className="space-y-3">
+            {[
+              "Recover $50K+ annually by capturing missed calls",
+              "Book appointments 24/7 without hiring extra staff",
+              "Respond to every lead in under 60 seconds — automatically",
+              "Reduce no-shows with automated SMS reminders",
+              "Free up your team to focus on high-value work",
+            ].map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mt-0.5">✓</span>
+                <span className="text-gray-700">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ─── Calculator Section ────────────────────────────────────────── */}
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
