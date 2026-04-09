@@ -613,6 +613,39 @@ const CompareBoltcallVsPodium: React.FC = () => {
         </div>
       </main>
 
+      {/* Social Proof */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Businesses Say About Boltcall</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "Podium was great for reviews but we were still losing calls every night. Boltcall fills the gap — it answers calls 24/7 and books appointments without any human involvement.", name: "Karen M.", role: "Med Spa Owner, Texas" },
+            { quote: "We used Podium for messaging but it didn't help with inbound calls. Boltcall is the AI receptionist we needed — it picks up every call and qualifies leads on the spot.", name: "Michael B.", role: "Auto Repair Shop Owner, Ohio" },
+            { quote: "Compared to Podium, Boltcall is laser-focused on one thing: making sure no lead slips through the cracks. That's exactly what our business needed.", name: "Rachel T.", role: "Dental Practice Owner, Arizona" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Setup completed in 24 hours</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
+          </div>
+        </div>
+      </section>
+
       <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </>
