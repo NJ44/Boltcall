@@ -103,12 +103,11 @@ const AeoGlobalIntro: React.FC = () => {
     return () => window.clearTimeout(timer);
   }, [path]);
 
-  // Set canonical link tag for ALL pages with trailing slash to match Netlify's
-  // pretty-URL behavior (directory-based prerender creates /page/ -> 301 without slash).
+  // Set canonical link tag for ALL pages — no trailing slash (Netlify redirects /page/ → /page).
   useEffect(() => {
     const canonicalHref = path === '/'
       ? 'https://boltcall.org/'
-      : `https://boltcall.org${path}/`;
+      : `https://boltcall.org${path}`;
 
     let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
     if (!link) {
