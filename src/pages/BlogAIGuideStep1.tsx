@@ -103,6 +103,11 @@ const BlogAIGuideStep1: React.FC = () => {
                 <span>8 min read</span>
               </div>
             </div>
+
+            {/* Author byline */}
+            <p className="text-sm text-gray-500 mt-3">
+              Written by the Boltcall Team &middot; Updated April 2026
+            </p>
           </motion.div>
         </div>
       </section>
@@ -111,6 +116,22 @@ const BlogAIGuideStep1: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
+        {/* Intro */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-12"
+        >
+          <p className="text-lg text-gray-700 leading-relaxed">
+            In this first level you'll learn exactly what AI can handle for your service business — from
+            answering calls around the clock to sending automated follow-ups — so you can decide whether
+            AI is the right fit before spending a single dollar. By the end you'll understand the real
+            benefits, the cost vs. value trade-off, and how other local businesses are already using AI
+            to grow.
+          </p>
+        </motion.section>
+
         {/* What AI Can Automate */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
