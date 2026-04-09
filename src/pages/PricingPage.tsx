@@ -18,7 +18,7 @@ const PricingPage: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/pricing/';
+    link.href = 'https://boltcall.org/pricing';
 
     const speakableScript = document.createElement('script');
     speakableScript.type = 'application/ld+json';
