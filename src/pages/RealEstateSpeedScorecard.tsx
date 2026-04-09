@@ -801,10 +801,10 @@ const RealEstateSpeedScorecard: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                 {[
-                  'Your speed score breakdown',
-                  'Market-specific response benchmarks',
-                  'Lead follow-up scripts that convert',
-                  '5-minute setup guide for instant response',
+                  'Responding in under 5 minutes leads to 2.6 additional deals per year',
+                  'See exactly how many commissions slow follow-up is costing you',
+                  'Scripts that convert — personalized to your response time grade',
+                  'Set up sub-60-second AI response in under 5 minutes today',
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
