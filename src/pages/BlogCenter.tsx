@@ -458,11 +458,31 @@ const BlogCenter: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/blog/';
+    link.href = 'https://boltcall.org/blog';
+
+    // Add Person schema for the blog author
+    const personScript = document.createElement('script');
+    personScript.id = 'blog-person-schema';
+    personScript.type = 'application/ld+json';
+    personScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Boltcall Team',
+      url: 'https://boltcall.org/about',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Boltcall',
+        url: 'https://boltcall.org',
+      },
+      description: 'The Boltcall Team writes guides on AI receptionists, speed-to-lead, and call automation for local businesses.',
+    });
+    document.head.appendChild(personScript);
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");
       if (el) el.remove();
+      const ps = document.getElementById('blog-person-schema');
+      if (ps) ps.remove();
     };
   }, []);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(true);

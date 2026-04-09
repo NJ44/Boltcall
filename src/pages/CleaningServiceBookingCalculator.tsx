@@ -68,6 +68,12 @@ const CleaningServiceBookingCalculator: React.FC = () => {
         "author": { "@type": "Organization", "name": "Boltcall" },
         "datePublished": "2026-04-01",
         "dateModified": "2026-04-01",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
         "publisher": {
           "@type": "Organization",
           "name": "Boltcall",

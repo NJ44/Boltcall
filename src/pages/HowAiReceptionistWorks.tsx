@@ -39,6 +39,12 @@ const HowAiReceptionistWorks: React.FC = () => {
       },
       "datePublished": "2026-03-12",
       "dateModified": "2026-03-12",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/blog/how-ai-receptionist-works"
@@ -57,7 +63,7 @@ const HowAiReceptionistWorks: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/how-ai-receptionist-works/';
+    link.href = 'https://boltcall.org/how-ai-receptionist-works';
 
     return () => {
       document.head.removeChild(script);

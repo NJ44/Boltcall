@@ -113,7 +113,7 @@ const AIRevenueAudit: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/ai-revenue-audit/';
+    link.href = 'https://boltcall.org/ai-revenue-audit';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");

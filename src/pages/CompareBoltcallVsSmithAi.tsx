@@ -38,6 +38,12 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
       },
       "datePublished": "2026-03-23",
       "dateModified": "2026-03-23",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "https://boltcall.org/compare/boltcall-vs-smith-ai"

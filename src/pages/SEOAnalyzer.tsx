@@ -24,7 +24,7 @@ const SEOAnalyzer: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/seo-audit/';
+    link.href = 'https://boltcall.org/seo-audit';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");
