@@ -504,6 +504,31 @@ const LawyerIntakeCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* ════════════════ ABOUT THIS CALCULATOR ════════════════ */}
+        <section className="relative px-4 md:px-6 py-10 bg-slate-950">
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              custom={0}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
+              className="bg-slate-900 border border-yellow-500/20 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 leading-relaxed"
+            >
+              <h2 className="text-xl font-bold text-white">About This Calculator</h2>
+              <p>
+                The Lawyer Intake Calculator is designed for law firm owners, managing partners, and intake coordinators who want to quantify exactly how much revenue their current intake process is leaving on the table. Most law firms track case settlements and billable hours obsessively — but few have ever calculated how many qualified leads they lose before a case file is even opened. This tool fixes that.
+              </p>
+              <p>
+                Enter your practice area, the number of new inquiries you receive each week, your current response time and intake process, and your average case value. The calculator models two scenarios: your current intake conversion rate, and an optimized rate that reflects what top-performing firms in your practice area consistently achieve. The gap between those two numbers is your monthly and annual revenue opportunity — the cases you are already generating leads for but failing to convert.
+              </p>
+              <p>
+                Research from the Clio Legal Trends Report consistently shows that law firms that respond to inquiries within one hour convert at 2 to 3 times the rate of firms that respond the next business day. For high-value practice areas like personal injury or business litigation, that difference can represent hundreds of thousands of dollars annually. Use this calculator to understand your specific numbers, then scroll down to see which intake changes will move the needle fastest for your firm.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
         {/* ════════════════ CALCULATOR ════════════════ */}
         <section className="relative px-4 md:px-6 py-12 bg-slate-950">
           <div className="max-w-[1360px] mx-auto">
