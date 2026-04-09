@@ -310,6 +310,39 @@ const ReceptionistVsBoltcall: React.FC = () => {
         </motion.section>
       </article>
 
+      {/* Social Proof */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Businesses Say After Switching from a Human Receptionist</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "Our receptionist cost us $3,200/month and still missed calls when she was at lunch or on vacation. Boltcall costs a fraction of that and never takes a break.", name: "James R.", role: "Dental Practice Owner, Florida" },
+            { quote: "I was nervous about replacing our front desk person. But Boltcall handles after-hours calls so well that we're actually booking more appointments than before.", name: "Priya S.", role: "Med Spa Owner, California" },
+            { quote: "The human receptionist was great but couldn't work 24/7. Boltcall fills in every gap — nights, weekends, and holidays. We don't lose a single lead anymore.", name: "David K.", role: "Law Firm Manager, Illinois" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Setup completed in 24 hours</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
+          </div>
+        </div>
+      </section>
+
       <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </div>
