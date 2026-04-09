@@ -272,6 +272,78 @@ const SEOAnalyzer: React.FC = () => {
         </div>
       )}
 
+      {/* How It Works */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">How the Free SEO Audit Works</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm max-w-xl mx-auto">
+          Enter your website URL and email. Our tool crawls your site the same way Google does, checks 30+ ranking factors, and delivers a plain-English report to your inbox — usually within minutes.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: Globe, title: 'We Crawl Your Site', desc: 'We analyze your page titles, meta descriptions, headings, internal links, page speed, and mobile friendliness — the exact signals Google uses to rank pages.' },
+            { icon: TrendingUp, title: 'We Score 30+ Factors', desc: 'Every factor is scored on a 0-100 scale. You\'ll see exactly what\'s holding your site back and which fixes will have the biggest impact on your traffic.' },
+            { icon: Clock, title: 'Report in Your Inbox', desc: 'Your detailed SEO report lands in your inbox within minutes — no software to install, no login required, and completely free with no credit card needed.' },
+          ].map((item) => (
+            <div key={item.title} className="bg-gray-50 rounded-xl p-5 border border-gray-200">
+              <item.icon className="w-6 h-6 text-blue-600 mb-3" />
+              <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Who It's For */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Who This SEO Audit Is For</h2>
+          <div className="prose prose-gray max-w-none space-y-4 text-gray-700 leading-relaxed text-sm">
+            <p>
+              This tool is built for local business owners who want to understand why their website isn't showing up on Google — without hiring an SEO agency or spending hours reading technical documentation. If you're a plumber, HVAC company, dentist, lawyer, or any service-area business, this audit will pinpoint the exact technical and on-page issues preventing your site from ranking for the searches your customers are already making.
+            </p>
+            <p>
+              Most local business websites have 8 to 15 fixable SEO issues. Common problems include missing meta descriptions, slow page load times, unoptimized images, no structured data markup, and missing local SEO signals like your address and phone number. Fixing even half of these issues can move you from page 3 to page 1 within 60 to 90 days — without paying for ads.
+            </p>
+            <p>
+              The audit is completely free because we believe every local business deserves a fair shot at ranking on Google. There's no catch, no upsell in the report itself, and your email will only be used to send you the audit results and occasional tips about growing your business online.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { quote: "The SEO audit flagged 12 issues we had no idea about. After fixing them, our Google ranking jumped from page 3 to page 1 for our main keyword.", name: "Lisa M.", role: "Roofing Company Owner, Ohio" },
+            { quote: "Free, instant, and actually useful. I used the report to guide our website redesign and saw 60% more organic traffic in 90 days.", name: "Carlos R.", role: "HVAC Business Owner, Texas" },
+            { quote: "I sent this audit to my web developer and it saved hours of guesswork. Very clear and actionable.", name: "Janet K.", role: "Dental Practice Manager, Georgia" },
+          ].map((item) => (
+            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="bg-gray-50 border-t border-gray-100 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Report delivered to your inbox in minutes</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
+          </div>
+        </div>
+      </section>
+
       </main>
       <Footer />
     </div>
