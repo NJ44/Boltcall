@@ -40,6 +40,12 @@ const BestAfterHoursAnsweringService: React.FC = () => {
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': 'https://boltcall.org/blog/best-after-hours-answering-service'
+      },
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://boltcall.org/og-image.jpg',
+        width: 1200,
+        height: 630,
       }
     };
 
