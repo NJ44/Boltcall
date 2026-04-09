@@ -283,7 +283,7 @@ const AiReadinessScorecard: React.FC = () => {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = 'https://boltcall.org/ai-readiness-scorecard';
+    link.href = 'https://boltcall.org/ai-readiness-scorecard/';
 
     return () => {
       const el = document.querySelector("link[rel='canonical']");
