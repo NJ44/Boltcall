@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import {
   Sparkles, TrendingDown, TrendingUp, Users, DollarSign,
