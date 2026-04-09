@@ -147,11 +147,11 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                       <ul className="space-y-3">
                         <li className="flex items-start space-x-3">
                           <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-700"><strong>27% of customers</strong> will call a competitor if they can't reach you after hours</span>
+                          <span className="text-gray-700"><strong>27% of customers</strong> will call a competitor if they can't reach you after hours (source: <a href="https://www.bia.com/local-business-lead-management-study/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">BIA Advisory Services</a>)</span>
                         </li>
                         <li className="flex items-start space-x-3">
                           <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-700">Small businesses lose an average of <strong>$62,000 annually</strong> from missed calls</span>
+                          <span className="text-gray-700">Small businesses lose an average of <strong>$62,000 annually</strong> from missed calls (source: <a href="https://www.invoca.com/blog/missed-call-statistics" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">Invoca Research</a>)</span>
                         </li>
                         <li className="flex items-start space-x-3">
                           <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
