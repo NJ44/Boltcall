@@ -267,6 +267,66 @@ const SEOAuditPDF: React.FC = () => {
         </div>
       </section>
 
+      {/* How It Works — What We Analyze */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            What Is AEO — And Why Does It Matter for Your Business?
+          </h2>
+
+          <div className="prose prose-gray max-w-none space-y-4 text-gray-700 leading-relaxed mb-10">
+            <p>
+              Search Engine Optimization (SEO) focuses on ranking in Google's traditional blue-link results.
+              AI Engine Optimization (AEO) is the emerging discipline of making your business visible inside
+              AI-powered answer engines — ChatGPT, Google's AI Overviews, Perplexity, and Bing Copilot.
+              These AI surfaces now answer millions of local business queries every day, and the businesses
+              that appear in those answers get calls, bookings, and leads without paying for ads.
+            </p>
+            <p>
+              Most local businesses have never been audited for AEO readiness. They may rank reasonably well
+              on traditional Google search, yet be completely invisible when a potential customer asks an AI
+              assistant "who is the best plumber near me?" or "which dentist accepts Delta Dental in Austin?"
+              Our audit scores your site on both dimensions — giving you a complete picture of your current
+              visibility and a prioritized list of what to fix first.
+            </p>
+            <p>
+              The free PDF report we generate covers 30 factors across six categories: on-page SEO health,
+              technical performance, structured data and rich results eligibility, content quality and
+              topical authority, local signals (NAP consistency, Google Business Profile alignment), and
+              AEO readiness indicators like FAQ schema, conversational content structure, and entity markup.
+              Most businesses discover 8 to 15 fixable issues they were unaware of — and fixing even half
+              of them typically moves the revenue needle within 60 to 90 days.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-5 mb-10">
+            {[
+              {
+                title: 'Step 1: Enter Your URL',
+                desc: 'We crawl your website the same way Google and AI engines do — analyzing every page, heading, link, and metadata tag in real time.',
+              },
+              {
+                title: 'Step 2: AI Writes Your Report',
+                desc: 'Our AI cross-references your site data against 30 ranking factors and writes a plain-English analysis with specific, actionable recommendations.',
+              },
+              {
+                title: 'Step 3: Get Your PDF',
+                desc: 'A branded 6-page PDF arrives in your inbox within minutes — with a priority action plan ranked by potential traffic impact so you know exactly where to start.',
+              },
+            ].map((step) => (
+              <div key={step.title} className="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                <h3 className="font-bold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
       {/* Form */}
       <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <motion.div
