@@ -99,23 +99,23 @@ const GiveawayPage: React.FC = () => {
               <ul className="mt-6 space-y-3 text-white/90 text-sm">
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>AI Receptionist</span>
+                  <span>Enhance customer engagement with instant replies — never miss a lead</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>SMS messaging</span>
+                  <span>Reach customers instantly via SMS to qualify leads faster</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>Instant form replies</span>
+                  <span>Convert more website visitors with AI-powered form responses</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>Instant follow-ups</span>
+                  <span>Save time with automated follow-ups that keep clients informed</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="w-3.5 h-3.5 mt-0.5 text-brand-blue" strokeWidth={2.5} />
-                  <span>Plus more bonuses</span>
+                  <span>Improve service efficiency with AI receptionist — plus more revenue-boosting tools</span>
                 </li>
               </ul>
             </div>
