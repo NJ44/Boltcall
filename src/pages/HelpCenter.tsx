@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Search, BookOpen, AlertTriangle, Phone, HelpCircle, ArrowRight, FileText, Clock, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface HelpCategory {
   id: string;
@@ -132,6 +133,37 @@ const HelpCenter: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Documentation CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-12"
+        >
+          <Link
+            to="/documentation"
+            className="group block rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white shadow-xl shadow-blue-600/10 transition hover:brightness-[1.03]"
+          >
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/15">
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Open Boltcall Documentation</h2>
+                  <p className="mt-1 text-white/85">
+                    Step-by-step setup guides, integrations, features, troubleshooting, and best practices.
+                  </p>
+                </div>
+              </div>
+              <div className="inline-flex items-center gap-2 self-start rounded-xl bg-white px-5 py-3 text-sm font-bold text-blue-700 md:self-auto">
+                Go to Documentation
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
         {/* Help Categories */}
         <div className="mb-16">
           <motion.h2

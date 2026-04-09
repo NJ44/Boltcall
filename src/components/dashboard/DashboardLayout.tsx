@@ -348,6 +348,7 @@ const DashboardLayout: React.FC = () => {
 
   const navItemsFooter = [
     { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" />, onboardingId: 'nav-settings' },
+    { to: '/documentation', label: 'Documentation', icon: <BookOpen className="w-5 h-5 scale-[0.95]" /> },
     { to: '/help-center', label: t('nav.helpCenter'), icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
   ];
 
@@ -970,7 +971,7 @@ const DashboardLayout: React.FC = () => {
                 <h3 className="text-sm font-medium text-gray-900 mb-4">{t('help.documentation')}</h3>
                 <div className="space-y-3">
                   <Link
-                    to="/help-center"
+                    to="/documentation"
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                     onClick={() => setShowHelpSidebar(false)}
                   >

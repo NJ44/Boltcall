@@ -21,6 +21,24 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Best AI Receptionist for Home Services (Plumbers, HVAC, Roofing) — 2026 Guide',
+    slug: '/blog/best-ai-receptionist-home-services',
+    excerpt: 'A practical buying guide for home service businesses. Learn what matters, compare options, and see how to capture every call and booking 24/7.',
+    date: 'April 9, 2026',
+    readTime: '10 min read',
+    category: 'Home Services|Industry Guide',
+    image: '/og-image.jpg'
+  },
+  {
+    title: 'How to Set Up 24/7 Call Answering for a Small Business (No Staff)',
+    slug: '/blog/ai-agent-for-small-business-24-7-call-answering',
+    excerpt: 'Step-by-step setup for 24/7 answering, lead capture, booking, and follow-up—without hiring more staff.',
+    date: 'April 9, 2026',
+    readTime: '9 min read',
+    category: 'AI Agent|Small Business|How-to',
+    image: '/og-image.jpg'
+  },
+  {
     title: 'Is an AI Receptionist Worth It? ROI & Cost-Benefit Analysis for Local Businesses',
     slug: '/blog/ai-receptionist-worth-it-roi',
     excerpt: 'Discover whether an AI receptionist delivers real value for your business. We break down costs, benefits, and ROI to help you decide if it\'s the righ',

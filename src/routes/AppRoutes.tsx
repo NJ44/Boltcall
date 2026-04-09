@@ -188,6 +188,8 @@ const ChatbotVsLivePhoneComparison = React.lazy(() => import('../pages/ChatbotVs
 const AiReceptionistForPlumbers = React.lazy(() => import('../pages/AiReceptionistForPlumbers'));
 const AIReceptionistWorthItROI = React.lazy(() => import('../pages/AIReceptionistWorthItROI'));
 const MissedCallsStatistics2026 = React.lazy(() => import('../pages/MissedCallsStatistics2026'));
+const BestAIReceptionistHomeServices = React.lazy(() => import('../pages/BestAIReceptionistHomeServices'));
+const AiAgentSmallBusiness247CallAnswering = React.lazy(() => import('../pages/AiAgentSmallBusiness247CallAnswering'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -462,6 +464,8 @@ const NavigationWrapper: React.FC = () => {
             <Route path="/blog/ai-receptionist-for-plumbers" element={<AiReceptionistForPlumbers />} />
             <Route path="/blog/ai-receptionist-worth-it-roi" element={<AIReceptionistWorthItROI />} />
             <Route path="/blog/missed-calls-statistics-local-business-2026" element={<MissedCallsStatistics2026 />} />
+        <Route path="/blog/best-ai-receptionist-home-services" element={<BestAIReceptionistHomeServices />} />
+        <Route path="/blog/ai-agent-for-small-business-24-7-call-answering" element={<AiAgentSmallBusiness247CallAnswering />} />
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
