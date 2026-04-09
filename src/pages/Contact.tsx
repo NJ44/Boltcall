@@ -211,6 +211,28 @@ const Contact: React.FC = () => {
                 </button>
               </div>
             </form>
+
+            <p className="mt-4 text-center text-xs text-gray-400">
+              See how Boltcall compares on{' '}
+              <a
+                href="https://www.g2.com/categories/ai-sales-assistant"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                G2
+              </a>{' '}
+              or read reviews on{' '}
+              <a
+                href="https://www.capterra.com/p/10010996/Boltcall/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                Capterra
+              </a>
+              .
+            </p>
           </motion.div>
         </div>
       </motion.div>
