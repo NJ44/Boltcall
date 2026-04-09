@@ -116,6 +116,11 @@ const BlogAIGuideStep2: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
+        {/* TL;DR */}
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
+          <p className="text-sm font-bold text-blue-800 uppercase tracking-wide mb-2">TL;DR</p>
+          <p className="text-blue-900 text-sm leading-relaxed">Choosing the right AI tools means evaluating call handling, appointment booking, follow-up automation, and CRM integration. The best tools pay for themselves within the first month through recovered missed calls. This guide helps you compare options and avoid expensive mistakes.</p>
+        </div>
         {/* Introduction */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
