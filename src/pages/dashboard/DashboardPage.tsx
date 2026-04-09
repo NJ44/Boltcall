@@ -10,6 +10,7 @@ import { InteractiveOnboardingChecklist, type Step } from '../../components/ui/o
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
+import { AgentWorkflowBlock } from '../../components/ui/agent-workflow-block';
 
 const ONBOARDING_STEPS: Step[] = [
   {
@@ -249,6 +250,17 @@ const DashboardPage: React.FC = () => {
       {/* Feature Hub */}
       <div data-onboarding="features">
         <FeatureHub />
+      </div>
+
+      {/* Agent Architecture */}
+      <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
+        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Agent Architecture</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">How your triggers, agents, and outputs connect</p>
+        </div>
+        <div className="p-4">
+          <AgentWorkflowBlock />
+        </div>
       </div>
 
       {/* Alerts Section */}
