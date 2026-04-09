@@ -235,7 +235,7 @@ const SEOAuditPDF: React.FC = () => {
               Get a professional 6-page PDF analyzing your website for both search engines and AI answer engines.
             </p>
             <p className="text-gray-500 max-w-xl mx-auto">
-              We crawl your site, check 30+ SEO factors, evaluate AEO readiness, and deliver a branded report with scores and an action plan.
+              Improve your website's visibility with a comprehensive 30-factor SEO analysis — uncover what's costing you traffic and get a prioritized action plan to rank higher and get found by AI answer engines.
             </p>
           </motion.div>
         </div>
