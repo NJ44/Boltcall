@@ -293,6 +293,24 @@ const SEOAnalyzer: React.FC = () => {
         </div>
       </section>
 
+      {/* What the SEO Audit Checks */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">What the SEO Audit Checks</h2>
+          <div className="space-y-4">
+            <p className="text-gray-700 leading-relaxed">
+              The audit begins with a technical SEO scan — checking for crawl errors, broken links, missing canonical tags, and slow page load times that cause Google to deprioritize your site. It also evaluates your meta titles and descriptions across every page, flagging ones that are missing, duplicated, or too long to display correctly in search results. These technical issues are often invisible to the naked eye but have an outsized effect on your rankings.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Next, the audit checks mobile usability and content gaps relative to your competitors. Most local business websites still have pages that render poorly on smartphones, which directly hurts rankings since Google uses mobile-first indexing. The content gap analysis identifies topics and keywords your competitors rank for that your site doesn't cover — revealing quick wins you can capture without building new pages from scratch.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              The audit also includes AEO (Answer Engine Optimization) factors — the signals that determine whether your business appears in AI-generated answers, voice search results, and featured snippets. This includes structured data markup, FAQ schema, and how well your content directly answers the questions your customers are typing into Google. Most local business websites score poorly on AEO, making it one of the highest-opportunity areas to improve.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Who It's For */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8">
