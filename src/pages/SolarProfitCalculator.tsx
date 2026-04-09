@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { CheckCircle } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
