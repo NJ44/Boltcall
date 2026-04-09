@@ -19,7 +19,7 @@ const AiAgentSmallBusiness247CallAnswering: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'How to Set Up 24/7 Call Answering for a Small Business (No Staff) | Boltcall';
     updateMetaDescription(
-      'Step-by-step guide to set up 24/7 call answering for your small business without hiring staff. Use an AI agent to answer calls, qualify leads, and book appointments.'
+      'How to set up 24/7 call answering for your small business without hiring staff. Use an AI agent to answer calls, qualify leads, and book appointments automatically.'
     );
 
     const script = document.createElement('script');
