@@ -236,6 +236,24 @@ const Contact: React.FC = () => {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* How We Can Help */}
+      <section className="w-full max-w-[860px] mt-10 mb-6">
+        <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-10 text-white">
+          <h2 className="text-2xl font-bold mb-6">How We Can Help</h2>
+          <div className="space-y-4">
+            <p className="text-white/90 leading-relaxed">
+              Our support team typically responds to all inquiries within one business day, and most questions are answered the same day during business hours. Whether you're evaluating Boltcall for the first time or you're an existing customer running into an issue, someone on our team will get back to you with a clear, actionable answer — not a canned response or a link to an FAQ.
+            </p>
+            <p className="text-white/90 leading-relaxed">
+              The kinds of questions we handle most often include: getting your AI receptionist set up and configured for your specific business hours and call flows, understanding billing and plan options, connecting Boltcall to third-party tools like your CRM or scheduling software, and troubleshooting any issues with call routing or AI response quality. You can reach us with anything from a quick question to a complex integration request.
+            </p>
+            <p className="text-white/90 leading-relaxed">
+              Common questions from businesses reaching out for the first time: How long does onboarding take? (Most businesses are live within 24 hours.) Can I customize what the AI says on calls? (Yes — we configure the script to match your tone and services.) Does Boltcall work with my existing phone number? (In most cases, yes — we can forward calls or port your number depending on your setup.) Send us a message and we'll walk you through exactly how it works for your situation.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
