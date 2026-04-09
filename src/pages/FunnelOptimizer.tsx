@@ -359,7 +359,7 @@ const FunnelOptimizer: React.FC = () => {
                   {/* Teaser */}
                   <div className="mt-6 p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-center">
                     <p className="text-indigo-300 text-sm">
-                      <span className="font-semibold">Your full report includes:</span> Revenue leak detection, industry benchmarks, compound growth scenarios, and personalized recommendations.
+                      <span className="font-semibold">Increase your monthly revenue</span> by identifying conversion leaks — receive personalized recommendations to boost conversion rates and see compound growth scenarios for your business.
                     </p>
                   </div>
                 </div>
