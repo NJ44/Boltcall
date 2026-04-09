@@ -160,6 +160,7 @@ const BlogAIGuideStep2 = React.lazy(() => import('../pages/BlogAIGuideStep2'));
 const BlogAIGuideStep3 = React.lazy(() => import('../pages/BlogAIGuideStep3'));
 const BlogAIReceptionistComparison = React.lazy(() => import('../pages/BlogAIReceptionistComparison'));
 const BlogAIReceptionistHowItWorks = React.lazy(() => import('../pages/BlogAIReceptionistHowItWorks'));
+const BlogAIAnsweringServiceSmallBusiness = React.lazy(() => import('../pages/BlogAIAnsweringServiceSmallBusiness'));
 const BlogIsAIReceptionistWorthIt = React.lazy(() => import('../pages/BlogIsAIReceptionistWorthIt'));
 const BlogHowToMakeAIReceptionist = React.lazy(() => import('../pages/BlogHowToMakeAIReceptionist'));
 const BlogWillReceptionistsBeReplacedByAI = React.lazy(() => import('../pages/BlogWillReceptionistsBeReplacedByAI'));
