@@ -115,7 +115,7 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center px-8 text-white"
           >
-            <h1 className="text-2xl font-bold mb-2">Get in Touch</h1>
+            <p className="text-2xl font-bold mb-2">Get in Touch</p>
             <p className="text-white/80 text-sm leading-relaxed mb-4 max-w-[240px] mx-auto">
               Have a question or want to learn more? We'd love to hear from you.
             </p>
