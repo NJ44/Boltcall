@@ -16,7 +16,7 @@ const BestAfterHoursAnsweringService: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Best After Hours Answering Service for Local Businesses: AI vs Traditional | Boltcall';
-    updateMetaDescription('Compare the best after hours answering services for local businesses. Learn why AI receptionists outperform traditional services with 24/7 coverage and lower costs.');
+    updateMetaDescription('Compare the best after hours answering services for local businesses. AI receptionists outperform traditional services with 24/7 coverage and lower costs.');
 
     const schema = {
       '@context': 'https://schema.org',
