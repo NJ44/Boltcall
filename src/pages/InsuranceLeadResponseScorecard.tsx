@@ -659,10 +659,10 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
             <motion.div variants={fadeUp} className="text-left bg-slate-900/60 border border-slate-800 rounded-xl p-5 mb-8">
               <ul className="space-y-3">
                 {[
-                  'Personalized scorecard with your grades and benchmarks',
-                  'Speed-to-lead playbook for insurance agents',
-                  'After-hours lead capture strategy guide',
-                  'Commission recovery roadmap with AI implementation steps',
+                  'Respond within 5 minutes to qualify leads 21x more effectively',
+                  'Recover after-hours commissions you\'re currently losing to competitors',
+                  'Capture 95% of after-hours leads with AI responding in under 30 seconds',
+                  'Step-by-step roadmap to increase your lead-to-bind rate with AI',
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
