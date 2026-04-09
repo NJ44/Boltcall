@@ -36,7 +36,7 @@ const FAQAIReceptionistPlumber: React.FC = () => {
         "description": "Everything plumbing business owners need to know about AI receptionists — emergency dispatch, after-hours calls, booking, and ROI.",
         "author": { "@type": "Organization", "name": "Boltcall" },
         "datePublished": "2026-03-31",
-        "dateModified": "2026-03-31",
+        "dateModified": "2026-03-31",,
         "publisher": {
           "@type": "Organization",
           "name": "Boltcall",

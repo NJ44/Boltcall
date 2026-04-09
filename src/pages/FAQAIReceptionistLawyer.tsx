@@ -116,7 +116,7 @@ const FAQAIReceptionistLawyer: React.FC = () => {
         "description": "Everything law firms need to know about AI receptionists — client intake, confidentiality, after-hours calls, billing integration, and ROI.",
         "author": { "@type": "Organization", "name": "Boltcall" },
         "datePublished": "2026-03-31",
-        "dateModified": "2026-03-31",
+        "dateModified": "2026-03-31",,
         "publisher": {
           "@type": "Organization",
           "name": "Boltcall",
