@@ -30,7 +30,7 @@ const FunnelOptimizer: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Free Funnel Optimizer — See How Much Revenue Your Funnel Is Leaking';
-    updateMetaDescription('Free funnel analysis tool for local businesses. Enter your conversion rates, get a branded PDF report with revenue leak detection, benchmarks, and recommendations.');
+    updateMetaDescription('Free funnel analysis tool for local businesses. Enter your conversion rates, get a PDF report with revenue leak detection, benchmarks, and fix recommendations.');
   }, []);
 
   // Live preview calculations
