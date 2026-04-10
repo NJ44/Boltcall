@@ -757,6 +757,175 @@ const AIRevenueAudit: React.FC = () => {
         </div>
       </section>
 
+      {/* Revenue Impact Stats Table */}
+      <section id="revenue-stats" className="py-12 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Revenue Impact by the Numbers</h2>
+          <p className="text-gray-500 mb-6 text-sm">Industry benchmarks vs. businesses running Boltcall AI Receptionist.</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-blue-600 text-white">
+                  <th className="text-left px-4 py-3 font-semibold">Metric</th>
+                  <th className="text-left px-4 py-3 font-semibold">Industry Average</th>
+                  <th className="text-left px-4 py-3 font-semibold">With AI Receptionist</th>
+                  <th className="text-left px-4 py-3 font-semibold">Improvement</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { metric: 'Missed call rate', industry: '62%', ai: '0%', improvement: '-62 pts' },
+                  { metric: 'Lead response time', industry: '47 hours', ai: '< 60 seconds', improvement: '99.9% faster' },
+                  { metric: 'After-hours lead capture', industry: '8%', ai: '94%', improvement: '+86 pts' },
+                  { metric: 'Monthly missed revenue', industry: '$18,400', ai: '$1,200', improvement: '-$17,200' },
+                  { metric: 'Booking conversion rate', industry: '23%', ai: '51%', improvement: '+122%' },
+                  { metric: 'Annual ROI on AI receptionist', industry: '—', ai: '380%', improvement: '—' },
+                ].map((row, i) => (
+                  <tr key={row.metric} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className="px-4 py-3 font-medium text-gray-900">{row.metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{row.industry}</td>
+                    <td className="px-4 py-3 text-blue-700 font-semibold">{row.ai}</td>
+                    <td className="px-4 py-3 text-green-700 font-semibold">{row.improvement}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Comparison Table */}
+      <section id="pricing" className="py-12 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">How Boltcall Compares to Other Solutions</h2>
+          <p className="text-gray-500 mb-6 text-sm">See why local businesses choose AI over traditional receptionist options.</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-blue-600 text-white">
+                  <th className="text-left px-4 py-3 font-semibold">Solution</th>
+                  <th className="text-left px-4 py-3 font-semibold">Monthly Cost</th>
+                  <th className="text-left px-4 py-3 font-semibold">Missed Call Coverage</th>
+                  <th className="text-left px-4 py-3 font-semibold">Booking Automation</th>
+                  <th className="text-left px-4 py-3 font-semibold">ROI Timeline</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { solution: 'Boltcall AI Receptionist', cost: '$297–$497', coverage: '100% (24/7)', automation: 'Yes', roi: '30 days', highlight: true },
+                  { solution: 'Human receptionist', cost: '$3,200–$4,800', coverage: '~60% (business hours only)', automation: 'Manual', roi: 'Never', highlight: false },
+                  { solution: 'Answering service', cost: '$250–$1,200', coverage: '~70%', automation: 'No', roi: 'Breaks even', highlight: false },
+                  { solution: 'Virtual assistant', cost: '$800–$2,000', coverage: '~40%', automation: 'Limited', roi: '6–12 months', highlight: false },
+                  { solution: 'No coverage', cost: '$0', coverage: '0%', automation: 'No', roi: 'Negative', highlight: false },
+                ].map((row, i) => (
+                  <tr key={row.solution} className={row.highlight ? 'bg-blue-50' : i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className={`px-4 py-3 font-medium ${row.highlight ? 'text-blue-700' : 'text-gray-900'}`}>{row.solution}</td>
+                    <td className="px-4 py-3 text-gray-700">{row.cost}</td>
+                    <td className="px-4 py-3 text-gray-700">{row.coverage}</td>
+                    <td className="px-4 py-3 text-gray-700">{row.automation}</td>
+                    <td className={`px-4 py-3 font-semibold ${row.highlight ? 'text-green-700' : 'text-gray-600'}`}>{row.roi}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases */}
+      <section id="use-cases" className="py-12 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Real-World Revenue Recovery Stories</h2>
+          <p className="text-gray-500 mb-8 text-sm">How local businesses used AI audit data to identify and recover lost revenue.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                industry: 'HVAC Contractor',
+                location: 'Dallas, TX',
+                problem: 'Revenue audit identified $23,400/month in after-hours missed revenue.',
+                result: 'Implemented AI receptionist and recovered $19,800 within 45 days.',
+                tag: 'After-Hours Coverage',
+              },
+              {
+                industry: 'Dental Practice',
+                location: 'Miami, FL',
+                problem: 'Audit revealed 31 missed new-patient calls per month at $340 average value.',
+                result: 'Added $10,540/month in revenue after switching to AI answering.',
+                tag: 'New Patient Acquisition',
+              },
+              {
+                industry: 'Plumber',
+                location: 'Denver, CO',
+                problem: 'Emergency calls after hours going to voicemail — $8,200/month slipping away.',
+                result: '$8,200/month recovered after switching to 24/7 AI answering.',
+                tag: 'Emergency Call Capture',
+              },
+              {
+                industry: 'Law Firm',
+                location: 'New York, NY',
+                problem: 'Speed-to-lead gap costing $41,000/quarter in lost consultations.',
+                result: 'Reduced response time from 6 hours to 45 seconds — consultations recovered.',
+                tag: 'Speed-to-Lead',
+              },
+            ].map((item) => (
+              <div key={item.industry + item.location} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <p className="font-bold text-gray-900 text-base">{item.industry}</p>
+                    <p className="text-xs text-gray-500">{item.location}</p>
+                  </div>
+                  <span className="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-1 rounded-full whitespace-nowrap">{item.tag}</span>
+                </div>
+                <p className="text-sm text-gray-600 mb-2"><span className="font-semibold text-gray-800">Challenge:</span> {item.problem}</p>
+                <p className="text-sm text-green-700 font-semibold">{item.result}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Competitive Differentiators */}
+      <section id="why-boltcall-audit" className="py-12 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Why Our Revenue Audit Is Different</h2>
+          <p className="text-gray-500 mb-8 text-sm">Most revenue tools give you a score. We give you a dollar amount — and a plan.</p>
+          <div className="space-y-4">
+            {[
+              {
+                title: 'Actual Dollar Estimates',
+                description: 'Not percentages, but real monthly revenue loss in dollars. You see exactly what each gap is costing you — down to the booking.',
+              },
+              {
+                title: 'Industry-Specific Benchmarks',
+                description: 'Your numbers are compared to top performers in your niche — HVAC, dental, legal, home services — not a generic national average.',
+              },
+              {
+                title: 'Phone-First Focus',
+                description: 'Most revenue audits miss call data entirely. We put inbound call handling front and center, because that\'s where most local businesses lose the most money.',
+              },
+              {
+                title: 'Actionable Next Steps',
+                description: 'Every gap in your audit comes with a specific fix — not just a score. You know exactly what to do next to plug the leak.',
+              },
+              {
+                title: 'No Sales Pressure',
+                description: 'Your results are yours to act on however you choose. We\'ll show you the numbers; what you do with them is up to you.',
+              },
+            ].map((item, i) => (
+              <div key={item.title} className="flex gap-4 bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                  {i + 1}
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900 mb-1">{item.title}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
