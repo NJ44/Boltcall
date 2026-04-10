@@ -239,6 +239,28 @@ const integrations: Integration[] = [
     ],
     url: 'https://business.google.com',
   },
+  {
+    id: 'servicetitan',
+    name: 'ServiceTitan',
+    logo: '/servicetitan_logo.png',
+    subtitle: 'Field Service Management',
+    description: 'Automatically create customers and booking requests in ServiceTitan when leads call your AI receptionist.',
+    fallbackColor: '#E8461A',
+    type: 'api_key',
+    category: 'crm',
+    apiLabel: 'Client ID',
+    extraFields: [
+      { key: 'client_secret', label: 'Client Secret', placeholder: 'Your ServiceTitan app client secret', secret: true },
+      { key: 'tenant_id', label: 'Tenant ID', placeholder: 'e.g. 123456789 (from your ServiceTitan URL)' },
+    ],
+    steps: [
+      'In ServiceTitan, go to Settings → Integrations → API Application Access',
+      'Create a new application — copy the Client ID and Client Secret',
+      'Find your Tenant ID in the URL when logged in (e.g. go.servicetitan.com/tenant/12345)',
+      'Paste all three values below to connect',
+    ],
+    url: 'https://go.servicetitan.com',
+  },
 ];
 
 // ---------------------------------------------------------------------------
