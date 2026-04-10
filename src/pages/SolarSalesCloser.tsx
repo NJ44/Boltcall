@@ -566,6 +566,22 @@ const SolarSalesCloser: React.FC = () => {
           </div>
         </div>
 
+        {/* Trust Signals */}
+        <div className="flex justify-center gap-6 px-6 pb-6 flex-wrap">
+          {[
+            'No credit card required',
+            'Live in 24 hours',
+            'Cancel anytime',
+          ].map((signal) => (
+            <div key={signal} className="flex items-center gap-1.5 text-sm text-slate-400">
+              <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {signal}
+            </div>
+          ))}
+        </div>
+
         {/* App Container */}
         <div className="max-w-[960px] mx-auto px-6 pb-20">
           {/* Tab Bar */}
