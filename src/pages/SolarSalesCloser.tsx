@@ -438,6 +438,45 @@ const SolarSalesCloser: React.FC = () => {
     updateMetaDescription(
       'Free Solar Sales Closer Toolkit — 14 objection-killing scripts, 6-step sales flow, 7 closing techniques, and practice mode. Turn "let me think about it" into signed contracts.'
     );
+
+    // Service schema
+    const serviceSchema = document.createElement('script');
+    serviceSchema.type = 'application/ld+json';
+    serviceSchema.id = 'schema-service-solar-sales-closer';
+    serviceSchema.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      'name': 'Solar Sales Closer AI Tool',
+      'description': 'AI-powered sales closing tool for solar businesses — handles objections, follows up with leads, and books consultations automatically.',
+      'provider': {
+        '@type': 'Organization',
+        'name': 'Boltcall',
+        'url': 'https://boltcall.org',
+      },
+      'areaServed': 'US',
+      'serviceType': 'AI Sales Assistant',
+    });
+    document.head.appendChild(serviceSchema);
+
+    // BreadcrumbList schema
+    const breadcrumbSchema = document.createElement('script');
+    breadcrumbSchema.type = 'application/ld+json';
+    breadcrumbSchema.id = 'schema-breadcrumb-solar-sales-closer';
+    breadcrumbSchema.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://boltcall.org' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': 'https://boltcall.org/tools' },
+        { '@type': 'ListItem', 'position': 3, 'name': 'Solar Sales Closer', 'item': 'https://boltcall.org/tools/solar-sales-closer' },
+      ],
+    });
+    document.head.appendChild(breadcrumbSchema);
+
+    return () => {
+      document.getElementById('schema-service-solar-sales-closer')?.remove();
+      document.getElementById('schema-breadcrumb-solar-sales-closer')?.remove();
+    };
   }, []);
 
   const toggleObjection = (index: number) => {
