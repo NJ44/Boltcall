@@ -430,6 +430,71 @@ const FAQAIReceptionistPlumber: React.FC = () => {
           </div>
         </section>
 
+        {/* Pros & Cons */}
+        <section id="pros-cons" className="py-16 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+            >
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                Pros &amp; Cons of AI Receptionists for Plumbers
+              </h2>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                An honest breakdown of what AI phone answering does well — and where it still has limits — for plumbing companies.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {/* Pros */}
+                <div className="rounded-xl border-2 border-green-200 bg-green-50 p-6">
+                  <h3 className="text-base font-bold text-green-800 mb-4 flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">✓</span>
+                    Advantages
+                  </h3>
+                  <ul className="space-y-3">
+                    {[
+                      'Never misses an emergency call — even at 2am',
+                      'Books appointments automatically while you\'re on a job',
+                      'Captures lead info before you call back',
+                      'Handles multiple calls simultaneously during busy periods',
+                      'Consistent, professional tone on every call',
+                      'Fraction of the cost of a human dispatcher',
+                    ].map((pro, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-green-900">
+                        <span className="text-green-600 font-bold flex-shrink-0 mt-0.5">✓</span>
+                        <span>{pro}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* Cons */}
+                <div className="rounded-xl border-2 border-red-200 bg-red-50 p-6">
+                  <h3 className="text-base font-bold text-red-800 mb-4 flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">✗</span>
+                    Limitations
+                  </h3>
+                  <ul className="space-y-3">
+                    {[
+                      'Cannot diagnose complex plumbing issues over the phone',
+                      'Requires initial setup and customization',
+                      'Monthly subscription cost ($297–$497/month)',
+                      'Customers who insist on human contact may be frustrated',
+                      'Needs internet connectivity to function',
+                      'Doesn\'t replace the need for skilled plumbers',
+                    ].map((con, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-red-900">
+                        <span className="text-red-500 font-bold flex-shrink-0 mt-0.5">✗</span>
+                        <span>{con}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Related Resources */}
         <section className="py-16 bg-white">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
