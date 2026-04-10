@@ -187,8 +187,35 @@ const CompareBoltcallVsCalomation: React.FC = () => {
           </p>
         </motion.div>
 
+        {/* Table of Contents */}
+        <nav id="toc" aria-label="Table of contents" className="bg-white border border-gray-200 rounded-2xl p-6 mb-12 shadow-sm">
+          <h2 className="text-base font-bold text-gray-900 uppercase tracking-wide mb-4">In This Comparison</h2>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { href: '#overview', label: 'Overview' },
+              { href: '#pricing', label: 'Pricing Transparency' },
+              { href: '#comparison-table', label: 'Feature Comparison' },
+              { href: '#setup', label: 'Setup Experience' },
+              { href: '#guarantee', label: '24-Hour Guarantee' },
+              { href: '#who-boltcall', label: 'Who Chooses Boltcall' },
+              { href: '#who-calomation', label: 'Who Chooses Calomation' },
+              { href: '#verdict', label: 'Verdict' },
+              { href: '#expert-insights', label: 'Expert Insights' },
+              { href: '#faq', label: 'FAQ' },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="inline-block bg-blue-50 text-blue-700 text-sm font-medium px-3 py-1.5 rounded-full border border-blue-100 hover:bg-blue-100 hover:border-blue-200 transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </nav>
+
         {/* Overview */}
-        <section className="mb-12">
+        <section id="overview" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Overview: What Both Platforms Do</h2>
           <p className="text-gray-700 text-lg leading-relaxed mb-4">
             If you run a local business — a dental practice, law firm, plumbing company, or any service-based operation — you already know the problem: missed calls cost you money. Industry data suggests that <strong>62% of calls to small businesses go unanswered</strong>, and every missed call is a potential customer who dials a competitor instead.
