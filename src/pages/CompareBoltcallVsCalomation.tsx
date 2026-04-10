@@ -326,7 +326,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* The Boltcall Guarantee */}
-        <section className="mb-12">
+        <section id="guarantee" className="mb-12">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white">
             <div className="flex items-start gap-4">
               <Shield className="w-10 h-10 flex-shrink-0 mt-1" />
