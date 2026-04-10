@@ -103,6 +103,65 @@ const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
           </p>
         </motion.section>
 
+        {/* Table of Contents */}
+        <motion.section
+          id="table-of-contents"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-16"
+        >
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">In This Comparison</h2>
+            <nav aria-label="Table of contents">
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="#quick-comparison"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  Quick Comparison Table
+                </a>
+                <a
+                  href="#response-speed"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  Response Speed
+                </a>
+                <a
+                  href="#intelligence-comparison"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  Intelligence: Template vs Conversation
+                </a>
+                <a
+                  href="#multi-channel"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  Multi-Channel Capabilities
+                </a>
+                <a
+                  href="#cost-comparison"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  Total Cost of Ownership
+                </a>
+                <a
+                  href="#expert-insights"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  Expert Insights
+                </a>
+                <a
+                  href="#bottom-line"
+                  className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                >
+                  The Bottom Line
+                </a>
+              </div>
+            </nav>
+          </div>
+        </motion.section>
+
         {/* Quick Comparison Table */}
         <motion.section
           id="quick-comparison"
