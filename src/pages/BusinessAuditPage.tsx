@@ -284,6 +284,40 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             </section>
 
+            {/* Audit Metrics Table */}
+            <section className="py-12 bg-white">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">What Gets Scored — and Why It Matters</h2>
+                    <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                        <table className="w-full text-sm text-left">
+                            <thead className="bg-blue-600 text-white">
+                                <tr>
+                                    <th className="px-4 py-3 font-semibold">Audit Category</th>
+                                    <th className="px-4 py-3 font-semibold">What We Check</th>
+                                    <th className="px-4 py-3 font-semibold">Revenue Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {[
+                                    ['Phone Response Rate', 'Call answer rate, voicemail drop rate, after-hours coverage', 'High — missed calls = missed revenue'],
+                                    ['Google Business Profile', 'Completeness, categories, photos, Q&A, review count', 'High — directly affects local pack ranking'],
+                                    ['Website Speed & Mobile', 'Load time, mobile UX, Core Web Vitals', 'Medium — slow sites lose 53% of visitors'],
+                                    ['Online Reputation', 'Star rating, review recency, response rate', 'Medium — 88% of people trust reviews as much as referrals'],
+                                    ['Competitor Gap Analysis', 'Top 3 local competitors vs. your profile', 'Medium — shows exactly where you\'re losing to rivals'],
+                                    ['Missed Call Revenue Estimate', 'Monthly missed calls × average job value', 'Direct — puts a $ figure on your coverage gap'],
+                                ].map(([cat, check, impact], i) => (
+                                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                        <td className="px-4 py-3 font-semibold text-gray-800">{cat}</td>
+                                        <td className="px-4 py-3 text-gray-600">{check}</td>
+                                        <td className="px-4 py-3 text-blue-700 font-medium">{impact}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
             {/* Social Proof */}
             <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
