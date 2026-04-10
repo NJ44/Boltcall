@@ -25,6 +25,25 @@ const FreeWebsitePage: React.FC = () => {
   useEffect(() => {
     document.title = 'Get Your Free Professional Website - Boltcall';
     updateMetaDescription('Fill out our form to get a free professional website for your business. Modern design, fast loading, and SEO optimized. Apply now.');
+
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Free Website", "item": "https://boltcall.org/free-website" },
+      ],
+    };
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.id = 'breadcrumb-schema';
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      document.getElementById('breadcrumb-schema')?.remove();
+    };
   }, []);
   const [referrerId, setReferrerId] = useState<string | null>(null);
   const [surveyData, setSurveyData] = useState({
