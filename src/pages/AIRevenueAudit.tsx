@@ -115,9 +115,25 @@ const AIRevenueAudit: React.FC = () => {
     }
     link.href = 'https://boltcall.org/ai-revenue-audit';
 
+    // Add BreadcrumbList JSON-LD
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'breadcrumb-jsonld';
+    breadcrumbScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "AI Revenue Audit", "item": "https://boltcall.org/ai-revenue-audit" }
+      ]
+    });
+    document.head.appendChild(breadcrumbScript);
+
     return () => {
       const el = document.querySelector("link[rel='canonical']");
       if (el) el.remove();
+      const bc = document.getElementById('breadcrumb-jsonld');
+      if (bc) bc.remove();
     };
   }, []);
   const [surveyStarted, setSurveyStarted] = useState(false);

@@ -25,6 +25,25 @@ const FreeWebsitePage: React.FC = () => {
   useEffect(() => {
     document.title = 'Get Your Free Professional Website - Boltcall';
     updateMetaDescription('Fill out our form to get a free professional website for your business. Modern design, fast loading, and SEO optimized. Apply now.');
+
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Free Website", "item": "https://boltcall.org/free-website" },
+      ],
+    };
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.id = 'breadcrumb-schema';
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      document.getElementById('breadcrumb-schema')?.remove();
+    };
   }, []);
   const [referrerId, setReferrerId] = useState<string | null>(null);
   const [surveyData, setSurveyData] = useState({
@@ -355,6 +374,45 @@ const FreeWebsitePage: React.FC = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section id="social-proof" className="py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Trusted by Local Businesses</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            {[
+              { stat: '500+', label: 'local businesses served' },
+              { stat: '4.9/5', label: 'average rating' },
+              { stat: '24hr', label: 'delivery time' },
+            ].map(({ stat, label }) => (
+              <div key={label} className="text-center p-6 rounded-xl border border-gray-100 shadow-sm">
+                <div className="text-3xl font-extrabold text-blue-600 mb-1">{stat}</div>
+                <div className="text-sm text-gray-500">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Signals */}
+      <section className="py-8 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-6">
+            {[
+              'Money-back guarantee',
+              'No setup fees',
+              'SSL included',
+            ].map((signal) => (
+              <div key={signal} className="flex items-center gap-2 text-sm text-gray-600">
+                <svg className="w-4 h-4 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                {signal}
+              </div>
+            ))}
           </div>
         </div>
       </section>

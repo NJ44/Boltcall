@@ -56,9 +56,27 @@ const BlogAIGuideStep2: React.FC = () => {
     script.text = JSON.stringify(articleSchema);
     document.head.appendChild(script);
 
+    // BreadcrumbList schema
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "AI Guide for Businesses", "item": "https://boltcall.org/ai-guide-for-businesses" },
+        { "@type": "ListItem", "position": 3, "name": "Level 2: Choosing AI Tools", "item": "https://boltcall.org/ai-guide-for-businesses/level-2-choosing-ai-tools" },
+      ],
+    };
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.id = 'breadcrumb-schema';
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
     return () => {
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
+      document.getElementById('breadcrumb-schema')?.remove();
     };
   }, []);
 
