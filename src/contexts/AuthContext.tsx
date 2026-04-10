@@ -1,8 +1,17 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+/**
+ * AuthContext — lightweight context definition.
+ *
+ * Intentionally has NO runtime import of auth.ts / supabase.ts so this module
+ * stays out of the critical-path bundle on marketing pages. Only `import type`
+ * is used for TypeScript types (erased at build time).
+ *
+ * The actual AuthProvider (with Supabase) lives in AuthProvider.tsx and is
+ * lazy-loaded in AppRoutes.tsx so it never ends up in the modulepreload list.
+ */
+import { createContext, useContext } from 'react';
 import type { User, AuthState, LoginCredentials, SignupCredentials } from '../lib/auth';
-import { login as supabaseLogin, signup as supabaseSignup, logout as supabaseLogout, getCurrentUser, onAuthStateChange, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } from '../lib/auth';
 
-interface AuthContextType extends AuthState {
+export interface AuthContextType extends AuthState {
   login: (credentials: LoginCredentials) => Promise<void>;
   signup: (credentials: SignupCredentials) => Promise<void>;
   logout: () => Promise<void>;
@@ -11,173 +20,21 @@ interface AuthContextType extends AuthState {
   signInWithFacebook: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Safe no-op default — used before AuthProvider hydrates (~200 ms on first load).
+// isLoading:true means ProtectedRoute shows a spinner rather than redirecting.
+const noop = async () => {};
 
-type AuthAction =
-  | { type: 'LOGIN_START' }
-  | { type: 'LOGIN_SUCCESS'; payload: User }
-  | { type: 'LOGIN_ERROR' }
-  | { type: 'LOGOUT' }
-  | { type: 'SET_LOADING'; payload: boolean };
-
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case 'LOGIN_START':
-      return { ...state, isLoading: true };
-    case 'LOGIN_SUCCESS':
-      return {
-        user: action.payload,
-        isAuthenticated: true,
-        isLoading: false
-      };
-    case 'LOGIN_ERROR':
-      return { ...state, isLoading: false };
-    case 'LOGOUT':
-      return {
-        user: null,
-        isAuthenticated: false,
-        isLoading: false
-      };
-    case 'SET_LOADING':
-      return { ...state, isLoading: action.payload };
-    default:
-      return state;
-  }
-};
-
-const initialState: AuthState = {
-  user: null,
+export const AuthContext = createContext<AuthContextType>({
+  user: null as User | null,
   isAuthenticated: false,
-  isLoading: true
-};
-
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
-
-  // Check for existing session and listen to auth state changes
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const user = await getCurrentUser();
-        if (user) {
-          dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-        } else {
-          dispatch({ type: 'SET_LOADING', payload: false });
-        }
-      } catch {
-        dispatch({ type: 'SET_LOADING', payload: false });
-      }
-    };
-
-    checkAuth();
-
-    // Listen to auth state changes
-    const { data: { subscription } } = onAuthStateChange((user) => {
-      if (user) {
-        dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-      } else {
-        dispatch({ type: 'LOGOUT' });
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const login = async (credentials: LoginCredentials) => {
-    try {
-      dispatch({ type: 'LOGIN_START' });
-      const user = await supabaseLogin(credentials);
-      dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-    } catch (error) {
-      dispatch({ type: 'LOGIN_ERROR' });
-      throw error;
-    }
-  };
-
-  const signup = async (credentials: SignupCredentials) => {
-    try {
-      dispatch({ type: 'LOGIN_START' });
-      const user = await supabaseSignup(credentials);
-      dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-    } catch (error) {
-      dispatch({ type: 'LOGIN_ERROR' });
-      throw error;
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await supabaseLogout();
-      localStorage.removeItem('boltcall_setup_complete');
-      dispatch({ type: 'LOGOUT' });
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      dispatch({ type: 'LOGIN_START' });
-      await signInWithGoogle();
-    } catch (error) {
-      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
-        // This is expected for OAuth redirects
-        return;
-      }
-      dispatch({ type: 'LOGIN_ERROR' });
-      throw error;
-    }
-  };
-
-  const handleMicrosoftLogin = async () => {
-    try {
-      dispatch({ type: 'LOGIN_START' });
-      await signInWithMicrosoft();
-    } catch (error) {
-      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
-        // This is expected for OAuth redirects
-        return;
-      }
-      dispatch({ type: 'LOGIN_ERROR' });
-      throw error;
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    try {
-      dispatch({ type: 'LOGIN_START' });
-      await signInWithFacebook();
-    } catch (error) {
-      if (error instanceof Error && error.message === 'OAuth redirect initiated') {
-        return;
-      }
-      dispatch({ type: 'LOGIN_ERROR' });
-      throw error;
-    }
-  };
-
-  const value: AuthContextType = {
-    ...state,
-    login,
-    signup,
-    logout,
-    signInWithGoogle: handleGoogleLogin,
-    signInWithMicrosoft: handleMicrosoftLogin,
-    signInWithFacebook: handleFacebookLogin
-  };
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  isLoading: true,
+  login: noop,
+  signup: noop,
+  logout: noop,
+  signInWithGoogle: noop,
+  signInWithMicrosoft: noop,
+  signInWithFacebook: noop,
+});
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+export const useAuth = () => useContext(AuthContext);
