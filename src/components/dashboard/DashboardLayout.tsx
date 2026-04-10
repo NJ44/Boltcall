@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import AlertsNotifications from '../ui/avatar-notifications';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
