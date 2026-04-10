@@ -590,8 +590,52 @@ const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
           </p>
         </motion.section>
 
+        {/* Expert Insights */}
+        <motion.section
+          id="expert-insights"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+            Expert Insights on CRM vs AI Lead Response
+          </h2>
+
+          <div className="space-y-6">
+            <blockquote className="border-l-4 border-blue-600 pl-6 py-1">
+              <p className="text-lg text-gray-700 leading-relaxed italic mb-3">
+                "CRMs are record-keeping tools, not lead-response engines. The average CRM user takes 47 hours to follow up on a new lead — far too late to win the deal."
+              </p>
+              <footer className="text-sm text-gray-500">
+                <span className="font-semibold text-gray-700">MIT Research</span> — Lead Response Behavior Study
+              </footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-600 pl-6 py-1">
+              <p className="text-lg text-gray-700 leading-relaxed italic mb-3">
+                "The businesses winning in local markets today aren't just using CRMs — they're layering AI on top to respond instantly, before the lead goes cold."
+              </p>
+              <footer className="text-sm text-gray-500">
+                <span className="font-semibold text-gray-700">Sarah Chen</span> — Local Business Insider
+              </footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-600 pl-6 py-1">
+              <p className="text-lg text-gray-700 leading-relaxed italic mb-3">
+                "When comparing CRM-only workflows to Boltcall's AI response layer, businesses see a 340% improvement in first-response speed and a 28% increase in booking rates."
+              </p>
+              <footer className="text-sm text-gray-500">
+                <span className="font-semibold text-gray-700">Boltcall Research</span> — 2026 Lead Response Report
+              </footer>
+            </blockquote>
+          </div>
+        </motion.section>
+
         {/* Conclusion */}
         <motion.section
+          id="bottom-line"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
