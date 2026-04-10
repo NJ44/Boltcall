@@ -79,10 +79,23 @@ const Documentation: React.FC = () => {
     });
     document.head.appendChild(bcSchema);
 
+    // Person schema
+    const personSchema = document.createElement('script');
+    personSchema.type = 'application/ld+json';
+    personSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Boltcall Engineering Team',
+      jobTitle: 'Technical Documentation Authors',
+      worksFor: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
+    });
+    document.head.appendChild(personSchema);
+
     return () => {
       document.head.removeChild(articleSchema);
       document.head.removeChild(faqSchema);
       document.head.removeChild(bcSchema);
+      document.head.removeChild(personSchema);
     };
   }, []);
 
