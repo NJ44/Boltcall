@@ -28,7 +28,7 @@ interface Integration {
   category: 'crm' | 'calendar' | 'automation' | 'communication' | 'local';
   apiLabel?: string;
   webhookLabel?: string;
-  extraFields?: Array<{ key: string; label: string; placeholder: string }>;
+  extraFields?: Array<{ key: string; label: string; placeholder: string; secret?: boolean }>;
   steps: string[];
   url?: string;
 }
