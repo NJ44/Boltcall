@@ -643,7 +643,7 @@ const IntegrationHubTab: React.FC = () => {
                         <div key={field.key}>
                           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{field.label}</label>
                           <input
-                            type="text"
+                            type={field.secret ? 'password' : 'text'}
                             value={formExtra[field.key] || ''}
                             onChange={(e) => setFormExtra(prev => ({ ...prev, [field.key]: e.target.value }))}
                             placeholder={field.placeholder}
