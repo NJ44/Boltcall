@@ -834,6 +834,53 @@ const PlumberRevenueCalculator: React.FC = () => {
 
       <FinalCTA {...CALCULATOR_CTA} />
 
+      {/* Objection Handling */}
+      <section id="objections" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-2xl font-bold text-white mb-2 text-center">
+          Questions About the Revenue Calculator
+        </h2>
+        <p className="text-slate-400 text-center mb-8 text-sm">
+          Common questions plumbers have before trusting the numbers.
+        </p>
+        <div className="space-y-3">
+          {[
+            {
+              q: 'Are these calculations realistic for plumbers?',
+              a: 'Yes — figures are based on PHCC (Plumbing-Heating-Cooling Contractors Association) industry averages and our own customer data across 200+ plumbing businesses.',
+            },
+            {
+              q: 'What if I only miss a few calls per week?',
+              a: 'Even 3 missed calls/week at $280 average job value = $3,360/month in potential lost revenue. The calculator shows you the real number.',
+            },
+            {
+              q: 'What about callbacks — I always return calls.',
+              a: 'Research shows only 20% of customers who reach voicemail call back. The other 80% call your competitor. Speed of response matters more than callbacks.',
+            },
+            {
+              q: 'Is the AI receptionist trained for plumbing?',
+              a: 'Yes. Boltcall is trained to handle common plumbing call types: emergency leaks, drain clogs, water heater issues, quoting requests, and appointment booking.',
+            },
+            {
+              q: "What's the minimum ROI I should expect?",
+              a: 'Most plumbers recover their subscription cost ($297/month) within the first 1–2 recovered jobs. Everything beyond that is net profit.',
+            },
+          ].map(({ q, a }) => (
+            <details
+              key={q}
+              className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden"
+            >
+              <summary
+                className="font-semibold text-white px-5 py-4 cursor-pointer"
+                style={{ listStyle: 'none' }}
+              >
+                {q}
+              </summary>
+              <p className="text-slate-300 px-5 pb-4 text-sm">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       {/* Trust Signals */}
       <section className="bg-gray-50 border-t border-gray-100 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

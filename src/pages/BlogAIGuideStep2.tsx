@@ -105,9 +105,10 @@ const BlogAIGuideStep2: React.FC = () => {
             </div>
 
             {/* Author byline */}
-            <p className="text-sm text-gray-500 mt-3">
-              Written by the Boltcall Team &middot; Updated April 2026
-            </p>
+            <div className="flex items-center gap-3 mb-6 text-sm text-gray-500 mt-3">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs">BC</div>
+              <span>Written by <strong className="text-gray-700">The Boltcall Team</strong> · Updated {new Date().getFullYear()}</span>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -117,9 +118,9 @@ const BlogAIGuideStep2: React.FC = () => {
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
         {/* TL;DR */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
-          <p className="text-sm font-bold text-blue-800 uppercase tracking-wide mb-2">TL;DR</p>
-          <p className="text-blue-900 text-sm leading-relaxed">Choosing the right AI tools means evaluating call handling, appointment booking, follow-up automation, and CRM integration. The best tools pay for themselves within the first month through recovered missed calls. This guide helps you compare options and avoid expensive mistakes.</p>
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5 mb-8">
+          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">TL;DR</p>
+          <p className="text-gray-700 text-sm leading-relaxed">When choosing AI tools, prioritize: (1) phone-first over chat-only, (2) vertical-specific training over generic bots, (3) calendar integration, and (4) transparent pricing. Boltcall checks all four boxes for service businesses.</p>
         </div>
         {/* Introduction */}
         <motion.section
@@ -397,6 +398,7 @@ const BlogAIGuideStep2: React.FC = () => {
 
         {/* FAQ */}
         <motion.section
+          id="faq"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
@@ -406,19 +408,43 @@ const BlogAIGuideStep2: React.FC = () => {
             <div className="w-1 self-stretch bg-green-600 rounded-full"></div>
             Frequently Asked Questions
           </h2>
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <p className="font-bold text-gray-900 mb-2">Q: Should I use an all-in-one AI platform or separate tools?</p>
-              <p className="text-gray-700 leading-relaxed">A: For most local businesses, an all-in-one platform (calls, SMS, follow-ups in one place) is simpler and cheaper. Separate best-in-class tools make sense only once you have specific needs that a combined platform can't meet.</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <p className="font-bold text-gray-900 mb-2">Q: How do I know if an AI tool will work with my existing calendar?</p>
-              <p className="text-gray-700 leading-relaxed">A: Check the platform's integrations page before signing up. Most reputable tools support Google Calendar, Cal.com, and Outlook out of the box. Always confirm during a free trial before committing.</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <p className="font-bold text-gray-900 mb-2">Q: What is a reasonable monthly budget for AI tools as a small business?</p>
-              <p className="text-gray-700 leading-relaxed">A: Most service businesses see a positive ROI at $50–$150 per month. Start with a starter plan, measure the additional bookings and time saved in the first 30 days, then decide whether to upgrade.</p>
-            </div>
+          <div className="space-y-3">
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>What's the most important feature to look for in AI for service businesses?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-green-600 text-green-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                Phone capability. Most AI tools are chat-only. For service businesses, 70%+ of leads still call first — so you need AI that handles inbound calls, not just web chat.
+              </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>How much should I expect to pay for AI receptionist software?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-green-600 text-green-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                Quality AI receptionist platforms run $297–$497/month. Compare that to a part-time receptionist at $1,500+/month or a live answering service at $400–$800/month with limited capabilities.
+              </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>Can AI integrate with my existing scheduling software?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-green-600 text-green-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                Yes. Look for platforms with native integrations for Google Calendar, Calendly, Acuity, or your industry-specific CRM. Boltcall supports the most common scheduling tools.
+              </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>How long does it take to see results?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-green-600 text-green-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                Most businesses recover their monthly fee within the first week by capturing just 1–2 additional jobs from calls that would have gone to voicemail.
+              </div>
+            </details>
           </div>
         </motion.section>
 

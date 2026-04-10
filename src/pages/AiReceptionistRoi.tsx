@@ -862,6 +862,68 @@ const AiReceptionistRoi: React.FC = () => {
         </div>
       </section>
 
+      {/* ─── Objection Handling ───────────────────────────────────────── */}
+      <section id="objections" className="py-16 md:py-20 bg-white border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-2xl md:text-3xl font-bold text-[#0B1220] mb-2 text-center"
+            >
+              Common Questions About ROI Calculations
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-gray-500 text-center mb-10"
+            >
+              Real answers to the questions we hear most before businesses get started.
+            </motion.p>
+            <motion.div variants={fadeInUp} className="space-y-3">
+              {[
+                {
+                  q: 'Are these ROI estimates accurate for my business?',
+                  a: 'All calculations use conservative industry averages. Your actual results may be higher. Numbers are based on MIT speed-to-lead research and BrightLocal missed call data.',
+                },
+                {
+                  q: 'What if my average job value is lower?',
+                  a: 'The calculator lets you input your own numbers. Even at $150/job, recovering 8 missed calls/month = $1,200 in monthly revenue recovered.',
+                },
+                {
+                  q: 'How long until I see results?',
+                  a: 'Most businesses see measurable improvement within the first 30 days — starting from the first calls handled by AI.',
+                },
+                {
+                  q: "What if AI can't handle my industry's calls?",
+                  a: 'Boltcall is trained on local service business call patterns. You customize the script for your specific services.',
+                },
+                {
+                  q: 'Is the $297/month worth it?',
+                  a: "If the calculator shows you're losing even $1,000/month in missed calls, the math is clear. Most users recover their subscription cost in the first week.",
+                },
+              ].map(({ q, a }) => (
+                <details
+                  key={q}
+                  className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden"
+                >
+                  <summary
+                    className="font-semibold text-gray-900 px-5 py-4 cursor-pointer"
+                    style={{ listStyle: 'none' }}
+                  >
+                    {q}
+                  </summary>
+                  <p className="text-gray-600 px-5 pb-4 text-sm">{a}</p>
+                </details>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

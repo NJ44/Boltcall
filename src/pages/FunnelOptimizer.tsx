@@ -570,6 +570,53 @@ const FunnelOptimizer: React.FC = () => {
         </div>
       </section>
 
+      {/* Objection Handling */}
+      <section id="objections" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+          Common Questions About Funnel Optimization
+        </h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">
+          Honest answers before you run your numbers.
+        </p>
+        <div className="space-y-3">
+          {[
+            {
+              q: 'How do I know my funnel has gaps?',
+              a: "If you're spending on ads but not seeing proportional revenue growth, you have funnel leaks. The most common: slow lead response and missed after-hours calls.",
+            },
+            {
+              q: 'Can I optimize my funnel without rebuilding it?',
+              a: 'Yes. Most funnel improvements come from fixing the response layer — not the top of funnel. Responding faster to existing leads beats getting more leads.',
+            },
+            {
+              q: "What's the biggest funnel mistake local businesses make?",
+              a: "Letting leads go to voicemail. 80% of callers who reach voicemail don't leave a message and never call back.",
+            },
+            {
+              q: 'How much of my ad spend is being wasted?',
+              a: 'Industry data suggests 35–60% of paid leads are lost due to slow response. Our audit helps you calculate your specific waste number.',
+            },
+            {
+              q: 'How quickly can I see funnel improvements?',
+              a: 'Adding AI call answering typically shows results within the first week — you\'ll see more leads converted from the same spend.',
+            },
+          ].map(({ q, a }) => (
+            <details
+              key={q}
+              className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden"
+            >
+              <summary
+                className="font-semibold text-gray-900 px-5 py-4 cursor-pointer"
+                style={{ listStyle: 'none' }}
+              >
+                {q}
+              </summary>
+              <p className="text-gray-600 px-5 pb-4 text-sm">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       {/* Trust Signals */}
       <section className="bg-gray-50 border-t border-gray-100 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

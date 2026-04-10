@@ -105,9 +105,10 @@ const BlogAIGuideStep1: React.FC = () => {
             </div>
 
             {/* Author byline */}
-            <p className="text-sm text-gray-500 mt-3">
-              Written by the Boltcall Team &middot; Updated April 2026
-            </p>
+            <div className="flex items-center gap-3 mb-6 text-sm text-gray-500 mt-3">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs">BC</div>
+              <span>Written by <strong className="text-gray-700">The Boltcall Team</strong> · Updated {new Date().getFullYear()}</span>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -117,9 +118,9 @@ const BlogAIGuideStep1: React.FC = () => {
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
         {/* TL;DR */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
-          <p className="text-sm font-bold text-blue-800 uppercase tracking-wide mb-2">TL;DR</p>
-          <p className="text-blue-900 text-sm leading-relaxed">AI automation for service businesses covers calls, SMS, follow-ups, and reminders. The goal is to capture every lead and respond instantly — even when your team is unavailable. This guide explains how AI works and what to expect in your first 30 days.</p>
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5 mb-8">
+          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">TL;DR</p>
+          <p className="text-gray-700 text-sm leading-relaxed">AI receptionists answer calls, book appointments, and capture leads 24/7 — giving small service businesses enterprise-level customer service at a fraction of the cost. If you miss more than 2 calls per day, AI phone answering will pay for itself.</p>
         </div>
         {/* Intro */}
         <motion.section
@@ -329,6 +330,7 @@ const BlogAIGuideStep1: React.FC = () => {
 
         {/* FAQ */}
         <motion.section
+          id="faq"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
@@ -338,19 +340,43 @@ const BlogAIGuideStep1: React.FC = () => {
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Frequently Asked Questions
           </h2>
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <p className="font-bold text-gray-900 mb-2">Q: Do I need technical skills to set up AI for my business?</p>
-              <p className="text-gray-700 leading-relaxed">A: No. Modern AI receptionist platforms like Boltcall are built for business owners, not developers. Setup takes under 30 minutes using a guided wizard — no coding or IT support required.</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <p className="font-bold text-gray-900 mb-2">Q: What types of calls can an AI receptionist handle?</p>
-              <p className="text-gray-700 leading-relaxed">A: AI receptionists can answer general inquiries, book and confirm appointments, collect caller information, send SMS follow-ups, and transfer complex issues to your team — all 24/7.</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <p className="font-bold text-gray-900 mb-2">Q: How quickly will I see results after adding AI?</p>
-              <p className="text-gray-700 leading-relaxed">A: Most businesses notice fewer missed calls and more booked appointments within the first week. The biggest gains come from capturing after-hours leads that would otherwise go to a competitor.</p>
-            </div>
+          <div className="space-y-3">
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>Do I need technical skills to use AI for my business?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-blue-600 text-blue-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                No. Modern AI receptionist platforms like Boltcall are set up in under 24 hours with no coding required. You configure it through a simple dashboard.
+              </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>How is AI different from a phone menu (IVR)?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-blue-600 text-blue-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                IVR systems follow rigid scripts. AI receptionists understand natural language, can answer unique questions, and adapt to conversation — just like a human.
+              </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>Will AI replace my staff?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-blue-600 text-blue-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                No. AI handles routine calls (booking, FAQs, after-hours) so your team focuses on higher-value work. Think of it as hiring a tireless first-line receptionist.
+              </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>What if a caller has a complex question?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-blue-600 text-blue-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                The AI can transfer the call, take a message, or schedule a callback — ensuring no caller is left without a next step.
+              </div>
+            </details>
           </div>
         </motion.section>
 

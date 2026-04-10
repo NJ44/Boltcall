@@ -483,6 +483,53 @@ const SEOAuditPDF: React.FC = () => {
         </div>
       </section>
 
+      {/* Objection Handling */}
+      <section id="objections" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+          Questions About Your SEO Audit Report
+        </h2>
+        <p className="text-gray-500 text-center mb-8 text-sm">
+          Straight answers to the things people wonder before requesting the report.
+        </p>
+        <div className="space-y-3">
+          {[
+            {
+              q: 'How accurate is the audit?',
+              a: 'Our audit pulls live data from Google Search Console signals, citation databases, and mobile performance APIs. It reflects your real-world online presence.',
+            },
+            {
+              q: "What if I don't have a website?",
+              a: 'The audit still covers your Google Business Profile, citation consistency, review scores, and phone response rate — all critical for local visibility.',
+            },
+            {
+              q: 'Will this turn into a sales pitch?',
+              a: "No. The report is yours to keep and act on however you choose. We may follow up once — that's it.",
+            },
+            {
+              q: 'How long does it take to get the report?',
+              a: 'The PDF report is typically delivered within 24–48 business hours via email.',
+            },
+            {
+              q: 'What if my scores are already good?',
+              a: "Great news — the report will confirm it. And we'll show you what your competitors are doing to pull ahead.",
+            },
+          ].map(({ q, a }) => (
+            <details
+              key={q}
+              className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden"
+            >
+              <summary
+                className="font-semibold text-gray-900 px-5 py-4 cursor-pointer"
+                style={{ listStyle: 'none' }}
+              >
+                {q}
+              </summary>
+              <p className="text-gray-600 px-5 pb-4 text-sm">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       <FAQ />
       <Footer />
     </div>

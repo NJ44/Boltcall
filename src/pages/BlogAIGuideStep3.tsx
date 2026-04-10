@@ -105,9 +105,10 @@ const BlogAIGuideStep3: React.FC = () => {
             </div>
 
             {/* Author byline */}
-            <p className="text-sm text-gray-500 mt-3">
-              Written by the Boltcall Team &middot; Updated April 2026
-            </p>
+            <div className="flex items-center gap-3 mb-6 text-sm text-gray-500 mt-3">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs">BC</div>
+              <span>Written by <strong className="text-gray-700">The Boltcall Team</strong> · Updated {new Date().getFullYear()}</span>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -117,9 +118,9 @@ const BlogAIGuideStep3: React.FC = () => {
         <div className="flex gap-8">
           <article className="flex-1 max-w-4xl">
         {/* TL;DR */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-8">
-          <p className="text-sm font-bold text-blue-800 uppercase tracking-wide mb-2">TL;DR</p>
-          <p className="text-blue-900 text-sm leading-relaxed">Getting started with AI takes less than a week — no technical skills required. The key steps are connecting your phone number, setting up your AI voice, and enabling automated SMS follow-ups. This guide walks you through each step with practical timelines.</p>
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-5 mb-8">
+          <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">TL;DR</p>
+          <p className="text-gray-700 text-sm leading-relaxed">Getting started takes less than 24 hours. Connect your phone number, configure your AI agent's voice and FAQ responses, integrate your calendar, and go live. Most businesses see ROI within the first week.</p>
         </div>
         {/* Introduction */}
         <motion.section
@@ -353,6 +354,7 @@ const BlogAIGuideStep3: React.FC = () => {
 
         {/* FAQ */}
         <motion.section
+          id="faq"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -362,73 +364,43 @@ const BlogAIGuideStep3: React.FC = () => {
             <div className="w-1 self-stretch bg-purple-600 rounded-full"></div>
             Frequently Asked Questions
           </h2>
-          
-          <div className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    Is AI too complicated for small businesses?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Not at all. Modern AI tools like Boltcall are designed specifically for small businesses. 
-                    You don't need technical knowledge or IT support. Setup takes under 30 minutes, and our 
-                    team provides free onboarding to get you started. Most business owners are up and running 
-                    the same day they sign up.
-                  </p>
-                </div>
+          <div className="space-y-3">
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>How long does setup actually take?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-purple-600 text-purple-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                Most businesses are live within 24 hours. You'll need: a phone number (or forward your existing one), your business hours, FAQ answers, and calendar access.
               </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    Will customers know they're talking to AI?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Our AI is designed to sound natural and professional. Many customers can't tell the 
-                    difference, and those who do appreciate the instant response and 24/7 availability. 
-                    You can customize the greeting to be transparent about using AI, or keep it natural—it's 
-                    your choice. Either way, customers value the immediate service.
-                  </p>
-                </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>What if the AI gives a wrong answer?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-purple-600 text-purple-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                You control the AI's knowledge base. You can review call transcripts, update responses, and refine performance from your dashboard. The AI gets smarter over time.
               </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    What if I need to make changes later?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Everything is fully customizable and can be updated anytime. Change your greeting, 
-                    update responses, modify business hours, or adjust settings—all from your dashboard 
-                    in minutes. No need to call support or wait for updates.
-                  </p>
-                </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>Do I need to change my phone number?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-purple-600 text-purple-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                No. You can forward your existing number to Boltcall, or get a new number — your choice. Callers won't know anything changed.
               </div>
-            </div>
-
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-1.5">
-                    Can I try it before committing?
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    Most AI platforms offer free trials or low-cost starter plans. This lets you test the 
-                    system with real calls and see how it works for your business before making a larger 
-                    commitment. Take advantage of these trials to find the right fit.
-                  </p>
-                </div>
+            </details>
+            <details className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+                <span>What metrics should I track to measure success?</span>
+                <span className="flex-shrink-0 w-5 h-5 rounded-full border-2 border-purple-600 text-purple-600 flex items-center justify-center text-xs font-bold group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-5 text-gray-700 text-sm leading-relaxed border-t border-gray-100 pt-4">
+                Track: calls answered vs. missed, bookings per week (before and after), and revenue from AI-captured leads. Most clients see 30–50% more booked appointments in month one.
               </div>
-            </div>
+            </details>
           </div>
         </motion.section>
 

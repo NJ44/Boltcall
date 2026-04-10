@@ -327,6 +327,53 @@ const AIAuditPage: React.FC = () => {
           </div>
         </section>
 
+        {/* Objection Handling */}
+        <section id="objections" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+            Questions About the AI Audit
+          </h2>
+          <p className="text-gray-500 text-center mb-8 text-sm">
+            Everything you need to know before you start.
+          </p>
+          <div className="space-y-3">
+            {[
+              {
+                q: 'What exactly does the AI audit analyze?',
+                a: 'We analyze your phone answering speed, Google Business Profile completeness, online review score, website performance, and gap vs. your top 3 local competitors.',
+              },
+              {
+                q: 'Is my data kept private?',
+                a: 'Absolutely. Your audit data is never shared or sold. It\'s used solely to generate your personalized report.',
+              },
+              {
+                q: 'Do I need to install anything?',
+                a: 'No. Just fill in the form and we do the rest. No software installation required.',
+              },
+              {
+                q: 'How is this different from a regular SEO audit?',
+                a: 'Standard SEO audits focus on keywords and backlinks. Ours focuses on phone performance and local revenue — the things that actually fill your calendar.',
+              },
+              {
+                q: 'What happens after I get my results?',
+                a: "You'll get a clear action list. You can implement it yourself, hire someone, or let us show you how Boltcall can automate the fixes.",
+              },
+            ].map(({ q, a }) => (
+              <details
+                key={q}
+                className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden"
+              >
+                <summary
+                  className="font-semibold text-gray-900 px-5 py-4 cursor-pointer"
+                  style={{ listStyle: 'none' }}
+                >
+                  {q}
+                </summary>
+                <p className="text-gray-600 px-5 pb-4 text-sm">{a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         <FAQ />
         <Footer />
       </div>
