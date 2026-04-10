@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AlertsNotifications from '../ui/avatar-notifications';
+import NotificationsWithActions from '../ui/notifications-with-actions';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -613,7 +613,7 @@ const DashboardLayout: React.FC = () => {
                  
                  {/* Alerts Dropdown (hidden on mobile) */}
                  <div className="hidden md:block">
-                   <AlertsNotifications alerts={alerts} />
+                   <NotificationsWithActions alerts={alerts} />
                  </div>
 
                  {/* Services Status Dropdown (hidden on mobile) */}
