@@ -29,6 +29,10 @@ import {
   PhoneMissed,
   Reply,
   Mail,
+  AlertTriangle,
+  XCircle,
+  Info,
+  ExternalLink,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -43,6 +47,7 @@ import UsageLimitModal from './UsageLimitModal';
 import TrialExpiryPopup from './TrialExpiryPopup';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
 import FeedbackSlider from '../ui/feedback-slider';
+import { useDashboardStore } from '../../stores/dashboardStore';
 
 const DashboardLayout: React.FC = () => {
   const { t, i18n } = useTranslation('common');
@@ -62,19 +67,13 @@ const DashboardLayout: React.FC = () => {
 
   // Get current user from auth context
   const { user } = useAuth();
+  const { alerts } = useDashboardStore();
   
   // Mock user plan - in real app, this would come from user context/API
   const userPlan: 'free' | 'pro' | 'elite' = 'free';
   
   
-  // Notification toggles
-  const [notifications, setNotifications] = useState({
-    newLead: true,
-    appointmentBooked: true,
-    appointmentCancelled: true,
-    missedCall: true,
-    systemAlert: false
-  });
+
 
   // Services status — loaded from Supabase business_features + facebook_page_connections
   const [services, setServices] = useState({
@@ -269,16 +268,6 @@ const DashboardLayout: React.FC = () => {
   };
 
 
-  const toggleNotification = (key: keyof typeof notifications) => {
-    const newValue = !notifications[key];
-    if (user?.id) {
-      logUserAction('Notification Toggle', `Toggled ${key} notification to ${newValue ? 'enabled' : 'disabled'}`, user.id);
-    }
-    setNotifications(prev => ({
-      ...prev,
-      [key]: newValue
-    }));
-  };
 
 
 
@@ -625,90 +614,65 @@ const DashboardLayout: React.FC = () => {
                 </div>
 
                  
-                 {/* Notification Dropdown (hidden on mobile — hover doesn't work on touch) */}
+                 {/* Alerts Dropdown (hidden on mobile — hover doesn't work on touch) */}
                  <div className="relative group hidden md:block">
-                 <button
-                   className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
-                   aria-label="Notification settings"
-                 >
-                   <Bell className="w-5 h-5" />
-                 </button>
+                   <button
+                     className="p-2 rounded-lg transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-300/30 relative"
+                     aria-label="Alerts"
+                   >
+                     <Bell className="w-5 h-5" />
+                     {alerts.length > 0 && (
+                       <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+                     )}
+                   </button>
 
-                   {/* Notification Dropdown Content */}
+                   {/* Alerts Dropdown Content */}
                    <div className="absolute right-0 top-full mt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
                      <div className={`rounded-2xl shadow-xl border p-4 ${isDarkMode ? 'bg-[#111114] border-[#1e1e24]' : 'bg-white border-gray-200'}`}>
-          <div className="flex items-center justify-between mb-4">
+                       <div className="flex items-center justify-between mb-4">
                          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              {t('topbar.notificationSettings')}
+                           Alerts
                          </h3>
-          </div>
-          
-                       <div className="space-y-3 max-h-80 overflow-y-auto">
-            {/* New Lead Notification */}
-                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
-              <div className="flex items-center gap-3">
-                  <Users className="w-4 h-4 text-blue-600" />
-                <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t('notifications.newLead')}</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t('notifications.newLeadDesc')}</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('newLead')}
-                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                  notifications.newLead ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
-                  notifications.newLead ? 'translate-x-6' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
+                         {alerts.length > 0 && (
+                           <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">
+                             {alerts.length}
+                           </span>
+                         )}
+                       </div>
 
-            {/* Appointment Booked Notification */}
-                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
-              <div className="flex items-center gap-3">
-                  <Calendar className="w-4 h-4 text-blue-600" />
-                <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t('notifications.appointmentBooked')}</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t('notifications.appointmentBookedDesc')}</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('appointmentBooked')}
-                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                  notifications.appointmentBooked ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
-                  notifications.appointmentBooked ? 'translate-x-6' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
-
-            {/* Missed Call Notification */}
-                         <div className={`flex items-center justify-between p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
-              <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-blue-600" />
-                <div>
-                               <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t('notifications.missedCall')}</div>
-                               <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t('notifications.missedCallDesc')}</div>
-                </div>
-              </div>
-              <button
-                onClick={() => toggleNotification('missedCall')}
-                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                  notifications.missedCall ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              >
-                <span className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
-                  notifications.missedCall ? 'translate-x-6' : 'translate-x-1'
-                }`} />
-              </button>
-            </div>
-                </div>
-                </div>
-              </div>
+                       <div className="space-y-2 max-h-80 overflow-y-auto">
+                         {alerts.length === 0 ? (
+                           <div className={`flex items-center gap-3 p-3 rounded-lg ${isDarkMode ? 'bg-[#161619]' : 'bg-gray-50'}`}>
+                             <Info className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                             <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>All clear — no active alerts</p>
+                           </div>
+                         ) : (
+                           alerts.map(alert => {
+                             const Icon = alert.type === 'error' ? XCircle : alert.type === 'warning' ? AlertTriangle : Info;
+                             const colorClass = alert.type === 'error'
+                               ? 'text-red-600 bg-red-50 border-red-200'
+                               : alert.type === 'warning'
+                               ? 'text-yellow-600 bg-yellow-50 border-yellow-200'
+                               : 'text-blue-600 bg-blue-50 border-blue-200';
+                             return (
+                               <div key={alert.id} className={`flex items-start gap-3 p-3 rounded-lg border ${colorClass}`}>
+                                 <Icon className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                                 <div className="flex-1 min-w-0">
+                                   <p className="text-sm font-medium leading-snug">{alert.message}</p>
+                                   {alert.link && (
+                                     <a href={alert.link} className="inline-flex items-center gap-1 text-xs mt-1 hover:underline opacity-80">
+                                       <ExternalLink className="w-3 h-3" />
+                                       View details
+                                     </a>
+                                   )}
+                                 </div>
+                               </div>
+                             );
+                           })
+                         )}
+                       </div>
+                     </div>
+                   </div>
                  </div>
 
                  {/* Services Status Dropdown (hidden on mobile) */}
