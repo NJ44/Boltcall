@@ -11,7 +11,9 @@ const AuthProvider = React.lazy(() =>
 // transitive Supabase deps) out of the critical-path bundle on marketing pages.
 const DashboardProviders = React.lazy(() => import('../components/DashboardProviders'));
 import ProtectedRoute from '../components/ProtectedRoute';
-import PlanGate from '../components/PlanGate';
+// PlanGate is lazy — breaks the PlanGate→SubscriptionContext→stripe.ts→supabase
+// static import chain so supabase never lands in the critical-path bundle.
+const PlanGate = React.lazy(() => import('../components/PlanGate'));
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 import ContentDepthFooter from '../components/seo/ContentDepthFooter';
 
