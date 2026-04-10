@@ -89,9 +89,33 @@ const VoicemailVsBoltcall: React.FC = () => {
         </div>
       </section>
 
+      {/* Table of Contents */}
+      <nav aria-label="Table of contents" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-2">
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-6">
+          <p className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-4">On This Page</p>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { href: '#quick-comparison', label: 'Quick Comparison' },
+              { href: '#why-boltcall-wins', label: 'Why Boltcall Wins' },
+              { href: '#expert-insights', label: 'Expert Insights' },
+              { href: '#testimonials', label: 'What Businesses Say' },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="inline-block bg-white text-blue-700 border border-blue-200 rounded-full px-4 py-1.5 text-sm font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+
       {/* Main Content */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16">
         <motion.section
+          id="quick-comparison"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
