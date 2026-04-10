@@ -15,15 +15,6 @@ import PlanGate from '../components/PlanGate';
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 import ContentDepthFooter from '../components/seo/ContentDepthFooter';
 
-// Wraps dashboard routes with subscription/token providers (only needed for authenticated pages)
-const DashboardProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <SubscriptionProvider>
-    <TokenProvider>
-      {children}
-    </TokenProvider>
-  </SubscriptionProvider>
-);
-
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
 // ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
