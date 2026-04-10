@@ -153,9 +153,27 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
     faqScript.text = JSON.stringify(faqSchema);
     document.head.appendChild(faqScript);
 
+    // BreadcrumbList schema
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://boltcall.org' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': 'https://boltcall.org/tools' },
+        { '@type': 'ListItem', 'position': 3, 'name': 'Chiropractor Patient Recovery Calculator', 'item': 'https://boltcall.org/tools/chiropractor-patient-recovery-calculator' },
+      ],
+    };
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.id = 'breadcrumb-schema';
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
     return () => {
       document.getElementById('article-schema')?.remove();
       document.getElementById('faq-schema')?.remove();
+      document.getElementById('breadcrumb-schema')?.remove();
     };
   }, []);
 
