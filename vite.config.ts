@@ -180,13 +180,13 @@ export default defineConfig({
             if (id.includes('i18next')) return 'i18n';
             // Lucide icons — tree-shaken but shared across many components
             if (id.includes('lucide-react')) return 'icons';
-            // Framer Motion — 250+ usages; stable named chunk prevents it from
-            // bleeding into ambiguously-named shared "index" chunks
-            if (id.includes('framer-motion')) return 'framer-motion';
-            // Radix UI — primitive components shared across the whole app
-            if (id.includes('@radix-ui')) return 'radix-ui';
-            // DotLottie WASM bridge — 500KB+; isolate it
+            // DotLottie WASM bridge — 500KB+ shared lazy chunk; give it a stable
+            // named cache key so it doesn't invalidate on every deploy
             if (id.includes('@lottiefiles')) return 'lottie-player';
+            // NOTE: framer-motion and @radix-ui are intentionally NOT assigned
+            // manual chunks. They live only in lazy route chunks. Naming them
+            // would force Vite to add them to the modulepreload list, adding
+            // ~220KB to every page's critical-path parse cost.
           }
         },
       },
