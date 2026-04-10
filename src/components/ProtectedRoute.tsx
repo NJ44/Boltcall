@@ -48,6 +48,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     // Check if user has completed setup (has a business_profiles row)
     const checkSetup = async () => {
       try {
+        const { supabase } = await import('../lib/supabase');
         const { data, error } = await supabase
           .from('business_profiles')
           .select('id')
