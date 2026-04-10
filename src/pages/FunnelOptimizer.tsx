@@ -31,6 +31,25 @@ const FunnelOptimizer: React.FC = () => {
   useEffect(() => {
     document.title = 'Free Funnel Optimizer — See How Much Revenue Your Funnel Is Leaking';
     updateMetaDescription('Free funnel analysis tool for local businesses. Enter your conversion rates and get a PDF report with revenue leak detection, benchmarks, and fixes.');
+
+    // Add BreadcrumbList JSON-LD
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'breadcrumb-jsonld';
+    breadcrumbScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Funnel Optimizer", "item": "https://boltcall.org/funnel-optimizer" }
+      ]
+    });
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const bc = document.getElementById('breadcrumb-jsonld');
+      if (bc) bc.remove();
+    };
   }, []);
 
   // Live preview calculations
