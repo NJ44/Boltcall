@@ -456,6 +456,48 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             </section>
 
+            {/* Audit-Specific FAQ */}
+            <section className="py-12 bg-white">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-8">Common Questions About the Business Audit</h2>
+                    <div className="space-y-3">
+                        {[
+                            {
+                                q: 'How long does the audit take?',
+                                a: 'Most audits are completed within 5–10 minutes. You\'ll receive a detailed report by email as soon as the analysis finishes.',
+                            },
+                            {
+                                q: 'What do I need to provide?',
+                                a: 'Just your website URL and email address. No login, no credit card, no personal details beyond that.',
+                            },
+                            {
+                                q: 'Is the audit really free?',
+                                a: 'Yes, 100% free with no strings attached. We offer the audit because it helps business owners understand what Boltcall fixes — but there is no obligation to sign up.',
+                            },
+                            {
+                                q: 'What if I don\'t have a website?',
+                                a: 'You can enter your Google Business Profile URL or Facebook business page URL instead. The audit will still analyze your online presence and call coverage gaps.',
+                            },
+                            {
+                                q: 'Will you use my data for anything?',
+                                a: 'We use your URL to run the audit and your email to send the report. We don\'t sell your data or add you to marketing lists without your consent.',
+                            },
+                            {
+                                q: 'How is this different from a standard SEO audit?',
+                                a: 'Standard SEO audits focus on search rankings. Our audit also evaluates your phone response rate, after-hours coverage, missed call revenue estimate, and local competitor gaps — the metrics that directly affect how many jobs you book.',
+                            },
+                        ].map((item, i) => (
+                            <details key={i} className="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden">
+                                <summary className="font-semibold text-gray-900 text-sm cursor-pointer px-5 py-4" style={{ listStyle: 'none' }}>
+                                    {item.q}
+                                </summary>
+                                <p className="text-gray-600 text-sm px-5 pb-4 leading-relaxed">{item.a}</p>
+                            </details>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             <FAQ />
             <Footer />
         </div>
