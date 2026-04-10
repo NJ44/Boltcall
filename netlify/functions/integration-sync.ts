@@ -1032,6 +1032,15 @@ export const handler: Handler = async (event) => {
             result = { success: true };
             break;
 
+          case 'servicetitan':
+            if (integration.api_key) {
+              const stResult = await syncToServiceTitan(integration.api_key, integration.config || {}, lead);
+              result = stResult;
+            } else {
+              result = { success: false, error: 'No Client ID configured' };
+            }
+            break;
+
           default:
             result = { success: true, error: `Provider ${integration.provider} sync not implemented yet` };
         }
