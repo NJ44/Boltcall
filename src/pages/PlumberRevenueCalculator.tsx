@@ -158,6 +158,26 @@ const PlumberRevenueCalculator: React.FC = () => {
     updateMetaDescription(
       'Free calculator for plumbing businesses: see how much revenue you lose from missed after-hours emergency calls. Get a personalized revenue recovery report.'
     );
+
+    // Add BreadcrumbList JSON-LD
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'breadcrumb-jsonld';
+    breadcrumbScript.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools" },
+        { "@type": "ListItem", "position": 3, "name": "Plumber Revenue Calculator", "item": "https://boltcall.org/tools/plumber-revenue-calculator" }
+      ]
+    });
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const bc = document.getElementById('breadcrumb-jsonld');
+      if (bc) bc.remove();
+    };
   }, []);
 
   const calc = useMemo(() => {
