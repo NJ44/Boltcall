@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, HelpCircle, X, Send, ChevronRight, Phone } from 'lucide-react';
+import { HelpCircle, X, Send, ChevronRight, Phone } from 'lucide-react';
 import { EmptyState } from '../../components/ui/empty-state';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -262,23 +262,6 @@ const DashboardPage: React.FC = () => {
           <AgentWorkflowBlock />
         </div>
       </div>
-
-      {/* Alerts Section */}
-      <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
-        <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Alerts</h2>
-        </div>
-
-        <div className="p-4 space-y-3">
-          {/* Alert items will go here */}
-          <div className="text-center py-6 text-gray-500">
-            <AlertTriangle className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-            <p className="text-sm">No alerts at this time</p>
-          </div>
-        </div>
-      </div>
-
-
 
       {/* Help Chat Side Panel */}
       <AnimatePresence>
