@@ -422,6 +422,103 @@ const BlogAIGuideStep2: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Pros & Cons */}
+        <motion.section
+          id="pros-cons"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.46 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-green-600 rounded-full"></div>
+            Pros &amp; Cons of AI Tools for Local Businesses
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-green-800 mb-4">Pros</h3>
+              <ul className="space-y-3">
+                {[
+                  'Reduced staffing costs',
+                  '24/7 availability without overtime',
+                  'Consistent customer experience every call',
+                  'Faster lead response — captured in seconds',
+                  'Automatic data capture into your CRM',
+                  'Scales without hiring additional staff',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-green-900 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-red-800 mb-4">Cons</h3>
+              <ul className="space-y-3">
+                {[
+                  'Upfront setup time required',
+                  'Learning curve for staff and owner',
+                  'Monthly subscription cost to budget for',
+                  'Requires reliable internet and power',
+                  'Not ideal for complex, nuanced situations',
+                  'Needs ongoing tuning as your business evolves',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-red-900 text-sm">
+                    <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-red-500 font-bold text-base leading-none">&#x2715;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Sources & Further Reading */}
+        <motion.section
+          id="sources"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.48 }}
+          className="mb-16"
+        >
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Sources &amp; Further Reading</h2>
+            <ul className="space-y-3">
+              <li>
+                <a href="https://www.g2.com/categories/artificial-intelligence" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  G2: "Best AI Tools for Small Business" Report (2024)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.capterra.com/resources/ai-software-adoption-survey/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Capterra: "AI Software Adoption Survey" (2024)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.gartner.com/en/information-technology/insights/artificial-intelligence" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Gartner Magic Quadrant for AI Platforms
+                </a>
+              </li>
+              <li>
+                <a href="https://techcrunch.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  TechCrunch: "How SMBs are choosing AI vendors in 2024"
+                </a>
+              </li>
+              <li>
+                <a href="https://www.forbes.com/sites/technology/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Forbes: "AI Tool Selection Framework for Small Business"
+                </a>
+              </li>
+              <li>
+                <a href="https://clutch.co/resources/small-business-technology-survey" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Clutch.co: "Small Business Technology Survey" (2024)
+                </a>
+              </li>
+            </ul>
+          </div>
+        </motion.section>
+
         {/* Navigation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -430,8 +527,8 @@ const BlogAIGuideStep2: React.FC = () => {
           className="mt-16 pt-8 border-t border-gray-200"
         >
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <Link 
-              to="/ai-guide-for-businesses/level-1-understanding-ai" 
+            <Link
+              to="/ai-guide-for-businesses/level-1-understanding-ai"
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
