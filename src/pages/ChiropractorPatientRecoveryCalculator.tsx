@@ -764,6 +764,100 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* --- WHY BOLTCALL --- */}
+        <section id="why-boltcall" className="px-4 sm:px-6 py-16 sm:py-20 bg-slate-950">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}
+            className="max-w-5xl mx-auto">
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl font-black text-white text-center mb-4">
+              Why Boltcall for{' '}
+              <span className="bg-gradient-to-r from-teal-400 to-emerald-500 bg-clip-text text-transparent">
+                Chiropractic Practices
+              </span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-slate-400 text-center mb-12 max-w-2xl mx-auto">
+              Not all AI receptionists are built for healthcare. Here's what makes Boltcall the right fit for chiropractic clinics.
+            </motion.p>
+            <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {[
+                {
+                  icon: Activity,
+                  title: 'Chiropractic-Trained AI',
+                  desc: 'Understands appointment types, insurance questions, and new-patient intake — so callers get accurate, helpful answers without you lifting a finger.',
+                },
+                {
+                  icon: CheckCircle,
+                  title: 'HIPAA-Friendly Design',
+                  desc: 'Call data is handled with healthcare privacy standards in mind, giving you and your patients confidence that sensitive information stays protected.',
+                },
+                {
+                  icon: Phone,
+                  title: '24/7 Patient Capture',
+                  desc: 'Never miss a new patient because your front desk is busy with in-office patients or closed for the evening. Boltcall answers every call, every time.',
+                },
+                {
+                  icon: MessageSquare,
+                  title: 'Automated Follow-Up',
+                  desc: 'Sends appointment reminders and re-engages missed patients via SMS — reducing no-shows and pulling dropped patients back into care automatically.',
+                },
+                {
+                  icon: Calendar,
+                  title: 'Integrates With Your Calendar',
+                  desc: 'Books directly into your scheduling system with no double-booking. Patients get confirmed slots instantly, and your team sees updates in real time.',
+                },
+              ].map((item) => (
+                <motion.div key={item.title} variants={fadeUp}
+                  className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-teal-500/30 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center mb-4">
+                    <item.icon className="w-5 h-5 text-teal-400" />
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* --- CONTACT SECTION --- */}
+        <section id="contact" className="px-4 sm:px-6 py-16 sm:py-20 bg-slate-900">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={stagger}
+            className="max-w-3xl mx-auto text-center">
+            <motion.h2 variants={fadeUp} className="text-2xl sm:text-3xl font-black text-white mb-4">
+              Have Questions?{' '}
+              <span className="bg-gradient-to-r from-teal-400 to-emerald-500 bg-clip-text text-transparent">
+                We're Here to Help
+              </span>
+            </motion.h2>
+            <motion.p variants={fadeUp} className="text-slate-400 mb-10">
+              We typically respond within 2 business hours. Reach out any time and a real person will get back to you.
+            </motion.p>
+            <motion.div variants={fadeUp}
+              className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 sm:p-10 text-left shadow-xl shadow-blue-900/30">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-xs font-semibold text-blue-200 uppercase tracking-widest mb-1">Email Support</p>
+                  <a href="mailto:support@boltcall.org"
+                    className="text-white font-bold text-lg hover:text-blue-100 transition-colors">
+                    support@boltcall.org
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-blue-200 uppercase tracking-widest mb-1">Book a Call</p>
+                  <a href="https://boltcall.org/book-a-call" target="_blank" rel="noopener noreferrer"
+                    className="text-white font-bold text-lg hover:text-blue-100 transition-colors">
+                    boltcall.org/book-a-call
+                  </a>
+                </div>
+                <div className="sm:col-span-2 border-t border-blue-500/40 pt-6 mt-2">
+                  <p className="text-blue-100 text-sm leading-relaxed">
+                    We typically respond within <strong className="text-white">2 business hours</strong>. Whether you want to see a live demo, ask about pricing, or get help configuring Boltcall for your chiropractic practice — our team is ready.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </section>
+
         {/* --- FINAL CTA --- */}
         <FinalCTA {...CALCULATOR_CTA} />
       </main>
