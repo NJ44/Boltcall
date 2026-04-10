@@ -354,6 +354,51 @@ const BlogAIGuideStep1: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Sources & Further Reading */}
+        <motion.section
+          id="sources"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.48 }}
+          className="mb-16"
+        >
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Sources &amp; Further Reading</h2>
+            <ul className="space-y-3">
+              <li>
+                <a href="https://aiindex.stanford.edu/report/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Stanford AI Index Report (2024)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.technologyreview.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  MIT Technology Review: "The Business Case for AI" (2024)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.ibm.com/thought-leadership/institute-business-value/en-us/report/ai-adoption" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  IBM Institute for Business Value: AI Adoption Survey
+                </a>
+              </li>
+              <li>
+                <a href="https://www2.deloitte.com/us/en/insights/focus/cognitive-technologies/state-of-ai-and-intelligent-automation-in-business-survey.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Deloitte AI Institute: "State of AI in the Enterprise"
+                </a>
+              </li>
+              <li>
+                <a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/superagency-in-the-workplace" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  McKinsey: "Superagency in the Workplace" (2025)
+                </a>
+              </li>
+              <li>
+                <a href="https://openai.com/research/gpt-4" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  OpenAI: "GPT-4 Technical Report" — for context on capabilities
+                </a>
+              </li>
+            </ul>
+          </div>
+        </motion.section>
+
         {/* Navigation to Next Step */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
