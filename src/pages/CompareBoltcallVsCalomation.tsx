@@ -263,7 +263,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* Feature Comparison Table */}
-        <section className="mb-12">
+        <section id="comparison-table" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Feature-by-Feature Comparison</h2>
           <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
             <table className="w-full">
