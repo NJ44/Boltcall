@@ -528,6 +528,109 @@ async function findGoogleCalendarAppointment(
   }
 }
 
+// ─── ServiceTitan Integration ────────────────────────────────────────────────
+
+async function getServiceTitanToken(clientId: string, clientSecret: string): Promise<string | null> {
+  try {
+    const res = await fetch('https://auth.servicetitan.io/connect/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: clientId,
+        client_secret: clientSecret,
+      }).toString(),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.access_token || null;
+  } catch {
+    return null;
+  }
+}
+
+async function syncToServiceTitan(
+  clientId: string,
+  config: any,
+  lead: any
+): Promise<{ success: boolean; customerId?: number; error?: string }> {
+  const clientSecret = config?.client_secret;
+  const tenantId = config?.tenant_id;
+
+  if (!clientSecret) return { success: false, error: 'No Client Secret configured' };
+  if (!tenantId) return { success: false, error: 'No Tenant ID configured' };
+
+  try {
+    const accessToken = await getServiceTitanToken(clientId, clientSecret);
+    if (!accessToken) {
+      return { success: false, error: 'ServiceTitan authentication failed — check your Client ID and Secret' };
+    }
+
+    const baseUrl = `https://api.servicetitan.io/crm/v2/tenant/${tenantId}`;
+    const authHeaders: Record<string, string> = {
+      'Authorization': `Bearer ${accessToken}`,
+      'ST-App-Key': clientId,
+      'Content-Type': 'application/json',
+    };
+
+    // Search for existing customer by phone
+    let existingId: number | null = null;
+    if (lead.phone) {
+      const cleanPhone = lead.phone.replace(/\D/g, '');
+      const searchRes = await fetch(
+        `${baseUrl}/customers?phones=${encodeURIComponent(cleanPhone)}&page=1&pageSize=1`,
+        { method: 'GET', headers: authHeaders }
+      );
+      if (searchRes.ok) {
+        const searchData = await searchRes.json();
+        if (searchData.data?.length > 0) existingId = searchData.data[0].id;
+      }
+    }
+
+    const name =
+      lead.name ||
+      [lead.first_name, lead.last_name].filter(Boolean).join(' ') ||
+      'Unknown Lead';
+
+    const contacts: Array<{ type: string; value: string }> = [];
+    if (lead.phone) contacts.push({ type: 'Phone', value: lead.phone });
+    if (lead.email) contacts.push({ type: 'Email', value: lead.email });
+
+    const customerData: Record<string, any> = {
+      name,
+      type: 'Residential',
+      contacts,
+    };
+
+    if (existingId) {
+      const res = await fetch(`${baseUrl}/customers/${existingId}`, {
+        method: 'PATCH',
+        headers: authHeaders,
+        body: JSON.stringify(customerData),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`ServiceTitan update failed: ${res.status} - ${errText}`);
+      }
+      return { success: true, customerId: existingId };
+    } else {
+      const res = await fetch(`${baseUrl}/customers`, {
+        method: 'POST',
+        headers: authHeaders,
+        body: JSON.stringify(customerData),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`ServiceTitan create failed: ${res.status} - ${errText}`);
+      }
+      const data = await res.json();
+      return { success: true, customerId: data.id };
+    }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : 'ServiceTitan sync failed' };
+  }
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 export const handler: Handler = async (event) => {
