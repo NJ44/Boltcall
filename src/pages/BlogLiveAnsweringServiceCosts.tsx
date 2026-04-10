@@ -44,12 +44,26 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
       },
       "image": {
         "@type": "ImageObject",
-        "url": "https://boltcall.org/og-image.jpg"
+        "url": "https://boltcall.org/og-image.png",
+        "width": 1200,
+        "height": 630
       }
+    };
+
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog" },
+        { "@type": "ListItem", "position": 3, "name": "Understanding Live Answering Service Costs", "item": "https://boltcall.org/blog/understanding-live-answering-service-costs" }
+      ]
     };
 
     const existingScript = document.getElementById('article-schema');
     if (existingScript) existingScript.remove();
+    const existingBreadcrumb = document.getElementById('breadcrumb-schema');
+    if (existingBreadcrumb) existingBreadcrumb.remove();
 
     const script = document.createElement('script');
     script.id = 'article-schema';
@@ -57,9 +71,17 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
     script.text = JSON.stringify(articleSchema);
     document.head.appendChild(script);
 
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.id = 'breadcrumb-schema';
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
     return () => {
       const scriptToRemove = document.getElementById('article-schema');
       if (scriptToRemove) scriptToRemove.remove();
+      const breadcrumbToRemove = document.getElementById('breadcrumb-schema');
+      if (breadcrumbToRemove) breadcrumbToRemove.remove();
     };
   }, []);
 
