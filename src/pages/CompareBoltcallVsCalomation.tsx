@@ -377,7 +377,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* Who Might Prefer Calomation */}
-        <section className="mb-12">
+        <section id="who-calomation" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Who Might Prefer Calomation</h2>
           <p className="text-gray-700 text-lg leading-relaxed mb-4">
             To be fair, Calomation is a legitimate AI receptionist platform and may be the better fit for certain businesses. Consider Calomation if:
@@ -402,7 +402,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* Verdict */}
-        <section className="mb-12">
+        <section id="verdict" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Verdict: Boltcall vs Calomation</h2>
           <p className="text-gray-700 text-lg leading-relaxed mb-4">
             Both Boltcall and Calomation are real AI receptionist platforms serving local businesses. They share the same core capability: an AI agent that answers your business phone 24/7. But the similarities largely end there.
