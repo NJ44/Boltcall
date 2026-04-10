@@ -3,6 +3,7 @@ import { updateMetaDescription } from '../lib/utils';
 import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import LazySection from '../components/LazySection';
 
 // Lazy load below-the-fold components to reduce initial bundle
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
@@ -51,54 +52,87 @@ const Home: React.FC = () => {
       <div className="hidden md:block">
         <GiveawayBar />
       </div>
-      
+
       {/* Content */}
       <div className="relative z-10 pt-32">
         <Header />
         <main className="pb-0">
           <Hero />
 
+          {/* HeroScrollDemo — desktop only, near fold; start loading immediately */}
           <div className="relative -top-[120px] z-[100] pointer-events-none hidden md:block" style={{ minHeight: '600px', contain: 'layout' }}>
-            <Suspense fallback={<div className="h-[600px] w-full" style={{ contain: 'layout' }} />}>
-              <HeroScrollDemo />
-            </Suspense>
+            <LazySection rootMargin="0px" minHeight="600px">
+              <Suspense fallback={<div className="h-[600px] w-full" style={{ contain: 'layout' }} />}>
+                <HeroScrollDemo />
+              </Suspense>
+            </LazySection>
           </div>
 
-          <Suspense fallback={<div className="min-h-screen" />}>
-            <div className="relative mt-0 md:mt-0 md:-top-[300px]">
-              <HowItWorks />
-            </div>
+          {/* HowItWorks — first below-fold section, preload aggressively */}
+          <div className="relative mt-0 md:mt-0 md:-top-[300px]">
+            <LazySection rootMargin="500px" minHeight="600px">
+              <Suspense fallback={<div className="min-h-[600px]" />}>
+                <HowItWorks />
+              </Suspense>
+            </LazySection>
+          </div>
 
-            <div className="relative -top-[60px] md:-top-[200px] hidden md:block" style={{ minHeight: '400px', contain: 'layout' }}>
+          {/* StickyScrollSection — desktop only, behind HowItWorks */}
+          <div className="relative -top-[60px] md:-top-[200px] hidden md:block" style={{ minHeight: '400px', contain: 'layout' }}>
+            <LazySection rootMargin="400px" minHeight="400px">
               <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
                 <StickyScrollSection />
               </Suspense>
-            </div>
+            </LazySection>
+          </div>
 
-            <div className="relative md:-top-[255px] md:mt-24">
-              <FreeSetup />
-            </div>
+          <div className="relative md:-top-[255px] md:mt-24">
+            <LazySection rootMargin="400px" minHeight="500px">
+              <Suspense fallback={<div className="min-h-[500px]" />}>
+                <FreeSetup />
+              </Suspense>
+            </LazySection>
+          </div>
 
-            <div className="relative md:-top-[255px] md:mt-24">
-              <IntegrationHero />
-            </div>
+          <div className="relative md:-top-[255px] md:mt-24">
+            <LazySection rootMargin="400px" minHeight="400px">
+              <Suspense fallback={<div className="min-h-[400px]" />}>
+                <IntegrationHero />
+              </Suspense>
+            </LazySection>
+          </div>
 
-            <div className="relative md:-top-[255px] md:mt-24">
-              <Pricing />
-            </div>
+          <div className="relative md:-top-[255px] md:mt-24">
+            <LazySection rootMargin="400px" minHeight="600px">
+              <Suspense fallback={<div className="min-h-[600px]" />}>
+                <Pricing />
+              </Suspense>
+            </LazySection>
+          </div>
 
-            <div className="relative md:-top-[255px] md:mt-24 bg-white -mb-16 md:-mb-16">
-              <FAQ />
-            </div>
+          <div className="relative md:-top-[255px] md:mt-24 bg-white -mb-16 md:-mb-16">
+            <LazySection rootMargin="400px" minHeight="400px">
+              <Suspense fallback={<div className="min-h-[400px]" />}>
+                <FAQ />
+              </Suspense>
+            </LazySection>
+          </div>
 
-            <div className="relative md:-top-[255px] md:mt-24 bg-white">
-              <FinalCTA />
-            </div>
+          <div className="relative md:-top-[255px] md:mt-24 bg-white">
+            <LazySection rootMargin="400px" minHeight="300px">
+              <Suspense fallback={<div className="min-h-[300px]" />}>
+                <FinalCTA />
+              </Suspense>
+            </LazySection>
+          </div>
 
-            <div className="relative md:-top-[255px] md:mt-24">
-              <Footer />
-            </div>
-          </Suspense>
+          <div className="relative md:-top-[255px] md:mt-24">
+            <LazySection rootMargin="400px" minHeight="400px">
+              <Suspense fallback={<div className="min-h-[400px]" />}>
+                <Footer />
+              </Suspense>
+            </LazySection>
+          </div>
         </main>
       </div>
     </div>

@@ -2,22 +2,20 @@ import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLenis } from '../hooks/useLenis';
-import { AuthProvider } from '../contexts/AuthContext';
-import { SubscriptionProvider } from '../contexts/SubscriptionContext';
-import { TokenProvider } from '../contexts/TokenContext';
+// AuthProvider is lazy — this keeps @supabase/supabase-js (127 KB) out of the
+// critical-path modulepreload list on marketing pages.
+const AuthProvider = React.lazy(() =>
+  import('../contexts/AuthProvider').then(m => ({ default: m.AuthProvider }))
+);
+// DashboardProviders is lazy — keeps SubscriptionContext+TokenContext (and their
+// transitive Supabase deps) out of the critical-path bundle on marketing pages.
+const DashboardProviders = React.lazy(() => import('../components/DashboardProviders'));
 import ProtectedRoute from '../components/ProtectedRoute';
-import PlanGate from '../components/PlanGate';
+// PlanGate is lazy — breaks the PlanGate→SubscriptionContext→stripe.ts→supabase
+// static import chain so supabase never lands in the critical-path bundle.
+const PlanGate = React.lazy(() => import('../components/PlanGate'));
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 import ContentDepthFooter from '../components/seo/ContentDepthFooter';
-
-// Wraps dashboard routes with subscription/token providers (only needed for authenticated pages)
-const DashboardProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <SubscriptionProvider>
-    <TokenProvider>
-      {children}
-    </TokenProvider>
-  </SubscriptionProvider>
-);
 
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
@@ -570,11 +568,16 @@ const NavigationWrapper: React.FC = () => {
 
 const AppRoutes: React.FC = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <NavigationWrapper />
-      </Router>
-    </AuthProvider>
+    // Suspense here: AuthProvider is lazy-loaded so Supabase only downloads
+    // after the first render, not during critical-path JS parsing.
+    // PageLoader is the same spinner used everywhere else in the app.
+    <Suspense fallback={<PageLoader />}>
+      <AuthProvider>
+        <Router>
+          <NavigationWrapper />
+        </Router>
+      </AuthProvider>
+    </Suspense>
   );
 };
 

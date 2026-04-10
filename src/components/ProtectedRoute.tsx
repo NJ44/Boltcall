@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -49,6 +48,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     // Check if user has completed setup (has a business_profiles row)
     const checkSetup = async () => {
       try {
+        const { supabase } = await import('../lib/supabase');
         const { data, error } = await supabase
           .from('business_profiles')
           .select('id')

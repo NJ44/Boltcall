@@ -171,19 +171,20 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // React core — shared by everything, keep as stable cached chunks
+            // React core — always needed on every page; keep as stable named chunks
+            // so browsers can cache them independently across deploys.
             if (id.includes('react-dom')) return 'react-dom';
             if (id.includes('react-router')) return 'react-router';
-            // Supabase — needed for auth on every page load
-            if (id.includes('@supabase')) return 'supabase';
-            // i18n — used across all routes
+            // i18n — initialised at startup on all routes
             if (id.includes('i18next')) return 'i18n';
-            // Lucide icons — tree-shaken but shared across many components
+            // Lucide icons — eagerly imported by Header; needs to be stable
             if (id.includes('lucide-react')) return 'icons';
-            // NOTE: framer-motion, gsap, lottie, radix, recharts, forms
-            // are NOT assigned manual chunks — Vite naturally code-splits them
-            // into the lazy route chunks that import them, preventing
-            // unnecessary preloading on pages that don't need them.
+            // IMPORTANT: Do NOT name @supabase, @lottiefiles, framer-motion, or
+            // @radix-ui here. Vite adds ALL named manualChunks to <link
+            // rel="modulepreload"> in index.html. Those libraries are only used
+            // by lazy routes, so naming them forces the browser to parse them on
+            // every page even for visitors who never reach a dashboard or animation.
+            // Let Rollup auto-split them into unnamed lazy-only shared chunks.
           }
         },
       },
