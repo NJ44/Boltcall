@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, MessageCircle } from 'lucide-react';
+import { X, Send, CheckCircle2, MessageCircle, HelpCircle, Wand2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { cn } from '../../lib/utils';
 
@@ -10,11 +10,11 @@ interface Message {
   actions?: string[];
 }
 
-const QUICK_ACTIONS = [
-  { label: 'Make my agent friendlier', icon: '😊' },
-  { label: 'Change my greeting', icon: '👋' },
-  { label: 'Show my call stats', icon: '📊' },
-  { label: 'Add a FAQ', icon: '❓' },
+const QUICK_ACTIONS: { label: string; type: 'question' | 'action' }[] = [
+  { label: 'I am new to the platform, what do I do first?', type: 'question' },
+  { label: 'How do I connect a phone number?', type: 'question' },
+  { label: 'Create an AI Agent for me', type: 'action' },
+  { label: 'Edit an AI Agent for me', type: 'action' },
 ];
 
 const AiAssistant: React.FC = () => {
