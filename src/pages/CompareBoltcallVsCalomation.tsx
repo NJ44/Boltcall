@@ -94,10 +94,22 @@ const CompareBoltcallVsCalomation: React.FC = () => {
       }))
     };
 
+    // Person schema
+    const personSchema = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jordan Michaels",
+      "jobTitle": "AI Business Technology Reviewer",
+      "worksFor": { "@type": "Organization", "name": "Boltcall", "url": "https://boltcall.org" },
+      "url": "https://boltcall.org/compare/boltcall-vs-calomation"
+    };
+
     const existingArticle = document.getElementById('article-schema');
     if (existingArticle) existingArticle.remove();
     const existingFaq = document.getElementById('faq-schema');
     if (existingFaq) existingFaq.remove();
+    const existingPerson = document.getElementById('person-schema');
+    if (existingPerson) existingPerson.remove();
 
     const articleScript = document.createElement('script');
     articleScript.id = 'article-schema';
@@ -111,11 +123,19 @@ const CompareBoltcallVsCalomation: React.FC = () => {
     faqScript.text = JSON.stringify(faqSchema);
     document.head.appendChild(faqScript);
 
+    const personScript = document.createElement('script');
+    personScript.id = 'person-schema';
+    personScript.type = 'application/ld+json';
+    personScript.text = JSON.stringify(personSchema);
+    document.head.appendChild(personScript);
+
     return () => {
       const s1 = document.getElementById('article-schema');
       if (s1) s1.remove();
       const s2 = document.getElementById('faq-schema');
       if (s2) s2.remove();
+      const s3 = document.getElementById('person-schema');
+      if (s3) s3.remove();
     };
   }, []);
 
