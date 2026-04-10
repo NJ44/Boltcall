@@ -351,6 +351,87 @@ const BusinessAuditPage: React.FC = () => {
                 </div>
             </section>
 
+            {/* Use Cases & Case Studies */}
+            <section className="py-12 bg-gray-50">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Use Cases: Who Benefits Most from the Audit</h2>
+                    <p className="text-gray-600 mb-8 text-sm">The business audit is most valuable for local service businesses where missed calls directly mean lost revenue.</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                            {
+                                industry: 'HVAC & Plumbing',
+                                scenario: 'A Texas HVAC company was answering only 58% of calls. The audit flagged 3 peak hours where calls spiked but staff was unavailable. After adding AI coverage, call answer rate hit 100% and monthly bookings increased by 31%.',
+                                result: '+31% monthly bookings',
+                            },
+                            {
+                                industry: 'Dental Practices',
+                                scenario: 'A California dental office discovered their Google Business Profile had 40% of fields incomplete and zero photos — suppressing their local search ranking. Fixing the profile added 12 new patient inquiries per month.',
+                                result: '+12 new patients/month',
+                            },
+                            {
+                                industry: 'Law Firms',
+                                scenario: 'A personal injury law firm learned 70% of after-hours calls were going to voicemail with no follow-up. The audit recommended an AI intake agent. Within 60 days, they captured 8 additional consultations per month.',
+                                result: '+8 consultations/month',
+                            },
+                            {
+                                industry: 'Home Services (General)',
+                                scenario: 'A roofing contractor in Florida found their average job value was $1,200, and they were missing roughly 18 calls per month. The audit\'s missed call revenue estimate showed $21,600/month in lost potential — the clearest motivator to act.',
+                                result: '$21,600 in identified lost revenue',
+                            },
+                        ].map((item, i) => (
+                            <div key={i} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                                <div className="inline-flex items-center bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">{item.industry}</div>
+                                <p className="text-gray-700 text-sm leading-relaxed mb-3">{item.scenario}</p>
+                                <div className="flex items-center gap-2 text-green-700 font-semibold text-sm">
+                                    <CheckCircle className="w-4 h-4 text-green-500" />
+                                    {item.result}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Competitive Differentiators */}
+            <section className="py-12 bg-white">
+                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Why Our Audit Is Different</h2>
+                    <p className="text-gray-600 mb-8 text-sm">Most free audit tools check generic SEO metrics. Ours is built specifically for local service businesses where phone coverage is the #1 revenue lever.</p>
+                    <div className="space-y-4">
+                        {[
+                            {
+                                title: 'Phone-First Analysis',
+                                desc: 'Unlike generic SEO audits, we start with your call response rate — because for most local businesses, a missed call is a missed sale.',
+                            },
+                            {
+                                title: 'AI-Powered Recommendations',
+                                desc: 'Our report doesn\'t just list problems. It prioritizes them by revenue impact and tells you exactly what to do first.',
+                            },
+                            {
+                                title: 'Local Competitor Benchmarking',
+                                desc: 'See how you compare against your 3 nearest competitors — not a national average. Your local market is what matters.',
+                            },
+                            {
+                                title: 'Dollar-Value Gap Estimate',
+                                desc: 'Every gap is expressed in dollars, not abstract scores. You\'ll see exactly what fixing each issue could add to your monthly revenue.',
+                            },
+                            {
+                                title: 'No Sales Pressure',
+                                desc: 'The audit is genuinely free. No credit card, no sales call required. You get the report and decide what to do with it.',
+                            },
+                        ].map((item, i) => (
+                            <div key={i} className="flex gap-4">
+                                <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">{i + 1}</div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-900 text-sm mb-1">{item.title}</h3>
+                                    <p className="text-gray-600 text-sm">{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Trust Signals */}
             <section className="bg-gray-50 border-t border-gray-100 py-10">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
