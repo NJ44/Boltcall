@@ -186,6 +186,55 @@ const BlogAIGuide: React.FC = () => {
       </section>
 
 
+      {/* Sources & Further Reading */}
+      <section id="sources" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="bg-gray-800 border border-gray-700 rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-6">Sources &amp; Further Reading</h2>
+          <ul className="space-y-3">
+            <li>
+              <a href="https://www.mckinsey.com/featured-insights/mckinsey-global-institute" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                McKinsey Global Institute: "The Age of AI" (2024)
+              </a>
+            </li>
+            <li>
+              <a href="https://hbr.org" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                Harvard Business Review: "How Small Businesses Are Winning With AI" (2024)
+              </a>
+            </li>
+            <li>
+              <a href="https://mitsloan.mit.edu/ideas-made-to-matter/speed-lead-study-shows-value-responding-quickly" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                MIT Sloan School: "Speed-to-Lead Research" — Dr. James Oldroyd
+              </a>
+            </li>
+            <li>
+              <a href="https://www.salesforce.com/resources/research-reports/state-of-the-connected-customer/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                Salesforce: State of the Connected Customer Report (2024)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.gartner.com/en/topics/artificial-intelligence" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                Gartner: "AI Adoption in SMBs" (2024)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.sba.gov/business-guide/manage-your-business/digital-transformation" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                U.S. Small Business Administration: Digital Transformation Guide
+              </a>
+            </li>
+            <li>
+              <a href="https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/mobile-search-local-businesses/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                Google/Ipsos: "How People Use Mobile Search to Find Local Businesses" (2023)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.brightlocal.com/research/local-consumer-review-survey/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                BrightLocal: Local Consumer Review Survey (2024)
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
