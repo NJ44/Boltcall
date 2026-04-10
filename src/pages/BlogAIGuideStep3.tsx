@@ -432,6 +432,103 @@ const BlogAIGuideStep3: React.FC = () => {
           </div>
         </motion.section>
 
+        {/* Pros & Cons */}
+        <motion.section
+          id="pros-cons"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-purple-600 rounded-full"></div>
+            Should You Start with AI Now?
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-green-800 mb-4">Pros of Starting Now</h3>
+              <ul className="space-y-3">
+                {[
+                  'Early mover advantage over local competitors',
+                  'Immediate ROI possible within the first month',
+                  'AI improves over time as it learns your business',
+                  'Competitors are still falling behind — act now',
+                  'Setup is faster than most business owners expect',
+                  'Dedicated onboarding support available',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-green-900 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-red-800 mb-4">Cons of Waiting</h3>
+              <ul className="space-y-3">
+                {[
+                  'Competitors adopting AI faster every month',
+                  'Missed leads accumulate daily while you wait',
+                  'Integration takes time — starting later means later results',
+                  'Staff learning curve is longer when change is rushed',
+                  'AI platform costs are rising as adoption grows',
+                  'Catching up to early adopters becomes harder over time',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-red-900 text-sm">
+                    <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-red-500 font-bold text-base leading-none">&#x2715;</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Sources & Further Reading */}
+        <motion.section
+          id="sources"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.48 }}
+          className="mb-16"
+        >
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Sources &amp; Further Reading</h2>
+            <ul className="space-y-3">
+              <li>
+                <a href="https://www.bain.com/insights/topics/technology/artificial-intelligence/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Bain &amp; Company: "AI Adoption Playbook for SMBs"
+                </a>
+              </li>
+              <li>
+                <a href="https://www.hubspot.com/state-of-ai" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  HubSpot: "State of AI Report" (2024)
+                </a>
+              </li>
+              <li>
+                <a href="https://www.salesforce.com/resources/articles/trends-in-ai-for-customer-service/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Salesforce: "Trends in AI for Customer Service"
+                </a>
+              </li>
+              <li>
+                <a href="https://www.nielsen.com/insights/2024/local-business-digital-transformation/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Nielsen: "Local Business Digital Transformation Study"
+                </a>
+              </li>
+              <li>
+                <a href="https://www.brightlocal.com/research/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  BrightLocal: "Local Business AI Usage Survey"
+                </a>
+              </li>
+              <li>
+                <a href="https://boltcall.org/resources/ai-receptionist-impact-report" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Boltcall: "2025 AI Receptionist Impact Report"
+                </a>
+              </li>
+            </ul>
+          </div>
+        </motion.section>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
