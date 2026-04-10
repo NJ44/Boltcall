@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, MessageCircle } from 'lucide-react';
+import { X, Send, CheckCircle2, MessageCircle, HelpCircle, Wand2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { cn } from '../../lib/utils';
 
@@ -10,11 +10,11 @@ interface Message {
   actions?: string[];
 }
 
-const QUICK_ACTIONS = [
-  { label: 'Make my agent friendlier', icon: '😊' },
-  { label: 'Change my greeting', icon: '👋' },
-  { label: 'Show my call stats', icon: '📊' },
-  { label: 'Add a FAQ', icon: '❓' },
+const QUICK_ACTIONS: { label: string; type: 'question' | 'action' }[] = [
+  { label: 'I am new to the platform, what do I do first?', type: 'question' },
+  { label: 'How do I connect a phone number?', type: 'question' },
+  { label: 'Create an AI Agent for me', type: 'action' },
+  { label: 'Edit an AI Agent for me', type: 'action' },
 ];
 
 const AiAssistant: React.FC = () => {
@@ -119,7 +119,7 @@ const AiAssistant: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed bottom-6 right-6 z-50 w-[340px] h-[420px] flex flex-col bg-white dark:bg-[#111114] rounded-xl shadow-xl border border-gray-200 dark:border-[#1e1e24] overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[340px] h-[460px] flex flex-col bg-white dark:bg-[#111114] rounded-xl shadow-xl border border-gray-200 dark:border-[#1e1e24] overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-[#1e1e24]">
@@ -144,22 +144,28 @@ const AiAssistant: React.FC = () => {
             <div className="flex-1 px-4 py-3 overflow-y-auto space-y-2.5 text-sm flex flex-col">
               {/* Empty state */}
               {messages.length === 0 && (
-                <div className="flex flex-col items-center justify-center flex-1 py-2">
-                  <div className="w-10 h-10 bg-blue-50 dark:bg-blue-500/10 rounded-full flex items-center justify-center mb-2.5">
-                    <MessageCircle className="w-5 h-5 text-blue-500" />
+                <div className="flex flex-col flex-1 py-2">
+                  <div className="flex flex-col items-center mb-4">
+                    <div className="w-10 h-10 bg-blue-50 dark:bg-blue-500/10 rounded-full flex items-center justify-center mb-2.5">
+                      <MessageCircle className="w-5 h-5 text-blue-500" />
+                    </div>
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-0.5">How can I help?</h4>
+                    <p className="text-[11px] text-gray-400 max-w-[240px] text-center">
+                      Ask me anything or pick a quick action below.
+                    </p>
                   </div>
-                  <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-0.5">How can I help?</h4>
-                  <p className="text-[11px] text-gray-400 mb-3 max-w-[240px] text-center">
-                    Change your greeting, update your prompt, add FAQs — just ask.
-                  </p>
-                  <div className="grid grid-cols-2 gap-1.5 w-full max-w-[280px]">
+                  <div className="flex flex-col gap-1.5 w-full">
                     {QUICK_ACTIONS.map((action) => (
                       <button
                         key={action.label}
                         onClick={() => handleQuickAction(action.label)}
-                        className="flex items-center gap-1.5 text-left text-[11px] px-2.5 py-2 bg-gray-50 dark:bg-[#1a1a1f] hover:bg-gray-100 dark:hover:bg-[#222228] text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg border border-gray-100 dark:border-[#1e1e24] transition-colors"
+                        className="flex items-center gap-3 text-left text-[12px] px-3 py-2.5 bg-gray-50 dark:bg-[#1a1a1f] hover:bg-gray-100 dark:hover:bg-[#222228] text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg border border-gray-100 dark:border-[#1e1e24] transition-colors"
                       >
-                        <span>{action.icon}</span>
+                        {action.type === 'question' ? (
+                          <HelpCircle className="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-500" />
+                        ) : (
+                          <Wand2 className="w-4 h-4 shrink-0 text-gray-400 dark:text-gray-500" />
+                        )}
                         <span className="leading-tight">{action.label}</span>
                       </button>
                     ))}
