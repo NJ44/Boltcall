@@ -347,7 +347,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* Who Chooses Boltcall */}
-        <section className="mb-12">
+        <section id="who-boltcall" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <Phone className="w-8 h-8 text-blue-600" />
             Who Chooses Boltcall
