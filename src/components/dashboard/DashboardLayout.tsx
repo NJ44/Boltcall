@@ -6,7 +6,7 @@ import {
   LayoutDashboard,
   Bot,
   BookOpen,
-  Users,
+
   Settings,
   Menu,
   X,
