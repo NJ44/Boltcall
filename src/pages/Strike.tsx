@@ -514,6 +514,41 @@ const Strike: React.FC = () => {
         </div>
       </div>
       <FAQ />
+
+      {/* Contact Section */}
+      <section id="contact" className="px-4 sm:px-6 lg:px-8 py-16 bg-gray-950 border-t border-white/10">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-4">
+            Have Questions? We're Here to Help
+          </h2>
+          <p className="text-white/60 mb-10 text-sm leading-relaxed">
+            Whether you're exploring Strike or need help with your setup, our team responds fast.
+          </p>
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 sm:p-10 text-left backdrop-blur-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <p className="text-xs font-semibold text-blue-400 uppercase tracking-widest mb-1">Support Email</p>
+                <a href="mailto:support@boltcall.org"
+                  className="text-white font-bold text-base hover:text-blue-400 transition-colors">
+                  support@boltcall.org
+                </a>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-blue-400 uppercase tracking-widest mb-1">Book a Demo</p>
+                <a href="https://boltcall.org/book-a-call" target="_blank" rel="noopener noreferrer"
+                  className="text-white font-bold text-base hover:text-blue-400 transition-colors">
+                  boltcall.org/book-a-call
+                </a>
+              </div>
+              <div className="sm:col-span-2 border-t border-white/10 pt-6 mt-2">
+                <p className="text-white/60 text-sm leading-relaxed">
+                  We typically respond within <strong className="text-white">2 business hours</strong>. A real person will get back to you — no bots, no canned responses.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
