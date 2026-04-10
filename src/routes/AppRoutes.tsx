@@ -7,8 +7,9 @@ import { useLenis } from '../hooks/useLenis';
 const AuthProvider = React.lazy(() =>
   import('../contexts/AuthProvider').then(m => ({ default: m.AuthProvider }))
 );
-import { SubscriptionProvider } from '../contexts/SubscriptionContext';
-import { TokenProvider } from '../contexts/TokenContext';
+// DashboardProviders is lazy — keeps SubscriptionContext+TokenContext (and their
+// transitive Supabase deps) out of the critical-path bundle on marketing pages.
+const DashboardProviders = React.lazy(() => import('../components/DashboardProviders'));
 import ProtectedRoute from '../components/ProtectedRoute';
 import PlanGate from '../components/PlanGate';
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
