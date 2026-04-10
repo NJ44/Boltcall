@@ -2,7 +2,11 @@ import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLenis } from '../hooks/useLenis';
-import { AuthProvider } from '../contexts/AuthContext';
+// AuthProvider is lazy — this keeps @supabase/supabase-js (127 KB) out of the
+// critical-path modulepreload list on marketing pages.
+const AuthProvider = React.lazy(() =>
+  import('../contexts/AuthProvider').then(m => ({ default: m.AuthProvider }))
+);
 import { SubscriptionProvider } from '../contexts/SubscriptionContext';
 import { TokenProvider } from '../contexts/TokenContext';
 import ProtectedRoute from '../components/ProtectedRoute';
