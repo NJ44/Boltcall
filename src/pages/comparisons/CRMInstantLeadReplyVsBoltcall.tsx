@@ -26,7 +26,23 @@ const CRMInstantLeadReplyVsBoltcall: React.FC = () => {
       ],
     });
     document.head.appendChild(bcSchema);
-    return () => { document.head.removeChild(bcSchema); };
+
+    const personSchema = document.createElement('script');
+    personSchema.type = 'application/ld+json';
+    personSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Jordan Michaels',
+      jobTitle: 'AI Business Technology Reviewer',
+      worksFor: { '@type': 'Organization', name: 'Boltcall', url: 'https://boltcall.org' },
+      url: 'https://boltcall.org/comparisons/crm-vs-boltcall',
+    });
+    document.head.appendChild(personSchema);
+
+    return () => {
+      document.head.removeChild(bcSchema);
+      document.head.removeChild(personSchema);
+    };
   }, []);
 
   return (
