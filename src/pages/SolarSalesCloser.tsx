@@ -835,6 +835,50 @@ const SolarSalesCloser: React.FC = () => {
             </div>
           )}
 
+          {/* Social Proof */}
+          <section id="social-proof" className="mt-12">
+            <h3 className="text-center text-lg font-extrabold mb-6 text-slate-100">
+              What Solar Pros Are Saying
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  quote: 'We went from closing 1 in 10 leads to 1 in 4. The AI handles objections better than our human closers did on the phone.',
+                  name: 'Mike T.',
+                  company: 'Solar Solutions AZ',
+                },
+                {
+                  quote: 'After-hours leads used to die in voicemail. Now the AI follows up instantly and books consultations while we sleep.',
+                  name: 'Jennifer R.',
+                  company: 'SunPower Installations TX',
+                },
+                {
+                  quote: 'Set it up on a Tuesday, had 3 new consultations booked by Friday. Worth every penny.',
+                  name: 'Carlos M.',
+                  company: 'Green Energy Partners FL',
+                },
+              ].map((t) => (
+                <div
+                  key={t.name}
+                  className="bg-[#141928] border border-[#2A3352] rounded-[14px] p-5 flex flex-col gap-3"
+                >
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-slate-400 text-sm leading-relaxed flex-1">"{t.quote}"</p>
+                  <div>
+                    <div className="text-sm font-bold text-slate-100">{t.name}</div>
+                    <div className="text-xs text-slate-500">{t.company}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* CTA Section */}
           <div className="text-center mt-12 py-10 px-6 bg-gradient-to-br from-amber-500/5 to-red-500/5 border border-[#2A3352] rounded-2xl">
             <h3 className="text-xl font-extrabold mb-2">
