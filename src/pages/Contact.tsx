@@ -237,8 +237,38 @@ const Contact: React.FC = () => {
         </div>
       </motion.div>
 
+      {/* Contact Info */}
+      <section id="contact-info" className="w-full max-w-[860px] mt-10">
+        <div className="bg-white rounded-2xl shadow-lg px-8 py-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-6">Quick Contact</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Support Email</span>
+              <a href="mailto:support@boltcall.org" className="text-gray-900 font-semibold text-base hover:text-blue-600 transition-colors">
+                support@boltcall.org
+              </a>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Book a Strategy Call</span>
+              <a href="https://boltcall.org/book-a-call" target="_blank" rel="noopener noreferrer"
+                className="text-gray-900 font-semibold text-base hover:text-blue-600 transition-colors">
+                boltcall.org/book-a-call
+              </a>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Response Time</span>
+              <span className="text-gray-700 text-sm">We respond to all inquiries within <strong>2 business hours</strong> during M–F 9am–6pm ET</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Urgent Issues</span>
+              <span className="text-gray-700 text-sm">Use the <strong>live chat</strong> on boltcall.org for fastest response</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How We Can Help */}
-      <section className="w-full max-w-[860px] mt-10 mb-6">
+      <section className="w-full max-w-[860px] mt-6 mb-6">
         <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-10 text-white">
           <h2 className="text-2xl font-bold mb-6">How We Can Help</h2>
           <div className="space-y-4">
