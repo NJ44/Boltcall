@@ -49,10 +49,19 @@ const FAQAIReceptionistPlumber: React.FC = () => {
         },
         "image": {
           "@type": "ImageObject",
-          "url": "https://boltcall.org/og-image.jpg",
+          "url": "https://boltcall.org/og-image.png",
           "width": 1200,
           "height": 630
         }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org" },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog" },
+          { "@type": "ListItem", "position": 3, "name": "AI Receptionist for Plumbers: FAQ", "item": "https://boltcall.org/blog/ai-receptionist-plumber-faq" }
+        ]
       },
       {
         "@context": "https://schema.org",
