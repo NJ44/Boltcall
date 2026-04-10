@@ -288,8 +288,7 @@ const SmsPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">SMS AI Assistant</h1>
-          <p className="text-sm text-gray-500 mt-1">AI-powered SMS conversations that qualify leads and book appointments</p>
+          <h1 className="text-2xl font-bold text-gray-900">SMS Agent</h1>
         </div>
         <div className="flex items-center gap-2">
           <PopButton color="gray" size="sm" onClick={loadData} className="gap-1.5">
