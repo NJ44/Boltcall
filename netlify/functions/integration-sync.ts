@@ -879,6 +879,31 @@ export const handler: Handler = async (event) => {
         return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `Google Business Profile auth failed: ${res.status}. Ensure the API is enabled and credentials are valid.` }) };
       }
 
+      if (provider === 'servicetitan') {
+        if (!testApiKey) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Client ID required for ServiceTitan' }) };
+        const clientSecret = testConfig?.client_secret;
+        if (!clientSecret) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Client Secret required for ServiceTitan' }) };
+        const tenantId = testConfig?.tenant_id;
+        if (!tenantId) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Tenant ID required for ServiceTitan' }) };
+
+        const accessToken = await getServiceTitanToken(testApiKey, clientSecret);
+        if (!accessToken) {
+          return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: 'Authentication failed — check your Client ID and Client Secret' }) };
+        }
+
+        const res = await fetch(
+          `https://api.servicetitan.io/crm/v2/tenant/${tenantId}/customers?page=1&pageSize=1`,
+          { headers: { 'Authorization': `Bearer ${accessToken}`, 'ST-App-Key': testApiKey } }
+        );
+        if (res.ok) {
+          const data = await res.json();
+          const count = data.totalCount ?? 0;
+          return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: `ServiceTitan connected — ${count} customers in account` }) };
+        }
+        const errText = await res.text();
+        return { statusCode: 200, headers, body: JSON.stringify({ success: false, error: `ServiceTitan access failed: ${res.status} — check your Tenant ID` }) };
+      }
+
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: 'No test available for this provider' }) };
     }
 
