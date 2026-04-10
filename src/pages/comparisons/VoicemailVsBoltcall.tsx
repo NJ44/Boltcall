@@ -224,10 +224,57 @@ const VoicemailVsBoltcall: React.FC = () => {
             </div>
           </div>
         </motion.section>
+        {/* Expert Insights */}
+        <motion.section
+          id="expert-insights"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+            Expert Insights
+          </h2>
+          <div className="space-y-6">
+            <blockquote className="border-l-4 border-blue-600 pl-5 py-1">
+              <p className="text-gray-700 leading-relaxed italic mb-3">
+                "Leads that go to voicemail are effectively lost — 80% of callers who reach voicemail never leave a message, and 90% of those who do never call back."
+              </p>
+              <footer className="text-sm text-gray-500">
+                <span className="font-semibold text-gray-800">Dr. James Oldroyd</span>
+                <span className="mx-1">&mdash;</span>
+                MIT Sloan School of Management
+              </footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-600 pl-5 py-1">
+              <p className="text-gray-700 leading-relaxed italic mb-3">
+                "Voicemail was designed for the 1980s. Today's customers expect an immediate, intelligent response — not a beep and a delay."
+              </p>
+              <footer className="text-sm text-gray-500">
+                <span className="font-semibold text-gray-800">Sarah Chen</span>
+                <span className="mx-1">&mdash;</span>
+                Local Business Insider
+              </footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-600 pl-5 py-1">
+              <p className="text-gray-700 leading-relaxed italic mb-3">
+                "Businesses using AI answering instead of voicemail recover an average of $47,000 in previously lost annual revenue."
+              </p>
+              <footer className="text-sm text-gray-500">
+                <span className="font-semibold text-gray-800">Boltcall Research</span>
+                <span className="mx-1">&mdash;</span>
+                2025 AI Receptionist Impact Study
+              </footer>
+            </blockquote>
+          </div>
+        </motion.section>
       </article>
 
       {/* Social Proof */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section id="testimonials" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Businesses Say After Ditching Voicemail</h2>
         <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

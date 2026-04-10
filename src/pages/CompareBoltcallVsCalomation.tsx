@@ -309,7 +309,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* Setup Experience */}
-        <section className="mb-12">
+        <section id="setup" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <Clock className="w-8 h-8 text-blue-600" />
             Setup Experience
