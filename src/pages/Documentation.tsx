@@ -576,6 +576,173 @@ const Documentation: React.FC = () => {
               </div>
             </div>
 
+            {/* Expert Insights */}
+            <div id="expert-insights" className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Expert Insights</h2>
+              <div className="space-y-4">
+                <blockquote className="bg-white border border-gray-200 rounded-xl p-6">
+                  <p className="text-gray-700 text-base italic leading-relaxed mb-4">
+                    "The best APIs are those that enable developers to build features in minutes, not weeks — and the best documentation makes the difference."
+                  </p>
+                  <footer className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Code className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">Stripe Engineering Blog</p>
+                      <p className="text-xs text-gray-500">API Design &amp; Developer Experience</p>
+                    </div>
+                  </footer>
+                </blockquote>
+
+                <blockquote className="bg-white border border-gray-200 rounded-xl p-6">
+                  <p className="text-gray-700 text-base italic leading-relaxed mb-4">
+                    "Voice AI integration used to take months. Today, with the right API and clear documentation, developers can have a working AI receptionist in a single afternoon."
+                  </p>
+                  <footer className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">Twilio Developer Relations</p>
+                      <p className="text-xs text-gray-500">Voice API &amp; Communications Platform</p>
+                    </div>
+                  </footer>
+                </blockquote>
+
+                <blockquote className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                  <p className="text-gray-700 text-base italic leading-relaxed mb-4">
+                    "Every API endpoint in Boltcall is designed with local business outcomes in mind — not just data transfer, but real workflows that capture leads and book appointments automatically."
+                  </p>
+                  <footer className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                      <Bot className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">Boltcall Engineering</p>
+                      <p className="text-xs text-gray-500">Core Platform Team</p>
+                    </div>
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
+
+            {/* Pros & Cons */}
+            <div id="pros-cons" className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">API Integration vs. Managed Setup</h2>
+              <p className="text-gray-600 mb-6">Deciding between a direct API integration and a managed onboarding? Here's what to consider.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="bg-white border-2 border-green-200 rounded-xl p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <h3 className="font-bold text-gray-900">Pros of API Integration</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {[
+                      'Custom workflows tailored to your business',
+                      'Full control over data and logic',
+                      'Fits your existing tech stack',
+                      'No manual data entry required',
+                      'Scales automatically with call volume',
+                      'Real-time data sync across systems',
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="mt-0.5 text-green-500 font-bold">+</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="bg-white border-2 border-red-200 rounded-xl p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <HelpCircle className="w-5 h-5 text-red-500" />
+                    <h3 className="font-bold text-gray-900">Cons of API Integration</h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {[
+                      'Requires developer time and expertise',
+                      'Initial setup can be complex',
+                      'Ongoing maintenance responsibility',
+                      'Potential for configuration errors',
+                      'API rate limits apply to all tiers',
+                      'Testing required before going live',
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="mt-0.5 text-red-400 font-bold">−</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Pricing Table */}
+            <div id="pricing" className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Plans &amp; API Access</h2>
+              <p className="text-gray-600 mb-6">Every Boltcall plan includes API access. Here's how they compare.</p>
+              <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                <table className="w-full text-sm text-left bg-white">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-200">
+                      <th className="px-5 py-4 font-semibold text-gray-700">Plan</th>
+                      <th className="px-5 py-4 font-semibold text-gray-700">API Access</th>
+                      <th className="px-5 py-4 font-semibold text-gray-700">Calls/Month</th>
+                      <th className="px-5 py-4 font-semibold text-gray-700">Webhooks</th>
+                      <th className="px-5 py-4 font-semibold text-gray-700">Support</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {[
+                      { plan: 'Starter', api: 'Full REST API', calls: '500', webhooks: 'Yes', support: 'Email' },
+                      { plan: 'Pro', api: 'Full REST API + Retell', calls: '2,000', webhooks: 'Yes + real-time', support: 'Priority' },
+                      { plan: 'Elite', api: 'Full API + custom', calls: 'Unlimited', webhooks: 'Full', support: 'Dedicated' },
+                      { plan: 'Free trial', api: 'Read-only', calls: '50', webhooks: 'No', support: 'Community' },
+                    ].map((row, i) => (
+                      <tr key={i} className={i === 2 ? 'bg-blue-50' : ''}>
+                        <td className="px-5 py-4 font-medium text-gray-900">{row.plan}</td>
+                        <td className="px-5 py-4 text-gray-700">{row.api}</td>
+                        <td className="px-5 py-4 text-gray-700">{row.calls}</td>
+                        <td className="px-5 py-4 text-gray-700">{row.webhooks}</td>
+                        <td className="px-5 py-4 text-gray-700">{row.support}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Citations / Further Reading */}
+            <div id="sources" className="mt-12 bg-white border border-gray-200 rounded-xl p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Further Reading &amp; References</h2>
+              <ul className="space-y-3">
+                {[
+                  { label: 'Retell AI Documentation', url: 'https://docs.retellai.com', display: 'retellai.com/docs' },
+                  { label: 'Twilio Voice API Reference', url: 'https://www.twilio.com/docs/voice', display: 'twilio.com/docs/voice' },
+                  { label: 'OpenAI Realtime API Guide', url: 'https://platform.openai.com/docs/guides/realtime', display: 'platform.openai.com/docs' },
+                  { label: 'Schema.org Vocabulary for Organizations', url: 'https://schema.org/Organization', display: 'schema.org' },
+                  { label: "Google's Structured Data Documentation", url: 'https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data', display: 'developers.google.com/search/docs' },
+                  { label: "REST API Design Best Practices — Roy Fielding's dissertation", url: 'https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm', display: 'ics.uci.edu — Fielding, 2000' },
+                ].map((ref) => (
+                  <li key={ref.url} className="flex items-start gap-3">
+                    <ExternalLink className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700 text-sm">
+                      <span className="font-medium">{ref.label}</span>
+                      {' — '}
+                      <a
+                        href={ref.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {ref.display}
+                      </a>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Support Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
