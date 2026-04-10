@@ -444,6 +444,35 @@ const Documentation: React.FC = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
+
+            {/* Table of Contents */}
+            <div id="toc" className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-4">Table of Contents</h2>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { label: 'Getting Started', href: '#getting-started' },
+                  { label: 'Integrations', href: '#integrations' },
+                  { label: 'AI Features', href: '#ai-features' },
+                  { label: 'Instant Response', href: '#instant-response' },
+                  { label: 'Dashboard & Analytics', href: '#dashboard' },
+                  { label: 'Notifications & Alerts', href: '#notifications' },
+                  { label: 'Troubleshooting', href: '#troubleshooting' },
+                  { label: 'Expert Insights', href: '#expert-insights' },
+                  { label: 'API Pros & Cons', href: '#pros-cons' },
+                  { label: 'Pricing', href: '#pricing' },
+                  { label: 'References', href: '#sources' },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-sm font-medium hover:bg-blue-100 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <div className="space-y-6">
               {sections.map((section, sectionIndex) => (
                 <motion.div
