@@ -180,10 +180,13 @@ export default defineConfig({
             if (id.includes('i18next')) return 'i18n';
             // Lucide icons — tree-shaken but shared across many components
             if (id.includes('lucide-react')) return 'icons';
-            // NOTE: framer-motion, gsap, lottie, radix, recharts, forms
-            // are NOT assigned manual chunks — Vite naturally code-splits them
-            // into the lazy route chunks that import them, preventing
-            // unnecessary preloading on pages that don't need them.
+            // Framer Motion — 250+ usages; stable named chunk prevents it from
+            // bleeding into ambiguously-named shared "index" chunks
+            if (id.includes('framer-motion')) return 'framer-motion';
+            // Radix UI — primitive components shared across the whole app
+            if (id.includes('@radix-ui')) return 'radix-ui';
+            // DotLottie WASM bridge — 500KB+; isolate it
+            if (id.includes('@lottiefiles')) return 'lottie-player';
           }
         },
       },
