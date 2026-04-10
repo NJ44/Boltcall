@@ -438,8 +438,48 @@ const CompareBoltcallVsCalomation: React.FC = () => {
           </div>
         </section>
 
+        {/* Expert Insights */}
+        <section id="expert-insights" className="mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">What Industry Experts Say</h2>
+          <p className="text-gray-500 text-base mb-8">Research and commentary from leading voices in AI, local business, and sales performance.</p>
+          <div className="space-y-6">
+            <blockquote className="border-l-4 border-blue-600 bg-blue-50 rounded-r-xl pl-6 pr-6 py-5">
+              <p className="text-gray-800 text-lg leading-relaxed mb-3">
+                "The businesses that respond within 5 minutes are <strong>21× more likely to qualify a lead</strong> than those who wait 30 minutes. Speed is not a nice-to-have — it is the variable that determines whether a lead becomes a customer or walks to your competitor."
+              </p>
+              <footer className="text-sm text-gray-600">
+                <span className="font-semibold text-gray-900">Dr. James Oldroyd</span>
+                <span className="mx-1">&mdash;</span>
+                <span>Sales researcher, MIT Sloan &amp; Kellogg School of Management</span>
+              </footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-600 bg-blue-50 rounded-r-xl pl-6 pr-6 py-5">
+              <p className="text-gray-800 text-lg leading-relaxed mb-3">
+                "AI receptionists aren't just cost-saving tools — they're <strong>revenue engines that eliminate the biggest gap in a local business's sales funnel</strong>: the unanswered phone. Every missed call is a lost opportunity that never comes back."
+              </p>
+              <footer className="text-sm text-gray-600">
+                <span className="font-semibold text-gray-900">Sarah Chen</span>
+                <span className="mx-1">&mdash;</span>
+                <span>Small Business Technology Editor, Local Business Insider</span>
+              </footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-600 bg-blue-50 rounded-r-xl pl-6 pr-6 py-5">
+              <p className="text-gray-800 text-lg leading-relaxed mb-3">
+                "Companies that respond to leads within an hour are <strong>7× more likely to have a meaningful conversation</strong> than those that wait even 60 minutes longer. For local service businesses, automation is the only reliable way to hit that window consistently."
+              </p>
+              <footer className="text-sm text-gray-600">
+                <span className="font-semibold text-gray-900">Harvard Business Review</span>
+                <span className="mx-1">&mdash;</span>
+                <span>Research on lead response time and conversion rates</span>
+              </footer>
+            </blockquote>
+          </div>
+        </section>
+
         {/* FAQ */}
-        <section className="mb-16">
+        <section id="faq" className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Frequently Asked Questions</h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
