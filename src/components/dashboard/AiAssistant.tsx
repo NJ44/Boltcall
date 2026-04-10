@@ -119,7 +119,7 @@ const AiAssistant: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed bottom-6 right-6 z-50 w-[340px] h-[420px] flex flex-col bg-white dark:bg-[#111114] rounded-xl shadow-xl border border-gray-200 dark:border-[#1e1e24] overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[340px] h-[460px] flex flex-col bg-white dark:bg-[#111114] rounded-xl shadow-xl border border-gray-200 dark:border-[#1e1e24] overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-[#1e1e24]">
