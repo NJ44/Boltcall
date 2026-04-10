@@ -28,7 +28,7 @@ interface Integration {
   category: 'crm' | 'calendar' | 'automation' | 'communication' | 'local';
   apiLabel?: string;
   webhookLabel?: string;
-  extraFields?: Array<{ key: string; label: string; placeholder: string }>;
+  extraFields?: Array<{ key: string; label: string; placeholder: string; secret?: boolean }>;
   steps: string[];
   url?: string;
 }
@@ -238,6 +238,28 @@ const integrations: Integration[] = [
       'Paste both values below — Boltcall will request reviews and monitor responses automatically',
     ],
     url: 'https://business.google.com',
+  },
+  {
+    id: 'servicetitan',
+    name: 'ServiceTitan',
+    logo: '/servicetitan_logo.png',
+    subtitle: 'Field Service Management',
+    description: 'Automatically create customers and booking requests in ServiceTitan when leads call your AI receptionist.',
+    fallbackColor: '#E8461A',
+    type: 'api_key',
+    category: 'crm',
+    apiLabel: 'Client ID',
+    extraFields: [
+      { key: 'client_secret', label: 'Client Secret', placeholder: 'Your ServiceTitan app client secret', secret: true },
+      { key: 'tenant_id', label: 'Tenant ID', placeholder: 'e.g. 123456789 (from your ServiceTitan URL)' },
+    ],
+    steps: [
+      'In ServiceTitan, go to Settings → Integrations → API Application Access',
+      'Create a new application — copy the Client ID and Client Secret',
+      'Find your Tenant ID in the URL when logged in (e.g. go.servicetitan.com/tenant/12345)',
+      'Paste all three values below to connect',
+    ],
+    url: 'https://go.servicetitan.com',
   },
 ];
 
@@ -621,7 +643,7 @@ const IntegrationHubTab: React.FC = () => {
                         <div key={field.key}>
                           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{field.label}</label>
                           <input
-                            type="text"
+                            type={field.secret ? 'password' : 'text'}
                             value={formExtra[field.key] || ''}
                             onChange={(e) => setFormExtra(prev => ({ ...prev, [field.key]: e.target.value }))}
                             placeholder={field.placeholder}
