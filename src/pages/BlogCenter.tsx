@@ -542,8 +542,28 @@ const BlogCenter: React.FC = () => {
         </div>
       </section>
 
+      {/* Table of Contents */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">On This Page</h2>
+          <nav className="flex flex-wrap gap-3">
+            {[
+              { label: 'All Posts', href: '#blog-posts' },
+              { label: 'AI Receptionist Stats', href: '#stats' },
+              { label: 'Expert Insights', href: '#expert-insights' },
+              { label: 'Pros & Cons', href: '#pros-cons' },
+              { label: 'Pricing Overview', href: '#pricing' },
+            ].map(({ label, href }) => (
+              <a key={href} href={href} className="text-sm text-blue-600 border border-blue-200 bg-white hover:bg-blue-50 px-3 py-1.5 rounded-full transition-colors">
+                {label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </section>
+
       {/* Blog Posts Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <section id="blog-posts" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {blogPosts.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => (
