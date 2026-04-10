@@ -229,7 +229,7 @@ const CompareBoltcallVsCalomation: React.FC = () => {
         </section>
 
         {/* Pricing Transparency */}
-        <section className="mb-12">
+        <section id="pricing" className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
             <DollarSign className="w-8 h-8 text-blue-600" />
             Pricing Transparency
