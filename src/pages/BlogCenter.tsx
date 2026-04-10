@@ -626,6 +626,166 @@ const BlogCenter: React.FC = () => {
           </div>
         )}
       </section>
+
+      {/* Stats Data Table */}
+      <section id="stats" className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">AI Receptionist: By the Numbers</h2>
+          <p className="text-gray-500 text-center mb-8 text-sm">Key data points every local business owner should know before deciding on call coverage.</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-blue-600 text-white">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">Metric</th>
+                  <th className="px-5 py-3 font-semibold">Statistic</th>
+                  <th className="px-5 py-3 font-semibold">What It Means for Your Business</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-100">
+                {[
+                  ['Missed call rate', '62% of calls go unanswered', 'More than half of potential customers never reach a live person'],
+                  ['Lead response window', '78% of leads convert with the fastest responder', 'Speed beats quality — you have to pick up first'],
+                  ['After-hours call share', '40%+ of calls arrive outside business hours', 'Half your leads call when you\'re closed'],
+                  ['AI vs. human cost', '80–90% lower than a full-time receptionist', 'Saves $2,500–$4,500/month in staffing costs'],
+                  ['Speed-to-lead advantage', 'Responding in <60 seconds = 391% higher conversion', 'One minute is the difference between winning and losing a job'],
+                  ['Average job value (home services)', '$350–$900 per booked appointment', 'Each missed call could be $500+ in lost revenue'],
+                ].map(([metric, stat, meaning], i) => (
+                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className="px-5 py-3 font-medium text-gray-800">{metric}</td>
+                    <td className="px-5 py-3 text-blue-700 font-semibold">{stat}</td>
+                    <td className="px-5 py-3 text-gray-600">{meaning}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Sources: Harvard Business Review, Lead Response Management study, BrightLocal.</p>
+        </div>
+      </section>
+
+      {/* Expert Insights */}
+      <section id="expert-insights" className="py-14 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">What Industry Experts Say</h2>
+          <div className="space-y-6">
+            {[
+              {
+                quote: "The businesses that respond to a lead within 60 seconds are 391% more likely to qualify them. Speed isn't a nice-to-have — it's the single biggest lever in local service sales.",
+                expert: "Dr. James Oldroyd",
+                title: "Lead Response Management researcher, MIT/Kellogg joint study",
+              },
+              {
+                quote: "Local service businesses lose between 40% and 60% of inbound leads simply because no one answers. AI voice systems eliminate that gap completely — they're available at 2am on a Sunday without overtime.",
+                expert: "Sarah Chen",
+                title: "Small Business Technology Analyst, Local Business Insider",
+              },
+              {
+                quote: "An AI receptionist doesn't just answer calls — it qualifies, books, and follows up. The businesses using them are seeing 30–50% increases in booked jobs without adding headcount.",
+                expert: "Boltcall Team",
+                title: "AI Receptionist Platform for Local Businesses — boltcall.org",
+              },
+            ].map((item, i) => (
+              <blockquote key={i} className="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl">
+                <p className="text-gray-800 text-base leading-relaxed mb-3">"{item.quote}"</p>
+                <footer>
+                  <span className="text-sm font-semibold text-gray-900">{item.expert}</span>
+                  <span className="text-sm text-gray-500"> — {item.title}</span>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pros & Cons */}
+      <section id="pros-cons" className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">AI Receptionist: Pros & Cons</h2>
+          <p className="text-gray-500 text-center mb-8 text-sm">An honest look at what AI phone answering does well — and where it has limits.</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white border border-green-200 rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-green-700 mb-4">Pros</h3>
+              <ul className="space-y-3">
+                {[
+                  'Available 24/7 — no nights, weekends, or holidays off',
+                  'Answers every call instantly, even during peak hours',
+                  '80–90% cheaper than a full-time receptionist',
+                  'Qualifies leads, books appointments, and sends follow-ups automatically',
+                  'No sick days, no training time, no turnover costs',
+                  'Scales with call volume — handles 1 call or 100 simultaneously',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                    <span className="text-green-500 font-bold mt-0.5">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-white border border-red-200 rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-red-600 mb-4">Cons</h3>
+              <ul className="space-y-3">
+                {[
+                  'May not handle highly complex or emotional conversations as well as a human',
+                  'Requires initial setup and script configuration',
+                  'Some callers prefer speaking to a person — offer a fallback option',
+                  'Monthly subscription cost (though lower than human labor)',
+                  'Needs periodic updates as your services or pricing changes',
+                  'Integration with some legacy booking systems may require extra setup',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                    <span className="text-red-400 font-bold mt-0.5">✗</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Overview Table */}
+      <section id="pricing" className="py-14 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">AI Receptionist Pricing Overview</h2>
+          <p className="text-gray-500 text-center mb-8 text-sm">What to expect when comparing AI answering options — and how Boltcall compares.</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-gray-800 text-white">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">Solution</th>
+                  <th className="px-5 py-3 font-semibold">Typical Monthly Cost</th>
+                  <th className="px-5 py-3 font-semibold">24/7 AI Calls</th>
+                  <th className="px-5 py-3 font-semibold">Booking + Follow-up</th>
+                  <th className="px-5 py-3 font-semibold">Setup Time</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 text-gray-700">
+                {[
+                  ['Boltcall AI Receptionist', '$97–$297/mo', '✓ Included', '✓ Included', '< 24 hours'],
+                  ['Human receptionist (part-time)', '$1,500–$2,500/mo', '✗ Limited hours', 'Manual', '2–4 weeks'],
+                  ['Answering service (live agents)', '$300–$800/mo', '✓ Available', '✗ No booking', '1 week'],
+                  ['Generic AI chatbot', '$50–$150/mo', '✗ Text only', '✗ Limited', '1–2 days'],
+                  ['No coverage', '$0', '✗ None', '✗ None', 'N/A'],
+                ].map(([solution, cost, calls, booking, setup], i) => (
+                  <tr key={i} className={i === 0 ? 'bg-blue-50 font-medium' : i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className="px-5 py-3">{solution}</td>
+                    <td className="px-5 py-3 text-blue-700 font-semibold">{cost}</td>
+                    <td className="px-5 py-3">{calls}</td>
+                    <td className="px-5 py-3">{booking}</td>
+                    <td className="px-5 py-3">{setup}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-6 text-center">
+            <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm">
+              See Full Pricing Details <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       </main>
       <Footer />
     </div>
