@@ -1,0 +1,499 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e7]:
+        - link "AlternativeTo Logo AlternativeTo Logo Text" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "AlternativeTo Logo" [ref=e9]
+          - img "AlternativeTo Logo Text" [ref=e10]
+        - navigation [ref=e12]:
+          - link "NEW APP RELEASES" [ref=e13] [cursor=pointer]:
+            - /url: /browse/new-apps/
+            - generic [ref=e14]: NEW APP RELEASES
+          - generic [ref=e15]: "|"
+          - link "BROWSE ALL APPS" [ref=e16] [cursor=pointer]:
+            - /url: /browse/
+            - generic [ref=e17]: BROWSE ALL APPS
+          - generic [ref=e18]: "|"
+          - link "TECH NEWS" [ref=e19] [cursor=pointer]:
+            - /url: /news/all/
+            - generic [ref=e20]: TECH NEWS
+          - generic [ref=e21]: "|"
+          - link "LISTS" [ref=e22] [cursor=pointer]:
+            - /url: /lists/
+        - generic [ref=e23]:
+          - combobox "Search" [ref=e26]:
+            - generic [ref=e28]
+          - generic [ref=e33]:
+            - button "Open user menu" [ref=e35] [cursor=pointer]
+            - button "Show Notifications" [ref=e40] [cursor=pointer]
+            - button "Open page menu" [ref=e45] [cursor=pointer]
+    - generic [ref=e48]:
+      - generic [ref=e51]:
+        - img "Just a cute robot" [ref=e52]
+        - generic [ref=e53]:
+          - heading "141,356 Apps & Software Alternatives - Ranked by 1,991,136 User Opinions" [level=3] [ref=e54]
+          - combobox "Search" [ref=e58]:
+            - generic [ref=e60]
+          - generic [ref=e66]:
+            - text: Welcome
+            - link "noamyakoby6" [ref=e67] [cursor=pointer]:
+              - /url: /user/noamyakoby6/
+            - text: ", are you looking for a new alternative? Or maybe suggest"
+            - link "a new one" [ref=e68] [cursor=pointer]:
+              - /url: /manage-item/
+            - text: "?"
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e72]:
+            - link "Meta starts its new Muse AI model family with Muse Spark in a broader AI strategy reset image" [ref=e73] [cursor=pointer]:
+              - /url: /news/2026/4/meta-starts-its-new-muse-ai-model-family-with-muse-spark-in-a-broader-ai-strategy-reset/
+            - generic [ref=e77]
+            - link "Meta starts its new Muse AI model family with Muse Spark in a broader AI strategy reset" [ref=e83] [cursor=pointer]:
+              - /url: /news/2026/4/meta-starts-its-new-muse-ai-model-family-with-muse-spark-in-a-broader-ai-strategy-reset/
+          - generic [ref=e86]:
+            - link "Amazon will cut off support and Kindle Store access for older Kindle devices in May 2026 image" [ref=e87] [cursor=pointer]:
+              - /url: /news/2026/4/amazon-will-cut-off-support-and-kindle-store-access-for-older-kindle-devices-in-may-2026/
+            - generic [ref=e91]
+            - link "Amazon will cut off support and Kindle Store access for older Kindle devices in May 2026" [ref=e103] [cursor=pointer]:
+              - /url: /news/2026/4/amazon-will-cut-off-support-and-kindle-store-access-for-older-kindle-devices-in-may-2026/
+        - generic [ref=e105]:
+          - generic [ref=e107]:
+            - link "Amazon introduces S3 Files to bridge AWS compute and S3 with native file system access image" [ref=e108] [cursor=pointer]:
+              - /url: /news/2026/4/amazon-introduces-s3-files-to-bridge-aws-compute-and-s3-with-native-file-system-access/
+            - generic [ref=e112]
+            - link "Amazon introduces S3 Files to bridge AWS compute and S3 with native file system access" [ref=e120] [cursor=pointer]:
+              - /url: /news/2026/4/amazon-introduces-s3-files-to-bridge-aws-compute-and-s3-with-native-file-system-access/
+          - generic [ref=e123]:
+            - link "Storybook 10.3 brings MCP for React, accessibility upgrades, and expanded CSF Factories image" [ref=e124] [cursor=pointer]:
+              - /url: /news/2026/4/storybook-10-3-brings-mcp-for-react-accessibility-upgrades-and-expanded-csf-factories/
+            - generic [ref=e128]
+            - link "Storybook 10.3 brings MCP for React, accessibility upgrades, and expanded CSF Factories" [ref=e136] [cursor=pointer]:
+              - /url: /news/2026/4/storybook-10-3-brings-mcp-for-react-accessibility-upgrades-and-expanded-csf-factories/
+          - generic [ref=e139]:
+            - link "Substack adds note scheduling, post templates, drop caps, new livestream options, and more image" [ref=e140] [cursor=pointer]:
+              - /url: /news/2026/4/substack-adds-note-scheduling-post-templates-drop-caps-new-livestream-options-and-more/
+            - generic [ref=e144]
+            - link "Substack adds note scheduling, post templates, drop caps, new livestream options, and more" [ref=e152] [cursor=pointer]:
+              - /url: /news/2026/4/substack-adds-note-scheduling-post-templates-drop-caps-new-livestream-options-and-more/
+          - generic [ref=e155]:
+            - link "Geekbench 6.7 adds Intel BOT detection, improved SoC & CPU identification, and more image" [ref=e156] [cursor=pointer]:
+              - /url: /news/2026/4/geekbench-6-7-adds-intel-bot-detection-improved-soc-and-cpu-identification-and-more/
+            - generic [ref=e160]
+            - link "Geekbench 6.7 adds Intel BOT detection, improved SoC & CPU identification, and more" [ref=e168] [cursor=pointer]:
+              - /url: /news/2026/4/geekbench-6-7-adds-intel-bot-detection-improved-soc-and-cpu-identification-and-more/
+        - link "More tech news" [ref=e171] [cursor=pointer]:
+          - /url: /news/all/
+          - text: More tech news
+          - img [ref=e172]
+        - separator
+        - insertion [ref=e176]:
+          - iframe [ref=e178]:
+            - generic [active] [ref=f121e1]:
+              - generic [ref=f121e5]:
+                - generic [ref=f121e6]:
+                  - link [ref=f121e7] [cursor=pointer]:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CtWldz6XYafKXL66qnboP-KmLkA3Ph8GyhgHztr3lwRXB8Jjb1x0QASCm9tQDYPmS84OYEKABzcbXoQPIAQmoAwHIA8sEqgSUAk_QwRidHUjUcT2RcHq-qV9_85nxA45Xwm-bpYWn3vyPoZhBP6ksK6OsLZwHjwXrBKLqnXIK7YDQBN22ghpYe_atDGvfKdtvZ7rlopaNFdL_szF6nB52jsw-4jgkdDMN30s1iLGgxCvTIViccIJz7ai0XNJvhROkUE1M5D6Iq_TMYOYn2l2o8RBpMijRuBGMWbD9AkvrY7wj6ADmb_pWAolNsywi5qdySF-Wvm99GevDAXZrdaPMFjQYOimzA-1kulL0_QhrCm3_nQFBHAoSe8VGqK3GE8EsCSqAxiREEHM0Xk2OsCvMTPGRgs-7mqPPBEjrXjNnHI0xwnQqPjFYSvmfflo4XqJMAjzkUVgP9aws0Q7qq8AE0ZOpsL8FiAWchNncVZAGAaAGLoAHm7moXogHAZAHAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgHmuGxAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHANIIMwgAEAIYmgMyCICAgICAgIAIOhKf0ICAgIAEgMCAgICgqIACqAFIvf3BOljWitPA4OKTA7EJy8qhwparRi-ACgGYCwHICwGADAGqDQJJTMgNAeoNEwjjvtbA4OKTAxUuVUcBHfjUAtLwDQKIDgm4E-QD2BMM0BUByhYCCgD4FgGAFwGyFxAYASoKOTI1NjM3NzU2N1AGuhcCOAGqGBcJAAAAAFGeTkESCjkyNTYzNzc1NjcYAbIYBRguIgEA0BgB6BgBwhkCCAE&ae=1&gclid=Cj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB&num=1&cid=CAQS1wEABaugff7GzpopjQGnDJgMtDXz-dnTdNrZzXxGZzEExVV1DVRdLJQthwS642yUph-1K_Mr1Q0ZNLCwXNyRYL2idRq9NIEn0imsrY34377VfA1kgM80W4xpZ4QcyCb5TbFvZcwd8klcQbp7O6_jQ0ThVMeSDXJSBGJs5P-FFizvKm1wqtOMr_UI6QHICVVOg_W30edhEjZrmw87DwOUY42ZXmDq1BhwAYq4FzA6mv3MJyKUT0x9vQstQ1d2YK1HeGg0XO0IHJJzmv3Elp2a57ZFTj8uN7G2JBgB&sig=AOD64_2odT63xHBsLwUEXN_AWr0XhcpVxQ&client=ca-pub-8332396259212490&rf=1&nb=9&adurl=https://www.mongodb.com/lp/cloud/atlas/try3%3Futm_content%3Dgdn-ai%26utm_source%3Dgdn%26utm_campaign%3Ddisplay_gd_pl_evergreen_atlas_general_prosp_mad_emea-il_dev_desktop_eng_lead%26utm_term%3Dprospecting%26utm_medium%3Ddisplay%26utm_ad%3D%26utm_ad_campaign_id%3D23011410460%26adgroup%3D188811463121%26cq_cmp%3D23011410460%26gad_source%3D5%26gad_campaignid%3D23011410460%26gclid%3DCj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB
+                    - img [ref=f121e8]
+                  - link "Start Building for Free" [ref=f121e11] [cursor=pointer]:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CtWldz6XYafKXL66qnboP-KmLkA3Ph8GyhgHztr3lwRXB8Jjb1x0QASCm9tQDYPmS84OYEKABzcbXoQPIAQmoAwHIA8sEqgSUAk_QwRidHUjUcT2RcHq-qV9_85nxA45Xwm-bpYWn3vyPoZhBP6ksK6OsLZwHjwXrBKLqnXIK7YDQBN22ghpYe_atDGvfKdtvZ7rlopaNFdL_szF6nB52jsw-4jgkdDMN30s1iLGgxCvTIViccIJz7ai0XNJvhROkUE1M5D6Iq_TMYOYn2l2o8RBpMijRuBGMWbD9AkvrY7wj6ADmb_pWAolNsywi5qdySF-Wvm99GevDAXZrdaPMFjQYOimzA-1kulL0_QhrCm3_nQFBHAoSe8VGqK3GE8EsCSqAxiREEHM0Xk2OsCvMTPGRgs-7mqPPBEjrXjNnHI0xwnQqPjFYSvmfflo4XqJMAjzkUVgP9aws0Q7qq8AE0ZOpsL8FiAWchNncVZAGAaAGLoAHm7moXogHAZAHAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgHmuGxAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHANIIMwgAEAIYmgMyCICAgICAgIAIOhKf0ICAgIAEgMCAgICgqIACqAFIvf3BOljWitPA4OKTA7EJy8qhwparRi-ACgGYCwHICwGADAGqDQJJTMgNAeoNEwjjvtbA4OKTAxUuVUcBHfjUAtLwDQKIDgm4E-QD2BMM0BUByhYCCgD4FgGAFwGyFxAYASoKOTI1NjM3NzU2N1AGuhcCOAGqGBcJAAAAAFGeTkESCjkyNTYzNzc1NjcYAbIYBRguIgEA0BgB6BgBwhkCCAE&ae=1&gclid=Cj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB&num=1&cid=CAQS1wEABaugff7GzpopjQGnDJgMtDXz-dnTdNrZzXxGZzEExVV1DVRdLJQthwS642yUph-1K_Mr1Q0ZNLCwXNyRYL2idRq9NIEn0imsrY34377VfA1kgM80W4xpZ4QcyCb5TbFvZcwd8klcQbp7O6_jQ0ThVMeSDXJSBGJs5P-FFizvKm1wqtOMr_UI6QHICVVOg_W30edhEjZrmw87DwOUY42ZXmDq1BhwAYq4FzA6mv3MJyKUT0x9vQstQ1d2YK1HeGg0XO0IHJJzmv3Elp2a57ZFTj8uN7G2JBgB&sig=AOD64_2odT63xHBsLwUEXN_AWr0XhcpVxQ&client=ca-pub-8332396259212490&rf=1&nb=0&adurl=https://www.mongodb.com/lp/cloud/atlas/try3%3Futm_content%3Dgdn-ai%26utm_source%3Dgdn%26utm_campaign%3Ddisplay_gd_pl_evergreen_atlas_general_prosp_mad_emea-il_dev_desktop_eng_lead%26utm_term%3Dprospecting%26utm_medium%3Ddisplay%26utm_ad%3D%26utm_ad_campaign_id%3D23011410460%26adgroup%3D188811463121%26cq_cmp%3D23011410460%26gad_source%3D5%26gad_campaignid%3D23011410460%26gclid%3DCj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB
+                - generic [ref=f121e12]:
+                  - link [ref=f121e13] [cursor=pointer]:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CtWldz6XYafKXL66qnboP-KmLkA3Ph8GyhgHztr3lwRXB8Jjb1x0QASCm9tQDYPmS84OYEKABzcbXoQPIAQmoAwHIA8sEqgSUAk_QwRidHUjUcT2RcHq-qV9_85nxA45Xwm-bpYWn3vyPoZhBP6ksK6OsLZwHjwXrBKLqnXIK7YDQBN22ghpYe_atDGvfKdtvZ7rlopaNFdL_szF6nB52jsw-4jgkdDMN30s1iLGgxCvTIViccIJz7ai0XNJvhROkUE1M5D6Iq_TMYOYn2l2o8RBpMijRuBGMWbD9AkvrY7wj6ADmb_pWAolNsywi5qdySF-Wvm99GevDAXZrdaPMFjQYOimzA-1kulL0_QhrCm3_nQFBHAoSe8VGqK3GE8EsCSqAxiREEHM0Xk2OsCvMTPGRgs-7mqPPBEjrXjNnHI0xwnQqPjFYSvmfflo4XqJMAjzkUVgP9aws0Q7qq8AE0ZOpsL8FiAWchNncVZAGAaAGLoAHm7moXogHAZAHAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgHmuGxAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHANIIMwgAEAIYmgMyCICAgICAgIAIOhKf0ICAgIAEgMCAgICgqIACqAFIvf3BOljWitPA4OKTA7EJy8qhwparRi-ACgGYCwHICwGADAGqDQJJTMgNAeoNEwjjvtbA4OKTAxUuVUcBHfjUAtLwDQKIDgm4E-QD2BMM0BUByhYCCgD4FgGAFwGyFxAYASoKOTI1NjM3NzU2N1AGuhcCOAGqGBcJAAAAAFGeTkESCjkyNTYzNzc1NjcYAbIYBRguIgEA0BgB6BgBwhkCCAE&ae=1&gclid=Cj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB&num=1&cid=CAQS1wEABaugff7GzpopjQGnDJgMtDXz-dnTdNrZzXxGZzEExVV1DVRdLJQthwS642yUph-1K_Mr1Q0ZNLCwXNyRYL2idRq9NIEn0imsrY34377VfA1kgM80W4xpZ4QcyCb5TbFvZcwd8klcQbp7O6_jQ0ThVMeSDXJSBGJs5P-FFizvKm1wqtOMr_UI6QHICVVOg_W30edhEjZrmw87DwOUY42ZXmDq1BhwAYq4FzA6mv3MJyKUT0x9vQstQ1d2YK1HeGg0XO0IHJJzmv3Elp2a57ZFTj8uN7G2JBgB&sig=AOD64_2odT63xHBsLwUEXN_AWr0XhcpVxQ&client=ca-pub-8332396259212490&rf=1&nb=19&adurl=https://www.mongodb.com/lp/cloud/atlas/try3%3Futm_content%3Dgdn-ai%26utm_source%3Dgdn%26utm_campaign%3Ddisplay_gd_pl_evergreen_atlas_general_prosp_mad_emea-il_dev_desktop_eng_lead%26utm_term%3Dprospecting%26utm_medium%3Ddisplay%26utm_ad%3D%26utm_ad_campaign_id%3D23011410460%26adgroup%3D188811463121%26cq_cmp%3D23011410460%26gad_source%3D5%26gad_campaignid%3D23011410460%26gclid%3DCj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB
+                    - img [ref=f121e14]
+                  - link "MongoDB Atlas" [ref=f121e16] [cursor=pointer]:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CtWldz6XYafKXL66qnboP-KmLkA3Ph8GyhgHztr3lwRXB8Jjb1x0QASCm9tQDYPmS84OYEKABzcbXoQPIAQmoAwHIA8sEqgSUAk_QwRidHUjUcT2RcHq-qV9_85nxA45Xwm-bpYWn3vyPoZhBP6ksK6OsLZwHjwXrBKLqnXIK7YDQBN22ghpYe_atDGvfKdtvZ7rlopaNFdL_szF6nB52jsw-4jgkdDMN30s1iLGgxCvTIViccIJz7ai0XNJvhROkUE1M5D6Iq_TMYOYn2l2o8RBpMijRuBGMWbD9AkvrY7wj6ADmb_pWAolNsywi5qdySF-Wvm99GevDAXZrdaPMFjQYOimzA-1kulL0_QhrCm3_nQFBHAoSe8VGqK3GE8EsCSqAxiREEHM0Xk2OsCvMTPGRgs-7mqPPBEjrXjNnHI0xwnQqPjFYSvmfflo4XqJMAjzkUVgP9aws0Q7qq8AE0ZOpsL8FiAWchNncVZAGAaAGLoAHm7moXogHAZAHAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgHmuGxAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHANIIMwgAEAIYmgMyCICAgICAgIAIOhKf0ICAgIAEgMCAgICgqIACqAFIvf3BOljWitPA4OKTA7EJy8qhwparRi-ACgGYCwHICwGADAGqDQJJTMgNAeoNEwjjvtbA4OKTAxUuVUcBHfjUAtLwDQKIDgm4E-QD2BMM0BUByhYCCgD4FgGAFwGyFxAYASoKOTI1NjM3NzU2N1AGuhcCOAGqGBcJAAAAAFGeTkESCjkyNTYzNzc1NjcYAbIYBRguIgEA0BgB6BgBwhkCCAE&ae=1&gclid=Cj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB&num=1&cid=CAQS1wEABaugff7GzpopjQGnDJgMtDXz-dnTdNrZzXxGZzEExVV1DVRdLJQthwS642yUph-1K_Mr1Q0ZNLCwXNyRYL2idRq9NIEn0imsrY34377VfA1kgM80W4xpZ4QcyCb5TbFvZcwd8klcQbp7O6_jQ0ThVMeSDXJSBGJs5P-FFizvKm1wqtOMr_UI6QHICVVOg_W30edhEjZrmw87DwOUY42ZXmDq1BhwAYq4FzA6mv3MJyKUT0x9vQstQ1d2YK1HeGg0XO0IHJJzmv3Elp2a57ZFTj8uN7G2JBgB&sig=AOD64_2odT63xHBsLwUEXN_AWr0XhcpVxQ&client=ca-pub-8332396259212490&rf=1&nb=1&adurl=https://www.mongodb.com/lp/cloud/atlas/try3%3Futm_content%3Dgdn-ai%26utm_source%3Dgdn%26utm_campaign%3Ddisplay_gd_pl_evergreen_atlas_general_prosp_mad_emea-il_dev_desktop_eng_lead%26utm_term%3Dprospecting%26utm_medium%3Ddisplay%26utm_ad%3D%26utm_ad_campaign_id%3D23011410460%26adgroup%3D188811463121%26cq_cmp%3D23011410460%26gad_source%3D5%26gad_campaignid%3D23011410460%26gclid%3DCj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB
+                  - link "Open" [ref=f121e17] [cursor=pointer]:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CtWldz6XYafKXL66qnboP-KmLkA3Ph8GyhgHztr3lwRXB8Jjb1x0QASCm9tQDYPmS84OYEKABzcbXoQPIAQmoAwHIA8sEqgSUAk_QwRidHUjUcT2RcHq-qV9_85nxA45Xwm-bpYWn3vyPoZhBP6ksK6OsLZwHjwXrBKLqnXIK7YDQBN22ghpYe_atDGvfKdtvZ7rlopaNFdL_szF6nB52jsw-4jgkdDMN30s1iLGgxCvTIViccIJz7ai0XNJvhROkUE1M5D6Iq_TMYOYn2l2o8RBpMijRuBGMWbD9AkvrY7wj6ADmb_pWAolNsywi5qdySF-Wvm99GevDAXZrdaPMFjQYOimzA-1kulL0_QhrCm3_nQFBHAoSe8VGqK3GE8EsCSqAxiREEHM0Xk2OsCvMTPGRgs-7mqPPBEjrXjNnHI0xwnQqPjFYSvmfflo4XqJMAjzkUVgP9aws0Q7qq8AE0ZOpsL8FiAWchNncVZAGAaAGLoAHm7moXogHAZAHAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgHmuGxAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAtgHANIIMwgAEAIYmgMyCICAgICAgIAIOhKf0ICAgIAEgMCAgICgqIACqAFIvf3BOljWitPA4OKTA7EJy8qhwparRi-ACgGYCwHICwGADAGqDQJJTMgNAeoNEwjjvtbA4OKTAxUuVUcBHfjUAtLwDQKIDgm4E-QD2BMM0BUByhYCCgD4FgGAFwGyFxAYASoKOTI1NjM3NzU2N1AGuhcCOAGqGBcJAAAAAFGeTkESCjkyNTYzNzc1NjcYAbIYBRguIgEA0BgB6BgBwhkCCAE&ae=1&gclid=Cj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB&num=1&cid=CAQS1wEABaugff7GzpopjQGnDJgMtDXz-dnTdNrZzXxGZzEExVV1DVRdLJQthwS642yUph-1K_Mr1Q0ZNLCwXNyRYL2idRq9NIEn0imsrY34377VfA1kgM80W4xpZ4QcyCb5TbFvZcwd8klcQbp7O6_jQ0ThVMeSDXJSBGJs5P-FFizvKm1wqtOMr_UI6QHICVVOg_W30edhEjZrmw87DwOUY42ZXmDq1BhwAYq4FzA6mv3MJyKUT0x9vQstQ1d2YK1HeGg0XO0IHJJzmv3Elp2a57ZFTj8uN7G2JBgB&sig=AOD64_2odT63xHBsLwUEXN_AWr0XhcpVxQ&client=ca-pub-8332396259212490&rf=1&nb=8&adurl=https://www.mongodb.com/lp/cloud/atlas/try3%3Futm_content%3Dgdn-ai%26utm_source%3Dgdn%26utm_campaign%3Ddisplay_gd_pl_evergreen_atlas_general_prosp_mad_emea-il_dev_desktop_eng_lead%26utm_term%3Dprospecting%26utm_medium%3Ddisplay%26utm_ad%3D%26utm_ad_campaign_id%3D23011410460%26adgroup%3D188811463121%26cq_cmp%3D23011410460%26gad_source%3D5%26gad_campaignid%3D23011410460%26gclid%3DCj0KCQjwv-LOBhCdARIsAM5hdKcUvU177YvSb6SegfvtkEPYweEzfTuaDjCvhxWzzKZkyM6lArKJAn8aAgwDEALw_wcB
+                    - generic [ref=f121e19]: Open
+              - img [ref=f121e23] [cursor=pointer]
+              - button [ref=f121e25] [cursor=pointer]:
+                - img [ref=f121e26]
+              - iframe
+        - separator
+        - heading "New App Releases" [level=2] [ref=e179]
+        - generic [ref=e180]:
+          - article [ref=e181]:
+            - generic [ref=e182]
+          - article [ref=e257]:
+            - generic [ref=e258]
+          - article [ref=e329]:
+            - generic [ref=e330]
+          - article [ref=e413]:
+            - generic [ref=e414]
+          - article [ref=e500]:
+            - generic [ref=e501]
+          - article [ref=e585]:
+            - generic [ref=e586]
+          - article [ref=e656]:
+            - generic [ref=e657]
+        - link "More new app releases" [ref=e746] [cursor=pointer]:
+          - /url: /browse/new-apps/
+          - text: More new app releases
+          - img [ref=e747]
+        - separator
+        - heading "Interesting New Alternatives" [level=2] [ref=e749]
+        - generic [ref=e750]:
+          - generic [ref=e752]:
+            - generic [ref=e753]
+            - generic [ref=e758]
+          - generic [ref=e776]:
+            - generic [ref=e777]
+            - generic [ref=e782]
+          - generic [ref=e801]:
+            - generic [ref=e802]
+            - generic [ref=e808]
+        - separator
+        - insertion [ref=e827]
+        - separator
+        - heading "People are looking for alternatives to..." [level=2] [ref=e829]
+        - generic [ref=e830]:
+          - generic [ref=e831]:
+            - img "Netflix icon" [ref=e833]
+            - generic [ref=e834]
+          - generic [ref=e839]:
+            - img "Spotify icon" [ref=e841]
+            - generic [ref=e842]
+          - generic [ref=e847]:
+            - img "Adobe Photoshop icon" [ref=e849]
+            - generic [ref=e850]
+          - generic [ref=e855]:
+            - img "CapCut icon" [ref=e857]
+            - generic [ref=e858]
+          - generic [ref=e863]:
+            - img "Microsoft Word icon" [ref=e866]
+            - generic [ref=e867]
+          - generic [ref=e872]:
+            - img "ChatGPT icon" [ref=e874]
+            - generic [ref=e875]
+          - generic [ref=e880]:
+            - img "YouTube icon" [ref=e882]
+            - generic [ref=e883]
+          - generic [ref=e888]:
+            - img "Adobe Acrobat Reader icon" [ref=e890]
+            - generic [ref=e891]
+          - generic [ref=e896]:
+            - img "Canva icon" [ref=e898]
+            - generic [ref=e899]
+          - generic [ref=e904]:
+            - img "Adobe Premiere Pro icon" [ref=e906]
+            - generic [ref=e907]
+          - generic [ref=e912]:
+            - img "Autodesk AutoCAD icon" [ref=e915]
+            - generic [ref=e916]
+          - generic [ref=e921]:
+            - img "Microsoft Excel icon" [ref=e924]
+            - generic [ref=e925]
+          - generic [ref=e930]:
+            - img "Adobe Acrobat DC icon" [ref=e932]
+            - generic [ref=e933]
+          - generic [ref=e938]:
+            - img "Adobe Illustrator icon" [ref=e940]
+            - generic [ref=e941]
+          - generic [ref=e946]:
+            - img "Google Chrome icon" [ref=e949]
+            - generic [ref=e950]
+          - generic [ref=e955]:
+            - img "Crunchyroll icon" [ref=e958]
+            - generic [ref=e959]
+        - separator
+        - heading "More Tech News" [level=2] [ref=e964]
+        - generic [ref=e965]:
+          - generic [ref=e967]:
+            - link "Xbox is finally updating its Achievements system with visual improvements and new features image" [ref=e968] [cursor=pointer]:
+              - /url: /news/2026/4/xbox-is-finally-updating-its-achievements-system-with-visual-improvements-and-new-features/
+            - generic [ref=e972]
+            - link "Xbox is finally updating its Achievements system with visual improvements and new features" [ref=e983] [cursor=pointer]:
+              - /url: /news/2026/4/xbox-is-finally-updating-its-achievements-system-with-visual-improvements-and-new-features/
+          - generic [ref=e986]:
+            - link "Anthropic launches Mythos, a new cybersecurity model so powerful it is tightly restricted image" [ref=e987] [cursor=pointer]:
+              - /url: /news/2026/4/anthropic-launches-mythos-a-new-cybersecurity-model-so-powerful-it-is-tightly-restricted/
+            - generic [ref=e991]
+            - link "Anthropic launches Mythos, a new cybersecurity model so powerful it is tightly restricted" [ref=e1002] [cursor=pointer]:
+              - /url: /news/2026/4/anthropic-launches-mythos-a-new-cybersecurity-model-so-powerful-it-is-tightly-restricted/
+          - generic [ref=e1005]:
+            - link "Google Maps adds Gemini captions, photo suggestions & improved experience for contributors image" [ref=e1006] [cursor=pointer]:
+              - /url: /news/2026/4/google-maps-adds-gemini-captions-photo-suggestions-and-improved-experience-for-contributors/
+            - generic [ref=e1010]
+            - link "Google Maps adds Gemini captions, photo suggestions & improved experience for contributors" [ref=e1018] [cursor=pointer]:
+              - /url: /news/2026/4/google-maps-adds-gemini-captions-photo-suggestions-and-improved-experience-for-contributors/
+          - generic [ref=e1021]:
+            - link "Chrome finally brings vertical tabs and an immersive reading mode for better productivity image" [ref=e1022] [cursor=pointer]:
+              - /url: /news/2026/4/chrome-finally-brings-vertical-tabs-and-an-immersive-reading-mode-for-better-productivity/
+            - generic [ref=e1026]
+            - link "Chrome finally brings vertical tabs and an immersive reading mode for better productivity" [ref=e1037] [cursor=pointer]:
+              - /url: /news/2026/4/chrome-finally-brings-vertical-tabs-and-an-immersive-reading-mode-for-better-productivity/
+          - generic [ref=e1040]:
+            - link "Immich 2.7 adds duplicate resolution, editor shortcuts, new web actions, and much more image" [ref=e1041] [cursor=pointer]:
+              - /url: /news/2026/4/immich-2-7-adds-duplicate-resolution-editor-shortcuts-new-web-actions-and-much-more/
+            - generic [ref=e1045]
+            - link "Immich 2.7 adds duplicate resolution, editor shortcuts, new web actions, and much more" [ref=e1053] [cursor=pointer]:
+              - /url: /news/2026/4/immich-2-7-adds-duplicate-resolution-editor-shortcuts-new-web-actions-and-much-more/
+          - generic [ref=e1056]:
+            - link "PeaZip 11.0 boosts archive browsing, upgrades drag and drop & enhances fractional scaling image" [ref=e1057] [cursor=pointer]:
+              - /url: /news/2026/4/peazip-11-0-boosts-archive-browsing-upgrades-drag-and-drop-and-enhances-fractional-scaling/
+            - generic [ref=e1061]
+            - link "PeaZip 11.0 boosts archive browsing, upgrades drag and drop & enhances fractional scaling" [ref=e1072] [cursor=pointer]:
+              - /url: /news/2026/4/peazip-11-0-boosts-archive-browsing-upgrades-drag-and-drop-and-enhances-fractional-scaling/
+          - generic [ref=e1075]:
+            - link "DNS resolver Quad9 enables DNS over HTTP/3 and QUIC globally, expanding encrypted options image" [ref=e1076] [cursor=pointer]:
+              - /url: /news/2026/4/dns-resolver-quad9-enables-dns-over-http-3-and-quic-globally-expanding-encrypted-options/
+            - generic [ref=e1080]
+            - link "DNS resolver Quad9 enables DNS over HTTP/3 and QUIC globally, expanding encrypted options" [ref=e1088] [cursor=pointer]:
+              - /url: /news/2026/4/dns-resolver-quad9-enables-dns-over-http-3-and-quic-globally-expanding-encrypted-options/
+          - generic [ref=e1091]:
+            - link "Cloudflare and GoDaddy partner to help websites fight back against AI crawlers image" [ref=e1092] [cursor=pointer]:
+              - /url: /news/2026/4/cloudflare-and-godaddy-partner-to-help-websites-fight-back-against-ai-crawlers/
+            - generic [ref=e1096]
+            - link "Cloudflare and GoDaddy partner to help websites fight back against AI crawlers" [ref=e1107] [cursor=pointer]:
+              - /url: /news/2026/4/cloudflare-and-godaddy-partner-to-help-websites-fight-back-against-ai-crawlers/
+        - link "More tech news" [ref=e1110] [cursor=pointer]:
+          - /url: /news/all/
+          - text: More tech news
+          - img [ref=e1111]
+        - separator
+        - insertion [ref=e1115]
+        - separator
+        - heading "Crew Picks" [level=2] [ref=e1117]
+        - generic [ref=e1118]:
+          - article [ref=e1119]:
+            - generic [ref=e1120]
+          - article [ref=e1210]:
+            - generic [ref=e1211]
+          - article [ref=e1302]:
+            - generic [ref=e1303]
+          - article [ref=e1392]:
+            - generic [ref=e1393]
+          - article [ref=e1477]:
+            - generic [ref=e1478]
+          - article [ref=e1562]:
+            - generic [ref=e1563]
+        - link "More crew picks" [ref=e1670] [cursor=pointer]:
+          - /url: /lists/11/crew-picks/
+          - text: More crew picks
+          - img [ref=e1671]
+        - separator
+        - insertion [ref=e1675]
+        - separator
+        - heading "Most Viewed Apps" [level=2] [ref=e1677]
+        - generic [ref=e1678]:
+          - generic [ref=e1679]:
+            - img "Netflix icon" [ref=e1681]
+            - generic [ref=e1682]
+          - generic [ref=e1687]:
+            - img "Spotify icon" [ref=e1689]
+            - generic [ref=e1690]
+          - generic [ref=e1695]:
+            - img "YouTube icon" [ref=e1697]
+            - generic [ref=e1698]
+          - generic [ref=e1703]:
+            - img "Adobe Photoshop icon" [ref=e1705]
+            - generic [ref=e1706]
+          - generic [ref=e1711]:
+            - img "Stremio icon" [ref=e1713]
+            - generic [ref=e1714]
+          - generic [ref=e1719]:
+            - img "CapCut icon" [ref=e1721]
+            - generic [ref=e1722]
+          - generic [ref=e1727]:
+            - img "ChatGPT icon" [ref=e1729]
+            - generic [ref=e1730]
+          - generic [ref=e1735]:
+            - img "Google Messages icon" [ref=e1737]
+            - generic [ref=e1738]
+          - generic [ref=e1743]:
+            - img "Microsoft Word icon" [ref=e1746]
+            - generic [ref=e1747]
+          - generic [ref=e1752]:
+            - img "Canva icon" [ref=e1754]
+            - generic [ref=e1755]
+          - generic [ref=e1760]:
+            - img "Adobe Premiere Pro icon" [ref=e1762]
+            - generic [ref=e1763]
+          - generic [ref=e1768]:
+            - img "Adobe Acrobat Reader icon" [ref=e1770]
+            - generic [ref=e1771]
+          - generic [ref=e1776]:
+            - img "Z-Library icon" [ref=e1779]
+            - generic [ref=e1780]
+          - generic [ref=e1785]:
+            - img "Obsidian icon" [ref=e1787]
+            - generic [ref=e1788]
+          - generic [ref=e1793]:
+            - img "Samsung Messages icon" [ref=e1796]
+            - generic [ref=e1797]
+          - generic [ref=e1802]:
+            - img "FL Studio icon" [ref=e1805]
+            - generic [ref=e1806]
+          - generic [ref=e1811]:
+            - img "Autodesk AutoCAD icon" [ref=e1814]
+            - generic [ref=e1815]
+          - generic [ref=e1820]:
+            - img "Adobe Acrobat DC icon" [ref=e1822]
+            - generic [ref=e1823]
+          - generic [ref=e1828]:
+            - img "Mozilla Firefox icon" [ref=e1830]
+            - generic [ref=e1831]
+          - generic [ref=e1836]:
+            - img "Adobe Illustrator icon" [ref=e1838]
+            - generic [ref=e1839]
+        - link "All most viewed apps" [ref=e1845] [cursor=pointer]:
+          - /url: /browse/all/?sort=views
+          - text: All most viewed apps
+          - img [ref=e1846]
+        - separator
+        - heading "Recently updated apps" [level=2] [ref=e1848]
+        - generic [ref=e1849]:
+          - article [ref=e1850]:
+            - generic [ref=e1851]
+          - article [ref=e1942]:
+            - generic [ref=e1943]
+          - article [ref=e2067]:
+            - generic [ref=e2068]
+          - article [ref=e2173]:
+            - generic [ref=e2174]
+          - article [ref=e2292]:
+            - generic [ref=e2293]
+        - separator
+        - heading "Popular App Lists" [level=2] [ref=e2390]
+        - generic [ref=e2391]:
+          - generic [ref=e2393]:
+            - generic [ref=e2394]
+            - generic [ref=e2400]
+          - generic [ref=e2417]:
+            - generic [ref=e2418]
+            - generic [ref=e2424]
+          - generic [ref=e2444]:
+            - generic [ref=e2445]
+            - generic [ref=e2451]
+        - link "More user lists" [ref=e2467] [cursor=pointer]:
+          - /url: /lists/
+          - text: More user lists
+          - img [ref=e2468]
+        - separator
+        - heading "Recently Discontinued Apps" [level=2] [ref=e2470]
+        - generic [ref=e2471]:
+          - generic [ref=e2472]:
+            - img "Samsung Messages icon" [ref=e2475]
+            - generic [ref=e2476]
+          - generic [ref=e2497]:
+            - img "SaidIt.net icon" [ref=e2500]
+            - generic [ref=e2501]
+          - generic [ref=e2521]:
+            - img "Sora icon" [ref=e2524]
+            - generic [ref=e2525]
+          - generic [ref=e2546]:
+            - img "Digg icon" [ref=e2549]
+            - generic [ref=e2550]
+          - generic [ref=e2570]:
+            - img "Adobe Fill & Sign icon" [ref=e2573]
+            - generic [ref=e2574]
+          - generic [ref=e2595]:
+            - img "Hiren’s BootCD icon" [ref=e2598]
+            - generic [ref=e2599]
+          - generic [ref=e2616]:
+            - img "Cozy Cloud icon" [ref=e2618]
+            - generic [ref=e2619]
+          - generic [ref=e2639]:
+            - img "Simplenote icon" [ref=e2641]
+            - generic [ref=e2642]
+          - generic [ref=e2663]:
+            - img "Iridium Browser icon" [ref=e2665]
+            - generic [ref=e2666]
+          - generic [ref=e2682]:
+            - img "Hidden Bar icon" [ref=e2685]
+            - generic [ref=e2686]
+        - link "All recently discontinued apps" [ref=e2709] [cursor=pointer]:
+          - /url: /browse/recently-discontinued/
+          - text: All recently discontinued apps
+          - img [ref=e2710]
+        - generic [ref=e2712]:
+          - separator
+          - heading "Top Contributors" [level=2] [ref=e2713]
+          - generic [ref=e2714]:
+            - generic [ref=e2717]
+            - generic [ref=e2777]
+            - generic [ref=e2837]
+          - link "More user stats" [ref=e2896] [cursor=pointer]:
+            - /url: /community/
+            - text: More user stats
+            - img [ref=e2897]
+  - contentinfo [ref=e2899]:
+    - generic [ref=e2900]:
+      - img "AlternativeTo" [ref=e2901]
+      - generic [ref=e2902]:
+        - generic [ref=e2903]:
+          - paragraph [ref=e2904]: AlternativeTo is a free service that helps you find better alternatives to the products you love and hate.
+          - paragraph [ref=e2905]:
+            - text: The site is made by
+            - link "Ola" [ref=e2906] [cursor=pointer]:
+              - /url: /user/ola/
+            - text: and
+            - link "Markus" [ref=e2907] [cursor=pointer]:
+              - /url: /user/markus/
+            - text: in Sweden, with a lot of help from our friends and colleagues in Italy, Finland, USA, Colombia, Philippines, France and contributors from all over the world. That's right, all the lists of alternatives are crowd-sourced, and that's what makes the data powerful and relevant.
+          - paragraph [ref=e2908]:
+            - text: Feel free to send us your questions and feedback at
+            - link "hello@alternativeto.net" [ref=e2909] [cursor=pointer]:
+              - /url: mailto:hello@alternativeto.net
+            - text: ", on our"
+            - link "Discord" [ref=e2910] [cursor=pointer]:
+              - /url: https://discord.gg/VS45yNS
+            - text: or on our social media channels
+            - generic [ref=e2911]
+            - generic [ref=e2913]
+            - generic [ref=e2915]
+            - generic [ref=e2917]
+            - generic [ref=e2919]
+            - generic [ref=e2921]
+            - text: .
+        - list [ref=e2924]:
+          - listitem [ref=e2925]:
+            - link "FAQ" [ref=e2926] [cursor=pointer]:
+              - /url: /faq/
+          - listitem [ref=e2927]:
+            - link "Privacy Policy" [ref=e2928] [cursor=pointer]:
+              - /url: /about/privacy/
+          - listitem [ref=e2929]:
+            - link "Cookie Policy" [ref=e2930] [cursor=pointer]:
+              - /url: /about/cookie-policy/
+          - listitem [ref=e2931]:
+            - link "About AlternativeTo" [ref=e2932] [cursor=pointer]:
+              - /url: /about/
+          - listitem [ref=e2933]:
+            - link "Become a Partner" [ref=e2934] [cursor=pointer]:
+              - /url: mailto:partners@alternativeto.com
+      - generic [ref=e2935]:
+        - generic [ref=e2936]:
+          - link "Discord" [ref=e2937] [cursor=pointer]:
+            - /url: https://discord.gg/VS45yNS
+            - img [ref=e2938]
+          - link "X (Twitter)" [ref=e2940] [cursor=pointer]:
+            - /url: https://x.com/alternativeto
+            - img [ref=e2941]
+          - link "Mastodon" [ref=e2943] [cursor=pointer]:
+            - /url: https://mas.to/@alternativeto
+            - img [ref=e2944]
+          - link "Bluesky" [ref=e2946] [cursor=pointer]:
+            - /url: https://bsky.app/profile/alternativeto.net
+            - img [ref=e2947]
+          - link "Threads" [ref=e2949] [cursor=pointer]:
+            - /url: https://www.threads.com/@alternativetonet
+            - img [ref=e2950]
+          - link "Instagram" [ref=e2952] [cursor=pointer]:
+            - /url: https://www.instagram.com/alternativetonet/
+            - img [ref=e2953]
+          - link "LinkedIn" [ref=e2955] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/alternativeto/
+            - img [ref=e2956]
+        - generic [ref=e2958]:
+          - generic [ref=e2959]: © 27 Kilobyte AB
+          - generic [ref=e2960]: "|"
+          - generic [ref=e2961]: "Build: Docker_20260323.1 | Version: app-router"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - alert [ref=e2962]

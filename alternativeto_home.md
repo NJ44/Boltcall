@@ -1,0 +1,229 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e7]:
+        - link "AlternativeTo Logo AlternativeTo Logo Text" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "AlternativeTo Logo" [ref=e9]
+          - img "AlternativeTo Logo Text" [ref=e10]
+        - navigation [ref=e12]:
+          - link "NEW APP RELEASES" [ref=e13] [cursor=pointer]:
+            - /url: /browse/new-apps/
+          - generic [ref=e15]: "|"
+          - link "BROWSE ALL APPS" [ref=e16] [cursor=pointer]:
+            - /url: /browse/
+          - generic [ref=e18]: "|"
+          - link "TECH NEWS" [ref=e19] [cursor=pointer]:
+            - /url: /news/all/
+          - generic [ref=e21]: "|"
+          - link "LISTS" [ref=e22] [cursor=pointer]:
+            - /url: /lists/
+        - generic [ref=e23]:
+          - combobox "Search" [ref=e2672]
+          - generic [ref=e24]
+    - generic [ref=e31]:
+      - generic [ref=e34]:
+        - img "Just a cute robot" [ref=e35]
+        - generic [ref=e36]:
+          - heading "141,356 Apps & Software Alternatives - Ranked by 1,991,136 User Opinions" [level=3] [ref=e37]
+          - combobox "Search" [ref=e41]
+          - paragraph [ref=e50]
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - generic [ref=e55]
+          - generic [ref=e69]
+        - generic [ref=e88]:
+          - generic [ref=e90]
+          - generic [ref=e106]
+          - generic [ref=e122]
+          - generic [ref=e138]
+        - link "More tech news" [ref=e154] [cursor=pointer]:
+          - /url: /news/all/
+          - text: More tech news
+          - img [ref=e155]
+        - separator
+        - insertion [ref=e2680]:
+          - iframe [ref=e2682]:
+            
+        - separator
+        - heading "New App Releases" [level=2] [ref=e158]
+        - generic [ref=e159]:
+          - article [ref=e160]
+          - article [ref=e236]
+          - article [ref=e308]
+          - article [ref=e382]
+          - article [ref=e451]
+          - article [ref=e518]
+          - article [ref=e589]
+        - link "More new app releases" [ref=e661] [cursor=pointer]:
+          - /url: /browse/new-apps/
+          - text: More new app releases
+          - img [ref=e662]
+        - separator
+        - heading "Interesting New Alternatives" [level=2] [ref=e664]
+        - generic [ref=e665]:
+          - generic [ref=e667]
+          - generic [ref=e691]
+          - generic [ref=e716]
+        - separator
+        - insertion [ref=e2748]
+        - separator
+        - heading "People are looking for alternatives to..." [level=2] [ref=e741]
+        - generic [ref=e742]:
+          - generic [ref=e743]
+          - generic [ref=e751]
+          - generic [ref=e759]
+          - generic [ref=e767]
+          - generic [ref=e775]
+          - generic [ref=e784]
+          - generic [ref=e792]
+          - generic [ref=e800]
+          - generic [ref=e808]
+          - generic [ref=e816]
+          - generic [ref=e824]
+          - generic [ref=e833]
+          - generic [ref=e842]
+          - generic [ref=e850]
+          - generic [ref=e858]
+          - generic [ref=e867]
+        - separator
+        - heading "More Tech News" [level=2] [ref=e876]
+        - generic [ref=e877]:
+          - generic [ref=e879]
+          - generic [ref=e898]
+          - generic [ref=e917]
+          - generic [ref=e933]
+          - generic [ref=e952]
+          - generic [ref=e968]
+          - generic [ref=e987]
+          - generic [ref=e1003]
+        - link "More tech news" [ref=e1022] [cursor=pointer]:
+          - /url: /news/all/
+          - text: More tech news
+          - img [ref=e1023]
+        - separator
+        - insertion [ref=e2751]
+        - separator
+        - heading "Crew Picks" [level=2] [ref=e1026]
+        - generic [ref=e1027]:
+          - article [ref=e1028]
+          - article [ref=e1101]
+          - article [ref=e1175]
+          - article [ref=e1247]
+          - article [ref=e1314]
+          - article [ref=e1381]
+        - link "More crew picks" [ref=e1471] [cursor=pointer]:
+          - /url: /lists/11/crew-picks/
+          - text: More crew picks
+          - img [ref=e1472]
+        - separator
+        - insertion [ref=e2808]
+        - separator
+        - heading "Most Viewed Apps" [level=2] [ref=e1475]
+        - generic [ref=e1476]:
+          - generic [ref=e1477]
+          - generic [ref=e1485]
+          - generic [ref=e1493]
+          - generic [ref=e1501]
+          - generic [ref=e1509]
+          - generic [ref=e1517]
+          - generic [ref=e1525]
+          - generic [ref=e1533]
+          - generic [ref=e1541]
+          - generic [ref=e1550]
+          - generic [ref=e1558]
+          - generic [ref=e1566]
+          - generic [ref=e1574]
+          - generic [ref=e1583]
+          - generic [ref=e1591]
+          - generic [ref=e1600]
+          - generic [ref=e1609]
+          - generic [ref=e1618]
+          - generic [ref=e1626]
+          - generic [ref=e1634]
+        - link "All most viewed apps" [ref=e1643] [cursor=pointer]:
+          - /url: /browse/all/?sort=views
+          - text: All most viewed apps
+          - img [ref=e1644]
+        - separator
+        - heading "Recently updated apps" [level=2] [ref=e1646]
+        - generic [ref=e1647]:
+          - article [ref=e1648]
+          - article [ref=e1722]
+          - article [ref=e1829]
+          - article [ref=e1917]
+          - article [ref=e2018]
+        - separator
+        - heading "Popular App Lists" [level=2] [ref=e2098]
+        - generic [ref=e2099]:
+          - generic [ref=e2101]
+          - generic [ref=e2125]
+          - generic [ref=e2152]
+        - link "More user lists" [ref=e2175] [cursor=pointer]:
+          - /url: /lists/
+          - text: More user lists
+          - img [ref=e2176]
+        - separator
+        - heading "Recently Discontinued Apps" [level=2] [ref=e2178]
+        - generic [ref=e2179]:
+          - generic [ref=e2180]
+          - generic [ref=e2205]
+          - generic [ref=e2229]
+          - generic [ref=e2254]
+          - generic [ref=e2278]
+          - generic [ref=e2303]
+          - generic [ref=e2324]
+          - generic [ref=e2347]
+          - generic [ref=e2371]
+          - generic [ref=e2390]
+        - link "All recently discontinued apps" [ref=e2417] [cursor=pointer]:
+          - /url: /browse/recently-discontinued/
+          - text: All recently discontinued apps
+          - img [ref=e2418]
+        - generic [ref=e2420]:
+          - separator
+          - heading "Top Contributors" [level=2] [ref=e2421]
+          - generic [ref=e2422]
+          - link "More user stats" [ref=e2604] [cursor=pointer]:
+            - /url: /community/
+  - contentinfo [ref=e2607]:
+    - generic [ref=e2608]:
+      - img "AlternativeTo" [ref=e2609]
+      - generic [ref=e2610]:
+        - generic [ref=e2611]:
+          - paragraph [ref=e2612]: AlternativeTo is a free service that helps you find better alternatives to the products you love and hate.
+          - paragraph [ref=e2613]
+          - paragraph [ref=e2616]
+        - list [ref=e2632]:
+          - listitem [ref=e2633]
+          - listitem [ref=e2635]
+          - listitem [ref=e2637]
+          - listitem [ref=e2639]
+          - listitem [ref=e2641]
+      - generic [ref=e2643]:
+        - generic [ref=e2644]:
+          - link "Discord" [ref=e2645] [cursor=pointer]:
+            - /url: https://discord.gg/VS45yNS
+          - link "X (Twitter)" [ref=e2648] [cursor=pointer]:
+            - /url: https://x.com/alternativeto
+          - link "Mastodon" [ref=e2651] [cursor=pointer]:
+            - /url: https://mas.to/@alternativeto
+          - link "Bluesky" [ref=e2654] [cursor=pointer]:
+            - /url: https://bsky.app/profile/alternativeto.net
+          - link "Threads" [ref=e2657] [cursor=pointer]:
+            - /url: https://www.threads.com/@alternativetonet
+          - link "Instagram" [ref=e2660] [cursor=pointer]:
+            - /url: https://www.instagram.com/alternativetonet/
+          - link "LinkedIn" [ref=e2663] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/alternativeto/
+        - generic [ref=e2666]:
+          - generic [ref=e2667]: © 27 Kilobyte AB
+          - generic [ref=e2668]: "|"
+          - generic [ref=e2669]: "Build: Docker_20260323.1 | Version: app-router"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - alert [ref=e2864]

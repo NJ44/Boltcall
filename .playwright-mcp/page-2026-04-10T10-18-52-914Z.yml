@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#page-container"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation [ref=e5]:
+        - link "Crunchbase | Knowledge Center Help Center home page" [ref=e6] [cursor=pointer]:
+          - /url: /hc/en-us
+          - img "Crunchbase | Knowledge Center Help Center home page" [ref=e7]
+        - list [ref=e8]:
+          - listitem [ref=e9]:
+            - link "Back to website" [ref=e10] [cursor=pointer]:
+              - /url: https://www.crunchbase.com/
+          - listitem [ref=e11]:
+            - link "Community" [ref=e12] [cursor=pointer]:
+              - /url: /hc/en-us/community/topics
+          - listitem [ref=e13]:
+            - button "Sign in" [ref=e14] [cursor=pointer]
+    - main [ref=e15]:
+      - generic [ref=e16]:
+        - heading "oops" [level=1] [ref=e17]
+        - heading "The page you were looking for doesn't exist" [level=2] [ref=e18]
+        - paragraph [ref=e19]: You may have mistyped the address or the page may have moved
+        - link "Take me back to the home page" [ref=e20] [cursor=pointer]:
+          - /url: /hc/en-us
+    - contentinfo [ref=e21]:
+      - navigation [ref=e23]:
+        - link "Crunchbase | Knowledge Center" [ref=e24] [cursor=pointer]:
+          - /url: /hc/en-us
+        - listitem [ref=e25]:
+          - link "Terms of Service" [ref=e26] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/terms-of-service/
+        - listitem [ref=e27]:
+          - link "Privacy Policy" [ref=e28] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+        - listitem [ref=e29]:
+          - link "News" [ref=e30] [cursor=pointer]:
+            - /url: https://news.crunchbase.com/
+        - listitem [ref=e31]:
+          - link "Blog" [ref=e32] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/blog/
+        - link [ref=e33] [cursor=pointer]:
+          - /url: https://www.facebook.com/crunchbase/
+          - img [ref=e34]
+        - link [ref=e36] [cursor=pointer]:
+          - /url: https://twitter.com/crunchbase
+          - img [ref=e37]
+        - link [ref=e39] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/crunchbase
+          - img [ref=e40]

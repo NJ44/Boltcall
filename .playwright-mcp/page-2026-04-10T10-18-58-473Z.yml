@@ -1,0 +1,424 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#page-container"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation [ref=e5]:
+        - link "Crunchbase | Knowledge Center Help Center home page" [ref=e6] [cursor=pointer]:
+          - /url: /hc/en-us
+          - img "Crunchbase | Knowledge Center Help Center home page" [ref=e7]
+        - list [ref=e8]:
+          - listitem [ref=e9]:
+            - link "Back to website" [ref=e10] [cursor=pointer]:
+              - /url: https://www.crunchbase.com/
+          - listitem [ref=e11]:
+            - link "Community" [ref=e12] [cursor=pointer]:
+              - /url: /hc/en-us/community/topics
+          - listitem [ref=e13]:
+            - button "Sign in" [ref=e14] [cursor=pointer]
+    - main [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - navigation [ref=e18]:
+            - list [ref=e19]:
+              - listitem "Crunchbase | Knowledge Center" [ref=e20]:
+                - link "Crunchbase | Knowledge Center" [ref=e21] [cursor=pointer]:
+                  - /url: /hc/en-us
+              - listitem "Search results" [ref=e22]: / Search results
+          - generic [ref=e24]:
+            - heading "Search" [level=2] [ref=e25]
+            - search [ref=e26]:
+              - searchbox "Search here" [ref=e27]: add new organization
+            - img [ref=e28]
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - heading "171 results for \"add new organization\"" [level=1] [ref=e34]
+            - list [ref=e35]:
+              - listitem [ref=e36]:
+                - heading "Adding a Sub-Organization 20" [level=3] [ref=e37]:
+                  - link "Adding a Sub-Organization" [ref=e38] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwhFJgLTUwA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJcaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzM2MDAyMjQxOTAxMy1BZGRpbmctYS1TdWItT3JnYW5pemF0aW9uBjsIVDoOc2VhcmNoX2lkSSIpYmZkNzZlZTktYjA2MS00OGZiLWE4ZjktZmU0MzEyZWQyZmRmBjsIRjoJcmFua2kGOgtsb2NhbGVJIgplbi11cwY7CFQ6CnF1ZXJ5SSIZYWRkIG5ldyBvcmdhbml6YXRpb24GOwhUOhJyZXN1bHRzX2NvdW50aQGr--cc9290cb9c5c7ceb785dcf4569122e0729444f06
+                  - generic [ref=e39]:
+                    - img [ref=e40]
+                    - text: "20"
+                - list [ref=e44]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e45]:
+                    - link "Crunchbase | Knowledge Center" [ref=e46] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e47]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e48] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Edit Profiles" [ref=e49]:
+                    - text: /
+                    - link "Edit Profiles" [ref=e50] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115002796948-Edit-Profiles
+                - paragraph [ref=e51]:
+                  - text: To
+                  - emphasis [ref=e52]: add
+                  - text: a sub-
+                  - emphasis [ref=e53]: organization
+                  - text: to a company profile To
+                  - emphasis [ref=e54]: add
+                  - text: a sub-
+                  - emphasis [ref=e55]: organization
+                  - text: to a company profile, you must start from the parent
+                - list [ref=e56]:
+                  - listitem [ref=e57]:
+                    - link "Crunchbase Staff" [ref=e58] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e59]:
+                    - text: ·
+                    - time [ref=e60]: April 30, 2019 at 2:29 AM
+              - listitem [ref=e61]:
+                - heading "How do I add a LGBTQ+ led and/or founded tag to my company profile? 2" [level=3] [ref=e62]:
+                  - link "How do I add a LGBTQ+ led and/or founded tag to my company profile?" [ref=e63] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwiTQundXQ86D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSIBgWh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9hcnRpY2xlcy8xNjg5NTgyOTQyNjgzNS1Ib3ctZG8tSS1hZGQtYS1MR0JUUS1sZWQtYW5kLW9yLWZvdW5kZWQtdGFnLXRvLW15LWNvbXBhbnktcHJvZmlsZQY7CFQ6DnNlYXJjaF9pZEkiKWJmZDc2ZWU5LWIwNjEtNDhmYi1hOGY5LWZlNDMxMmVkMmZkZgY7CEY6CXJhbmtpBzoLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiGWFkZCBuZXcgb3JnYW5pemF0aW9uBjsIVDoScmVzdWx0c19jb3VudGkBqw%3D%3D--766083106ddc6a83bc5a4c4008457cb89c9b478c
+                  - generic [ref=e64]:
+                    - img [ref=e65]
+                    - text: "2"
+                - list [ref=e69]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e70]:
+                    - link "Crunchbase | Knowledge Center" [ref=e71] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e72]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e73] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Diversity Spotlight Data" [ref=e74]:
+                    - text: /
+                    - link "Diversity Spotlight Data" [ref=e75] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/23492235485587-Diversity-Spotlight-Data
+                - paragraph [ref=e76]:
+                  - text: be able to
+                  - emphasis [ref=e77]: add
+                  - text: an LGBTQ+ tag to their
+                  - emphasis [ref=e78]: organization
+                  - text: profile on Crunchbase. Instead, we accept requests to
+                  - emphasis [ref=e79]: add
+                  - text: a LGBTQ+ tag
+                - list [ref=e80]:
+                  - listitem [ref=e81]:
+                    - link "Erika" [ref=e82] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/378929566554-Erika
+                  - listitem [ref=e83]:
+                    - text: ·
+                    - time [ref=e84]: May 23, 2023 at 8:08 PM
+              - listitem [ref=e85]:
+                - heading "Add a Job to a Person Profile 30" [level=3] [ref=e86]:
+                  - link "Add a Job to a Person Profile" [ref=e87] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgM2lPHGgA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJgaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzExNTAxMzMxMDk4OC1BZGQtYS1Kb2ItdG8tYS1QZXJzb24tUHJvZmlsZQY7CFQ6DnNlYXJjaF9pZEkiKWJmZDc2ZWU5LWIwNjEtNDhmYi1hOGY5LWZlNDMxMmVkMmZkZgY7CEY6CXJhbmtpCDoLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiGWFkZCBuZXcgb3JnYW5pemF0aW9uBjsIVDoScmVzdWx0c19jb3VudGkBqw%3D%3D--19116b06e0fce5c41cbb014461f3a7e7d8698943
+                  - generic [ref=e88]:
+                    - img [ref=e89]
+                    - text: "30"
+                - list [ref=e93]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e94]:
+                    - link "Crunchbase | Knowledge Center" [ref=e95] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e96]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e97] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Edit Profiles" [ref=e98]:
+                    - text: /
+                    - link "Edit Profiles" [ref=e99] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115002796948-Edit-Profiles
+                - paragraph [ref=e100]:
+                  - text: profile for the
+                  - emphasis [ref=e101]: organization
+                  - text: you’re looking for, you can
+                  - emphasis [ref=e102]: add
+                  - text: one for it by clicking Create
+                  - emphasis [ref=e103]: New Organization
+                  - text: . Enter the
+                - list [ref=e104]:
+                  - listitem [ref=e105]:
+                    - link "Crunchbase Staff" [ref=e106] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e107]:
+                    - text: ·
+                    - time [ref=e108]: October 7, 2017 at 9:33 PM
+              - listitem [ref=e109]:
+                - heading "Adding an Acquisition -3" [level=3] [ref=e110]:
+                  - link "Adding an Acquisition" [ref=e111] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwh0csTRUwA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJYaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzM2MDAwMTU5ODA2OC1BZGRpbmctYW4tQWNxdWlzaXRpb24GOwhUOg5zZWFyY2hfaWRJIiliZmQ3NmVlOS1iMDYxLTQ4ZmItYThmOS1mZTQzMTJlZDJmZGYGOwhGOglyYW5raQk6C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhlhZGQgbmV3IG9yZ2FuaXphdGlvbgY7CFQ6EnJlc3VsdHNfY291bnRpAas%3D--62efad808adae84f22f8cdf7fe64c6544a1f23fe
+                  - generic [ref=e112]:
+                    - img [ref=e113]
+                    - text: "-3"
+                - list [ref=e117]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e118]:
+                    - link "Crunchbase | Knowledge Center" [ref=e119] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e120]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e121] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Edit Profiles" [ref=e122]:
+                    - text: /
+                    - link "Edit Profiles" [ref=e123] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115002796948-Edit-Profiles
+                - paragraph [ref=e124]:
+                  - text: create a
+                  - emphasis [ref=e125]: new
+                  - text: profile from the same page by selecting Create
+                  - emphasis [ref=e126]: New
+                  - emphasis [ref=e127]: Organization
+                  - text: . This will lead you to the Edit
+                  - emphasis [ref=e128]: New
+                  - text: Organization
+                - list [ref=e129]:
+                  - listitem [ref=e130]:
+                    - link "Crunchbase Staff" [ref=e131] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e132]:
+                    - text: ·
+                    - time [ref=e133]: June 26, 2018 at 8:38 PM
+              - listitem [ref=e134]:
+                - heading "LGBTQ+ Diversity Tags" [level=3] [ref=e135]:
+                  - link "LGBTQ+ Diversity Tags" [ref=e136] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwiT53HJgBg6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJZaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzI2OTQxNDE0NTY1Nzc5LUxHQlRRLURpdmVyc2l0eS1UYWdzBjsIVDoOc2VhcmNoX2lkSSIpYmZkNzZlZTktYjA2MS00OGZiLWE4ZjktZmU0MzEyZWQyZmRmBjsIRjoJcmFua2kKOgtsb2NhbGVJIgplbi11cwY7CFQ6CnF1ZXJ5SSIZYWRkIG5ldyBvcmdhbml6YXRpb24GOwhUOhJyZXN1bHRzX2NvdW50aQGr--9606d5d4f46769b2342a7242df5102d10d88aad2
+                - list [ref=e137]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e138]:
+                    - link "Crunchbase | Knowledge Center" [ref=e139] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Crunchbase Business" [ref=e140]:
+                    - text: /
+                    - link "Crunchbase Business" [ref=e141] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/4404841455891-Crunchbase-Business
+                  - listitem "New Features" [ref=e142]:
+                    - text: /
+                    - link "New Features" [ref=e143] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/25254028808083-New-Features
+                - paragraph [ref=e144]:
+                  - text: be able to
+                  - emphasis [ref=e145]: add
+                  - text: an LGBTQ+ tag to their
+                  - emphasis [ref=e146]: organization
+                  - text: profile on Crunchbase. Instead, we accept requests to
+                  - emphasis [ref=e147]: add
+                  - text: a LGBTQ+ tag
+                - list [ref=e148]:
+                  - listitem [ref=e149]:
+                    - link "Erika" [ref=e150] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/378929566554-Erika
+                  - listitem [ref=e151]:
+                    - text: ·
+                    - time [ref=e152]: March 1, 2024 at 9:40 PM
+              - listitem [ref=e153]:
+                - heading "How do I create a Crunchbase profile? 280" [level=3] [ref=e154]:
+                  - link "How do I create a Crunchbase profile?" [ref=e155] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwh0KT3HGgA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJnaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzExNTAxMTgyMzk4OC1Ib3ctZG8tSS1jcmVhdGUtYS1DcnVuY2hiYXNlLXByb2ZpbGUGOwhUOg5zZWFyY2hfaWRJIiliZmQ3NmVlOS1iMDYxLTQ4ZmItYThmOS1mZTQzMTJlZDJmZGYGOwhGOglyYW5raQs6C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhlhZGQgbmV3IG9yZ2FuaXphdGlvbgY7CFQ6EnJlc3VsdHNfY291bnRpAas%3D--488b72b09c00d83f1e296481bfeb7041d0e797ee
+                  - generic [ref=e156]:
+                    - img [ref=e157]
+                    - text: "280"
+                - list [ref=e161]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e162]:
+                    - link "Crunchbase | Knowledge Center" [ref=e163] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e164]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e165] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Contribute Data" [ref=e166]:
+                    - text: /
+                    - link "Contribute Data" [ref=e167] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115003224627-Contribute-Data
+                - paragraph [ref=e168]:
+                  - text: Crunchbase, any registered and socially authenticated user can
+                  - emphasis [ref=e169]: add
+                  - text: a profile page. Before you begin, use our search function
+                - list [ref=e170]:
+                  - listitem [ref=e171]:
+                    - link "Crunchbase Staff" [ref=e172] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e173]:
+                    - text: ·
+                    - time [ref=e174]: August 19, 2017 at 1:16 AM
+              - listitem [ref=e175]:
+                - heading "Adding Investors to a Funding Round -6" [level=3] [ref=e176]:
+                  - link "Adding Investors to a Funding Round" [ref=e177] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwjx5FvSUwA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJmaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzM2MDAxMTUyMzMxMy1BZGRpbmctSW52ZXN0b3JzLXRvLWEtRnVuZGluZy1Sb3VuZAY7CFQ6DnNlYXJjaF9pZEkiKWJmZDc2ZWU5LWIwNjEtNDhmYi1hOGY5LWZlNDMxMmVkMmZkZgY7CEY6CXJhbmtpDDoLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiGWFkZCBuZXcgb3JnYW5pemF0aW9uBjsIVDoScmVzdWx0c19jb3VudGkBqw%3D%3D--8b775a5450fae8fa37799028f78e14a18ba97047
+                  - generic [ref=e178]:
+                    - img [ref=e179]
+                    - text: "-6"
+                - list [ref=e183]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e184]:
+                    - link "Crunchbase | Knowledge Center" [ref=e185] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e186]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e187] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Edit Profiles" [ref=e188]:
+                    - text: /
+                    - link "Edit Profiles" [ref=e189] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115002796948-Edit-Profiles
+                - paragraph [ref=e190]:
+                  - text: you do not need to click Create
+                  - emphasis [ref=e191]: New
+                  - text: Investment on the Edit
+                  - emphasis [ref=e192]: New
+                  - emphasis [ref=e193]: Organization
+                  - text: or Edit
+                  - emphasis [ref=e194]: New
+                  - text: Person page as the original investment
+                - list [ref=e195]:
+                  - listitem [ref=e196]:
+                    - link "Crunchbase Staff" [ref=e197] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e198]:
+                    - text: ·
+                    - time [ref=e199]: October 31, 2018 at 1:58 AM
+              - listitem [ref=e200]:
+                - heading "Add an Event to a Profile 9" [level=3] [ref=e201]:
+                  - link "Add an Event to a Profile" [ref=e202] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwjoRD%2FHGgA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJcaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzExNTAxMTk2MjA4OC1BZGQtYW4tRXZlbnQtdG8tYS1Qcm9maWxlBjsIVDoOc2VhcmNoX2lkSSIpYmZkNzZlZTktYjA2MS00OGZiLWE4ZjktZmU0MzEyZWQyZmRmBjsIRjoJcmFua2kNOgtsb2NhbGVJIgplbi11cwY7CFQ6CnF1ZXJ5SSIZYWRkIG5ldyBvcmdhbml6YXRpb24GOwhUOhJyZXN1bHRzX2NvdW50aQGr--5dcc33f297262cf7311e8d09da73543778688161
+                  - generic [ref=e203]:
+                    - img [ref=e204]
+                    - text: "9"
+                - list [ref=e208]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e209]:
+                    - link "Crunchbase | Knowledge Center" [ref=e210] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e211]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e212] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Edit Profiles" [ref=e213]:
+                    - text: /
+                    - link "Edit Profiles" [ref=e214] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115002796948-Edit-Profiles
+                - paragraph [ref=e215]:
+                  - text: not need to click Create
+                  - emphasis [ref=e216]: New
+                  - text: Event on the
+                  - emphasis [ref=e217]: new
+                  - text: profile to
+                  - emphasis [ref=e218]: add
+                  - text: the event you originally intended to
+                  - emphasis [ref=e219]: add
+                  - text: . The event will already
+                - list [ref=e220]:
+                  - listitem [ref=e221]:
+                    - link "Crunchbase Staff" [ref=e222] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e223]:
+                    - text: ·
+                    - time [ref=e224]: August 23, 2017 at 8:48 PM
+              - listitem [ref=e225]:
+                - heading "Having trouble adding a news article 9" [level=3] [ref=e226]:
+                  - link "Having trouble adding a news article" [ref=e227] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwh5wD7SUwA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJnaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzM2MDAwOTYxMzQzMy1IYXZpbmctdHJvdWJsZS1hZGRpbmctYS1uZXdzLWFydGljbGUGOwhUOg5zZWFyY2hfaWRJIiliZmQ3NmVlOS1iMDYxLTQ4ZmItYThmOS1mZTQzMTJlZDJmZGYGOwhGOglyYW5raQ46C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhlhZGQgbmV3IG9yZ2FuaXphdGlvbgY7CFQ6EnJlc3VsdHNfY291bnRpAas%3D--b2b43a1eb87fbb9f0c84091d89c7947757caea5a
+                  - generic [ref=e228]:
+                    - img [ref=e229]
+                    - text: "9"
+                - list [ref=e233]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e234]:
+                    - link "Crunchbase | Knowledge Center" [ref=e235] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e236]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e237] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Edit Profiles" [ref=e238]:
+                    - text: /
+                    - link "Edit Profiles" [ref=e239] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115002796948-Edit-Profiles
+                - paragraph [ref=e240]:
+                  - text: types of
+                  - emphasis [ref=e241]: news
+                  - text: "articles that we recommend adding to your profile include: Press releases from"
+                  - emphasis [ref=e242]: news
+                  - text: sites
+                  - emphasis [ref=e243]: News
+                  - text: articles
+                - list [ref=e244]:
+                  - listitem [ref=e245]:
+                    - link "Crunchbase Staff" [ref=e246] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e247]:
+                    - text: ·
+                    - time [ref=e248]: September 21, 2018 at 12:33 AM
+              - listitem [ref=e249]:
+                - heading "Create an Event 34" [level=3] [ref=e250]:
+                  - link "Create an Event" [ref=e251] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwisRD%2FHGgA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJSaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzExNTAxMTk2MjAyOC1DcmVhdGUtYW4tRXZlbnQGOwhUOg5zZWFyY2hfaWRJIiliZmQ3NmVlOS1iMDYxLTQ4ZmItYThmOS1mZTQzMTJlZDJmZGYGOwhGOglyYW5raQ86C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhlhZGQgbmV3IG9yZ2FuaXphdGlvbgY7CFQ6EnJlc3VsdHNfY291bnRpAas%3D--f9909177a6ff52307b7cc54965fffb155171507f
+                  - generic [ref=e252]:
+                    - img [ref=e253]
+                    - text: "34"
+                - list [ref=e257]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e258]:
+                    - link "Crunchbase | Knowledge Center" [ref=e259] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e260]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e261] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Contribute Data" [ref=e262]:
+                    - text: /
+                    - link "Contribute Data" [ref=e263] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115003224627-Contribute-Data
+                - paragraph [ref=e264]:
+                  - text: Create
+                  - emphasis [ref=e265]: New
+                  - text: Appearance. This will take you to the Edit
+                  - emphasis [ref=e266]: New
+                  - text: Appearance page where you can search for the
+                  - emphasis [ref=e267]: organization
+                  - text: or person
+                - list [ref=e268]:
+                  - listitem [ref=e269]:
+                    - link "Crunchbase Staff" [ref=e270] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e271]:
+                    - text: ·
+                    - time [ref=e272]: August 23, 2017 at 8:47 PM
+            - navigation "Pagination" [ref=e273]:
+              - list [ref=e274]:
+                - listitem [ref=e275]:
+                  - link "Next" [ref=e276] [cursor=pointer]:
+                    - /url: /hc/en-us/search?page=2&query=add+new+organization&utf8=%E2%9C%93#results
+                    - text: Next ›
+                - listitem [ref=e277]:
+                  - link "Last" [ref=e278] [cursor=pointer]:
+                    - /url: /hc/en-us/search?page=18&query=add+new+organization&utf8=%E2%9C%93#results
+                    - generic [ref=e279]: Last
+                    - text: »
+          - complementary [ref=e280]:
+            - generic [ref=e281]:
+              - heading "By Type" [level=3] [ref=e282]
+              - list [ref=e284]:
+                - listitem [ref=e285]:
+                  - link "All types (171)" [ref=e286] [cursor=pointer]:
+                    - /url: /hc/en-us/search?query=add+new+organization&utf8=%E2%9C%93
+                - listitem [ref=e287]:
+                  - link "Articles (110)" [ref=e288] [cursor=pointer]:
+                    - /url: /hc/en-us/search?filter_by=knowledge_base&query=add+new+organization&utf8=%E2%9C%93
+                - listitem [ref=e289]:
+                  - link "Community (61)" [ref=e290] [cursor=pointer]:
+                    - /url: /hc/en-us/search?filter_by=community&query=add+new+organization&utf8=%E2%9C%93
+    - contentinfo [ref=e291]:
+      - navigation [ref=e293]:
+        - link "Crunchbase | Knowledge Center" [ref=e294] [cursor=pointer]:
+          - /url: /hc/en-us
+        - listitem [ref=e295]:
+          - link "Terms of Service" [ref=e296] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/terms-of-service/
+        - listitem [ref=e297]:
+          - link "Privacy Policy" [ref=e298] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+        - listitem [ref=e299]:
+          - link "News" [ref=e300] [cursor=pointer]:
+            - /url: https://news.crunchbase.com/
+        - listitem [ref=e301]:
+          - link "Blog" [ref=e302] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/blog/
+        - link [ref=e303] [cursor=pointer]:
+          - /url: https://www.facebook.com/crunchbase/
+          - img [ref=e304]
+        - link [ref=e306] [cursor=pointer]:
+          - /url: https://twitter.com/crunchbase
+          - img [ref=e307]
+        - link [ref=e309] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/crunchbase
+          - img [ref=e310]

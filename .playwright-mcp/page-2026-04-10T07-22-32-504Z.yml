@@ -1,0 +1,272 @@
+- generic [ref=e1]:
+  - main [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e7]:
+        - link "AlternativeTo Logo AlternativeTo Logo Text" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "AlternativeTo Logo" [ref=e9]
+          - img "AlternativeTo Logo Text" [ref=e10]
+        - navigation [ref=e12]:
+          - link "NEW APP RELEASES" [ref=e13] [cursor=pointer]:
+            - /url: /browse/new-apps/
+            - generic [ref=e14]: NEW APP RELEASES
+          - generic [ref=e15]: "|"
+          - link "BROWSE ALL APPS" [ref=e16] [cursor=pointer]:
+            - /url: /browse/
+            - generic [ref=e17]: BROWSE ALL APPS
+          - generic [ref=e18]: "|"
+          - link "TECH NEWS" [ref=e19] [cursor=pointer]:
+            - /url: /news/all/
+            - generic [ref=e20]: TECH NEWS
+          - generic [ref=e21]: "|"
+          - link "LISTS" [ref=e22] [cursor=pointer]:
+            - /url: /lists/
+        - generic [ref=e23]:
+          - combobox "Search" [ref=e26]:
+            - generic [ref=e28]:
+              - searchbox "Search" [active] [ref=e29]
+              - button "Submit search" [ref=e30] [cursor=pointer]:
+                - img [ref=e31]
+          - generic [ref=e33]:
+            - link "Sign In" [ref=e35] [cursor=pointer]:
+              - /url: /api/auth/login
+            - button "Open page menu" [ref=e37] [cursor=pointer]:
+              - img [ref=e38]
+    - generic [ref=e40]:
+      - navigation "Breadcrumb" [ref=e43]:
+        - list [ref=e44]:
+          - listitem [ref=e45]:
+            - link "Home" [ref=e46] [cursor=pointer]:
+              - /url: /
+            - text: ►
+          - listitem [ref=e47]: Search result
+      - generic [ref=e48]:
+        - 'heading "Search Result: boltcall" [level=1] [ref=e50]'
+        - insertion [ref=e54]:
+          - iframe [ref=e300]:
+            - generic [active] [ref=f55e1]:
+              - generic [ref=f55e6]:
+                - generic [ref=f55e7]:
+                  - generic "Heywise" [ref=f55e9]:
+                    - link "Your Personal Aesthetic - Test" [ref=f55e10] [cursor=pointer]:
+                      - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CiE0DlaPYaZbkCtOK77MPpMq1uQLp-rixhgHG3Ynh-g6qp8z3kQ4QASCm9tQDYPmS84OYEKAB54L0_gLIAQGpAqSHsQocRag-qAMByAPLBKoEqAJP0KnDZeaM54ElG6VSS1sOKZldZjCBmND06wEN0hXQrdb0LCbOf9mwrFhUy7HzzM7N1uA7BuBlLL42Nj6t0E_3BY3nFmdKVv002EfRuYD1IB-nSdJWDUK6wQrcLmf0Cth0Ao0hSUtsuIcgjLL6tAPkIO2trB-UBl_WhqVu-WNfeRHK3qUjMG3j6IG4nqU7-8kCK4u9voE8724T8-DvRosJ8H7hK9ZAl9KM-6rGlzXDdhFiNdPwNMuZsDIo5ODaYiKnJ4NcfIBfK8LKKRkruoNqAd_B7Yq4wIftcRxBKyOSZZR98xjhNxgScpTrHr2e9ipa-O9MxCrz1z9fNCOBl7CPstxTeYoaNA96H8d0762lvkY5PVPu7SOjM2Y47DOh9fLwaPb3u-aF5sAE9q_M29wDiAWmi4itOIAHgf2LgQGoB6fMsQKoB-LYsQKoB6a-G6gHzM6xAqgH89EbqAeW2BuoB6qbsQKoB47OG6gHk9gbqAfw4BuoB-6WsQKoB_6esQKoB6--sQKoB5rhsQKoB9XJG6gHmgaoB_-esQKoB9-fsQKoB_jCsQKoB_vCsQLYBwHSCC8IgGEQARifAzIIioKAgICAgAg6DYBAgMCAgICAqIACqANIvf3BOliA48qw3uKTA7EJgyQ2odDs112ACgGYCwHICwGiDAOQAQGqDQJJTMgNAeoNEwi7h8yw3uKTAxVTxXsAHSRlLSfwDQKIDgnYEwyIFAbQFQGYFgHKFgIKAPgWAYAXAbIXEBgBKgo5MjU2Mzc3NTY3UAa6FwI4AaoYFwkAAAAAsMrxQBIKOTI1NjM3NzU2NxgBshgJEgLATxgBIgEA0BgB6BgBwhkCCAE&ae=1&gclid=EAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE&num=1&cid=CAQS0AEABaugfdYhOcWpd-ZJmInDQGuFrFgGFWgRWVuCaN0gl_Ou0H28sJKzYiq0jhrtjvXM2juNl0Bi1xlzP5RQoAocRjPt2b7ywO3uTMVuv8yFr8QcmgMaTfKomGAqgrnPD7cWgFWmiQ_kyv9jTbtaBr_wHiDuZHMCvdcvMdkLOzBRCcgO_0E4dhoQYPTPgILNG7FLm4rZYp_BQqeGFFMSiks6RJqLp7uPVv5MeiJ86yfggJfohnzA50umoL7ejnl690G4skOMbUX-LjZsEi9-S_WmGAE&sig=AOD64_0OktPNE6ZlKMHh5CK_oIcsdCc_wg&client=ca-pub-8332396259212490&rf=1&nb=0&adurl=https://heywise.com/quiz/what-is-your-personal-aesthetic/%3Futm_source%3Dadwords%26utm_medium%3Dc-content%26utm_term%3D%26adid%3D557865490689%26ad_group_id%3D127967369206%26utm_campaign%3DHW-INTL_-_Display_-_personal-aesthetic-SD-Desktop%26gad_source%3D5%26gad_campaignid%3D15126889894%26gclid%3DEAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE
+                  - generic [ref=f55e11]:
+                    - link "Put yourself to the test." [ref=f55e13] [cursor=pointer]:
+                      - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CiE0DlaPYaZbkCtOK77MPpMq1uQLp-rixhgHG3Ynh-g6qp8z3kQ4QASCm9tQDYPmS84OYEKAB54L0_gLIAQGpAqSHsQocRag-qAMByAPLBKoEqAJP0KnDZeaM54ElG6VSS1sOKZldZjCBmND06wEN0hXQrdb0LCbOf9mwrFhUy7HzzM7N1uA7BuBlLL42Nj6t0E_3BY3nFmdKVv002EfRuYD1IB-nSdJWDUK6wQrcLmf0Cth0Ao0hSUtsuIcgjLL6tAPkIO2trB-UBl_WhqVu-WNfeRHK3qUjMG3j6IG4nqU7-8kCK4u9voE8724T8-DvRosJ8H7hK9ZAl9KM-6rGlzXDdhFiNdPwNMuZsDIo5ODaYiKnJ4NcfIBfK8LKKRkruoNqAd_B7Yq4wIftcRxBKyOSZZR98xjhNxgScpTrHr2e9ipa-O9MxCrz1z9fNCOBl7CPstxTeYoaNA96H8d0762lvkY5PVPu7SOjM2Y47DOh9fLwaPb3u-aF5sAE9q_M29wDiAWmi4itOIAHgf2LgQGoB6fMsQKoB-LYsQKoB6a-G6gHzM6xAqgH89EbqAeW2BuoB6qbsQKoB47OG6gHk9gbqAfw4BuoB-6WsQKoB_6esQKoB6--sQKoB5rhsQKoB9XJG6gHmgaoB_-esQKoB9-fsQKoB_jCsQKoB_vCsQLYBwHSCC8IgGEQARifAzIIioKAgICAgAg6DYBAgMCAgICAqIACqANIvf3BOliA48qw3uKTA7EJgyQ2odDs112ACgGYCwHICwGiDAOQAQGqDQJJTMgNAeoNEwi7h8yw3uKTAxVTxXsAHSRlLSfwDQKIDgnYEwyIFAbQFQGYFgHKFgIKAPgWAYAXAbIXEBgBKgo5MjU2Mzc3NTY3UAa6FwI4AaoYFwkAAAAAsMrxQBIKOTI1NjM3NzU2NxgBshgJEgLATxgBIgEA0BgB6BgBwhkCCAE&ae=1&gclid=EAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE&num=1&cid=CAQS0AEABaugfdYhOcWpd-ZJmInDQGuFrFgGFWgRWVuCaN0gl_Ou0H28sJKzYiq0jhrtjvXM2juNl0Bi1xlzP5RQoAocRjPt2b7ywO3uTMVuv8yFr8QcmgMaTfKomGAqgrnPD7cWgFWmiQ_kyv9jTbtaBr_wHiDuZHMCvdcvMdkLOzBRCcgO_0E4dhoQYPTPgILNG7FLm4rZYp_BQqeGFFMSiks6RJqLp7uPVv5MeiJ86yfggJfohnzA50umoL7ejnl690G4skOMbUX-LjZsEi9-S_WmGAE&sig=AOD64_0OktPNE6ZlKMHh5CK_oIcsdCc_wg&client=ca-pub-8332396259212490&rf=1&nb=7&adurl=https://heywise.com/quiz/what-is-your-personal-aesthetic/%3Futm_source%3Dadwords%26utm_medium%3Dc-content%26utm_term%3D%26adid%3D557865490689%26ad_group_id%3D127967369206%26utm_campaign%3DHW-INTL_-_Display_-_personal-aesthetic-SD-Desktop%26gad_source%3D5%26gad_campaignid%3D15126889894%26gclid%3DEAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE
+                    - link [ref=f55e14] [cursor=pointer]:
+                      - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CiE0DlaPYaZbkCtOK77MPpMq1uQLp-rixhgHG3Ynh-g6qp8z3kQ4QASCm9tQDYPmS84OYEKAB54L0_gLIAQGpAqSHsQocRag-qAMByAPLBKoEqAJP0KnDZeaM54ElG6VSS1sOKZldZjCBmND06wEN0hXQrdb0LCbOf9mwrFhUy7HzzM7N1uA7BuBlLL42Nj6t0E_3BY3nFmdKVv002EfRuYD1IB-nSdJWDUK6wQrcLmf0Cth0Ao0hSUtsuIcgjLL6tAPkIO2trB-UBl_WhqVu-WNfeRHK3qUjMG3j6IG4nqU7-8kCK4u9voE8724T8-DvRosJ8H7hK9ZAl9KM-6rGlzXDdhFiNdPwNMuZsDIo5ODaYiKnJ4NcfIBfK8LKKRkruoNqAd_B7Yq4wIftcRxBKyOSZZR98xjhNxgScpTrHr2e9ipa-O9MxCrz1z9fNCOBl7CPstxTeYoaNA96H8d0762lvkY5PVPu7SOjM2Y47DOh9fLwaPb3u-aF5sAE9q_M29wDiAWmi4itOIAHgf2LgQGoB6fMsQKoB-LYsQKoB6a-G6gHzM6xAqgH89EbqAeW2BuoB6qbsQKoB47OG6gHk9gbqAfw4BuoB-6WsQKoB_6esQKoB6--sQKoB5rhsQKoB9XJG6gHmgaoB_-esQKoB9-fsQKoB_jCsQKoB_vCsQLYBwHSCC8IgGEQARifAzIIioKAgICAgAg6DYBAgMCAgICAqIACqANIvf3BOliA48qw3uKTA7EJgyQ2odDs112ACgGYCwHICwGiDAOQAQGqDQJJTMgNAeoNEwi7h8yw3uKTAxVTxXsAHSRlLSfwDQKIDgnYEwyIFAbQFQGYFgHKFgIKAPgWAYAXAbIXEBgBKgo5MjU2Mzc3NTY3UAa6FwI4AaoYFwkAAAAAsMrxQBIKOTI1NjM3NzU2NxgBshgJEgLATxgBIgEA0BgB6BgBwhkCCAE&ae=1&gclid=EAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE&num=1&cid=CAQS0AEABaugfdYhOcWpd-ZJmInDQGuFrFgGFWgRWVuCaN0gl_Ou0H28sJKzYiq0jhrtjvXM2juNl0Bi1xlzP5RQoAocRjPt2b7ywO3uTMVuv8yFr8QcmgMaTfKomGAqgrnPD7cWgFWmiQ_kyv9jTbtaBr_wHiDuZHMCvdcvMdkLOzBRCcgO_0E4dhoQYPTPgILNG7FLm4rZYp_BQqeGFFMSiks6RJqLp7uPVv5MeiJ86yfggJfohnzA50umoL7ejnl690G4skOMbUX-LjZsEi9-S_WmGAE&sig=AOD64_0OktPNE6ZlKMHh5CK_oIcsdCc_wg&client=ca-pub-8332396259212490&rf=1&nb=8&adurl=https://heywise.com/quiz/what-is-your-personal-aesthetic/%3Futm_source%3Dadwords%26utm_medium%3Dc-content%26utm_term%3D%26adid%3D557865490689%26ad_group_id%3D127967369206%26utm_campaign%3DHW-INTL_-_Display_-_personal-aesthetic-SD-Desktop%26gad_source%3D5%26gad_campaignid%3D15126889894%26gclid%3DEAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE
+                      - img [ref=f55e15]
+                - generic "Heywise" [ref=f55e17]:
+                  - link "Heywise" [ref=f55e18] [cursor=pointer]:
+                    - /url: https://www.googleadservices.com/pagead/aclk?sa=L&ai=CiE0DlaPYaZbkCtOK77MPpMq1uQLp-rixhgHG3Ynh-g6qp8z3kQ4QASCm9tQDYPmS84OYEKAB54L0_gLIAQGpAqSHsQocRag-qAMByAPLBKoEqAJP0KnDZeaM54ElG6VSS1sOKZldZjCBmND06wEN0hXQrdb0LCbOf9mwrFhUy7HzzM7N1uA7BuBlLL42Nj6t0E_3BY3nFmdKVv002EfRuYD1IB-nSdJWDUK6wQrcLmf0Cth0Ao0hSUtsuIcgjLL6tAPkIO2trB-UBl_WhqVu-WNfeRHK3qUjMG3j6IG4nqU7-8kCK4u9voE8724T8-DvRosJ8H7hK9ZAl9KM-6rGlzXDdhFiNdPwNMuZsDIo5ODaYiKnJ4NcfIBfK8LKKRkruoNqAd_B7Yq4wIftcRxBKyOSZZR98xjhNxgScpTrHr2e9ipa-O9MxCrz1z9fNCOBl7CPstxTeYoaNA96H8d0762lvkY5PVPu7SOjM2Y47DOh9fLwaPb3u-aF5sAE9q_M29wDiAWmi4itOIAHgf2LgQGoB6fMsQKoB-LYsQKoB6a-G6gHzM6xAqgH89EbqAeW2BuoB6qbsQKoB47OG6gHk9gbqAfw4BuoB-6WsQKoB_6esQKoB6--sQKoB5rhsQKoB9XJG6gHmgaoB_-esQKoB9-fsQKoB_jCsQKoB_vCsQLYBwHSCC8IgGEQARifAzIIioKAgICAgAg6DYBAgMCAgICAqIACqANIvf3BOliA48qw3uKTA7EJgyQ2odDs112ACgGYCwHICwGiDAOQAQGqDQJJTMgNAeoNEwi7h8yw3uKTAxVTxXsAHSRlLSfwDQKIDgnYEwyIFAbQFQGYFgHKFgIKAPgWAYAXAbIXEBgBKgo5MjU2Mzc3NTY3UAa6FwI4AaoYFwkAAAAAsMrxQBIKOTI1NjM3NzU2NxgBshgJEgLATxgBIgEA0BgB6BgBwhkCCAE&ae=1&gclid=EAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE&num=1&cid=CAQS0AEABaugfdYhOcWpd-ZJmInDQGuFrFgGFWgRWVuCaN0gl_Ou0H28sJKzYiq0jhrtjvXM2juNl0Bi1xlzP5RQoAocRjPt2b7ywO3uTMVuv8yFr8QcmgMaTfKomGAqgrnPD7cWgFWmiQ_kyv9jTbtaBr_wHiDuZHMCvdcvMdkLOzBRCcgO_0E4dhoQYPTPgILNG7FLm4rZYp_BQqeGFFMSiks6RJqLp7uPVv5MeiJ86yfggJfohnzA50umoL7ejnl690G4skOMbUX-LjZsEi9-S_WmGAE&sig=AOD64_0OktPNE6ZlKMHh5CK_oIcsdCc_wg&client=ca-pub-8332396259212490&rf=1&nb=1&adurl=https://heywise.com/quiz/what-is-your-personal-aesthetic/%3Futm_source%3Dadwords%26utm_medium%3Dc-content%26utm_term%3D%26adid%3D557865490689%26ad_group_id%3D127967369206%26utm_campaign%3DHW-INTL_-_Display_-_personal-aesthetic-SD-Desktop%26gad_source%3D5%26gad_campaignid%3D15126889894%26gclid%3DEAIaIQobChMI1oLMsN7ikwMVU8V7AB0kZS0nEAEYASAAEgKN2_D_BwE
+              - img [ref=f55e22] [cursor=pointer]
+              - button [ref=f55e24] [cursor=pointer]:
+                - img [ref=f55e25]
+              - iframe
+        - list [ref=e57]:
+          - listitem [ref=e58]:
+            - article [ref=e59]:
+              - generic [ref=e60]:
+                - generic [ref=e62]:
+                  - generic [ref=e63]:
+                    - generic [ref=e64]:
+                      - link "Bitcall icon" [ref=e66] [cursor=pointer]:
+                        - /url: /software/bitcall/about/
+                        - img "Bitcall icon" [ref=e68]
+                      - generic [ref=e69]:
+                        - generic [ref=e73]:
+                          - link "Bitcall" [ref=e75] [cursor=pointer]:
+                            - /url: /software/bitcall/about/
+                            - heading "Bitcall" [level=2] [ref=e76]
+                          - generic [ref=e78]:
+                            - button "Like Bitcall" [ref=e79] [cursor=pointer]:
+                              - generic [ref=e80]:
+                                - img [ref=e81]
+                                - generic [ref=e83]: 1 like
+                            - generic "Bitcall" [ref=e86]:
+                              - generic "Bitcall" [ref=e88] [cursor=pointer]:
+                                - generic [ref=e89]: Bi
+                        - paragraph [ref=e93]: Bitcall OS lets anyone launch and run a white-label telecom business—selling eSIM, WebRTC/VoIP, SMS, OTP, and HLR, from one prepaid, crypto-friendly dashboard.
+                    - generic [ref=e95]:
+                      - generic [ref=e96]:
+                        - heading "Cost / License" [level=4] [ref=e97]
+                        - list [ref=e98]:
+                          - listitem [ref=e99]:
+                            - generic [ref=e100]: Paid
+                          - listitem [ref=e101]:
+                            - generic [ref=e102]: Proprietary
+                      - generic [ref=e103]:
+                        - heading "Platforms" [level=4] [ref=e104]
+                        - list [ref=e105]:
+                          - listitem [ref=e106]:
+                            - generic [ref=e107]: Online
+                  - generic [ref=e108]:
+                    - button "Open image in lightbox" [ref=e111] [cursor=pointer]:
+                      - img "Bitcall screenshot 1" [ref=e113]
+                    - generic [ref=e115]:
+                      - button "Open image in lightbox" [ref=e117] [cursor=pointer]:
+                        - img "Bitcall screenshot 1" [ref=e119]
+                      - generic "You must be logged in to suggest screenshots" [ref=e121] [cursor=pointer]:
+                        - img [ref=e122]
+                      - generic "You must be logged in to suggest screenshots" [ref=e127] [cursor=pointer]:
+                        - img [ref=e128]
+                - link "56 alternatives" [ref=e137] [cursor=pointer]:
+                  - /url: /software/bitcall/
+                  - img [ref=e138]
+                  - text: 56 alternatives
+          - listitem [ref=e140]:
+            - article [ref=e141]:
+              - generic [ref=e142]:
+                - generic [ref=e144]:
+                  - generic [ref=e145]:
+                    - generic [ref=e146]:
+                      - link "SoliCall Pro icon" [ref=e148] [cursor=pointer]:
+                        - /url: /software/solicall-pro/about/
+                        - img "SoliCall Pro icon" [ref=e151]
+                      - generic [ref=e152]:
+                        - generic [ref=e156]:
+                          - link "SoliCall Pro" [ref=e158] [cursor=pointer]:
+                            - /url: /software/solicall-pro/about/
+                            - heading "SoliCall Pro" [level=2] [ref=e159]
+                          - generic [ref=e161]:
+                            - button "Like SoliCall Pro" [ref=e162] [cursor=pointer]:
+                              - generic [ref=e163]:
+                                - img [ref=e164]
+                                - generic [ref=e166]: 2 likes
+                            - generic [ref=e168]:
+                              - generic "babsors" [ref=e169]:
+                                - img "babsors" [ref=e172] [cursor=pointer]
+                              - generic "tim15" [ref=e173]:
+                                - generic "tim15" [ref=e175] [cursor=pointer]:
+                                  - generic [ref=e176]: ti
+                        - paragraph [ref=e180]: SoliCall develops patented technology for improving audio quality in telephony. SoliCall’s unique noise reduction software includes an innovative NOISE FIREWALL™ for contact centers, a versatile echo cancellation software and a unique noise reduction technology.
+                    - generic [ref=e182]:
+                      - generic [ref=e183]:
+                        - heading "Cost / License" [level=4] [ref=e184]
+                        - list [ref=e185]:
+                          - listitem [ref=e186]:
+                            - generic [ref=e187]: Paid
+                          - listitem [ref=e188]:
+                            - generic [ref=e189]: Proprietary
+                      - generic [ref=e190]:
+                        - heading "Application type" [level=4] [ref=e191]
+                        - list [ref=e192]:
+                          - listitem [ref=e193]:
+                            - link "Background Noise Reduction Tool" [ref=e194] [cursor=pointer]:
+                              - /url: /browse/all/?tag=background-noise-reduction
+                      - generic [ref=e195]:
+                        - heading "Platforms" [level=4] [ref=e196]
+                        - list [ref=e197]:
+                          - listitem [ref=e198]:
+                            - generic [ref=e199]: Windows
+                  - generic [ref=e200]:
+                    - button "Open image in lightbox" [ref=e203] [cursor=pointer]:
+                      - img "SoliCall Pro screenshot 1" [ref=e205]
+                    - generic [ref=e207]:
+                      - generic "You must be logged in to suggest screenshots" [ref=e209] [cursor=pointer]:
+                        - img [ref=e210]
+                      - generic "You must be logged in to suggest screenshots" [ref=e215] [cursor=pointer]:
+                        - img [ref=e216]
+                      - generic "You must be logged in to suggest screenshots" [ref=e221] [cursor=pointer]:
+                        - img [ref=e222]
+                - link "5 alternatives" [ref=e231] [cursor=pointer]:
+                  - /url: /software/solicall-pro/
+                  - img [ref=e232]
+                  - text: 5 alternatives
+  - contentinfo [ref=e234]:
+    - generic [ref=e235]:
+      - img "AlternativeTo" [ref=e236]
+      - generic [ref=e237]:
+        - generic [ref=e238]:
+          - paragraph [ref=e239]: AlternativeTo is a free service that helps you find better alternatives to the products you love and hate.
+          - paragraph [ref=e240]:
+            - text: The site is made by
+            - link "Ola" [ref=e241] [cursor=pointer]:
+              - /url: /user/ola/
+            - text: and
+            - link "Markus" [ref=e242] [cursor=pointer]:
+              - /url: /user/markus/
+            - text: in Sweden, with a lot of help from our friends and colleagues in Italy, Finland, USA, Colombia, Philippines, France and contributors from all over the world. That's right, all the lists of alternatives are crowd-sourced, and that's what makes the data powerful and relevant.
+          - paragraph [ref=e243]:
+            - text: Feel free to send us your questions and feedback at
+            - link "hello@alternativeto.net" [ref=e244] [cursor=pointer]:
+              - /url: mailto:hello@alternativeto.net
+            - text: ", on our"
+            - link "Discord" [ref=e245] [cursor=pointer]:
+              - /url: https://discord.gg/VS45yNS
+            - text: or on our social media channels
+            - generic [ref=e246]:
+              - link "X" [ref=e247] [cursor=pointer]:
+                - /url: https://x.com/alternativeto
+              - text: ","
+            - generic [ref=e248]:
+              - link "Mastodon" [ref=e249] [cursor=pointer]:
+                - /url: https://mas.to/@alternativeto
+              - text: ","
+            - generic [ref=e250]:
+              - link "Bluesky" [ref=e251] [cursor=pointer]:
+                - /url: https://bsky.app/profile/alternativeto.net
+              - text: ","
+            - generic [ref=e252]:
+              - link "Threads" [ref=e253] [cursor=pointer]:
+                - /url: https://www.threads.com/@alternativetonet
+              - text: ","
+            - generic [ref=e254]:
+              - link "Instagram" [ref=e255] [cursor=pointer]:
+                - /url: https://www.instagram.com/alternativetonet/
+              - text: ","
+            - generic [ref=e256]:
+              - text: or
+              - link "LinkedIn" [ref=e257] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/alternativeto/
+            - text: .
+        - list [ref=e259]:
+          - listitem [ref=e260]:
+            - link "FAQ" [ref=e261] [cursor=pointer]:
+              - /url: /faq/
+          - listitem [ref=e262]:
+            - link "Privacy Policy" [ref=e263] [cursor=pointer]:
+              - /url: /about/privacy/
+          - listitem [ref=e264]:
+            - link "Cookie Policy" [ref=e265] [cursor=pointer]:
+              - /url: /about/cookie-policy/
+          - listitem [ref=e266]:
+            - link "About AlternativeTo" [ref=e267] [cursor=pointer]:
+              - /url: /about/
+          - listitem [ref=e268]:
+            - link "Become a Partner" [ref=e269] [cursor=pointer]:
+              - /url: mailto:partners@alternativeto.com
+      - generic [ref=e270]:
+        - generic [ref=e271]:
+          - link "Discord" [ref=e272] [cursor=pointer]:
+            - /url: https://discord.gg/VS45yNS
+            - img [ref=e273]
+          - link "X (Twitter)" [ref=e275] [cursor=pointer]:
+            - /url: https://x.com/alternativeto
+            - img [ref=e276]
+          - link "Mastodon" [ref=e278] [cursor=pointer]:
+            - /url: https://mas.to/@alternativeto
+            - img [ref=e279]
+          - link "Bluesky" [ref=e281] [cursor=pointer]:
+            - /url: https://bsky.app/profile/alternativeto.net
+            - img [ref=e282]
+          - link "Threads" [ref=e284] [cursor=pointer]:
+            - /url: https://www.threads.com/@alternativetonet
+            - img [ref=e285]
+          - link "Instagram" [ref=e287] [cursor=pointer]:
+            - /url: https://www.instagram.com/alternativetonet/
+            - img [ref=e288]
+          - link "LinkedIn" [ref=e290] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/alternativeto/
+            - img [ref=e291]
+        - generic [ref=e293]:
+          - generic [ref=e294]: © 27 Kilobyte AB
+          - generic [ref=e295]: "|"
+          - generic [ref=e296]: "Build: Docker_20260323.1 | Version: app-router"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - alert [ref=e297]

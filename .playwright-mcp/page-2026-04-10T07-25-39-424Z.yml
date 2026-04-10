@@ -1,0 +1,233 @@
+- generic [ref=e3]:
+  - link "Skip to main content" [ref=e4] [cursor=pointer]:
+    - /url: "#mainContent"
+  - link "Skip to site search" [ref=e5] [cursor=pointer]:
+    - /url: "#search"
+  - main [ref=e6]:
+    - banner [ref=e7]:
+      - generic [ref=e11]:
+        - link "AlternativeTo Logo AlternativeTo Logo Text" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - img "AlternativeTo Logo" [ref=e13]
+          - img "AlternativeTo Logo Text" [ref=e14]
+        - navigation [ref=e16]:
+          - link "NEW APP RELEASES" [ref=e17] [cursor=pointer]:
+            - /url: /browse/new-apps/
+            - generic [ref=e18]: NEW APP RELEASES
+          - generic [ref=e19]: "|"
+          - link "BROWSE ALL APPS" [ref=e20] [cursor=pointer]:
+            - /url: /browse/
+            - generic [ref=e21]: BROWSE ALL APPS
+          - generic [ref=e22]: "|"
+          - link "TECH NEWS" [ref=e23] [cursor=pointer]:
+            - /url: /news/all/
+            - generic [ref=e24]: TECH NEWS
+          - generic [ref=e25]: "|"
+          - link "LISTS" [ref=e26] [cursor=pointer]:
+            - /url: /lists/
+        - generic [ref=e28]:
+          - button "Open user menu" [ref=e30] [cursor=pointer]:
+            - img [ref=e31]
+          - button "Show Notifications" [ref=e34] [cursor=pointer]:
+            - img [ref=e36]
+          - button "Open page menu" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+    - generic [ref=e42]:
+      - navigation "Breadcrumb" [ref=e45]:
+        - list [ref=e46]:
+          - listitem [ref=e47]:
+            - link "Home" [ref=e48] [cursor=pointer]:
+              - /url: /
+            - text: ►
+          - listitem [ref=e49]:
+            - link "Suggest a new application" [ref=e50] [cursor=pointer]:
+              - /url: /manage-item/
+      - generic [ref=e52]:
+        - heading "Suggest a new application" [level=1] [ref=e53]
+        - paragraph [ref=e56]:
+          - text: Here you can submit apps to AlternativeTo. The form is pretty straightforward but we do have some rules and most of them are in our
+          - link "FAQ" [ref=e57] [cursor=pointer]:
+            - /url: /faq/
+          - text: ", especially about"
+          - link "submitting apps" [ref=e58] [cursor=pointer]:
+            - /url: /faq/#submitting-applications/
+          - text: . Please take a quick look there so you do not waste your time adding something that is not allowed on the site.
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - group "Main info" [ref=e61]:
+              - generic [ref=e62]: Main info
+              - generic [ref=e63]:
+                - generic [ref=e64]: Name • Required
+                - textbox "Name • Required" [ref=e65]
+                - generic [ref=e66]: Official name with correct spelling and letter case.
+              - generic [ref=e67]:
+                - generic [ref=e68]: Short Description
+                - textbox "Short Description" [ref=e69]
+                - generic [ref=e70]: What is the main purpose of this app / software? Keep it short, preferably in one concise sentence.
+              - generic [ref=e71]:
+                - generic [ref=e72]: Website • Required
+                - textbox "Website • Required" [ref=e73]
+                - generic [ref=e74]: Official website of the app / software.
+              - generic [ref=e75]:
+                - generic [ref=e76]: Full Description
+                - textbox "Full Description" [ref=e77]
+                - generic [ref=e78]: A longer description of the application; this could be written by yourself or taken from official material.
+              - generic [ref=e81]:
+                - generic [ref=e82]: Pricing • Required
+                - combobox "Pricing • Required" [ref=e83]:
+                  - option [selected]
+                  - option "Free"
+                  - option "Freemium"
+                  - option "Free for personal use"
+                  - option "Commercial"
+              - generic [ref=e85]:
+                - checkbox "Is Opensource?" [ref=e86]
+                - generic [ref=e87]: Is Opensource?
+            - group "Tags" [ref=e88]:
+              - generic [ref=e89]: Tags
+            - group "Features" [ref=e90]:
+              - generic [ref=e91]: Features
+              - paragraph [ref=e92]: Depending on what type of app you are editing / adding we highlight some features that may be relevant for this type of app. Please take a look at these and select the ones you know this app supports.
+            - group "Platforms" [ref=e93]:
+              - generic [ref=e94]: Platforms
+            - group "Author / Social Media" [ref=e95]:
+              - generic [ref=e96]: Author / Social Media
+              - generic [ref=e97]:
+                - generic [ref=e98]: X username
+                - textbox "X username" [ref=e99]
+                - generic [ref=e100]: X (Twitter) name of the app or company.
+              - generic [ref=e101]:
+                - generic [ref=e102]: Facebook URL
+                - textbox "Facebook URL" [ref=e103]
+                - generic [ref=e104]: Facebook URL of the app or company.
+            - group "Icon & Screenshots" [ref=e105]:
+              - generic [ref=e106]: Icon & Screenshots
+              - generic [ref=e107]:
+                - generic [ref=e108]:
+                  - generic [ref=e109]: Application Icon • Required
+                  - generic [ref=e112] [cursor=pointer]:
+                    - img [ref=e114]
+                    - paragraph [ref=e116]: Drag an icon here or click to select an icon to upload. JPEG, PNG, SVG or WebP.
+                  - generic [ref=e120]:
+                    - text: A square image, 128x128 or bigger, with transparent background is suggested.
+                    - link "More about icons in our FAQ." [ref=e121] [cursor=pointer]:
+                      - /url: /faq/#how-do-i-extract-icons-from-windows-and-mac-applications
+                - generic [ref=e122]:
+                  - generic [ref=e123]: Upload icon by URL
+                  - textbox "Upload icon by URL" [ref=e124]
+                  - generic [ref=e125]: Or you can just paste a URL and it will be uploaded automatically.
+                - generic [ref=e129]:
+                  - img [ref=e130]
+                  - text: Remember to add screenshots. We may deny submissions that are missing these. An icon is required.
+                - generic [ref=e132]: Videos
+                - generic [ref=e133]:
+                  - generic [ref=e134]: Add a new video URL
+                  - textbox "Add a new video URL" [ref=e135]
+                  - generic [ref=e136]: We only support YouTube right now. Just paste the URL above and the video will be added.
+            - group "Meta" [ref=e140]:
+              - generic [ref=e141]: Meta
+              - generic [ref=e142]:
+                - generic [ref=e143]: Note about your changes
+                - textbox "Note about your changes" [ref=e144]
+                - generic [ref=e145]: If you want to explain your changes you can do it here. It's totally optional but it may help the admin approve your changes quicker.
+            - generic [ref=e147]:
+              - link "Remember to add screenshots. We may deny submissions that are missing these. An icon is required." [ref=e149] [cursor=pointer]:
+                - /url: "#icon-screenshots"
+                - generic [ref=e151]:
+                  - img [ref=e152]
+                  - text: Remember to add screenshots. We may deny submissions that are missing these. An icon is required.
+              - button "Submit the application" [disabled] [ref=e156] [cursor=pointer]:
+                - img [ref=e157]
+                - text: Submit the application
+          - navigation [ref=e159]:
+            - list
+  - contentinfo [ref=e160]:
+    - generic [ref=e161]:
+      - img "AlternativeTo" [ref=e162]
+      - generic [ref=e163]:
+        - generic [ref=e164]:
+          - paragraph [ref=e165]: AlternativeTo is a free service that helps you find better alternatives to the products you love and hate.
+          - paragraph [ref=e166]:
+            - text: The site is made by
+            - link "Ola" [ref=e167] [cursor=pointer]:
+              - /url: /user/ola/
+            - text: and
+            - link "Markus" [ref=e168] [cursor=pointer]:
+              - /url: /user/markus/
+            - text: in Sweden, with a lot of help from our friends and colleagues in Italy, Finland, USA, Colombia, Philippines, France and contributors from all over the world. That's right, all the lists of alternatives are crowd-sourced, and that's what makes the data powerful and relevant.
+          - paragraph [ref=e169]:
+            - text: Feel free to send us your questions and feedback at
+            - link "hello@alternativeto.net" [ref=e170] [cursor=pointer]:
+              - /url: mailto:hello@alternativeto.net
+            - text: ", on our"
+            - link "Discord" [ref=e171] [cursor=pointer]:
+              - /url: https://discord.gg/VS45yNS
+            - text: or on our social media channels
+            - generic [ref=e172]:
+              - link "X" [ref=e173] [cursor=pointer]:
+                - /url: https://x.com/alternativeto
+              - text: ","
+            - generic [ref=e174]:
+              - link "Mastodon" [ref=e175] [cursor=pointer]:
+                - /url: https://mas.to/@alternativeto
+              - text: ","
+            - generic [ref=e176]:
+              - link "Bluesky" [ref=e177] [cursor=pointer]:
+                - /url: https://bsky.app/profile/alternativeto.net
+              - text: ","
+            - generic [ref=e178]:
+              - link "Threads" [ref=e179] [cursor=pointer]:
+                - /url: https://www.threads.com/@alternativetonet
+              - text: ","
+            - generic [ref=e180]:
+              - link "Instagram" [ref=e181] [cursor=pointer]:
+                - /url: https://www.instagram.com/alternativetonet/
+              - text: ","
+            - generic [ref=e182]:
+              - text: or
+              - link "LinkedIn" [ref=e183] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/alternativeto/
+            - text: .
+        - list [ref=e185]:
+          - listitem [ref=e186]:
+            - link "FAQ" [ref=e187] [cursor=pointer]:
+              - /url: /faq/
+          - listitem [ref=e188]:
+            - link "Privacy Policy" [ref=e189] [cursor=pointer]:
+              - /url: /about/privacy/
+          - listitem [ref=e190]:
+            - link "Cookie Policy" [ref=e191] [cursor=pointer]:
+              - /url: /about/cookie-policy/
+          - listitem [ref=e192]:
+            - link "About AlternativeTo" [ref=e193] [cursor=pointer]:
+              - /url: /about/
+          - listitem [ref=e194]:
+            - link "Become a Partner" [ref=e195] [cursor=pointer]:
+              - /url: mailto:partners@alternativeto.com
+      - generic [ref=e196]:
+        - generic [ref=e197]:
+          - link "Discord" [ref=e198] [cursor=pointer]:
+            - /url: https://discord.gg/VS45yNS
+            - img [ref=e199]
+          - link "X (Twitter)" [ref=e201] [cursor=pointer]:
+            - /url: https://x.com/alternativeto
+            - img [ref=e202]
+          - link "Mastodon" [ref=e204] [cursor=pointer]:
+            - /url: https://mas.to/@alternativeto
+            - img [ref=e205]
+          - link "Bluesky" [ref=e207] [cursor=pointer]:
+            - /url: https://bsky.app/profile/alternativeto.net
+            - img [ref=e208]
+          - link "Threads" [ref=e210] [cursor=pointer]:
+            - /url: https://www.threads.com/@alternativetonet
+            - img [ref=e211]
+          - link "Instagram" [ref=e213] [cursor=pointer]:
+            - /url: https://www.instagram.com/alternativetonet/
+            - img [ref=e214]
+          - link "LinkedIn" [ref=e216] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/alternativeto/
+            - img [ref=e217]
+        - generic [ref=e219]:
+          - generic [ref=e220]: © 27 Kilobyte AB
+          - generic [ref=e221]: "|"
+          - generic [ref=e222]: "Build: Docker_20260323.1 | Version: page-router"

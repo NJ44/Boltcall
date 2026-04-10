@@ -1,0 +1,921 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - link "Crunchbase" [ref=e7] [cursor=pointer]:
+      - /url: /
+      - img [ref=e9]
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - button "Crunchbase Scout" [ref=e24]:
+          - img [ref=e31]
+        - button "Resources" [ref=e36]:
+          - generic [ref=e39]:
+            - generic [ref=e40]: Resources
+            - img [ref=e42]
+        - button "Advanced Search" [ref=e47]:
+          - generic [ref=e50]:
+            - generic [ref=e51]: Advanced Search
+            - img [ref=e53]
+      - generic [ref=e57]:
+        - link "Start Free Trial" [ref=e60] [cursor=pointer]:
+          - /url: /buy/select-product
+          - generic [ref=e61]: Start Free Trial
+        - generic [ref=e65]:
+          - button "Talk With Sales" [ref=e68]:
+            - generic [ref=e72]: Talk With Sales
+          - link "Pricing" [ref=e77] [cursor=pointer]:
+            - /url: /buy/select-product
+            - generic [ref=e81]: Pricing
+        - link "Log In" [ref=e87] [cursor=pointer]:
+          - /url: /login?redirect_to=%2Forganization%2Fnew
+          - generic [ref=e91]: Log In
+  - generic [ref=e96]:
+    - generic [ref=e98]:
+      - generic [ref=e101]:
+        - img "Sovereign Developers and Infrastructure Limited Logo" [ref=e105]
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - generic [ref=e109]: Sovereign Developers and Infrastructure Limited (closed)
+            - generic [ref=e110]:
+              - button "Save" [ref=e112]:
+                - generic [ref=e114]:
+                  - img [ref=e116]
+                  - generic [ref=e118]: Save
+              - button "Actions" [ref=e122]:
+                - generic [ref=e123]:
+                  - text: Actions
+                  - img [ref=e125]
+          - generic [ref=e129]: Sovereign developers & Infrastructure Limited (SDIL) is an organization in the realm of property development.
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - img [ref=e133]
+              - generic [ref=e135]: Closed
+            - generic [ref=e136]:
+              - img [ref=e138]
+              - generic [ref=e140]:
+                - text: Founded
+                - generic [ref=e144] [cursor=pointer]:
+                  - generic: obfuscation
+            - generic [ref=e145]:
+              - img [ref=e147]
+              - generic [ref=e150]: Private
+            - generic [ref=e151]:
+              - img [ref=e153]
+              - link "Venture - Series Unknown" [ref=e157] [cursor=pointer]:
+                - /url: /search/funding_rounds/field/organization/last_funding_type/sovereign-developers-and-infrastructure-limited
+            - generic [ref=e158]:
+              - img [ref=e160]
+              - generic [ref=e165]:
+                - link "Indore" [ref=e166] [cursor=pointer]:
+                  - /url: /search/organizations/field/organization/location_identifiers/indore-madhya-pradesh
+                - text: ","
+                - link "Madhya Pradesh" [ref=e167] [cursor=pointer]:
+                  - /url: /search/organizations/field/organization/location_identifiers/madhya-pradesh-india
+                - text: ","
+                - link "India" [ref=e168] [cursor=pointer]:
+                  - /url: /search/organizations/field/organization/location_identifiers/india
+            - generic [ref=e169]:
+              - img [ref=e171]
+              - link "101-250" [ref=e180] [cursor=pointer]:
+                - /url: /search/people/field/organization/num_employees_enum/sovereign-developers-and-infrastructure-limited
+            - generic [ref=e181]:
+              - img [ref=e183]
+              - link "sdil.in" [ref=e190] [cursor=pointer]:
+                - /url: http://sdil.in
+            - link "View on LinkedIn" [ref=e194] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/sovereign-developers-and-infrastructure-pvt-ltd/
+              - img [ref=e197]
+      - generic [ref=e199]:
+        - generic [ref=e200]:
+          - generic [ref=e202]:
+            - img [ref=e204]
+            - paragraph [ref=e206]:
+              - text: Sovereign Developers and Infrastructure Limited is permanently closed. If you feel this is an error,
+              - link "let us know" [ref=e207] [cursor=pointer]:
+                - /url: https://support.crunchbase.com/hc/en-us/requests/new?ticket_form_id=412707
+              - text: .
+          - generic [ref=e208]:
+            - navigation [ref=e212]:
+              - list [ref=e213]:
+                - listitem [ref=e214]:
+                  - link "Overview" [ref=e215] [cursor=pointer]:
+                    - /url: /organization/new#overview
+                    - generic [ref=e217]: Overview
+                - listitem [ref=e218]:
+                  - link "Predictions & Insights" [ref=e219] [cursor=pointer]:
+                    - /url: /organization/new#predictions_and_insights
+                    - generic [ref=e221]:
+                      - img [ref=e223]
+                      - text: Predictions & Insights
+                  - link "Growth Outlook" [ref=e225] [cursor=pointer]:
+                    - /url: /organization/new/growth_outlook
+                    - generic [ref=e226]: Growth Outlook
+                - listitem [ref=e227]:
+                  - link "Financials" [ref=e228] [cursor=pointer]:
+                    - /url: /organization/new#financials
+                    - generic [ref=e230]:
+                      - img [ref=e232]
+                      - text: Financials
+                  - link "Financial Details" [ref=e234] [cursor=pointer]:
+                    - /url: /organization/new/financial_details
+                    - generic [ref=e235]: Financial Details
+                - listitem [ref=e236]:
+                  - link "Market Intelligence" [ref=e237] [cursor=pointer]:
+                    - /url: /organization/new#market_intelligence
+                    - generic [ref=e239]: Market Intelligence
+                - listitem [ref=e240]:
+                  - link "People" [ref=e241] [cursor=pointer]:
+                    - /url: /organization/new#people
+                    - generic [ref=e243]:
+                      - img [ref=e245]
+                      - text: People
+                  - link "Profiles & Contacts" [ref=e247] [cursor=pointer]:
+                    - /url: /organization/new/profiles_and_contacts
+                    - generic [ref=e248]: Profiles & Contacts
+                - listitem [ref=e249]:
+                  - link "Technology" [ref=e250] [cursor=pointer]:
+                    - /url: /organization/new#technology
+                    - generic [ref=e252]:
+                      - img [ref=e254]
+                      - text: Technology
+                  - link "Tech Details" [ref=e256] [cursor=pointer]:
+                    - /url: /organization/new/tech_details
+                    - generic [ref=e257]: Tech Details
+                - listitem [ref=e258]:
+                  - link "Lists Featuring This Company" [ref=e259] [cursor=pointer]:
+                    - /url: /organization/new#recommended_searches
+                    - generic [ref=e261]: Lists Featuring This Company
+                - listitem [ref=e262]:
+                  - link "Frequently Asked Questions" [ref=e263] [cursor=pointer]:
+                    - /url: /organization/new#faq
+                    - generic [ref=e265]: Frequently Asked Questions
+            - generic [ref=e268]:
+              - generic [ref=e270]:
+                - generic [ref=e272]: Overview
+                - generic [ref=e273]:
+                  - generic [ref=e277]:
+                    - generic [ref=e278]: Unlock best-in-class private company insights with Crunchbase Pro
+                    - list [ref=e280]:
+                      - listitem [ref=e281]:
+                        - generic [ref=e282]:
+                          - img [ref=e284]
+                          - generic [ref=e286]: Get real-time funding and financial data
+                      - listitem [ref=e287]:
+                        - generic [ref=e288]:
+                          - img [ref=e290]
+                          - generic [ref=e292]: Export up to 2K accounts/month
+                      - listitem [ref=e293]:
+                        - generic [ref=e294]:
+                          - img [ref=e296]
+                          - generic [ref=e298]: Search 4M+ private companies
+                    - button "Try Pro Free" [ref=e300]:
+                      - generic [ref=e301]: Try Pro Free
+                  - generic [ref=e308]:
+                    - generic [ref=e309]:
+                      - generic [ref=e310]:
+                        - generic [ref=e311]:
+                          - text: Growth Score
+                          - img [ref=e313] [cursor=pointer]
+                        - generic [ref=e315]:
+                          - img [ref=e317]
+                          - generic [ref=e321]:
+                            - img [ref=e323]
+                            - generic [ref=e325]: pts
+                          - generic [ref=e326]: in past quarter
+                      - generic [ref=e327]:
+                        - generic [ref=e328]:
+                          - text: Heat Score
+                          - img [ref=e330] [cursor=pointer]
+                        - generic [ref=e332]:
+                          - img [ref=e334]
+                          - generic [ref=e338]: "93"
+                          - generic [ref=e340]:
+                            - img [ref=e342]
+                            - generic [ref=e345]: 16 pts
+                          - generic [ref=e346]: in past quarter
+                    - generic [ref=e347]:
+                      - heading "Company Performance Metrics" [level=2] [ref=e348]
+                      - radiogroup [ref=e350]:
+                        - radio "3M" [checked] [ref=e351] [cursor=pointer]:
+                          - generic [ref=e352]: 3M
+                        - generic [ref=e353] [cursor=pointer]:
+                          - img [ref=e355]
+                          - generic [ref=e357]:
+                            - radio "1Y" [disabled]:
+                              - generic: 1Y
+                        - generic [ref=e358] [cursor=pointer]:
+                          - img [ref=e360]
+                          - generic [ref=e362]:
+                            - radio "2Y" [disabled]:
+                              - generic: 2Y
+                        - generic [ref=e363] [cursor=pointer]:
+                          - img [ref=e365]
+                          - generic [ref=e367]:
+                            - radio "5Y" [disabled]:
+                              - generic: 5Y
+                        - generic [ref=e368] [cursor=pointer]:
+                          - img [ref=e370]
+                          - generic [ref=e372]:
+                            - radio "10Y" [disabled]:
+                              - generic: 10Y
+                    - generic [ref=e374]:
+                      - button "Heat Score" [ref=e376]:
+                        - generic [ref=e379]: Heat Score
+                      - button "Heat Trend" [ref=e383]:
+                        - generic [ref=e386]: Heat Trend
+                      - generic [ref=e389]:
+                        - button "Growth Score" [disabled]:
+                          - generic:
+                            - generic: Growth Score
+                      - generic [ref=e390]:
+                        - button "Growth Trend" [disabled]:
+                          - generic:
+                            - generic: Growth Trend
+                    - generic [ref=e392]: Score
+                    - button "About These Metrics" [ref=e396] [cursor=pointer]:
+                      - generic [ref=e398]:
+                        - img [ref=e400]
+                        - generic [ref=e402]: About These Metrics
+                  - generic [ref=e404]:
+                    - generic [ref=e407]:
+                      - heading "Funding Rounds" [level=2] [ref=e410]
+                      - generic [ref=e411]:
+                        - generic [ref=e412]:
+                          - generic [ref=e416]: Venture - Series Unknown
+                          - generic [ref=e421] [cursor=pointer]:
+                            - generic: OBF
+                          - generic [ref=e422]:
+                            - text: in
+                            - generic [ref=e426] [cursor=pointer]:
+                              - generic: obfuscation
+                        - generic [ref=e427]:
+                          - generic [ref=e431]: Funding Round
+                          - generic [ref=e436] [cursor=pointer]:
+                            - generic: OBF
+                          - generic [ref=e437]:
+                            - text: in
+                            - generic [ref=e441] [cursor=pointer]:
+                              - generic: obfuscation
+                      - link "View all 2 rounds" [ref=e444] [cursor=pointer]:
+                        - /url: /organization/new#company_funding
+                        - generic [ref=e445]:
+                          - generic [ref=e446]: View all 2 rounds
+                          - img [ref=e448]
+                    - generic [ref=e454]:
+                      - heading "Key People" [level=2] [ref=e457]
+                      - list [ref=e459]:
+                        - listitem [ref=e460]:
+                          - img "Deepak Kumar Logo" [ref=e462]
+                          - generic [ref=e464]:
+                            - link "Deepak Kumar:" [ref=e465] [cursor=pointer]:
+                              - /url: /person/deepak-kumar-df17
+                            - text: Director
+                  - generic [ref=e469]:
+                    - heading "Details" [level=2] [ref=e472]
+                    - generic [ref=e474]:
+                      - generic [ref=e475]:
+                        - generic [ref=e477]:
+                          - generic [ref=e479]: Legal Name
+                          - generic [ref=e481]: Sovereign Developers and Infrastructure Limited
+                        - generic [ref=e483]:
+                          - generic [ref=e485]: Operating Status
+                          - generic [ref=e487]: Closed
+                        - generic [ref=e489]:
+                          - generic [ref=e491]: Founders
+                          - link "Deepak Kumar" [ref=e496] [cursor=pointer]:
+                            - /url: /person/deepak-kumar-df17
+                      - generic [ref=e497]:
+                        - generic [ref=e498]: About the Company
+                        - generic [ref=e499]:
+                          - paragraph [ref=e502]: Sovereign developers & Infrastructure Limited is a reputed real estate company in India. The company has two offices located in Bangalore and Noida. We offer quality flats and residential apartments with affordable prices. The principal aim of the company is to bring customer satisfaction from all the angles like project location, quality,...
+                          - button "Read More" [ref=e503]:
+                            - generic [ref=e505]:
+                              - img [ref=e507]
+                              - generic [ref=e509]: Read More
+                      - generic [ref=e512]:
+                        - generic [ref=e514]:
+                          - generic [ref=e516]: Phone Number
+                          - generic [ref=e518]: +91 80 3355 5222
+                        - generic [ref=e520]:
+                          - generic [ref=e522]: Contact Email
+                          - generic [ref=e525]: response@sdil.in
+              - generic [ref=e528]:
+                - generic [ref=e530]: Predictions & Insights
+                - generic [ref=e533]:
+                  - generic [ref=e536]:
+                    - heading "Growth Prediction" [level=2] [ref=e539]:
+                      - text: Growth Prediction
+                      - img [ref=e541] [cursor=pointer]
+                    - generic [ref=e546]:
+                      - img [ref=e549]
+                      - generic [ref=e552]:
+                        - text: See this Growth Prediction
+                        - img [ref=e554]
+                    - button "Explore Prediction" [ref=e558]:
+                      - generic [ref=e559]:
+                        - text: Explore Prediction
+                        - img [ref=e561]
+                  - generic [ref=e567]:
+                    - heading "Products & Services" [level=2] [ref=e570]
+                    - generic [ref=e571]:
+                      - generic [ref=e572]:
+                        - generic [ref=e573]: Digital City Guide for Ağrı
+                        - generic [ref=e574]: A digital platform providing localized information about Ağrı city, including places to visit, local news, and business listings.
+                      - generic [ref=e575]:
+                        - generic [ref=e576]: News Portal
+                        - generic [ref=e577]: An online news service delivering current news and updates relevant to Ağrı and its surrounding areas.
+                    - button "Explore Insight" [ref=e580]:
+                      - generic [ref=e581]:
+                        - text: Explore Insight
+                        - img [ref=e583]
+                  - generic [ref=e592]:
+                    - generic [ref=e593]: Unlock More with Crunchbase Pro
+                    - list [ref=e595]:
+                      - listitem [ref=e596]:
+                        - generic [ref=e597]:
+                          - img [ref=e599]
+                          - generic [ref=e601]: Full access to financial & funding data on unlimited profiles
+                      - listitem [ref=e602]:
+                        - generic [ref=e603]:
+                          - img [ref=e605]
+                          - generic [ref=e607]: Export up to 2k results/month for analysis
+                      - listitem [ref=e608]:
+                        - generic [ref=e609]:
+                          - img [ref=e611]
+                          - generic [ref=e613]: Track market signals on competitors, products, and R&D
+                      - listitem [ref=e614]:
+                        - generic [ref=e615]:
+                          - img [ref=e617]
+                          - generic [ref=e619]: Preview private company insights and predictions
+                    - button "Try Pro Free" [ref=e621]:
+                      - generic [ref=e622]: Try Pro Free
+              - generic [ref=e626]:
+                - generic [ref=e628]: Financials
+                - generic [ref=e633]:
+                  - heading "Company Funding" [level=2] [ref=e636]
+                  - generic [ref=e638]:
+                    - tablist [ref=e641]:
+                      - generic [ref=e642]:
+                        - tab "Funding Rounds" [selected] [ref=e643] [cursor=pointer]:
+                          - generic [ref=e645]: Funding Rounds
+                        - tab "Investors" [ref=e646] [cursor=pointer]:
+                          - generic [ref=e648]: Investors
+                    - generic [ref=e649]:
+                      - tabpanel "Funding Rounds" [ref=e650]:
+                        - generic [ref=e651]:
+                          - generic [ref=e654]:
+                            - generic [ref=e656]: Number of Funding Rounds
+                            - link "2" [ref=e659] [cursor=pointer]:
+                              - /url: /search/funding_rounds/field/organizations/num_funding_rounds/sovereign-developers-and-infrastructure-limited
+                          - generic [ref=e661]:
+                            - generic [ref=e663]:
+                              - generic [ref=e664]: Unlock company funding data, including rounds, dates, amounts, and investors.
+                              - generic [ref=e665]:
+                                - generic [ref=e666]: obfuscated
+                                - button "Register for Free" [ref=e667]:
+                                  - generic [ref=e669]:
+                                    - img [ref=e671]
+                                    - generic [ref=e673]: Register for Free
+                            - table [ref=e676]:
+                              - rowgroup [ref=e677]:
+                                - row "Announced Date Transaction Name Number of Investors Money Raised Lead Investors Funding Type" [ref=e678]:
+                                  - columnheader "Announced Date" [ref=e679]:
+                                    - generic [ref=e681]:
+                                      - img [ref=e683]
+                                      - generic [ref=e690]: Announced Date
+                                  - columnheader "Transaction Name" [ref=e692]:
+                                    - generic [ref=e700]: Transaction Name
+                                  - columnheader "Number of Investors" [ref=e702]:
+                                    - generic [ref=e710]: Number of Investors
+                                  - columnheader "Money Raised" [ref=e712]:
+                                    - generic [ref=e720]: Money Raised
+                                  - columnheader "Lead Investors" [ref=e722]:
+                                    - generic [ref=e730]: Lead Investors
+                                  - columnheader "Funding Type" [ref=e732]:
+                                    - generic [ref=e740]: Funding Type
+                              - rowgroup:
+                                - row "obfuscation Venture Round - Sovereign Developers and Infrastructure Limited 1 obfuscation — Venture - Series Unknown":
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - link "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                            - /url: /funding_round/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                            - generic:
+                                              - generic:
+                                                - img "Venture Round - Sovereign Developers and Infrastructure Limited Logo"
+                                              - generic: Venture Round - Sovereign Developers and Infrastructure Limited
+                                  - cell "1":
+                                    - generic:
+                                      - generic:
+                                        - link "1":
+                                          - /url: /search/principal.investors/field/funding_round.has_funding_round.forward/num_investors/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "—":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: —
+                                  - cell "Venture - Series Unknown":
+                                    - generic:
+                                      - generic: Venture - Series Unknown
+                                - row "obfuscation Venture Round - Sovereign Developers and Infrastructure Limited 1 obfuscation — Venture - Series Unknown":
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - link "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                            - /url: /funding_round/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                            - generic:
+                                              - generic:
+                                                - img "Venture Round - Sovereign Developers and Infrastructure Limited Logo"
+                                              - generic: Venture Round - Sovereign Developers and Infrastructure Limited
+                                  - cell "1":
+                                    - generic:
+                                      - generic:
+                                        - link "1":
+                                          - /url: /search/principal.investors/field/funding_round.has_funding_round.forward/num_investors/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "—":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: —
+                                  - cell "Venture - Series Unknown":
+                                    - generic:
+                                      - generic: Venture - Series Unknown
+                                - row "obfuscation Venture Round - Sovereign Developers and Infrastructure Limited 1 obfuscation — Venture - Series Unknown":
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - link "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                            - /url: /funding_round/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                            - generic:
+                                              - generic:
+                                                - img "Venture Round - Sovereign Developers and Infrastructure Limited Logo"
+                                              - generic: Venture Round - Sovereign Developers and Infrastructure Limited
+                                  - cell "1":
+                                    - generic:
+                                      - generic:
+                                        - link "1":
+                                          - /url: /search/principal.investors/field/funding_round.has_funding_round.forward/num_investors/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "—":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: —
+                                  - cell "Venture - Series Unknown":
+                                    - generic:
+                                      - generic: Venture - Series Unknown
+                                - row "obfuscation Venture Round - Sovereign Developers and Infrastructure Limited 1 obfuscation — Venture - Series Unknown":
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - link "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                            - /url: /funding_round/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                            - generic:
+                                              - generic:
+                                                - img "Venture Round - Sovereign Developers and Infrastructure Limited Logo"
+                                              - generic: Venture Round - Sovereign Developers and Infrastructure Limited
+                                  - cell "1":
+                                    - generic:
+                                      - generic:
+                                        - link "1":
+                                          - /url: /search/principal.investors/field/funding_round.has_funding_round.forward/num_investors/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "—":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: —
+                                  - cell "Venture - Series Unknown":
+                                    - generic:
+                                      - generic: Venture - Series Unknown
+                                - row "obfuscation Venture Round - Sovereign Developers and Infrastructure Limited 1 obfuscation — Venture - Series Unknown":
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - link "Venture Round - Sovereign Developers and Infrastructure Limited":
+                                            - /url: /funding_round/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                            - generic:
+                                              - generic:
+                                                - img "Venture Round - Sovereign Developers and Infrastructure Limited Logo"
+                                              - generic: Venture Round - Sovereign Developers and Infrastructure Limited
+                                  - cell "1":
+                                    - generic:
+                                      - generic:
+                                        - link "1":
+                                          - /url: /search/principal.investors/field/funding_round.has_funding_round.forward/num_investors/sovereign-developers-and-infrastructure-limited-series-unknown--f5f47bdd
+                                  - cell "obfuscation":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - generic: obfuscation
+                                  - cell "—":
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: —
+                                  - cell "Venture - Series Unknown":
+                                    - generic:
+                                      - generic: Venture - Series Unknown
+                      - tabpanel [ref=e742]
+                  - link "View Financial Details" [ref=e746] [cursor=pointer]:
+                    - /url: /organization/new/financial_details
+                    - generic [ref=e747]:
+                      - text: View Financial Details
+                      - img [ref=e749]
+              - generic [ref=e755]:
+                - generic [ref=e757]: Market Intelligence
+                - generic [ref=e762]:
+                  - generic [ref=e763]: Unlock best-in-class Market Intelligence with Crunchbase Pro
+                  - list [ref=e765]:
+                    - listitem [ref=e766]:
+                      - generic [ref=e767]:
+                        - img [ref=e769]
+                        - generic [ref=e771]: Explore Competitors and Market Maps
+                    - listitem [ref=e772]:
+                      - generic [ref=e773]:
+                        - img [ref=e775]
+                        - generic [ref=e777]: Export up to 2K accounts/month
+                    - listitem [ref=e778]:
+                      - generic [ref=e779]:
+                        - img [ref=e781]
+                        - generic [ref=e783]: Search 4M+ private companies
+                  - button "Try Pro Free" [ref=e785]:
+                    - generic [ref=e786]: Try Pro Free
+              - generic [ref=e790]:
+                - generic [ref=e791]:
+                  - generic [ref=e792]: People
+                  - link "View Profiles & Contacts" [ref=e795] [cursor=pointer]:
+                    - /url: /organization/new/profiles_and_contacts
+                    - generic [ref=e796]:
+                      - text: View Profiles & Contacts
+                      - img [ref=e798]
+                - generic [ref=e802]:
+                  - generic [ref=e804]:
+                    - generic [ref=e806]:
+                      - generic [ref=e807]: Headcount
+                      - link "101-250" [ref=e809] [cursor=pointer]:
+                        - /url: /search/people/field/organizations/num_employees_enum/sovereign-developers-and-infrastructure-limited
+                    - generic [ref=e811]:
+                      - generic [ref=e812]: Employee Profiles
+                      - link "1" [ref=e814] [cursor=pointer]:
+                        - /url: /search/jobs/field/organizations/num_current_positions/sovereign-developers-and-infrastructure-limited
+                  - generic [ref=e818]:
+                    - heading "Employee Profiles" [level=2] [ref=e821]
+                    - list [ref=e824]:
+                      - listitem [ref=e825]:
+                        - img "Deepak Kumar Logo" [ref=e827]
+                        - generic [ref=e828]:
+                          - link "Deepak Kumar" [ref=e829] [cursor=pointer]:
+                            - /url: /person/deepak-kumar-df17
+                          - generic [ref=e831]: Director
+                    - link "View All" [ref=e835] [cursor=pointer]:
+                      - /url: /organization/new/profiles_and_contacts#people_employees
+                      - generic [ref=e836]:
+                        - text: View All
+                        - img [ref=e838]
+              - generic [ref=e843]:
+                - generic [ref=e844]:
+                  - generic [ref=e845]: Technology
+                  - link "View Tech Report" [ref=e848] [cursor=pointer]:
+                    - /url: /organization/new/tech_details
+                    - generic [ref=e849]:
+                      - text: View Tech Report
+                      - img [ref=e851]
+                - generic [ref=e856]:
+                  - generic [ref=e859]:
+                    - heading "Monthly Web Visits" [level=2] [ref=e862]
+                    - generic [ref=e863]:
+                      - generic [ref=e864]: "25"
+                      - generic [ref=e865]:
+                        - generic [ref=e867]:
+                          - img [ref=e869]
+                          - generic [ref=e873]: 12.79%
+                        - generic [ref=e874]: in past month
+                    - link "Data source:" [ref=e878] [cursor=pointer]:
+                      - /url: https://www.semrush.com/trends/
+                  - generic [ref=e881]:
+                    - heading "Active Website Tech Count" [level=2] [ref=e884]
+                    - generic [ref=e885]:
+                      - generic [ref=e886]: "31"
+                      - generic [ref=e887]:
+                        - link "Sovereign Developers and Infrastructure Limited" [ref=e890] [cursor=pointer]:
+                          - /url: /organization/sovereign-developers-and-infrastructure-limited
+                        - text: is actively using
+                        - generic [ref=e891]: "31"
+                        - text: technologies for its website, according to
+                        - link "BuiltWith" [ref=e892] [cursor=pointer]:
+                          - /url: https://builtwith.com/
+                        - text: . These include
+                        - generic [ref=e893]:
+                          - link "IPhone / Mobile Compatible" [ref=e896] [cursor=pointer]:
+                            - /url: /builtwith_technology/2f6cffdd-6438-400e-9512-692a21e184d8
+                          - text: ","
+                          - link "Viewport Meta" [ref=e899] [cursor=pointer]:
+                            - /url: /builtwith_technology/983394a8-d4ee-4af3-89ba-ae3a204dc982
+                          - text: ", and"
+                          - link "SSL by Default" [ref=e902] [cursor=pointer]:
+                            - /url: /builtwith_technology/799c9bbf-c24f-44f5-abb6-4a4f95f0e962
+                        - text: .
+                    - link "Data source:" [ref=e906] [cursor=pointer]:
+                      - /url: https://builtwith.com/
+              - generic [ref=e908]:
+                - generic [ref=e910]: Lists Featuring This Company
+                - generic [ref=e915]:
+                  - heading "Lists Featuring This Company" [level=2] [ref=e918]
+                  - generic [ref=e920]:
+                    - generic [ref=e921]:
+                      - generic [ref=e923]:
+                        - link "Closed Asia Companies (Top 10K)" [ref=e924] [cursor=pointer]:
+                          - /url: /hub/closed-asia-companies
+                        - generic [ref=e925]:
+                          - link "9,562" [ref=e927] [cursor=pointer]:
+                            - /url: /search/organizations/field/hubs/org_num/closed-asia-companies
+                          - text: Number of Organizations •
+                          - link "$74.8B" [ref=e929] [cursor=pointer]:
+                            - /url: /search/funding_rounds/field/hubs/org_funding_total/closed-asia-companies
+                          - text: Total Funding Amount •
+                          - link "12,456" [ref=e931] [cursor=pointer]:
+                            - /url: /search/principal.investors/field/hubs/org_num_investors/closed-asia-companies
+                          - text: Number of Investors
+                      - button "Track" [ref=e934]:
+                        - generic [ref=e935]: Track
+                    - generic [ref=e938]:
+                      - generic [ref=e940]:
+                        - link "Brand Capital Portfolio Companies" [ref=e941] [cursor=pointer]:
+                          - /url: /hub/brand-capital-portfolio-companies
+                        - generic [ref=e942]:
+                          - link "651" [ref=e944] [cursor=pointer]:
+                            - /url: /search/organizations/field/hubs/org_num/brand-capital-portfolio-companies
+                          - text: Number of Organizations •
+                          - link "$86.3B" [ref=e946] [cursor=pointer]:
+                            - /url: /search/funding_rounds/field/hubs/org_funding_total/brand-capital-portfolio-companies
+                          - text: Total Funding Amount •
+                          - link "1,890" [ref=e948] [cursor=pointer]:
+                            - /url: /search/principal.investors/field/hubs/org_num_investors/brand-capital-portfolio-companies
+                          - text: Number of Investors
+                      - button "Track" [ref=e951]:
+                        - generic [ref=e952]: Track
+                    - generic [ref=e955]:
+                      - generic [ref=e957]:
+                        - link "Closed India Companies (Top 10K)" [ref=e958] [cursor=pointer]:
+                          - /url: /hub/closed-india-companies
+                        - generic [ref=e959]:
+                          - link "8,545" [ref=e961] [cursor=pointer]:
+                            - /url: /search/organizations/field/hubs/org_num/closed-india-companies
+                          - text: Number of Organizations •
+                          - link "$13.7B" [ref=e963] [cursor=pointer]:
+                            - /url: /search/funding_rounds/field/hubs/org_funding_total/closed-india-companies
+                          - text: Total Funding Amount •
+                          - link "3,824" [ref=e965] [cursor=pointer]:
+                            - /url: /search/principal.investors/field/hubs/org_num_investors/closed-india-companies
+                          - text: Number of Investors
+                      - button "Track" [ref=e968]:
+                        - generic [ref=e969]: Track
+                    - generic [ref=e972]:
+                      - generic [ref=e974]:
+                        - link "Closed Madhya Pradesh Companies" [ref=e975] [cursor=pointer]:
+                          - /url: /hub/closed-madhya-pradesh-companies
+                        - generic [ref=e976]:
+                          - link "203" [ref=e978] [cursor=pointer]:
+                            - /url: /search/organizations/field/hubs/org_num/closed-madhya-pradesh-companies
+                          - text: Number of Organizations •
+                          - link "$25.4M" [ref=e980] [cursor=pointer]:
+                            - /url: /search/funding_rounds/field/hubs/org_funding_total/closed-madhya-pradesh-companies
+                          - text: Total Funding Amount •
+                          - link "32" [ref=e982] [cursor=pointer]:
+                            - /url: /search/principal.investors/field/hubs/org_num_investors/closed-madhya-pradesh-companies
+                          - text: Number of Investors
+                      - button "Track" [ref=e985]:
+                        - generic [ref=e986]: Track
+                  - button "View All" [ref=e992]:
+                    - generic [ref=e993]: View All
+              - generic [ref=e997]:
+                - generic [ref=e999]: Frequently Asked Questions
+                - generic [ref=e1006]:
+                  - generic [ref=e1007]:
+                    - text: Where is
+                    - link "Sovereign Developers and Infrastructure Limited" [ref=e1010] [cursor=pointer]:
+                      - /url: /organization/sovereign-developers-and-infrastructure-limited
+                    - text: "'s headquarters?"
+                    - link "Sovereign Developers and Infrastructure Limited" [ref=e1013] [cursor=pointer]:
+                      - /url: /organization/sovereign-developers-and-infrastructure-limited
+                    - text: is located in
+                    - generic [ref=e1016]:
+                      - link "Indore" [ref=e1017] [cursor=pointer]:
+                        - /url: /search/organizations/field/organizations/location_identifiers/indore-madhya-pradesh
+                      - text: ","
+                      - link "Madhya Pradesh" [ref=e1018] [cursor=pointer]:
+                        - /url: /search/organizations/field/organizations/location_identifiers/madhya-pradesh-india
+                      - text: ","
+                      - link "India" [ref=e1019] [cursor=pointer]:
+                        - /url: /search/organizations/field/organizations/location_identifiers/india
+                    - text: .
+                  - generic [ref=e1020]:
+                    - text: Who invested in
+                    - link "Sovereign Developers and Infrastructure Limited" [ref=e1023] [cursor=pointer]:
+                      - /url: /organization/sovereign-developers-and-infrastructure-limited
+                    - text: "?"
+                    - link "Sovereign Developers and Infrastructure Limited" [ref=e1026] [cursor=pointer]:
+                      - /url: /organization/sovereign-developers-and-infrastructure-limited
+                    - text: is funded by
+                    - link "Brand Capital" [ref=e1030] [cursor=pointer]:
+                      - /url: /organization/brandcapital
+                    - text: .
+                  - generic [ref=e1031]:
+                    - text: When was the last funding round for
+                    - link "Sovereign Developers and Infrastructure Limited" [ref=e1034] [cursor=pointer]:
+                      - /url: /organization/sovereign-developers-and-infrastructure-limited
+                    - text: "?"
+                    - link "Sovereign Developers and Infrastructure Limited" [ref=e1037] [cursor=pointer]:
+                      - /url: /organization/sovereign-developers-and-infrastructure-limited
+                    - text: closed its last funding round on
+                    - generic [ref=e1041] [cursor=pointer]:
+                      - generic: obfuscation
+                    - text: from a
+                    - link "Venture - Series Unknown" [ref=e1043] [cursor=pointer]:
+                      - /url: /search/funding_rounds/field/organizations/last_funding_type/sovereign-developers-and-infrastructure-limited
+                    - text: round.
+        - generic [ref=e1045]:
+          - generic [ref=e1047]:
+            - generic [ref=e1048]:
+              - generic [ref=e1051]:
+                - text: "Browse By:"
+                - link "Organizations," [ref=e1052] [cursor=pointer]:
+                  - /url: /sitemap/organizations
+                - link "People," [ref=e1053] [cursor=pointer]:
+                  - /url: /sitemap/people
+                - link "Events" [ref=e1054] [cursor=pointer]:
+                  - /url: /sitemap/events
+              - generic [ref=e1055]:
+                - generic [ref=e1056]: Stay Connected
+                - list [ref=e1057]:
+                  - listitem [ref=e1058]:
+                    - link "Crunchbase Blog" [ref=e1059] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/blog
+                  - listitem [ref=e1060]:
+                    - link "Crunchbase News" [ref=e1061] [cursor=pointer]:
+                      - /url: https://news.crunchbase.com/
+                  - listitem [ref=e1062]:
+                    - link "Subscribe to the Crunchbase Daily" [ref=e1063] [cursor=pointer]:
+                      - /url: /account?editNotifications=true
+                  - listitem [ref=e1064]:
+                    - link "Crunchbase Twitter" [ref=e1065] [cursor=pointer]:
+                      - /url: https://twitter.com/crunchbase
+                      - img [ref=e1067]
+                    - link "Crunchbase Facebook" [ref=e1069] [cursor=pointer]:
+                      - /url: https://www.facebook.com/crunchbase/
+                      - img [ref=e1071]
+                    - link "Crunchbase LinkedIn" [ref=e1073] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/company/crunchbase
+                      - img [ref=e1075]
+                    - link "Crunchbase Instagram" [ref=e1077] [cursor=pointer]:
+                      - /url: https://instagram.com/crunchbase
+                      - img [ref=e1079]
+            - generic [ref=e1081]:
+              - generic [ref=e1082]:
+                - generic [ref=e1083]: Who We Are
+                - list [ref=e1084]:
+                  - listitem [ref=e1085]:
+                    - link "Company" [ref=e1086] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/about-us
+                  - listitem [ref=e1087]:
+                    - link "Careers" [ref=e1088] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/about-us/careers
+                  - listitem [ref=e1089]:
+                    - link "Partners" [ref=e1090] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/partners
+                  - listitem [ref=e1091]:
+                    - link "Press" [ref=e1092] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/pressroom
+                  - listitem [ref=e1093]:
+                    - link "Contact Us" [ref=e1094] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/about-us/contact-us
+                  - listitem [ref=e1095]:
+                    - button "Talk With Sales" [ref=e1096] [cursor=pointer]
+              - generic [ref=e1097]:
+                - generic [ref=e1098]: What We Do
+                - list [ref=e1099]:
+                  - listitem [ref=e1100]:
+                    - link "Crunchbase Pro" [ref=e1101] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/products/crunchbase-pro
+                  - listitem [ref=e1102]:
+                    - link "Crunchbase Business" [ref=e1103] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/products/crunchbase-business
+                  - listitem [ref=e1104]:
+                    - link "Marketplace" [ref=e1105] [cursor=pointer]:
+                      - /url: https://www.crunchbase.com/marketplace/
+                  - listitem [ref=e1106]:
+                    - link "Data Licensing" [ref=e1107] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/products/crunchbase-for-applications
+                  - listitem [ref=e1108]:
+                    - link "Customer Stories" [ref=e1109] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/customers
+                  - listitem [ref=e1110]:
+                    - link "Pricing" [ref=e1111] [cursor=pointer]:
+                      - /url: /buy/select-product
+              - generic [ref=e1112]:
+                - generic [ref=e1113]: Helpful Links
+                - list [ref=e1114]:
+                  - listitem [ref=e1115]:
+                    - link "Create Profile" [ref=e1116] [cursor=pointer]:
+                      - /url: /add-new
+                  - listitem [ref=e1117]:
+                    - link "Featured Lists and Searches" [ref=e1118] [cursor=pointer]:
+                      - /url: /featured
+                  - listitem [ref=e1119]:
+                    - link "Knowledge Center" [ref=e1120] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/
+                  - listitem [ref=e1121]:
+                    - link "Privacy" [ref=e1122] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+                  - listitem [ref=e1123]:
+                    - button "Do Not Sell My Info" [ref=e1124] [cursor=pointer]
+          - generic [ref=e1125]:
+            - generic [ref=e1127]:
+              - text: AI Content may contain mistakes and is not legal, financial or investment advice.
+              - link "Learn more." [ref=e1128] [cursor=pointer]:
+                - /url: https://about.crunchbase.com/terms-of-service/
+            - generic [ref=e1129]:
+              - link "Terms of Service" [ref=e1130] [cursor=pointer]:
+                - /url: https://about.crunchbase.com/terms-of-service/
+              - text: "|"
+              - link "Privacy Policy" [ref=e1131] [cursor=pointer]:
+                - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+              - text: "|"
+              - link "Sitemap" [ref=e1132] [cursor=pointer]:
+                - /url: /sitemap
+              - text: "| © 2026 Crunchbase Inc. All Rights Reserved."
+              - generic [ref=e1133]: (dd1070b 1)
+            - generic [ref=e1134]:
+              - button "Cookie Settings" [ref=e1135] [cursor=pointer]
+              - text: "|"
+              - button "Do Not Sell or Share My Personal Info" [ref=e1136] [cursor=pointer]
+    - button "Help" [ref=e1138] [cursor=pointer]:
+      - img [ref=e1141]

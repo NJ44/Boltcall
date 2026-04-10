@@ -1,0 +1,1375 @@
+- generic [ref=e1]:
+  - generic [ref=e2542]:
+    - generic [ref=e2544]:
+      - link "Crunchbase" [ref=e2546] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5244]
+      - generic [ref=e2559]:
+        - button "Resources" [expanded] [active] [ref=e2562] [cursor=pointer]:
+          - generic [ref=e2565]:
+            - generic [ref=e2566]: Resources
+            - img [ref=e2568]
+        - generic [ref=e2572]:
+          - link "Start Free Trial" [ref=e2575] [cursor=pointer]:
+            - /url: /buy/select-product
+            - generic [ref=e2576]: Start Free Trial
+          - generic [ref=e2579]:
+            - button "Talk With Sales" [ref=e2582]:
+              - generic [ref=e2586]: Talk With Sales
+            - link "Pricing" [ref=e2591] [cursor=pointer]:
+              - /url: /buy/select-product
+              - generic [ref=e2595]: Pricing
+            - button "Advanced Search" [ref=e2599]:
+              - generic [ref=e2602]:
+                - generic [ref=e2603]: Advanced Search
+                - img [ref=e2605]
+            - button "Dashboard" [ref=e2610]:
+              - generic [ref=e2613]:
+                - generic [ref=e2614]: Dashboard
+                - img [ref=e2616]
+            - button "Crunchbase Scout" [ref=e2622]:
+              - img [ref=e2629]
+            - button "Account" [ref=e2634]:
+              - generic [ref=e2638]:
+                - img [ref=e2641]
+                - img [ref=e2644]
+    - generic [ref=e2650]:
+      - generic [ref=e2653]:
+        - generic [ref=e2654]:
+          - heading "Welcome back, נועם" [level=1] [ref=e2655]
+          - generic [ref=e2657]:
+            - generic [ref=e2658]:
+              - button "Expand Scout" [ref=e2662] [cursor=pointer]:
+                - img [ref=e2664]
+              - generic [ref=e2671]:
+                - generic [ref=e2674]: Search Crunchbase or Send Message
+                - combobox "Search Crunchbase or Send Message" [ref=e2675]
+                - button "Send Message" [disabled]:
+                  - generic:
+                    - img
+            - generic [ref=e2676]:
+              - button "Tech companies that are likely raising soon" [ref=e2677] [cursor=pointer]:
+                - generic [ref=e2678]:
+                  - img [ref=e2680]
+                  - generic [ref=e2683]: Tech companies that are likely raising soon
+              - button "Find web3 companies that are likely growing" [ref=e2684] [cursor=pointer]:
+                - generic [ref=e2685]:
+                  - img [ref=e2687]
+                  - generic [ref=e2689]: Find web3 companies that are likely growing
+              - button "Chart the funding journey of xAI" [ref=e2690] [cursor=pointer]:
+                - generic [ref=e2691]:
+                  - img [ref=e2693]
+                  - generic [ref=e2695]: Chart the funding journey of xAI
+              - button "Cybersecurity exits in the last 12 months" [ref=e2696] [cursor=pointer]:
+                - generic [ref=e2697]:
+                  - img [ref=e2699]
+                  - generic [ref=e2701]: Cybersecurity exits in the last 12 months
+          - generic [ref=e2703]:
+            - generic [ref=e2706]:
+              - button "Discover" [ref=e2707]:
+                - generic [ref=e2709]:
+                  - img [ref=e2711]
+                  - generic [ref=e2713]: Discover
+              - button "Your Saved Companies" [ref=e2716]:
+                - generic [ref=e2718]:
+                  - img [ref=e2720]
+                  - generic [ref=e2723]: Your Saved Companies
+            - generic [ref=e2726]:
+              - button "Predictions and Insights" [ref=e2728]:
+                - generic [ref=e2730]:
+                  - generic [ref=e2731]:
+                    - img [ref=e2733]
+                    - generic [ref=e2736]: Predictions and Insights
+                  - img [ref=e2739]
+              - button "Location" [ref=e2744]:
+                - generic [ref=e2746]:
+                  - generic [ref=e2747]:
+                    - img [ref=e2749]
+                    - generic [ref=e2751]: Location
+                  - img [ref=e2754]
+              - button "Industry" [ref=e2759]:
+                - generic [ref=e2761]:
+                  - generic [ref=e2762]:
+                    - img [ref=e2764]
+                    - generic [ref=e2766]: Industry
+                  - img [ref=e2769]
+            - generic [ref=e2774]:
+              - generic [ref=e2776] [cursor=pointer]:
+                - link "OKX Logo OKX" [ref=e2782]:
+                  - /url: /organization/okx
+                  - generic [ref=e2783]:
+                    - img "OKX Logo" [ref=e2785]
+                    - generic [ref=e2786]: OKX
+                - generic [ref=e2787]:
+                  - generic [ref=e2790]:
+                    - img [ref=e2792]
+                    - generic [ref=e2794]: Legal Proceeding
+                  - generic [ref=e2796]: 一本书引爆十年恩怨，CZ 与 Star 再次开战
+              - generic [ref=e2798] [cursor=pointer]:
+                - link "Modern Wealth Management Logo Modern Wealth Management" [ref=e2804]:
+                  - /url: /organization/modern-wealth-management
+                  - generic [ref=e2805]:
+                    - img "Modern Wealth Management Logo" [ref=e2807]
+                    - generic [ref=e2808]: Modern Wealth Management
+                - generic [ref=e2809]:
+                  - generic [ref=e2812]:
+                    - img [ref=e2814]
+                    - generic [ref=e2816]: Acquisition Prediction
+                  - generic [ref=e2818]: It is probable that Modern Wealth Management will be acquired
+              - generic [ref=e2820] [cursor=pointer]:
+                - link "Eli Lilly Logo Eli Lilly" [ref=e2826]:
+                  - /url: /organization/eli-lilly
+                  - generic [ref=e2827]:
+                    - img "Eli Lilly Logo" [ref=e2829]
+                    - generic [ref=e2830]: Eli Lilly
+                - generic [ref=e2831]:
+                  - generic [ref=e2834]:
+                    - img [ref=e2836]
+                    - generic [ref=e2838]: Growth Insight
+                  - generic [ref=e2840]: Eli Lilly reported significant growth in 2025, with total revenue rising to $65.2 billion, a 45% increase from the previous year, driven largely by its GLP-1 drugs, Mounjaro and Zepbound. Mounjaro generated $24.8 billion in sales in the first nine months of 2025, while Zepbound sales reached $13.5 billion, reflecting a 175% increase year-over-year. In Q4 2025, Eli Lilly's revenue was $19.3 billion, up 43% from the prior year, with over $10 billion coming from its obesity and diabetes portfolio. The company also reported a 54% year-over-year increase in Q3 revenue to $17.6 billion, driven by strong demand for its GLP-1 therapies. Eli Lilly's adjusted earnings per share for Q4 2025 rose to $7.54, exceeding analyst expectations and reflecting robust profit growth from its expanding product portfolio.
+              - generic [ref=e2842] [cursor=pointer]:
+                - link "Good Driver Mutuality Logo Good Driver Mutuality" [ref=e2848]:
+                  - /url: /organization/good-driver-mutuality
+                  - generic [ref=e2849]:
+                    - img "Good Driver Mutuality Logo" [ref=e2851]
+                    - generic [ref=e2852]: Good Driver Mutuality
+                - generic [ref=e2853]:
+                  - generic [ref=e2856]:
+                    - img [ref=e2858]
+                    - generic [ref=e2860]: Acquisition Prediction
+                  - generic [ref=e2862]: It is probable that Good Driver Mutuality will be acquired
+              - generic [ref=e2864] [cursor=pointer]:
+                - link "Rebellions Logo Rebellions" [ref=e2870]:
+                  - /url: /organization/rebellions-ai
+                  - generic [ref=e2871]:
+                    - img "Rebellions Logo" [ref=e2873]
+                    - generic [ref=e2874]: Rebellions
+                - generic [ref=e2875]:
+                  - generic [ref=e2878]:
+                    - img [ref=e2880]
+                    - generic [ref=e2882]: Partnership Announcement
+                  - generic [ref=e2884]: 리벨리온, Arm·SKT와 ‘추론 인프라’ 협력…글로벌 소버린 AI 및 통신 시장 겨냥
+              - generic [ref=e2886] [cursor=pointer]:
+                - link "Periskope Logo Periskope" [ref=e2892]:
+                  - /url: /organization/periskope
+                  - generic [ref=e2893]:
+                    - img "Periskope Logo" [ref=e2895]
+                    - generic [ref=e2896]: Periskope
+                - generic [ref=e2897]:
+                  - generic [ref=e2900]:
+                    - img [ref=e2902]
+                    - generic [ref=e2904]: Acquisition Prediction
+                  - generic [ref=e2906]: It is probable that Periskope will be acquired
+              - generic [ref=e2908] [cursor=pointer]:
+                - link "Google for Startups Logo Google for Startups" [ref=e2914]:
+                  - /url: /organization/google-for-entrepreneurs
+                  - generic [ref=e2915]:
+                    - img "Google for Startups Logo" [ref=e2917]
+                    - generic [ref=e2918]: Google for Startups
+                - generic [ref=e2919]:
+                  - generic [ref=e2922]:
+                    - img [ref=e2924]
+                    - generic [ref=e2927]: Investor Insight
+                  - generic [ref=e2929]: Google for Startups backs pre-seed startups with grants and non-equity support in AI, software, SaaS, and science and engineering across Kyiv, London, and Tallinn in Europe.
+              - generic [ref=e2931] [cursor=pointer]:
+                - link "Arcana Recovery Logo Arcana Recovery" [ref=e2937]:
+                  - /url: /organization/arcana-recovery
+                  - generic [ref=e2938]:
+                    - img "Arcana Recovery Logo" [ref=e2940]
+                    - generic [ref=e2941]: Arcana Recovery
+                - generic [ref=e2942]:
+                  - generic [ref=e2945]:
+                    - img [ref=e2947]
+                    - generic [ref=e2949]: Acquisition Prediction
+                  - generic [ref=e2951]: It is probable that Arcana Recovery will be acquired
+              - generic [ref=e2953] [cursor=pointer]:
+                - link "USA Rare Earth Logo USA Rare Earth" [ref=e2959]:
+                  - /url: /organization/usa-rare-earth
+                  - generic [ref=e2960]:
+                    - img "USA Rare Earth Logo" [ref=e2962]
+                    - generic [ref=e2963]: USA Rare Earth
+                - generic [ref=e2964]:
+                  - generic [ref=e2967]:
+                    - img [ref=e2969]
+                    - generic [ref=e2971]: Partnership Announcement
+                  - generic [ref=e2973]: USA Rare Earth considers building French magnet plant
+              - generic [ref=e2975] [cursor=pointer]:
+                - link "Canton Network Logo Canton Network" [ref=e2981]:
+                  - /url: /organization/canton-network
+                  - generic [ref=e2982]:
+                    - img "Canton Network Logo" [ref=e2984]
+                    - generic [ref=e2985]: Canton Network
+                - generic [ref=e2986]:
+                  - generic [ref=e2989]:
+                    - img [ref=e2991]
+                    - generic [ref=e2993]: Acquisition Prediction
+                  - generic [ref=e2995]: It is probable that Canton Network will be acquired
+              - generic [ref=e2997] [cursor=pointer]:
+                - link "SpaceX Logo SpaceX" [ref=e3003]:
+                  - /url: /organization/space-exploration-technologies
+                  - generic [ref=e3004]:
+                    - img "SpaceX Logo" [ref=e3006]
+                    - generic [ref=e3007]: SpaceX
+                - generic [ref=e3008]:
+                  - generic [ref=e3011]:
+                    - img [ref=e3013]
+                    - generic [ref=e3015]: Growth Insight
+                  - generic [ref=e3017]: SpaceX acquired Elon Musk's artificial intelligence startup xAI in February 2026, creating a combined entity valued at approximately $1.25 trillion. This merger integrated xAI's AI capabilities with SpaceX's space and satellite operations, significantly boosting SpaceX's valuation. The acquisition was part of a broader strategy to consolidate Musk's ventures and support plans for orbital data centers. Additionally, SpaceX's Starlink service reached 9.2 million paying customers globally, reflecting strong growth in its customer base. The company generated about $15 to $16 billion in revenue last year, with Starlink contributing significantly to this figure, indicating robust financial performance ahead of its planned IPO.
+              - generic [ref=e3019] [cursor=pointer]:
+                - link "The Many Co. Logo The Many Co." [ref=e3025]:
+                  - /url: /organization/borobabi
+                  - generic [ref=e3026]:
+                    - img "The Many Co. Logo" [ref=e3028]
+                    - generic [ref=e3029]: The Many Co.
+                - generic [ref=e3030]:
+                  - generic [ref=e3033]:
+                    - img [ref=e3035]
+                    - generic [ref=e3037]: Acquisition Prediction
+                  - generic [ref=e3039]: It is probable that The Many Co. will be acquired
+              - generic [ref=e3041] [cursor=pointer]:
+                - link "Wasabi Technologies Logo Wasabi Technologies" [ref=e3047]:
+                  - /url: /organization/wasabi-technologies-inc
+                  - generic [ref=e3048]:
+                    - img "Wasabi Technologies Logo" [ref=e3050]
+                    - generic [ref=e3051]: Wasabi Technologies
+                - generic [ref=e3052]:
+                  - generic [ref=e3055]:
+                    - img [ref=e3057]
+                    - generic [ref=e3059]: Product Launch
+                  - generic [ref=e3061]: Wasabi CEO On Why Buying Seagate’s Lyve Cloud Storage Business Is A Boost In Storage Supply Chain ‘Mess’
+              - generic [ref=e3063] [cursor=pointer]:
+                - link "Brask AI Logo Brask AI" [ref=e3069]:
+                  - /url: /organization/brask-ai
+                  - generic [ref=e3070]:
+                    - img "Brask AI Logo" [ref=e3072]
+                    - generic [ref=e3073]: Brask AI
+                - generic [ref=e3074]:
+                  - generic [ref=e3077]:
+                    - img [ref=e3079]
+                    - generic [ref=e3081]: Acquisition Prediction
+                  - generic [ref=e3083]: It is probable that Brask AI will be acquired
+              - generic [ref=e3085] [cursor=pointer]:
+                - link "Plug and Play Logo Plug and Play" [ref=e3091]:
+                  - /url: /organization/plug-and-play-ventures
+                  - generic [ref=e3092]:
+                    - img "Plug and Play Logo" [ref=e3094]
+                    - generic [ref=e3095]: Plug and Play
+                - generic [ref=e3096]:
+                  - generic [ref=e3099]:
+                    - img [ref=e3101]
+                    - generic [ref=e3104]: Investor Insight
+                  - generic [ref=e3106]: Plug and Play invests in seed and early-stage companies in AI, software, and financial services, primarily across San Francisco, Boston, and New York in the United States.
+              - generic [ref=e3108] [cursor=pointer]:
+                - link "SourceIQ Logo SourceIQ" [ref=e3114]:
+                  - /url: /organization/talkdei
+                  - generic [ref=e3115]:
+                    - img "SourceIQ Logo" [ref=e3117]
+                    - generic [ref=e3118]: SourceIQ
+                - generic [ref=e3119]:
+                  - generic [ref=e3122]:
+                    - img [ref=e3124]
+                    - generic [ref=e3126]: IPO Prediction
+                  - generic [ref=e3128]: It is probable that SourceIQ will IPO
+              - generic [ref=e3130] [cursor=pointer]:
+                - link "Epic Games Logo Epic Games" [ref=e3136]:
+                  - /url: /organization/epic-games-2
+                  - generic [ref=e3137]:
+                    - img "Epic Games Logo" [ref=e3139]
+                    - generic [ref=e3140]: Epic Games
+                - generic [ref=e3141]:
+                  - generic [ref=e3144]:
+                    - img [ref=e3146]
+                    - generic [ref=e3148]: Legal Proceeding
+                  - generic [ref=e3150]: No Ads? Check Back In Two Weeks; I/Os Will Outlive Us All
+              - generic [ref=e3152] [cursor=pointer]:
+                - link "HSBC Innovation Banking Logo HSBC Innovation Banking" [ref=e3158]:
+                  - /url: /organization/hsbc-innovation-banking
+                  - generic [ref=e3159]:
+                    - img "HSBC Innovation Banking Logo" [ref=e3161]
+                    - generic [ref=e3162]: HSBC Innovation Banking
+                - generic [ref=e3163]:
+                  - generic [ref=e3166]:
+                    - img [ref=e3168]
+                    - generic [ref=e3170]: Acquisition Prediction
+                  - generic [ref=e3172]: It is probable that HSBC Innovation Banking will be acquired
+              - generic [ref=e3174] [cursor=pointer]:
+                - link "Eikon Therapeutics Logo Eikon Therapeutics" [ref=e3180]:
+                  - /url: /organization/eikon-therapeutics
+                  - generic [ref=e3181]:
+                    - img "Eikon Therapeutics Logo" [ref=e3183]
+                    - generic [ref=e3184]: Eikon Therapeutics
+                - generic [ref=e3185]:
+                  - generic [ref=e3188]:
+                    - img [ref=e3190]
+                    - generic [ref=e3192]: Growth Insight
+                  - generic [ref=e3194]: Eikon Therapeutics completed an initial public offering on Nasdaq, raising approximately $381 million to support the development of its oncology drug pipeline. The company had previously raised a total of over $1 billion in funding, including a $351 million Series D round and a $106 million Series C round. The IPO was noted as the largest biopharma IPO in 2026, with shares priced at $18 each, and the offering was upsized from an initial plan of 17.6 million shares to 21.2 million shares. This successful IPO contributed to the overall $5 billion raised through IPOs in the U.S. in 2026.
+              - generic [ref=e3196] [cursor=pointer]:
+                - link "WELARA Logo WELARA" [ref=e3202]:
+                  - /url: /organization/welara
+                  - generic [ref=e3203]:
+                    - img "WELARA Logo" [ref=e3205]
+                    - generic [ref=e3206]: WELARA
+                - generic [ref=e3207]:
+                  - generic [ref=e3210]:
+                    - img [ref=e3212]
+                    - generic [ref=e3214]: Acquisition Prediction
+                  - generic [ref=e3216]: It is probable that WELARA will be acquired
+              - generic [ref=e3218] [cursor=pointer]:
+                - link "NANO Nuclear Energy Logo NANO Nuclear Energy" [ref=e3224]:
+                  - /url: /organization/nano-nuclear-energy
+                  - generic [ref=e3225]:
+                    - img "NANO Nuclear Energy Logo" [ref=e3227]
+                    - generic [ref=e3228]: NANO Nuclear Energy
+                - generic [ref=e3229]:
+                  - generic [ref=e3232]:
+                    - img [ref=e3234]
+                    - generic [ref=e3236]: Partnership Announcement
+                  - generic [ref=e3238]: NANO Nuclear Granted U.S. Department of Energy's GAIN Voucher Award in Collaboration with Oak Ridge National Laboratory to Develop a Validated UQ Framework Tailored to the KRONOS MMR Energy System
+              - generic [ref=e3240] [cursor=pointer]:
+                - link "Saturation Logo Saturation" [ref=e3246]:
+                  - /url: /organization/saturation-io
+                  - generic [ref=e3247]:
+                    - img "Saturation Logo" [ref=e3249]
+                    - generic [ref=e3250]: Saturation
+                - generic [ref=e3251]:
+                  - generic [ref=e3254]:
+                    - img [ref=e3256]
+                    - generic [ref=e3258]: Acquisition Prediction
+                  - generic [ref=e3260]: It is probable that Saturation will be acquired
+              - generic [ref=e3262] [cursor=pointer]:
+                - link "Lifeline Ventures Logo Lifeline Ventures" [ref=e3268]:
+                  - /url: /organization/lifeline-ventures
+                  - generic [ref=e3269]:
+                    - img "Lifeline Ventures Logo" [ref=e3271]
+                    - generic [ref=e3272]: Lifeline Ventures
+                - generic [ref=e3273]:
+                  - generic [ref=e3276]:
+                    - img [ref=e3278]
+                    - generic [ref=e3281]: Investor Insight
+                  - generic [ref=e3283]: Lifeline Ventures invests at pre-seed to early-stage in AI, software, renewable energy, and hardware-focused science and engineering, primarily in Helsinki and Espoo, Finland, and Vilnius, Lithuania in Europe.
+              - generic [ref=e3285] [cursor=pointer]:
+                - link "Gigflow Logo Gigflow" [ref=e3291]:
+                  - /url: /organization/soydigi-com
+                  - generic [ref=e3292]:
+                    - img "Gigflow Logo" [ref=e3294]
+                    - generic [ref=e3295]: Gigflow
+                - generic [ref=e3296]:
+                  - generic [ref=e3299]:
+                    - img [ref=e3301]
+                    - generic [ref=e3303]: Acquisition Prediction
+                  - generic [ref=e3305]: It is probable that Gigflow will be acquired
+              - generic [ref=e3307] [cursor=pointer]:
+                - link "Isomorphic Labs Logo Isomorphic Labs" [ref=e3313]:
+                  - /url: /organization/isomorphic-labs
+                  - generic [ref=e3314]:
+                    - img "Isomorphic Labs Logo" [ref=e3316]
+                    - generic [ref=e3317]: Isomorphic Labs
+                - generic [ref=e3318]:
+                  - generic [ref=e3321]:
+                    - img [ref=e3323]
+                    - generic [ref=e3325]: Product Launch
+                  - generic [ref=e3327]: Demis Hassabis says Google DeepMind had to return to its startup roots after the Brain merger
+              - generic [ref=e3329] [cursor=pointer]:
+                - link "Canarie Ai Logo Canarie Ai" [ref=e3335]:
+                  - /url: /organization/akroda
+                  - generic [ref=e3336]:
+                    - img "Canarie Ai Logo" [ref=e3338]
+                    - generic [ref=e3339]: Canarie Ai
+                - generic [ref=e3340]:
+                  - generic [ref=e3343]:
+                    - img [ref=e3345]
+                    - generic [ref=e3347]: Acquisition Prediction
+                  - generic [ref=e3349]: It is probable that Canarie Ai will be acquired
+              - generic [ref=e3351] [cursor=pointer]:
+                - link "Mirae Asset Securities Logo Mirae Asset Securities" [ref=e3357]:
+                  - /url: /organization/mirae-asset-securities
+                  - generic [ref=e3358]:
+                    - img "Mirae Asset Securities Logo" [ref=e3360]
+                    - generic [ref=e3361]: Mirae Asset Securities
+                - generic [ref=e3362]:
+                  - generic [ref=e3365]:
+                    - img [ref=e3367]
+                    - generic [ref=e3369]: Growth Insight
+                  - generic [ref=e3371]: Mirae Asset Securities reported a consolidated net profit of 1.59 trillion won for fiscal 2025, reflecting a 72% year-on-year increase, driven by strong overseas operations and gains from SpaceX-related investments. The company also raised approximately 100 billion won through Korea's first blockchain-based digital bond issuance, marking a significant milestone in its funding activities. Additionally, Mirae Asset Securities executed treasury share cancellations totaling 170.2 billion won as part of its shareholder return program, alongside cash and stock dividends.
+              - generic [ref=e3373] [cursor=pointer]:
+                - link "Amplified Music Rights Logo Amplified Music Rights" [ref=e3379]:
+                  - /url: /organization/amplified-music-rights
+                  - generic [ref=e3380]:
+                    - img "Amplified Music Rights Logo" [ref=e3382]
+                    - generic [ref=e3383]: Amplified Music Rights
+                - generic [ref=e3384]:
+                  - generic [ref=e3387]:
+                    - img [ref=e3389]
+                    - generic [ref=e3391]: Acquisition Prediction
+                  - generic [ref=e3393]: It is probable that Amplified Music Rights will be acquired
+              - generic [ref=e3395] [cursor=pointer]:
+                - link "xAI Logo xAI" [ref=e3401]:
+                  - /url: /organization/xai
+                  - generic [ref=e3402]:
+                    - img "xAI Logo" [ref=e3404]
+                    - generic [ref=e3405]: xAI
+                - generic [ref=e3406]:
+                  - generic [ref=e3409]:
+                    - img [ref=e3411]
+                    - generic [ref=e3413]: Partnership Announcement
+                  - generic [ref=e3415]: Musk sues to oust OpenAI CEO
+              - generic [ref=e3417] [cursor=pointer]:
+                - link "bao Logo bao" [ref=e3423]:
+                  - /url: /organization/bao-solutions
+                  - generic [ref=e3424]:
+                    - img "bao Logo" [ref=e3426]
+                    - generic [ref=e3427]: bao
+                - generic [ref=e3428]:
+                  - generic [ref=e3431]:
+                    - img [ref=e3433]
+                    - generic [ref=e3435]: Acquisition Prediction
+                  - generic [ref=e3437]: It is probable that bao will be acquired
+              - generic [ref=e3439] [cursor=pointer]:
+                - link "Wintermute Ventures Logo Wintermute Ventures" [ref=e3445]:
+                  - /url: /organization/wintermute-ventures
+                  - generic [ref=e3446]:
+                    - img "Wintermute Ventures Logo" [ref=e3448]
+                    - generic [ref=e3449]: Wintermute Ventures
+                - generic [ref=e3450]:
+                  - generic [ref=e3453]:
+                    - img [ref=e3455]
+                    - generic [ref=e3458]: Investor Insight
+                  - generic [ref=e3460]: Wintermute Ventures invests in seed to early-stage blockchain, cryptocurrency, and fintech companies, with a geographic focus across North America and Europe, including the US, Cayman Islands, and Switzerland.
+              - generic [ref=e3462] [cursor=pointer]:
+                - link "Semilla Co. (Flou / Seed Academy) Logo Semilla Co. (Flou / Seed Academy)" [ref=e3468]:
+                  - /url: /organization/seed-ad99
+                  - generic [ref=e3469]:
+                    - img "Semilla Co. (Flou / Seed Academy) Logo" [ref=e3471]
+                    - generic [ref=e3472]: Semilla Co. (Flou / Seed Academy)
+                - generic [ref=e3473]:
+                  - generic [ref=e3476]:
+                    - img [ref=e3478]
+                    - generic [ref=e3480]: Acquisition Prediction
+                  - generic [ref=e3482]: It is probable that Semilla Co. (Flou / Seed Academy) will be acquired
+              - generic [ref=e3484] [cursor=pointer]:
+                - link "Telegram Logo Telegram" [ref=e3490]:
+                  - /url: /organization/telegram-messenger
+                  - generic [ref=e3491]:
+                    - img "Telegram Logo" [ref=e3493]
+                    - generic [ref=e3494]: Telegram
+                - generic [ref=e3495]:
+                  - generic [ref=e3498]:
+                    - img [ref=e3500]
+                    - generic [ref=e3502]: Partnership Announcement
+                  - generic [ref=e3504]: TON blockchain claims sub-second finality with Catchain 2.0 upgrade
+              - generic [ref=e3506] [cursor=pointer]:
+                - link "Perch Logo Perch" [ref=e3512]:
+                  - /url: /organization/perch-051d
+                  - generic [ref=e3513]:
+                    - img "Perch Logo" [ref=e3515]
+                    - generic [ref=e3516]: Perch
+                - generic [ref=e3517]:
+                  - generic [ref=e3520]:
+                    - img [ref=e3522]
+                    - generic [ref=e3524]: Acquisition Prediction
+                  - generic [ref=e3526]: It is probable that Perch will be acquired
+              - generic [ref=e3528] [cursor=pointer]:
+                - link "TWIN VEE POWERCATS CO. Logo TWIN VEE POWERCATS CO." [ref=e3534]:
+                  - /url: /organization/twin-vee-powercats-inc
+                  - generic [ref=e3535]:
+                    - img "TWIN VEE POWERCATS CO. Logo" [ref=e3537]
+                    - generic [ref=e3538]: TWIN VEE POWERCATS CO.
+                - generic [ref=e3539]:
+                  - generic [ref=e3542]:
+                    - img [ref=e3544]
+                    - generic [ref=e3546]: Growth Insight
+                  - generic [ref=e3548]: Twin Vee PowerCats reported net sales of $14.8 million for 2025, reflecting a 3% increase from $14.4 million in 2024, indicating a modest return to revenue growth as dealer demand improved and inventory normalized. The company reduced its net loss to $8.6 million in 2025 from $14.0 million in 2024, marking a 39% improvement driven by higher gross profit and a 27% reduction in operating expenses. Additionally, Twin Vee PowerCats completed a public offering of 6,383,000 shares of common stock at $0.47 per share, raising approximately $3 million in gross proceeds for working capital and general corporate purposes. The company also acquired the assets of Bahama Boat Works in June 2025, adding a premium offshore monohull boat brand to its portfolio.
+              - generic [ref=e3550] [cursor=pointer]:
+                - link "4M Collision Logo 4M Collision" [ref=e3556]:
+                  - /url: /organization/auto
+                  - generic [ref=e3557]:
+                    - img "4M Collision Logo" [ref=e3559]
+                    - generic [ref=e3560]: 4M Collision
+                - generic [ref=e3561]:
+                  - generic [ref=e3564]:
+                    - img [ref=e3566]
+                    - generic [ref=e3568]: Acquisition Prediction
+                  - generic [ref=e3570]: It is probable that 4M Collision will be acquired
+              - generic [ref=e3572] [cursor=pointer]:
+                - link "India Quotient Logo India Quotient" [ref=e3578]:
+                  - /url: /organization/india-quotient
+                  - generic [ref=e3579]:
+                    - img "India Quotient Logo" [ref=e3581]
+                    - generic [ref=e3582]: India Quotient
+                - generic [ref=e3583]:
+                  - generic [ref=e3586]:
+                    - img [ref=e3588]
+                    - generic [ref=e3590]: Award
+                  - generic [ref=e3592]: IAEA hails India’s fast breeder reactor as breakthrough in nuclear energy
+              - generic [ref=e3594] [cursor=pointer]:
+                - link "Cogenuity Partners. Logo Cogenuity Partners." [ref=e3600]:
+                  - /url: /organization/cogenuity-partners
+                  - generic [ref=e3601]:
+                    - img "Cogenuity Partners. Logo" [ref=e3603]
+                    - generic [ref=e3604]: Cogenuity Partners.
+                - generic [ref=e3605]:
+                  - generic [ref=e3608]:
+                    - img [ref=e3610]
+                    - generic [ref=e3612]: Acquisition Prediction
+                  - generic [ref=e3614]: It is probable that Cogenuity Partners. will be acquired
+              - generic [ref=e3616] [cursor=pointer]:
+                - link "Reverie Logo Reverie" [ref=e3622]:
+                  - /url: /organization/reverie-41ce
+                  - generic [ref=e3623]:
+                    - img "Reverie Logo" [ref=e3625]
+                    - generic [ref=e3626]: Reverie
+                - generic [ref=e3627]:
+                  - generic [ref=e3630]:
+                    - img [ref=e3632]
+                    - generic [ref=e3635]: Investor Insight
+                  - generic [ref=e3637]: Reverie invests in seed-stage blockchain, cryptocurrency, and fintech companies, focusing on financial services across Toronto in Canada, São Paulo in Brazil, and Bangalore in India.
+              - generic [ref=e3639] [cursor=pointer]:
+                - link "Collective Global Management Logo Collective Global Management" [ref=e3645]:
+                  - /url: /organization/collective-global-management
+                  - generic [ref=e3646]:
+                    - img "Collective Global Management Logo" [ref=e3648]
+                    - generic [ref=e3649]: Collective Global Management
+                - generic [ref=e3650]:
+                  - generic [ref=e3653]:
+                    - img [ref=e3655]
+                    - generic [ref=e3657]: Acquisition Prediction
+                  - generic [ref=e3659]: It is probable that Collective Global Management will be acquired
+              - generic [ref=e3661] [cursor=pointer]:
+                - link "ICG Silver & Gold Logo ICG Silver & Gold" [ref=e3667]:
+                  - /url: /organization/icg-silver-gold
+                  - generic [ref=e3668]:
+                    - img "ICG Silver & Gold Logo" [ref=e3670]
+                    - generic [ref=e3671]: ICG Silver & Gold
+                - generic [ref=e3672]:
+                  - generic [ref=e3675]:
+                    - img [ref=e3677]
+                    - generic [ref=e3679]: Leadership Hire
+                  - generic [ref=e3681]: ICG Silver & Gold Identifies Major Untested Structural Corridor and Multiple New Targets at the Tuscarora District
+              - generic [ref=e3683] [cursor=pointer]:
+                - link "Dots Logo Dots" [ref=e3689]:
+                  - /url: /organization/dots-fec0
+                  - generic [ref=e3690]:
+                    - img "Dots Logo" [ref=e3692]
+                    - generic [ref=e3693]: Dots
+                - generic [ref=e3694]:
+                  - generic [ref=e3697]:
+                    - img [ref=e3699]
+                    - generic [ref=e3701]: Acquisition Prediction
+                  - generic [ref=e3703]: It is probable that Dots will be acquired
+              - generic [ref=e3705] [cursor=pointer]:
+                - link "Tripadvisor Logo Tripadvisor" [ref=e3711]:
+                  - /url: /organization/tripadvisor
+                  - generic [ref=e3712]:
+                    - img "Tripadvisor Logo" [ref=e3714]
+                    - generic [ref=e3715]: Tripadvisor
+                - generic [ref=e3716]:
+                  - generic [ref=e3719]:
+                    - img [ref=e3721]
+                    - generic [ref=e3723]: Growth Insight
+                  - generic [ref=e3725]: Tripadvisor reported a 45% year-over-year jump in winter travel bookings on its platform, indicating strong growth in the number of customers planning and booking winter trips. The Tripadvisor Group's experiences segment saw experience bookings reach about 5 million in Q4 2025, an 18% year-over-year increase. For full-year 2025, Tripadvisor Group's experiences segment handled approximately 22.9 million bookings, a 16% increase from 2024. Tripadvisor Group achieved full-year 2025 revenue of $1.9 billion, a 3% increase over 2024. Tripadvisor Group's experiences segment revenue increased to $204 million in Q4 2025 from $186 million in Q4 2024. Tripadvisor Group's experiences segment generated $924 million in revenue in 2025, up 10% from 2024.
+              - generic [ref=e3727] [cursor=pointer]:
+                - link "ConnectUs Logo ConnectUs" [ref=e3733]:
+                  - /url: /organization/connectus-5a37
+                  - generic [ref=e3734]:
+                    - img "ConnectUs Logo" [ref=e3736]
+                    - generic [ref=e3737]: ConnectUs
+                - generic [ref=e3738]:
+                  - generic [ref=e3741]:
+                    - img [ref=e3743]
+                    - generic [ref=e3745]: Acquisition Prediction
+                  - generic [ref=e3747]: It is probable that ConnectUs will be acquired
+              - generic [ref=e3749] [cursor=pointer]:
+                - link "GridStor Logo GridStor" [ref=e3755]:
+                  - /url: /organization/gridstor
+                  - generic [ref=e3756]:
+                    - img "GridStor Logo" [ref=e3758]
+                    - generic [ref=e3759]: GridStor
+                - generic [ref=e3760]:
+                  - generic [ref=e3763]:
+                    - img [ref=e3765]
+                    - generic [ref=e3767]: Partnership Announcement
+                  - generic [ref=e3769]: GridStor, Axpo execute energy storage revenue swap agreement for 440MWh Texas BESS
+              - generic [ref=e3771] [cursor=pointer]:
+                - link "EntertainM Logo EntertainM" [ref=e3777]:
+                  - /url: /organization/entertainm
+                  - generic [ref=e3778]:
+                    - img "EntertainM Logo" [ref=e3780]
+                    - generic [ref=e3781]: EntertainM
+                - generic [ref=e3782]:
+                  - generic [ref=e3785]:
+                    - img [ref=e3787]
+                    - generic [ref=e3789]: IPO Prediction
+                  - generic [ref=e3791]: It is probable that EntertainM will IPO
+              - generic [ref=e3793] [cursor=pointer]:
+                - link "Ikorni Invest Logo Ikorni Invest" [ref=e3799]:
+                  - /url: /organization/ikorni-invest
+                  - generic [ref=e3800]:
+                    - img "Ikorni Invest Logo" [ref=e3802]
+                    - generic [ref=e3803]: Ikorni Invest
+                - generic [ref=e3804]:
+                  - generic [ref=e3807]:
+                    - img [ref=e3809]
+                    - generic [ref=e3812]: Investor Insight
+                  - generic [ref=e3814]: Ikorni Invest backs seed-stage companies in chemical, manufacturing, construction, and related science, engineering, and real estate sectors, with investments concentrated in Helsinki, Joensuu, Uusikaupunki, and broader Finland in Europe.
+              - generic [ref=e3816] [cursor=pointer]:
+                - link "Sony Honda Mobility Logo Sony Honda Mobility" [ref=e3822]:
+                  - /url: /organization/sony-honda-mobility
+                  - generic [ref=e3823]:
+                    - img "Sony Honda Mobility Logo" [ref=e3825]
+                    - generic [ref=e3826]: Sony Honda Mobility
+                - generic [ref=e3827]:
+                  - generic [ref=e3830]:
+                    - img [ref=e3832]
+                    - generic [ref=e3834]: Acquisition Prediction
+                  - generic [ref=e3836]: It is probable that Sony Honda Mobility will be acquired
+              - generic [ref=e3838] [cursor=pointer]:
+                - link "Cassa Depositi e Prestiti Logo Cassa Depositi e Prestiti" [ref=e3844]:
+                  - /url: /organization/cassa-depositi-e-prestiti
+                  - generic [ref=e3845]:
+                    - img "Cassa Depositi e Prestiti Logo" [ref=e3847]
+                    - generic [ref=e3848]: Cassa Depositi e Prestiti
+                - generic [ref=e3849]:
+                  - generic [ref=e3852]:
+                    - img [ref=e3854]
+                    - generic [ref=e3856]: Partnership Announcement
+                  - generic [ref=e3858]: Senior living gains ground as Italy’s aging strains families
+              - generic [ref=e3860] [cursor=pointer]:
+                - link "CyBirb Logo CyBirb" [ref=e3866]:
+                  - /url: /organization/cybirb
+                  - generic [ref=e3867]:
+                    - img "CyBirb Logo" [ref=e3869]
+                    - generic [ref=e3870]: CyBirb
+                - generic [ref=e3871]:
+                  - generic [ref=e3874]:
+                    - img [ref=e3876]
+                    - generic [ref=e3878]: Acquisition Prediction
+                  - generic [ref=e3880]: It is probable that CyBirb will be acquired
+              - generic [ref=e3882] [cursor=pointer]:
+                - link "VolitionRx Logo VolitionRx" [ref=e3888]:
+                  - /url: /organization/volitionrx
+                  - generic [ref=e3889]:
+                    - img "VolitionRx Logo" [ref=e3891]
+                    - generic [ref=e3892]: VolitionRx
+                - generic [ref=e3893]:
+                  - generic [ref=e3896]:
+                    - img [ref=e3898]
+                    - generic [ref=e3900]: Growth Insight
+                  - generic [ref=e3902]: VolitionRx reported Q3 2025 revenue of $0.6 million, which represented a 32% increase year over year. The company also reported full-year 2025 revenue of $1.7 million, marking a 40% increase over the previous year, indicating growing commercialization of its assays. Additionally, VolitionRx achieved a key R&D milestone for its Capture-Seq liquid biopsy technology, demonstrating strong proof of concept for multi-cancer early detection and minimal residual disease applications. The company raised approximately $6.1 million in net proceeds via a public offering after the quarter end, which is expected to support its operations and R&D efforts.
+              - generic [ref=e3904] [cursor=pointer]:
+                - link "Marauder Capital Logo Marauder Capital" [ref=e3910]:
+                  - /url: /organization/marauder-capital
+                  - generic [ref=e3911]:
+                    - img "Marauder Capital Logo" [ref=e3913]
+                    - generic [ref=e3914]: Marauder Capital
+                - generic [ref=e3915]:
+                  - generic [ref=e3918]:
+                    - img [ref=e3920]
+                    - generic [ref=e3922]: Acquisition Prediction
+                  - generic [ref=e3924]: It is probable that Marauder Capital will be acquired
+              - generic [ref=e3926] [cursor=pointer]:
+                - link "Honor Logo Honor" [ref=e3932]:
+                  - /url: /organization/honor-2
+                  - generic [ref=e3933]:
+                    - img "Honor Logo" [ref=e3935]
+                    - generic [ref=e3936]: Honor
+                - generic [ref=e3937]:
+                  - generic [ref=e3940]:
+                    - img [ref=e3942]
+                    - generic [ref=e3944]: Partnership Announcement
+                  - generic [ref=e3946]: 赞助商开始挤爆张雪深度
+              - generic [ref=e3948] [cursor=pointer]:
+                - link "Theory 11 Entertainment Logo Theory 11 Entertainment" [ref=e3954]:
+                  - /url: /organization/theory-entertainment
+                  - generic [ref=e3955]:
+                    - img "Theory 11 Entertainment Logo" [ref=e3957]
+                    - generic [ref=e3958]: Theory 11 Entertainment
+                - generic [ref=e3959]:
+                  - generic [ref=e3962]:
+                    - img [ref=e3964]
+                    - generic [ref=e3966]: Acquisition Prediction
+                  - generic [ref=e3968]: It is probable that Theory 11 Entertainment will be acquired
+              - generic [ref=e3970] [cursor=pointer]:
+                - link "Baltiska Handels Logo Baltiska Handels" [ref=e3976]:
+                  - /url: /organization/baltiska-handels
+                  - generic [ref=e3977]:
+                    - img "Baltiska Handels Logo" [ref=e3979]
+                    - generic [ref=e3980]: Baltiska Handels
+                - generic [ref=e3981]:
+                  - generic [ref=e3984]:
+                    - img [ref=e3986]
+                    - generic [ref=e3989]: Investor Insight
+                  - generic [ref=e3991]: Baltiska Handels invests in seed and early-stage companies in chemical, manufacturing, and leisure sectors within manufacturing, science and engineering, and community and lifestyle, focusing on Finland and Sweden in Europe.
+              - generic [ref=e3993] [cursor=pointer]:
+                - link "SevenGen Logo SevenGen" [ref=e3999]:
+                  - /url: /organization/sevengen-e507
+                  - generic [ref=e4000]:
+                    - img "SevenGen Logo" [ref=e4002]
+                    - generic [ref=e4003]: SevenGen
+                - generic [ref=e4004]:
+                  - generic [ref=e4007]:
+                    - img [ref=e4009]
+                    - generic [ref=e4011]: Acquisition Prediction
+                  - generic [ref=e4013]: It is probable that SevenGen will be acquired
+              - generic [ref=e4015] [cursor=pointer]:
+                - link "Sigma360 Logo Sigma360" [ref=e4021]:
+                  - /url: /organization/sigma-ratings
+                  - generic [ref=e4022]:
+                    - img "Sigma360 Logo" [ref=e4024]
+                    - generic [ref=e4025]: Sigma360
+                - generic [ref=e4026]:
+                  - generic [ref=e4029]:
+                    - img [ref=e4031]
+                    - generic [ref=e4033]: Product Launch
+                  - generic [ref=e4035]: Sigma360 and Consilient Announce Strategic Integration to Transform Financial Crime Detection with Federated Machine Learning Driven pKYC and Transaction Risk Monitoring
+              - generic [ref=e4037] [cursor=pointer]:
+                - link "HollyHires.ai Logo HollyHires.ai" [ref=e4043]:
+                  - /url: /organization/hollyhires-ai
+                  - generic [ref=e4044]:
+                    - img "HollyHires.ai Logo" [ref=e4046]
+                    - generic [ref=e4047]: HollyHires.ai
+                - generic [ref=e4048]:
+                  - generic [ref=e4051]:
+                    - img [ref=e4053]
+                    - generic [ref=e4055]: Acquisition Prediction
+                  - generic [ref=e4057]: It is probable that HollyHires.ai will be acquired
+              - generic [ref=e4059] [cursor=pointer]:
+                - link "Docusign Logo Docusign" [ref=e4065]:
+                  - /url: /organization/docusign
+                  - generic [ref=e4066]:
+                    - img "Docusign Logo" [ref=e4068]
+                    - generic [ref=e4069]: Docusign
+                - generic [ref=e4070]:
+                  - generic [ref=e4073]:
+                    - img [ref=e4075]
+                    - generic [ref=e4077]: Growth Insight
+                  - generic [ref=e4079]: DocuSign reported total revenue of $836.86 million for Q4 FY2026, reflecting an 8% year-over-year increase from approximately $774.87 million. For fiscal 2026, total revenue rose 8% year over year to $3.22 billion, up from $2.98 billion in fiscal 2025. The company generated $377.2 million in net cash from operating activities in Q4, with free cash flow reaching $350.2 million, indicating strong cash generation. Additionally, DocuSign's global customer base increased from over 1.5 million to nearly 1.7 million, including growth in enterprise and commercial customers from approximately 242,000 to over 260,000. The adjusted earnings per share for Q4 were reported at $1.01, exceeding analyst expectations of $0.95 per share.
+              - generic [ref=e4081] [cursor=pointer]:
+                - link "Bulba Logo Bulba" [ref=e4087]:
+                  - /url: /organization/referto
+                  - generic [ref=e4088]:
+                    - img "Bulba Logo" [ref=e4090]
+                    - generic [ref=e4091]: Bulba
+                - generic [ref=e4092]:
+                  - generic [ref=e4095]:
+                    - img [ref=e4097]
+                    - generic [ref=e4099]: Acquisition Prediction
+                  - generic [ref=e4101]: It is probable that Bulba will be acquired
+              - generic [ref=e4103] [cursor=pointer]:
+                - link "Viz Logo Viz" [ref=e4109]:
+                  - /url: /organization/viz
+                  - generic [ref=e4110]:
+                    - img "Viz Logo" [ref=e4112]
+                    - generic [ref=e4113]: Viz
+                - generic [ref=e4114]:
+                  - generic [ref=e4117]:
+                    - img [ref=e4119]
+                    - generic [ref=e4121]: Award
+                  - generic [ref=e4123]: Viz.ai Ranked No. 1 for Second Consecutive Year in 2026 Black Book Survey of Independent AI Clinical Decision Support Solutions
+              - generic [ref=e4125] [cursor=pointer]:
+                - link "Open Education Technologies Logo Open Education Technologies" [ref=e4131]:
+                  - /url: /organization/open-education-technologies
+                  - generic [ref=e4132]:
+                    - img "Open Education Technologies Logo" [ref=e4134]
+                    - generic [ref=e4135]: Open Education Technologies
+                - generic [ref=e4136]:
+                  - generic [ref=e4139]:
+                    - img [ref=e4141]
+                    - generic [ref=e4143]: Acquisition Prediction
+                  - generic [ref=e4145]: It is probable that Open Education Technologies will be acquired
+              - generic [ref=e4147] [cursor=pointer]:
+                - link "Signature Ventures Logo Signature Ventures" [ref=e4153]:
+                  - /url: /organization/signature-ventures
+                  - generic [ref=e4154]:
+                    - img "Signature Ventures Logo" [ref=e4156]
+                    - generic [ref=e4157]: Signature Ventures
+                - generic [ref=e4158]:
+                  - generic [ref=e4161]:
+                    - img [ref=e4163]
+                    - generic [ref=e4166]: Investor Insight
+                  - generic [ref=e4168]: Signature Ventures backs seed to early-stage Series A companies in blockchain, cryptocurrency, and fintech, investing primarily across Berlin, Zug, and New York in Europe and North America.
+              - generic [ref=e4170] [cursor=pointer]:
+                - link "Culture Smart Logo Culture Smart" [ref=e4176]:
+                  - /url: /organization/culture-smart
+                  - generic [ref=e4177]:
+                    - img "Culture Smart Logo" [ref=e4179]
+                    - generic [ref=e4180]: Culture Smart
+                - generic [ref=e4181]:
+                  - generic [ref=e4184]:
+                    - img [ref=e4186]
+                    - generic [ref=e4188]: Acquisition Prediction
+                  - generic [ref=e4190]: It is probable that Culture Smart will be acquired
+              - generic [ref=e4192] [cursor=pointer]:
+                - link "CenterGate Capital Logo CenterGate Capital" [ref=e4198]:
+                  - /url: /organization/centergate-capital
+                  - generic [ref=e4199]:
+                    - img "CenterGate Capital Logo" [ref=e4201]
+                    - generic [ref=e4202]: CenterGate Capital
+                - generic [ref=e4203]:
+                  - generic [ref=e4206]:
+                    - img [ref=e4208]
+                    - generic [ref=e4210]: Partnership Announcement
+                  - generic [ref=e4212]: CenterGate Capital Announces Partnership with Spartaco Tool Group, a Leading Provider of Professional-Grade Tools For Utility and Telecom Infrastructure
+              - generic [ref=e4214] [cursor=pointer]:
+                - link "Emory Peak Holdings Logo Emory Peak Holdings" [ref=e4220]:
+                  - /url: /organization/emory-peak-holdings
+                  - generic [ref=e4221]:
+                    - img "Emory Peak Holdings Logo" [ref=e4223]
+                    - generic [ref=e4224]: Emory Peak Holdings
+                - generic [ref=e4225]:
+                  - generic [ref=e4228]:
+                    - img [ref=e4230]
+                    - generic [ref=e4232]: Acquisition Prediction
+                  - generic [ref=e4234]: It is probable that Emory Peak Holdings will be acquired
+              - generic [ref=e4236] [cursor=pointer]:
+                - link "Banca Monte dei Paschi di Siena Logo Banca Monte dei Paschi di Siena" [ref=e4242]:
+                  - /url: /organization/banca-monte-dei-pashi-di-siena
+                  - generic [ref=e4243]:
+                    - img "Banca Monte dei Paschi di Siena Logo" [ref=e4245]
+                    - generic [ref=e4246]: Banca Monte dei Paschi di Siena
+                - generic [ref=e4247]:
+                  - generic [ref=e4250]:
+                    - img [ref=e4252]
+                    - generic [ref=e4254]: Growth Insight
+                  - generic [ref=e4256]: Banca Monte dei Paschi di Siena completed a €17 billion acquisition of Mediobanca in September, creating Italy’s third-largest lender by assets. The bank reported a rise in net profit, with Q3 2025 net profit increasing to 474 million EUR from 407 million EUR a year earlier, aided by tax credits and beating consensus. Total revenues for the first nine months of 2025 were reported at EUR 3.05 billion, slightly up from EUR 3.04 billion in the same period of 2024.
+              - generic [ref=e4258] [cursor=pointer]:
+                - link "Metaverse Magna Logo Metaverse Magna" [ref=e4264]:
+                  - /url: /organization/metaverse-magna
+                  - generic [ref=e4265]:
+                    - img "Metaverse Magna Logo" [ref=e4267]
+                    - generic [ref=e4268]: Metaverse Magna
+                - generic [ref=e4269]:
+                  - generic [ref=e4272]:
+                    - img [ref=e4274]
+                    - generic [ref=e4276]: Acquisition Prediction
+                  - generic [ref=e4278]: It is probable that Metaverse Magna will be acquired
+              - generic [ref=e4280] [cursor=pointer]:
+                - link "Fountain Life Logo Fountain Life" [ref=e4286]:
+                  - /url: /organization/fountain-life
+                  - generic [ref=e4287]:
+                    - img "Fountain Life Logo" [ref=e4289]
+                    - generic [ref=e4290]: Fountain Life
+                - generic [ref=e4291]:
+                  - generic [ref=e4294]:
+                    - img [ref=e4296]
+                    - generic [ref=e4298]: Product Launch
+                  - generic [ref=e4300]: Fountain Life adds APEX to premium longevity program
+              - generic [ref=e4302] [cursor=pointer]:
+                - link "Morgenesis Logo Morgenesis" [ref=e4308]:
+                  - /url: /organization/morgenesis
+                  - generic [ref=e4309]:
+                    - img "Morgenesis Logo" [ref=e4311]
+                    - generic [ref=e4312]: Morgenesis
+                - generic [ref=e4313]:
+                  - generic [ref=e4316]:
+                    - img [ref=e4318]
+                    - generic [ref=e4320]: Acquisition Prediction
+                  - generic [ref=e4322]: It is probable that Morgenesis will be acquired
+              - generic [ref=e4324] [cursor=pointer]:
+                - link "Prelude Logo Prelude" [ref=e4330]:
+                  - /url: /organization/prelude-6261
+                  - generic [ref=e4331]:
+                    - img "Prelude Logo" [ref=e4333]
+                    - generic [ref=e4334]: Prelude
+                - generic [ref=e4335]:
+                  - generic [ref=e4338]:
+                    - img [ref=e4340]
+                    - generic [ref=e4343]: Investor Insight
+                  - generic [ref=e4345]: Prelude backs seed to early-stage blockchain, cryptocurrency, and financial services companies, investing across U.S. hubs including Boerne, San Francisco, and New York in North America.
+              - generic [ref=e4347] [cursor=pointer]:
+                - link "AliExpress Logo AliExpress" [ref=e4353]:
+                  - /url: /organization/aliexpress
+                  - generic [ref=e4354]:
+                    - img "AliExpress Logo" [ref=e4356]
+                    - generic [ref=e4357]: AliExpress
+                - generic [ref=e4358]:
+                  - generic [ref=e4361]:
+                    - img [ref=e4363]
+                    - generic [ref=e4365]: IPO Prediction
+                  - generic [ref=e4367]: It is probable that AliExpress will IPO
+              - generic [ref=e4369] [cursor=pointer]:
+                - link "Stake Logo Stake" [ref=e4375]:
+                  - /url: /organization/stake-properties
+                  - generic [ref=e4376]:
+                    - img "Stake Logo" [ref=e4378]
+                    - generic [ref=e4379]: Stake
+                - generic [ref=e4380]:
+                  - generic [ref=e4383]:
+                    - img [ref=e4385]
+                    - generic [ref=e4387]: Partnership Announcement
+                  - generic [ref=e4389]: 5 Top Crypto Casinos Where Security Meets a $7M World Record Prize Pool
+              - generic [ref=e4391] [cursor=pointer]:
+                - link "LunOSA Logo LunOSA" [ref=e4397]:
+                  - /url: /organization/lunosa
+                  - generic [ref=e4398]:
+                    - img "LunOSA Logo" [ref=e4400]
+                    - generic [ref=e4401]: LunOSA
+                - generic [ref=e4402]:
+                  - generic [ref=e4405]:
+                    - img [ref=e4407]
+                    - generic [ref=e4409]: Acquisition Prediction
+                  - generic [ref=e4411]: It is probable that LunOSA will be acquired
+              - generic [ref=e4413] [cursor=pointer]:
+                - link "India Chip Logo India Chip" [ref=e4419]:
+                  - /url: /organization/india-chip
+                  - generic [ref=e4420]:
+                    - img "India Chip Logo" [ref=e4422]
+                    - generic [ref=e4423]: India Chip
+                - generic [ref=e4424]:
+                  - generic [ref=e4427]:
+                    - img [ref=e4429]
+                    - generic [ref=e4431]: Growth Insight
+                  - generic [ref=e4433]: India Chip, a joint venture between HCL Group and Foxconn, invested ₹3,700 crore to establish a semiconductor assembly and testing facility in Jewar, Uttar Pradesh. This facility is expected to create over 3,500 direct and indirect jobs as it ramps up operations. The project received substantial support from the Indian central and state government incentives.
+              - generic [ref=e4435] [cursor=pointer]:
+                - link "Suits Logo Suits" [ref=e4441]:
+                  - /url: /organization/suits-60b3
+                  - generic [ref=e4442]:
+                    - img "Suits Logo" [ref=e4444]
+                    - generic [ref=e4445]: Suits
+                - generic [ref=e4446]:
+                  - generic [ref=e4449]:
+                    - img [ref=e4451]
+                    - generic [ref=e4453]: Acquisition Prediction
+                  - generic [ref=e4455]: It is probable that Suits will be acquired
+              - generic [ref=e4457] [cursor=pointer]:
+                - link "Infleqtion Logo Infleqtion" [ref=e4463]:
+                  - /url: /organization/coldquanta
+                  - generic [ref=e4464]:
+                    - img "Infleqtion Logo" [ref=e4466]
+                    - generic [ref=e4467]: Infleqtion
+                - generic [ref=e4468]:
+                  - generic [ref=e4471]:
+                    - img [ref=e4473]
+                    - generic [ref=e4475]: Product Launch
+                  - generic [ref=e4477]: "OpenAI: Our new AI tool is too dangerous to release, too!"
+              - generic [ref=e4479] [cursor=pointer]:
+                - link "figbox Logo figbox" [ref=e4485]:
+                  - /url: /organization/figbox
+                  - generic [ref=e4486]:
+                    - img "figbox Logo" [ref=e4488]
+                    - generic [ref=e4489]: figbox
+                - generic [ref=e4490]:
+                  - generic [ref=e4493]:
+                    - img [ref=e4495]
+                    - generic [ref=e4497]: Acquisition Prediction
+                  - generic [ref=e4499]: It is probable that figbox will be acquired
+              - generic [ref=e4501] [cursor=pointer]:
+                - link "Chaac Ventures Logo Chaac Ventures" [ref=e4507]:
+                  - /url: /organization/chaac-ventures
+                  - generic [ref=e4508]:
+                    - img "Chaac Ventures Logo" [ref=e4510]
+                    - generic [ref=e4511]: Chaac Ventures
+                - generic [ref=e4512]:
+                  - generic [ref=e4515]:
+                    - img [ref=e4517]
+                    - generic [ref=e4520]: Investor Insight
+                  - generic [ref=e4522]: Chaac Ventures backs seed to late-stage companies in software, information technology, and artificial intelligence, investing primarily in New York, Los Angeles, and Cambridge within the United States.
+              - generic [ref=e4524] [cursor=pointer]:
+                - link "Bites Logo Bites" [ref=e4530]:
+                  - /url: /organization/shaguf
+                  - generic [ref=e4531]:
+                    - img "Bites Logo" [ref=e4533]
+                    - generic [ref=e4534]: Bites
+                - generic [ref=e4535]:
+                  - generic [ref=e4538]:
+                    - img [ref=e4540]
+                    - generic [ref=e4542]: IPO Prediction
+                  - generic [ref=e4544]: It is probable that Bites will IPO
+              - generic [ref=e4546] [cursor=pointer]:
+                - link "Nomba Logo Nomba" [ref=e4552]:
+                  - /url: /organization/nomba
+                  - generic [ref=e4553]:
+                    - img "Nomba Logo" [ref=e4555]
+                    - generic [ref=e4556]: Nomba
+                - generic [ref=e4557]:
+                  - generic [ref=e4560]:
+                    - img [ref=e4562]
+                    - generic [ref=e4564]: Partnership Announcement
+                  - generic [ref=e4566]: Lending to Nigeria’s SMEs is hard. Nomba thinks there’s a better way
+              - generic [ref=e4568] [cursor=pointer]:
+                - link "Knode.ai Logo Knode.ai" [ref=e4574]:
+                  - /url: /organization/knode-ai
+                  - generic [ref=e4575]:
+                    - img "Knode.ai Logo" [ref=e4577]
+                    - generic [ref=e4578]: Knode.ai
+                - generic [ref=e4579]:
+                  - generic [ref=e4582]:
+                    - img [ref=e4584]
+                    - generic [ref=e4586]: Acquisition Prediction
+                  - generic [ref=e4588]: It is probable that Knode.ai will be acquired
+              - generic [ref=e4590] [cursor=pointer]:
+                - link "Telstra Logo Telstra" [ref=e4596]:
+                  - /url: /organization/telstra
+                  - generic [ref=e4597]:
+                    - img "Telstra Logo" [ref=e4599]
+                    - generic [ref=e4600]: Telstra
+                - generic [ref=e4601]:
+                  - generic [ref=e4604]:
+                    - img [ref=e4606]
+                    - generic [ref=e4608]: Growth Insight
+                  - generic [ref=e4610]: Telstra reported it was the largest mobile operator in Australia with 27.7 million connections at the end of 2025. The company increased IoT connections by 1.4 million to reach 10.5 million by the end of 2025. Telstra also reported a 3.6% increase in services in operation to 25.5 million in the first half of fiscal 2026, driven mainly by mobile price increases and demand. The net profit for the first half of fiscal 2026 increased 9.4% to AUD1.1 billion, supported by cost reductions and efficiency gains. Additionally, Telstra's first-half underlying EBITDA rose 5.5% year on year to AUD4.19 billion, bolstered by stronger mobile revenue and cost reductions. Despite these positive metrics, Telstra undertook aggressive cost-cutting measures, shedding more than 2,300 jobs over six months, contributing to a billion-dollar profit. The company reported flat total revenue of AUD11.8 billion for the first half of fiscal 2026 compared with the same period a year earlier, despite growth in mobile, IoT, and tower sales.
+              - generic [ref=e4612] [cursor=pointer]:
+                - link "Springline Advisory Logo Springline Advisory" [ref=e4618]:
+                  - /url: /organization/springline-advisory
+                  - generic [ref=e4619]:
+                    - img "Springline Advisory Logo" [ref=e4621]
+                    - generic [ref=e4622]: Springline Advisory
+                - generic [ref=e4623]:
+                  - generic [ref=e4626]:
+                    - img [ref=e4628]
+                    - generic [ref=e4630]: Acquisition Prediction
+                  - generic [ref=e4632]: It is probable that Springline Advisory will be acquired
+              - generic [ref=e4634] [cursor=pointer]:
+                - link "Equinix Logo Equinix" [ref=e4640]:
+                  - /url: /organization/equinix
+                  - generic [ref=e4641]:
+                    - img "Equinix Logo" [ref=e4643]
+                    - generic [ref=e4644]: Equinix
+                - generic [ref=e4645]:
+                  - generic [ref=e4648]:
+                    - img [ref=e4650]
+                    - generic [ref=e4652]: Legal Proceeding
+                  - generic [ref=e4654]: Did Equinix, Inc. Insiders Breach their Fiduciary Duties to Shareholders?
+              - generic [ref=e4656] [cursor=pointer]:
+                - link "Viva Labs Logo Viva Labs" [ref=e4662]:
+                  - /url: /organization/viva-labs-303e
+                  - generic [ref=e4663]:
+                    - img "Viva Labs Logo" [ref=e4665]
+                    - generic [ref=e4666]: Viva Labs
+                - generic [ref=e4667]:
+                  - generic [ref=e4670]:
+                    - img [ref=e4672]
+                    - generic [ref=e4674]: Acquisition Prediction
+                  - generic [ref=e4676]: It is probable that Viva Labs will be acquired
+              - generic [ref=e4678] [cursor=pointer]:
+                - link "Y Combinator Logo Y Combinator" [ref=e4684]:
+                  - /url: /organization/y-combinator
+                  - generic [ref=e4685]:
+                    - img "Y Combinator Logo" [ref=e4687]
+                    - generic [ref=e4688]: Y Combinator
+                - generic [ref=e4689]:
+                  - generic [ref=e4692]:
+                    - img [ref=e4694]
+                    - generic [ref=e4697]: Investor Insight
+                  - generic [ref=e4699]: Y Combinator invests in seed and early-stage companies in AI, software, and information technology across North America and Europe, with activity in San Francisco, New York, and Paris.
+              - generic [ref=e4701] [cursor=pointer]:
+                - link "Stash Logo Stash" [ref=e4707]:
+                  - /url: /organization/stash-1fe3
+                  - generic [ref=e4708]:
+                    - img "Stash Logo" [ref=e4710]
+                    - generic [ref=e4711]: Stash
+                - generic [ref=e4712]:
+                  - generic [ref=e4715]:
+                    - img [ref=e4717]
+                    - generic [ref=e4719]: Acquisition Prediction
+                  - generic [ref=e4721]: It is probable that Stash will be acquired
+              - generic [ref=e4723] [cursor=pointer]:
+                - link "SpaceX Logo SpaceX" [ref=e4729]:
+                  - /url: /organization/space-exploration-technologies
+                  - generic [ref=e4730]:
+                    - img "SpaceX Logo" [ref=e4732]
+                    - generic [ref=e4733]: SpaceX
+                - generic [ref=e4734]:
+                  - generic [ref=e4737]:
+                    - img [ref=e4739]
+                    - generic [ref=e4741]: Partnership Announcement
+                  - generic [ref=e4743]: SpaceX is keeping the Space Station alive again this weekend
+              - generic [ref=e4745] [cursor=pointer]:
+                - link "JustParkwell (Formerly - Parkwell) Logo JustParkwell (Formerly - Parkwell)" [ref=e4751]:
+                  - /url: /organization/parkwell-africa
+                  - generic [ref=e4752]:
+                    - img "JustParkwell (Formerly - Parkwell) Logo" [ref=e4754]
+                    - generic [ref=e4755]: JustParkwell (Formerly - Parkwell)
+                - generic [ref=e4756]:
+                  - generic [ref=e4759]:
+                    - img [ref=e4761]
+                    - generic [ref=e4763]: Acquisition Prediction
+                  - generic [ref=e4765]: It is probable that JustParkwell (Formerly - Parkwell) will be acquired
+              - generic [ref=e4767] [cursor=pointer]:
+                - link "Lemonade Logo Lemonade" [ref=e4773]:
+                  - /url: /organization/lemonade
+                  - generic [ref=e4774]:
+                    - img "Lemonade Logo" [ref=e4776]
+                    - generic [ref=e4777]: Lemonade
+                - generic [ref=e4778]:
+                  - generic [ref=e4781]:
+                    - img [ref=e4783]
+                    - generic [ref=e4785]: Growth Insight
+                  - generic [ref=e4787]: Lemonade reported Q3 2025 revenue of $194.5 million, reflecting a 42% year-over-year increase, driven by improved underwriting metrics and customer growth. The company nearly tripled its customer base from 1.00 million at the end of 2020 to 2.87 million by Q3 2025, with 90% of its customers being first-time buyers of insurance. Lemonade's adjusted EBITDA loss narrowed to $5 million in Q4 2025, indicating improving earnings trends. The gross profit margin more than doubled from 19% in Q3 2023 to 41% in the latest reported quarter, reflecting enhanced underwriting performance. Additionally, Lemonade's GAAP net loss narrowed 44.6% to $37.5 million in Q3 2025, showcasing improved earnings performance.
+              - generic [ref=e4789] [cursor=pointer]:
+                - link "Skylark Logo Skylark" [ref=e4795]:
+                  - /url: /organization/skylark-platform
+                  - generic [ref=e4796]:
+                    - img "Skylark Logo" [ref=e4798]
+                    - generic [ref=e4799]: Skylark
+                - generic [ref=e4800]:
+                  - generic [ref=e4803]:
+                    - img [ref=e4805]
+                    - generic [ref=e4807]: Acquisition Prediction
+                  - generic [ref=e4809]: It is probable that Skylark will be acquired
+              - generic [ref=e4811] [cursor=pointer]:
+                - link "Health Universe Logo Health Universe" [ref=e4817]:
+                  - /url: /organization/health-universe-049d
+                  - generic [ref=e4818]:
+                    - img "Health Universe Logo" [ref=e4820]
+                    - generic [ref=e4821]: Health Universe
+                - generic [ref=e4822]:
+                  - generic [ref=e4825]:
+                    - img [ref=e4827]
+                    - generic [ref=e4829]: Partnership Announcement
+                  - generic [ref=e4831]: CEO Building AI’s “Health Universe” Utterly Unperturbed By Rivals
+              - generic [ref=e4833] [cursor=pointer]:
+                - link "SelectZero Logo SelectZero" [ref=e4839]:
+                  - /url: /organization/litech-ce3a
+                  - generic [ref=e4840]:
+                    - img "SelectZero Logo" [ref=e4842]
+                    - generic [ref=e4843]: SelectZero
+                - generic [ref=e4844]:
+                  - generic [ref=e4847]:
+                    - img [ref=e4849]
+                    - generic [ref=e4851]: Acquisition Prediction
+                  - generic [ref=e4853]: It is probable that SelectZero will be acquired
+              - generic [ref=e4855] [cursor=pointer]:
+                - link "Mastercard Foundation Logo Mastercard Foundation" [ref=e4861]:
+                  - /url: /organization/mastercard-foundation-edtech-fellowship-program
+                  - generic [ref=e4862]:
+                    - img "Mastercard Foundation Logo" [ref=e4864]
+                    - generic [ref=e4865]: Mastercard Foundation
+                - generic [ref=e4866]:
+                  - generic [ref=e4869]:
+                    - img [ref=e4871]
+                    - generic [ref=e4874]: Investor Insight
+                  - generic [ref=e4876]: Mastercard Foundation provides grants and non-equity support to education and edtech initiatives, focusing on education, software, and IT sectors across African cities including Addis Ababa, Lagos, and Nairobi.
+              - generic [ref=e4878] [cursor=pointer]:
+                - link "Box8 Logo Box8" [ref=e4884]:
+                  - /url: /organization/box8-4750
+                  - generic [ref=e4885]:
+                    - img "Box8 Logo" [ref=e4887]
+                    - generic [ref=e4888]: Box8
+                - generic [ref=e4889]:
+                  - generic [ref=e4892]:
+                    - img [ref=e4894]
+                    - generic [ref=e4896]: IPO Prediction
+                  - generic [ref=e4898]: It is probable that Box8 will IPO
+              - generic [ref=e4900] [cursor=pointer]:
+                - link "Farther Logo Farther" [ref=e4906]:
+                  - /url: /organization/farther-finance
+                  - generic [ref=e4907]:
+                    - img "Farther Logo" [ref=e4909]
+                    - generic [ref=e4910]: Farther
+                - generic [ref=e4911]:
+                  - generic [ref=e4914]:
+                    - img [ref=e4916]
+                    - generic [ref=e4918]: Product Launch
+                  - generic [ref=e4920]: Bureaucracy, ‘lack of organizational clarity’ pushes Goldman Sachs veteran to Farther
+              - generic [ref=e4922] [cursor=pointer]:
+                - link "Wheelo Logo Wheelo" [ref=e4928]:
+                  - /url: /organization/wheelo
+                  - generic [ref=e4929]:
+                    - img "Wheelo Logo" [ref=e4931]
+                    - generic [ref=e4932]: Wheelo
+                - generic [ref=e4933]:
+                  - generic [ref=e4936]:
+                    - img [ref=e4938]
+                    - generic [ref=e4940]: IPO Prediction
+                  - generic [ref=e4942]: It is probable that Wheelo will IPO
+              - generic [ref=e4944] [cursor=pointer]:
+                - link "Walmart Connect Logo Walmart Connect" [ref=e4950]:
+                  - /url: /organization/walmart-connect
+                  - generic [ref=e4951]:
+                    - img "Walmart Connect Logo" [ref=e4953]
+                    - generic [ref=e4954]: Walmart Connect
+                - generic [ref=e4955]:
+                  - generic [ref=e4958]:
+                    - img [ref=e4960]
+                    - generic [ref=e4962]: Growth Insight
+                  - generic [ref=e4964]: Walmart reported a 5.6% year-over-year increase in fourth quarter revenue to $190.7 billion, with full-year fiscal 2026 revenue up 4.7% to $713.2 billion. The company’s adjusted earnings per share rose to $0.74 from $0.73 a year earlier, and its fourth quarter operating income increased 10.8% year over year to about $8.7 billion. Walmart’s fiscal-year net income increased 12.6% to $21.893 billion compared with the prior year. Additionally, Walmart’s U.S. e-commerce sales grew 27% year-on-year, with global online sales up 24%, and e-commerce reaching 23% of U.S. sales. Walmart Connect's advertising revenue reached $4.4 billion in 2024, representing 27% year-over-year growth, and the global advertising revenue grew 46% year over year to nearly $6.4 billion in its fiscal 2026.
+              - generic [ref=e4966] [cursor=pointer]:
+                - link "Dark Matter Technologies Logo Dark Matter Technologies" [ref=e4972]:
+                  - /url: /organization/dark-matter-technologies
+                  - generic [ref=e4973]:
+                    - img "Dark Matter Technologies Logo" [ref=e4975]
+                    - generic [ref=e4976]: Dark Matter Technologies
+                - generic [ref=e4977]:
+                  - generic [ref=e4980]:
+                    - img [ref=e4982]
+                    - generic [ref=e4984]: Acquisition Prediction
+                  - generic [ref=e4986]: It is probable that Dark Matter Technologies will be acquired
+        - generic [ref=e4988]:
+          - generic [ref=e4990]:
+            - generic [ref=e4991]:
+              - generic [ref=e4994]:
+                - text: "Browse By:"
+                - link "Organizations," [ref=e4995] [cursor=pointer]:
+                  - /url: /sitemap/organizations
+                - link "People," [ref=e4996] [cursor=pointer]:
+                  - /url: /sitemap/people
+                - link "Events" [ref=e4997] [cursor=pointer]:
+                  - /url: /sitemap/events
+              - generic [ref=e4998]:
+                - generic [ref=e4999]: Stay Connected
+                - list [ref=e5000]:
+                  - listitem [ref=e5001]:
+                    - link "Crunchbase Blog" [ref=e5002] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/blog
+                  - listitem [ref=e5003]:
+                    - link "Crunchbase News" [ref=e5004] [cursor=pointer]:
+                      - /url: https://news.crunchbase.com/
+                  - listitem [ref=e5005]:
+                    - link "Subscribe to the Crunchbase Daily" [ref=e5006] [cursor=pointer]:
+                      - /url: /account?editNotifications=true
+                  - listitem [ref=e5007]:
+                    - link "Crunchbase Twitter" [ref=e5008] [cursor=pointer]:
+                      - /url: https://twitter.com/crunchbase
+                      - img [ref=e5010]
+                    - link "Crunchbase Facebook" [ref=e5012] [cursor=pointer]:
+                      - /url: https://www.facebook.com/crunchbase/
+                      - img [ref=e5014]
+                    - link "Crunchbase LinkedIn" [ref=e5016] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/company/crunchbase
+                      - img [ref=e5018]
+                    - link "Crunchbase Instagram" [ref=e5020] [cursor=pointer]:
+                      - /url: https://instagram.com/crunchbase
+                      - img [ref=e5022]
+            - generic [ref=e5024]:
+              - generic [ref=e5025]:
+                - generic [ref=e5026]: Who We Are
+                - list [ref=e5027]:
+                  - listitem [ref=e5028]:
+                    - link "Company" [ref=e5029] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/about-us
+                  - listitem [ref=e5030]:
+                    - link "Careers" [ref=e5031] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/about-us/careers
+                  - listitem [ref=e5032]:
+                    - link "Partners" [ref=e5033] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/partners
+                  - listitem [ref=e5034]:
+                    - link "Press" [ref=e5035] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/pressroom
+                  - listitem [ref=e5036]:
+                    - link "Contact Us" [ref=e5037] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/about-us/contact-us
+                  - listitem [ref=e5038]:
+                    - button "Talk With Sales" [ref=e5039] [cursor=pointer]
+              - generic [ref=e5040]:
+                - generic [ref=e5041]: What We Do
+                - list [ref=e5042]:
+                  - listitem [ref=e5043]:
+                    - link "Crunchbase Pro" [ref=e5044] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/products/crunchbase-pro
+                  - listitem [ref=e5045]:
+                    - link "Crunchbase Business" [ref=e5046] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/products/crunchbase-business
+                  - listitem [ref=e5047]:
+                    - link "Marketplace" [ref=e5048] [cursor=pointer]:
+                      - /url: https://www.crunchbase.com/marketplace/
+                  - listitem [ref=e5049]:
+                    - link "Data Licensing" [ref=e5050] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/products/crunchbase-for-applications
+                  - listitem [ref=e5051]:
+                    - link "Customer Stories" [ref=e5052] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/customers
+                  - listitem [ref=e5053]:
+                    - link "Pricing" [ref=e5054] [cursor=pointer]:
+                      - /url: /buy/select-product
+              - generic [ref=e5055]:
+                - generic [ref=e5056]: Helpful Links
+                - list [ref=e5057]:
+                  - listitem [ref=e5058]:
+                    - link "Create Profile" [ref=e5059] [cursor=pointer]:
+                      - /url: /add-new
+                  - listitem [ref=e5060]:
+                    - link "Featured Lists and Searches" [ref=e5061] [cursor=pointer]:
+                      - /url: /featured
+                  - listitem [ref=e5062]:
+                    - link "Knowledge Center" [ref=e5063] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/
+                  - listitem [ref=e5064]:
+                    - link "Privacy" [ref=e5065] [cursor=pointer]:
+                      - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+                  - listitem [ref=e5066]:
+                    - button "Do Not Sell My Info" [ref=e5067] [cursor=pointer]
+          - generic [ref=e5068]:
+            - generic [ref=e5070]:
+              - text: AI Content may contain mistakes and is not legal, financial or investment advice.
+              - link "Learn more." [ref=e5071] [cursor=pointer]:
+                - /url: https://about.crunchbase.com/terms-of-service/
+            - generic [ref=e5072]:
+              - link "Terms of Service" [ref=e5073] [cursor=pointer]:
+                - /url: https://about.crunchbase.com/terms-of-service/
+              - text: "|"
+              - link "Privacy Policy" [ref=e5074] [cursor=pointer]:
+                - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+              - text: "|"
+              - link "Sitemap" [ref=e5075] [cursor=pointer]:
+                - /url: /sitemap
+              - text: "| © 2026 Crunchbase Inc. All Rights Reserved."
+              - generic [ref=e5076]: (dd1070b 1)
+            - generic [ref=e5077]:
+              - button "Cookie Settings" [ref=e5078] [cursor=pointer]
+              - text: "|"
+              - button "Do Not Sell or Share My Personal Info" [ref=e5079] [cursor=pointer]
+      - button "Help" [ref=e5081] [cursor=pointer]:
+        - img [ref=e5084]
+  - menu [ref=e5255]:
+    - generic [ref=e5257]:
+      - group [ref=e5258]:
+        - generic [ref=e5259]:
+          - generic [ref=e5261]: Resources
+          - menuitem "Crunchbase Blog" [ref=e5263] [cursor=pointer]:
+            - generic [ref=e5266]: Crunchbase Blog
+          - menuitem "Crunchbase News" [ref=e5268] [cursor=pointer]:
+            - generic [ref=e5271]: Crunchbase News
+          - menuitem "Create Profile" [ref=e5273] [cursor=pointer]:
+            - generic [ref=e5276]: Create Profile
+          - menuitem "About Us" [ref=e5278] [cursor=pointer]:
+            - generic [ref=e5281]: About Us
+          - menuitem "Careers" [ref=e5283] [cursor=pointer]:
+            - generic [ref=e5286]: Careers
+          - menuitem "Our Data" [ref=e5288] [cursor=pointer]:
+            - generic [ref=e5291]: Our Data
+          - menuitem "Do Not Sell or Share My Personal Info" [ref=e5293] [cursor=pointer]:
+            - generic [ref=e5296]: Do Not Sell or Share My Personal Info
+          - menuitem "Contact Us" [ref=e5298] [cursor=pointer]:
+            - generic [ref=e5301]: Contact Us
+          - menuitem "Support" [ref=e5303] [cursor=pointer]:
+            - generic [ref=e5306]: Support
+      - group [ref=e5307]:
+        - generic [ref=e5308]:
+          - generic [ref=e5310]: Solutions
+          - menuitem "Find Prospects" [ref=e5312] [cursor=pointer]:
+            - generic [ref=e5315]: Find Prospects
+          - menuitem "Find Investors" [ref=e5317] [cursor=pointer]:
+            - generic [ref=e5320]: Find Investors
+          - menuitem "Find Investment Opportunities" [ref=e5322] [cursor=pointer]:
+            - generic [ref=e5325]: Find Investment Opportunities
+          - menuitem "Market Research" [ref=e5327] [cursor=pointer]:
+            - generic [ref=e5330]: Market Research
+          - menuitem "Build Your Product" [ref=e5332] [cursor=pointer]:
+            - generic [ref=e5335]: Build Your Product
+      - group [ref=e5336]:
+        - generic [ref=e5337]:
+          - generic [ref=e5339]: Products
+          - menuitem "Crunchbase Pro" [ref=e5341] [cursor=pointer]:
+            - generic [ref=e5344]: Crunchbase Pro
+          - menuitem "Crunchbase Business" [ref=e5346] [cursor=pointer]:
+            - generic [ref=e5349]: Crunchbase Business
+          - menuitem "Crunchbase API" [ref=e5351] [cursor=pointer]:
+            - generic [ref=e5354]: Crunchbase API
+          - menuitem "Chrome Extension" [ref=e5356] [cursor=pointer]:
+            - generic [ref=e5359]: Chrome Extension
+          - menuitem "Data Licensing" [ref=e5361] [cursor=pointer]:
+            - generic [ref=e5364]: Data Licensing
+          - menuitem "Data Partners" [ref=e5366] [cursor=pointer]:
+            - generic [ref=e5369]: Data Partners
+      - group [ref=e5370]:
+        - menuitem "Crunchbase Pro" [ref=e5372] [cursor=pointer]:
+          - generic [ref=e5373]:
+            - img [ref=e5374]
+            - generic [ref=e5376]: Crunchbase Pro
+      - separator [ref=e5377]
+      - group [ref=e5378]:
+        - menuitem "Talk With Sales" [ref=e5380] [cursor=pointer]:
+          - generic [ref=e5381]:
+            - img [ref=e5382]
+            - generic [ref=e5384]: Talk With Sales

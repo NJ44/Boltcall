@@ -1,0 +1,49 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "Welcome" [level=1] [ref=e7]
+        - paragraph [ref=e9]: Login to AlternativeTo with either your e-mail or the social provider you used when signing up.
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13]:
+            - generic [ref=e15]:
+              - generic [ref=e16]: Email address *
+              - textbox "Email address" [ref=e17]
+            - generic [ref=e19]:
+              - generic [ref=e20]: Password *
+              - textbox "Password" [ref=e21]
+              - switch "Show password" [ref=e22] [cursor=pointer]
+          - paragraph [ref=e23]:
+            - link "Reset password" [ref=e24] [cursor=pointer]:
+              - /url: /u/login/password-reset-start/Username-Password-Authentication?state=hKFo2SBNYm5xOFhYT2NXaFJEdWhuZkEtb2pzNGE1ckZpakdDSqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHVYOUJCeGE2VzNMamFWR1IxZldXcXlfdXdEa0VIRDc3o2NpZNkgZnBHSjFmQUg5NmQ1ZDNtU2UwalJRR2tjZWFHUUltQzc
+          - button "Continue" [ref=e26] [cursor=pointer]
+        - paragraph [ref=e28]:
+          - text: Don't have an account?
+          - link "Sign up" [ref=e29] [cursor=pointer]:
+            - /url: /u/signup?state=hKFo2SBNYm5xOFhYT2NXaFJEdWhuZkEtb2pzNGE1ckZpakdDSqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHVYOUJCeGE2VzNMamFWR1IxZldXcXlfdXdEa0VIRDc3o2NpZNkgZnBHSjFmQUg5NmQ1ZDNtU2UwalJRR2tjZWFHUUltQzc
+        - generic [ref=e31]: Or
+        - generic [ref=e32]:
+          - button "Continue with Google" [ref=e34] [cursor=pointer]:
+            - generic [ref=e36]: Continue with Google
+          - button "Continue with Microsoft Account" [ref=e38] [cursor=pointer]:
+            - generic [ref=e40]: Continue with Microsoft Account
+          - button "Continue with GitHub" [ref=e42] [cursor=pointer]:
+            - generic [ref=e44]: Continue with GitHub
+          - button "Continue with Apple" [ref=e46] [cursor=pointer]:
+            - generic [ref=e48]: Continue with Apple
+  - contentinfo [ref=e49]:
+    - list [ref=e50]:
+      - listitem [ref=e51]:
+        - text: Need help? Check the
+        - link "FAQ" [ref=e52] [cursor=pointer]:
+          - /url: https://alternativeto.net/faq/
+        - text: or e-mail us at
+        - link "support@alternativeto.net" [ref=e53] [cursor=pointer]:
+          - /url: mailto:support@alternativeto.net
+        - text: "|"
+        - link "Facebook Login Issues" [ref=e54] [cursor=pointer]:
+          - /url: https://alternativeto.net/faq/#login-via-facebook-doesn-t-work-how-can-i-login
+        - text: "|"
+        - link "Twitter / X login issues" [ref=e55] [cursor=pointer]:
+          - /url: https://alternativeto.net/faq/#login-via-x-twitter-doesn-t-work-how-can-i-login

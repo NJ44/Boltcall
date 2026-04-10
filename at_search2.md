@@ -1,0 +1,241 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e7]:
+        - link "AlternativeTo Logo AlternativeTo Logo Text" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "AlternativeTo Logo" [ref=e9]
+          - img "AlternativeTo Logo Text" [ref=e10]
+        - navigation [ref=e12]:
+          - link "NEW APP RELEASES" [ref=e13] [cursor=pointer]:
+            - /url: /browse/new-apps/
+            - generic [ref=e14]: NEW APP RELEASES
+          - generic [ref=e15]: "|"
+          - link "BROWSE ALL APPS" [ref=e16] [cursor=pointer]:
+            - /url: /browse/
+            - generic [ref=e17]: BROWSE ALL APPS
+          - generic [ref=e18]: "|"
+          - link "TECH NEWS" [ref=e19] [cursor=pointer]:
+            - /url: /news/all/
+            - generic [ref=e20]: TECH NEWS
+          - generic [ref=e21]: "|"
+          - link "LISTS" [ref=e22] [cursor=pointer]:
+            - /url: /lists/
+        - generic [ref=e23]:
+          - combobox "Search" [ref=e272]:
+            - generic [ref=e274]
+          - generic [ref=e24]:
+            - link "Sign In" [ref=e26] [cursor=pointer]:
+              - /url: /api/auth/login
+            - button "Open page menu" [ref=e28] [cursor=pointer]
+    - generic [ref=e31]:
+      - navigation "Breadcrumb" [ref=e34]:
+        - list [ref=e35]:
+          - listitem [ref=e36]:
+            - link "Home" [ref=e37] [cursor=pointer]:
+              - /url: /
+            - text: ►
+          - listitem [ref=e38]: Search result
+      - generic [ref=e39]:
+        - 'heading "Search Result: boltcall" [level=1] [ref=e41]'
+        - insertion [ref=e280]:
+          - iframe [ref=e282]:
+            - generic [ref=f91e4]:
+              - generic:
+                - generic: מודעה
+              - button [ref=f91e5] [cursor=pointer]:
+                - generic:
+                  - img
+              - generic [ref=f91e7]:
+                - link "shtihim-online.co.il" [ref=f91e9] [cursor=pointer]:
+                  - /url: https://abs.yandex.ru/dsp/event?bi=jTCIiSwAAAAAAAAAeJwBLADT_wid5KiAtLrNnRoQthYY2xMg_JmkMDINCJoTEO_k6Zy4q7K7WzjgE0C2FlgF1c0UKg%2C%2C&bl=c2xpT2YAAAAAAAAAeJzj4ue4-GFlG5MAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5jjZM2sMoACaBZgAA4C8lbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=Sv_J6umU7kOSvcCavHiFrSdk1ZKfXc8NFfGZAtQC7TQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                  - generic [ref=f91e13]: shtihim-online.co.il
+                - generic [ref=f91e17]:
+                  - button:
+                    - img
+                  - generic [ref=f91e19]:
+                    - generic [ref=f91e21]:
+                      - generic [ref=f91e22]:
+                        - generic [ref=f91e23]:
+                          - link [ref=f91e24] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=jTCIiSwAAAAAAAAAeJwBLADT_wid5KiAtLrNnRoQthYY2xMg_JmkMDINCJoTEO_k6Zy4q7K7WzjgE0C2FlgF1c0UKg%2C%2C&bl=c2xpT2YAAAAAAAAAeJzj4ue4-GFlG5MAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5jjZM2sMoACaBZgAA4C8lbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=Sv_J6umU7kOSvcCavHiFrSdk1ZKfXc8NFfGZAtQC7TQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - img [ref=f91e27]
+                          - link "−23%" [ref=f91e29] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=jTCIiSwAAAAAAAAAeJwBLADT_wid5KiAtLrNnRoQthYY2xMg_JmkMDINCJoTEO_k6Zy4q7K7WzjgE0C2FlgF1c0UKg%2C%2C&bl=c2xpT2YAAAAAAAAAeJzj4ue4-GFlG5MAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5jjZM2sMoACaBZgAA4C8lbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=Sv_J6umU7kOSvcCavHiFrSdk1ZKfXc8NFfGZAtQC7TQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - generic [ref=f91e30]: −23%
+                        - generic [ref=f91e31]:
+                          - generic [ref=f91e32]:
+                            - link "11,433 ₪" [ref=f91e33] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=jTCIiSwAAAAAAAAAeJwBLADT_wid5KiAtLrNnRoQthYY2xMg_JmkMDINCJoTEO_k6Zy4q7K7WzjgE0C2FlgF1c0UKg%2C%2C&bl=c2xpT2YAAAAAAAAAeJzj4ue4-GFlG5MAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5jjZM2sMoACaBZgAA4C8lbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=Sv_J6umU7kOSvcCavHiFrSdk1ZKfXc8NFfGZAtQC7TQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - link "14,900 ₪" [ref=f91e35] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=jTCIiSwAAAAAAAAAeJwBLADT_wid5KiAtLrNnRoQthYY2xMg_JmkMDINCJoTEO_k6Zy4q7K7WzjgE0C2FlgF1c0UKg%2C%2C&bl=c2xpT2YAAAAAAAAAeJzj4ue4-GFlG5MAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5jjZM2sMoACaBZgAA4C8lbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=Sv_J6umU7kOSvcCavHiFrSdk1ZKfXc8NFfGZAtQC7TQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                          - link "שטיח ARIA עבודת יד 380419" [ref=f91e36] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=jTCIiSwAAAAAAAAAeJwBLADT_wid5KiAtLrNnRoQthYY2xMg_JmkMDINCJoTEO_k6Zy4q7K7WzjgE0C2FlgF1c0UKg%2C%2C&bl=c2xpT2YAAAAAAAAAeJzj4ue4-GFlG5MAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5jjZM2sMoACaBZgAA4C8lbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=Sv_J6umU7kOSvcCavHiFrSdk1ZKfXc8NFfGZAtQC7TQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                      - generic [ref=f91e37]:
+                        - generic [ref=f91e38]:
+                          - link [ref=f91e39] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=RfM3jy0AAAAAAAAAeJwBLQDS_wiOpr2AoM3NgxoQthYY2xMg_JmkMDIOCJoTEJSbg-_l96vLxgE44BNAthZYCtgZFBQ%2C&bl=lDKkO2AAAAAAAAAAeJzj4uU4f-CIiQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBz_n11TFQARQBMA-FQkVQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=RvZ7Oo_c8onnHgdbGJZ2eviNdbHcSXofYm6YFH3hIoQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - img [ref=f91e42]
+                          - link "−29%" [ref=f91e44] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=RfM3jy0AAAAAAAAAeJwBLQDS_wiOpr2AoM3NgxoQthYY2xMg_JmkMDIOCJoTEJSbg-_l96vLxgE44BNAthZYCtgZFBQ%2C&bl=lDKkO2AAAAAAAAAAeJzj4uU4f-CIiQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBz_n11TFQARQBMA-FQkVQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=RvZ7Oo_c8onnHgdbGJZ2eviNdbHcSXofYm6YFH3hIoQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - generic [ref=f91e45]: −29%
+                        - generic [ref=f91e46]:
+                          - generic [ref=f91e47]:
+                            - link "277 ₪" [ref=f91e48] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=RfM3jy0AAAAAAAAAeJwBLQDS_wiOpr2AoM3NgxoQthYY2xMg_JmkMDIOCJoTEJSbg-_l96vLxgE44BNAthZYCtgZFBQ%2C&bl=lDKkO2AAAAAAAAAAeJzj4uU4f-CIiQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBz_n11TFQARQBMA-FQkVQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=RvZ7Oo_c8onnHgdbGJZ2eviNdbHcSXofYm6YFH3hIoQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - link "390 ₪" [ref=f91e50] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=RfM3jy0AAAAAAAAAeJwBLQDS_wiOpr2AoM3NgxoQthYY2xMg_JmkMDIOCJoTEJSbg-_l96vLxgE44BNAthZYCtgZFBQ%2C&bl=lDKkO2AAAAAAAAAAeJzj4uU4f-CIiQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBz_n11TFQARQBMA-FQkVQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=RvZ7Oo_c8onnHgdbGJZ2eviNdbHcSXofYm6YFH3hIoQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                          - link "שטיח נומאד 09 NOMAD- דו צדדי, שני שטיחים באחד" [ref=f91e51] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=RfM3jy0AAAAAAAAAeJwBLQDS_wiOpr2AoM3NgxoQthYY2xMg_JmkMDIOCJoTEJSbg-_l96vLxgE44BNAthZYCtgZFBQ%2C&bl=lDKkO2AAAAAAAAAAeJzj4uU4f-CIiQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBz_n11TFQARQBMA-FQkVQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=RvZ7Oo_c8onnHgdbGJZ2eviNdbHcSXofYm6YFH3hIoQ%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                    - generic [ref=f91e53]:
+                      - generic [ref=f91e54]:
+                        - generic [ref=f91e55]:
+                          - link [ref=f91e56] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=jgI4gCwAAAAAAAAAeJwBLADT_wjuho-AlM3NgxoQthYY2xMg_JmkMDINCJoTEJunyZHJmJOVfDjgE0C2FlgGvLkS_A%2C%2C&bl=uHYFm2AAAAAAAAAAeJzj4uX43fwtQwBESJxgE0LlSklybFm4n1Pg5syLkxkl-patN1QAERqMBgxKIpyhYHDVXjA4bXOSjP83ewlGDQYjXo5b_-d7C4AIoAkAYTIlbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=3tELe3Fb6hih9Zg5D_XelsMnrzsFGOTs3A4rCDfJ3uM%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - img [ref=f91e59]
+                          - link "−67%" [ref=f91e61] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=jgI4gCwAAAAAAAAAeJwBLADT_wjuho-AlM3NgxoQthYY2xMg_JmkMDINCJoTEJunyZHJmJOVfDjgE0C2FlgGvLkS_A%2C%2C&bl=uHYFm2AAAAAAAAAAeJzj4uX43fwtQwBESJxgE0LlSklybFm4n1Pg5syLkxkl-patN1QAERqMBgxKIpyhYHDVXjA4bXOSjP83ewlGDQYjXo5b_-d7C4AIoAkAYTIlbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=3tELe3Fb6hih9Zg5D_XelsMnrzsFGOTs3A4rCDfJ3uM%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - generic [ref=f91e62]: −67%
+                        - generic [ref=f91e63]:
+                          - generic [ref=f91e64]:
+                            - link "1,655 ₪" [ref=f91e65] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=jgI4gCwAAAAAAAAAeJwBLADT_wjuho-AlM3NgxoQthYY2xMg_JmkMDINCJoTEJunyZHJmJOVfDjgE0C2FlgGvLkS_A%2C%2C&bl=uHYFm2AAAAAAAAAAeJzj4uX43fwtQwBESJxgE0LlSklybFm4n1Pg5syLkxkl-patN1QAERqMBgxKIpyhYHDVXjA4bXOSjP83ewlGDQYjXo5b_-d7C4AIoAkAYTIlbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=3tELe3Fb6hih9Zg5D_XelsMnrzsFGOTs3A4rCDfJ3uM%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - link "4,990 ₪" [ref=f91e67] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=jgI4gCwAAAAAAAAAeJwBLADT_wjuho-AlM3NgxoQthYY2xMg_JmkMDINCJoTEJunyZHJmJOVfDjgE0C2FlgGvLkS_A%2C%2C&bl=uHYFm2AAAAAAAAAAeJzj4uX43fwtQwBESJxgE0LlSklybFm4n1Pg5syLkxkl-patN1QAERqMBgxKIpyhYHDVXjA4bXOSjP83ewlGDQYjXo5b_-d7C4AIoAkAYTIlbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=3tELe3Fb6hih9Zg5D_XelsMnrzsFGOTs3A4rCDfJ3uM%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                          - link "שטיח NATURE לולאות גוון בז' משולב XXL B DB" [ref=f91e68] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=jgI4gCwAAAAAAAAAeJwBLADT_wjuho-AlM3NgxoQthYY2xMg_JmkMDINCJoTEJunyZHJmJOVfDjgE0C2FlgGvLkS_A%2C%2C&bl=uHYFm2AAAAAAAAAAeJzj4uX43fwtQwBESJxgE0LlSklybFm4n1Pg5syLkxkl-patN1QAERqMBgxKIpyhYHDVXjA4bXOSjP83ewlGDQYjXo5b_-d7C4AIoAkAYTIlbw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=3tELe3Fb6hih9Zg5D_XelsMnrzsFGOTs3A4rCDfJ3uM%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                      - generic [ref=f91e69]:
+                        - generic [ref=f91e70]:
+                          - link [ref=f91e71] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=h-YkKC0AAAAAAAAAeJwBLQDS_wiDpeGB9O36txoQthYY2xMg_JmkMDIOCJoTEOG977XE6t26hQE44BNAthZYAQP1FUw%2C&bl=jR69EmAAAAAAAAAAeJzj4uU4ueaergCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvByb7j5TEAARQBMA6XMjow%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=MkC6h0kJFXyfLSX6dnuFg534TzZg3YpC1Ap7GMF7t-M%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - img [ref=f91e74]
+                          - link "−45%" [ref=f91e76] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=h-YkKC0AAAAAAAAAeJwBLQDS_wiDpeGB9O36txoQthYY2xMg_JmkMDIOCJoTEOG977XE6t26hQE44BNAthZYAQP1FUw%2C&bl=jR69EmAAAAAAAAAAeJzj4uU4ueaergCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvByb7j5TEAARQBMA6XMjow%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=MkC6h0kJFXyfLSX6dnuFg534TzZg3YpC1Ap7GMF7t-M%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - generic [ref=f91e77]: −45%
+                        - generic [ref=f91e78]:
+                          - generic [ref=f91e79]:
+                            - link "433 ₪" [ref=f91e80] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=h-YkKC0AAAAAAAAAeJwBLQDS_wiDpeGB9O36txoQthYY2xMg_JmkMDIOCJoTEOG977XE6t26hQE44BNAthZYAQP1FUw%2C&bl=jR69EmAAAAAAAAAAeJzj4uU4ueaergCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvByb7j5TEAARQBMA6XMjow%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=MkC6h0kJFXyfLSX6dnuFg534TzZg3YpC1Ap7GMF7t-M%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - link "790 ₪" [ref=f91e82] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=h-YkKC0AAAAAAAAAeJwBLQDS_wiDpeGB9O36txoQthYY2xMg_JmkMDIOCJoTEOG977XE6t26hQE44BNAthZYAQP1FUw%2C&bl=jR69EmAAAAAAAAAAeJzj4uU4ueaergCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvByb7j5TEAARQBMA6XMjow%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=MkC6h0kJFXyfLSX6dnuFg534TzZg3YpC1Ap7GMF7t-M%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                          - link "שטיח וינטג' מדליון טורקיז ורוד 3147-01" [ref=f91e83] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=h-YkKC0AAAAAAAAAeJwBLQDS_wiDpeGB9O36txoQthYY2xMg_JmkMDIOCJoTEOG977XE6t26hQE44BNAthZYAQP1FUw%2C&bl=jR69EmAAAAAAAAAAeJzj4uU4ueaergCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvByb7j5TEAARQBMA6XMjow%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=MkC6h0kJFXyfLSX6dnuFg534TzZg3YpC1Ap7GMF7t-M%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                    - generic [ref=f91e85]:
+                      - generic [ref=f91e86]:
+                        - generic [ref=f91e87]:
+                          - link [ref=f91e88] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=d6JuGSwAAAAAAAAAeJwBLADT_wj1pr2AoM3NgxoQthYY2xMg_JmkMDINCJoTEOvhj7q43ZCaMTjgE0C2FlgN0_QTyA%2C%2C&bl=c86QL2AAAAAAAAAAeJzj4uX4cGy2kQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBy7XzWqCIAIoAkA6pwjGQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=uq9W4zpZ0BGF-Kyy3hPrnFUHWyPigfywH9X6dUKxHGk%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - img [ref=f91e91]
+                          - link "−56%" [ref=f91e93] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=d6JuGSwAAAAAAAAAeJwBLADT_wj1pr2AoM3NgxoQthYY2xMg_JmkMDINCJoTEOvhj7q43ZCaMTjgE0C2FlgN0_QTyA%2C%2C&bl=c86QL2AAAAAAAAAAeJzj4uX4cGy2kQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBy7XzWqCIAIoAkA6pwjGQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=uq9W4zpZ0BGF-Kyy3hPrnFUHWyPigfywH9X6dUKxHGk%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - generic [ref=f91e94]: −56%
+                        - generic [ref=f91e95]:
+                          - generic [ref=f91e96]:
+                            - link "433 ₪" [ref=f91e97] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=d6JuGSwAAAAAAAAAeJwBLADT_wj1pr2AoM3NgxoQthYY2xMg_JmkMDINCJoTEOvhj7q43ZCaMTjgE0C2FlgN0_QTyA%2C%2C&bl=c86QL2AAAAAAAAAAeJzj4uX4cGy2kQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBy7XzWqCIAIoAkA6pwjGQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=uq9W4zpZ0BGF-Kyy3hPrnFUHWyPigfywH9X6dUKxHGk%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - link "990 ₪" [ref=f91e99] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=d6JuGSwAAAAAAAAAeJwBLADT_wj1pr2AoM3NgxoQthYY2xMg_JmkMDINCJoTEOvhj7q43ZCaMTjgE0C2FlgN0_QTyA%2C%2C&bl=c86QL2AAAAAAAAAAeJzj4uX4cGy2kQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBy7XzWqCIAIoAkA6pwjGQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=uq9W4zpZ0BGF-Kyy3hPrnFUHWyPigfywH9X6dUKxHGk%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                          - link "שטיח LUCCA 672 כחול ווש משופשף" [ref=f91e100] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=d6JuGSwAAAAAAAAAeJwBLADT_wj1pr2AoM3NgxoQthYY2xMg_JmkMDINCJoTEOvhj7q43ZCaMTjgE0C2FlgN0_QTyA%2C%2C&bl=c86QL2AAAAAAAAAAeJzj4uX4cGy2kQCIkDjBJoTKlZLk2LJwP6fAzZkXJzNK9C1bb6gAIjQYDRiURDhDweCqvWBw2uYkGf9v9hKMGgxGvBy7XzWqCIAIoAkA6pwjGQ%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=uq9W4zpZ0BGF-Kyy3hPrnFUHWyPigfywH9X6dUKxHGk%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                      - generic [ref=f91e101]:
+                        - generic [ref=f91e102]:
+                          - link [ref=f91e103] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=_LCobS0AAAAAAAAAeJwBLQDS_wiN5KiAtLrNnRoQthYY2xMg_JmkMDIOCJoTEIWUkKzXjM-B2wE44BNAthZYBddcE3w%2C&bl=hIvasGYAAAAAAAAAeJzj4ueYtrBpOZMAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5trecvswoACaBZgAAIMUjuw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=q6mIhxCStuVJ05TYeB6Pv4V9GfLMwJNTAUxGnnv8Na8%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - img [ref=f91e106]
+                          - link "−22%" [ref=f91e108] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=_LCobS0AAAAAAAAAeJwBLQDS_wiN5KiAtLrNnRoQthYY2xMg_JmkMDIOCJoTEIWUkKzXjM-B2wE44BNAthZYBddcE3w%2C&bl=hIvasGYAAAAAAAAAeJzj4ueYtrBpOZMAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5trecvswoACaBZgAAIMUjuw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=q6mIhxCStuVJ05TYeB6Pv4V9GfLMwJNTAUxGnnv8Na8%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - generic [ref=f91e109]: −22%
+                        - generic [ref=f91e110]:
+                          - generic [ref=f91e111]:
+                            - link "11,656 ₪" [ref=f91e112] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=_LCobS0AAAAAAAAAeJwBLQDS_wiN5KiAtLrNnRoQthYY2xMg_JmkMDIOCJoTEIWUkKzXjM-B2wE44BNAthZYBddcE3w%2C&bl=hIvasGYAAAAAAAAAeJzj4ueYtrBpOZMAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5trecvswoACaBZgAAIMUjuw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=q6mIhxCStuVJ05TYeB6Pv4V9GfLMwJNTAUxGnnv8Na8%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                            - link "14,900 ₪" [ref=f91e114] [cursor=pointer]:
+                              - /url: https://abs.yandex.ru/dsp/event?bi=_LCobS0AAAAAAAAAeJwBLQDS_wiN5KiAtLrNnRoQthYY2xMg_JmkMDIOCJoTEIWUkKzXjM-B2wE44BNAthZYBddcE3w%2C&bl=hIvasGYAAAAAAAAAeJzj4ueYtrBpOZMAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5trecvswoACaBZgAAIMUjuw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=q6mIhxCStuVJ05TYeB6Pv4V9GfLMwJNTAUxGnnv8Na8%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                          - link "שטיח ARIA עבודת יד 380375" [ref=f91e115] [cursor=pointer]:
+                            - /url: https://abs.yandex.ru/dsp/event?bi=_LCobS0AAAAAAAAAeJwBLQDS_wiN5KiAtLrNnRoQthYY2xMg_JmkMDIOCJoTEIWUkKzXjM-B2wE44BNAthZYBddcE3w%2C&bl=hIvasGYAAAAAAAAAeJzj4ueYtrBpOZMAmJQ4wSaELiAlybFl4X5OgZszL05mlOhbtt5QAURoMBowKIlwhoLBVXvB4LTNSTL-3-wlGDUYjPg5trecvswoACaBZgAAIMUjuw%2C%2C&dt=1&et=2&f=P7fjzx0BAAAAAAAAeJzjaO-90b3p3do18gI3Tz06xybR0rxvwv1Ze5bra3FwMApwSDApMBhJcjAIMEgwKDBoMBgwWDC4MgCBB0MAQwSDFRuHooCQBKOTMcfj00c33Nm-Zd5rRoH-iZf_Trw7_7GiBEJQSTAxpyS1KC-xJLMstSRfLy-1JKOZsYiPi4tjCrsQc3ZOugSDAEsDI1sXI7fEpG52ja2MBqwWDJMYtTngThJgs5J2dnQNdvXIr3Q2zaiscg0vTs4LMg4uNXUMSCuOYpjByLiAkWETIwvQ6Yw7GSfZ3HkUJ91md5DRx7zTMeHpAvsTjAwvGJk-MDL-YFzJ38DE0MHEOImJn-Now6Q9jAJgUuIE2wImhhVMS57P5wAAw8RfkA%2C%2C&rt=1&sgn=q6mIhxCStuVJ05TYeB6Pv4V9GfLMwJNTAUxGnnv8Na8%2C&sgn_m=GW7cCxkAAAAAAAAAeJzjYkot4WIqKuFiTONiSsoE4hwuppQSAUYAQCgE7w%2C%2C&a=08TM6gkAAAAAAAAAeJzjnDUTBB7aAwAWHATB
+                  - button [ref=f91e116] [cursor=pointer]:
+                    - img [ref=f91e117]
+        - list [ref=e46]:
+          - listitem [ref=e47]:
+            - article [ref=e48]
+          - listitem [ref=e123]:
+            - article [ref=e124]
+  - contentinfo [ref=e207]:
+    - generic [ref=e208]:
+      - img "AlternativeTo" [ref=e209]
+      - generic [ref=e210]:
+        - generic [ref=e211]:
+          - paragraph [ref=e212]: AlternativeTo is a free service that helps you find better alternatives to the products you love and hate.
+          - paragraph [ref=e213]:
+            - text: The site is made by
+            - link "Ola" [ref=e214] [cursor=pointer]:
+              - /url: /user/ola/
+            - text: and
+            - link "Markus" [ref=e215] [cursor=pointer]:
+              - /url: /user/markus/
+            - text: in Sweden, with a lot of help from our friends and colleagues in Italy, Finland, USA, Colombia, Philippines, France and contributors from all over the world. That's right, all the lists of alternatives are crowd-sourced, and that's what makes the data powerful and relevant.
+          - paragraph [ref=e216]:
+            - text: Feel free to send us your questions and feedback at
+            - link "hello@alternativeto.net" [ref=e217] [cursor=pointer]:
+              - /url: mailto:hello@alternativeto.net
+            - text: ", on our"
+            - link "Discord" [ref=e218] [cursor=pointer]:
+              - /url: https://discord.gg/VS45yNS
+            - text: or on our social media channels
+            - generic [ref=e219]
+            - generic [ref=e221]
+            - generic [ref=e223]
+            - generic [ref=e225]
+            - generic [ref=e227]
+            - generic [ref=e229]
+            - text: .
+        - list [ref=e232]:
+          - listitem [ref=e233]:
+            - link "FAQ" [ref=e234] [cursor=pointer]:
+              - /url: /faq/
+          - listitem [ref=e235]:
+            - link "Privacy Policy" [ref=e236] [cursor=pointer]:
+              - /url: /about/privacy/
+          - listitem [ref=e237]:
+            - link "Cookie Policy" [ref=e238] [cursor=pointer]:
+              - /url: /about/cookie-policy/
+          - listitem [ref=e239]:
+            - link "About AlternativeTo" [ref=e240] [cursor=pointer]:
+              - /url: /about/
+          - listitem [ref=e241]:
+            - link "Become a Partner" [ref=e242] [cursor=pointer]:
+              - /url: mailto:partners@alternativeto.com
+      - generic [ref=e243]:
+        - generic [ref=e244]:
+          - link "Discord" [ref=e245] [cursor=pointer]:
+            - /url: https://discord.gg/VS45yNS
+            - img [ref=e246]
+          - link "X (Twitter)" [ref=e248] [cursor=pointer]:
+            - /url: https://x.com/alternativeto
+            - img [ref=e249]
+          - link "Mastodon" [ref=e251] [cursor=pointer]:
+            - /url: https://mas.to/@alternativeto
+            - img [ref=e252]
+          - link "Bluesky" [ref=e254] [cursor=pointer]:
+            - /url: https://bsky.app/profile/alternativeto.net
+            - img [ref=e255]
+          - link "Threads" [ref=e257] [cursor=pointer]:
+            - /url: https://www.threads.com/@alternativetonet
+            - img [ref=e258]
+          - link "Instagram" [ref=e260] [cursor=pointer]:
+            - /url: https://www.instagram.com/alternativetonet/
+            - img [ref=e261]
+          - link "LinkedIn" [ref=e263] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/alternativeto/
+            - img [ref=e264]
+        - generic [ref=e266]:
+          - generic [ref=e267]: © 27 Kilobyte AB
+          - generic [ref=e268]: "|"
+          - generic [ref=e269]: "Build: Docker_20260323.1 | Version: app-router"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+  - alert [ref=e299]

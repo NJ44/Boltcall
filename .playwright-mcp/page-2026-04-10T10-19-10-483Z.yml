@@ -1,0 +1,417 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#page-container"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation [ref=e5]:
+        - link "Crunchbase | Knowledge Center Help Center home page" [ref=e6] [cursor=pointer]:
+          - /url: /hc/en-us
+          - img "Crunchbase | Knowledge Center Help Center home page" [ref=e7]
+        - list [ref=e8]:
+          - listitem [ref=e9]:
+            - link "Back to website" [ref=e10] [cursor=pointer]:
+              - /url: https://www.crunchbase.com/
+          - listitem [ref=e11]:
+            - link "Community" [ref=e12] [cursor=pointer]:
+              - /url: /hc/en-us/community/topics
+          - listitem [ref=e13]:
+            - button "Sign in" [ref=e14] [cursor=pointer]
+    - main [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - navigation [ref=e18]:
+            - list [ref=e19]:
+              - listitem "Crunchbase | Knowledge Center" [ref=e20]:
+                - link "Crunchbase | Knowledge Center" [ref=e21] [cursor=pointer]:
+                  - /url: /hc/en-us
+              - listitem "Search results" [ref=e22]: / Search results
+          - generic [ref=e24]:
+            - heading "Search" [level=2] [ref=e25]
+            - search [ref=e26]:
+              - searchbox "Search here" [ref=e27]: add new company profile
+            - img [ref=e28]
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - heading "493 results for \"add new company profile\"" [level=1] [ref=e34]
+            - list [ref=e35]:
+              - listitem [ref=e36]:
+                - heading "How can i add a newly registered company? 1 comment" [level=3] [ref=e37]:
+                  - link "How can i add a newly registered company?" [ref=e38] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgTvs6nrCM6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkidGh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvMzkyMjQ0NTY2OTEyMTktSG93LWNhbi1pLWFkZC1hLW5ld2x5LXJlZ2lzdGVyZWQtY29tcGFueQY7CFQ6DnNlYXJjaF9pZEkiKThiZjQ3N2E2LWI1MTctNGE0My04N2M2LTA4MjY4YjVkNmFlMQY7CEY6CXJhbmtpBjoLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiHGFkZCBuZXcgY29tcGFueSBwcm9maWxlBjsIVDoScmVzdWx0c19jb3VudGkC7QE%3D--2401d4a6184a88dbe3589ee0084cc7695a34151a
+                  - generic [ref=e39]:
+                    - img [ref=e40]
+                    - text: 1 comment
+                - list [ref=e42]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e43]:
+                    - link "Crunchbase | Knowledge Center" [ref=e44] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e45]:
+                    - text: /
+                    - link "Community" [ref=e46] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e47]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e48] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e49]:
+                  - text: created a
+                  - emphasis [ref=e50]: new
+                  - emphasis [ref=e51]: profile
+                  - text: and submitted a request to
+                  - emphasis [ref=e52]: add
+                  - text: a
+                  - emphasis [ref=e53]: company
+                  - text: "using this link: https://www.crunchbase.com/"
+                  - emphasis [ref=e54]: add
+                  - text: "-"
+                  - emphasis [ref=e55]: new
+                  - text: I haven’t
+                - list [ref=e56]:
+                  - listitem [ref=e57]:
+                    - link "Albert A" [ref=e58] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/39224397772435-Albert-A
+                  - listitem [ref=e59]:
+                    - text: ·
+                    - time [ref=e60]: March 9, 2025 at 2:21 PM
+              - listitem [ref=e61]:
+                - heading "Adding new signals to a company profile 1 comment" [level=3] [ref=e62]:
+                  - link "Adding new signals to a company profile" [ref=e63] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgT8fTYAwQ6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkicmh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvNDQxNDU3MTM0NDE0Ny1BZGRpbmctbmV3LXNpZ25hbHMtdG8tYS1jb21wYW55LXByb2ZpbGUGOwhUOg5zZWFyY2hfaWRJIik4YmY0NzdhNi1iNTE3LTRhNDMtODdjNi0wODI2OGI1ZDZhZTEGOwhGOglyYW5raQc6C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhxhZGQgbmV3IGNvbXBhbnkgcHJvZmlsZQY7CFQ6EnJlc3VsdHNfY291bnRpAu0B--0351439057a6e33402c85451b861347ec3ca68e7
+                  - generic [ref=e64]:
+                    - img [ref=e65]
+                    - text: 1 comment
+                - list [ref=e67]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e68]:
+                    - link "Crunchbase | Knowledge Center" [ref=e69] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e70]:
+                    - text: /
+                    - link "Community" [ref=e71] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e72]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e73] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e74]:
+                  - text: try to edit a
+                  - emphasis [ref=e75]: company
+                  - text: "'s signals, I am directed to the edit"
+                  - emphasis [ref=e76]: company
+                  - text: page which only allows me to
+                  - emphasis [ref=e77]: add
+                  - text: /remove
+                  - emphasis [ref=e78]: news
+                  - text: articles. How
+                - list [ref=e79]:
+                  - listitem [ref=e80]:
+                    - link "Sharon Chitayat" [ref=e81] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/1528960043261-Sharon-Chitayat
+                  - listitem [ref=e82]:
+                    - text: ·
+                    - time [ref=e83]: January 7, 2022 at 12:34 AM
+              - listitem [ref=e84]:
+                - heading "How do I create a Crunchbase profile? 280" [level=3] [ref=e85]:
+                  - link "How do I create a Crunchbase profile?" [ref=e86] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwh0KT3HGgA6D2FjY291bnRfaWRpA041FDoJdHlwZUkiDGFydGljbGUGOgZFVDoIdXJsSSJnaHR0cHM6Ly9zdXBwb3J0LmNydW5jaGJhc2UuY29tL2hjL2VuLXVzL2FydGljbGVzLzExNTAxMTgyMzk4OC1Ib3ctZG8tSS1jcmVhdGUtYS1DcnVuY2hiYXNlLXByb2ZpbGUGOwhUOg5zZWFyY2hfaWRJIik4YmY0NzdhNi1iNTE3LTRhNDMtODdjNi0wODI2OGI1ZDZhZTEGOwhGOglyYW5raQg6C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhxhZGQgbmV3IGNvbXBhbnkgcHJvZmlsZQY7CFQ6EnJlc3VsdHNfY291bnRpAu0B--6ec7d8f97c508fd7f9239ef7a4de2002a445d566
+                  - generic [ref=e87]:
+                    - img [ref=e88]
+                    - text: "280"
+                - list [ref=e92]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e93]:
+                    - link "Crunchbase | Knowledge Center" [ref=e94] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "About Crunchbase" [ref=e95]:
+                    - text: /
+                    - link "About Crunchbase" [ref=e96] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/categories/23491748100371-About-Crunchbase
+                  - listitem "Contribute Data" [ref=e97]:
+                    - text: /
+                    - link "Contribute Data" [ref=e98] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/sections/115003224627-Contribute-Data
+                - paragraph [ref=e99]:
+                  - text: To
+                  - emphasis [ref=e100]: add
+                  - text: a
+                  - emphasis [ref=e101]: profile
+                  - text: ": 1. Click Resources in the top navigation, then Create"
+                  - emphasis [ref=e102]: Profile
+                  - text: . 2. Select the type of
+                  - emphasis [ref=e103]: profile
+                  - text: you’d
+                - list [ref=e104]:
+                  - listitem [ref=e105]:
+                    - link "Crunchbase Staff" [ref=e106] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/21950314448-Crunchbase-Staff
+                  - listitem [ref=e107]:
+                    - text: ·
+                    - time [ref=e108]: August 19, 2017 at 1:16 AM
+              - listitem [ref=e109]:
+                - heading "Company's profile 1 comment" [level=3] [ref=e110]:
+                  - link "Company's profile" [ref=e111] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgTtB7eyAQ6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkiXGh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvNTI2MDc2NjUyNDQzNS1Db21wYW55LXMtcHJvZmlsZQY7CFQ6DnNlYXJjaF9pZEkiKThiZjQ3N2E2LWI1MTctNGE0My04N2M2LTA4MjY4YjVkNmFlMQY7CEY6CXJhbmtpCToLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiHGFkZCBuZXcgY29tcGFueSBwcm9maWxlBjsIVDoScmVzdWx0c19jb3VudGkC7QE%3D--d3ec8a2727f8fa191972bcd8dafbf04c56057459
+                  - generic [ref=e112]:
+                    - img [ref=e113]
+                    - text: 1 comment
+                - list [ref=e115]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e116]:
+                    - link "Crunchbase | Knowledge Center" [ref=e117] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e118]:
+                    - text: /
+                    - link "Community" [ref=e119] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e120]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e121] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e122]:
+                  - text: and Representative of Wellnuts Inc. I have found our
+                  - emphasis [ref=e123]: company
+                  - text: ’s
+                  - emphasis [ref=e124]: profile
+                  - text: at Crunchbase (https://www.crunchbase.com/organizat
+                - list [ref=e125]:
+                  - listitem [ref=e126]:
+                    - link "Alena Sakchina" [ref=e127] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/5260773363987-Alena-Sakchina
+                  - listitem [ref=e128]:
+                    - text: ·
+                    - time [ref=e129]: April 4, 2022 at 11:44 AM
+              - listitem [ref=e130]:
+                - heading "How can I insert my company profile 1 comment" [level=3] [ref=e131]:
+                  - link "How can I insert my company profile" [ref=e132] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwiTWBKqlwU6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkibmh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvNjE0ODk1MTUyOTYxOS1Ib3ctY2FuLUktaW5zZXJ0LW15LWNvbXBhbnktcHJvZmlsZQY7CFQ6DnNlYXJjaF9pZEkiKThiZjQ3N2E2LWI1MTctNGE0My04N2M2LTA4MjY4YjVkNmFlMQY7CEY6CXJhbmtpCjoLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiHGFkZCBuZXcgY29tcGFueSBwcm9maWxlBjsIVDoScmVzdWx0c19jb3VudGkC7QE%3D--e2579b13b478f2411c460f391bd43b84d0e0aea2
+                  - generic [ref=e133]:
+                    - img [ref=e134]
+                    - text: 1 comment
+                - list [ref=e136]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e137]:
+                    - link "Crunchbase | Knowledge Center" [ref=e138] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e139]:
+                    - text: /
+                    - link "Community" [ref=e140] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e141]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e142] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e143]:
+                  - text: My
+                  - emphasis [ref=e144]: company
+                  - text: does not appear in the database. We are inspyria ( Global EMotimes SL) with more than 5 years of record business
+                - list [ref=e145]:
+                  - listitem [ref=e146]:
+                    - link "Sergi Arribas" [ref=e147] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/1914502234145-Sergi-Arribas
+                  - listitem [ref=e148]:
+                    - text: ·
+                    - time [ref=e149]: May 11, 2022 at 2:38 PM
+              - listitem [ref=e150]:
+                - heading "Not able to create company profile 1 comment" [level=3] [ref=e151]:
+                  - link "Not able to create company profile" [ref=e152] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgTObhTJQs6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkibmh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvMTIyNTQ5NDYyNzc2NTEtTm90LWFibGUtdG8tY3JlYXRlLWNvbXBhbnktcHJvZmlsZQY7CFQ6DnNlYXJjaF9pZEkiKThiZjQ3N2E2LWI1MTctNGE0My04N2M2LTA4MjY4YjVkNmFlMQY7CEY6CXJhbmtpCzoLbG9jYWxlSSIKZW4tdXMGOwhUOgpxdWVyeUkiHGFkZCBuZXcgY29tcGFueSBwcm9maWxlBjsIVDoScmVzdWx0c19jb3VudGkC7QE%3D--acca1863df24c5e303b547be607eaa792379445e
+                  - generic [ref=e153]:
+                    - img [ref=e154]
+                    - text: 1 comment
+                - list [ref=e156]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e157]:
+                    - link "Crunchbase | Knowledge Center" [ref=e158] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e159]:
+                    - text: /
+                    - link "Community" [ref=e160] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e161]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e162] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e163]:
+                  - text: Hello Team, I want to create
+                  - emphasis [ref=e164]: company
+                  - emphasis [ref=e165]: profile
+                  - text: for https://www.beyondmart.com/ I have already linked twitter and my gsuit
+                - list [ref=e166]:
+                  - listitem [ref=e167]:
+                    - link "Atul Hansaliya" [ref=e168] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/406290232674-Atul-Hansaliya
+                  - listitem [ref=e169]:
+                    - text: ·
+                    - time [ref=e170]: December 18, 2022 at 6:05 AM
+              - listitem [ref=e171]:
+                - heading "Changing profile of an acquired company 4 comments" [level=3] [ref=e172]:
+                  - link "Changing profile of an acquired company" [ref=e173] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgTerJXJA46D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkic2h0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvMTU1NDkyNTI5MjU5NzEtQ2hhbmdpbmctcHJvZmlsZS1vZi1hbi1hY3F1aXJlZC1jb21wYW55BjsIVDoOc2VhcmNoX2lkSSIpOGJmNDc3YTYtYjUxNy00YTQzLTg3YzYtMDgyNjhiNWQ2YWUxBjsIRjoJcmFua2kMOgtsb2NhbGVJIgplbi11cwY7CFQ6CnF1ZXJ5SSIcYWRkIG5ldyBjb21wYW55IHByb2ZpbGUGOwhUOhJyZXN1bHRzX2NvdW50aQLtAQ%3D%3D--bfe1463590259aff03abdd04cc8cc292faa834a5
+                  - generic [ref=e174]:
+                    - img [ref=e175]
+                    - text: 4 comments
+                - list [ref=e177]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e178]:
+                    - link "Crunchbase | Knowledge Center" [ref=e179] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e180]:
+                    - text: /
+                    - link "Community" [ref=e181] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e182]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e183] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e184]:
+                  - text: Hi - My
+                  - emphasis [ref=e185]: company
+                  - text: acquired another
+                  - emphasis [ref=e186]: company
+                  - text: ", and I want to update the Crunchbase"
+                  - emphasis [ref=e187]: profile
+                  - text: of the acquired
+                  - emphasis [ref=e188]: company
+                  - text: . But since
+                - list [ref=e189]:
+                  - listitem [ref=e190]:
+                    - link "Natalie Beaulieu" [ref=e191] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/418158108393-Natalie-Beaulieu
+                  - listitem [ref=e192]:
+                    - text: ·
+                    - time [ref=e193]: April 6, 2023 at 10:55 PM
+              - listitem [ref=e194]:
+                - heading "How do I add to or update the People section of my company's profile?" [level=3] [ref=e195]:
+                  - link "How do I add to or update the People section of my company's profile?" [ref=e196] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgl3fc%2BXQE6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkiAYpodHRwczovL3N1cHBvcnQuY3J1bmNoYmFzZS5jb20vaGMvZW4tdXMvY29tbXVuaXR5L3Bvc3RzLzE1MDAwMDAwMTc3MDEtSG93LWRvLUktYWRkLXRvLW9yLXVwZGF0ZS10aGUtUGVvcGxlLXNlY3Rpb24tb2YtbXktY29tcGFueS1zLXByb2ZpbGUGOwhUOg5zZWFyY2hfaWRJIik4YmY0NzdhNi1iNTE3LTRhNDMtODdjNi0wODI2OGI1ZDZhZTEGOwhGOglyYW5raQ06C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhxhZGQgbmV3IGNvbXBhbnkgcHJvZmlsZQY7CFQ6EnJlc3VsdHNfY291bnRpAu0B--c9b15f9051f1433ca0c5902e04f8f98347ea970d
+                - list [ref=e197]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e198]:
+                    - link "Crunchbase | Knowledge Center" [ref=e199] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e200]:
+                    - text: /
+                    - link "Community" [ref=e201] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e202]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e203] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e204]:
+                  - text: with Crunchbase
+                  - emphasis [ref=e205]: profiles
+                  - text: ". Below are guides to help you edit that section. Guides for Editing: To"
+                  - emphasis [ref=e206]: add
+                  - text: employees to this
+                - list [ref=e207]:
+                  - listitem [ref=e208]:
+                    - link "Erika" [ref=e209] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/378929566554-Erika
+                  - listitem [ref=e210]:
+                    - text: ·
+                    - time [ref=e211]: December 4, 2020 at 3:47 AM
+              - listitem [ref=e212]:
+                - heading "Company Not Found to Build a Profile 1 comment" [level=3] [ref=e213]:
+                  - link "Company Not Found to Build a Profile" [ref=e214] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwiTjPKfJQY6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkib2h0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvNjc1ODY2NzAyOTY1MS1Db21wYW55LU5vdC1Gb3VuZC10by1CdWlsZC1hLVByb2ZpbGUGOwhUOg5zZWFyY2hfaWRJIik4YmY0NzdhNi1iNTE3LTRhNDMtODdjNi0wODI2OGI1ZDZhZTEGOwhGOglyYW5raQ46C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhxhZGQgbmV3IGNvbXBhbnkgcHJvZmlsZQY7CFQ6EnJlc3VsdHNfY291bnRpAu0B--6acd3597a6b0472ebec3db7bb309db456d9ef7cb
+                  - generic [ref=e215]:
+                    - img [ref=e216]
+                    - text: 1 comment
+                - list [ref=e218]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e219]:
+                    - link "Crunchbase | Knowledge Center" [ref=e220] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e221]:
+                    - text: /
+                    - link "Community" [ref=e222] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e223]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e224] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e225]:
+                  - text: Hello, My
+                  - emphasis [ref=e226]: company
+                  - text: LIMS Wizards https://limswizards.com/ does not come up Crunchbase under "Search for the
+                  - emphasis [ref=e227]: Company
+                  - text: You Work
+                - list [ref=e228]:
+                  - listitem [ref=e229]:
+                    - link "Megan Cavanaugh" [ref=e230] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/6758444097683-Megan-Cavanaugh
+                  - listitem [ref=e231]:
+                    - text: ·
+                    - time [ref=e232]: June 6, 2022 at 6:37 PM
+              - listitem [ref=e233]:
+                - heading "I can't create a company profile 1 comment" [level=3] [ref=e234]:
+                  - link "I can't create a company profile" [ref=e235] [cursor=pointer]:
+                    - /url: /hc/en-us/search/click?data=BAh7DjoHaWRsKwgTBaVZqCU6D2FjY291bnRfaWRpA041FDoJdHlwZUkiE2NvbW11bml0eV9wb3N0BjoGRVQ6CHVybEkibGh0dHBzOi8vc3VwcG9ydC5jcnVuY2hiYXNlLmNvbS9oYy9lbi11cy9jb21tdW5pdHkvcG9zdHMvNDE0MDQ5ODg3MjA0MDMtSS1jYW4tdC1jcmVhdGUtYS1jb21wYW55LXByb2ZpbGUGOwhUOg5zZWFyY2hfaWRJIik4YmY0NzdhNi1iNTE3LTRhNDMtODdjNi0wODI2OGI1ZDZhZTEGOwhGOglyYW5raQ86C2xvY2FsZUkiCmVuLXVzBjsIVDoKcXVlcnlJIhxhZGQgbmV3IGNvbXBhbnkgcHJvZmlsZQY7CFQ6EnJlc3VsdHNfY291bnRpAu0B--e0c46fb56cf0e2276c2d5e609e77d96bb24f667c
+                  - generic [ref=e236]:
+                    - img [ref=e237]
+                    - text: 1 comment
+                - list [ref=e239]:
+                  - listitem "Crunchbase | Knowledge Center" [ref=e240]:
+                    - link "Crunchbase | Knowledge Center" [ref=e241] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com
+                  - listitem "Community" [ref=e242]:
+                    - text: /
+                    - link "Community" [ref=e243] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics
+                  - listitem "Crunchbase Profiles Q & A" [ref=e244]:
+                    - text: /
+                    - link "Crunchbase Profiles Q & A" [ref=e245] [cursor=pointer]:
+                      - /url: https://support.crunchbase.com/hc/en-us/community/topics/360001456714-Crunchbase-Profiles-Q-A
+                - paragraph [ref=e246]:
+                  - text: "& google account). But I still can't create my"
+                  - emphasis [ref=e247]: company
+                  - emphasis [ref=e248]: profile
+                  - text: . What should I do?
+                - list [ref=e249]:
+                  - listitem [ref=e250]:
+                    - link "Agus Suratno" [ref=e251] [cursor=pointer]:
+                      - /url: /hc/en-us/profiles/41119419495827-Agus-Suratno
+                  - listitem [ref=e252]:
+                    - text: ·
+                    - time [ref=e253]: May 20, 2025 at 3:31 AM
+            - navigation "Pagination" [ref=e254]:
+              - list [ref=e255]:
+                - listitem [ref=e256]:
+                  - link "Next" [ref=e257] [cursor=pointer]:
+                    - /url: /hc/en-us/search?page=2&query=add+new+company+profile&utf8=%E2%9C%93#results
+                    - text: Next ›
+                - listitem [ref=e258]:
+                  - link "Last" [ref=e259] [cursor=pointer]:
+                    - /url: /hc/en-us/search?page=50&query=add+new+company+profile&utf8=%E2%9C%93#results
+                    - generic [ref=e260]: Last
+                    - text: »
+          - complementary [ref=e261]:
+            - generic [ref=e262]:
+              - heading "By Type" [level=3] [ref=e263]
+              - list [ref=e265]:
+                - listitem [ref=e266]:
+                  - link "All types (492)" [ref=e267] [cursor=pointer]:
+                    - /url: /hc/en-us/search?query=add+new+company+profile&utf8=%E2%9C%93
+                - listitem [ref=e268]:
+                  - link "Articles (245)" [ref=e269] [cursor=pointer]:
+                    - /url: /hc/en-us/search?filter_by=knowledge_base&query=add+new+company+profile&utf8=%E2%9C%93
+                - listitem [ref=e270]:
+                  - link "Community (247)" [ref=e271] [cursor=pointer]:
+                    - /url: /hc/en-us/search?filter_by=community&query=add+new+company+profile&utf8=%E2%9C%93
+    - contentinfo [ref=e272]:
+      - navigation [ref=e274]:
+        - link "Crunchbase | Knowledge Center" [ref=e275] [cursor=pointer]:
+          - /url: /hc/en-us
+        - listitem [ref=e276]:
+          - link "Terms of Service" [ref=e277] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/terms-of-service/
+        - listitem [ref=e278]:
+          - link "Privacy Policy" [ref=e279] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+        - listitem [ref=e280]:
+          - link "News" [ref=e281] [cursor=pointer]:
+            - /url: https://news.crunchbase.com/
+        - listitem [ref=e282]:
+          - link "Blog" [ref=e283] [cursor=pointer]:
+            - /url: https://about.crunchbase.com/blog/
+        - link [ref=e284] [cursor=pointer]:
+          - /url: https://www.facebook.com/crunchbase/
+          - img [ref=e285]
+        - link [ref=e287] [cursor=pointer]:
+          - /url: https://twitter.com/crunchbase
+          - img [ref=e288]
+        - link [ref=e290] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/crunchbase
+          - img [ref=e291]

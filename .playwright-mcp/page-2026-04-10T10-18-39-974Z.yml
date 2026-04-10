@@ -1,0 +1,47 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - link "Crunchbase" [ref=e7] [cursor=pointer]:
+      - /url: /
+      - img [ref=e9]
+    - generic [ref=e20]:
+      - button "Resources" [ref=e23]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: Resources
+          - img [ref=e29]
+      - generic [ref=e33]:
+        - link "Start Free Trial" [ref=e36] [cursor=pointer]:
+          - /url: /buy/select-product
+          - generic [ref=e37]: Start Free Trial
+        - generic [ref=e40]:
+          - button "Talk With Sales" [ref=e43]:
+            - generic [ref=e47]: Talk With Sales
+          - link "Pricing" [ref=e52] [cursor=pointer]:
+            - /url: /buy/select-product
+            - generic [ref=e56]: Pricing
+          - button "Advanced Search" [ref=e60]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: Advanced Search
+              - img [ref=e66]
+          - button "Dashboard" [ref=e71]:
+            - generic [ref=e74]:
+              - generic [ref=e75]: Dashboard
+              - img [ref=e77]
+          - button "Crunchbase Scout" [ref=e83]:
+            - img [ref=e90]
+          - button "Account" [ref=e95]:
+            - generic [ref=e99]:
+              - img [ref=e102]
+              - img [ref=e105]
+  - generic [ref=e111]:
+    - generic [ref=e113]:
+      - heading "Page not found" [level=1] [ref=e115]
+      - generic [ref=e117]:
+        - img "Page not found" [ref=e118]
+        - generic [ref=e119]: Oops.
+        - generic [ref=e120]: Looks like our space cadets can't find this page for you. Head home to see the latest in Crunchbase or use the search bar to find what you're looking for.
+        - generic [ref=e121]:
+          - text: If you need any help, please contact us at
+          - link "support@crunchbase.com" [ref=e122] [cursor=pointer]:
+            - /url: mailto:support@crunchbase.com
+    - button "Help" [ref=e124] [cursor=pointer]:
+      - img [ref=e127]
