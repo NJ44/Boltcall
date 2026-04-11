@@ -1291,6 +1291,43 @@ const LawyerIntakeCalculator: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Industry Benchmark Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Law Firm Intake Benchmarks: Lead Capture and Conversion Performance</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How top-performing law firms compare to the average on intake response and case conversion</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Industry Average</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With AI Answering</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                ['Intake calls answered rate', '55% (industry avg)', '99%+ with AI'],
+                ['After-hours intake capture', 'Voicemail or none', 'All intake calls answered'],
+                ['Monthly missed intake calls (20 avg)', '9 missed calls', '0–1 missed calls'],
+                ['Average case value', '$2,400 – $8,000', '$2,400 – $8,000 (same)'],
+                ['Monthly revenue lost to missed intakes', '$21,600 – $72,000', '$0 – $8,000'],
+                ['Intake-to-signing rate', '28%', '45%+ (speed + follow-up)'],
+                ['Response time to web leads', '4–6 hours average', 'Under 60 seconds'],
+                ['Monthly Google review growth', '0–1 reviews/mo', '3–6 reviews/mo (automated)'],
+                ].map(([metric, avg, ai]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{avg}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

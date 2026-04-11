@@ -1003,6 +1003,43 @@ const DentistChairCalculator: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Industry Benchmark Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Dental Practice Industry Benchmarks: Call Capture and Revenue Performance</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How top-performing dental offices compare to the average on call handling and patient flow</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Industry Average</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With AI Answering</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                ['Calls answered rate', '70% (industry avg)', '99%+ with AI'],
+                ['After-hours call capture', 'Voicemail or none', 'All calls answered'],
+                ['Monthly missed calls (35 call avg)', '10–11 missed calls', '0–1 missed calls'],
+                ['New patient lifetime value', '$1,200 – $3,200', '$1,200 – $3,200 (same)'],
+                ['Monthly new patient revenue lost', '$12,000 – $35,200', '$0 – $3,200'],
+                ['No-show rate', '18–25%', '8–12% (reminders active)'],
+                ['Average recall compliance rate', '52%', '68%+ (automated recall sequences)'],
+                ['Monthly Google review growth', '1–2 reviews/mo', '6–12 reviews/mo (automated)'],
+                ].map(([metric, avg, ai]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{avg}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
