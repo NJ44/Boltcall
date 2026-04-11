@@ -289,6 +289,7 @@ const NavigationWrapper: React.FC = () => {
           }
         >
           <Route index element={<DashboardPage />} />
+          <Route path="getting-started" element={<GettingStartedPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
 
           {/* Pro-gated merged pages */}
