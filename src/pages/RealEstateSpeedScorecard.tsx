@@ -24,6 +24,7 @@ import {
   Mail,
 } from 'lucide-react';
 import { updateMetaDescription } from '../lib/utils';
+import { createServiceSchema, injectSchemas } from '../lib/schema';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
