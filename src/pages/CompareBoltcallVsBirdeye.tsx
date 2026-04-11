@@ -692,6 +692,74 @@ const CompareBoltcallVsBirdeye: React.FC = () => {
       </section>
 
       <FinalCTA {...COMPARISON_CTA} />
+
+      {/* Pros / Cons */}
+      <section className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Boltcall vs Birdeye: Pros and Cons</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Boltcall</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Purpose-built AI call answering for local businesses"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Purpose-built AI call answering for local businesses
+                </li>
+                <li key={"Flat monthly pricing — no per-call fees"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Flat monthly pricing — no per-call fees
+                </li>
+                <li key={"Live in 30 minutes with no tech team needed"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Live in 30 minutes with no tech team needed
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Less focus on review management tools"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Less focus on review management tools
+                </li>
+                <li key={"Best suited for service businesses, not retail"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Best suited for service businesses, not retail
+                </li>
+                </ul>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Birdeye</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Strong review management and reputation tools"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Strong review management and reputation tools
+                </li>
+                <li key={"Wide integration ecosystem"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Wide integration ecosystem
+                </li>
+                <li key={"Good multi-location support"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Good multi-location support
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Not built for AI phone answering"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Not built for AI phone answering
+                </li>
+                <li key={"Per-feature pricing adds up quickly"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Per-feature pricing adds up quickly
+                </li>
+                <li key={"Complex setup for small teams"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Complex setup for small teams
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

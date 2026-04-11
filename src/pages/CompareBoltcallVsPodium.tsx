@@ -660,6 +660,74 @@ const CompareBoltcallVsPodium: React.FC = () => {
       </section>
 
       <FinalCTA {...COMPARISON_CTA} />
+
+      {/* Pros / Cons */}
+      <section className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Boltcall vs Podium: Pros and Cons</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Boltcall</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Dedicated AI phone receptionist — answers every call"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Dedicated AI phone receptionist — answers every call
+                </li>
+                <li key={"Flat monthly pricing, no per-contact fees"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Flat monthly pricing, no per-contact fees
+                </li>
+                <li key={"Captures leads from both calls and missed calls automatically"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Captures leads from both calls and missed calls automatically
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Review management is not a primary focus"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Review management is not a primary focus
+                </li>
+                <li key={"Smaller brand footprint than Podium"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Smaller brand footprint than Podium
+                </li>
+                </ul>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Podium</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Good review request and messaging tools"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Good review request and messaging tools
+                </li>
+                <li key={"Strong brand recognition"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Strong brand recognition
+                </li>
+                <li key={"Useful for reputation management"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Useful for reputation management
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Expensive plans for small businesses"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Expensive plans for small businesses
+                </li>
+                <li key={"AI call answering not a core feature"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>AI call answering not a core feature
+                </li>
+                <li key={"Per-contact pricing can spike at scale"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Per-contact pricing can spike at scale
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

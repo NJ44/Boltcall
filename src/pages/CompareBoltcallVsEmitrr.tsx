@@ -585,6 +585,74 @@ const CompareBoltcallVsEmitrr: React.FC = () => {
       </section>
 
       <FinalCTA {...COMPARISON_CTA} />
+
+      {/* Pros / Cons */}
+      <section className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Boltcall vs Emitrr: Pros and Cons</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Boltcall</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Full AI voice + SMS in one platform"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Full AI voice + SMS in one platform
+                </li>
+                <li key={"No-code setup — live in under 30 minutes"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>No-code setup — live in under 30 minutes
+                </li>
+                <li key={"Purpose-built for lead capture and call answering"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Purpose-built for lead capture and call answering
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Narrower HIPAA compliance scope"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Narrower HIPAA compliance scope
+                </li>
+                <li key={"Fewer enterprise-level reporting features"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Fewer enterprise-level reporting features
+                </li>
+                </ul>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Emitrr</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Good SMS automation features"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Good SMS automation features
+                </li>
+                <li key={"Patient/client communication tools"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Patient/client communication tools
+                </li>
+                <li key={"HIPAA-compliant messaging"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>HIPAA-compliant messaging
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Limited AI voice call handling"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Limited AI voice call handling
+                </li>
+                <li key={"Setup requires technical resources"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Setup requires technical resources
+                </li>
+                <li key={"Higher learning curve"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Higher learning curve
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

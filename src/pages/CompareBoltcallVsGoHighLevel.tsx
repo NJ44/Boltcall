@@ -818,6 +818,74 @@ const CompareBoltcallVsGoHighLevel: React.FC = () => {
       </section>
 
       <FinalCTA {...COMPARISON_CTA} />
+
+      {/* Pros / Cons */}
+      <section className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Boltcall vs GoHighLevel: Pros and Cons</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Boltcall</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Focused on what local businesses need most: answering calls 24/7"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Focused on what local businesses need most: answering calls 24/7
+                </li>
+                <li key={"Simple, flat pricing without upsell traps"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Simple, flat pricing without upsell traps
+                </li>
+                <li key={"Live in 30 minutes — no CRM migration required"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Live in 30 minutes — no CRM migration required
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Less comprehensive than a full CRM suite"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Less comprehensive than a full CRM suite
+                </li>
+                <li key={"No white-label options"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>No white-label options
+                </li>
+                </ul>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">GoHighLevel</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Comprehensive all-in-one CRM and marketing platform"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Comprehensive all-in-one CRM and marketing platform
+                </li>
+                <li key={"White-label options for agencies"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>White-label options for agencies
+                </li>
+                <li key={"Extensive workflow automation"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Extensive workflow automation
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Steep learning curve for small business owners"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Steep learning curve for small business owners
+                </li>
+                <li key={"Overkill for businesses needing just AI phone coverage"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Overkill for businesses needing just AI phone coverage
+                </li>
+                <li key={"Higher cost to access full features"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Higher cost to access full features
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

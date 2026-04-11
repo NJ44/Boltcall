@@ -676,6 +676,74 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
       </section>
 
       <FinalCTA {...COMPARISON_CTA} />
+
+      {/* Pros / Cons */}
+      <section className="py-14 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Boltcall vs Smith.ai: Pros and Cons</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Boltcall</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Pure AI — instant answer on every call, no per-call fees"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Pure AI — instant answer on every call, no per-call fees
+                </li>
+                <li key={"Flat monthly pricing regardless of call volume"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Flat monthly pricing regardless of call volume
+                </li>
+                <li key={"Consistent quality on every interaction, 24/7"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Consistent quality on every interaction, 24/7
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"No human fallback agent option for complex calls"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>No human fallback agent option for complex calls
+                </li>
+                <li key={"Better for businesses with predictable call types"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Better for businesses with predictable call types
+                </li>
+                </ul>
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Smith.ai</h3>
+              <div className="mb-5">
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
+                <ul className="space-y-2">
+                <li key={"Hybrid AI + human receptionists available"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Hybrid AI + human receptionists available
+                </li>
+                <li key={"Strong after-hours coverage with live agents"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Strong after-hours coverage with live agents
+                </li>
+                <li key={"Good legal and medical intake options"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Good legal and medical intake options
+                </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
+                <ul className="space-y-2">
+                <li key={"Per-call pricing makes costs unpredictable at volume"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Per-call pricing makes costs unpredictable at volume
+                </li>
+                <li key={"Human agent quality varies by shift"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Human agent quality varies by shift
+                </li>
+                <li key={"Slower response time than pure AI systems"} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Slower response time than pure AI systems
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
