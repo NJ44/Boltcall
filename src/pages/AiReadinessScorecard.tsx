@@ -456,6 +456,28 @@ const AiReadinessScorecard: React.FC = () => {
         </div>
       </section>
 
+      {!quizStarted && !showResults && (
+        <section className="py-10 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">What You'll Discover</h2>
+            <ul className="space-y-3 text-left max-w-xl mx-auto">
+              {[
+                "Capture 100% of customer calls — including nights, weekends, and holidays",
+                "Increase bookings by 40% by responding to every lead within 60 seconds",
+                "Identify exactly which AI tools will generate the fastest ROI for your business",
+                "Stop losing $50K+/year to unanswered calls with an AI receptionist",
+                "Get a personalized action plan — free, in 2 minutes",
+              ].map((benefit, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mt-0.5 text-xs font-bold">✓</span>
+                  <span className="text-gray-700">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {/* ─── Quiz Section ─────────────────────────────────────────────── */}
       {quizStarted && !showEmailGate && !showResults && (
         <section ref={quizRef} className="py-16 md:py-24 bg-white">

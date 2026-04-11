@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { updateMetaDescription } from "../lib/utils";
 import { AnimatedRoadmap } from "@/components/ui/animated-roadmap";
 import { CheckCircle } from "lucide-react";
 import { ThreeDButton } from "@/components/ui/ThreeDButton";
@@ -35,6 +37,13 @@ const milestonesData = [
 ];
 
 const RankOnGoogleOfferPage = () => {
+    useEffect(() => {
+        document.title = 'Boost Your Google Rankings with AI Receptionist and SEO Solutions | Boltcall';
+        updateMetaDescription(
+            'Rank higher on Google and capture more local leads with Boltcall's AI receptionist and SEO solutions. Improve your Google reviews, local citations, and lead response speed.'
+        );
+    }, []);
+
     return (
         <div className="w-full bg-white text-foreground min-h-screen flex flex-col">
             {/* Giveaway Bar (hidden on mobile) */}

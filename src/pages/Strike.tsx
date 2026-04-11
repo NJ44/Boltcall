@@ -31,7 +31,7 @@ const Strike: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Strike AI - Your Intelligent AI Assistant | Strike';
-    updateMetaDescription('Experience the future of AI interaction with Strike. Powerful, intuitive, and designed to help you accomplish more with intelligent assistance.');
+    updateMetaDescription('Get tailored marketing strategies, sales conversion scripts, and automated reminders with Strike AI. Powerful AI built to help local businesses close more deals and grow faster.');
   }, []);
 
   // Typing animation effect

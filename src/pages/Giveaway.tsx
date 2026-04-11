@@ -375,6 +375,21 @@ const GiveawayPage: React.FC = () => {
           <Link to="/challenge" className="hover:text-white underline">Break Our AI Challenge</Link>
         </div>
       </div>
+
+      {/* Why Enter section */}
+      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Why Enter the Boltcall Giveaway?</h2>
+        <p className="text-gray-600 mb-4 leading-relaxed">
+          Every week, one local business owner wins free access to Boltcall's full AI receptionist platform — including 
+          AI-powered call answering, SMS lead follow-up, and automated appointment booking. This is the exact same 
+          system that's helping 500+ businesses capture more leads and grow revenue without hiring more staff.
+        </p>
+        <p className="text-gray-600 leading-relaxed">
+          The AI receptionist answers 100% of calls 24/7, qualifies leads automatically, and sends follow-up texts 
+          to every missed caller. Winners get 30 days of full platform access, setup included. No contracts, 
+          no credit card required — just enter your email and you're in.
+        </p>
+      </section>
     </div>
   );
 };

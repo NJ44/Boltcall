@@ -87,7 +87,7 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Insurance Lead Response Scorecard: Grade Your Speed (2026) | Boltcall';
     updateMetaDescription(
-      'Free scorecard for insurance agents. Grade your lead response speed, after-hours coverage, and conversion rate. Discover how much commission AI can recover.'
+      'Grade your insurance lead response speed and discover how much commission you're losing to slow follow-up. Learn how AI assistance can recover lost revenue and boost your close rate.'
     );
 
     // FAQPage schema
@@ -817,6 +817,27 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
               </motion.div>
             ))}
           </motion.div>
+        </section>
+
+
+        {/* --- WHY BOLTCALL --- */}
+        <section className="px-4 sm:px-6 py-10 bg-slate-950">
+          <div className="max-w-3xl mx-auto bg-gradient-to-br from-teal-900/30 to-slate-900 border border-teal-500/20 rounded-2xl p-8">
+            <h2 className="text-2xl font-bold text-white mb-6">Why Insurance Agents Choose Boltcall</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { title: "Responds in under 1 second", desc: "Beats every competing agent to the lead — 24/7, including nights and weekends when 35% of quotes come in" },
+                { title: "Setup in 30 minutes", desc: "No developers, no IT team — just answer a few questions and your AI agent goes live" },
+                { title: "Pays for itself", desc: "One extra bound policy per month more than covers the entire annual subscription" },
+                { title: "Trained on your agency", desc: "Knows your carriers, coverages, and eligibility rules — sounds like a knowledgeable team member" },
+              ].map((item) => (
+                <div key={item.title} className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
+                  <div className="font-semibold text-teal-300 mb-1">✓ {item.title}</div>
+                  <div className="text-sm text-slate-400">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* --- COMMON CONCERNS --- */}

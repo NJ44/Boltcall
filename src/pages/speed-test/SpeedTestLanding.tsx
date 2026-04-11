@@ -16,8 +16,8 @@ const SpeedTestLanding: React.FC = () => {
   const [websiteUrl, setWebsiteUrl] = useState('');
 
   React.useEffect(() => {
-    document.title = 'Free Website Health Check Tool | Boltcall';
-    updateMetaDescription('Enter your URL for a free website health check. Analyzes speed, Core Web Vitals, mobile performance, and gives optimization recommendations.');
+    document.title = 'Free Website Speed & Health Check — See Your Score in Seconds | Boltcall';
+    updateMetaDescription('Enter your URL for a free website health check. Instantly analyze your page load speed, Core Web Vitals, mobile performance score, and get specific fixes to rank higher and reduce bounce rate.');
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -98,6 +98,27 @@ const SpeedTestLanding: React.FC = () => {
               Get instant insights into your website's performance and health
             </p>
 
+
+            {/* What This Test Measures */}
+            <section className="max-w-3xl mx-auto text-left mt-4 mb-8">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">What Does This Health Check Measure?</h2>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                Your website's speed and performance directly affect how many visitors turn into customers. 
+                Google uses Core Web Vitals — including Largest Contentful Paint (LCP), Cumulative Layout Shift (CLS), 
+                and First Input Delay (FID) — as ranking signals. A slow site not only frustrates visitors; it actively 
+                suppresses your search rankings.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                This free tool analyzes your page load speed, mobile performance score, render-blocking resources, 
+                image optimization, and other technical factors that affect both user experience and SEO. Enter your 
+                URL to get a real-time score with specific, actionable recommendations you can implement today to 
+                rank higher and reduce bounce rate.
+              </p>
+            </section>
+
+          </motion.div>
+
+          <div className="text-center">
             <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
               <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <input
@@ -145,7 +166,7 @@ const SpeedTestLanding: React.FC = () => {
                 </motion.div>
               )}
             </form>
-          </motion.div>
+          </div>
         </main>
         <Footer />
       </div>

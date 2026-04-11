@@ -55,7 +55,7 @@ const LandscapingSeasonalRevenueCalculator: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Landscaping Revenue Calculator: Missed Calls Cost You (2026) | Boltcall';
+    document.title = 'Calculate Your Landscaping Revenue Losses from Missed Calls and Seasonal Gaps | Boltcall';
     updateMetaDescription(
       'Free landscaping revenue calculator. See how much money missed calls, lost quotes, and seasonal gaps cost your landscaping business every year.'
     );
@@ -813,6 +813,26 @@ const LandscapingSeasonalRevenueCalculator: React.FC = () => {
         {/* --- FINAL CTA --- */}
         <FinalCTA {...CALCULATOR_CTA} />
       </main>
+
+      {/* Why Boltcall Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <section className="my-10 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Why Landscaping Businesses Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { title: "Responds in under 1 second", desc: "Capture every peak-season quote request — even when your crews are on the job and cannot pick up" },
+              { title: "Setup in 30 minutes", desc: "No developers, no tech team — answer a few questions and your AI agent goes live before the next call comes in" },
+              { title: "Pays for itself", desc: "One extra job booked per month covers the entire subscription — most landscapers recover the cost in the first week of peak season" },
+              { title: "Trained on your services", desc: "Knows your seasonal offerings, service areas, and pricing — gives callers real answers, not a voicemail" },
+            ].map((item) => (
+              <div key={item.title} className="bg-white rounded-xl p-4 shadow-sm">
+                <div className="font-semibold text-gray-900 mb-1">✓ {item.title}</div>
+                <div className="text-sm text-gray-600">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </section>
 
       {/* Trust Signals */}
       <section className="bg-gray-50 border-t border-gray-100 py-8">

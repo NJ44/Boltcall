@@ -922,6 +922,28 @@ const Challenge: React.FC = () => {
         </div>
       </section>
 
+      {/* Benefit-focused section */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Why This Matters for Your Business</h2>
+          <p className="text-gray-500 text-center mb-6 text-sm">See exactly how Boltcall protects your leads — and why it works.</p>
+          <ul className="space-y-3 max-w-xl mx-auto">
+            {[
+              "Capture every lead 24/7 — without lifting a finger — while competitors send callers to voicemail",
+              "Never miss a revenue opportunity with AI that answers calls even on nights and weekends",
+              "Protect your business from caller manipulation with security-first AI training",
+              "See the AI in action before you commit — no credit card, no risk",
+              "Discover how Boltcall turns every caller into a qualified lead automatically",
+            ].map((benefit, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mt-0.5 text-xs font-bold">✓</span>
+                <span className="text-gray-700">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
