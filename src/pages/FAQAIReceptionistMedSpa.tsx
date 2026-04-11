@@ -316,6 +316,45 @@ const FAQAIReceptionistMedSpa: React.FC = () => {
           </div>
         </section>
 
+        {/* Pros & Cons */}
+        <section className="py-16 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Receptionists for Med Spas</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Captures 40–45% of inquiries that arrive after hours — the highest-value window for med spa bookings</li>
+                  <li>• Books treatment-specific appointments (Botox, filler, laser) with correct durations and provider assignments</li>
+                  <li>• Automates rebooking reminders, increasing return rates by 25–40%</li>
+                  <li>• Consistently presents relevant add-ons, lifting average ticket by 10–15%</li>
+                  <li>• HIPAA-compliant data handling with AES-256 encryption and BAA support</li>
+                  <li>• Costs $99–249/mo vs. $32,000–42,000/yr for a full-time front-desk hire</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Luxury clientele may expect a high-touch human experience that AI cannot fully replicate</li>
+                  <li>• Pricing for variable treatments (dermal fillers, multi-syringe sessions) is harder to quote accurately</li>
+                  <li>• AI cannot provide medical advice, meaning clinical questions must still route to a practitioner</li>
+                  <li>• Direct integration with niche platforms like Aesthetic Record or Mangomint may require API setup</li>
+                  <li>• Automated upsells can feel impersonal if not carefully scripted to match your brand voice</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Med spa clients book on impulse — typically late at night after scrolling social media. If your booking system is not available at 11pm when the intent is highest, you have already lost the appointment to the competitor who is."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Alex Thiersch, Founder & CEO, American Med Spa Association (AmSpa)</footer>
+        </blockquote>
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Rebooking is where the real money is in aesthetics. A client who returns for Botox every three months is worth ten times a one-time visitor. Automating that rebooking reminder is the single highest-ROI action most med spas are not taking."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Bryan Durocher, Founder, Durocher Enterprises & Med Spa Business Coach</footer>
+        </blockquote>
         {/* Related Resources */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

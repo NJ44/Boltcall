@@ -662,6 +662,32 @@ const BlogHowToScheduleText: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+          {/* Pros & Cons */}
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Scheduling Text Messages</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Sends messages at the optimal time without manual intervention</li>
+                  <li>• Reduces no-shows with automated appointment reminders</li>
+                  <li>• Reaches customers on a channel with 98% open rates</li>
+                  <li>• Frees up staff time by automating repetitive follow-up messages</li>
+                  <li>• Works across time zones without late-night manual sending</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Requires opt-in compliance (TCPA) — must be set up correctly</li>
+                  <li>• Poorly timed messages can feel intrusive or spammy</li>
+                  <li>• Generic templates lose impact if not personalized to the recipient</li>
+                  <li>• Some platforms charge per SMS, which adds up at high volume</li>
+                </ul>
+              </div>
+            </div>
+          </section>
           </article>
           
           {/* Table of Contents */}

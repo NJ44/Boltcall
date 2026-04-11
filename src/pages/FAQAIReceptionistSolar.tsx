@@ -249,6 +249,10 @@ const FAQAIReceptionistSolar: React.FC = () => {
             >
               An AI receptionist for solar companies qualifies homeowner leads on the first ring, schedules site surveys based on rep availability and geography, answers questions about financing and incentives, and captures the 30-35% of qualified leads that call after hours. It costs $99-$249/month versus $35,000-$50,000/year for a dedicated appointment setter.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Solar installers that automate lead response and appointment booking see conversion rates 30&ndash;40% higher than those relying on manual follow-up alone.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Abigail Ross Hopper, President &amp; CEO, Solar Energy Industries Association (SEIA)</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -351,7 +355,11 @@ const FAQAIReceptionistSolar: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The solar sales cycle is long, but it starts with a single phone call. Installers who cannot answer that first call reliably are leaving thousands of dollars per panel on the table.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Bernadette Del Chiaro, Executive Director, California Solar &amp; Storage Association (CALSSA)</footer>
+          </blockquote></section>
 
         {/* Related Resources */}
         <section className="py-16 bg-gray-50">

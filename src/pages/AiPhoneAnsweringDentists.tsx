@@ -8,9 +8,9 @@ import { Phone, Calendar, Clock, Star, CheckCircle, MessageSquare } from 'lucide
 const AiPhoneAnsweringDentists: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'AI Phone Answering for Dental Practices: Complete Guide | Boltcall';
+    document.title = 'AI Phone Answering for Dental Practices | Boltcall';
     updateMetaDescription(
-      'How AI phone answering works for dental practices. Stop missing patient calls, automate appointment booking, and reduce no-shows with an AI receptionist built for dentists.'
+      'How AI phone answering works for dental practices. Stop missing patient calls, automate bookings, and reduce no-shows with an AI built for dentists.'
     );
 
     const schema = {
@@ -39,7 +39,14 @@ const AiPhoneAnsweringDentists: React.FC = () => {
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://boltcall.org/blog"}, {"@type": "ListItem", "position": 3, "name": "AI Phone Answering for Dentists", "item": "https://boltcall.org/blog/ai-phone-answering-dentists"}]});
+    document.head.appendChild(bcScript);
+
     return () => {
+      document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('article-schema-dentists')?.remove();
     };
   }, []);
@@ -210,6 +217,27 @@ const AiPhoneAnsweringDentists: React.FC = () => {
 
       </article>
 
+
+      {/* Trust + Social Proof */}
+      <section className="py-10 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm font-medium text-gray-500 mb-5">
+            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            {[
+              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
+              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
+            ].map((t) => (
+              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
+                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
+                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

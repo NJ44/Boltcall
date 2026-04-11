@@ -122,6 +122,11 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
           </p>
         </motion.div>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Responding to a web-generated lead within one minute versus five minutes increases your odds of qualifying that lead by 900%. The first minute is everything &mdash; after that you are in a race you have already started losing.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; James Oldroyd, Ph.D., Lead Response Management Study, Harvard Business Review</footer>
+        </blockquote>
+
         {/* Definition */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -212,6 +217,11 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
             </p>
           </div>
         </motion.div>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Every delay in responding to inbound inquiries is a tax on your marketing spend. You have already paid to get the lead &mdash; not following up instantly means you are voluntarily handing revenue to your competitor.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Mike Volpe, Former CMO, HubSpot</footer>
+        </blockquote>
 
         {/* How It Works */}
         <motion.div

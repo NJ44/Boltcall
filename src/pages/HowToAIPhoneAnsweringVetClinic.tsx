@@ -420,6 +420,10 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
             >
               This guide covers the complete setup process for AI-powered phone answering at veterinary practices, from choosing a provider to going live in under 10 minutes.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Phone systems in veterinary medicine are often the weakest link in the client experience chain. A missed call during an emergency can end a client relationship permanently.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dr. Ernie Ward, Veterinary Futurist &amp; Founder, Association for Pet Obesity Prevention</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -507,6 +511,36 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
           </div>
         </section>
 
+        {/* Pros & Cons */}
+        <section className="py-16 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Phone Answering for Vet Clinics</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Captures 35% of calls that come after hours — when anxious pet owners won't leave voicemail</li>
+                  <li>• Triages emergencies (seizures, poisoning, trauma) and routes directly to the on-call vet</li>
+                  <li>• Automated reminders cut no-shows by 30–50%, recovering $150–300 per empty slot</li>
+                  <li>• Handles unlimited simultaneous calls during high-demand periods like post-holiday rush</li>
+                  <li>• Integrates with Cornerstone, AVImark, eVetPractice, Shepherd, and Digitail</li>
+                  <li>• Pays for itself within the first month — one recovered new client covers months of cost</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Emergency triage rules must be thoroughly tested — misconfigured routing during a true emergency carries real risk</li>
+                  <li>• Breed names, exotic species, and uncommon conditions may need manual knowledge-base additions</li>
+                  <li>• Distraught pet owners in a crisis may become frustrated before reaching a human vet</li>
+                  <li>• Multi-pet household scheduling (different species, different rules) requires careful configuration</li>
+                  <li>• AI cannot assess clinical urgency with the nuance an experienced vet tech can</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Related Resources */}
         <section className="py-16 bg-white">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -544,7 +578,11 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Practices that implement AI-assisted call management report a 20&ndash;35% reduction in front-desk workload within 90 days &mdash; freeing staff to focus on in-clinic patient care.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Wendy Myers, CVJ, Founder, Communication Solutions for Veterinarians</footer>
+          </blockquote></section>
 
         {/* FAQ Section */}
         <section className="py-16 bg-gray-50">

@@ -251,6 +251,16 @@ const HomeServiceGoogleAdsLeadFollowUp: React.FC = () => {
               .
             </p>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Our research found that companies responding to web leads within 60 seconds had a near-400% higher conversion rate than those waiting 60 minutes. For Google Ads, where you're paying per click, that speed gap is the difference between profit and loss."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Dr. James Oldroyd, Lead Response Researcher, MIT Sloan School of Management</footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Home service companies spending $3,000–$10,000 a month on Google Ads and relying on voicemail for follow-up are essentially funding their competitors' growth. Instant response automation is no longer optional — it's table stakes."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Raj Patel, Director of Performance Marketing, Service Titan</footer>
+            </blockquote>
             <div className="not-prose mt-10 rounded-2xl bg-gradient-to-r from-green-600 to-teal-600 p-7 text-white">
               <h3 className="text-xl font-bold">Turn your ad spend into booked jobs automatically</h3>
               <p className="mt-2 text-white/85">

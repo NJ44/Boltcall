@@ -60,7 +60,14 @@ const Strike: React.FC = () => {
       }
     });
 
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Strike AI", "item": "https://boltcall.org/strike-ai"}]});
+    document.head.appendChild(bcScript);
+
     return () => {
+      document.getElementById('breadcrumb-jsonld')?.remove();
       Object.values(typingIntervals).forEach(interval => clearInterval(interval));
     };
   }, [messages, typingProgress]);
@@ -513,6 +520,27 @@ const Strike: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* How Strike AI Works */}
+      <section id="how-it-works" className="px-4 sm:px-6 lg:px-8 py-16 bg-gray-900 border-t border-white/10">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-6 text-center">How Strike AI Works</h2>
+          <div className="space-y-5 text-white/70 text-sm leading-relaxed">
+            <p>
+              Strike AI is a specialized AI assistant built specifically for local businesses. Unlike general-purpose AI tools, Strike is organized around specific growth areas — marketing, sales, local SEO, and business development — so you get focused, actionable answers rather than generic responses.
+            </p>
+            <p>
+              When you start a conversation with Strike, you can either type a free-form question or select one of the specialized agents. Each agent is pre-configured with context about that growth area: the Sales Conversion agent, for example, is primed with objection-handling frameworks, closing techniques, and lead follow-up strategies that actually work for service businesses. The Marketing Strategy agent draws on campaign structures and messaging approaches proven in local markets.
+            </p>
+            <p>
+              Strike AI is powered by large language models that process your input and generate responses tailored to your business context. The more specific your question, the more useful the answer. Instead of asking "how do I get more customers," try "what's the best way to follow up with a lead who asked for a quote three days ago but hasn't responded?" — Strike will give you a concrete script you can use today.
+            </p>
+            <p>
+              All conversations are private. Strike does not retain your conversation history between sessions, and no business information you share is used to train future models. Use it to draft marketing emails, build sales scripts, brainstorm Google Business Profile updates, or map out your next 90-day growth sprint.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <FAQ />
 
       {/* Contact Section */}

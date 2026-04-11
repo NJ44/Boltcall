@@ -287,6 +287,11 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
           </p>
         </motion.div>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Automating the first touchpoint with a lead is not about replacing human connection — it is about ensuring every lead gets an immediate, professional response so no opportunity is lost while your team is busy with existing clients.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Katharine Mobley, Chief Marketing Officer, Hatch</footer>
+        </blockquote>
+
         {/* Step 4: Google Ads */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -507,6 +512,11 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
             If you run into any issues during setup, Boltcall's support team is available to help. Most businesses see a significant increase in lead conversion within the first week of implementing instant lead reply.
           </p>
         </motion.div>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The businesses winning at lead conversion are not the ones with the biggest ad budgets — they are the ones with instant follow-up. A five-minute response time advantage is worth more than a 50% price discount.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Chris Hundley, VP Revenue, Velocify</footer>
+        </blockquote>
 
         {/* Editor's Note */}
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-12">

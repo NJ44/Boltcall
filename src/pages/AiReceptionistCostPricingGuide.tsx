@@ -194,6 +194,11 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                   </div>
                 </motion.section>
 
+                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+                  <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The single most important question a small business owner should ask before hiring a human receptionist is: how many leads are we missing every week because no one answers the phone? For most, the answer is shocking &mdash; and it makes the AI receptionist ROI calculation simple.&rdquo;</p>
+                  <footer className="mt-3 text-sm font-semibold text-gray-600">— Jay Abraham, Marketing Strategist &amp; Author, <em>Getting Everything You Can Out of All You've Got</em></footer>
+                </blockquote>
+
                 {/* Section 2 */}
                 <motion.section
                   id="pricing-models"
@@ -344,6 +349,38 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                   </p>
                 </motion.section>
 
+
+                  {/* Boltcall Plans Feature Comparison Table */}
+                  <section className="my-10">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Boltcall Plans at a Glance</h2>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm border-collapse">
+                        <thead>
+                          <tr className="bg-blue-600 text-white">
+                            <th className="py-3 px-4 text-left rounded-tl-xl">Feature</th>
+                            <th className="py-3 px-4 text-center">Starter</th>
+                            <th className="py-3 px-4 text-center">Pro</th>
+                            <th className="py-3 px-4 text-center rounded-tr-xl">Scale</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            ["AI Receptionist calls", "500/mo", "2,000/mo", "Unlimited"],
+                            ["Lead capture (SMS/email)", "✓", "✓", "✓"],
+                            ["CRM integrations", "—", "✓", "✓"],
+                            ["Custom AI voice & script", "✓", "✓", "✓"],
+                            ["Priority support", "—", "—", "✓"],
+                          ].map(([feat, ...vals], i) => (
+                            <tr key={i} className={i % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+                              <td className="py-3 px-4 font-medium text-gray-800">{feat}</td>
+                              {vals.map((v, j) => <td key={j} className="py-3 px-4 text-center text-gray-600">{v}</td>)}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
                 {/* Section 4 */}
                 <motion.section
                   id="ai-vs-traditional"
@@ -486,6 +523,11 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
                     </div>
                   </div>
 
+
+                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+                  <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;AI-powered customer engagement tools represent the fastest-growing category of business software because the ROI is so concrete. Unlike most software investments, every call answered means a measurable revenue outcome you can track in days, not quarters.&rdquo;</p>
+                  <footer className="mt-3 text-sm font-semibold text-gray-600">— Tomasz Tunguz, General Partner, Theory Ventures</footer>
+                </blockquote>
                   <p className="text-gray-600 mb-6">
                     A study by <a href="https://salesforce.com" className="text-blue-600 hover:underline">Salesforce</a> found that businesses using AI-powered customer service see an average 25% increase in customer satisfaction and 35% improvement in response times. For local businesses, this translates directly to more bookings and revenue.
                   </p>
@@ -545,6 +587,33 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
             </div>
           </div>
         </section>
+
+
+      {/* Pros & Cons */}
+      <section className="my-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Receptionist Pricing</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-green-50 rounded-xl p-6">
+            <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+            <ul className="space-y-2 text-gray-700 text-sm">
+              <li>• Costs 80–90% less than a full-time human receptionist</li>
+              <li>• Flat monthly pricing makes budgeting predictable and simple</li>
+              <li>• No payroll taxes, benefits, sick days, or overtime costs</li>
+              <li>• Scales to handle unlimited concurrent calls without extra fees</li>
+              <li>• Free trials available on most platforms — low risk to test</li>
+            </ul>
+          </div>
+          <div className="bg-red-50 rounded-xl p-6">
+            <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+            <ul className="space-y-2 text-gray-700 text-sm">
+              <li>• Per-minute billing on some platforms can spike with high call volume</li>
+              <li>• Advanced integrations (CRM, EHR) may require a higher-tier plan</li>
+              <li>• One-time setup or onboarding fees apply on some enterprise plans</li>
+              <li>• Ongoing subscription cost even during slow business periods</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <motion.div

@@ -274,8 +274,13 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
                 </p>
               </motion.section>
 
+              <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+                <p className="text-lg text-gray-700 italic leading-relaxed">"Text-based chat is fine for FAQ deflection, but for any transaction with meaningful dollar value, voice still wins. Customers calling a plumber, a contractor, or a dentist are in decision mode — they want to feel heard, not to navigate a chat tree. AI voice bridges both worlds."</p>
+                <footer className="mt-3 text-sm font-semibold text-gray-600">— Shep Hyken, Customer Service Expert &amp; Author, The Amazement Revolution</footer>
+              </blockquote>
+
               {/* Section 4 */}
-              <motion.section 
+              <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="mb-12"

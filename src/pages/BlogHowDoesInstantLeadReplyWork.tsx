@@ -261,6 +261,11 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
           </p>
         </motion.div>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Webhooks are the backbone of real-time business automation. Any lead engagement system that relies on polling rather than push notifications is fundamentally limited in how fast it can respond — and in sales, milliseconds matter.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Jeff Lawson, Co-Founder &amp; former CEO, Twilio</footer>
+        </blockquote>
+
         {/* AI Processing */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -510,6 +515,11 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
             Together, these technologies create a system that can respond to leads faster than any human could, while providing intelligent, personalized service 24/7.
           </p>
         </motion.div>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Large language models have fundamentally changed what is possible in automated customer conversations. A system that previously would have felt robotic can now carry on a contextually aware, personalized dialogue that genuinely helps the customer.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Andrew Ng, Co-Founder, Coursera &amp; AI Fund</footer>
+        </blockquote>
 
         {/* Editor's Note */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">

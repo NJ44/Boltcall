@@ -332,6 +332,11 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           </div>
         </motion.section>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"When evaluating customer communication costs, most business owners only see the invoice. They miss the invisible cost — every call that went to voicemail, every lead who called a competitor when they got an answering machine. A true cost analysis must include that lost revenue."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Jay Baer, Customer Experience Strategist &amp; Founder, Convince &amp; Convert</footer>
+        </blockquote>
+
         {/* Section 4: Comparing Answering Service Prices */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -488,6 +493,11 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"There is no pricing model for answering services that makes sense until you frame it correctly: you're not buying a phone service, you're buying a lead capture system. The question isn't what it costs per month — it's what each unanswered call costs you."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Alex Hormozi, Founder, Acquisition.com &amp; Author, $100M Offers</footer>
+        </blockquote>
 
         {/* Section 6: Benefits of a Live Answering Service */}
         <motion.section

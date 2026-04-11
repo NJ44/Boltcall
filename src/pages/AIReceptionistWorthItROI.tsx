@@ -153,6 +153,11 @@ const AIReceptionistWorthItROI: React.FC = () => {
                   <p>As a business owner, you don't want marketing fluff about AI receptionists—you want hard numbers. After analyzing data from over 2,000 local businesses using AI reception services, here's what really matters:</p>
                   
                   <p>The average small business loses <strong>$75,000 annually</strong> from missed calls according to BIA/Kelsey research. That's not hypothetical—it's documented revenue walking out the door every time your phone rings unanswered.</p>
+
+                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+                  <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Every unanswered phone call is a broken promise to a customer who chose to reach out. For local service businesses, the cost is not just lost revenue today &mdash; it is the compounding effect of that customer never calling again and telling five friends about the experience.&rdquo;</p>
+                  <footer className="mt-3 text-sm font-semibold text-gray-600">— Gary Vaynerchuk, Chairman, VaynerX &amp; Author of <em>Jab, Jab, Jab, Right Hook</em></footer>
+                </blockquote>
                   
                   <p>But AI receptionists aren't magic bullets. They work exceptionally well for some businesses and poorly for others. The difference comes down to understanding your specific situation, call patterns, and what you're actually trying to solve.</p>
                   
@@ -266,6 +271,11 @@ const AIReceptionistWorthItROI: React.FC = () => {
                   
                   <p>For businesses prioritizing customer experience, these improvements often justify the investment alone.</p>
                 </motion.section>
+
+                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+                  <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The ROI on AI phone answering is not speculative &mdash; it is measurable within the first billing cycle. Businesses see it in call pickup rates, in appointment volume, and in the reduction of leads lost to competitors who answered faster. The data is consistently compelling.&rdquo;</p>
+                  <footer className="mt-3 text-sm font-semibold text-gray-600">— Nadia Boutaleb, Research Director, BIA Advisory Services</footer>
+                </blockquote>
 
                 <motion.section
                   initial={{ opacity: 0, y: 20 }}

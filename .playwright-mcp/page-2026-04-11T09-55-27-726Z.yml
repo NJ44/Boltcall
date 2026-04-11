@@ -1,0 +1,522 @@
+- generic [ref=e2]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - button "Collapse sidebar" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - link "Boltcall" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard
+          - img "Boltcall" [ref=e14]
+        - navigation "Main navigation" [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - link "Overview" [ref=e18] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e20]
+                - generic [ref=e25]: Overview
+              - link "Leads" [ref=e26] [cursor=pointer]:
+                - /url: /dashboard/leads
+                - img [ref=e28]
+                - generic [ref=e30]: Leads
+              - link "Calls" [ref=e32] [cursor=pointer]:
+                - /url: /dashboard/calls
+                - img [ref=e34]
+                - generic [ref=e36]: Calls
+            - generic [ref=e37]:
+              - paragraph [ref=e38]: Setup
+              - generic [ref=e39]:
+                - link "AI Agents" [ref=e40] [cursor=pointer]:
+                  - /url: /dashboard/agents
+                  - img [ref=e42]
+                  - generic [ref=e45]: AI Agents
+                - link "Knowledge Base" [ref=e46] [cursor=pointer]:
+                  - /url: /dashboard/knowledge-base
+                  - img [ref=e48]
+                  - generic [ref=e50]: Knowledge Base
+                - link "Phone Numbers" [ref=e51] [cursor=pointer]:
+                  - /url: /dashboard/phone
+                  - img [ref=e53]
+                  - generic [ref=e55]: Phone Numbers
+                - link "Integrations" [ref=e56] [cursor=pointer]:
+                  - /url: /dashboard/integrations
+                  - img [ref=e58]
+                  - generic [ref=e60]: Integrations
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: Services
+              - generic [ref=e63]:
+                - link "AI Receptionist" [ref=e64] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                  - img [ref=e66]
+                  - generic [ref=e70]: AI Receptionist
+                - link "Missed Calls Beta" [ref=e71] [cursor=pointer]:
+                  - /url: /dashboard/calls
+                  - img [ref=e73]
+                  - generic [ref=e78]: Missed Calls
+                  - generic [ref=e79]: Beta
+                - link "SMS" [ref=e80] [cursor=pointer]:
+                  - /url: /dashboard/sms
+                  - img [ref=e82]
+                  - generic [ref=e84]: SMS
+                - link "Instant Lead Response" [ref=e85] [cursor=pointer]:
+                  - /url: /dashboard/instant-lead-response
+                  - img [ref=e87]
+                  - generic [ref=e91]: Instant Lead Response
+                - link "AI Email" [ref=e92] [cursor=pointer]:
+                  - /url: /dashboard/email
+                  - img [ref=e94]
+                  - generic [ref=e97]: AI Email
+          - generic [ref=e98]:
+            - link "Settings" [ref=e99] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e101]
+              - generic [ref=e104]: Settings
+            - link "Documentation" [ref=e105] [cursor=pointer]:
+              - /url: /documentation
+              - img [ref=e107]
+              - generic [ref=e109]: Documentation
+            - link "Help Center" [ref=e110] [cursor=pointer]:
+              - /url: /help-center
+              - img [ref=e112]
+              - generic [ref=e115]: Help Center
+            - button "Give Us Feedback" [ref=e116] [cursor=pointer]:
+              - img [ref=e118]
+              - generic [ref=e120]: Give Us Feedback
+    - main [ref=e121]:
+      - generic [ref=e123]:
+        - heading "Leads" [level=1] [ref=e127]
+        - generic [ref=e128]:
+          - button "asd" [ref=e131] [cursor=pointer]:
+            - img [ref=e132]
+            - generic [ref=e135]: asd
+            - img [ref=e136]
+          - button "Alerts" [ref=e139] [cursor=pointer]:
+            - img [ref=e140]
+            - generic [ref=e143]: "3"
+          - button "Services status" [ref=e145] [cursor=pointer]:
+            - img [ref=e146]
+          - button "נ" [ref=e150] [cursor=pointer]
+      - generic [ref=e152]:
+        - generic [ref=e153]:
+          - paragraph [ref=e154]:
+            - text: Your free trial ends in
+            - strong [ref=e155]: 2 days
+            - text: . Subscribe to keep access to all features.
+          - link "Choose a plan" [ref=e156] [cursor=pointer]:
+            - /url: /dashboard/settings/plan-billing
+        - generic [ref=e157]:
+          - navigation [ref=e160]:
+            - button "Speed to Lead" [ref=e161] [cursor=pointer]:
+              - img [ref=e162]
+              - text: Speed to Lead
+            - button "Missed Calls" [ref=e165] [cursor=pointer]:
+              - img [ref=e166]
+              - text: Missed Calls
+            - button "Reactivation" [ref=e170] [cursor=pointer]:
+              - img [ref=e171]
+              - text: Reactivation
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - paragraph [ref=e178]: Total Leads
+                - generic [ref=e179]:
+                  - generic [ref=e180]: "25"
+                  - generic [ref=e181]: 0↑
+                - paragraph [ref=e182]: Last 7 Days
+              - generic [ref=e183]:
+                - paragraph [ref=e184]: Contacted
+                - generic [ref=e185]:
+                  - generic [ref=e186]: "8"
+                  - generic [ref=e187]: 50↑
+                - paragraph [ref=e188]: Last 7 Days
+              - generic [ref=e189]:
+                - paragraph [ref=e190]: Conversion Rate
+                - generic [ref=e191]:
+                  - generic [ref=e192]: 32%
+                  - generic [ref=e193]: 11↑
+                - paragraph [ref=e194]: Last 7 Days
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - heading "Lead Performance" [level=2] [ref=e197]
+                - generic [ref=e198]:
+                  - generic [ref=e199]:
+                    - button "Lead Count" [ref=e200] [cursor=pointer]
+                    - button "Response Rate" [ref=e201] [cursor=pointer]
+                  - combobox [ref=e202]:
+                    - option "Last 7 Days" [selected]
+                    - option "Last 30 Days"
+              - img [ref=e204]:
+                - generic [ref=e206]: "0"
+                - generic [ref=e208]: "1"
+                - generic [ref=e210]: "1"
+                - generic [ref=e212]: "2"
+                - generic [ref=e214]: "2"
+                - generic [ref=e224]: Apr 5
+                - generic [ref=e225]: Apr 6
+                - generic [ref=e226]: Apr 7
+                - generic [ref=e227]: Apr 8
+                - generic [ref=e228]: Apr 9
+                - generic [ref=e229]: Apr 10
+                - generic [ref=e230]: Apr 11
+            - generic [ref=e231]:
+              - generic [ref=e232]:
+                - heading "Lead List" [level=2] [ref=e233]
+                - generic [ref=e234]:
+                  - combobox [ref=e235]:
+                    - option "All Statuses" [selected]
+                    - option "Booked"
+                    - option "Contacted"
+                    - option "New"
+                  - combobox [ref=e236]:
+                    - option "All Sources" [selected]
+                    - option "website"
+                    - option "instagram"
+                    - option "facebook"
+                    - option "google"
+                    - option "referral"
+                  - generic [ref=e237]:
+                    - img [ref=e238]
+                    - textbox "Search leads..." [ref=e241]
+              - table [ref=e243]:
+                - rowgroup [ref=e244]:
+                  - row "ID Status Name Source Date" [ref=e245]:
+                    - columnheader "ID" [ref=e246]
+                    - columnheader "Status" [ref=e247]
+                    - columnheader "Name" [ref=e248]
+                    - columnheader "Source" [ref=e249]
+                    - columnheader "Date" [ref=e250]
+                - rowgroup [ref=e251]:
+                  - row "#e4633 booked Ashley Martinez website 10 67↑ 10 Apr 2026" [ref=e252]:
+                    - cell "#e4633" [ref=e253]
+                    - cell "booked" [ref=e254]:
+                      - generic [ref=e255]: booked
+                    - cell "Ashley Martinez" [ref=e256]
+                    - cell "website 10 67↑" [ref=e257]:
+                      - generic [ref=e258]:
+                        - generic [ref=e260]: website
+                        - generic [ref=e261]:
+                          - text: "10"
+                          - generic [ref=e262]: 67↑
+                    - cell "10 Apr 2026" [ref=e263]
+                  - row "#2570d booked Jordan Kim website 10 67↑ 9 Apr 2026" [ref=e264]:
+                    - cell "#2570d" [ref=e265]
+                    - cell "booked" [ref=e266]:
+                      - generic [ref=e267]: booked
+                    - cell "Jordan Kim" [ref=e268]
+                    - cell "website 10 67↑" [ref=e269]:
+                      - generic [ref=e270]:
+                        - generic [ref=e272]: website
+                        - generic [ref=e273]:
+                          - text: "10"
+                          - generic [ref=e274]: 67↑
+                    - cell "9 Apr 2026" [ref=e275]
+                  - row "#178ec contacted Mia Thompson instagram 4 50↓ 8 Apr 2026" [ref=e276]:
+                    - cell "#178ec" [ref=e277]
+                    - cell "contacted" [ref=e278]:
+                      - generic [ref=e279]: contacted
+                    - cell "Mia Thompson" [ref=e280]
+                    - cell "instagram 4 50↓" [ref=e281]:
+                      - generic [ref=e282]:
+                        - generic [ref=e284]: instagram
+                        - generic [ref=e285]:
+                          - text: "4"
+                          - generic [ref=e286]: 50↓
+                    - cell "8 Apr 2026" [ref=e287]
+                  - row "#82b73 new Rachel Nguyen facebook 3 8 Apr 2026" [ref=e288]:
+                    - cell "#82b73" [ref=e289]
+                    - cell "new" [ref=e290]:
+                      - generic [ref=e291]: new
+                    - cell "Rachel Nguyen" [ref=e292]
+                    - cell "facebook 3" [ref=e293]:
+                      - generic [ref=e294]:
+                        - generic [ref=e296]: facebook
+                        - generic [ref=e297]: "3"
+                    - cell "8 Apr 2026" [ref=e298]
+                  - row "#22533 booked Chloe Davis website 10 67↑ 7 Apr 2026" [ref=e299]:
+                    - cell "#22533" [ref=e300]
+                    - cell "booked" [ref=e301]:
+                      - generic [ref=e302]: booked
+                    - cell "Chloe Davis" [ref=e303]
+                    - cell "website 10 67↑" [ref=e304]:
+                      - generic [ref=e305]:
+                        - generic [ref=e307]: website
+                        - generic [ref=e308]:
+                          - text: "10"
+                          - generic [ref=e309]: 67↑
+                    - cell "7 Apr 2026" [ref=e310]
+                  - row "#108dd contacted Sophia Patel google 5 50↓ 6 Apr 2026" [ref=e311]:
+                    - cell "#108dd" [ref=e312]
+                    - cell "contacted" [ref=e313]:
+                      - generic [ref=e314]: contacted
+                    - cell "Sophia Patel" [ref=e315]
+                    - cell "google 5 50↓" [ref=e316]:
+                      - generic [ref=e317]:
+                        - generic [ref=e319]: google
+                        - generic [ref=e320]:
+                          - text: "5"
+                          - generic [ref=e321]: 50↓
+                    - cell "6 Apr 2026" [ref=e322]
+                  - row "#b7de4 booked Emily Rodriguez website 10 67↑ 6 Apr 2026" [ref=e323]:
+                    - cell "#b7de4" [ref=e324]
+                    - cell "booked" [ref=e325]:
+                      - generic [ref=e326]: booked
+                    - cell "Emily Rodriguez" [ref=e327]
+                    - cell "website 10 67↑" [ref=e328]:
+                      - generic [ref=e329]:
+                        - generic [ref=e331]: website
+                        - generic [ref=e332]:
+                          - text: "10"
+                          - generic [ref=e333]: 67↑
+                    - cell "6 Apr 2026" [ref=e334]
+                  - row "#f3c25 new Isabella Chen referral 3 5 Apr 2026" [ref=e335]:
+                    - cell "#f3c25" [ref=e336]
+                    - cell "new" [ref=e337]:
+                      - generic [ref=e338]: new
+                    - cell "Isabella Chen" [ref=e339]
+                    - cell "referral 3" [ref=e340]:
+                      - generic [ref=e341]:
+                        - generic [ref=e343]: referral
+                        - generic [ref=e344]: "3"
+                    - cell "5 Apr 2026" [ref=e345]
+                  - row "#6a078 contacted Natalie Wilson website 10 67↑ 5 Apr 2026" [ref=e346]:
+                    - cell "#6a078" [ref=e347]
+                    - cell "contacted" [ref=e348]:
+                      - generic [ref=e349]: contacted
+                    - cell "Natalie Wilson" [ref=e350]
+                    - cell "website 10 67↑" [ref=e351]:
+                      - generic [ref=e352]:
+                        - generic [ref=e354]: website
+                        - generic [ref=e355]:
+                          - text: "10"
+                          - generic [ref=e356]: 67↑
+                    - cell "5 Apr 2026" [ref=e357]
+                  - row "#c924c booked Olivia Brown instagram 4 50↓ 4 Apr 2026" [ref=e358]:
+                    - cell "#c924c" [ref=e359]
+                    - cell "booked" [ref=e360]:
+                      - generic [ref=e361]: booked
+                    - cell "Olivia Brown" [ref=e362]
+                    - cell "instagram 4 50↓" [ref=e363]:
+                      - generic [ref=e364]:
+                        - generic [ref=e366]: instagram
+                        - generic [ref=e367]:
+                          - text: "4"
+                          - generic [ref=e368]: 50↓
+                    - cell "4 Apr 2026" [ref=e369]
+                  - row "#c1e24 new Ava Lee google 5 50↓ 3 Apr 2026" [ref=e370]:
+                    - cell "#c1e24" [ref=e371]
+                    - cell "new" [ref=e372]:
+                      - generic [ref=e373]: new
+                    - cell "Ava Lee" [ref=e374]
+                    - cell "google 5 50↓" [ref=e375]:
+                      - generic [ref=e376]:
+                        - generic [ref=e378]: google
+                        - generic [ref=e379]:
+                          - text: "5"
+                          - generic [ref=e380]: 50↓
+                    - cell "3 Apr 2026" [ref=e381]
+                  - row "#ab4fe booked Hannah Flores website 10 67↑ 3 Apr 2026" [ref=e382]:
+                    - cell "#ab4fe" [ref=e383]
+                    - cell "booked" [ref=e384]:
+                      - generic [ref=e385]: booked
+                    - cell "Hannah Flores" [ref=e386]
+                    - cell "website 10 67↑" [ref=e387]:
+                      - generic [ref=e388]:
+                        - generic [ref=e390]: website
+                        - generic [ref=e391]:
+                          - text: "10"
+                          - generic [ref=e392]: 67↑
+                    - cell "3 Apr 2026" [ref=e393]
+                  - row "#c212f contacted Lily Scott facebook 3 2 Apr 2026" [ref=e394]:
+                    - cell "#c212f" [ref=e395]
+                    - cell "contacted" [ref=e396]:
+                      - generic [ref=e397]: contacted
+                    - cell "Lily Scott" [ref=e398]
+                    - cell "facebook 3" [ref=e399]:
+                      - generic [ref=e400]:
+                        - generic [ref=e402]: facebook
+                        - generic [ref=e403]: "3"
+                    - cell "2 Apr 2026" [ref=e404]
+                  - row "#92542 booked Grace Turner referral 3 1 Apr 2026" [ref=e405]:
+                    - cell "#92542" [ref=e406]
+                    - cell "booked" [ref=e407]:
+                      - generic [ref=e408]: booked
+                    - cell "Grace Turner" [ref=e409]
+                    - cell "referral 3" [ref=e410]:
+                      - generic [ref=e411]:
+                        - generic [ref=e413]: referral
+                        - generic [ref=e414]: "3"
+                    - cell "1 Apr 2026" [ref=e415]
+                  - row "#1fb45 new Zoe White website 10 67↑ 31 Mar 2026" [ref=e416]:
+                    - cell "#1fb45" [ref=e417]
+                    - cell "new" [ref=e418]:
+                      - generic [ref=e419]: new
+                    - cell "Zoe White" [ref=e420]
+                    - cell "website 10 67↑" [ref=e421]:
+                      - generic [ref=e422]:
+                        - generic [ref=e424]: website
+                        - generic [ref=e425]:
+                          - text: "10"
+                          - generic [ref=e426]: 67↑
+                    - cell "31 Mar 2026" [ref=e427]
+                  - row "#81954 contacted Luna Harris google 5 50↓ 30 Mar 2026" [ref=e428]:
+                    - cell "#81954" [ref=e429]
+                    - cell "contacted" [ref=e430]:
+                      - generic [ref=e431]: contacted
+                    - cell "Luna Harris" [ref=e432]
+                    - cell "google 5 50↓" [ref=e433]:
+                      - generic [ref=e434]:
+                        - generic [ref=e436]: google
+                        - generic [ref=e437]:
+                          - text: "5"
+                          - generic [ref=e438]: 50↓
+                    - cell "30 Mar 2026" [ref=e439]
+                  - row "#c301d booked Aurora Clark instagram 4 50↓ 30 Mar 2026" [ref=e440]:
+                    - cell "#c301d" [ref=e441]
+                    - cell "booked" [ref=e442]:
+                      - generic [ref=e443]: booked
+                    - cell "Aurora Clark" [ref=e444]
+                    - cell "instagram 4 50↓" [ref=e445]:
+                      - generic [ref=e446]:
+                        - generic [ref=e448]: instagram
+                        - generic [ref=e449]:
+                          - text: "4"
+                          - generic [ref=e450]: 50↓
+                    - cell "30 Mar 2026" [ref=e451]
+                  - row "#a17e0 new Stella Lewis website 10 67↑ 29 Mar 2026" [ref=e452]:
+                    - cell "#a17e0" [ref=e453]
+                    - cell "new" [ref=e454]:
+                      - generic [ref=e455]: new
+                    - cell "Stella Lewis" [ref=e456]
+                    - cell "website 10 67↑" [ref=e457]:
+                      - generic [ref=e458]:
+                        - generic [ref=e460]: website
+                        - generic [ref=e461]:
+                          - text: "10"
+                          - generic [ref=e462]: 67↑
+                    - cell "29 Mar 2026" [ref=e463]
+                  - row "#6b185 contacted Penelope Walker google 5 50↓ 28 Mar 2026" [ref=e464]:
+                    - cell "#6b185" [ref=e465]
+                    - cell "contacted" [ref=e466]:
+                      - generic [ref=e467]: contacted
+                    - cell "Penelope Walker" [ref=e468]
+                    - cell "google 5 50↓" [ref=e469]:
+                      - generic [ref=e470]:
+                        - generic [ref=e472]: google
+                        - generic [ref=e473]:
+                          - text: "5"
+                          - generic [ref=e474]: 50↓
+                    - cell "28 Mar 2026" [ref=e475]
+                  - row "#57166 booked Violet Hall referral 3 27 Mar 2026" [ref=e476]:
+                    - cell "#57166" [ref=e477]
+                    - cell "booked" [ref=e478]:
+                      - generic [ref=e479]: booked
+                    - cell "Violet Hall" [ref=e480]
+                    - cell "referral 3" [ref=e481]:
+                      - generic [ref=e482]:
+                        - generic [ref=e484]: referral
+                        - generic [ref=e485]: "3"
+                    - cell "27 Mar 2026" [ref=e486]
+                  - row "#3c040 contacted Clara Young website 10 67↑ 25 Mar 2026" [ref=e487]:
+                    - cell "#3c040" [ref=e488]
+                    - cell "contacted" [ref=e489]:
+                      - generic [ref=e490]: contacted
+                    - cell "Clara Young" [ref=e491]
+                    - cell "website 10 67↑" [ref=e492]:
+                      - generic [ref=e493]:
+                        - generic [ref=e495]: website
+                        - generic [ref=e496]:
+                          - text: "10"
+                          - generic [ref=e497]: 67↑
+                    - cell "25 Mar 2026" [ref=e498]
+                  - row "#5f532 booked Nora Allen facebook 3 23 Mar 2026" [ref=e499]:
+                    - cell "#5f532" [ref=e500]
+                    - cell "booked" [ref=e501]:
+                      - generic [ref=e502]: booked
+                    - cell "Nora Allen" [ref=e503]
+                    - cell "facebook 3" [ref=e504]:
+                      - generic [ref=e505]:
+                        - generic [ref=e507]: facebook
+                        - generic [ref=e508]: "3"
+                    - cell "23 Mar 2026" [ref=e509]
+                  - row "#dee8c new Hazel King website 10 67↑ 21 Mar 2026" [ref=e510]:
+                    - cell "#dee8c" [ref=e511]
+                    - cell "new" [ref=e512]:
+                      - generic [ref=e513]: new
+                    - cell "Hazel King" [ref=e514]
+                    - cell "website 10 67↑" [ref=e515]:
+                      - generic [ref=e516]:
+                        - generic [ref=e518]: website
+                        - generic [ref=e519]:
+                          - text: "10"
+                          - generic [ref=e520]: 67↑
+                    - cell "21 Mar 2026" [ref=e521]
+                  - row "#55c83 contacted Ellie Wright google 5 50↓ 18 Mar 2026" [ref=e522]:
+                    - cell "#55c83" [ref=e523]
+                    - cell "contacted" [ref=e524]:
+                      - generic [ref=e525]: contacted
+                    - cell "Ellie Wright" [ref=e526]
+                    - cell "google 5 50↓" [ref=e527]:
+                      - generic [ref=e528]:
+                        - generic [ref=e530]: google
+                        - generic [ref=e531]:
+                          - text: "5"
+                          - generic [ref=e532]: 50↓
+                    - cell "18 Mar 2026" [ref=e533]
+                  - row "#1c2dc booked Scarlett Adams instagram 4 50↓ 15 Mar 2026" [ref=e534]:
+                    - cell "#1c2dc" [ref=e535]
+                    - cell "booked" [ref=e536]:
+                      - generic [ref=e537]: booked
+                    - cell "Scarlett Adams" [ref=e538]
+                    - cell "instagram 4 50↓" [ref=e539]:
+                      - generic [ref=e540]:
+                        - generic [ref=e542]: instagram
+                        - generic [ref=e543]:
+                          - text: "4"
+                          - generic [ref=e544]: 50↓
+                    - cell "15 Mar 2026" [ref=e545]
+      - button [ref=e546] [cursor=pointer]:
+        - img [ref=e547]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Help & Support" [level=2]
+          - button:
+            - img
+        - generic:
+          - generic:
+            - heading "Documentation" [level=3]
+            - generic:
+              - link "Documentation Complete guides and API reference":
+                - /url: /documentation
+                - generic:
+                  - img
+                - generic:
+                  - generic: Documentation
+                  - generic: Complete guides and API reference
+              - link "Help Center FAQs, guides, and troubleshooting":
+                - /url: /help-center
+                - generic:
+                  - img
+                - generic:
+                  - generic: Help Center
+                  - generic: FAQs, guides, and troubleshooting
+          - generic:
+            - heading "Get Support" [level=3]
+            - generic:
+              - button "Create Support Ticket Submit your issue for detailed assistance.":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Create Support Ticket
+                  - generic: Submit your issue for detailed assistance.
+              - button "Upgrade Unlock premium features and support":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Upgrade
+                  - generic: Unlock premium features and support
+          - generic:
+            - generic:
+              - generic: "Current plan: Free"
+  - region "Notifications alt+T"
+  - region "Notifications alt+T"

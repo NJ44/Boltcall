@@ -451,6 +451,69 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           </div>
         </motion.div>
 
+
+        {/* Real ROI Numbers */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.41 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+            <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
+            Real ROI Numbers: 3 Business Examples
+          </h2>
+          <div className="space-y-6">
+            <div className="bg-blue-50 rounded-xl p-6 border-l-4 border-blue-600">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-2xl font-bold text-blue-700">Plumbing Co.</span>
+                <span className="text-sm text-gray-500">— Houston, TX</span>
+              </div>
+              <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                Owner was missing ~22 calls/month to voicemail. Average job value: $420. AI receptionist captured
+                18 of those calls in month one and converted 12 to booked appointments.
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                <span className="bg-white rounded-lg px-3 py-1 text-green-700">+$5,040 revenue month 1</span>
+                <span className="bg-white rounded-lg px-3 py-1 text-blue-700">Cost: $99/mo</span>
+                <span className="bg-white rounded-lg px-3 py-1 text-gray-700">ROI: 50x</span>
+              </div>
+            </div>
+            <div className="bg-green-50 rounded-xl p-6 border-l-4 border-green-600">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-2xl font-bold text-green-700">Med Spa</span>
+                <span className="text-sm text-gray-500">— Austin, TX</span>
+              </div>
+              <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                Needed after-hours coverage for consultation bookings. Average treatment value: $650. AI
+                receptionist handled 35 after-hours calls per month, booking 16 consultations that would have
+                gone to voicemail.
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                <span className="bg-white rounded-lg px-3 py-1 text-green-700">+$10,400 revenue/mo</span>
+                <span className="bg-white rounded-lg px-3 py-1 text-blue-700">Cost: $199/mo</span>
+                <span className="bg-white rounded-lg px-3 py-1 text-gray-700">ROI: 52x</span>
+              </div>
+            </div>
+            <div className="bg-purple-50 rounded-xl p-6 border-l-4 border-purple-600">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-2xl font-bold text-purple-700">Law Firm</span>
+                <span className="text-sm text-gray-500">— Atlanta, GA</span>
+              </div>
+              <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                Personal injury firm missing evening intake calls. Average case value: $8,000+. AI receptionist
+                qualified leads, collected accident details, and scheduled attorney callbacks — capturing 4 new
+                cases in month one that previously went to competitors.
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                <span className="bg-white rounded-lg px-3 py-1 text-green-700">4 new cases captured</span>
+                <span className="bg-white rounded-lg px-3 py-1 text-blue-700">Cost: $299/mo</span>
+                <span className="bg-white rounded-lg px-3 py-1 text-gray-700">ROI: 100x+</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Pros & Cons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

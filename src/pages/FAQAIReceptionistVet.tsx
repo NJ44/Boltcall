@@ -253,6 +253,10 @@ const FAQAIReceptionistVet: React.FC = () => {
             >
               An AI receptionist for veterinary clinics answers every call on the first ring, triages emergencies to the on-call vet, books species-specific appointments, sends automated reminders to reduce no-shows by 30-50%, and captures the 30-35% of calls that come after hours. It costs $99-$249/month versus $30,000-$40,000/year for a front desk hire.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Veterinary practices that miss emergency calls after hours risk both patient outcomes and client loyalty. Reliable 24/7 phone answering is now a standard of care expectation.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dr. Gary Glassman, Veterinary Practice Consultant &amp; Speaker, Vet Metrics</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -355,7 +359,11 @@ const FAQAIReceptionistVet: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Client communication is the number one area where veterinary practices lose revenue. When a pet owner cannot get through, they do not wait &mdash; they switch to a practice that answers.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Wendy Myers, CVJ, Founder, Communication Solutions for Veterinarians</footer>
+          </blockquote></section>
 
         {/* Related Resources */}
         <section className="py-16 bg-gray-50">

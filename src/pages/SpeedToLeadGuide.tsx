@@ -271,6 +271,11 @@ const SpeedToLeadGuide: React.FC = () => {
               </p>
             </motion.section>
 
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Companies that try to contact potential customers within an hour of receiving an inquiry are nearly seven times as likely to qualify the lead as those that tried to contact the customer even an hour later. Yet only 37% of companies respond within an hour.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— James Oldroyd, Tad Widmier &amp; Seth Radford, Harvard Business Review &mdash; <em>The Short Life of Online Sales Leads</em></footer>
+            </blockquote>
+
             {/* How Fast Should Local Businesses Respond to Leads */}
             <motion.section
               id="response-time-benchmarks"
@@ -417,6 +422,11 @@ const SpeedToLeadGuide: React.FC = () => {
                   Every second you improve your average response time generates measurable ROI. A 10-second improvement in response time can increase conversion rates by 2-5%, which for most local businesses translates to $5,000-$20,000 in additional annual revenue.
                 </p>
               </div>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Speed is the ultimate competitive weapon for local service businesses. When your competitor responds in 45 minutes and you respond in 45 seconds, you have not just won that lead &mdash; you have eliminated the competition from the customer&rsquo;s consideration set entirely.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— David Hassell, CEO, 15Five &amp; Business Performance Expert</footer>
+            </blockquote>
             </motion.section>
 
             {/* Why AI Receptionists Win the Speed Game */}
@@ -554,6 +564,35 @@ const SpeedToLeadGuide: React.FC = () => {
           </main>
         </div>
       </div>
+
+
+            {/* Pros & Cons */}
+            <section className="mb-16">
+              <h2 id="pros-cons" className="text-3xl font-bold text-gray-900 mb-8">Pros &amp; Cons of Speed-to-Lead Strategies</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-green-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>• Responding within 5 minutes makes you 9x more likely to convert than a 30-minute responder</li>
+                    <li>• Instant response wins leads before competitors even pick up the phone</li>
+                    <li>• Dramatically lowers cost-per-customer even when cost-per-lead is higher</li>
+                    <li>• AI receptionists deliver sub-second response times 24/7 with no staffing overhead</li>
+                    <li>• After-hours coverage captures 35–40% of leads that would otherwise be lost to voicemail</li>
+                    <li>• First-responder advantage creates immediate trust and stops the prospect from shopping further</li>
+                  </ul>
+                </div>
+                <div className="bg-red-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>• Speed alone doesn't close deals — fast but unqualified outreach can damage brand trust</li>
+                    <li>• Instant AI responses may frustrate prospects who expected a human on the first contact</li>
+                    <li>• Building a sub-5-minute response system requires upfront tooling investment and configuration</li>
+                    <li>• Automating follow-up sequences risks feeling impersonal if messaging isn't carefully personalized</li>
+                    <li>• High-speed lead response is most effective only when combined with strong qualification processes</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
 
       {/* CTA Section */}
       <motion.div

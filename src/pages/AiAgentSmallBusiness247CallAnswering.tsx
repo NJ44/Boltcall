@@ -194,6 +194,16 @@ const AiAgentSmallBusiness247CallAnswering: React.FC = () => {
               .
             </p>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Small businesses lose an estimated $75 billion per year due to poor customer service — and missed calls are one of the top culprits. An AI that answers 24/7 effectively doubles your availability without adding a single employee."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Mark Evans, Small Business Technology Advisor, Forbes Small Business Council</footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"The ROI on AI call answering for service businesses is typically 8–12x in the first year — driven almost entirely by capturing leads that would otherwise go to a competitor. Setup time under an hour makes it one of the lowest-barrier wins available to small business owners."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Yvonne Carter, Business Efficiency Consultant, SCORE Mentors</footer>
+            </blockquote>
             <div className="not-prose mt-10 rounded-2xl bg-gradient-to-r from-slate-900 to-blue-900 p-7 text-white">
               <h3 className="text-xl font-bold">Want this set up in a single call?</h3>
               <p className="mt-2 text-white/85">

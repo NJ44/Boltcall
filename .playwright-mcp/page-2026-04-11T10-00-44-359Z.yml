@@ -1,0 +1,265 @@
+- generic [ref=e2]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - button "Collapse sidebar" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - link "Boltcall" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard
+          - img "Boltcall" [ref=e14]
+        - navigation "Main navigation" [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - link "Overview" [ref=e18] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e20]
+                - generic [ref=e25]: Overview
+              - link "Leads" [ref=e26] [cursor=pointer]:
+                - /url: /dashboard/leads
+                - img [ref=e28]
+                - generic [ref=e30]: Leads
+              - link "Calls" [ref=e31] [cursor=pointer]:
+                - /url: /dashboard/calls
+                - img [ref=e33]
+                - generic [ref=e35]: Calls
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: Setup
+              - generic [ref=e38]:
+                - link "AI Agents" [ref=e39] [cursor=pointer]:
+                  - /url: /dashboard/agents
+                  - img [ref=e41]
+                  - generic [ref=e44]: AI Agents
+                - link "Knowledge Base" [ref=e45] [cursor=pointer]:
+                  - /url: /dashboard/knowledge-base
+                  - img [ref=e47]
+                  - generic [ref=e49]: Knowledge Base
+                - link "Phone Numbers" [ref=e50] [cursor=pointer]:
+                  - /url: /dashboard/phone
+                  - img [ref=e52]
+                  - generic [ref=e54]: Phone Numbers
+                - link "Integrations" [ref=e55] [cursor=pointer]:
+                  - /url: /dashboard/integrations
+                  - img [ref=e57]
+                  - generic [ref=e59]: Integrations
+            - generic [ref=e60]:
+              - paragraph [ref=e61]: Services
+              - generic [ref=e62]:
+                - link "AI Receptionist" [ref=e63] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                  - img [ref=e65]
+                  - generic [ref=e69]: AI Receptionist
+                - link "Missed Calls Beta" [ref=e70] [cursor=pointer]:
+                  - /url: /dashboard/calls
+                  - img [ref=e72]
+                  - generic [ref=e77]: Missed Calls
+                  - generic [ref=e78]: Beta
+                - link "SMS" [ref=e79] [cursor=pointer]:
+                  - /url: /dashboard/sms
+                  - img [ref=e81]
+                  - generic [ref=e83]: SMS
+                - link "Instant Lead Response" [ref=e85] [cursor=pointer]:
+                  - /url: /dashboard/instant-lead-response
+                  - img [ref=e87]
+                  - generic [ref=e91]: Instant Lead Response
+                - link "AI Email" [ref=e92] [cursor=pointer]:
+                  - /url: /dashboard/email
+                  - img [ref=e94]
+                  - generic [ref=e97]: AI Email
+          - generic [ref=e98]:
+            - link "Settings" [ref=e99] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e101]
+              - generic [ref=e104]: Settings
+            - link "Documentation" [ref=e105] [cursor=pointer]:
+              - /url: /documentation
+              - img [ref=e107]
+              - generic [ref=e109]: Documentation
+            - link "Help Center" [ref=e110] [cursor=pointer]:
+              - /url: /help-center
+              - img [ref=e112]
+              - generic [ref=e115]: Help Center
+            - button "Give Us Feedback" [ref=e116] [cursor=pointer]:
+              - img [ref=e118]
+              - generic [ref=e120]: Give Us Feedback
+    - main [ref=e121]:
+      - generic [ref=e123]:
+        - heading "SMS" [level=1] [ref=e127]
+        - generic [ref=e128]:
+          - button "asd" [ref=e131] [cursor=pointer]:
+            - img [ref=e132]
+            - generic [ref=e135]: asd
+            - img [ref=e136]
+          - button "Alerts" [ref=e139] [cursor=pointer]:
+            - img [ref=e140]
+            - generic [ref=e143]: "3"
+          - button "Services status" [ref=e145] [cursor=pointer]:
+            - img [ref=e146]
+          - button "נ" [ref=e150] [cursor=pointer]
+      - generic [ref=e152]:
+        - generic [ref=e153]:
+          - paragraph [ref=e154]:
+            - text: Your free trial ends in
+            - strong [ref=e155]: 2 days
+            - text: . Subscribe to keep access to all features.
+          - link "Choose a plan" [ref=e156] [cursor=pointer]:
+            - /url: /dashboard/settings/plan-billing
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - heading "SMS Agent" [level=1] [ref=e160]
+            - generic [ref=e161]:
+              - button "Refresh" [ref=e162] [cursor=pointer]:
+                - img [ref=e163]
+                - text: Refresh
+              - button "Settings" [ref=e168] [cursor=pointer]:
+                - img [ref=e169]
+                - text: Settings
+              - button "New SMS" [ref=e172] [cursor=pointer]:
+                - img [ref=e173]
+                - text: New SMS
+          - generic [ref=e176]:
+            - generic [ref=e177]:
+              - generic [ref=e178]:
+                - img [ref=e179]
+                - generic [ref=e181]: "10"
+              - paragraph [ref=e182]: Total Messages
+            - generic [ref=e183]:
+              - generic [ref=e184]:
+                - img [ref=e185]
+                - generic [ref=e188]: "0"
+              - paragraph [ref=e189]: Pending Drafts
+            - generic [ref=e190]:
+              - generic [ref=e191]:
+                - img [ref=e192]
+                - generic [ref=e194]: "0"
+              - paragraph [ref=e195]: Auto-Sent
+            - generic [ref=e196]:
+              - generic [ref=e197]:
+                - img [ref=e198]
+                - generic [ref=e202]: "0"
+              - paragraph [ref=e203]: Hot Leads
+          - generic [ref=e204]:
+            - img [ref=e205]
+            - generic [ref=e208]:
+              - generic [ref=e209]: "AI Auto-Reply: OFF (Draft Mode)"
+              - text: AI generates drafts for your approval
+            - button "Configure" [ref=e210] [cursor=pointer]
+          - generic [ref=e211]:
+            - button "Conversations" [ref=e212] [cursor=pointer]
+            - button "Settings" [ref=e213] [cursor=pointer]
+          - generic [ref=e214]:
+            - generic [ref=e215]:
+              - generic [ref=e216]:
+                - button "All" [ref=e217] [cursor=pointer]:
+                  - img [ref=e218]
+                  - text: All
+                - button "Pending" [ref=e220] [cursor=pointer]:
+                  - img [ref=e221]
+                  - text: Pending
+                - button "Hot Leads" [ref=e223] [cursor=pointer]:
+                  - img [ref=e224]
+                  - text: Hot Leads
+              - button "+13056291847 Of course, Olivia! No problem at all. We have availability Tuesday at 3pm or Wednesday at 10am. Which works better for you? Apr 11 2 messages" [ref=e226] [cursor=pointer]:
+                - generic [ref=e227]:
+                  - generic [ref=e228]:
+                    - img [ref=e230]
+                    - generic [ref=e232]:
+                      - paragraph [ref=e233]: "+13056291847"
+                      - paragraph [ref=e234]: Of course, Olivia! No problem at all. We have availability Tuesday at 3pm or Wednesday at 10am. Which works better for you?
+                  - generic [ref=e236]: Apr 11
+                - generic [ref=e237]:
+                  - generic [ref=e238]: 2 messages
+                  - img [ref=e239]
+              - button "+13051847392 Can't wait to see you Chloe! Your appointment is confirmed for Friday at 2pm with our lead esthetician. Please arrive 10 min early to complete your intake form 🌟 Apr 11 2 messages" [ref=e241] [cursor=pointer]:
+                - generic [ref=e242]:
+                  - generic [ref=e243]:
+                    - img [ref=e245]
+                    - generic [ref=e247]:
+                      - paragraph [ref=e248]: "+13051847392"
+                      - paragraph [ref=e249]: Can't wait to see you Chloe! Your appointment is confirmed for Friday at 2pm with our lead esthetician. Please arrive 10 min early to complete your intake form 🌟
+                  - generic [ref=e251]: Apr 11
+                - generic [ref=e252]:
+                  - generic [ref=e253]: 2 messages
+                  - img [ref=e254]
+              - button "+13055219847 Hi Ashley! Great question. Please avoid blood thinners (aspirin, ibuprofen), alcohol, and fish oil supplements for 24 hours before your appointment. See you Thursday! 😊 Apr 10 2 messages" [ref=e256] [cursor=pointer]:
+                - generic [ref=e257]:
+                  - generic [ref=e258]:
+                    - img [ref=e260]
+                    - generic [ref=e262]:
+                      - paragraph [ref=e263]: "+13055219847"
+                      - paragraph [ref=e264]: Hi Ashley! Great question. Please avoid blood thinners (aspirin, ibuprofen), alcohol, and fish oil supplements for 24 hours before your appointment. See you Thursday! 😊
+                  - generic [ref=e266]: Apr 10
+                - generic [ref=e267]:
+                  - generic [ref=e268]: 2 messages
+                  - img [ref=e269]
+              - button "+13058293741 Yes! We partner with CareCredit and Cherry Financing — 0% interest for up to 18 months on qualifying treatments. I can send you the application link! Apr 10 2 messages" [ref=e271] [cursor=pointer]:
+                - generic [ref=e272]:
+                  - generic [ref=e273]:
+                    - img [ref=e275]
+                    - generic [ref=e277]:
+                      - paragraph [ref=e278]: "+13058293741"
+                      - paragraph [ref=e279]: Yes! We partner with CareCredit and Cherry Financing — 0% interest for up to 18 months on qualifying treatments. I can send you the application link!
+                  - generic [ref=e281]: Apr 10
+                - generic [ref=e282]:
+                  - generic [ref=e283]: 2 messages
+                  - img [ref=e284]
+              - button "+13057839201 Hi Rachel! Botox starts at $12/unit. Most forehead treatments use 20-30 units. We also offer a free consultation so Dr. Reyes can give you an exact quote. Want to book one? Apr 8 2 messages" [ref=e286] [cursor=pointer]:
+                - generic [ref=e287]:
+                  - generic [ref=e288]:
+                    - img [ref=e290]
+                    - generic [ref=e292]:
+                      - paragraph [ref=e293]: "+13057839201"
+                      - paragraph [ref=e294]: Hi Rachel! Botox starts at $12/unit. Most forehead treatments use 20-30 units. We also offer a free consultation so Dr. Reyes can give you an exact quote. Want to book one?
+                  - generic [ref=e296]: Apr 8
+                - generic [ref=e297]:
+                  - generic [ref=e298]: 2 messages
+                  - img [ref=e299]
+            - generic [ref=e303]:
+              - img [ref=e304]
+              - paragraph [ref=e306]: Select a conversation
+      - button [ref=e307] [cursor=pointer]:
+        - img [ref=e308]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Help & Support" [level=2]
+          - button:
+            - img
+        - generic:
+          - generic:
+            - heading "Documentation" [level=3]
+            - generic:
+              - link "Documentation Complete guides and API reference":
+                - /url: /documentation
+                - generic:
+                  - img
+                - generic:
+                  - generic: Documentation
+                  - generic: Complete guides and API reference
+              - link "Help Center FAQs, guides, and troubleshooting":
+                - /url: /help-center
+                - generic:
+                  - img
+                - generic:
+                  - generic: Help Center
+                  - generic: FAQs, guides, and troubleshooting
+          - generic:
+            - heading "Get Support" [level=3]
+            - generic:
+              - button "Create Support Ticket Submit your issue for detailed assistance.":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Create Support Ticket
+                  - generic: Submit your issue for detailed assistance.
+              - button "Upgrade Unlock premium features and support":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Upgrade
+                  - generic: Unlock premium features and support
+          - generic:
+            - generic:
+              - generic: "Current plan: Free"
+  - region "Notifications alt+T"
+  - region "Notifications alt+T"

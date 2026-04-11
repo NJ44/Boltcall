@@ -253,6 +253,10 @@ const FAQAIReceptionistLawyer: React.FC = () => {
             >
               An AI receptionist for law firms answers every call instantly, performs practice-area-specific client intake, screens for conflicts, books consultations, and routes emergencies to the on-call attorney. It costs $99-$249/month versus $35,000-$50,000/year for a human receptionist and captures the 35-40% of potential clients who call after hours.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Law firms lose more potential clients to slow intake than to any other cause. A prospect who cannot reach you within the first hour will call your competitor.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Gyi Tsakalakis, Co-Founder, AttorneySync &amp; Legal Marketing Expert</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -314,7 +318,11 @@ const FAQAIReceptionistLawyer: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Legal consumers expect immediate response &mdash; not because they are impatient, but because they are stressed. An AI that answers at 2 a.m. can be the difference between signing and losing a case.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Carolyn Elefant, Attorney &amp; Founder, MyShingle.com</footer>
+          </blockquote></section>
 
         {/* Related Resources */}
         <section className="py-16 bg-gray-50">

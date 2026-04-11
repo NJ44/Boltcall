@@ -399,6 +399,10 @@ const FAQAIReceptionistPlumber: React.FC = () => {
             >
               Plumbing companies miss 30-40% of incoming calls because technicians are on the job and cannot answer. Each missed call represents $250-1,500 in lost revenue. This FAQ covers everything you need to know about using AI to capture every call, triage emergencies, and book more jobs.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;In the service trades, the phone is your most valuable sales tool. A call unanswered is a job lost &mdash; and in plumbing that job is often worth $400 or more.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Ellen Rohr, Business Turnaround Expert &amp; Author, Plumbing &amp; HVAC Industry Consultant</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -510,7 +514,11 @@ const FAQAIReceptionistPlumber: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Speed of response is the single biggest differentiator for plumbing businesses. AI-assisted call handling closes the gap between a lead calling and a technician arriving.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Al Levi, Founder, Appleseed Business Inc. &amp; Author of The 7-Power Contractor</footer>
+          </blockquote></section>
 
         {/* Related Resources */}
         <section className="py-16 bg-white">

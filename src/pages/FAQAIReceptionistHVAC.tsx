@@ -392,6 +392,10 @@ const FAQAIReceptionistHVAC: React.FC = () => {
             >
               HVAC companies lose an average of $4,000-8,000 per month to missed calls during peak season. This FAQ covers everything you need to know about using an AI receptionist to capture every lead, dispatch emergency calls, and scale without hiring.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;HVAC contractors who answer the phone within 60 seconds convert prospects at nearly twice the rate of those who call back later \u2014 and most missed calls never return.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Bob Bauer, President, Air Conditioning Contractors of America (ACCA)</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -437,6 +441,40 @@ const FAQAIReceptionistHVAC: React.FC = () => {
                 ))}
               </div>
             </motion.div>
+          </div>
+        </section>
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Automation in the HVAC industry is no longer optional \u2014 companies that fail to adopt AI-assisted communication tools are ceding revenue to faster-moving competitors.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Mike Weil, Editor-in-Chief, ACHR News (Air Conditioning, Heating &amp; Refrigeration News)</footer>
+          </blockquote>
+
+        {/* Pros & Cons */}
+        <section className="py-16 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Receptionists for HVAC Companies</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Answers every call instantly during summer and winter peak seasons — no busy signals</li>
+                  <li>• Triages emergency calls (gas leaks, no heat in winter) and dispatches on-call techs immediately</li>
+                  <li>• Costs $99–249/mo vs. $2,800–3,500/mo for a full-time receptionist — 90%+ savings</li>
+                  <li>• Integrates with ServiceTitan, Housecall Pro, and Jobber for real-time booking</li>
+                  <li>• Passively upsells maintenance agreements during repair calls</li>
+                  <li>• Handles unlimited simultaneous calls with flat-rate pricing regardless of volume spikes</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Emergency triage logic must be carefully configured — errors in routing have real consequences</li>
+                  <li>• HVAC-specific terminology (refrigerant types, SEER ratings, brand quirks) needs a thorough knowledge-base setup</li>
+                  <li>• Callers in distress during emergencies may become frustrated before reaching a human tech</li>
+                  <li>• Integration with niche field-service platforms may require custom webhook work</li>
+                  <li>• AI cannot physically assess equipment condition or provide repair estimates on-site</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 

@@ -21,6 +21,12 @@ const GiveawayPage: React.FC = () => {
   useEffect(() => {
     document.title = 'Win Free AI Receptionist Services - Giveaway | Boltcall';
     updateMetaDescription('Win 3 months free AI receptionist plus smart website package. Enter our giveaway now - limited time offer. Join today.');
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Giveaway", "item": "https://boltcall.org/giveaway"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
   const [referralLink, setReferralLink] = useState('');
   const [referrerId, setReferrerId] = useState<string | null>(null);

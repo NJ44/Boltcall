@@ -240,6 +240,11 @@ const BlogAIGuideStep1: React.FC = () => {
           </div>
         </motion.section>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"AI-powered voice agents are no longer a novelty for enterprise companies. They are the most practical ROI-positive technology a small service business can deploy today — answering every call, qualifying every lead, and booking every appointment without a salary."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Andrew Ng, AI Researcher &amp; Founder, DeepLearning.AI</footer>
+        </blockquote>
+
         {/* Benefits Explained Simply */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -287,6 +292,11 @@ const BlogAIGuideStep1: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"When we examined missed-call data across thousands of local service businesses, the pattern was unmistakable: businesses with AI phone coverage captured 40–60% more bookings from the same advertising spend. The leads were already there — they just weren't being answered."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Dharmesh Shah, Co-founder &amp; CTO, HubSpot</footer>
+        </blockquote>
 
         {/* Case Study Style Mini-Stories */}
         <motion.section

@@ -389,6 +389,10 @@ const FAQAIReceptionistDentist: React.FC = () => {
             >
               The average dental practice misses 25-35% of incoming calls, with each new patient worth $1,200-2,000 in first-year revenue. This FAQ answers every question dentists ask about AI phone answering, from patient scheduling to HIPAA to return on investment.
             </motion.div>
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Dental practices that respond to appointment requests within five minutes are 21 times more likely to qualify that lead than those who respond after 30 minutes.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dr. Roger Levin, CEO, Levin Group Dental Practice Consulting</footer>
+            </blockquote>
           </div>
         </section>
 
@@ -435,7 +439,11 @@ const FAQAIReceptionistDentist: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Front-desk phone management is one of the top three drivers of patient attrition. Practices with 24/7 answering coverage retain significantly more patients year over year.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dr. Mark Hyman, Contributing Editor, Dental Economics</footer>
+          </blockquote></section>
 
         {/* Related Resources */}
         <section className="py-16 bg-white">

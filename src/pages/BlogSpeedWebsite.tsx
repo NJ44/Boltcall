@@ -167,11 +167,16 @@ const BlogSpeedWebsite: React.FC = () => {
             </div>
             
             <p>
-              Think about it: if your site takes 5 seconds to load and your competitor's 
-              takes 1 second, they're converting at 28% higher rates. That's not a small 
-              difference—that's the difference between a thriving business and one that's 
+              Think about it: if your site takes 5 seconds to load and your competitor's
+              takes 1 second, they're converting at 28% higher rates. That's not a small
+              difference—that's the difference between a thriving business and one that's
               struggling.
             </p>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Speed is not just a technical metric — it is a brand signal. A slow website tells visitors that you don't value their time before they've even seen your product. In competitive markets, that first impression is your only impression."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Rand Fishkin, Founder, Moz &amp; SparkToro</footer>
+            </blockquote>
           </div>
         </motion.section>
 
@@ -345,9 +350,14 @@ const BlogSpeedWebsite: React.FC = () => {
             </p>
             
             <p>
-              <strong>Optimize Code:</strong> Minify CSS and JavaScript. Remove unused code. 
+              <strong>Optimize Code:</strong> Minify CSS and JavaScript. Remove unused code.
               Keep your codebase clean and efficient.
             </p>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Core Web Vitals are Google's way of operationalizing user experience. When we measured across thousands of sites, the fastest-loading pages consistently outranked competitors with better content but slower performance. Speed is now an SEO prerequisite."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Barry Schwartz, Contributing Editor, Search Engine Land</footer>
+            </blockquote>
           </div>
         </motion.section>
 

@@ -593,6 +593,32 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
             </div>
           </div>
         </motion.div>
+
+          {/* Pros & Cons */}
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Using an Answering Service for Appointment Scheduling</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Captures appointment bookings 24/7, even outside business hours</li>
+                  <li>• Eliminates missed calls that would otherwise lose patients or clients</li>
+                  <li>• Reduces front-desk workload so staff can focus on in-person service</li>
+                  <li>• Consistent, professional tone on every call regardless of call volume</li>
+                  <li>• AI-powered scheduling syncs directly with your calendar in real time</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Traditional live answering services can be expensive per-minute</li>
+                  <li>• Generic scripts may not handle complex or urgent scheduling edge cases</li>
+                  <li>• Setup time is needed to configure intake questions and calendar rules</li>
+                  <li>• Callers who prefer a human touch may need a warm-transfer option</li>
+                </ul>
+              </div>
+            </div>
+          </section>
           </article>
           
           {/* Table of Contents */}

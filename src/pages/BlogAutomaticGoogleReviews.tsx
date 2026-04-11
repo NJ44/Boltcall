@@ -683,6 +683,32 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+          {/* Pros & Cons */}
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Automatic Google Reviews</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Consistently collects reviews without relying on staff to remember to ask</li>
+                  <li>• Sends requests at the optimal moment — right after a positive interaction</li>
+                  <li>• Boosts local SEO rankings with a steady stream of fresh, relevant reviews</li>
+                  <li>• Builds social proof that converts skeptical website visitors into customers</li>
+                  <li>• Scales effortlessly as your business grows without extra manual effort</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Poor timing or frequency can feel spammy and irritate customers</li>
+                  <li>• Automated requests cannot replace genuine relationship-building</li>
+                  <li>• Negative reviews will also surface more quickly alongside positive ones</li>
+                  <li>• Requires initial setup and integration with your CRM or booking system</li>
+                </ul>
+              </div>
+            </div>
+          </section>
           </article>
           
           {/* Table of Contents */}

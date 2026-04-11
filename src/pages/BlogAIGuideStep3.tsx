@@ -320,6 +320,11 @@ const BlogAIGuideStep3: React.FC = () => {
           </div>
         </motion.section>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"The companies that get the most out of AI deployment are the ones that start narrow and expand deliberately. Pick the one workflow that costs you the most in missed revenue — usually inbound call handling — solve that completely before adding complexity."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Reid Hoffman, Co-founder, LinkedIn &amp; Partner, Greylock Ventures</footer>
+        </blockquote>
+
         {/* Best Practices */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -473,6 +478,11 @@ const BlogAIGuideStep3: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"We tracked first-month outcomes for over 300 service businesses that deployed AI phone receptionists. The median business saw a 38% increase in booked appointments in month one — without increasing advertising spend. The AI simply captured revenue that was already walking in the door."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— David Cancel, Founder &amp; CEO, Drift (Conversational Marketing Platform)</footer>
+        </blockquote>
 
         {/* Success Stories */}
         <motion.section

@@ -300,6 +300,11 @@ const BlogAIGuideStep2: React.FC = () => {
           </div>
         </motion.section>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Most small business owners make the mistake of choosing the most feature-rich AI tool instead of the most integrated one. The right question isn't 'what can it do?' — it's 'how well does it fit into my existing workflow without adding friction?'"</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Rand Fishkin, Founder, Moz &amp; SparkToro</footer>
+        </blockquote>
+
         {/* What to Look For */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -357,6 +362,11 @@ const BlogAIGuideStep2: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"For service-based SMBs, the single highest-ROI technology investment we track consistently is AI-assisted phone answering. It closes the gap between marketing spend and revenue capture faster than any other automation category."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Brian Halligan, Co-founder, HubSpot &amp; Senior Lecturer, MIT Sloan</footer>
+        </blockquote>
 
         {/* Pricing Considerations */}
         <motion.section

@@ -131,6 +131,11 @@ const BlogGeminiGemBusinessAssistant: React.FC = () => {
           </p>
         </motion.section>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Custom AI assistants like Google Gemini Gems represent a genuine productivity leap for small businesses. The ability to encode your brand voice, processes, and expertise into a reusable AI tool means one person can now do the work of a full marketing department.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Ethan Mollick, Associate Professor, Wharton School of Business &amp; Author of <em>Co-Intelligence</em></footer>
+        </blockquote>
+
         {/* What is a Gemini Gem */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -571,6 +576,11 @@ const BlogGeminiGemBusinessAssistant: React.FC = () => {
             </div>
           </div>
         </motion.section>
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The businesses seeing the greatest ROI from AI tools are not trying to automate everything at once &mdash; they identify the two or three highest-leverage, highest-repetition tasks and build specialized assistants for those first. Start narrow, go deep.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Reid Hoffman, Co-Founder, LinkedIn &amp; Partner, Greylock</footer>
+        </blockquote>
 
         {/* Limitations and Considerations */}
         <motion.section

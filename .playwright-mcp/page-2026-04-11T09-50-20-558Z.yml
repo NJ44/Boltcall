@@ -1,0 +1,363 @@
+- generic [ref=e2]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - button "Collapse sidebar" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - link "Boltcall" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard
+          - img "Boltcall" [ref=e14]
+        - navigation "Main navigation" [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - link "Overview" [ref=e18] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e20]
+                - generic [ref=e25]: Overview
+              - link "Leads" [ref=e27] [cursor=pointer]:
+                - /url: /dashboard/leads
+                - img [ref=e29]
+                - generic [ref=e31]: Leads
+              - link "Calls" [ref=e32] [cursor=pointer]:
+                - /url: /dashboard/calls
+                - img [ref=e34]
+                - generic [ref=e36]: Calls
+            - generic [ref=e37]:
+              - paragraph [ref=e38]: Setup
+              - generic [ref=e39]:
+                - link "AI Agents" [ref=e40] [cursor=pointer]:
+                  - /url: /dashboard/agents
+                  - img [ref=e42]
+                  - generic [ref=e45]: AI Agents
+                - link "Knowledge Base" [ref=e46] [cursor=pointer]:
+                  - /url: /dashboard/knowledge-base
+                  - img [ref=e48]
+                  - generic [ref=e50]: Knowledge Base
+                - link "Phone Numbers" [ref=e51] [cursor=pointer]:
+                  - /url: /dashboard/phone
+                  - img [ref=e53]
+                  - generic [ref=e55]: Phone Numbers
+                - link "Integrations" [ref=e56] [cursor=pointer]:
+                  - /url: /dashboard/integrations
+                  - img [ref=e58]
+                  - generic [ref=e60]: Integrations
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: Services
+              - generic [ref=e63]:
+                - link "AI Receptionist" [ref=e64] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                  - img [ref=e66]
+                  - generic [ref=e70]: AI Receptionist
+                - link "Missed Calls Beta" [ref=e71] [cursor=pointer]:
+                  - /url: /dashboard/calls
+                  - img [ref=e73]
+                  - generic [ref=e78]: Missed Calls
+                  - generic [ref=e79]: Beta
+                - link "SMS" [ref=e80] [cursor=pointer]:
+                  - /url: /dashboard/sms
+                  - img [ref=e82]
+                  - generic [ref=e84]: SMS
+                - link "Instant Lead Response" [ref=e85] [cursor=pointer]:
+                  - /url: /dashboard/instant-lead-response
+                  - img [ref=e87]
+                  - generic [ref=e91]: Instant Lead Response
+                - link "AI Email" [ref=e92] [cursor=pointer]:
+                  - /url: /dashboard/email
+                  - img [ref=e94]
+                  - generic [ref=e97]: AI Email
+          - generic [ref=e98]:
+            - link "Settings" [ref=e99] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e101]
+              - generic [ref=e104]: Settings
+            - link "Documentation" [ref=e105] [cursor=pointer]:
+              - /url: /documentation
+              - img [ref=e107]
+              - generic [ref=e109]: Documentation
+            - link "Help Center" [ref=e110] [cursor=pointer]:
+              - /url: /help-center
+              - img [ref=e112]
+              - generic [ref=e115]: Help Center
+            - button "Give Us Feedback" [ref=e116] [cursor=pointer]:
+              - img [ref=e118]
+              - generic [ref=e120]: Give Us Feedback
+    - main [active] [ref=e121]:
+      - generic [ref=e123]:
+        - heading "Overview" [level=1] [ref=e127]
+        - generic [ref=e128]:
+          - button "asd" [ref=e131] [cursor=pointer]:
+            - img [ref=e132]
+            - generic [ref=e135]: asd
+            - img [ref=e136]
+          - button "Alerts" [ref=e139] [cursor=pointer]:
+            - img [ref=e140]
+          - button "Services status" [ref=e145] [cursor=pointer]:
+            - img [ref=e146]
+          - button "נ" [ref=e150] [cursor=pointer]
+      - generic [ref=e153]:
+        - generic [ref=e154]:
+          - heading "Setup Guide" [level=2] [ref=e156]
+          - generic [ref=e157]:
+            - generic [ref=e158]:
+              - link "Create Agent" [ref=e159] [cursor=pointer]:
+                - /url: /dashboard/agents
+                - img [ref=e162]
+                - generic [ref=e165]: Create Agent
+              - link "Connect Cal.com" [ref=e166] [cursor=pointer]:
+                - /url: /dashboard/calcom
+                - img [ref=e169]
+                - generic [ref=e172]: Connect Cal.com
+              - link "Setup AI Receptionist" [ref=e173] [cursor=pointer]:
+                - /url: /dashboard/ai-receptionist
+                - img [ref=e176]
+                - generic [ref=e179]: Setup AI Receptionist
+              - link "Configure Phone Numbers" [ref=e180] [cursor=pointer]:
+                - /url: /dashboard/phone-numbers
+                - img [ref=e183]
+                - generic [ref=e186]: Configure Phone Numbers
+              - link "Setup Knowledge Base About 1 min +10 tokens" [ref=e187] [cursor=pointer]:
+                - /url: /dashboard/knowledge-base
+                - img [ref=e189]
+                - generic [ref=e191]:
+                  - generic [ref=e192]: Setup Knowledge Base
+                  - generic [ref=e193]: About 1 min
+                - link "+10 tokens" [ref=e195]:
+                  - /url: /dashboard/knowledge-base
+              - link "Test Your Agent About 1 min +10 tokens" [ref=e196] [cursor=pointer]:
+                - /url: /dashboard/agents
+                - img [ref=e198]
+                - generic [ref=e200]:
+                  - generic [ref=e201]: Test Your Agent
+                  - generic [ref=e202]: About 1 min
+                - link "+10 tokens" [ref=e204]:
+                  - /url: /dashboard/agents
+              - link "Give Feedback About 1 min +10 tokens" [ref=e205] [cursor=pointer]:
+                - /url: /dashboard/feedback
+                - img [ref=e207]
+                - generic [ref=e209]:
+                  - generic [ref=e210]: Give Feedback
+                  - generic [ref=e211]: About 1 min
+                - link "+10 tokens" [ref=e213]:
+                  - /url: /dashboard/feedback
+            - generic [ref=e214]:
+              - button "Talk to Your Agent" [ref=e215] [cursor=pointer]:
+                - img [ref=e216]
+                - text: Talk to Your Agent
+              - paragraph [ref=e218]: Your AI agent will call your phone so you can test it live
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - heading "Core Services" [level=2] [ref=e223]
+            - generic [ref=e224]: 0/4 active
+          - generic [ref=e225]:
+            - generic [ref=e226]:
+              - generic [ref=e227]:
+                - img [ref=e229]
+                - generic [ref=e231]: Speed to Lead
+              - generic [ref=e232]:
+                - link "Configure" [ref=e233] [cursor=pointer]:
+                  - /url: /dashboard/speed-to-lead
+                - switch [ref=e235] [cursor=pointer]:
+                  - generic [ref=e238]:
+                    - img [ref=e240]
+                    - img [ref=e243]
+            - generic [ref=e246]:
+              - generic [ref=e247]:
+                - img [ref=e249]
+                - generic [ref=e251]: AI Receptionist
+              - generic [ref=e252]:
+                - link "Configure" [ref=e253] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                - switch [ref=e255] [cursor=pointer]:
+                  - generic [ref=e258]:
+                    - img [ref=e260]
+                    - img [ref=e263]
+            - generic [ref=e266]:
+              - generic [ref=e267]:
+                - img [ref=e269]
+                - generic [ref=e271]: Website Chatbot
+              - generic [ref=e272]:
+                - link "Configure" [ref=e273] [cursor=pointer]:
+                  - /url: /dashboard/website-bubble
+                - switch [ref=e275] [cursor=pointer]:
+                  - generic [ref=e278]:
+                    - img [ref=e280]
+                    - img [ref=e283]
+            - generic [ref=e286]:
+              - generic [ref=e287]:
+                - img [ref=e289]
+                - generic [ref=e294]: Lead Reactivation
+              - generic [ref=e295]:
+                - link "Configure" [ref=e296] [cursor=pointer]:
+                  - /url: /dashboard/lead-reactivation
+                - switch [ref=e298] [cursor=pointer]:
+                  - generic [ref=e301]:
+                    - img [ref=e303]
+                    - img [ref=e306]
+        - generic [ref=e309]:
+          - generic [ref=e310]:
+            - heading "Agent Architecture" [level=2] [ref=e311]
+            - paragraph [ref=e312]: How your triggers, agents, and outputs connect
+          - generic [ref=e314]:
+            - generic [ref=e315]:
+              - generic [ref=e316]:
+                - generic [ref=e317]:
+                  - img [ref=e318]
+                  - text: Architecture
+                - generic [ref=e321]: Agent Channel Map
+              - generic [ref=e322]:
+                - generic [ref=e323]: Inbound
+                - generic [ref=e324]: Outbound
+            - generic [ref=e325]:
+              - generic [ref=e328]: USE CASES
+              - generic [ref=e331]: AGENTS
+              - generic [ref=e334]: OUTPUTS
+            - region "Agent architecture canvas" [ref=e335]:
+              - generic [ref=e336]:
+                - img
+                - 'article "use-case node: Call Enters" [ref=e338]':
+                  - generic [ref=e339]:
+                    - img [ref=e341]
+                    - generic [ref=e343]:
+                      - heading "Call Enters" [level=3] [ref=e344]
+                      - generic [ref=e346]: trigger
+                - 'article "use-case node: Inbound SMS" [ref=e348]':
+                  - generic [ref=e349]:
+                    - img [ref=e351]
+                    - generic [ref=e353]:
+                      - heading "Inbound SMS" [level=3] [ref=e354]
+                      - generic [ref=e356]: trigger
+                - 'article "use-case node: Missed Call" [ref=e358]':
+                  - generic [ref=e359]:
+                    - img [ref=e361]
+                    - generic [ref=e363]:
+                      - heading "Missed Call" [level=3] [ref=e364]
+                      - generic [ref=e366]: trigger
+                - 'article "use-case node: Ad Lead" [ref=e368]':
+                  - generic [ref=e369]:
+                    - img [ref=e371]
+                    - generic [ref=e374]:
+                      - heading "Ad Lead" [level=3] [ref=e375]
+                      - generic [ref=e377]: trigger
+                - 'article "use-case node: Website Lead" [ref=e379]':
+                  - generic [ref=e380]:
+                    - img [ref=e382]
+                    - generic [ref=e385]:
+                      - heading "Website Lead" [level=3] [ref=e386]
+                      - generic [ref=e388]: trigger
+                - 'article "agent node: Inbound Agent" [ref=e390]':
+                  - generic [ref=e391]:
+                    - img [ref=e393]
+                    - generic [ref=e396]:
+                      - heading "Inbound Agent" [level=3] [ref=e397]
+                      - generic [ref=e399]: inbound
+                - 'article "agent node: Outbound Agent" [ref=e401]':
+                  - generic [ref=e402]:
+                    - img [ref=e404]
+                    - generic [ref=e406]:
+                      - heading "Outbound Agent" [level=3] [ref=e407]
+                      - generic [ref=e409]: outbound
+                - 'article "output node: Calendar Booking" [ref=e411]':
+                  - generic [ref=e412]:
+                    - img [ref=e414]
+                    - generic [ref=e417]:
+                      - heading "Calendar Booking" [level=3] [ref=e418]
+                      - generic [ref=e420]: result
+                - 'article "output node: SMS Follow-Up" [ref=e422]':
+                  - generic [ref=e423]:
+                    - img [ref=e425]
+                    - generic [ref=e428]:
+                      - heading "SMS Follow-Up" [level=3] [ref=e429]
+                      - generic [ref=e431]: result
+                - 'article "output node: CRM Update" [ref=e433]':
+                  - generic [ref=e434]:
+                    - img [ref=e436]
+                    - generic [ref=e439]:
+                      - heading "CRM Update" [level=3] [ref=e440]
+                      - generic [ref=e442]: result
+                - 'article "output node: Review Request" [ref=e444]':
+                  - generic [ref=e445]:
+                    - img [ref=e447]
+                    - generic [ref=e449]:
+                      - heading "Review Request" [level=3] [ref=e450]
+                      - generic [ref=e452]: result
+                - 'article "output node: Lead Reactivation" [ref=e454]':
+                  - generic [ref=e455]:
+                    - img [ref=e457]
+                    - generic [ref=e460]:
+                      - heading "Lead Reactivation" [level=3] [ref=e461]
+                      - generic [ref=e463]: result
+                - 'article "output node: Reminders" [ref=e465]':
+                  - generic [ref=e466]:
+                    - img [ref=e468]
+                    - generic [ref=e471]:
+                      - heading "Reminders" [level=3] [ref=e472]
+                      - generic [ref=e473]:
+                        - generic [ref=e474]: result
+                        - img "Premium feature" [ref=e475]
+                - 'article "output node: Reputation Manager" [ref=e479]':
+                  - generic [ref=e480]:
+                    - img [ref=e482]
+                    - generic [ref=e484]:
+                      - heading "Reputation Manager" [level=3] [ref=e485]
+                      - generic [ref=e486]:
+                        - generic [ref=e487]: result
+                        - img "Premium feature" [ref=e488]
+            - status [ref=e491]:
+              - generic [ref=e492]:
+                - generic [ref=e495]: 5 Triggers
+                - generic [ref=e498]: 2 Agents
+                - generic [ref=e501]: 7 Outputs
+                - generic [ref=e504]: 13 Connections
+              - paragraph [ref=e505]: Hover for details · Drag to reposition
+        - generic [ref=e506]:
+          - heading "Alerts" [level=2] [ref=e508]
+          - generic [ref=e510]:
+            - img [ref=e511]
+            - paragraph [ref=e513]: No alerts at this time
+      - button [ref=e514] [cursor=pointer]:
+        - img [ref=e515]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Help & Support" [level=2]
+          - button:
+            - img
+        - generic:
+          - generic:
+            - heading "Documentation" [level=3]
+            - generic:
+              - link "Documentation Complete guides and API reference":
+                - /url: /documentation
+                - generic:
+                  - img
+                - generic:
+                  - generic: Documentation
+                  - generic: Complete guides and API reference
+              - link "Help Center FAQs, guides, and troubleshooting":
+                - /url: /help-center
+                - generic:
+                  - img
+                - generic:
+                  - generic: Help Center
+                  - generic: FAQs, guides, and troubleshooting
+          - generic:
+            - heading "Get Support" [level=3]
+            - generic:
+              - button "Create Support Ticket Submit your issue for detailed assistance.":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Create Support Ticket
+                  - generic: Submit your issue for detailed assistance.
+              - button "Upgrade Unlock premium features and support":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Upgrade
+                  - generic: Unlock premium features and support
+          - generic:
+            - generic:
+              - generic: "Current plan: Free"
+  - region "Notifications alt+T"
+  - region "Notifications alt+T"

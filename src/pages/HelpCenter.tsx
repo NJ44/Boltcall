@@ -321,6 +321,42 @@ const HelpCenter: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* What You'll Find Here */}
+        <div className="mt-16 mb-10 bg-white rounded-xl border border-gray-100 shadow-sm p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">What You'll Find in This Help Center</h2>
+          <p className="text-gray-600 leading-relaxed mb-4">
+            This Help Center is organized into four core areas so you can quickly find the answer you need — whether you're just getting started, configuring your AI receptionist, or running into a technical issue.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            {[
+              {
+                title: 'Getting Started',
+                desc: 'Step-by-step guides for setting up your Boltcall account, connecting your phone number, and launching your AI receptionist for the first time. Most businesses are live within 30 minutes.',
+              },
+              {
+                title: 'AI Receptionist Setup',
+                desc: 'Configure your AI's voice, script, business hours, and call-handling rules. Learn how to customize responses for your specific services and frequently asked questions.',
+              },
+              {
+                title: 'Appointment Booking & SMS',
+                desc: 'Connect your calendar, set booking rules, and configure SMS follow-up sequences. Covers Google Calendar, Calendly, and direct booking integrations.',
+              },
+              {
+                title: 'Billing & Account',
+                desc: 'Manage your subscription, update payment methods, and understand your plan limits. Includes guidance on upgrading, downgrading, and canceling.',
+              },
+            ].map((item) => (
+              <div key={item.title} className="flex flex-col gap-1 p-4 bg-gray-50 rounded-lg">
+                <span className="font-semibold text-gray-900">{item.title}</span>
+                <span className="text-sm text-gray-600 leading-relaxed">{item.desc}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-sm text-gray-500 mt-6 leading-relaxed">
+            Can't find what you need? Our support team responds to all inquiries within 2 business hours Monday–Friday, 9am–6pm ET. Use the Contact Support button below to reach us directly.
+          </p>
+        </div>
+
         {/* Contact Support */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

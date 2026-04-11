@@ -15,7 +15,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Boltcall vs Smith.ai: AI Receptionist Compared for Small Business (2026)';
-    updateMetaDescription('Boltcall vs Smith.ai compared head-to-head. Flat pricing vs per-call fees, pure AI vs hybrid, and which AI receptionist is better for your small business in 2026.');
+    updateMetaDescription('Boltcall vs Smith.ai: flat pricing vs per-call fees, pure AI vs hybrid. Which AI receptionist is better for your small business in 2026?');
 
     const articleScript = document.createElement('script');
     articleScript.type = 'application/ld+json';

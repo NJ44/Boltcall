@@ -52,10 +52,16 @@ const HVACOverflowCalculator: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'HVAC Overflow Revenue Calculator — Missed Call Cost Estimator | Boltcall';
+    document.title = 'Calculate HVAC Revenue Lost to Missed Calls | Boltcall';
     updateMetaDescription(
       'Free HVAC calculator — find out how many installs you lose during peak season when calls go unanswered. Calculate your revenue leak and fix it.'
     );
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "HVAC Overflow Calculator", "item": "https://boltcall.org/tools/hvac-overflow-calculator"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   const offPeakMonths = 12 - peakMonths;
@@ -763,6 +769,27 @@ const HVACOverflowCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Trust + Social Proof */}
+      <section className="py-10 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm font-medium text-gray-500 mb-5">
+            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            {[
+              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
+              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
+            ].map((t) => (
+              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
+                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
+                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

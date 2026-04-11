@@ -487,6 +487,38 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
               </div>
             </motion.section>
 
+
+            {/* Pros & Cons */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-12 mb-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+            >
+              <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Phone Answering for Plumbers</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-green-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>• Answers every call 24/7 — never miss an emergency plumbing job</li>
+                    <li>• Qualifies leads and books appointments without dispatcher involvement</li>
+                    <li>• Costs a fraction of a full-time receptionist or answering service</li>
+                    <li>• Handles multiple calls simultaneously during high-demand periods</li>
+                    <li>• Knows plumbing terminology and can triage urgency levels correctly</li>
+                  </ul>
+                </div>
+                <div className="bg-red-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>• Complex job scoping may still need a human technician callback</li>
+                    <li>• Initial configuration requires time to train on your service areas and pricing</li>
+                    <li>• Some older customers may prefer speaking with a person immediately</li>
+                    <li>• Requires reliable internet connection for consistent uptime</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.section>
+
           </main>
         </div>
       </div>

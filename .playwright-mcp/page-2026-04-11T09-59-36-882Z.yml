@@ -1,0 +1,144 @@
+- generic [ref=e2]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - button "Collapse sidebar" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - link "Boltcall" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard
+          - img "Boltcall" [ref=e14]
+        - navigation "Main navigation" [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - link "Overview" [ref=e18] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e20]
+                - generic [ref=e25]: Overview
+              - link "Leads" [ref=e26] [cursor=pointer]:
+                - /url: /dashboard/leads
+                - img [ref=e28]
+                - generic [ref=e30]: Leads
+              - link "Calls" [ref=e31] [cursor=pointer]:
+                - /url: /dashboard/calls
+                - img [ref=e33]
+                - generic [ref=e35]: Calls
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: Setup
+              - generic [ref=e38]:
+                - link "AI Agents" [ref=e39] [cursor=pointer]:
+                  - /url: /dashboard/agents
+                  - img [ref=e41]
+                  - generic [ref=e44]: AI Agents
+                - link "Knowledge Base" [ref=e45] [cursor=pointer]:
+                  - /url: /dashboard/knowledge-base
+                  - img [ref=e47]
+                  - generic [ref=e49]: Knowledge Base
+                - link "Phone Numbers" [ref=e50] [cursor=pointer]:
+                  - /url: /dashboard/phone
+                  - img [ref=e52]
+                  - generic [ref=e54]: Phone Numbers
+                - link "Integrations" [ref=e55] [cursor=pointer]:
+                  - /url: /dashboard/integrations
+                  - img [ref=e57]
+                  - generic [ref=e59]: Integrations
+            - generic [ref=e60]:
+              - paragraph [ref=e61]: Services
+              - generic [ref=e62]:
+                - link "AI Receptionist" [ref=e63] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                  - img [ref=e65]
+                  - generic [ref=e69]: AI Receptionist
+                - link "Missed Calls Beta" [ref=e70] [cursor=pointer]:
+                  - /url: /dashboard/calls
+                  - img [ref=e72]
+                  - generic [ref=e77]: Missed Calls
+                  - generic [ref=e78]: Beta
+                - link "SMS" [ref=e79] [cursor=pointer]:
+                  - /url: /dashboard/sms
+                  - img [ref=e81]
+                  - generic [ref=e83]: SMS
+                - link "Instant Lead Response" [ref=e84] [cursor=pointer]:
+                  - /url: /dashboard/instant-lead-response
+                  - img [ref=e86]
+                  - generic [ref=e90]: Instant Lead Response
+                - link "AI Email" [ref=e91] [cursor=pointer]:
+                  - /url: /dashboard/email
+                  - img [ref=e93]
+                  - generic [ref=e96]: AI Email
+          - generic [ref=e97]:
+            - link "Settings" [ref=e98] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e100]
+              - generic [ref=e103]: Settings
+            - link "Documentation" [ref=e104] [cursor=pointer]:
+              - /url: /documentation
+              - img [ref=e106]
+              - generic [ref=e108]: Documentation
+            - link "Help Center" [ref=e109] [cursor=pointer]:
+              - /url: /help-center
+              - img [ref=e111]
+              - generic [ref=e114]: Help Center
+            - button "Give Us Feedback" [ref=e115] [cursor=pointer]:
+              - img [ref=e117]
+              - generic [ref=e119]: Give Us Feedback
+    - main [active] [ref=e120]:
+      - generic [ref=e122]:
+        - heading "Phone Numbers" [level=1] [ref=e126]
+        - generic [ref=e127]:
+          - button "asd" [ref=e130] [cursor=pointer]:
+            - img [ref=e131]
+            - generic [ref=e134]: asd
+            - img [ref=e135]
+          - button "Alerts" [ref=e138] [cursor=pointer]:
+            - img [ref=e139]
+            - generic [ref=e142]: "3"
+          - button "Services status" [ref=e144] [cursor=pointer]:
+            - img [ref=e145]
+          - button "נ" [ref=e149] [cursor=pointer]
+      - button [ref=e151] [cursor=pointer]:
+        - img [ref=e152]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Help & Support" [level=2]
+          - button:
+            - img
+        - generic:
+          - generic:
+            - heading "Documentation" [level=3]
+            - generic:
+              - link "Documentation Complete guides and API reference":
+                - /url: /documentation
+                - generic:
+                  - img
+                - generic:
+                  - generic: Documentation
+                  - generic: Complete guides and API reference
+              - link "Help Center FAQs, guides, and troubleshooting":
+                - /url: /help-center
+                - generic:
+                  - img
+                - generic:
+                  - generic: Help Center
+                  - generic: FAQs, guides, and troubleshooting
+          - generic:
+            - heading "Get Support" [level=3]
+            - generic:
+              - button "Create Support Ticket Submit your issue for detailed assistance.":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Create Support Ticket
+                  - generic: Submit your issue for detailed assistance.
+              - button "Upgrade Unlock premium features and support":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Upgrade
+                  - generic: Unlock premium features and support
+          - generic:
+            - generic:
+              - generic: "Current plan: Free"
+  - region "Notifications alt+T"
+  - region "Notifications alt+T"

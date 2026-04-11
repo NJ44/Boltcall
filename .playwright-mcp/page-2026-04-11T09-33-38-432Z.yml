@@ -1,0 +1,221 @@
+- generic [ref=e2]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - button "Collapse sidebar" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - link "Boltcall" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard
+          - img "Boltcall" [ref=e14]
+        - navigation "Main navigation" [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - link "Overview" [ref=e18] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e20]
+                - generic [ref=e25]: Overview
+              - link "Leads" [ref=e26] [cursor=pointer]:
+                - /url: /dashboard/leads
+                - img [ref=e28]
+                - generic [ref=e30]: Leads
+              - link "Calls" [ref=e32] [cursor=pointer]:
+                - /url: /dashboard/calls
+                - img [ref=e34]
+                - generic [ref=e36]: Calls
+            - generic [ref=e37]:
+              - paragraph [ref=e38]: Setup
+              - generic [ref=e39]:
+                - link "AI Agents" [ref=e40] [cursor=pointer]:
+                  - /url: /dashboard/agents
+                  - img [ref=e42]
+                  - generic [ref=e45]: AI Agents
+                - link "Knowledge Base" [ref=e46] [cursor=pointer]:
+                  - /url: /dashboard/knowledge-base
+                  - img [ref=e48]
+                  - generic [ref=e50]: Knowledge Base
+                - link "Phone Numbers" [ref=e51] [cursor=pointer]:
+                  - /url: /dashboard/phone
+                  - img [ref=e53]
+                  - generic [ref=e55]: Phone Numbers
+                - link "Integrations" [ref=e56] [cursor=pointer]:
+                  - /url: /dashboard/integrations
+                  - img [ref=e58]
+                  - generic [ref=e60]: Integrations
+            - generic [ref=e61]:
+              - paragraph [ref=e62]: Services
+              - generic [ref=e63]:
+                - link "AI Receptionist" [ref=e64] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                  - img [ref=e66]
+                  - generic [ref=e70]: AI Receptionist
+                - link "Missed Calls Beta" [ref=e71] [cursor=pointer]:
+                  - /url: /dashboard/calls
+                  - img [ref=e73]
+                  - generic [ref=e78]: Missed Calls
+                  - generic [ref=e79]: Beta
+                - link "SMS" [ref=e80] [cursor=pointer]:
+                  - /url: /dashboard/sms
+                  - img [ref=e82]
+                  - generic [ref=e84]: SMS
+                - link "Instant Lead Response" [ref=e85] [cursor=pointer]:
+                  - /url: /dashboard/instant-lead-response
+                  - img [ref=e87]
+                  - generic [ref=e91]: Instant Lead Response
+                - link "AI Email" [ref=e92] [cursor=pointer]:
+                  - /url: /dashboard/email
+                  - img [ref=e94]
+                  - generic [ref=e97]: AI Email
+          - generic [ref=e98]:
+            - link "Settings" [ref=e99] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e101]
+              - generic [ref=e104]: Settings
+            - link "Documentation" [ref=e105] [cursor=pointer]:
+              - /url: /documentation
+              - img [ref=e107]
+              - generic [ref=e109]: Documentation
+            - link "Help Center" [ref=e110] [cursor=pointer]:
+              - /url: /help-center
+              - img [ref=e112]
+              - generic [ref=e115]: Help Center
+            - button "Give Us Feedback" [ref=e116] [cursor=pointer]:
+              - img [ref=e118]
+              - generic [ref=e120]: Give Us Feedback
+    - main [ref=e121]:
+      - generic [ref=e123]:
+        - heading "Leads" [level=1] [ref=e127]
+        - generic [ref=e128]:
+          - button "asd" [ref=e131] [cursor=pointer]:
+            - img [ref=e132]
+            - generic [ref=e135]: asd
+            - img [ref=e136]
+          - button "Alerts" [ref=e139] [cursor=pointer]:
+            - img [ref=e140]
+          - button "Services status" [ref=e145] [cursor=pointer]:
+            - img [ref=e146]
+          - button "נ" [ref=e150] [cursor=pointer]
+      - generic [ref=e152]:
+        - generic [ref=e153]:
+          - paragraph [ref=e154]:
+            - text: Your free trial ends in
+            - strong [ref=e155]: 2 days
+            - text: . Subscribe to keep access to all features.
+          - link "Choose a plan" [ref=e156] [cursor=pointer]:
+            - /url: /dashboard/settings/plan-billing
+        - generic [ref=e157]:
+          - navigation [ref=e160]:
+            - button "Speed to Lead" [ref=e161] [cursor=pointer]:
+              - img [ref=e162]
+              - text: Speed to Lead
+            - button "Missed Calls" [ref=e165] [cursor=pointer]:
+              - img [ref=e166]
+              - text: Missed Calls
+            - button "Reactivation" [ref=e170] [cursor=pointer]:
+              - img [ref=e171]
+              - text: Reactivation
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - paragraph [ref=e178]: Total Leads
+                - generic [ref=e179]:
+                  - generic [ref=e180]: "0"
+                  - generic [ref=e181]: 0↑
+                - paragraph [ref=e182]: Last 7 Days
+              - generic [ref=e183]:
+                - paragraph [ref=e184]: Contacted
+                - generic [ref=e185]:
+                  - generic [ref=e186]: "0"
+                  - generic [ref=e187]: 0↑
+                - paragraph [ref=e188]: Last 7 Days
+              - generic [ref=e189]:
+                - paragraph [ref=e190]: Conversion Rate
+                - generic [ref=e191]:
+                  - generic [ref=e192]: 0%
+                  - generic [ref=e193]: 0↑
+                - paragraph [ref=e194]: Last 7 Days
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - heading "Lead Performance" [level=2] [ref=e197]
+                - generic [ref=e198]:
+                  - generic [ref=e199]:
+                    - button "Lead Count" [ref=e200] [cursor=pointer]
+                    - button "Response Rate" [ref=e201] [cursor=pointer]
+                  - combobox [ref=e202]:
+                    - option "Last 7 Days" [selected]
+                    - option "Last 30 Days"
+              - img [ref=e204]:
+                - generic [ref=e206]: "0"
+                - generic [ref=e208]: "0"
+                - generic [ref=e210]: "1"
+                - generic [ref=e212]: "1"
+                - generic [ref=e214]: "1"
+                - generic [ref=e222]: Apr 5
+                - generic [ref=e223]: Apr 6
+                - generic [ref=e224]: Apr 7
+                - generic [ref=e225]: Apr 8
+                - generic [ref=e226]: Apr 9
+                - generic [ref=e227]: Apr 10
+                - generic [ref=e228]: Apr 11
+              - paragraph [ref=e230]: No lead data yet
+            - generic [ref=e231]:
+              - generic [ref=e232]:
+                - heading "Lead List" [level=2] [ref=e233]
+                - generic [ref=e234]:
+                  - combobox [ref=e235]:
+                    - option "All Statuses" [selected]
+                  - combobox [ref=e236]:
+                    - option "All Sources" [selected]
+                  - generic [ref=e237]:
+                    - img [ref=e238]
+                    - textbox "Search leads..." [ref=e241]
+              - generic [ref=e242]:
+                - img [ref=e243]
+                - paragraph [ref=e246]: No leads found
+                - paragraph [ref=e247]: Leads will appear here once you start receiving them
+      - button [ref=e248] [cursor=pointer]:
+        - img [ref=e249]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Help & Support" [level=2]
+          - button:
+            - img
+        - generic:
+          - generic:
+            - heading "Documentation" [level=3]
+            - generic:
+              - link "Documentation Complete guides and API reference":
+                - /url: /documentation
+                - generic:
+                  - img
+                - generic:
+                  - generic: Documentation
+                  - generic: Complete guides and API reference
+              - link "Help Center FAQs, guides, and troubleshooting":
+                - /url: /help-center
+                - generic:
+                  - img
+                - generic:
+                  - generic: Help Center
+                  - generic: FAQs, guides, and troubleshooting
+          - generic:
+            - heading "Get Support" [level=3]
+            - generic:
+              - button "Create Support Ticket Submit your issue for detailed assistance.":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Create Support Ticket
+                  - generic: Submit your issue for detailed assistance.
+              - button "Upgrade Unlock premium features and support":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Upgrade
+                  - generic: Unlock premium features and support
+          - generic:
+            - generic:
+              - generic: "Current plan: Free"
+  - region "Notifications alt+T"
+  - region "Notifications alt+T"

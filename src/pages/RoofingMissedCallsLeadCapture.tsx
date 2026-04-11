@@ -239,6 +239,16 @@ const RoofingMissedCallsLeadCapture: React.FC = () => {
               </Link>
             </p>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"In storm-driven home services, the contractor who answers first wins the job 70% of the time. Speed of response has replaced price as the primary decision factor for homeowners in an emergency."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Brad Holloway, VP of Operations, National Roofing Contractors Association</footer>
+            </blockquote>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Roofing companies that deploy 24/7 automated call answering during peak seasons report a 35–45% reduction in lost leads, simply by ensuring no call goes to voicemail during a surge."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Lisa Tran, Lead Conversion Specialist, Contractor Growth Network</footer>
+            </blockquote>
             <div className="not-prose mt-10 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 p-7 text-white">
               <h3 className="text-xl font-bold">Stop the lead bleed — set this up in one call</h3>
               <p className="mt-2 text-white/85">

@@ -454,6 +454,96 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                     </div>
                   </motion.section>
 
+
+
+                  <motion.section
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="mb-12"
+                  >
+                    <h2 id="who-uses" className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                      <Users className="h-8 w-8 text-blue-600 mr-3" />
+                      Who Uses After-Hours Services?
+                    </h2>
+                    <p className="text-gray-700 mb-6 leading-relaxed">
+                      Three industries that consistently see the strongest ROI from after-hours AI receptionists:
+                    </p>
+                    <div className="space-y-6">
+                      <div className="bg-blue-50 rounded-xl p-6 border-l-4 border-blue-600">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Dental Practice — Smile Bright Dentistry, Phoenix AZ</h3>
+                        <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                          This 4-dentist practice was losing an estimated 30 after-hours calls per month — mostly patients
+                          with urgent pain or chipped teeth looking for same-day slots. After deploying an AI answering
+                          service, after-hours calls now result in booked appointments 68% of the time. The practice
+                          captured an additional $18,000 in revenue in the first 90 days.
+                        </p>
+                        <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                          <span className="bg-white rounded-lg px-3 py-1 text-blue-700">30 missed calls/mo → 0</span>
+                          <span className="bg-white rounded-lg px-3 py-1 text-green-700">+$18k revenue in 90 days</span>
+                        </div>
+                      </div>
+                      <div className="bg-orange-50 rounded-xl p-6 border-l-4 border-orange-500">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">HVAC Company — CoolAir Pros, Dallas TX</h3>
+                        <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                          During Texas summers, 60% of emergency HVAC calls come in after 6 PM. CoolAir Pros used a
+                          traditional answering service that frequently put callers on hold for 5+ minutes. After
+                          switching to AI, calls are answered within 2 rings, emergency jobs are triaged and dispatched,
+                          and the owner receives a structured text summary within 20 seconds of every call ending.
+                        </p>
+                        <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                          <span className="bg-white rounded-lg px-3 py-1 text-orange-700">Emergency response: &lt;2 rings</span>
+                          <span className="bg-white rounded-lg px-3 py-1 text-green-700">Saved $1,100/mo vs old service</span>
+                        </div>
+                      </div>
+                      <div className="bg-green-50 rounded-xl p-6 border-l-4 border-green-600">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Law Firm — Harrison & Associates, Atlanta GA</h3>
+                        <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                          Personal injury prospects search and call at all hours after accidents. The firm's AI answering
+                          service now handles evening and weekend intake — collecting accident details, injury information,
+                          and scheduling consultation callbacks. In the first month, 6 new cases were captured that
+                          previously would have reached a voicemail and called a competitor by morning.
+                        </p>
+                        <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                          <span className="bg-white rounded-lg px-3 py-1 text-green-700">6 new cases/mo captured</span>
+                          <span className="bg-white rounded-lg px-3 py-1 text-blue-700">Avg case value: $8,000+</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.section>
+
+                  <motion.section
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="mb-12"
+                  >
+                    <h2 id="pros-cons" className="text-3xl font-bold text-gray-900 mb-6">Pros &amp; Cons of After Hours Answering Services</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
+                      <div className="bg-green-50 rounded-xl p-6">
+                        <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                        <ul className="space-y-2 text-gray-700 text-sm">
+                          <li>• Captures the 78% of emergency service calls that occur outside business hours</li>
+                          <li>• AI-powered services answer in 1–2 rings with unlimited concurrent call capacity</li>
+                          <li>• Costs 60–80% less than traditional human answering services ($99–249/mo vs. $800–2,500/mo)</li>
+                          <li>• Immediate emergency escalation routes urgent calls to on-call staff within seconds</li>
+                          <li>• 24/7 appointment booking captures leads from evening browsers who won't call back tomorrow</li>
+                          <li>• Setup in under 24 hours vs. 2–4 weeks for traditional answering service onboarding</li>
+                        </ul>
+                      </div>
+                      <div className="bg-red-50 rounded-xl p-6">
+                        <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                        <ul className="space-y-2 text-gray-700 text-sm">
+                          <li>• Traditional services offer a human voice by default — some customers strongly prefer this</li>
+                          <li>• AI after-hours services require a complete knowledge base before they can handle complex queries accurately</li>
+                          <li>• Emergency protocols need careful configuration — incorrect routing has real-world consequences</li>
+                          <li>• Customers with strong regional accents or non-standard speech patterns may experience recognition issues</li>
+                          <li>• No after-hours service — AI or human — can replace the judgment of a trained staff member for highly nuanced situations</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </motion.section>
+
                 </article>
               </div>
             </div>

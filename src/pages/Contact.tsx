@@ -324,6 +324,27 @@ const Contact: React.FC = () => {
         </div>
       </section>
 
+      {/* Feature Highlight */}
+      <section className="w-full max-w-[860px] mt-6">
+        <div className="bg-white rounded-2xl shadow-sm px-8 py-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">What You Get with Boltcall</h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+            {[
+              ["AI Receptionist calls", "500–Unlimited/mo depending on plan"],
+              ["Lead capture (SMS/email)", "Included on all plans"],
+              ["CRM integrations", "Pro & Scale plans"],
+              ["Custom AI voice & script", "Included on all plans"],
+              ["Priority support", "Scale plan"],
+            ].map(([feat, detail], i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="text-blue-600 font-bold mt-0.5">✓</span>
+                <span><span className="font-semibold text-gray-900">{feat}</span> — {detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* Internal navigation links */}
       <section className="w-full max-w-[860px] mt-4 mb-8">
         <div className="bg-white rounded-2xl shadow-sm px-8 py-6">

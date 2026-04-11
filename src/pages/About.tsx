@@ -13,6 +13,12 @@ const About: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'About Boltcall - AI Receptionist Solutions | Boltcall';
     updateMetaDescription('Discover Boltcall: AI-powered solutions helping local businesses thrive. Learn our mission, values, and how we revolutionize customer communication.');
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "About", "item": "https://boltcall.org/about"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   return (
@@ -181,7 +187,72 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Why Boltcall Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <section className="my-10 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">What Makes Boltcall Different</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { title: "Built for local businesses", desc: "Not an enterprise tool with a SMB price tag — built ground-up for owners who wear every hat" },
+                  { title: "No tech team required", desc: "30-minute setup, plain-English configuration, and a team that picks up the phone when you need help" },
+                  { title: "Pays for itself", desc: "One extra captured lead per month covers the entire monthly cost — most businesses see ROI in week one" },
+                  { title: "Sounds like you", desc: "Trained on your services, pricing, and FAQs so every caller gets an answer, not a hold message" },
+                ].map((item) => (
+                  <div key={item.title} className="bg-white rounded-xl p-4 shadow-sm">
+                    <div className="font-semibold text-gray-900 mb-1">✓ {item.title}</div>
+                    <div className="text-sm text-gray-600">{item.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </motion.div>
+        </div>
+      </section>
+
+ 
+      {/* Boltcall Plans Table */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <section className="my-10">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Boltcall Plans at a Glance</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-blue-600 text-white">
+                    <th className="py-3 px-4 text-left rounded-tl-xl">Feature</th>
+                    <th className="py-3 px-4 text-center">Starter</th>
+                    <th className="py-3 px-4 text-center">Pro</th>
+                    <th className="py-3 px-4 text-center rounded-tr-xl">Scale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["AI Receptionist calls", "500/mo", "2,000/mo", "Unlimited"],
+                    ["Lead capture (SMS/email)", "✓", "✓", "✓"],
+                    ["CRM integrations", "—", "✓", "✓"],
+                    ["Custom AI voice & script", "✓", "✓", "✓"],
+                    ["Priority support", "—", "—", "✓"],
+                  ].map(([feat, ...vals], i) => (
+                    <tr key={i} className={i % 2 === 0 ? "bg-gray-50" : "bg-white"}>
+                      <td className="py-3 px-4 font-medium text-gray-800">{feat}</td>
+                      {vals.map((v, j) => <td key={j} className="py-3 px-4 text-center text-gray-600">{v}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+     {/* CTA Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

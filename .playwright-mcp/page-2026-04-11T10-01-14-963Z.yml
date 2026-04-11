@@ -1,0 +1,255 @@
+- generic [ref=e2]:
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - button "Collapse sidebar" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - generic [ref=e11]:
+        - link "Boltcall" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard
+          - img "Boltcall" [ref=e14]
+        - navigation "Main navigation" [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - link "Overview" [ref=e18] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e20]
+                - generic [ref=e25]: Overview
+              - link "Leads" [ref=e26] [cursor=pointer]:
+                - /url: /dashboard/leads
+                - img [ref=e28]
+                - generic [ref=e30]: Leads
+              - link "Calls" [ref=e31] [cursor=pointer]:
+                - /url: /dashboard/calls
+                - img [ref=e33]
+                - generic [ref=e35]: Calls
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: Setup
+              - generic [ref=e38]:
+                - link "AI Agents" [ref=e39] [cursor=pointer]:
+                  - /url: /dashboard/agents
+                  - img [ref=e41]
+                  - generic [ref=e44]: AI Agents
+                - link "Knowledge Base" [ref=e45] [cursor=pointer]:
+                  - /url: /dashboard/knowledge-base
+                  - img [ref=e47]
+                  - generic [ref=e49]: Knowledge Base
+                - link "Phone Numbers" [ref=e50] [cursor=pointer]:
+                  - /url: /dashboard/phone
+                  - img [ref=e52]
+                  - generic [ref=e54]: Phone Numbers
+                - link "Integrations" [ref=e55] [cursor=pointer]:
+                  - /url: /dashboard/integrations
+                  - img [ref=e57]
+                  - generic [ref=e59]: Integrations
+            - generic [ref=e60]:
+              - paragraph [ref=e61]: Services
+              - generic [ref=e62]:
+                - link "AI Receptionist" [ref=e63] [cursor=pointer]:
+                  - /url: /dashboard/ai-receptionist
+                  - img [ref=e65]
+                  - generic [ref=e69]: AI Receptionist
+                - link "Missed Calls Beta" [ref=e70] [cursor=pointer]:
+                  - /url: /dashboard/calls
+                  - img [ref=e72]
+                  - generic [ref=e77]: Missed Calls
+                  - generic [ref=e78]: Beta
+                - link "SMS" [ref=e79] [cursor=pointer]:
+                  - /url: /dashboard/sms
+                  - img [ref=e81]
+                  - generic [ref=e83]: SMS
+                - link "Instant Lead Response" [ref=e84] [cursor=pointer]:
+                  - /url: /dashboard/instant-lead-response
+                  - img [ref=e86]
+                  - generic [ref=e90]: Instant Lead Response
+                - link "AI Email" [ref=e91] [cursor=pointer]:
+                  - /url: /dashboard/email
+                  - img [ref=e93]
+                  - generic [ref=e96]: AI Email
+          - generic [ref=e97]:
+            - link "Settings" [ref=e98] [cursor=pointer]:
+              - /url: /dashboard/settings
+              - img [ref=e100]
+              - generic [ref=e103]: Settings
+            - link "Documentation" [ref=e105] [cursor=pointer]:
+              - /url: /documentation
+              - img [ref=e107]
+              - generic [ref=e109]: Documentation
+            - link "Help Center" [ref=e110] [cursor=pointer]:
+              - /url: /help-center
+              - img [ref=e112]
+              - generic [ref=e115]: Help Center
+            - button "Give Us Feedback" [ref=e116] [cursor=pointer]:
+              - img [ref=e118]
+              - generic [ref=e120]: Give Us Feedback
+    - main [active] [ref=e121]:
+      - generic [ref=e123]:
+        - heading "Settings" [level=1] [ref=e127]
+        - generic [ref=e128]:
+          - button "asd" [ref=e131] [cursor=pointer]:
+            - img [ref=e132]
+            - generic [ref=e135]: asd
+            - img [ref=e136]
+          - button "Alerts" [ref=e139] [cursor=pointer]:
+            - img [ref=e140]
+            - generic [ref=e143]: "3"
+          - button "Services status" [ref=e145] [cursor=pointer]:
+            - img [ref=e146]
+          - button "נ" [ref=e150] [cursor=pointer]
+      - generic [ref=e153]:
+        - navigation [ref=e155]:
+          - link "Billing & Usage" [ref=e156] [cursor=pointer]:
+            - /url: /dashboard/settings/plan-billing
+          - link "Account & Settings" [ref=e157] [cursor=pointer]:
+            - /url: /dashboard/settings/general
+            - text: Account & Settings
+          - link "Team & Security" [ref=e159] [cursor=pointer]:
+            - /url: /dashboard/settings/roles
+          - link "Preferences" [ref=e160] [cursor=pointer]:
+            - /url: /dashboard/settings/preferences
+        - generic [ref=e161]:
+          - navigation [ref=e163]:
+            - link "General" [ref=e164] [cursor=pointer]:
+              - /url: /dashboard/settings/general
+            - link "Workspace" [ref=e165] [cursor=pointer]:
+              - /url: /dashboard/settings/workspace
+            - link "Members" [ref=e166] [cursor=pointer]:
+              - /url: /dashboard/settings/members
+          - generic [ref=e170]:
+            - generic [ref=e171]:
+              - generic [ref=e172]:
+                - img [ref=e174]
+                - heading "Business Information" [level=2] [ref=e178]
+              - generic [ref=e179]:
+                - generic [ref=e180]:
+                  - generic [ref=e181]: Business Name *
+                  - textbox "Enter business name" [ref=e182]: Glow Aesthetic Studio
+                - generic [ref=e183]:
+                  - generic [ref=e184]: Owner *
+                  - textbox "Enter owner name" [ref=e185]: Dr. Sofia Reyes
+                - generic [ref=e186]:
+                  - generic [ref=e187]: Agent Language *
+                  - combobox [ref=e188]:
+                    - option "English" [selected]
+                    - option "Spanish"
+                    - option "French"
+                    - option "German"
+                    - option "Italian"
+                    - option "Portuguese"
+                    - option "Chinese"
+                    - option "Japanese"
+                - generic [ref=e189]:
+                  - generic [ref=e190]: Industry
+                  - combobox [ref=e191]:
+                    - option "Technology" [selected]
+                    - option "Healthcare"
+                    - option "Finance"
+                    - option "Retail"
+                    - option "Education"
+                    - option "Real Estate"
+                    - option "Legal"
+                    - option "Consulting"
+                    - option "Manufacturing"
+                    - option "Hospitality"
+                    - option "Transportation"
+                    - option "Other"
+                - generic [ref=e192]:
+                  - generic [ref=e193]: Website
+                  - textbox "https://your-website.com" [ref=e194]: https://glowstudio.com
+                - generic [ref=e195]:
+                  - generic [ref=e196]: Description
+                  - textbox "Brief description of your business" [ref=e197]: Premier medical spa offering Botox, dermal fillers, laser treatments, HydraFacials, and body contouring. Serving clients in Miami and surrounding areas.
+            - generic [ref=e198]:
+              - generic [ref=e199]:
+                - img [ref=e201]
+                - heading "Address" [level=2] [ref=e204]
+              - generic [ref=e205]:
+                - generic [ref=e206]:
+                  - generic [ref=e207]: Address Line 1 *
+                  - textbox "Enter street address" [ref=e208]
+                - generic [ref=e209]:
+                  - generic [ref=e210]: Address Line 2
+                  - textbox "Apartment, suite, unit, etc." [ref=e211]
+                - generic [ref=e212]:
+                  - generic [ref=e213]: City *
+                  - textbox "Enter city" [ref=e214]
+                - generic [ref=e215]:
+                  - generic [ref=e216]: State / Province
+                  - textbox "Enter state or province" [ref=e217]
+                - generic [ref=e218]:
+                  - generic [ref=e219]: Postal Code
+                  - textbox "Enter postal code" [ref=e220]
+                - generic [ref=e221]:
+                  - generic [ref=e222]: Country *
+                  - combobox [ref=e223]:
+                    - option "United States" [selected]
+                    - option "Canada"
+                    - option "United Kingdom"
+                    - option "Australia"
+                    - option "Germany"
+                    - option "France"
+                    - option "Spain"
+                    - option "Italy"
+                    - option "Netherlands"
+                    - option "Sweden"
+                    - option "Norway"
+                    - option "Denmark"
+            - generic [ref=e224]:
+              - generic [ref=e225]:
+                - img [ref=e227]
+                - generic [ref=e229]:
+                  - heading "Delete Account" [level=2] [ref=e230]
+                  - paragraph [ref=e231]: Permanently delete your account and all data. This action cannot be undone.
+              - generic [ref=e233]:
+                - generic [ref=e234]:
+                  - heading "Delete Workspace" [level=3] [ref=e235]
+                  - paragraph [ref=e236]: Once you delete a workspace, there is no going back. Please be certain.
+                - button "Delete Workspace" [ref=e237] [cursor=pointer]:
+                  - img
+                  - text: Delete Workspace
+      - button [ref=e238] [cursor=pointer]:
+        - img [ref=e239]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - heading "Help & Support" [level=2]
+          - button:
+            - img
+        - generic:
+          - generic:
+            - heading "Documentation" [level=3]
+            - generic:
+              - link "Documentation Complete guides and API reference":
+                - /url: /documentation
+                - generic:
+                  - img
+                - generic:
+                  - generic: Documentation
+                  - generic: Complete guides and API reference
+              - link "Help Center FAQs, guides, and troubleshooting":
+                - /url: /help-center
+                - generic:
+                  - img
+                - generic:
+                  - generic: Help Center
+                  - generic: FAQs, guides, and troubleshooting
+          - generic:
+            - heading "Get Support" [level=3]
+            - generic:
+              - button "Create Support Ticket Submit your issue for detailed assistance.":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Create Support Ticket
+                  - generic: Submit your issue for detailed assistance.
+              - button "Upgrade Unlock premium features and support":
+                - generic:
+                  - img
+                - generic:
+                  - generic: Upgrade
+                  - generic: Unlock premium features and support
+          - generic:
+            - generic:
+              - generic: "Current plan: Free"
+  - region "Notifications alt+T"
+  - region "Notifications alt+T"

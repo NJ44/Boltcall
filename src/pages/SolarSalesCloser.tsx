@@ -437,7 +437,7 @@ const SolarSalesCloser: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Solar Sales Closer Toolkit | Boltcall';
     updateMetaDescription(
-      'Free Solar Sales Closer Toolkit — 14 objection-killing scripts, 6-step sales flow, 7 closing techniques, and practice mode. Turn "let me think about it" into signed contracts.'
+      'Free Solar Sales Closer Toolkit — 14 objection-killing scripts, 6-step sales flow, 7 closing techniques, and practice mode. Close more deals faster.'
     );
 
     // Service schema

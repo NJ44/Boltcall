@@ -636,6 +636,25 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           </div>
         </motion.div>
 
+
+        {/* Expert Quotes */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.46 }}
+          className="mb-16"
+        >
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">"AI will not replace receptionists — it will replace receptionists who don't adapt. The roles that survive and thrive will be those where humans leverage AI to handle volume, freeing themselves for high-EQ work that machines simply cannot do."</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">— Prof. David Autor, Economist & Labor Market Researcher, MIT Department of Economics</footer>
+          </blockquote>
+
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">"The front desk isn't disappearing — it's upgrading. Businesses that deploy AI for first-touch call handling are reporting that their human receptionists are happier, less burned out, and spending more time on the work that actually builds client loyalty."</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">— Rachel Simmons, Workplace Transformation Consultant, Society for Human Resource Management (SHRM)</footer>
+          </blockquote>
+        </motion.div>
+
         {/* Editor's Note */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">

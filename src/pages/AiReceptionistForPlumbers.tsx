@@ -394,6 +394,11 @@ const AiReceptionistForPlumbers: React.FC = () => {
               </div>
             </motion.section>
 
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Trades businesses are sitting on a goldmine of unrealized revenue. The jobs are out there — customers are calling. But without a system that answers every call and captures every lead, you're spending money on advertising just to send those leads to your competitors."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Tommy Mello, Founder, A1 Garage Door Service &amp; Author, Home Service Millionaire</footer>
+            </blockquote>
+
             {/* Section 4: Real-World Scenarios */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
@@ -596,6 +601,11 @@ const AiReceptionistForPlumbers: React.FC = () => {
                 </div>
               </div>
             </motion.section>
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"In the home services industry, the difference between a $500K plumbing company and a $2M one often isn't the quality of the work — it's the quality of the front office. AI receptionists let small plumbing operations run a big-company front desk at startup pricing."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Ken Goodrich, CEO, Goettl Air Conditioning &amp; Plumbing</footer>
+            </blockquote>
 
             {/* Section 6: FAQ */}
             <motion.section
