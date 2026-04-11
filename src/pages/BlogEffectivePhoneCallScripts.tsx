@@ -144,7 +144,22 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="the-importance-of-proper-telephone-etiqu"><a href="#the-importance-of-proper-telephone-etiqu" className="text-blue-600 hover:underline text-sm">The Importance of Proper Telephone Etiquette</a></li>
+                  <li key="key-elements-of-a-good-phone-script"><a href="#key-elements-of-a-good-phone-script" className="text-blue-600 hover:underline text-sm">Key Elements of a Good Phone Script</a></li>
+                  <li key="sample-phone-call-scripts"><a href="#sample-phone-call-scripts" className="text-blue-600 hover:underline text-sm">Sample Phone Call Scripts</a></li>
+                  <li key="tips-for-effective-phone-communication"><a href="#tips-for-effective-phone-communication" className="text-blue-600 hover:underline text-sm">Tips for Effective Phone Communication</a></li>
+                  <li key="adapting-scripts-to-your-business"><a href="#adapting-scripts-to-your-business" className="text-blue-600 hover:underline text-sm">Adapting Scripts to Your Business</a></li>
+                  <li key="conclusion-mastering-phone-communication"><a href="#conclusion-mastering-phone-communication" className="text-blue-600 hover:underline text-sm">Conclusion: Mastering Phone Communication</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="the-importance-of-proper-telephone-etiqu" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Importance of Proper Telephone Etiquette
           </h2>
@@ -193,7 +208,7 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="key-elements-of-a-good-phone-script" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Key Elements of a Good Phone Script
           </h2>
@@ -291,7 +306,7 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="sample-phone-call-scripts" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Sample Phone Call Scripts
           </h2>
@@ -407,7 +422,7 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="tips-for-effective-phone-communication" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Tips for Effective Phone Communication
           </h2>
@@ -530,7 +545,7 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="adapting-scripts-to-your-business" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Adapting Scripts to Your Business
           </h2>
@@ -584,7 +599,7 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="conclusion-mastering-phone-communication" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Mastering Phone Communication
           </h2>

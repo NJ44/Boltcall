@@ -134,14 +134,29 @@ const BlogSEO: React.FC = () => {
           <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Organic search is the most cost-effective digital marketing channel available to small businesses. A well-optimized local listing can deliver 10 to 20 times the return on investment of paid advertising over a three-year period.&rdquo;</p>
           <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Neil Patel, Co-Founder, NP Digital &amp; Author of <em>Hustle</em></footer>
         </blockquote>
+
+        {/* Table of Contents */}
+        <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+          <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+          <ol className="space-y-2 list-decimal list-inside">
+                  <li key="the-hidden-cost-of-being-invisible"><a href="#the-hidden-cost-of-being-invisible" className="text-blue-600 hover:underline text-sm">The Hidden Cost of Being Invisible</a></li>
+                  <li key="why-seo-matters-more-than-ever"><a href="#why-seo-matters-more-than-ever" className="text-blue-600 hover:underline text-sm">Why SEO Matters More Than Ever</a></li>
+                  <li key="the-seo-fundamentals-every-business-need"><a href="#the-seo-fundamentals-every-business-need" className="text-blue-600 hover:underline text-sm">The SEO Fundamentals Every Business Needs</a></li>
+                  <li key="common-seo-mistakes-that-kill-your-ranki"><a href="#common-seo-mistakes-that-kill-your-ranki" className="text-blue-600 hover:underline text-sm">Common SEO Mistakes That Kill Your Rankings</a></li>
+                  <li key="related-reading"><a href="#related-reading" className="text-blue-600 hover:underline text-sm">Related Reading</a></li>
+                  <li key="start-your-seo-journey-today"><a href="#start-your-seo-journey-today" className="text-blue-600 hover:underline text-sm">Start Your SEO Journey Today</a></li>
+          </ol>
+        </div>
+
         {/* Section 1 */}
+
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-hidden-cost-of-being-invisible" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Hidden Cost of Being Invisible
           </h2>
@@ -193,7 +208,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="why-seo-matters-more-than-ever" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why SEO Matters More Than Ever
           </h2>
@@ -251,7 +266,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-seo-fundamentals-every-business-need" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The SEO Fundamentals Every Business Needs
           </h2>
@@ -334,7 +349,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="common-seo-mistakes-that-kill-your-ranki" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Common SEO Mistakes That Kill Your Rankings
           </h2>
@@ -383,7 +398,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.55 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="related-reading" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Related Reading
           </h2>
@@ -415,7 +430,7 @@ const BlogSEO: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="start-your-seo-journey-today" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Start Your SEO Journey Today
           </h2>

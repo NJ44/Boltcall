@@ -154,7 +154,22 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="how-ai-receptionists-work-at-a-glance"><a href="#how-ai-receptionists-work-at-a-glance" className="text-blue-600 hover:underline text-sm">How AI Receptionists Work: At a Glance</a></li>
+                  <li key="what-happens-when-a-call-comes-in"><a href="#what-happens-when-a-call-comes-in" className="text-blue-600 hover:underline text-sm">What Happens When a Call Comes In</a></li>
+                  <li key="how-ai-receptionists-learn-your-business"><a href="#how-ai-receptionists-learn-your-business" className="text-blue-600 hover:underline text-sm">How AI Receptionists Learn Your Business</a></li>
+                  <li key="why-this-technology-matters"><a href="#why-this-technology-matters" className="text-blue-600 hover:underline text-sm">Why This Technology Matters</a></li>
+                  <li key="the-bottom-line"><a href="#the-bottom-line" className="text-blue-600 hover:underline text-sm">The Bottom Line</a></li>
+                  <li key="real-world-use-cases"><a href="#real-world-use-cases" className="text-blue-600 hover:underline text-sm">Real-World Use Cases</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="how-ai-receptionists-work-at-a-glance" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How AI Receptionists Work: At a Glance
           </h2>
@@ -229,7 +244,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="what-happens-when-a-call-comes-in" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             What Happens When a Call Comes In
           </h2>
@@ -299,7 +314,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-ai-receptionists-learn-your-business" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How AI Receptionists Learn Your Business
           </h2>
@@ -331,7 +346,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="why-this-technology-matters" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why This Technology Matters
           </h2>
@@ -372,7 +387,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-bottom-line" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Bottom Line
           </h2>
@@ -394,7 +409,7 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.52 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="real-world-use-cases" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Real-World Use Cases
           </h2>

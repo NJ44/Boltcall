@@ -164,7 +164,23 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="answering-the-phone-promptly"><a href="#answering-the-phone-promptly" className="text-blue-600 hover:underline text-sm">Answering the Phone Promptly</a></li>
+                  <li key="greeting-the-caller"><a href="#greeting-the-caller" className="text-blue-600 hover:underline text-sm">Greeting the Caller</a></li>
+                  <li key="handling-calls-professionally"><a href="#handling-calls-professionally" className="text-blue-600 hover:underline text-sm">Handling Calls Professionally</a></li>
+                  <li key="navigating-challenging-situations"><a href="#navigating-challenging-situations" className="text-blue-600 hover:underline text-sm">Navigating Challenging Situations</a></li>
+                  <li key="special-considerations-for-receptionists"><a href="#special-considerations-for-receptionists" className="text-blue-600 hover:underline text-sm">Special Considerations for Receptionists</a></li>
+                  <li key="best-practices-for-cell-phone-etiquette"><a href="#best-practices-for-cell-phone-etiquette" className="text-blue-600 hover:underline text-sm">Best Practices for Cell Phone Etiquette</a></li>
+                  <li key="conclusion-mastering-professional-phone"><a href="#conclusion-mastering-professional-phone" className="text-blue-600 hover:underline text-sm">Conclusion: Mastering Professional Phone Etiquette</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="answering-the-phone-promptly" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Answering the Phone Promptly
           </h2>
@@ -185,7 +201,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="greeting-the-caller" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Greeting the Caller
           </h2>
@@ -218,7 +234,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="handling-calls-professionally" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Handling Calls Professionally
           </h2>
@@ -274,7 +290,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="navigating-challenging-situations" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Navigating Challenging Situations
           </h2>
@@ -324,7 +340,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="special-considerations-for-receptionists" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Special Considerations for Receptionists
           </h2>
@@ -379,7 +395,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="best-practices-for-cell-phone-etiquette" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Best Practices for Cell Phone Etiquette
           </h2>
@@ -427,7 +443,7 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="conclusion-mastering-professional-phone" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Mastering Professional Phone Etiquette
           </h2>

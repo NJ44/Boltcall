@@ -130,14 +130,29 @@ const BlogSpeedWebsite: React.FC = () => {
           </p>
         </motion.div>
 
+
+        {/* Table of Contents */}
+        <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+          <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+          <ol className="space-y-2 list-decimal list-inside">
+                  <li key="the-3-second-rule-when-speed-becomes-cri"><a href="#the-3-second-rule-when-speed-becomes-cri" className="text-blue-600 hover:underline text-sm">The 3-Second Rule: When Speed Becomes Critical</a></li>
+                  <li key="why-speed-matters-more-than-ever"><a href="#why-speed-matters-more-than-ever" className="text-blue-600 hover:underline text-sm">Why Speed Matters More Than Ever</a></li>
+                  <li key="the-real-cost-of-a-slow-website"><a href="#the-real-cost-of-a-slow-website" className="text-blue-600 hover:underline text-sm">The Real Cost of a Slow Website</a></li>
+                  <li key="what-makes-a-website-slow"><a href="#what-makes-a-website-slow" className="text-blue-600 hover:underline text-sm">What Makes a Website Slow?</a></li>
+                  <li key="how-to-make-your-website-fast"><a href="#how-to-make-your-website-fast" className="text-blue-600 hover:underline text-sm">How to Make Your Website Fast</a></li>
+                  <li key="the-bottom-line"><a href="#the-bottom-line" className="text-blue-600 hover:underline text-sm">The Bottom Line</a></li>
+          </ol>
+        </div>
+
         {/* Section 1 */}
+
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-3-second-rule-when-speed-becomes-cri" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The 3-Second Rule: When Speed Becomes Critical
           </h2>
@@ -194,7 +209,7 @@ const BlogSpeedWebsite: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="why-speed-matters-more-than-ever" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Speed Matters More Than Ever
           </h2>
@@ -237,7 +252,7 @@ const BlogSpeedWebsite: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-real-cost-of-a-slow-website" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Real Cost of a Slow Website
           </h2>
@@ -274,7 +289,7 @@ const BlogSpeedWebsite: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="what-makes-a-website-slow" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             What Makes a Website Slow?
           </h2>
@@ -320,7 +335,7 @@ const BlogSpeedWebsite: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-to-make-your-website-fast" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How to Make Your Website Fast
           </h2>
@@ -375,7 +390,7 @@ const BlogSpeedWebsite: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-bottom-line" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Bottom Line
           </h2>

@@ -160,7 +160,23 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="why-google-reviews-are-critical-for-your"><a href="#why-google-reviews-are-critical-for-your" className="text-blue-600 hover:underline text-sm">Why Google Reviews Are Critical for Your Business</a></li>
+                  <li key="what-are-automatic-google-review-request"><a href="#what-are-automatic-google-review-request" className="text-blue-600 hover:underline text-sm">What Are Automatic Google Review Requests?</a></li>
+                  <li key="benefits-of-automatic-review-requests"><a href="#benefits-of-automatic-review-requests" className="text-blue-600 hover:underline text-sm">Benefits of Automatic Review Requests</a></li>
+                  <li key="best-practices-for-automatic-review-requ"><a href="#best-practices-for-automatic-review-requ" className="text-blue-600 hover:underline text-sm">Best Practices for Automatic Review Requests</a></li>
+                  <li key="how-boltcall-automates-google-review-req"><a href="#how-boltcall-automates-google-review-req" className="text-blue-600 hover:underline text-sm">How Boltcall Automates Google Review Requests</a></li>
+                  <li key="common-mistakes-to-avoid"><a href="#common-mistakes-to-avoid" className="text-blue-600 hover:underline text-sm">Common Mistakes to Avoid</a></li>
+                  <li key="start-getting-more-reviews-automatically"><a href="#start-getting-more-reviews-automatically" className="text-blue-600 hover:underline text-sm">Start Getting More Reviews Automatically</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="why-google-reviews-are-critical-for-your" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Google Reviews Are Critical for Your Business
           </h2>
@@ -247,7 +263,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="what-are-automatic-google-review-request" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             What Are Automatic Google Review Requests?
           </h2>
@@ -321,7 +337,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="benefits-of-automatic-review-requests" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Benefits of Automatic Review Requests
           </h2>
@@ -385,7 +401,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="best-practices-for-automatic-review-requ" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Best Practices for Automatic Review Requests
           </h2>
@@ -452,7 +468,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-boltcall-automates-google-review-req" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How Boltcall Automates Google Review Requests
           </h2>
@@ -562,7 +578,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="common-mistakes-to-avoid" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Common Mistakes to Avoid
           </h2>
@@ -635,7 +651,7 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="start-getting-more-reviews-automatically" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Start Getting More Reviews Automatically
           </h2>

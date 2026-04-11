@@ -159,7 +159,23 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="types-of-answering-services"><a href="#types-of-answering-services" className="text-blue-600 hover:underline text-sm">Types of Answering Services</a></li>
+                  <li key="pricing-models"><a href="#pricing-models" className="text-blue-600 hover:underline text-sm">Pricing Models</a></li>
+                  <li key="factors-affecting-costs"><a href="#factors-affecting-costs" className="text-blue-600 hover:underline text-sm">Factors Affecting Costs</a></li>
+                  <li key="comparing-answering-service-prices"><a href="#comparing-answering-service-prices" className="text-blue-600 hover:underline text-sm">Comparing Answering Service Prices</a></li>
+                  <li key="how-much-does-an-answering-service-cost"><a href="#how-much-does-an-answering-service-cost" className="text-blue-600 hover:underline text-sm">How Much Does an Answering Service Cost?</a></li>
+                  <li key="benefits-of-a-live-answering-service"><a href="#benefits-of-a-live-answering-service" className="text-blue-600 hover:underline text-sm">Benefits of a Live Answering Service</a></li>
+                  <li key="making-the-right-choice"><a href="#making-the-right-choice" className="text-blue-600 hover:underline text-sm">Making the Right Choice</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="types-of-answering-services" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Types of Answering Services
           </h2>
@@ -222,7 +238,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="pricing-models" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Pricing Models
           </h2>
@@ -285,7 +301,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="factors-affecting-costs" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Factors Affecting Costs
           </h2>
@@ -351,7 +367,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="comparing-answering-service-prices" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Comparing Answering Service Prices
           </h2>
@@ -431,7 +447,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-much-does-an-answering-service-cost" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How Much Does an Answering Service Cost?
           </h2>
@@ -513,7 +529,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="benefits-of-a-live-answering-service" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Benefits of a Live Answering Service
           </h2>
@@ -590,7 +606,7 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="making-the-right-choice" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Making the Right Choice
           </h2>

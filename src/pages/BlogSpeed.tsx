@@ -138,6 +138,23 @@ const BlogSpeed: React.FC = () => {
           </p>
         </motion.div>
 
+
+        {/* Table of Contents */}
+        <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+          <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+          <ol className="space-y-2 list-decimal list-inside">
+                  <li key="the-391-rule-what-the-data-says"><a href="#the-391-rule-what-the-data-says" className="text-blue-600 hover:underline text-sm">The 391% Rule: What the Data Says</a></li>
+                  <li key="why-speed-creates-such-a-massive-advanta"><a href="#why-speed-creates-such-a-massive-advanta" className="text-blue-600 hover:underline text-sm">Why Speed Creates Such a Massive Advantage</a></li>
+                  <li key="the-real-cost-of-being-slow"><a href="#the-real-cost-of-being-slow" className="text-blue-600 hover:underline text-sm">The Real Cost of Being Slow</a></li>
+                  <li key="how-to-respond-in-60-seconds-without-wor"><a href="#how-to-respond-in-60-seconds-without-wor" className="text-blue-600 hover:underline text-sm">How to Respond in 60 Seconds (Without Working 24/7)</a></li>
+                  <li key="the-bottom-line"><a href="#the-bottom-line" className="text-blue-600 hover:underline text-sm">The Bottom Line</a></li>
+                  <li key="real-world-case-studies-speed-in-action"><a href="#real-world-case-studies-speed-in-action" className="text-blue-600 hover:underline text-sm">Real-World Case Studies: Speed in Action</a></li>
+                  <li key="how-to-implement-60-second-response-time"><a href="#how-to-implement-60-second-response-time" className="text-blue-600 hover:underline text-sm">How to Implement 60-Second Response Times</a></li>
+                  <li key="common-mistakes-that-kill-response-speed"><a href="#common-mistakes-that-kill-response-speed" className="text-blue-600 hover:underline text-sm">Common Mistakes That Kill Response Speed</a></li>
+                  <li key="calculating-your-roi-from-instant-respon"><a href="#calculating-your-roi-from-instant-respon" className="text-blue-600 hover:underline text-sm">Calculating Your ROI from Instant Response</a></li>
+          </ol>
+        </div>
+
         {/* Section 1 */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -145,7 +162,7 @@ const BlogSpeed: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-391-rule-what-the-data-says" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The 391% Rule: What the Data Says
           </h2>
@@ -203,7 +220,7 @@ const BlogSpeed: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="why-speed-creates-such-a-massive-advanta" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Speed Creates Such a Massive Advantage
           </h2>
@@ -245,7 +262,7 @@ const BlogSpeed: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-real-cost-of-being-slow" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Real Cost of Being Slow
           </h2>
@@ -280,7 +297,7 @@ const BlogSpeed: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-to-respond-in-60-seconds-without-wor" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How to Respond in 60 Seconds (Without Working 24/7)
           </h2>
@@ -321,7 +338,7 @@ const BlogSpeed: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-bottom-line" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Bottom Line
           </h2>

@@ -144,7 +144,23 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="cost-savings-and-financial-benefits"><a href="#cost-savings-and-financial-benefits" className="text-blue-600 hover:underline text-sm">Cost Savings and Financial Benefits</a></li>
+                  <li key="simplified-management-and-operations"><a href="#simplified-management-and-operations" className="text-blue-600 hover:underline text-sm">Simplified Management and Operations</a></li>
+                  <li key="enhanced-customer-service-and-profession"><a href="#enhanced-customer-service-and-profession" className="text-blue-600 hover:underline text-sm">Enhanced Customer Service and Professional Image</a></li>
+                  <li key="focus-on-core-business-activities"><a href="#focus-on-core-business-activities" className="text-blue-600 hover:underline text-sm">Focus on Core Business Activities</a></li>
+                  <li key="access-to-advanced-technology"><a href="#access-to-advanced-technology" className="text-blue-600 hover:underline text-sm">Access to Advanced Technology</a></li>
+                  <li key="customization-and-flexibility"><a href="#customization-and-flexibility" className="text-blue-600 hover:underline text-sm">Customization and Flexibility</a></li>
+                  <li key="conclusion-embracing-outsourced-receptio"><a href="#conclusion-embracing-outsourced-receptio" className="text-blue-600 hover:underline text-sm">Conclusion: Embracing Outsourced Reception Services</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="cost-savings-and-financial-benefits" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Cost Savings and Financial Benefits
           </h2>
@@ -199,7 +215,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="simplified-management-and-operations" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Simplified Management and Operations
           </h2>
@@ -227,7 +243,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="enhanced-customer-service-and-profession" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Enhanced Customer Service and Professional Image
           </h2>
@@ -310,7 +326,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="focus-on-core-business-activities" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Focus on Core Business Activities
           </h2>
@@ -374,7 +390,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="access-to-advanced-technology" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Access to Advanced Technology
           </h2>
@@ -445,7 +461,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="customization-and-flexibility" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Customization and Flexibility
           </h2>
@@ -503,7 +519,7 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="conclusion-embracing-outsourced-receptio" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Embracing Outsourced Reception Services
           </h2>

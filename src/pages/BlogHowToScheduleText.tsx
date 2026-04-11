@@ -138,7 +138,22 @@ const BlogHowToScheduleText: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="why-schedule-text-messages"><a href="#why-schedule-text-messages" className="text-blue-600 hover:underline text-sm">Why Schedule Text Messages?</a></li>
+                  <li key="option-1-native-phone-features"><a href="#option-1-native-phone-features" className="text-blue-600 hover:underline text-sm">Option 1: Native Phone Features</a></li>
+                  <li key="option-2-sms-scheduling-apps"><a href="#option-2-sms-scheduling-apps" className="text-blue-600 hover:underline text-sm">Option 2: SMS Scheduling Apps</a></li>
+                  <li key="option-3-crm-platforms-with-sms"><a href="#option-3-crm-platforms-with-sms" className="text-blue-600 hover:underline text-sm">Option 3: CRM Platforms with SMS</a></li>
+                  <li key="option-4-boltcall-the-complete-ai-powere"><a href="#option-4-boltcall-the-complete-ai-powere" className="text-blue-600 hover:underline text-sm">Option 4: Boltcall - The Complete AI-Powered Solution</a></li>
+                  <li key="conclusion-choose-the-right-solution"><a href="#conclusion-choose-the-right-solution" className="text-blue-600 hover:underline text-sm">Conclusion: Choose the Right Solution</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="why-schedule-text-messages" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Schedule Text Messages?
           </h2>
@@ -185,7 +200,7 @@ const BlogHowToScheduleText: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="option-1-native-phone-features" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Option 1: Native Phone Features
           </h2>
@@ -261,7 +276,7 @@ const BlogHowToScheduleText: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="option-2-sms-scheduling-apps" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Option 2: SMS Scheduling Apps
           </h2>
@@ -337,7 +352,7 @@ const BlogHowToScheduleText: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="option-3-crm-platforms-with-sms" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Option 3: CRM Platforms with SMS
           </h2>
@@ -413,7 +428,7 @@ const BlogHowToScheduleText: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="option-4-boltcall-the-complete-ai-powere" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Option 4: Boltcall - The Complete AI-Powered Solution
           </h2>
@@ -637,7 +652,7 @@ const BlogHowToScheduleText: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="conclusion-choose-the-right-solution" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Choose the Right Solution
           </h2>

@@ -162,7 +162,22 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="understanding-answering-services"><a href="#understanding-answering-services" className="text-blue-600 hover:underline text-sm">Understanding Answering Services</a></li>
+                  <li key="the-role-of-answering-services-in-appoin"><a href="#the-role-of-answering-services-in-appoin" className="text-blue-600 hover:underline text-sm">The Role of Answering Services in Appointment Scheduling</a></li>
+                  <li key="benefits-of-using-an-answering-service"><a href="#benefits-of-using-an-answering-service" className="text-blue-600 hover:underline text-sm">Benefits of Using an Answering Service</a></li>
+                  <li key="how-virtual-receptionist-services-work"><a href="#how-virtual-receptionist-services-work" className="text-blue-600 hover:underline text-sm">How Virtual Receptionist Services Work</a></li>
+                  <li key="choosing-the-right-answering-service"><a href="#choosing-the-right-answering-service" className="text-blue-600 hover:underline text-sm">Choosing the Right Answering Service</a></li>
+                  <li key="conclusion-transforming-appointment-sche"><a href="#conclusion-transforming-appointment-sche" className="text-blue-600 hover:underline text-sm">Conclusion: Transforming Appointment Scheduling</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="understanding-answering-services" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Understanding Answering Services
           </h2>
@@ -223,7 +238,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-role-of-answering-services-in-appoin" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Role of Answering Services in Appointment Scheduling
           </h2>
@@ -284,7 +299,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="benefits-of-using-an-answering-service" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Benefits of Using an Answering Service
           </h2>
@@ -362,7 +377,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-virtual-receptionist-services-work" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How Virtual Receptionist Services Work
           </h2>
@@ -428,7 +443,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="choosing-the-right-answering-service" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Choosing the Right Answering Service
           </h2>
@@ -492,7 +507,7 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="conclusion-transforming-appointment-sche" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Conclusion: Transforming Appointment Scheduling
           </h2>

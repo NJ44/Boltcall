@@ -165,14 +165,28 @@ const Blog: React.FC = () => {
           </div>
         </motion.div>
 
+
+        {/* Table of Contents */}
+        <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+          <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+          <ol className="space-y-2 list-decimal list-inside">
+                  <li key="the-shifting-economy-what-changed"><a href="#the-shifting-economy-what-changed" className="text-blue-600 hover:underline text-sm">The Shifting Economy: What Changed?</a></li>
+                  <li key="why-traditional-methods-are-failing"><a href="#why-traditional-methods-are-failing" className="text-blue-600 hover:underline text-sm">Why Traditional Methods Are Failing</a></li>
+                  <li key="why-ai-services-are-critical-now"><a href="#why-ai-services-are-critical-now" className="text-blue-600 hover:underline text-sm">Why AI Services Are Critical Now</a></li>
+                  <li key="real-world-success-stories"><a href="#real-world-success-stories" className="text-blue-600 hover:underline text-sm">Real-World Success Stories</a></li>
+                  <li key="the-choice-is-yours"><a href="#the-choice-is-yours" className="text-blue-600 hover:underline text-sm">The Choice Is Yours</a></li>
+          </ol>
+        </div>
+
         {/* Section 1 */}
+
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-shifting-economy-what-changed" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Shifting Economy: What Changed?
           </h2>
@@ -255,7 +269,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="why-traditional-methods-are-failing" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Traditional Methods Are Failing
           </h2>
@@ -332,7 +346,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="why-ai-services-are-critical-now" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why AI Services Are Critical Now
           </h2>
@@ -502,7 +516,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="real-world-success-stories" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Real-World Success Stories
           </h2>
@@ -598,7 +612,7 @@ const Blog: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="the-choice-is-yours" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             The Choice Is Yours
           </h2>

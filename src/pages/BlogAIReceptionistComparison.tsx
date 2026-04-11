@@ -354,7 +354,19 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+
+          {/* Table of Contents */}
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
+            <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
+            <ol className="space-y-2 list-decimal list-inside">
+                  <li key="why-boltcall-stands-out-for-local-busine"><a href="#why-boltcall-stands-out-for-local-busine" className="text-blue-600 hover:underline text-sm">Why Boltcall Stands Out for Local Businesses</a></li>
+                  <li key="how-to-choose-the-right-tool"><a href="#how-to-choose-the-right-tool" className="text-blue-600 hover:underline text-sm">How to Choose the Right Tool</a></li>
+                  <li key="final-thoughts"><a href="#final-thoughts" className="text-blue-600 hover:underline text-sm">Final Thoughts</a></li>
+            </ol>
+          </div>
+
+
+          <h2 id="why-boltcall-stands-out-for-local-busine" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Boltcall Stands Out for Local Businesses
           </h2>
@@ -399,7 +411,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.9 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="how-to-choose-the-right-tool" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             How to Choose the Right Tool
           </h2>
@@ -456,7 +468,7 @@ const BlogAIReceptionistComparison: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.0 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
+          <h2 id="final-thoughts" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Final Thoughts
           </h2>
