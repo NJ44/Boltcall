@@ -80,6 +80,25 @@ const AIAgentComparison: React.FC = () => {
 
       {/* Main Content */}
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16">
+        {/* TL;DR Summary */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-12 bg-blue-50 border border-blue-200 rounded-xl p-6"
+        >
+          <p className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-3">TL;DR</p>
+          <p className="text-gray-800 font-medium mb-3">
+            AI agents like Boltcall cost 10–20× less than traditional call centers, respond instantly 24/7, and never miss a lead — making them the clear winner for local businesses that rely on inbound calls.
+          </p>
+          <ul className="space-y-1.5 text-sm text-gray-700">
+            <li className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">✓</span> <span><strong>Cost:</strong> $99–200/month vs. $2,000–5,000/month for a call center</span></li>
+            <li className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">✓</span> <span><strong>Speed:</strong> 0–5 second response vs. 2–5 minute average hold</span></li>
+            <li className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">✓</span> <span><strong>Availability:</strong> 24/7/365 vs. business hours only</span></li>
+            <li className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">✓</span> <span><strong>Missed leads:</strong> 0% vs. 30–50% during peak hours at call centers</span></li>
+          </ul>
+        </motion.div>
+
         {/* Quick Comparison Table */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
