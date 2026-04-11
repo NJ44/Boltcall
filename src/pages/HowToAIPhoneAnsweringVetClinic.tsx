@@ -658,6 +658,29 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What AI Phone Answering Includes for Vet Clinics</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Complete system for veterinary practices — every Boltcall plan includes:</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: '24/7 Emergency Call Answering', desc: 'Captures every after-hours urgent call for sick or injured pets' },
+            { label: 'Appointment Booking', desc: 'Books wellness exams, vaccines, and procedures into your calendar' },
+            { label: 'New Client Intake', desc: 'Collects pet name, species, breed, and reason for visit automatically' },
+            { label: 'Recall Reminders', desc: 'Automated reminders for annual exams and vaccine boosters' },
+            { label: 'Triage Script', desc: 'Guides callers through basic emergency triage before connecting on-call staff' },
+            { label: 'Monthly Revenue Report', desc: 'See calls answered, appointments booked, and revenue recovered' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

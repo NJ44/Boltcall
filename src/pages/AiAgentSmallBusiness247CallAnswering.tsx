@@ -237,6 +237,29 @@ const AiAgentSmallBusiness247CallAnswering: React.FC = () => {
         </div>
       </div>
 
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What 24/7 AI Call Answering Includes</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Everything in every Boltcall plan from the moment you go live</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: '24/7 Call Answering', desc: 'Every inbound call answered in under 3 rings, any time of day or night' },
+            { label: 'AI Trained on Your Business', desc: 'Learns your services, prices, hours, and FAQs before going live' },
+            { label: 'Live Appointment Booking', desc: 'Books directly into your calendar during the call — no callback needed' },
+            { label: 'Instant SMS Follow-Up', desc: 'Auto-texts missed callers within seconds of every missed call' },
+            { label: 'No-Show Reminders', desc: 'Automated reminders reduce appointment cancellations by 40%+' },
+            { label: 'Monthly Revenue Report', desc: 'See calls captured, jobs booked, and revenue recovered each month' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

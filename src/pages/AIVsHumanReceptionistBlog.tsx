@@ -593,6 +593,29 @@ const AIVsHumanReceptionistBlog: React.FC = () => {
         <footer className="mt-3 text-sm font-semibold text-gray-600">— McKinsey & Company, <a href="https://www.mckinsey.com/capabilities/operations/our-insights/the-next-frontier-of-customer-engagement-ai-enabled-customer-service" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">The Next Frontier of Customer Engagement</a>, 2023</footer>
       </blockquote>
 
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What Boltcall Includes vs. a Human Receptionist</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Key capabilities where an AI receptionist outperforms a traditional front desk hire</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: '24/7 Availability', desc: 'AI answers every call after hours, on weekends, and on holidays' },
+            { label: 'Instant Response', desc: 'Zero hold time — callers reach your AI in under 3 rings every time' },
+            { label: 'Live Appointment Booking', desc: 'Books directly into your calendar in real time without a callback' },
+            { label: 'Consistent Scripting', desc: 'Delivers the same on-brand greeting and qualification every call' },
+            { label: 'Automated Follow-Up', desc: 'Texts and emails missed callers and no-shows without any staff effort' },
+            { label: 'Flat Monthly Cost', desc: 'No salary, benefits, or training costs — a single predictable fee' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

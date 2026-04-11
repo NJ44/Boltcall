@@ -607,6 +607,29 @@ export default function ChatbotVsLiveChatVsPhoneAnswering() {
         <footer className="mt-3 text-sm font-semibold text-gray-600">— Salesforce, <a href="https://www.salesforce.com/resources/research-reports/state-of-the-connected-customer/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">State of the Connected Customer Report</a>, 2023</footer>
       </blockquote>
 
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">How Boltcall Compares to Chatbots and Live Chat</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What phone AI answering includes that chatbots and live chat tools cannot match</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: 'Voice Call Answering', desc: 'Handles phone calls that chatbots and live chat tools completely miss' },
+            { label: 'Real-Time Booking', desc: 'Books appointments over the phone without requiring the customer to type' },
+            { label: 'After-Hours Coverage', desc: '24/7 availability with no live agent required and no extra cost' },
+            { label: 'Lead Qualification', desc: 'Asks qualifying questions naturally in conversation, not via form fields' },
+            { label: 'Instant SMS Follow-Up', desc: 'Sends follow-up texts to callers without any manual action' },
+            { label: 'Missed Call Recovery', desc: 'Re-engages every caller who could not get through via automated text' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

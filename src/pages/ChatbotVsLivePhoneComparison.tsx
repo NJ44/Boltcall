@@ -500,6 +500,29 @@ const ChatbotVsLivePhoneComparison: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What Phone-First AI Includes vs. Chatbots</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six capabilities that make AI phone answering the most complete customer response solution</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: 'Phone Call Handling', desc: 'Answers inbound voice calls — the channel chatbots completely ignore' },
+            { label: '24/7 Live Response', desc: 'Real-time answers to every caller with no hold time or voicemail' },
+            { label: 'Appointment Booking', desc: 'Schedules directly into your calendar during the call' },
+            { label: 'Natural Conversation', desc: 'Handles complex questions, objections, and follow-ups by voice' },
+            { label: 'SMS Follow-Up', desc: 'Texts callers automatically after every interaction' },
+            { label: 'No Setup Complexity', desc: 'Goes live in 30 minutes — no chatbot flows or widget code to manage' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

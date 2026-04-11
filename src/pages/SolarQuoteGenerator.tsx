@@ -949,6 +949,29 @@ const SolarQuoteGenerator: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Solar Quote Tool Includes</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six calculation components that help solar reps close more deals faster</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: 'System Size Estimator', desc: 'Calculates recommended kW based on monthly usage and roof area' },
+            { label: 'Savings Projection', desc: 'Projects 20-year savings vs. utility rates with solar installed' },
+            { label: 'Payback Period', desc: 'Shows break-even timeline at current utility rates and financing options' },
+            { label: 'Federal Tax Credit', desc: 'Applies current ITC percentage to total system cost automatically' },
+            { label: 'Financing Options', desc: 'Compares cash, loan, and lease payment scenarios side by side' },
+            { label: 'Lead Capture', desc: 'Delivers the quote while capturing the prospect contact info for follow-up' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
