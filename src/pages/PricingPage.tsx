@@ -155,6 +155,47 @@ const PricingPage: React.FC = () => {
       </section>
 
       </main>
+
+      {/* Plan Comparison Table */}
+      <section className="bg-white py-10 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Feature Comparison by Plan</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Everything included in each Boltcall tier — no hidden fees</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Feature</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 text-center">Starter</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 text-center bg-indigo-50">Pro</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 text-center">Agency</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['24/7 AI Call Answering', true, true, true],
+                  ['Appointment Booking', true, true, true],
+                  ['Instant SMS Follow-Up', true, true, true],
+                  ['No-Show Reminders', true, true, true],
+                  ['Google Review Requests', false, true, true],
+                  ['Custom AI Voice & Script', false, true, true],
+                  ['CRM Integration', false, true, true],
+                  ['Multi-Location Support', false, false, true],
+                  ['Dedicated Account Manager', false, false, true],
+                  ['Monthly Revenue Report', true, true, true],
+                ].map(([feature, starter, pro, agency]) => (
+                  <tr key={String(feature)} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{feature}</td>
+                    <td className="px-4 py-3 text-center">{starter ? '✓' : '—'}</td>
+                    <td className="px-4 py-3 text-center bg-indigo-50/30 text-indigo-700 font-semibold">{pro ? '✓' : '—'}</td>
+                    <td className="px-4 py-3 text-center">{agency ? '✓' : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

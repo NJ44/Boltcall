@@ -245,6 +245,43 @@ const AiPhoneAnsweringDentists: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Dental AI Answering Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Answering vs. Traditional Phone Handling for Dental Practices</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How AI phone answering compares to a human front desk team for common dental scenarios</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Scenario</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Human Front Desk</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['After-hours appointment request', 'Books immediately into calendar', 'Voicemail — patient calls competitor'],
+                  ['New patient calling during lunch', 'Answers instantly, collects intake info', 'Goes to voicemail or on hold'],
+                  ['Appointment reminder follow-up', 'Automated 24h and 2h before visit', 'Staff calls manually when time allows'],
+                  ['Emergency call at 8pm', 'Triages urgency and books ASAP slot', 'No answer — missed emergency'],
+                  ['Insurance verification questions', 'Answers common questions from script', 'Staff must interrupt patient time'],
+                  ['Post-visit review request', 'Automated text 2 hours after appointment', 'Rarely done — too time-consuming'],
+                  ['Weekend call volume', 'All calls answered', 'No coverage'],
+                  ['Cost per month', '$79–$179 flat', '$3,200+ salary + benefits'],
+                ].map(([scenario, ai, human]) => (
+                  <tr key={scenario} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{scenario}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30">{ai}</td>
+                    <td className="px-4 py-3 text-gray-600">{human}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

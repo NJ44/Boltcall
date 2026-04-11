@@ -708,6 +708,45 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
         </div>
       </div>
 
+
+      {/* AI vs Human Receptionist Roles Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What AI Can and Cannot Replace in a Receptionist Role</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">An honest breakdown of AI strengths and the tasks that still require a human touch</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Task</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 text-center bg-indigo-50">AI Handles</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 text-center">Human Required</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Answering calls 24/7', true, false],
+                  ['Booking appointments', true, false],
+                  ['Collecting intake information', true, false],
+                  ['Answering common FAQs', true, false],
+                  ['Sending reminders and follow-ups', true, false],
+                  ['Requesting Google reviews', true, false],
+                  ['Complex complaint resolution', false, true],
+                  ['Empathetic crisis conversations', false, true],
+                  ['In-person patient/client greeting', false, true],
+                  ['Nuanced negotiation', false, true],
+                ].map(([task, ai, human]) => (
+                  <tr key={String(task)} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{task}</td>
+                    <td className="px-4 py-3 text-center bg-indigo-50/30 text-indigo-700 font-semibold">{ai ? '✓' : '—'}</td>
+                    <td className="px-4 py-3 text-center text-gray-600">{human ? '✓' : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

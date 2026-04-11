@@ -606,6 +606,45 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
         </div>
       </div>
 
+
+      {/* ROI Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Is an AI Receptionist Worth It? The Numbers</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Cost vs. revenue impact for a typical local service business with 40+ calls per month</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Without AI Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With Boltcall AI</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Monthly call volume', '40–60 calls', '40–60 calls'],
+                  ['Calls answered', '55–70% (22–42 calls)', '99%+ (40–60 calls)'],
+                  ['Calls missed/to voicemail', '12–27 per month', '0–1 per month'],
+                  ['Average revenue per job', '$400–$2,000', '$400–$2,000'],
+                  ['Est. monthly revenue recovered', '$0', '$4,800 – $54,000'],
+                  ['No-show rate', '18–25%', '8–12% (reminders active)'],
+                  ['Google reviews/month', '0–2 (inconsistent)', '5–15 (automated requests)'],
+                  ['Monthly receptionist cost', '$0 (no after-hours coverage)', '$79–$179'],
+                  ['ROI (conservative)', '—', '20x – 100x+'],
+                ].map(([metric, without, withAI]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{without}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{withAI}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Revenue recovered estimate assumes 30% of missed calls convert to booked jobs at average job values.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

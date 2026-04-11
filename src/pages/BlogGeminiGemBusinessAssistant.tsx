@@ -726,6 +726,45 @@ const BlogGeminiGemBusinessAssistant: React.FC = () => {
         </div>
       </div>
 
+
+      {/* AI Business Tools Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Business Tools Compared: Use Cases for Local Businesses</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Which AI tools solve which business problems for local service companies</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Business Need</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Gemini / ChatGPT</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">Boltcall AI Receptionist</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Answer inbound phone calls', '✗ — text only', '✓ — core function'],
+                  ['Book appointments in real time', '✗ — no calendar access', '✓ — live integration'],
+                  ['Send automated SMS follow-ups', '✗ — requires custom build', '✓ — built in'],
+                  ['Handle customer FAQs by voice', '✗ — not a phone AI', '✓ — voice trained on your business'],
+                  ['Write marketing copy', '✓ — strong capability', '✗ — not a writing tool'],
+                  ['Generate business reports', '✓ — strong capability', 'Partial — call/booking summary'],
+                  ['Draft emails and proposals', '✓ — strong capability', '✗ — not a writing tool'],
+                  ['24/7 lead capture by phone', '✗ — not a phone AI', '✓ — core function'],
+                  ['No-show reminder automation', '✗ — manual setup required', '✓ — built in'],
+                  ['Setup time', 'Immediate', '30 minutes'],
+                ].map(([need, gemini, boltcall]) => (
+                  <tr key={need} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{need}</td>
+                    <td className="px-4 py-3 text-gray-600">{gemini}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30">{boltcall}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

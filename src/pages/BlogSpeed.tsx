@@ -647,6 +647,40 @@ const BlogSpeed: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Speed to Lead Data Table */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Lead Conversion Rate by Response Time</h2>
+        <p className="text-gray-500 text-sm text-center mb-6">Harvard Business Review / Lead Response Management study across 100,000+ B2C leads</p>
+        <div className="overflow-x-auto rounded-xl border border-gray-200">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-gray-50 text-left">
+                <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Response Time</th>
+                <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Conversion Rate vs. Baseline</th>
+                <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Likelihood to Qualify Lead</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['Under 1 minute', '+391%', '21x more likely than 30-minute response'],
+                ['1–5 minutes', '+100%', '4x more likely than 30-minute response'],
+                ['5–30 minutes', '+62%', '3x more likely than 1-hour response'],
+                ['30 min – 1 hour', 'Baseline for comparison', '10x more likely than 24-hour response'],
+                ['1–24 hours', '-60%', 'Most leads have already contacted a competitor'],
+                ['24+ hours', '-90%', 'Almost no leads remain qualified'],
+              ].map(([time, rate, likelihood]) => (
+                <tr key={time} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                  <td className="px-4 py-3 text-gray-700 font-medium">{time}</td>
+                  <td className="px-4 py-3 text-green-700 font-semibold">{rate}</td>
+                  <td className="px-4 py-3 text-gray-600">{likelihood}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-gray-400 mt-3 text-center">Source: Lead Response Management study published in Harvard Business Review. Data from service industry leads.</p>
+      </section>
       <Footer />
     </div>
   );

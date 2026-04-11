@@ -651,6 +651,44 @@ const SpeedToLeadGuide: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Response Time vs. Conversion Rate Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Response Time vs. Lead Conversion Rate</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Data from Harvard Business Review and Lead Response Management study across 100,000+ leads</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Response Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Qualification Rate Lift</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">vs. Responding in 5 Minutes</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Competitive Advantage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Under 1 minute', '+391%', '4.9x more likely to qualify', 'Extreme — most competitors miss this'],
+                  ['1–5 minutes', '+100%', '2x more likely to qualify', 'Strong — achievable with AI'],
+                  ['5–30 minutes', '+62%', '1.6x more likely to qualify', 'Moderate — requires fast staff'],
+                  ['30 min – 1 hour', '+36%', '1.4x more likely to qualify', 'Weak — most leads have moved on'],
+                  ['1–24 hours', 'Baseline', '—', 'None — conversion rate at baseline'],
+                  ['24+ hours', '-60%', '0.4x — most leads lost', 'Negative — damages brand trust'],
+                ].map(([time, lift, vs5, advantage]) => (
+                  <tr key={time} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{time}</td>
+                    <td className="px-4 py-3 text-green-700 font-semibold">{lift}</td>
+                    <td className="px-4 py-3 text-gray-600">{vs5}</td>
+                    <td className="px-4 py-3 text-gray-600">{advantage}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Source: Lead Response Management / Harvard Business Review study of 100,000+ B2C leads across service industries.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

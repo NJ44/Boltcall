@@ -580,6 +580,46 @@ const AIReceptionistWorthItROI: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Cost Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Receptionist vs. Human Receptionist: Cost Comparison</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">A direct comparison of real annual costs and coverage for local service businesses</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Factor</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Traditional Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Receptionist (Boltcall)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Monthly cost', '$3,200 – $4,500', '$79 – $179'],
+                  ['Annual cost', '$38,400 – $54,000+', '$948 – $2,148'],
+                  ['Hours covered per week', '40 hrs (business hours only)', '168 hrs (24/7)'],
+                  ['After-hours call handling', 'Voicemail or missed', 'Answered instantly'],
+                  ['Weekend and holiday coverage', 'No (or overtime cost)', 'Yes — included'],
+                  ['Setup time', '2–4 weeks', '30 minutes'],
+                  ['Sick days / turnover risk', 'Yes', 'No'],
+                  ['Appointment booking', 'Manual', 'Automated, real-time'],
+                  ['SMS follow-up automation', 'No', 'Yes — included'],
+                  ['Google review requests', 'No', 'Yes — automated'],
+                ].map(([factor, human, ai]) => (
+                  <tr key={factor} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{factor}</td>
+                    <td className="px-4 py-3 text-gray-600">{human}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">* Traditional receptionist costs include salary, payroll taxes, and benefits. Source: Bureau of Labor Statistics 2025.</p>
+        </div>
+      </section>
       <Footer />
     </>
   );
