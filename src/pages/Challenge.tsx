@@ -296,315 +296,448 @@ const Challenge: React.FC = () => {
 
         {/* ── Main Challenge Card ─────────────────────────────────────── */}
         <section className="pb-16 lg:pb-24">
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white rounded-2xl border-2 border-gray-200 shadow-lg overflow-hidden"
+              transition={{ duration: 1.2, ease: 'easeOut', delay: 0.15 }}
             >
-              <AnimatePresence mode="wait">
-                {/* ── Step 1: Rules ─────────────────────────────────────── */}
-                {step === 'rules' && (
-                  <motion.div
-                    key="rules"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="p-8 md:p-10"
-                  >
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-blue-50 border border-blue-200 rounded-lg grid place-items-center">
-                        <Target className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <h2 className="text-2xl font-bold text-[#0B1220]">How It Works</h2>
-                    </div>
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 bg-white rounded-2xl overflow-hidden shadow-[0_35px_60px_-12px_rgba(0,0,0,0.6)]">
 
-                    <ol className="space-y-4 mb-8">
-                      {[
-                        { icon: PhoneCall, text: 'Call our AI receptionist at the number below' },
-                        { icon: MessageSquare, text: 'You have 60 seconds to make her reveal the secret code' },
-                        { icon: Lock, text: 'Come back here and enter the code to claim your prize' },
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 bg-blue-50 border border-blue-100 rounded-lg grid place-items-center">
-                            <item.icon className="w-4 h-4 text-blue-600" />
-                          </div>
-                          <div>
-                            <span className="text-gray-500 text-xs font-bold uppercase">Step {i + 1}</span>
-                            <p className="text-[#0B1220] text-sm mt-0.5">{item.text}</p>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
+                {/* ── Left: dark info panel ───────────────────────────── */}
+                <div className="bg-gray-900 text-white p-10 md:p-12 flex flex-col justify-between">
+                  <div>
+                    <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-400 rounded-full -ml-[8px]">
+                      Weekly Challenge
+                    </span>
+                    <h2 className="mt-3 text-2xl md:text-3xl font-extrabold text-white leading-tight">
+                      <span className="text-white">Crack the Code.</span>
+                      <br />
+                      <span className="text-blue-500">Win $2,500.</span>
+                    </h2>
 
-                    {/* Prizes */}
-                    <div className="grid grid-cols-2 gap-3 mb-8">
-                      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                        <Trophy className="w-5 h-5 text-blue-600 mb-2" />
-                        <p className="text-blue-600 font-bold text-sm">Crack the code</p>
-                        <p className="text-gray-700 text-xs mt-1">Free Professional Website ($2,500 value)</p>
-                      </div>
-                      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                        <Shield className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-gray-900 font-bold text-sm">Can't crack it?</p>
-                        <p className="text-gray-600 text-xs mt-1">Proof our AI will protect YOUR business too</p>
-                      </div>
-                    </div>
-
-                    {/* Rules */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8">
-                      <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Ground Rules</p>
-                      <ul className="space-y-1.5 text-gray-600 text-xs">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
-                          60-second time limit per call
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
-                          Any social engineering technique is fair game
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
-                          New secret code every Monday
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
-                          One prize per winner per week
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
-                          The AI will try to book you a demo after each attempt
-                        </li>
-                      </ul>
-                    </div>
-
-                    {/* Phone CTA */}
-                    <div className="text-center">
-                      <p className="text-gray-500 text-xs uppercase tracking-wider mb-3">Call this number</p>
-                      <a
-                        href={`tel:${CHALLENGE_PHONE_NUMBER}`}
-                        onClick={handleStartCall}
-                        className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
-                      >
-                        <Phone className="w-5 h-5" />
-                        {CHALLENGE_PHONE_DISPLAY}
-                      </a>
-                      <p className="text-gray-500 text-xs mt-3">Tap to call and start the timer</p>
-                    </div>
-
-                    <button
-                      onClick={() => setStep('submit')}
-                      className="mt-6 w-full text-center text-gray-500 hover:text-blue-600 text-sm transition-colors"
-                    >
-                      Already have the code? Submit it here
-                    </button>
-                  </motion.div>
-                )}
-
-                {/* ── Step 2: Active Call ───────────────────────────────── */}
-                {step === 'calling' && (
-                  <motion.div
-                    key="calling"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="p-8 md:p-10 text-center"
-                  >
-                    <div className="mb-6">
-                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
-                        <span className="text-blue-600 font-bold text-sm">CALL IN PROGRESS</span>
-                      </div>
-                    </div>
-
-                    <div className="w-24 h-24 mx-auto bg-blue-50 border-2 border-blue-200 rounded-full grid place-items-center mb-4">
-                      <Phone className="w-10 h-10 text-blue-600" />
-                    </div>
-
-                    <p className="text-5xl font-mono font-bold text-[#0B1220] mb-2">{formatTimer(callTimer)}</p>
-                    <p className="text-gray-500 text-sm mb-8">
-                      {callTimer < 60 ? 'Try to extract the code...' : 'Time is up. Did you get it?'}
+                    <p className="mt-6 text-white/80 text-sm leading-6">
+                      Our AI receptionist guards a secret code. Extract it in 60 seconds using any social engineering technique.
                     </p>
 
-                    <div className="flex flex-col gap-3">
-                      <button
-                        onClick={handleEndCall}
-                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
-                      >
-                        I'm Done — Submit My Code
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={handleReset}
-                        className="text-gray-500 hover:text-gray-700 text-sm transition-colors"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
+                    <ul className="mt-6 space-y-3 text-white/90 text-sm">
+                      <li className="flex items-start gap-3">
+                        <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
+                        <span>60 seconds per call — any technique allowed</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
+                        <span>Social engineering, persuasion, prompt hacking</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
+                        <span>New secret code every Monday</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" strokeWidth={2.5} />
+                        <span>One winner per week — prize resets too</span>
+                      </li>
+                    </ul>
 
-                {/* ── Step 3: Submit Code ───────────────────────────────── */}
-                {step === 'submit' && (
-                  <motion.div
-                    key="submit"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="p-8 md:p-10"
-                  >
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-blue-50 border border-blue-200 rounded-lg grid place-items-center">
-                        <Lock className="w-5 h-5 text-blue-600" />
+                    {/* Prize box */}
+                    <div className="mt-8 bg-gray-800 rounded-xl p-4 border border-gray-700">
+                      <div className="flex items-center gap-3">
+                        <Trophy className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-bold text-sm">Crack It → Free Professional Website</p>
+                          <p className="text-gray-400 text-xs mt-0.5">$2,500 value · Set up by our team</p>
+                        </div>
                       </div>
-                      <h2 className="text-2xl font-bold text-[#0B1220]">Submit Your Code</h2>
                     </div>
 
-                    {callTimer > 0 && (
-                      <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 mb-6 inline-flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-gray-500" />
-                        <span className="text-gray-600 text-sm">Call duration: {formatTimer(callTimer)}</span>
+                    {/* Stats */}
+                    {allTimeStats && (
+                      <div className="mt-6 flex items-center gap-6">
+                        <div>
+                          <p className="text-2xl font-bold text-white">{allTimeStats.totalAttempts.toLocaleString()}</p>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">Attempts</p>
+                        </div>
+                        <div className="h-8 w-px bg-gray-700" />
+                        <div>
+                          <p className="text-2xl font-bold text-blue-400">{allTimeStats.aiDefenseRate}%</p>
+                          <p className="text-xs text-gray-400 uppercase tracking-wider">AI Wins</p>
+                        </div>
                       </div>
                     )}
+                  </div>
+                </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">Name *</label>
-                          <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Your name"
-                            className="mt-1 w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-[#0B1220] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">Email</label>
+                {/* ── Right: interactive steps panel ─────────────────── */}
+                <div className="bg-gradient-to-b from-brand-blue to-brand-sky text-white p-10 md:p-12">
+                  <AnimatePresence mode="wait">
+
+                    {/* Step 1: Email */}
+                    {step === 'email' && (
+                      <motion.div
+                        key="email"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -16 }}
+                        className="flex flex-col justify-center h-full"
+                      >
+                        <p className="text-xs uppercase tracking-widest text-white/70 mb-2">Step 1 of 2</p>
+                        <h3 className="text-2xl font-extrabold text-white mb-2">Enter your email</h3>
+                        <p className="text-white/80 text-sm mb-8">
+                          We'll notify you if you win and send your prize details.
+                        </p>
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            if (!email.trim()) return;
+                            setStep('options');
+                          }}
+                          className="space-y-4"
+                        >
                           <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="For prize claims"
-                            className="mt-1 w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-[#0B1220] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                            placeholder="you@example.com"
+                            required
+                            autoFocus
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
                           />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">Secret Code *</label>
-                        <input
-                          type="text"
-                          value={code}
-                          onChange={(e) => setCode(e.target.value)}
-                          placeholder="Enter the code you extracted..."
-                          className="mt-1 w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-[#0B1220] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm font-mono tracking-widest uppercase"
-                          autoFocus
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <label className="text-gray-500 text-xs font-bold uppercase tracking-wider">
-                          What technique did you try?
-                        </label>
-                        <input
-                          type="text"
-                          value={technique}
-                          onChange={(e) => setTechnique(e.target.value)}
-                          placeholder="e.g. pretended to be tech support, asked to spell it..."
-                          className="mt-1 w-full px-4 py-3 bg-white border border-gray-300 rounded-md text-[#0B1220] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                        />
-                      </div>
-
-                      {error && (
-                        <p className="text-red-500 text-sm">{error}</p>
-                      )}
-
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isSubmitting ? 'Checking...' : 'Submit Code'}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={handleReset}
-                        className="w-full text-center text-gray-500 hover:text-gray-700 text-sm transition-colors"
-                      >
-                        Go back
-                      </button>
-                    </form>
-                  </motion.div>
-                )}
-
-                {/* ── Step 4: Result ────────────────────────────────────── */}
-                {step === 'result' && result && (
-                  <motion.div
-                    key="result"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="p-8 md:p-10 text-center"
-                  >
-                    {result.winner ? (
-                      <>
-                        <div className="w-20 h-20 mx-auto bg-blue-50 border-2 border-blue-200 rounded-full grid place-items-center mb-6">
-                          <Trophy className="w-10 h-10 text-blue-600" />
-                        </div>
-                        <h2 className="text-3xl font-bold text-[#0B1220] mb-2">You Cracked It!</h2>
-                        <p className="text-gray-600 mb-6">
-                          {result.message}
-                        </p>
-                        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
-                          <Award className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                          <p className="text-blue-600 font-bold text-lg">Free Professional Website</p>
-                          <p className="text-gray-600 text-sm mt-1">$2,500 value. We'll reach out within 24 hours.</p>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-20 h-20 mx-auto bg-blue-50 border-2 border-blue-200 rounded-full grid place-items-center mb-6">
-                          <Shield className="w-10 h-10 text-blue-600" />
-                        </div>
-                        <h2 className="text-3xl font-bold text-[#0B1220] mb-2">AI Held Strong</h2>
-                        <p className="text-gray-600 mb-2">{result.message}</p>
-                        {result.attempts && (
-                          <p className="text-gray-500 text-sm mb-6">
-                            Your attempts this week: {result.attempts}
-                          </p>
-                        )}
-                        <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6">
-                          <p className="text-[#0B1220] font-bold">Imagine this protecting YOUR business.</p>
-                          <p className="text-gray-600 text-sm mt-1">
-                            Same AI. Your business name. Your knowledge base. Set up in 5 minutes.
-                          </p>
-                        </div>
-                      </>
+                          <button
+                            type="submit"
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-blue font-bold rounded-md hover:bg-gray-50 transition-colors"
+                          >
+                            Unlock the Challenge
+                            <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </form>
+                        <p className="text-xs text-white/50 mt-6">No spam. Just prize notifications.</p>
+                      </motion.div>
                     )}
 
-                    <div className="flex flex-col gap-3">
-                      <Link
-                        to="/free-website"
-                        className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
+                    {/* Step 2: Call options */}
+                    {step === 'options' && (
+                      <motion.div
+                        key="options"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -16 }}
+                        className="flex flex-col justify-center h-full"
                       >
-                        Get Your Free Website
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                      <button
-                        onClick={handleReset}
-                        className="inline-flex items-center justify-center gap-2 text-gray-500 hover:text-gray-700 text-sm transition-colors"
+                        <p className="text-xs uppercase tracking-widest text-white/70 mb-2">Step 2 of 2</p>
+                        <h3 className="text-2xl font-extrabold text-white mb-2">How do you want to call?</h3>
+                        <p className="text-white/80 text-sm mb-8">
+                          Pick your method — you have 60 seconds once connected.
+                        </p>
+
+                        {/* Option A: I'll call the AI */}
+                        <a
+                          href={`tel:${CHALLENGE_PHONE_NUMBER}`}
+                          onClick={handleStartCall}
+                          className="w-full flex items-center gap-4 p-4 bg-white/10 border border-white/30 rounded-xl hover:bg-white/20 transition-colors mb-3"
+                        >
+                          <div className="w-10 h-10 bg-white/20 rounded-lg grid place-items-center flex-shrink-0">
+                            <Phone className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="text-left flex-1">
+                            <p className="text-white font-bold text-sm">I'll call the AI</p>
+                            <p className="text-white/70 text-xs">{CHALLENGE_PHONE_DISPLAY}</p>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-white/60 flex-shrink-0" />
+                        </a>
+
+                        {/* Option B: AI calls me */}
+                        <button
+                          onClick={() => setStep('ai-calling-form')}
+                          className="w-full flex items-center gap-4 p-4 bg-white/10 border border-white/30 rounded-xl hover:bg-white/20 transition-colors"
+                        >
+                          <div className="w-10 h-10 bg-white/20 rounded-lg grid place-items-center flex-shrink-0">
+                            <PhoneCall className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="text-left flex-1">
+                            <p className="text-white font-bold text-sm">Have the AI call me</p>
+                            <p className="text-white/70 text-xs">We'll call you within 30 seconds</p>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-white/60 flex-shrink-0" />
+                        </button>
+
+                        <button
+                          onClick={() => setStep('submit')}
+                          className="mt-6 w-full text-center text-white/60 hover:text-white text-sm transition-colors"
+                        >
+                          Already have the code? Submit it here
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {/* Step 2b: AI calls me — enter phone */}
+                    {step === 'ai-calling-form' && (
+                      <motion.div
+                        key="ai-calling-form"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -16 }}
+                        className="flex flex-col justify-center h-full"
                       >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                        Try Again
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                        <h3 className="text-2xl font-extrabold text-white mb-2">We'll call you</h3>
+                        <p className="text-white/80 text-sm mb-8">
+                          Enter your number and we'll connect you to the AI within 30 seconds.
+                        </p>
+                        <form
+                          onSubmit={async (e) => {
+                            e.preventDefault();
+                            if (!phone.trim()) return;
+                            try {
+                              await fetch(`${API_BASE}/call-me`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ email: email.trim(), phone: phone.trim() }),
+                              });
+                            } catch { /* silent */ }
+                            setStep('ai-calling');
+                          }}
+                          className="space-y-4"
+                        >
+                          <input
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="+1 555 000 0000"
+                            required
+                            autoFocus
+                            className="w-full px-4 py-3 rounded-md bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+                          />
+                          <button
+                            type="submit"
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-blue font-bold rounded-md hover:bg-gray-50 transition-colors"
+                          >
+                            Call Me Now
+                            <PhoneCall className="w-4 h-4" />
+                          </button>
+                        </form>
+                        <button
+                          onClick={() => setStep('options')}
+                          className="mt-4 w-full text-center text-white/60 hover:text-white text-sm transition-colors"
+                        >
+                          Go back
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {/* Step 3: Active call timer (user called AI) */}
+                    {step === 'calling' && (
+                      <motion.div
+                        key="calling"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex flex-col items-center justify-center text-center h-full"
+                      >
+                        <div className="mb-6">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 border border-white/30 rounded-full">
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                            <span className="text-white font-bold text-sm">CALL IN PROGRESS</span>
+                          </div>
+                        </div>
+
+                        <div className="w-24 h-24 bg-white/20 border-2 border-white/40 rounded-full grid place-items-center mb-4">
+                          <Phone className="w-10 h-10 text-white" />
+                        </div>
+
+                        <p className="text-5xl font-mono font-bold text-white mb-2">{formatTimer(callTimer)}</p>
+                        <p className="text-white/70 text-sm mb-8">
+                          {callTimer < 60 ? 'Try to extract the code...' : 'Time is up. Did you get it?'}
+                        </p>
+
+                        <button
+                          onClick={handleEndCall}
+                          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-blue font-bold rounded-md hover:bg-gray-50 transition-colors mb-3"
+                        >
+                          I'm Done — Submit My Code
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={handleReset}
+                          className="text-white/60 hover:text-white text-sm transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {/* Step 3b: AI is calling the user */}
+                    {step === 'ai-calling' && (
+                      <motion.div
+                        key="ai-calling"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex flex-col items-center justify-center text-center h-full"
+                      >
+                        <div className="w-20 h-20 bg-white/20 border-2 border-white/40 rounded-full grid place-items-center mb-6">
+                          <PhoneCall className="w-10 h-10 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-2">Calling you now...</h3>
+                        <p className="text-white/80 text-sm mb-8 max-w-xs">
+                          Pick up — you have 60 seconds to extract the secret code from our AI receptionist.
+                        </p>
+                        <button
+                          onClick={handleEndCall}
+                          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-blue font-bold rounded-md hover:bg-gray-50 transition-colors mb-3"
+                        >
+                          I Got the Code — Submit It
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={handleReset}
+                          className="text-white/60 hover:text-white text-sm transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {/* Step 4: Submit code */}
+                    {step === 'submit' && (
+                      <motion.div
+                        key="submit"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex flex-col justify-center h-full"
+                      >
+                        <div className="flex items-center gap-3 mb-6">
+                          <div className="w-10 h-10 bg-white/20 border border-white/30 rounded-lg grid place-items-center">
+                            <Lock className="w-5 h-5 text-white" />
+                          </div>
+                          <h3 className="text-2xl font-bold text-white">Submit Your Code</h3>
+                        </div>
+
+                        {callTimer > 0 && (
+                          <div className="bg-white/10 border border-white/20 rounded-lg px-4 py-2 mb-6 inline-flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-white/70" />
+                            <span className="text-white/90 text-sm">Call duration: {formatTimer(callTimer)}</span>
+                          </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                          <div>
+                            <label className="text-white/70 text-xs font-bold uppercase tracking-wider">Your Name *</label>
+                            <input
+                              type="text"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="Your name"
+                              className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/30 rounded-md text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-white/70 text-xs font-bold uppercase tracking-wider">Secret Code *</label>
+                            <input
+                              type="text"
+                              value={code}
+                              onChange={(e) => setCode(e.target.value)}
+                              placeholder="Enter the code you extracted..."
+                              className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/30 rounded-md text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm font-mono tracking-widest uppercase"
+                              autoFocus
+                              required
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-white/70 text-xs font-bold uppercase tracking-wider">Technique used?</label>
+                            <input
+                              type="text"
+                              value={technique}
+                              onChange={(e) => setTechnique(e.target.value)}
+                              placeholder="e.g. impersonated tech support..."
+                              className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/30 rounded-md text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+                            />
+                          </div>
+
+                          {error && <p className="text-red-200 text-sm">{error}</p>}
+
+                          <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="w-full inline-flex items-center justify-center px-6 py-3 bg-white text-brand-blue font-bold rounded-md hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {isSubmitting ? 'Checking...' : 'Submit Code'}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleReset}
+                            className="w-full text-center text-white/60 hover:text-white text-sm transition-colors"
+                          >
+                            Go back
+                          </button>
+                        </form>
+                      </motion.div>
+                    )}
+
+                    {/* Step 5: Result */}
+                    {step === 'result' && result && (
+                      <motion.div
+                        key="result"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex flex-col items-center justify-center text-center h-full"
+                      >
+                        {result.winner ? (
+                          <>
+                            <div className="w-20 h-20 bg-white/20 border-2 border-white/40 rounded-full grid place-items-center mb-6">
+                              <Trophy className="w-10 h-10 text-white" />
+                            </div>
+                            <h3 className="text-3xl font-bold text-white mb-2">You Cracked It!</h3>
+                            <p className="text-white/80 mb-6">{result.message}</p>
+                            <div className="bg-white/10 border border-white/30 rounded-xl p-6 mb-6 w-full">
+                              <Award className="w-8 h-8 text-white mx-auto mb-2" />
+                              <p className="text-white font-bold text-lg">Free Professional Website</p>
+                              <p className="text-white/70 text-sm mt-1">$2,500 value. We'll reach out within 24 hours.</p>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="w-20 h-20 bg-white/20 border-2 border-white/40 rounded-full grid place-items-center mb-6">
+                              <Shield className="w-10 h-10 text-white" />
+                            </div>
+                            <h3 className="text-3xl font-bold text-white mb-2">AI Held Strong</h3>
+                            <p className="text-white/80 mb-2">{result.message}</p>
+                            {result.attempts && (
+                              <p className="text-white/60 text-sm mb-6">Your attempts this week: {result.attempts}</p>
+                            )}
+                            <div className="bg-white/10 border border-white/30 rounded-xl p-6 mb-6 w-full">
+                              <p className="text-white font-bold">Imagine this protecting YOUR business.</p>
+                              <p className="text-white/70 text-sm mt-1">Same AI. Your business name. Set up in 5 minutes.</p>
+                            </div>
+                          </>
+                        )}
+
+                        <div className="flex flex-col gap-3 w-full">
+                          <Link
+                            to="/free-website"
+                            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-brand-blue font-semibold rounded-md hover:bg-gray-50 transition-colors"
+                          >
+                            Get Your Free Website
+                            <ArrowRight className="w-4 h-4" />
+                          </Link>
+                          <button
+                            onClick={handleReset}
+                            className="inline-flex items-center justify-center gap-2 text-white/60 hover:text-white text-sm transition-colors"
+                          >
+                            <RefreshCw className="w-3.5 h-3.5" />
+                            Try Again
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+
+                  </AnimatePresence>
+                </div>
+
+              </div>
             </motion.div>
           </div>
         </section>
