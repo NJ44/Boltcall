@@ -10,7 +10,7 @@ const GiveawayBar: React.FC = () => {
             <div className="flex items-center justify-center py-0.5 sm:py-2 gap-2 sm:gap-3" style={{ minHeight: '43px' }}>
               <div className="flex items-center space-x-1 sm:space-x-3">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className="font-bold text-xs sm:text-lg text-white">Break My AI Challenge</span>
+                  <span className="font-bold text-xs sm:text-lg text-white">Break Our AI</span>
                   <span className="text-[10px] sm:text-sm lg:text-base text-white/80">
                     Crack the code in 60 seconds. Win a <strong className="text-white">free website</strong>.
                   </span>
