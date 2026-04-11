@@ -934,6 +934,43 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Industry Benchmarks Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Chiropractic Industry Benchmarks: Call Capture and Revenue Impact</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How top-performing chiropractic businesses compare to the average on call response</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Industry Average</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">Top Performers (AI-Assisted)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Calls answered rate', '78%', '99%+'],
+                  ['Missed calls/month (40 call avg)', '8 calls', '0–1 calls'],
+                  ['After-hours call coverage', 'Voicemail or none', '100% answered'],
+                  ['Avg. response to web leads', '47 minutes', 'Under 60 seconds'],
+                  ['Monthly revenue lost to missed calls', '$4,224', '$0–$500'],
+                  ['No-show rate', '18–25%', '8–12%'],
+                  ['Monthly Google review growth', '0–2 reviews', '8–15 reviews'],
+                  ['Setup time for 24/7 coverage', '2–4 weeks (hire)', '30 minutes (AI)'],
+                ].map(([metric, avg, best]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{avg}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{best}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

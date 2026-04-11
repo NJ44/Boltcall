@@ -569,6 +569,43 @@ const BlogHowToSetUpInstantLeadReply: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Setup Steps Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Setting Up Instant Lead Reply: Steps and Timeline</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">From zero to live instant response in under 30 minutes with Boltcall</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Step</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">What to Do</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Time Required</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Manual or Automated After Setup</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['1. Connect your phone number', 'Forward your business line to Boltcall or port a new number', '5 minutes', 'Automated forever after'],
+                  ['2. Train your AI receptionist', 'Enter your services, hours, and common FAQs', '10 minutes', 'Automated — updates in real time'],
+                  ['3. Connect your calendar', 'Sync Google Calendar, Calendly, or your scheduling software', '5 minutes', 'Automated — live booking'],
+                  ['4. Set your SMS template', 'Customize the follow-up text callers receive within 60 seconds', '5 minutes', 'Automated on every call'],
+                  ['5. Test with a live call', 'Call your number and verify the greeting and booking flow', '5 minutes', 'Done — go live'],
+                  ['6. Review first-week results', 'Check your dashboard for calls answered and appointments booked', '10 minutes/week', 'Monthly report automated'],
+                ].map(([step, what, time, status]) => (
+                  <tr key={step} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{step}</td>
+                    <td className="px-4 py-3 text-gray-600">{what}</td>
+                    <td className="px-4 py-3 text-gray-600">{time}</td>
+                    <td className="px-4 py-3 text-gray-600">{status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

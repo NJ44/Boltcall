@@ -489,6 +489,40 @@ const Blog5SignsAIReceptionist: React.FC = () => {
         </div>
       </div>
 
+
+      {/* 5 Signs Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">5 Signs Your Business Needs an AI Receptionist</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">A quick diagnostic to determine if an AI receptionist will deliver immediate ROI</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Warning Sign</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">What It Costs You</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">What AI Receptionist Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Calls going to voicemail', '$300–$1,500 per missed call in lifetime value', 'Answers every call, any hour'],
+                  ['No after-hours coverage', '30–50% of calls arrive outside business hours', '24/7 answering included in base plan'],
+                  ['High no-show rate (15%+)', 'Empty slots cost $200–$800 per cancellation', 'Automated reminders cut no-shows by 40%+'],
+                  ['Staff tied up with repeat questions', '2–4 hours per day handling basic inquiries', 'AI handles FAQs and booking automatically'],
+                  ['Google reviews not growing', 'Every 1-star drop = 5–9% revenue loss', 'Automated post-visit review request sequences'],
+                ].map(([sign, cost, fix]) => (
+                  <tr key={sign} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{sign}</td>
+                    <td className="px-4 py-3 text-red-600">{cost}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30">{fix}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

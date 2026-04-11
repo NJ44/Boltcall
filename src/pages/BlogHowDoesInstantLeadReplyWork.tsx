@@ -574,6 +574,43 @@ const BlogHowDoesInstantLeadReplyWork: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Instant Lead Reply Data Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">How Instant Lead Reply Works: Channel Comparison</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Response methods ranked by speed, conversion rate, and automation potential</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Response Channel</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Avg. Response Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Conversion Rate</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Can Be Automated</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['AI phone call (Boltcall)', 'Under 3 seconds', 'Highest — voice builds trust instantly', 'Yes — fully automated'],
+                  ['Automated SMS', 'Under 60 seconds', 'High — 98% open rate', 'Yes — fully automated'],
+                  ['Manual callback by staff', '5–30 minutes average', 'Moderate — lead may have moved on', 'No — requires staff action'],
+                  ['Email reply', '1–4 hours average', 'Low — easy to ignore', 'Partial — templates only'],
+                  ['Live chat reply', '5–15 minutes average', 'Moderate — if staffed', 'No — requires human agent'],
+                  ['No response (voicemail)', 'Never', 'Near zero — lead lost', 'Not applicable'],
+                ].map(([channel, time, rate, auto]) => (
+                  <tr key={channel} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{channel}</td>
+                    <td className="px-4 py-3 text-gray-600">{time}</td>
+                    <td className="px-4 py-3 text-gray-600">{rate}</td>
+                    <td className="px-4 py-3 text-gray-600">{auto}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

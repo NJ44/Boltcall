@@ -743,6 +743,44 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
         <footer className="mt-3 text-sm font-semibold text-gray-600">— Lead Response Management Study, <a href="https://www.leadresponsemanagement.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">LeadResponseManagement.org</a></footer>
       </blockquote>
 
+
+      {/* AI Receptionist Building Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Build vs. Buy: AI Receptionist Options Compared</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What it takes to build a custom AI receptionist vs. using a purpose-built solution</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Factor</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Build Your Own</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">Use Boltcall</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Setup time', '3–6 months of development', '30 minutes'],
+                  ['Upfront cost', '$15,000 – $100,000+', '$0'],
+                  ['Monthly cost', '$2,000 – $10,000 (infrastructure + maintenance)', '$79 – $179'],
+                  ['Voice quality', 'Depends on provider and tuning', 'Production-ready, trained on local businesses'],
+                  ['Calendar integration', 'Custom development required', 'Built in — connects to Google, Calendly, and more'],
+                  ['SMS follow-up', 'Must build separate workflow', 'Included — automated from day one'],
+                  ['Industry-specific training', 'You write every prompt', 'Pre-trained on your trade type'],
+                  ['Ongoing maintenance', 'Your team (or contractor)', 'Handled by Boltcall'],
+                  ['ROI timeline', '12–18 months to break even', '48–72 hours to positive ROI'],
+                ].map(([factor, build, buy]) => (
+                  <tr key={factor} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{factor}</td>
+                    <td className="px-4 py-3 text-gray-600">{build}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{buy}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -938,6 +938,42 @@ const AiReadinessScorecard: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* AI Readiness Benchmark Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Readiness Benchmarks by Business Score</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What your score means and what businesses in each range typically experience</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Score Range</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">AI Readiness Level</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Typical Missed Revenue/Month</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Top Priority Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['0–25', 'Not Ready', '$8,000 – $25,000+', 'Set up 24/7 call answering immediately'],
+                  ['26–50', 'Partially Ready', '$4,000 – $12,000', 'Add after-hours coverage and SMS follow-up'],
+                  ['51–75', 'Mostly Ready', '$1,500 – $5,000', 'Automate reminders and review requests'],
+                  ['76–90', 'Ready', '$500 – $2,000', 'Optimize response scripts and CRM sync'],
+                  ['91–100', 'Fully Optimized', 'Minimal', 'Focus on conversion rate and upsell automation'],
+                ].map(([score, level, revenue, action]) => (
+                  <tr key={score} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{score}</td>
+                    <td className="px-4 py-3 text-gray-600">{level}</td>
+                    <td className="px-4 py-3 text-red-600 font-medium">{revenue}</td>
+                    <td className="px-4 py-3 text-gray-600">{action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
