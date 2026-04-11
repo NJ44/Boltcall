@@ -169,6 +169,21 @@ const KnowledgeBasePage: React.FC = () => {
     }
   };
 
+  const handleRenameFolder = async (folderId: string, name: string) => {
+    if (!name.trim() || !user?.id) return;
+    try {
+      await fetch(`${FUNCTIONS_BASE}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'update_folder', userId: user.id, folderId, name: name.trim() }),
+      });
+      setRenamingFolderId(null);
+      fetchFolders();
+    } catch {
+      showToast({ title: 'Error', message: 'Failed to rename folder', variant: 'error', duration: 3000 });
+    }
+  };
+
   const selectedFolder = folders.find(f => f.id === selectedFolderId) || null;
 
   // KB Completeness state
