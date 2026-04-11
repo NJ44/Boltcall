@@ -53,9 +53,18 @@ const SEOAuditPDF: React.FC = () => {
     });
     document.head.appendChild(breadcrumbScript);
 
+    const cleanupService = injectSchemas([
+      createServiceSchema({
+        name: 'Free SEO & AEO Audit',
+        description: 'A free SEO and AEO (AI Engine Optimization) audit tool that analyzes your website and delivers a branded PDF report with scores, keyword rankings, and a prioritized action plan.',
+        url: '/seo-aeo-audit',
+      }),
+    ]);
+
     return () => {
       const bc = document.getElementById('breadcrumb-jsonld');
       if (bc) bc.remove();
+      cleanupService();
     };
   }, []);
 
