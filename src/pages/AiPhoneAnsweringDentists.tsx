@@ -27,6 +27,7 @@ const AiPhoneAnsweringDentists: React.FC = () => {
       },
       datePublished: '2026-04-01',
       dateModified: '2026-04-01',
+      image: { '@type': 'ImageObject', url: 'https://boltcall.org/og-image.jpg' },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': 'https://boltcall.org/blog/ai-phone-answering-dentists',
