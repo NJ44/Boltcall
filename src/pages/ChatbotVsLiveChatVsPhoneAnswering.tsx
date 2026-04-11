@@ -51,7 +51,14 @@ export default function ChatbotVsLiveChatVsPhoneAnswering() {
     script.text = JSON.stringify(structuredData);
     document.head.appendChild(script);
 
+    const personScript = document.createElement('script');
+    personScript.type = 'application/ld+json';
+    personScript.id = 'person-schema';
+    personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
+    document.head.appendChild(personScript);
+
     return () => {
+      document.getElementById('person-schema')?.remove();
       const existingScript = document.querySelector('script[type="application/ld+json"]');
       if (existingScript) {
         document.head.removeChild(existingScript);

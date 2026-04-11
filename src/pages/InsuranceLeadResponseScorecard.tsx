@@ -170,7 +170,14 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "Insurance Lead Response Scorecard", "item": "https://boltcall.org/tools/insurance-lead-response-scorecard"}]});
     document.head.appendChild(bcScript);
 
+    const personScript = document.createElement('script');
+    personScript.type = 'application/ld+json';
+    personScript.id = 'person-schema';
+    personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
+    document.head.appendChild(personScript);
+
     return () => {
+      document.getElementById('person-schema')?.remove();
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('insurance-scorecard-faq-schema')?.remove();
       document.getElementById('insurance-scorecard-article-schema')?.remove();
