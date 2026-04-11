@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { createServiceSchema, injectSchemas } from '../lib/schema';
 import { motion } from 'framer-motion';
 import {
   Search, Globe, BarChart3, AlertCircle, Loader, Mail,
