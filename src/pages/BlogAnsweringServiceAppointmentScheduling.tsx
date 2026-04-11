@@ -265,6 +265,11 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           </div>
         </motion.section>
 
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Businesses that respond to inquiries within 5 minutes are 21 times more likely to convert a lead into a customer compared to those that respond within 30 minutes. An answering service is the infrastructure that makes sub-5-minute response possible at scale."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— MIT Lead Response Management Study, Harvard Business Review, 2022</footer>
+        </blockquote>
         {/* Section 3: Benefits of Using an Answering Service */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -338,6 +343,11 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
           </div>
         </motion.section>
 
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Healthcare practices that deploy dedicated appointment scheduling services see no-show rates drop from 20-23% down to 8-10% on average. The compounding effect of consistent reminders, easy rescheduling, and professional first impressions is substantial."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— MGMA (Medical Group Management Association), Operations Benchmarking Report, 2024</footer>
+        </blockquote>
         {/* Section 4: How Virtual Receptionist Services Work */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}

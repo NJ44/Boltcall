@@ -704,6 +704,43 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
               </div>
             </motion.section>
 
+            {/* Pros & Cons */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.52 }}
+              className="mb-16"
+            >
+              <section className="my-10">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of an AI Answering Service for Small Businesses</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-green-50 rounded-xl p-6">
+                    <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                    <ul className="space-y-2 text-gray-700 text-sm">
+                      <li>Answers every call in under 2 rings — eliminates the 62% of leads lost to voicemail after hours</li>
+                      <li>Costs $49–$149/month versus $35,000–$50,000/year for a full-time receptionist</li>
+                      <li>Books appointments and captures lead data automatically, connected to your CRM or calendar</li>
+                      <li>Handles unlimited simultaneous inbound calls during peak hours without hold times</li>
+                      <li>Responds to web form submissions and SMS leads as well as phone calls</li>
+                      <li>Provides consistent, professional answers on every interaction regardless of time of day</li>
+                      <li>Setup takes under 30 minutes with industry-specific templates for most local service businesses</li>
+                    </ul>
+                  </div>
+                  <div className="bg-red-50 rounded-xl p-6">
+                    <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                    <ul className="space-y-2 text-gray-700 text-sm">
+                      <li>Requires initial configuration to train the AI on your services, pricing, and common questions</li>
+                      <li>May not handle very complex or unusual enquiries without escalating to a human</li>
+                      <li>Callers who strongly prefer human interaction may ask to speak with a staff member</li>
+                      <li>Knowledge base needs regular updates when services, hours, or pricing change</li>
+                      <li>Older phone infrastructure may need forwarding setup before the AI can intercept calls</li>
+                      <li>ROI is smaller for businesses with very low call volumes (under 20 calls/month)</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </motion.section>
+
             {/* CTA Block */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}

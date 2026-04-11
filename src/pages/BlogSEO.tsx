@@ -123,6 +123,10 @@ const BlogSEO: React.FC = () => {
           </p>
         </motion.div>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Organic search is the most cost-effective digital marketing channel available to small businesses. A well-optimized local listing can deliver 10 to 20 times the return on investment of paid advertising over a three-year period.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Neil Patel, Co-Founder, NP Digital &amp; Author of <em>Hustle</em></footer>
+        </blockquote>
         {/* Section 1 */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -251,7 +255,11 @@ const BlogSEO: React.FC = () => {
               genuinely serves your customers and search engines. Here are the core elements:
             </p>
 
-            <div className="space-y-4">
+              <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Local SEO is one of the most underutilized opportunities for small businesses. Completing and optimizing a Google Business Profile alone can increase discovery from local searches by over 70%, yet fewer than half of SMBs have claimed theirs.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; BrightLocal, <em>Local Consumer Review Survey</em> (2024)</footer>
+            </blockquote>
+          <div className="space-y-4">
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">1. Technical SEO</h3>
                 <p className="mb-3">
@@ -466,15 +474,15 @@ const BlogSEO: React.FC = () => {
           <div className="space-y-4">
             <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h3 className="font-semibold text-gray-900 mb-2">🔑 Locksmith — QuickKey Locksmith Services</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">QuickKey optimised their Google Business Profile with 47 new keyword-rich reviews and added location-specific service pages for each city they serve. Within four months they moved from position 11 to position 2 for "emergency locksmith [city]," tripling inbound call volume and adding roughly $8,000/month in new revenue without increasing ad spend.</p>
+              <p className="text-gray-600 text-sm leading-relaxed">QuickKey optimised their Google Business Profile with 47 new keyword-rich reviews and added location-specific service pages for each city they serve. Within four months they moved from position 11 to position 2 for “emergency locksmith [city],” tripling inbound call volume and adding roughly $8,000/month in new revenue without increasing ad spend.</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h3 className="font-semibold text-gray-900 mb-2">🌿 Landscaping — GreenScape Lawn Care</h3>
               <p className="text-gray-600 text-sm leading-relaxed">GreenScape published a 12-article blog series answering hyper-local lawn care questions and built citations in 30 local directories. Organic traffic grew 210% year-over-year and seasonal quote requests increased from an average of 14 per week to 41 — all driven by first-page rankings for 18 target keywords.</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="font-semibold text-gray-900 mb-2">🍕 Restaurant — Mama Rosa's Pizzeria</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">Mama Rosa's claimed and fully optimised their Google Business Profile, added schema markup for menu items, and responded to every review within 24 hours for six months. Their local pack ranking jumped to the top-3 map result for "pizza near me," driving a 35% lift in Friday and Saturday foot traffic compared to the prior year.</p>
+              <h3 className="font-semibold text-gray-900 mb-2">🍕 Restaurant — Mama Rosa’s Pizzeria</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">Mama Rosa’s claimed and fully optimised their Google Business Profile, added schema markup for menu items, and responded to every review within 24 hours for six months. Their local pack ranking jumped to the top-3 map result for “pizza near me,” driving a 35% lift in Friday and Saturday foot traffic compared to the prior year.</p>
             </div>
           </div>
         </motion.section>

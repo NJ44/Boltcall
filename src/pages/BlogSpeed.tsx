@@ -173,6 +173,12 @@ const BlogSpeed: React.FC = () => {
                 </li>
               </ul>
             </div>
+
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Responding to a web-generated lead within one minute increases the odds of qualifying that lead by nearly 400 percent compared to waiting even five minutes. Speed is not a courtesy — it is the single most important variable in lead conversion.&rdquo;</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dr. James Oldroyd, MIT Sloan School of Management, <em>Speed-to-Lead Research</em></footer>
+          </blockquote>
+
           </div>
         </motion.section>
 
@@ -312,6 +318,10 @@ const BlogSpeed: React.FC = () => {
               60 seconds, you're leaving money on the table. A lot of money.
             </p>
             
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The businesses that will win the next decade are not those with the most resources — they are those that move fastest. Response time is the new competitive moat, and AI is the only way to defend it around the clock.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Salesforce Research, <em>State of the Connected Customer Report</em> (2024)</footer>
+            </blockquote>
             <p>
               The 391% advantage is real. The data is clear. And the solution is here. 
               The question is: will you be fast enough to capture it?

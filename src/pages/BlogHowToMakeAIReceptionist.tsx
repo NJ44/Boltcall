@@ -625,6 +625,42 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* Pros & Cons Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.48 }}
+          className="mb-16"
+        >
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Building vs. Buying an AI Receptionist</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• No-code platforms let non-technical teams launch in under an hour</li>
+                  <li>• Pre-built speech &amp; NLP pipelines eliminate months of engineering work</li>
+                  <li>• Managed services handle uptime, updates, and scaling automatically</li>
+                  <li>• Deep CRM and calendar integrations available out of the box</li>
+                  <li>• Cost-effective compared to hiring developers to build from scratch</li>
+                  <li>• Continuous model improvements without extra effort on your part</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Custom-built solutions offer more control but require significant dev time</li>
+                  <li>• Vendor lock-in if you rely on a single platform API</li>
+                  <li>• Knowledge base quality directly limits the AI accuracy</li>
+                  <li>• Edge-case call flows need careful scripting and testing</li>
+                  <li>• Building from scratch risks obsolescence as LLMs evolve rapidly</li>
+                  <li>• Integration with niche legacy systems may require custom work</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </motion.div>
+
         {/* Conclusion */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

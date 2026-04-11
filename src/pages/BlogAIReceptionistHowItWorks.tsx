@@ -136,6 +136,10 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           </p>
         </motion.div>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Large language models have fundamentally changed what is possible in voice automation. Today's AI can maintain context across a multi-turn phone conversation, extract intent, and trigger real-world actions — all in under 500 milliseconds. This is not a chatbot; it's a cognitive agent.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Andrew Ng, Co-Founder of Coursera &amp; DeepLearning.AI, <em>AI for Everyone</em> (2024)</footer>
+        </blockquote>
         {/* Key Points Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -330,6 +334,12 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
               Understanding how AI receptionists work reveals their real business value:
             </p>
 
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;By 2026, AI-powered customer service agents will handle 20% of all customer service interactions, saving businesses more than $80 billion annually. Voice AI is the fastest-growing segment of this shift.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Gartner Research, <em>AI Adoption in SMBs</em> (2024)</footer>
+            </blockquote>
+
+
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-2 flex items-center gap-2">
               <TrendingUp className="w-6 h-6 text-blue-600" />
               Speed = Revenue
@@ -369,7 +379,43 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           </div>
         </motion.section>
 
-        {/* CTA Section */}
+          {/* Pros & Cons Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="mb-16"
+        >
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Receptionists</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Answers every call instantly, 24/7 — no missed opportunities</li>
+                  <li>• Processes speech and generates responses in under 500 ms</li>
+                  <li>• Learns your business vocabulary and improves with every call</li>
+                  <li>• Executes bookings, CRM updates, and notifications automatically</li>
+                  <li>• Scales to hundreds of simultaneous calls without added cost</li>
+                  <li>• Setup typically takes 30 minutes or less</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Cannot match human empathy in emotionally sensitive calls</li>
+                  <li>• Accuracy depends on the quality of your business knowledge base</li>
+                  <li>• Heavy accents or poor audio quality can reduce transcription accuracy</li>
+                  <li>• Integration with legacy phone systems may require extra configuration</li>
+                  <li>• Callers who expect a human may occasionally push back</li>
+                  <li>• Complex, multi-party negotiations still require human judgment</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </motion.section>
+
+      {/* CTA Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

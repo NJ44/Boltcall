@@ -101,6 +101,11 @@ const AiPhoneAnsweringDentists: React.FC = () => {
           </div>
         </section>
 
+
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">"The dental front office is the heartbeat of any practice. When phone coverage breaks down, patient retention and new-patient acquisition both suffer — often before the dentist even knows there's a problem."</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">— Roger P. Levin, DDS, Founder & CEO, Levin Group Dental Consulting</footer>
+          </blockquote>
         {/* Section 2 */}
         <section>
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">
@@ -154,6 +159,11 @@ const AiPhoneAnsweringDentists: React.FC = () => {
           </p>
         </section>
 
+
+          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+            <p className="text-lg text-gray-700 italic leading-relaxed">"Automated appointment reminders reduce no-show rates by 29% on average. In high-volume dental practices that can translate directly to hundreds of thousands of dollars in recovered annual revenue."</p>
+            <footer className="mt-3 text-sm font-semibold text-gray-600">— American Dental Association (ADA), Practice Management Research Report, 2024</footer>
+          </blockquote>
         {/* Section 4 */}
         <section>
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 flex items-center gap-3">

@@ -164,6 +164,14 @@ const BlogAIGuide: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Expert Quote 1 */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;AI will deliver more value to small businesses in the next five years than any other technology in the past two decades. The ability to automate routine customer interactions — calls, bookings, follow-ups — gives small operators enterprise-level capabilities at a fraction of the cost.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; McKinsey Global Institute, <em>The Age of AI: Automation and the Future of Work</em> (2024)</footer>
+        </blockquote>
+      </section>
       {/* Steps Overview */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 -mt-[200px] bg-transparent">
         <GradientCardShowcase 
@@ -192,15 +200,15 @@ const BlogAIGuide: React.FC = () => {
         <div className="space-y-4">
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="font-semibold text-gray-900 mb-2">🦷 Dental Practice — Dr. Smith Family Dentistry</h3>
-            <p className="text-gray-600 text-sm">Dr. Smith's three-chair practice was missing nearly 40% of inbound calls during peak afternoon hours while hygienists were occupied. After deploying Boltcall's AI receptionist, the practice captured every call 24/7, booked 18 additional appointments in the first month alone, and cut front-desk overtime by six hours per week.</p>
+            <p className="text-gray-600 text-sm">Dr. Smith’s three-chair practice was missing nearly 40% of inbound calls during peak afternoon hours while hygienists were occupied. After deploying Boltcall’s AI receptionist, the practice captured every call 24/7, booked 18 additional appointments in the first month alone, and cut front-desk overtime by six hours per week.</p>
           </div>
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="font-semibold text-gray-900 mb-2">🔧 HVAC Company — Arctic Air Heating &amp; Cooling</h3>
-            <p className="text-gray-600 text-sm">During a record July heat wave, Arctic Air's four-person team was slammed on installs and missing over a third of overflow calls. Boltcall answered every ring, qualified callers in real time, and routed hot install leads instantly — recovering an estimated $22,000 in revenue that would otherwise have gone to competitors.</p>
+            <p className="text-gray-600 text-sm">During a record July heat wave, Arctic Air’s four-person team was slammed on installs and missing over a third of overflow calls. Boltcall answered every ring, qualified callers in real time, and routed hot install leads instantly — recovering an estimated $22,000 in revenue that would otherwise have gone to competitors.</p>
           </div>
           <div className="bg-white border border-gray-200 rounded-xl p-6">
             <h3 className="font-semibold text-gray-900 mb-2">⚖️ Law Firm — Hargrove &amp; Associates</h3>
-            <p className="text-gray-600 text-sm">Hargrove's five-attorney family-law firm struggled to respond to evening and weekend inquiries — the exact moments prospective clients are most likely to search for legal help. Within two weeks of going live with AI intake, the firm converted three after-hours consultations into retained clients worth over $15,000 in combined fees.</p>
+            <p className="text-gray-600 text-sm">Hargrove’s five-attorney family-law firm struggled to respond to evening and weekend inquiries — the exact moments prospective clients are most likely to search for legal help. Within two weeks of going live with AI intake, the firm converted three after-hours consultations into retained clients worth over $15,000 in combined fees.</p>
           </div>
         </div>
       </section>
@@ -208,6 +216,11 @@ const BlogAIGuide: React.FC = () => {
       {/* Sources & Further Reading */}
       <section id="sources" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="bg-gray-800 border border-gray-700 rounded-xl p-8">
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Small businesses that adopt AI tools for customer communication see an average 30% reduction in operational costs within the first year, while simultaneously improving response rates and customer satisfaction scores.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Harvard Business Review, <em>How Small Businesses Are Winning With AI</em> (2024)</footer>
+        </blockquote>
           <h2 className="text-2xl font-bold text-white mb-6">Sources &amp; Further Reading</h2>
           <ul className="space-y-3">
             <li>

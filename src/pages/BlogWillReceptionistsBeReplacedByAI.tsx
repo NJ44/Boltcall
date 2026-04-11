@@ -560,6 +560,42 @@ const BlogWillReceptionistsBeReplacedByAI: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* Pros & Cons Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.43 }}
+          className="mb-16"
+        >
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of AI Replacing Receptionist Roles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros of AI Taking Over Routine Tasks</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Frees human staff to focus on high-value, relationship-driven work</li>
+                  <li>• Eliminates coverage gaps — nights, weekends, and holidays included</li>
+                  <li>• Consistent, error-free handling of scheduling and FAQs at scale</li>
+                  <li>• Dramatic cost reduction vs. full-time front-desk staffing</li>
+                  <li>• Businesses report measurable gains in booked appointments</li>
+                  <li>• Reduces employee burnout from repetitive, high-volume call work</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons and Limitations</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• AI lacks the emotional intelligence for sensitive or distressed callers</li>
+                  <li>• Highly complex or irregular requests still trip up even advanced models</li>
+                  <li>• Full replacement risks damaging brand perception in high-touch industries</li>
+                  <li>• Human receptionists provide genuine relationship continuity AI cannot</li>
+                  <li>• Over-automation can frustrate callers who need nuanced assistance</li>
+                  <li>• Workforce displacement is a real ethical consideration for businesses</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </motion.div>
+
         {/* Conclusion */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

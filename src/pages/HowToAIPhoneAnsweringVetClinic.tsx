@@ -8,11 +8,25 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import FinalCTA, { HOW_TO_CTA } from '../components/FinalCTA';
+import TableOfContents from '../components/TableOfContents';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+const headings = [
+  { id: 'step-1', text: 'Step 1: Audit Your Current Call Volume', level: 2 },
+  { id: 'step-2', text: 'Step 2: Choose an AI Phone Answering Provider', level: 2 },
+  { id: 'step-3', text: "Step 3: Set Up Your Clinic's Knowledge Base", level: 2 },
+  { id: 'step-4', text: 'Step 4: Configure Appointment Booking Rules', level: 2 },
+  { id: 'step-5', text: 'Step 5: Set Up Automated Appointment Reminders', level: 2 },
+  { id: 'step-6', text: 'Step 6: Activate After-Hours and Emergency Call Routing', level: 2 },
+  { id: 'step-7', text: 'Step 7: Go Live and Monitor Performance', level: 2 },
+  { id: 'results', text: 'What Results to Expect', level: 2 },
+  { id: 'related-resources', text: 'Related Resources', level: 2 },
+  { id: 'faq', text: 'Frequently Asked Questions', level: 2 },
+];
 
 const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -336,7 +350,8 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
       <GiveawayBar />
       <Header />
 
-      <main className="flex-grow bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-8 items-start">
+        <main className="flex-grow bg-white min-w-0">
         {/* Hero Section */}
         <section className="bg-white py-16 md:py-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -446,7 +461,7 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
                           {step.number}
                         </div>
                         <div className="flex-1">
-                          <h2 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight">
+                          <h2 id={`step-${step.number}`} className="text-xl md:text-2xl font-bold text-gray-900 leading-tight">
                             Step {step.number}: {step.title}
                           </h2>
                         </div>
@@ -470,7 +485,7 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+              <h2 id="results" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
                 What Results to Expect
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -501,7 +516,7 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
+              <h2 id="related-resources" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {relatedResources.map((resource, index) => {
                   const Icon = resource.icon;
@@ -540,7 +555,7 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+              <h2 id="faq" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
                 Frequently Asked Questions
               </h2>
               <div className="space-y-3">
@@ -574,7 +589,11 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
 
         {/* CTA */}
         <FinalCTA {...HOW_TO_CTA} />
-      </main>
+        </main>
+        <div className="hidden lg:block w-64 flex-shrink-0 pt-32">
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </>

@@ -106,6 +106,34 @@ export function createProductSchema(config: ProductConfig) {
   };
 }
 
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export function createBreadcrumbSchema(items: BreadcrumbItem[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `https://boltcall.org${item.url}`,
+    })),
+  };
+}
+
+export function createPersonSchema(name: string, url?: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name,
+    url: url ?? 'https://boltcall.org',
+  };
+}
+
 /**
  * Inject one or more JSON-LD schema objects into <head>.
  * Returns a cleanup function suitable for useEffect.

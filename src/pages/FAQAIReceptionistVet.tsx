@@ -8,11 +8,17 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import FinalCTA, { BLOG_CTA } from '../components/FinalCTA';
+import TableOfContents from '../components/TableOfContents';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+const headings = [
+  { id: 'faq-section', text: '20 Questions About AI Receptionists for Veterinary Clinics', level: 2 },
+  { id: 'related-resources', text: 'Related Resources', level: 2 },
+];
 
 const faqs = [
   {
@@ -177,7 +183,8 @@ const FAQAIReceptionistVet: React.FC = () => {
       <GiveawayBar />
       <Header />
 
-      <main className="flex-grow bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-8 items-start">
+        <main className="flex-grow bg-white min-w-0">
         {/* Hero Section */}
         <section className="bg-white py-16 md:py-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -277,7 +284,7 @@ const FAQAIReceptionistVet: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+              <h2 id="faq-section" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
                 20 Questions About AI Receptionists for Veterinary Clinics
               </h2>
               <div className="space-y-3">
@@ -309,6 +316,47 @@ const FAQAIReceptionistVet: React.FC = () => {
           </div>
         </section>
 
+
+        {/* Pros & Cons */}
+        <section className="py-16 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+            >
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Using an AI Receptionist for Veterinary Clinics</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-green-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>Answers every call instantly — no missed calls during busy lobby check-ins or multi-line rushes</li>
+                    <li>Triages emergency calls 24/7 and routes life-threatening situations directly to the on-call vet</li>
+                    <li>Books species-specific appointments with correct durations and scheduling rules automatically</li>
+                    <li>Reduces no-shows by 30–50% through automated 48-hour and 2-hour SMS reminders</li>
+                    <li>Handles prescription refill requests without interrupting front desk or clinical staff</li>
+                    <li>Sends automated vaccination and wellness reminders, increasing compliance by 20–35%</li>
+                    <li>Integrates with Cornerstone, AVImark, eVetPractice, and other practice management systems</li>
+                    <li>Costs $99–$249/month vs. $30,000–$40,000/year for a full-time receptionist hire</li>
+                  </ul>
+                </div>
+                <div className="bg-red-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>Requires initial setup (1–2 hours) to configure appointment types, triage logic, and species-specific rules</li>
+                    <li>Cannot provide medical advice or diagnoses — complex clinical questions must go to a veterinarian</li>
+                    <li>Triage decision tree must be carefully configured to avoid under- or over-escalating calls</li>
+                    <li>Very distressed or emotional callers may still prefer to speak with a human team member</li>
+                    <li>Practice management integrations may need technical configuration for older or niche systems</li>
+                    <li>AI cannot assess pet behaviour or symptoms that require clinical judgement beyond structured triage questions</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Related Resources */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -318,7 +366,7 @@ const FAQAIReceptionistVet: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
+              <h2 id="related-resources" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
                   to="/tools/vet-clinic-revenue-calculator"
@@ -412,7 +460,11 @@ const FAQAIReceptionistVet: React.FC = () => {
 
         {/* CTA */}
         <FinalCTA {...BLOG_CTA} />
-      </main>
+        </main>
+        <div className="hidden lg:block w-64 flex-shrink-0 pt-32">
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </>

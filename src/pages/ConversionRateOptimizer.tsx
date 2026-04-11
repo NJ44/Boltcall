@@ -312,6 +312,27 @@ const ConversionRateOptimizer: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Why Boltcall? */}
+      <section className="my-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Why Businesses Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { title: 'Captures leads while you optimise', desc: 'Every visitor who calls after reading your CRO report gets answered instantly — no voicemail, no lost lead' },
+              { title: 'Responds in under 1 second', desc: 'Never miss a lead — 24/7 coverage including weekends and after-hours, when most conversions are lost' },
+              { title: 'Setup in 30 minutes', desc: 'No developers, no tech team — just answer a few questions and your AI receptionist is live' },
+              { title: 'Trained on your business', desc: 'Knows your services, pricing, and FAQs — sounds like you, not a generic bot' },
+            ].map((item) => (
+              <div key={item.title} className="bg-white rounded-xl p-4 shadow-sm">
+                <div className="font-semibold text-gray-900 mb-1">✓ {item.title}</div>
+                <div className="text-sm text-gray-600">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <FAQ />
 
       {/* Social Proof */}

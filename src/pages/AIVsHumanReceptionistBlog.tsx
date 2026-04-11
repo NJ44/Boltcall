@@ -515,6 +515,42 @@ const AIVsHumanReceptionistBlog: React.FC = () => {
           </div>
         </div>
 
+        {/* Pros & Cons Section */}
+        <motion.div
+          className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <section className="my-10">
+            <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons: AI Receptionist vs. Human Receptionist</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ AI Receptionist Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Available 24/7 — no after-hours gaps or holiday coverage issues</li>
+                  <li>• 70–90% lower total cost of ownership than a full-time hire</li>
+                  <li>• Answers instantly with zero hold time, improving caller satisfaction</li>
+                  <li>• Handles hundreds of calls simultaneously without scaling costs</li>
+                  <li>• Consistent quality every call — no bad days or rushed responses</li>
+                  <li>• Automatically logs every call, books appointments, and updates CRM</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ AI Receptionist Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>• Lacks genuine empathy for distressed or complex emotional situations</li>
+                  <li>• Cannot build the long-term client relationships humans naturally form</li>
+                  <li>• Unexpected or highly unusual requests may be handled incorrectly</li>
+                  <li>• Some callers in high-touch industries strongly prefer a human voice</li>
+                  <li>• Initial knowledge-base setup and scripting requires time investment</li>
+                  <li>• Requires periodic review to catch and correct edge-case errors</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </motion.div>
+
         {/* CTA Section */}
         <motion.div
           className="py-20 bg-gray-50"

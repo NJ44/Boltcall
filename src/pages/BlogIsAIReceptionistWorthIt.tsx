@@ -451,6 +451,43 @@ const BlogIsAIReceptionistWorthIt: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* Pros & Cons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.42 }}
+          className="mb-16"
+        >
+          <section className="my-10">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of an AI Receptionist</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-green-50 rounded-xl p-6">
+                <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>90–97% cheaper than a human receptionist while providing 24/7 coverage</li>
+                  <li>Responds in under 2 seconds — 391% higher conversion rate vs. a 5-minute response</li>
+                  <li>Never calls in sick, goes on vacation, or has a bad day</li>
+                  <li>Handles unlimited simultaneous calls with no hold times during peak periods</li>
+                  <li>Scales from 10 to 1,000+ calls per month with no additional cost</li>
+                  <li>Captures after-hours leads that previously went straight to voicemail</li>
+                  <li>Pays for itself with just 1–3 captured bookings per month in most service businesses</li>
+                </ul>
+              </div>
+              <div className="bg-red-50 rounded-xl p-6">
+                <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>Requires initial setup time to configure workflows, FAQs, and business-specific responses</li>
+                  <li>May not handle very complex, multi-step problem solving without escalating to a human</li>
+                  <li>Some customers — particularly older demographics — may prefer speaking with a person</li>
+                  <li>Knowledge base must be kept current as services, pricing, or team availability changes</li>
+                  <li>ROI is lower for very low-volume businesses (under 20 calls/month)</li>
+                  <li>Does not eliminate the need for human staff — complements rather than replaces your team</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </motion.div>
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

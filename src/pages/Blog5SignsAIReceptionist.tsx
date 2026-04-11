@@ -178,6 +178,11 @@ const Blog5SignsAIReceptionist: React.FC = () => {
               </p>
             </div>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Missed calls are not an operational inconvenience — they are a revenue event. For service businesses, each missed inbound call represents a lost opportunity worth hundreds to thousands of dollars in lifetime customer value. Automating that first touchpoint is the highest-ROI move available.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dharmesh Shah, Co-Founder &amp; CTO of HubSpot, <em>HubSpot State of Marketing Report</em> (2024)</footer>
+            </blockquote>
             {/* Sign 1 */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
@@ -264,6 +269,11 @@ const Blog5SignsAIReceptionist: React.FC = () => {
               </div>
             </motion.section>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;AI receptionist technology has reached the point where the total cost of ownership is 70 to 90 percent lower than a staffed front desk, while delivering measurably higher availability, consistency, and customer satisfaction scores.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Gartner, <em>Market Guide for Conversational AI Platforms</em> (2024)</footer>
+            </blockquote>
             {/* Sign 4 */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
@@ -345,6 +355,43 @@ const Blog5SignsAIReceptionist: React.FC = () => {
                   </li>
                 </ol>
               </div>
+            </motion.section>
+
+            {/* Pros & Cons Section */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-16"
+            >
+              <section className="my-10">
+                <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Using an AI Receptionist</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-green-50 rounded-xl p-6">
+                    <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                    <ul className="space-y-2 text-gray-700 text-sm">
+                      <li>• Eliminates missed calls — every lead is captured, 24/7</li>
+                      <li>• Responds in under 1 second, boosting conversions by up to 391%</li>
+                      <li>• Costs a fraction of a full-time receptionist salary</li>
+                      <li>• No sick days, vacations, or overtime — always available</li>
+                      <li>• Books appointments and qualifies leads automatically</li>
+                      <li>• Scales instantly during busy seasons without extra hiring</li>
+                    </ul>
+                  </div>
+                  <div className="bg-red-50 rounded-xl p-6">
+                    <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                    <ul className="space-y-2 text-gray-700 text-sm">
+                      <li>• Some customers still prefer speaking to a human immediately</li>
+                      <li>• Requires initial setup and knowledge-base configuration</li>
+                      <li>• Nuanced complaints or upset callers may need human escalation</li>
+                      <li>• Voice quality matters — a poor AI voice reflects badly on your brand</li>
+                      <li>• Cannot replace relationship-driven sales conversations</li>
+                      <li>• Ongoing monitoring needed to catch edge-case errors</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
             </motion.section>
 
             {/* FAQ Section */}

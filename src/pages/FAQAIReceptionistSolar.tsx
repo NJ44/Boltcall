@@ -8,11 +8,17 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import FinalCTA, { BLOG_CTA } from '../components/FinalCTA';
+import TableOfContents from '../components/TableOfContents';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+const headings = [
+  { id: 'faq-section', text: '20 Questions About AI Receptionists for Solar Companies', level: 2 },
+  { id: 'related-resources', text: 'Related Resources', level: 2 },
+];
 
 const faqs = [
   {
@@ -173,7 +179,8 @@ const FAQAIReceptionistSolar: React.FC = () => {
       <GiveawayBar />
       <Header />
 
-      <main className="flex-grow bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-8 items-start">
+        <main className="flex-grow bg-white min-w-0">
         {/* Hero Section */}
         <section className="bg-white py-16 md:py-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -273,7 +280,7 @@ const FAQAIReceptionistSolar: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+              <h2 id="faq-section" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
                 20 Questions About AI Receptionists for Solar Companies
               </h2>
               <div className="space-y-3">
@@ -305,6 +312,47 @@ const FAQAIReceptionistSolar: React.FC = () => {
           </div>
         </section>
 
+
+        {/* Pros & Cons */}
+        <section className="py-16 bg-white">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+            >
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Using an AI Receptionist for Solar Companies</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-green-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>Answers every call instantly — captures leads at peak motivation before they call a competitor</li>
+                    <li>Qualifies homeowners automatically (ownership, roof age, utility bill, service area) in 2–3 minutes</li>
+                    <li>Books site survey appointments 24/7, including evenings when most solar inquiries come in</li>
+                    <li>Handles seasonal call spikes without additional hiring or training costs</li>
+                    <li>Provides accurate, up-to-date information on financing, federal ITC, and state incentives</li>
+                    <li>Integrates with solar CRMs (Salesforce, Aurora Solar, Enerflo) to create qualified leads automatically</li>
+                    <li>Reduces site survey no-shows by 30–40% through automated reminders</li>
+                    <li>Costs $99–$249/month vs. $35,000–$50,000/year for a dedicated appointment setter</li>
+                  </ul>
+                </div>
+                <div className="bg-red-50 rounded-xl p-6">
+                  <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    <li>Requires initial setup time (1–2 hours) to configure service area, financing programs, and lead scripts</li>
+                    <li>Knowledge base must be kept current when incentive programs or panel offerings change</li>
+                    <li>Cannot provide personalised solar savings projections — complex financial questions are deferred to the site survey</li>
+                    <li>Highly technical design questions (shading analysis, system sizing) require a human solar advisor</li>
+                    <li>Callers who strongly prefer speaking with a person may ask to be transferred immediately</li>
+                    <li>CRM integration may require technical setup for non-standard platforms</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Related Resources */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -314,7 +362,7 @@ const FAQAIReceptionistSolar: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
+              <h2 id="related-resources" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Link
                   to="/tools/solar-profit-calculator"
@@ -391,7 +439,11 @@ const FAQAIReceptionistSolar: React.FC = () => {
 
         {/* CTA */}
         <FinalCTA {...BLOG_CTA} />
-      </main>
+        </main>
+        <div className="hidden lg:block w-64 flex-shrink-0 pt-32">
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </>

@@ -11,11 +11,18 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import FinalCTA, { BLOG_CTA } from '../components/FinalCTA';
+import TableOfContents from '../components/TableOfContents';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
+
+const headings = [
+  { id: 'faq-section', text: '20 Questions Plumbing Owners Ask About AI Receptionists', level: 2 },
+  { id: 'pros-cons', text: 'Pros & Cons of AI Receptionists for Plumbers', level: 2 },
+  { id: 'related-resources', text: 'Related Resources', level: 2 },
+];
 
 const FAQAIReceptionistPlumber: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -322,7 +329,8 @@ const FAQAIReceptionistPlumber: React.FC = () => {
       <GiveawayBar />
       <Header />
 
-      <main className="flex-grow bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-8 items-start">
+        <main className="flex-grow bg-white min-w-0">
         {/* Hero Section */}
         <section className="bg-white py-16 md:py-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -403,7 +411,7 @@ const FAQAIReceptionistPlumber: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+              <h2 id="faq-section" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
                 20 Questions Plumbing Owners Ask About AI Receptionists
               </h2>
               <div className="space-y-3">
@@ -448,7 +456,7 @@ const FAQAIReceptionistPlumber: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+              <h2 id="pros-cons" className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                 Pros &amp; Cons of AI Receptionists for Plumbers
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
@@ -513,7 +521,7 @@ const FAQAIReceptionistPlumber: React.FC = () => {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
+              <h2 id="related-resources" className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Related Resources</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {relatedResources.map((resource, index) => {
                   const Icon = resource.icon;
@@ -545,7 +553,11 @@ const FAQAIReceptionistPlumber: React.FC = () => {
 
         {/* CTA */}
         <FinalCTA {...BLOG_CTA} />
-      </main>
+        </main>
+        <div className="hidden lg:block w-64 flex-shrink-0 pt-32">
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
 
       <Footer />
     </>

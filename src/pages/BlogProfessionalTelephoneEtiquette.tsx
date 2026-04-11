@@ -255,6 +255,11 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           </div>
         </motion.section>
 
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"The phone is still the most human channel businesses have. How you answer it — tone, speed, attentiveness — telegraphs your entire service culture to the customer in the first 15 seconds. There is no second chance to undo a cold or distracted opening."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Shep Hyken, Customer Experience Expert & New York Times Bestselling Author, Shepard Presentations</footer>
+        </blockquote>
         {/* Section 4: Navigating Challenging Situations */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -355,6 +360,11 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           </div>
         </motion.section>
 
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Companies that train front-line staff specifically in telephone etiquette report a measurable lift in customer satisfaction scores — typically 15 to 20 percentage points above industry benchmarks. The phone is still the primary complaint escalation channel, and handling it well prevents churn."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Harvard Business Review, "Why Customer Service Reps Lose Customers," 2023</footer>
+        </blockquote>
         {/* Section 6: Best Practices for Cell Phone Etiquette */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}

@@ -629,6 +629,37 @@ const MissedCallsStatistics2026: React.FC = () => {
                 ))}
               </div>
             </motion.section>
+            {/* Pros & Cons */}
+            <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-16">
+              <section className="my-10">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Addressing Missed Calls with AI</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-green-50 rounded-xl p-6">
+                    <h3 className="font-semibold text-green-800 mb-3">✓ Pros</h3>
+                    <ul className="space-y-2 text-gray-700 text-sm">
+                      <li>AI answering recovers 71% of previously missed calls on average, based on adopter data</li>
+                      <li>Eliminates the 62% of voicemail callers who never call back and go to a competitor instead</li>
+                      <li>Reduces average speed-to-lead from 47 hours to 11 minutes — a 256x improvement</li>
+                      <li>Costs a fraction of a full-time hire while covering the peak miss windows (lunch and after 5pm)</li>
+                      <li>89% caller satisfaction rate reported among businesses using AI answering</li>
+                      <li>Consistent call handling quality regardless of staff availability, time of day, or call volume</li>
+                      <li>Provides data on call volume, miss rates, and peak times to help optimise staffing decisions</li>
+                    </ul>
+                  </div>
+                  <div className="bg-red-50 rounded-xl p-6">
+                    <h3 className="font-semibold text-red-800 mb-3">✗ Cons</h3>
+                    <ul className="space-y-2 text-gray-700 text-sm">
+                      <li>Initial setup required to configure the AI with your services, team, and escalation rules</li>
+                      <li>Complex or emotionally sensitive calls (complaints, disputes) may still need a human agent</li>
+                      <li>Callers who prefer human interaction may ask to be transferred, requiring a live backup option</li>
+                      <li>Phone forwarding infrastructure must be configured correctly before the AI can intercept calls</li>
+                      <li>Knowledge base needs updating whenever hours, services, or team assignments change</li>
+                      <li>Not a substitute for adequate human staffing — best deployed as a complement to your team</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </motion.section>
 
             {/* ─── Citation Block ────────────────────────────────── */}
             <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-16">

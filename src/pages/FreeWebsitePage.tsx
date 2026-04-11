@@ -417,6 +417,20 @@ const FreeWebsitePage: React.FC = () => {
         </div>
       </section>
     </div>
+
+      {/* Internal navigation links */}
+      <section className="w-full max-w-4xl mx-auto px-4 pb-10">
+        <div className="bg-white rounded-xl shadow-sm px-6 py-4 flex flex-wrap gap-3 text-sm items-center">
+          <span className="font-semibold text-gray-700 mr-1">Explore:</span>
+          <Link to="/pricing" className="text-blue-600 hover:underline">Pricing Plans</Link>
+          <span className="text-gray-300">·</span>
+          <Link to="/features/ai-receptionist" className="text-blue-600 hover:underline">AI Receptionist</Link>
+          <span className="text-gray-300">·</span>
+          <Link to="/blog" className="text-blue-600 hover:underline">Blog</Link>
+          <span className="text-gray-300">·</span>
+          <Link to="/contact" className="text-blue-600 hover:underline">Contact Us</Link>
+        </div>
+      </section>
   );
 };
 

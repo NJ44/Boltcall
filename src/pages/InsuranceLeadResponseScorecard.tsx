@@ -819,6 +819,21 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* --- COMMON CONCERNS --- */}
+        <section className="px-4 sm:px-6 py-10 bg-slate-950">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-slate-900 border border-teal-500/20 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <Shield className="w-8 h-8 text-teal-400 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-bold text-white mb-1">Common Concerns — Answered</p>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  This scorecard is 100% free and takes under 2 minutes. No credit card required, no account needed, and your numbers are never stored — calculations happen entirely in your browser. You can adjust every slider anonymously and only share your email if you want the full PDF report sent to you.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* --- FINAL CTA --- */}
         <FinalCTA {...CALCULATOR_CTA} />
       </main>

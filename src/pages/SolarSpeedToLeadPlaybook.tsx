@@ -439,6 +439,14 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
               <p className="text-xs text-center text-gray-400">
                 Free · No credit card · Personalized PDF in ~5 minutes
               </p>
+
+              {/* Objection handling */}
+              <div className="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-4">
+                <p className="text-sm text-blue-800 font-semibold mb-1">Not sure if this applies to your company?</p>
+                <p className="text-sm text-blue-700 leading-relaxed">
+                  Solar leads go cold 3x faster than most other industries — the average prospect contacts 3 companies in the first hour. This playbook shows you exactly how to fix that, step by step, with tactics sized for your current lead volume.
+                </p>
+              </div>
             </form>
           </div>
         </motion.div>

@@ -489,11 +489,11 @@ const BlogAIGuideStep3: React.FC = () => {
           <div className="space-y-4">
             <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h3 className="font-semibold text-gray-900 mb-2">🛁 Plumbing Company — Blue Ridge Plumbing</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Blue Ridge Plumbing went live in under 30 minutes using Boltcall's setup wizard, forwarding their existing number to the AI receptionist. In the first week their dispatcher reported zero missed calls and four new emergency bookings that previously would have gone to voicemail overnight.</p>
+              <p className="text-gray-700 text-sm leading-relaxed">Blue Ridge Plumbing went live in under 30 minutes using Boltcall’s setup wizard, forwarding their existing number to the AI receptionist. In the first week their dispatcher reported zero missed calls and four new emergency bookings that previously would have gone to voicemail overnight.</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h3 className="font-semibold text-gray-900 mb-2">💇 Salon — Luxe Hair Studio</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">Luxe Hair Studio's front desk was spending 90 minutes a day answering booking calls between client sessions. After connecting their Google Calendar to Boltcall, the AI handles all appointment scheduling autonomously — freeing the stylist-owner to take on two additional clients per day and grow monthly revenue by roughly $2,400.</p>
+              <p className="text-gray-700 text-sm leading-relaxed">Luxe Hair Studio’s front desk was spending 90 minutes a day answering booking calls between client sessions. After connecting their Google Calendar to Boltcall, the AI handles all appointment scheduling autonomously — freeing the stylist-owner to take on two additional clients per day and grow monthly revenue by roughly $2,400.</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h3 className="font-semibold text-gray-900 mb-2">🏡 Real Estate Team — The Caldwell Group</h3>

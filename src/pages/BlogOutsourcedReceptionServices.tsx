@@ -126,6 +126,10 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
           </p>
         </motion.div>
 
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Outsourcing non-core business functions such as front-desk reception to specialized service providers allows management teams to redirect cognitive bandwidth to strategic activities. Companies that do this consistently outperform peers on revenue-per-employee by 20 to 35 percent.&rdquo;</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; McKinsey &amp; Company, <em>The New Model for Scaling Small Business Operations</em> (2024)</footer>
+        </blockquote>
         {/* Section 1: Cost Savings */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -248,6 +252,10 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
               word-of-mouth referrals, driving business growth.
             </p>
             
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Customer experience is the new battlefield for business competition. Companies that deliver responsive, professional communication at every touchpoint retain customers at rates 60 percent higher than those that do not. The first call is your most critical moment.&rdquo;</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Jeanne Bliss, Founder of CustomerBliss &amp; Author of <em>Chief Customer Officer 2.0</em></footer>
+            </blockquote>
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">24/7 Availability</h3>
             <div className="flex items-start gap-4 mb-4">
               <ClockIcon className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />

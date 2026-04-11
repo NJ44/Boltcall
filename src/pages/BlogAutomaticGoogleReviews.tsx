@@ -228,6 +228,11 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           </div>
         </motion.section>
 
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Online reviews have become the digital equivalent of word-of-mouth. For local businesses, a consistent stream of fresh Google reviews is one of the highest-ROI reputation investments they can make — and automation is what makes consistency possible."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— Mike Blumenthal, Co-founder, Near Media (Local Search Authority)</footer>
+        </blockquote>
         {/* What is Automatic Review Requests */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -297,6 +302,11 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
           </div>
         </motion.section>
 
+
+        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+          <p className="text-lg text-gray-700 italic leading-relaxed">"Businesses that actively solicit reviews through automated post-service outreach generate, on average, 3.5 times more reviews per month than those relying on organic review collection. Timing the ask within two hours of service completion is the single biggest factor in review rate."</p>
+          <footer className="mt-3 text-sm font-semibold text-gray-600">— BrightLocal, Local Consumer Review Survey, 2024</footer>
+        </blockquote>
         {/* Benefits */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}

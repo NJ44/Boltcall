@@ -19,6 +19,7 @@ import ContentDepthFooter from '../components/seo/ContentDepthFooter';
 
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
+import BlogSchemaWrapper from '../components/BlogSchemaWrapper';
 // ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
 const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
@@ -423,6 +424,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/api-documentation" element={<ApiDocsPage />} />
+        <Route element={<BlogSchemaWrapper />}>
         <Route path="/blog" element={<BlogCenter />} />
         <Route path="/newsletter" element={<Navigate to="/" replace />} />
         <Route path="/blog/the-new-reality-for-local-businesses" element={<Blog />} />
@@ -472,6 +474,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/roofing-company-stop-losing-leads-missed-calls" element={<RoofingMissedCallsLeadCapture />} />
         <Route path="/blog/home-service-google-ads-lead-follow-up" element={<HomeServiceGoogleAdsLeadFollowUp />} />
         <Route path="/blog/best-ai-answering-service-dental-medical-practice" element={<BestAIAnsweringServiceDentalMedical />} />
+        </Route>
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/comparisons/receptionist-vs-boltcall" element={<ReceptionistVsBoltcall />} />
@@ -526,16 +529,17 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/chiropractor-patient-recovery-calculator" element={<ChiropractorPatientRecoveryCalculator />} />
         {/* Auto Repair Missed Call Calculator */}
         <Route path="/tools/auto-repair-missed-call-calculator" element={<AutoRepairMissedCallCalculator />} />
-        {/* Vet Clinic AI Phone Answering How-To (AEO page) */}
-        <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
-        {/* Industry FAQ AEO pages */}
-        <Route path="/blog/ai-receptionist-hvac-faq" element={<FAQAIReceptionistHVAC />} />
-        <Route path="/blog/ai-receptionist-dentist-faq" element={<FAQAIReceptionistDentist />} />
-        <Route path="/blog/ai-receptionist-plumber-faq" element={<FAQAIReceptionistPlumber />} />
-        <Route path="/blog/ai-receptionist-lawyer-faq" element={<FAQAIReceptionistLawyer />} />
-        <Route path="/blog/ai-receptionist-medspa-faq" element={<FAQAIReceptionistMedSpa />} />
-        <Route path="/blog/ai-receptionist-solar-faq" element={<FAQAIReceptionistSolar />} />
-        <Route path="/blog/ai-receptionist-vet-faq" element={<FAQAIReceptionistVet />} />
+        {/* Industry FAQ AEO pages + Vet Clinic How-To */}
+        <Route element={<BlogSchemaWrapper />}>
+          <Route path="/blog/ai-receptionist-hvac-faq" element={<FAQAIReceptionistHVAC />} />
+          <Route path="/blog/ai-receptionist-dentist-faq" element={<FAQAIReceptionistDentist />} />
+          <Route path="/blog/ai-receptionist-plumber-faq" element={<FAQAIReceptionistPlumber />} />
+          <Route path="/blog/ai-receptionist-lawyer-faq" element={<FAQAIReceptionistLawyer />} />
+          <Route path="/blog/ai-receptionist-medspa-faq" element={<FAQAIReceptionistMedSpa />} />
+          <Route path="/blog/ai-receptionist-solar-faq" element={<FAQAIReceptionistSolar />} />
+          <Route path="/blog/ai-receptionist-vet-faq" element={<FAQAIReceptionistVet />} />
+          <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
+        </Route>
         {/* Industry-specific calculators */}
         <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
         <Route path="/tools/hvac-overflow-calculator" element={<HVACOverflowCalculator />} />

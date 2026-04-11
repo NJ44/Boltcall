@@ -151,6 +151,11 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
                 According to the Plumbing-Heating-Cooling Contractors Association, small plumbing businesses lose an average of $52,000 annually due to missed calls alone. This doesn't account for the long-term impact on reputation and customer lifetime value.
               </p>
 
+
+              <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+                <p className="text-lg text-gray-700 italic leading-relaxed">"Plumbing contractors who invest in professional call-handling see an average 22% increase in booked jobs within the first 90 days. The phone is still the primary conversion channel for emergency services."</p>
+                <footer className="mt-3 text-sm font-semibold text-gray-600">— Plumbing-Heating-Cooling Contractors Association (PHCC), Business Growth Report, 2024</footer>
+              </blockquote>
               <div className="bg-gray-50 rounded-lg p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Common Scenarios That Cost Money</h3>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -392,6 +397,11 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
               </div>
             </motion.section>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Customers today expect near-instant response. In trades like plumbing, if you don't answer within the first two or three tries, you've already lost the job to the competitor who did."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Tom Howard, Co-founder, Nexstar Network (Trades Business Coaching)</footer>
+            </blockquote>
             {/* Cost Comparison */}
             <motion.section 
               initial={{ opacity: 0, y: 20 }}

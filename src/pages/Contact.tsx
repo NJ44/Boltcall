@@ -303,6 +303,58 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Why Boltcall? */}
+      <section className="w-full max-w-[860px] mt-6">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Why Businesses Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { title: 'Questions answered in under 1 second', desc: 'Your prospects get instant answers 24/7 — no hold music, no missed calls, no lost opportunities' },
+              { title: 'Setup in 30 minutes', desc: 'No developers or tech team needed — most businesses are live within one business day' },
+              { title: 'Pays for itself with one extra lead', desc: 'One captured call per month covers the entire monthly cost — everything after that is pure upside' },
+              { title: 'Trained on your business', desc: 'Handles your specific services, pricing, and FAQs — sounds like your best team member, not a bot' },
+            ].map((item) => (
+              <div key={item.title} className="bg-white rounded-xl p-4 shadow-sm">
+                <div className="font-semibold text-gray-900 mb-1">✓ {item.title}</div>
+                <div className="text-sm text-gray-600">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Internal navigation links */}
+      <section className="w-full max-w-[860px] mt-4 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm px-8 py-6">
+          <h2 className="text-base font-semibold text-gray-700 mb-4">Explore Boltcall</h2>
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link to="/pricing" className="text-blue-600 hover:underline font-medium">View Pricing Plans</Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/help-center" className="text-blue-600 hover:underline font-medium">Help Center</Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/features/ai-receptionist" className="text-blue-600 hover:underline font-medium">AI Receptionist Features</Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/blog" className="text-blue-600 hover:underline font-medium">Read Our Blog</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Internal navigation links */}
+      <section className="w-full max-w-[860px] mt-4 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm px-8 py-6">
+          <h2 className="text-base font-semibold text-gray-700 mb-4">Explore Boltcall</h2>
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link to="/pricing" className="text-blue-600 hover:underline font-medium">View Pricing Plans</Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/help-center" className="text-blue-600 hover:underline font-medium">Help Center</Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/features/ai-receptionist" className="text-blue-600 hover:underline font-medium">AI Receptionist Features</Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/blog" className="text-blue-600 hover:underline font-medium">Read Our Blog</Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -918,6 +918,24 @@ const SolarSalesCloser: React.FC = () => {
           — The Growth Partner for Solar Pros
         </div>
       </main>
+
+      {/* Why Boltcall? */}
+      <section className="bg-[#141928] border border-[#2A3352] rounded-2xl mx-6 mb-10 p-8">
+        <h2 className="text-2xl font-bold text-slate-100 mb-6">Why Solar Pros Choose Boltcall</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[
+            { title: 'Follows up every lead in under 60 seconds', desc: 'Solar leads go cold fast — Boltcall calls your new leads before your competitors do' },
+            { title: 'Handles objections on the first call', desc: 'AI trained on solar objections books more qualified consultations so your closers spend time closing, not qualifying' },
+            { title: 'Pays for itself with one extra close per month', desc: 'Average solar deal is worth 5K+ — one additional consultation booked covers your entire annual cost' },
+            { title: 'Setup in 30 minutes, no tech team needed', desc: 'Connects to your CRM and phone system — live the same day you sign up, no developers required' },
+          ].map((item) => (
+            <div key={item.title} className="bg-[#0B0F1A] border border-[#2A3352] rounded-xl p-4">
+              <div className="font-semibold text-slate-100 mb-1">✓ {item.title}</div>
+              <div className="text-sm text-slate-400">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
       <Footer />
     </div>
   );

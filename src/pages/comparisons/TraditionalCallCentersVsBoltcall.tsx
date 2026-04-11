@@ -671,6 +671,31 @@ const TraditionalCallCentersVsBoltcall: React.FC = () => {
         </div>
       </section>
 
+      {/* Objection Handling — Risk Reversal */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 space-y-4">
+          <h2 className="text-lg font-bold text-blue-900">Common Concerns — Answered Honestly</h2>
+          <div className="space-y-3 text-sm text-blue-900 leading-relaxed">
+            <div>
+              <strong>Worried about setup complexity?</strong>{' '}
+              Most businesses go live in under 30 minutes using the self-serve wizard — no technical knowledge, no developer, no vendor negotiations required.
+            </div>
+            <div>
+              <strong>Not sure if AI can handle your callers?</strong>{' '}
+              Boltcall is trained specifically on your business: your services, your FAQs, your booking flow. If a caller asks something outside its training, it collects their contact info and flags it for you — no lead is ever dropped.
+            </div>
+            <div>
+              <strong>Concerned about locking into a long-term contract?</strong>{' '}
+              There are no annual commitments. Cancel any time from your dashboard — no cancellation fees, no notice period.
+            </div>
+            <div>
+              <strong>Wondering if it actually saves money vs. your current call center?</strong>{' '}
+              The average SMB pays $2,000–$5,000/month for call center coverage. Boltcall starts at $99/month with no per-minute fees — the savings typically pay for a full year of Boltcall in the first month alone.
+            </div>
+          </div>
+        </div>
+      </section>
+
       <FinalCTA {...COMPARISON_CTA} />
       <Footer />
     </div>

@@ -536,6 +536,37 @@ export default function ChatbotVsLiveChatVsPhoneAnswering() {
         </div>
       </div>
 
+      {/* Pros & Cons Section */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <section className="my-10">
+          <h2 id="pros-cons" className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons: Chatbot vs. Live Chat vs. Phone Answering</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-green-50 rounded-xl p-6">
+              <h3 className="font-semibold text-green-800 mb-3">✓ Pros of AI-Powered Phone Answering</h3>
+              <ul className="space-y-2 text-gray-700 text-sm">
+                <li>• Highest conversion channel — voice calls close at 3–5x chat rates</li>
+                <li>• 24/7 coverage without staffing costs of live chat or call center agents</li>
+                <li>• Handles complex, multi-turn conversations that chatbots struggle with</li>
+                <li>• Captures leads who never type — many callers will not engage with text</li>
+                <li>• Instantly books appointments and qualifies leads during the call</li>
+                <li>• Builds more trust than a chatbot — a voice feels more human and credible</li>
+              </ul>
+            </div>
+            <div className="bg-red-50 rounded-xl p-6">
+              <h3 className="font-semibold text-red-800 mb-3">✗ Cons and Trade-offs</h3>
+              <ul className="space-y-2 text-gray-700 text-sm">
+                <li>• Chatbots scale more cheaply for simple, high-volume text queries</li>
+                <li>• Live chat enables async support that suits younger audiences</li>
+                <li>• Phone-first strategy can miss prospects who prefer typing over calling</li>
+                <li>• Voice AI requires careful prompt engineering for edge-case calls</li>
+                <li>• Chatbots leave a text trail that is easier to audit and search</li>
+                <li>• Best results require combining channels, not replacing one with another</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
       {/* CTA Section */}
       <motion.div
         className="py-20 bg-gray-50"

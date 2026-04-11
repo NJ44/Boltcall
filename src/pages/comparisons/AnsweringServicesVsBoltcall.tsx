@@ -7,6 +7,12 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import FinalCTA, { COMPARISON_CTA } from '../../components/FinalCTA';
 import GiveawayBar from '../../components/GiveawayBar';
+import TableOfContents from '../../components/TableOfContents';
+
+const headings = [
+  { id: 'quick-comparison', text: 'Quick Comparison', level: 2 },
+  { id: 'why-boltcall', text: 'Why Boltcall is Better', level: 2 },
+];
 
 const AnsweringServicesVsBoltcall: React.FC = () => {
   useEffect(() => {
@@ -74,14 +80,15 @@ const AnsweringServicesVsBoltcall: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-8 items-start">
+      <article className="flex-1 min-w-0 pt-4 pb-16">
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+          <h2 id="quick-comparison" className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Quick Comparison
           </h2>
@@ -150,7 +157,7 @@ const AnsweringServicesVsBoltcall: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
+          <h2 id="why-boltcall" className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Boltcall is Better
           </h2>
@@ -185,6 +192,10 @@ const AnsweringServicesVsBoltcall: React.FC = () => {
           </div>
         </motion.section>
       </article>
+      <div className="hidden lg:block w-64 flex-shrink-0 pt-4">
+        <TableOfContents headings={headings} />
+      </div>
+      </div>
 
       {/* Social Proof */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

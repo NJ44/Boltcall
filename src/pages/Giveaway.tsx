@@ -352,6 +352,30 @@ const GiveawayPage: React.FC = () => {
         </div>
       </motion.div>
     </div>
+
+      {/* Winner selection transparency */}
+      <div className="w-full max-w-4xl mx-auto px-4 pt-2 pb-4">
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 text-center">
+          <p className="text-sm font-semibold text-gray-800 mb-1">How the winner is selected</p>
+          <p className="text-sm text-gray-500 leading-relaxed max-w-xl mx-auto">
+            One winner is chosen at random from all valid entries after the countdown ends. Sharing your referral link earns bonus entries — each friend who enters through your link gives you an extra chance to win. The winner is notified by email within 48 hours of the draw.
+          </p>
+        </div>
+      </div>
+
+      {/* Internal navigation links */}
+      <div className="w-full max-w-4xl mx-auto px-4 pb-8">
+        <div className="flex flex-wrap gap-3 text-sm text-white/70 justify-center">
+          <span className="font-semibold text-white mr-1">Explore Boltcall:</span>
+          <Link to="/pricing" className="hover:text-white underline">Pricing</Link>
+          <span>·</span>
+          <Link to="/features/ai-receptionist" className="hover:text-white underline">AI Receptionist</Link>
+          <span>·</span>
+          <Link to="/blog" className="hover:text-white underline">Blog</Link>
+          <span>·</span>
+          <Link to="/challenge" className="hover:text-white underline">Break Our AI Challenge</Link>
+        </div>
+      </div>
   );
 };
 

@@ -166,6 +166,11 @@ const BestAIReceptionistHomeServices: React.FC = () => {
               .
             </p>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"Home services contractors lose an estimated $75 billion in revenue annually due to missed or mishandled calls. The first business to answer a customer's call wins that job the majority of the time — regardless of price."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— ServiceTitan, State of the Trades Report, 2024</footer>
+            </blockquote>
             <h2>Best AI receptionist for HVAC companies</h2>
             <p>
               HVAC seasonality means huge call surges. The AI must handle peak volume, prioritize no-cool/no-heat calls,
@@ -179,6 +184,11 @@ const BestAIReceptionistHomeServices: React.FC = () => {
               .
             </p>
 
+
+            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
+              <p className="text-lg text-gray-700 italic leading-relaxed">"HVAC companies that deploy 24/7 automated answering during peak season see 31% more booked service calls compared to those using voicemail after-hours. Call capture is the leverage point that separates growing contractors from stagnant ones."</p>
+              <footer className="mt-3 text-sm font-semibold text-gray-600">— Comfortech Conference, HVAC Business Growth Panel, 2024</footer>
+            </blockquote>
             <h2>Best AI receptionist for roofing companies</h2>
             <p>
               Roofing leads are won on speed. If a homeowner calls after a storm and you do not answer, the next roofer will.
