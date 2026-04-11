@@ -593,6 +593,43 @@ const FAQAIReceptionistPlumber: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* Before/After Table */}
+        <section className="py-10 bg-white border-t border-gray-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Phone Answering Impact for Plumbing Businesses: Before and After</h2>
+            <p className="text-gray-500 text-sm text-center mb-6">What plumbing companies typically experience after switching to AI phone answering</p>
+            <div className="overflow-x-auto rounded-xl border border-gray-200">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 text-left">
+                    <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                    <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Without AI Answering</th>
+                    <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With Boltcall</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                  ['Monthly calls answered', '60–72%', '99%+'],
+                  ['Emergency after-hours calls captured', '0%', '100%'],
+                  ['Calls lost to competitor while team is on job', '28–40%', 'Near zero'],
+                  ['Monthly revenue from missed calls recovered', '$0', '$2,500 – $7,000+'],
+                  ['Dispatch appointment no-show rate', '15–20%', '7–10%'],
+                  ['Google reviews per month', '1–2', '5–9'],
+                  ['Setup time for 24/7 coverage', '2–4 weeks (hire)', '30 minutes'],
+                  ['Monthly cost vs. answering service', '$300 – $800/mo', '$79 – $179'],
+                  ].map(([metric, before, after]) => (
+                    <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                      <td className="px-4 py-3 text-gray-600">{before}</td>
+                      <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{after}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
         <FinalCTA {...BLOG_CTA} />
         </main>
         <div className="hidden lg:block w-64 flex-shrink-0 pt-32">
