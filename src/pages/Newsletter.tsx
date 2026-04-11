@@ -41,6 +41,14 @@ const Newsletter: React.FC = () => {
   useEffect(() => {
     document.title = 'AI Business Newsletter | Weekly Tips & Strategies | Boltcall';
     updateMetaDescription('Subscribe to the Boltcall newsletter for weekly AI business strategies, productivity tips, and exclusive insights for local business owners. Join free.');
+
+    return injectSchemas([
+      createServiceSchema({
+        name: 'Boltcall AI Business Newsletter',
+        description: 'A free weekly newsletter delivering AI business strategies, productivity tips, lead capture tactics, and exclusive insights for local business owners who want to grow with AI.',
+        url: '/newsletter',
+      }),
+    ]);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
