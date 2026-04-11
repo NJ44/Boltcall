@@ -44,7 +44,8 @@ const Challenge: React.FC = () => {
   const [callDuration, setCallDuration] = useState('');
 
   // UI state
-  const [step, setStep] = useState<'rules' | 'calling' | 'submit' | 'result'>('rules');
+  const [step, setStep] = useState<'email' | 'options' | 'ai-calling-form' | 'calling' | 'ai-calling' | 'submit' | 'result'>('email');
+  const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{ winner: boolean; message: string; attempts?: number } | null>(null);
   const [error, setError] = useState('');
