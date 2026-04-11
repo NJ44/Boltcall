@@ -742,6 +742,27 @@ const HVACOverflowCalculator: React.FC = () => {
         </div>
       </section>
 
+      {/* Why Boltcall */}
+      <section className="py-16 sm:py-20 bg-slate-950">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-8">Why HVAC Companies Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { icon: "📞", title: "Never Miss a Peak-Season Call", desc: "AI answers every ring instantly during heat waves and cold snaps — when your team is on installs and phones go unanswered." },
+              { icon: "🛠️", title: "Instant Job Scheduling", desc: "Callers are qualified and booked on the spot. Service calls get scheduled, installs get routed to sales — all without human touch." },
+              { icon: "🔄", title: "Maintenance Agreement Upsells", desc: "AI identifies agreement-eligible customers during every service call and offers enrollment automatically, growing recurring revenue on autopilot." },
+              { icon: "💰", title: "Proven ROI", desc: "HVAC clients typically recover 10–20x their monthly Boltcall cost in captured revenue during a single peak-season month." },
+            ].map((item) => (
+              <div key={item.title} className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-orange-500/30 transition-colors">
+                <div className="text-2xl mb-3">{item.icon}</div>
+                <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
