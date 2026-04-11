@@ -295,6 +295,29 @@ const HomeServiceGoogleAdsLeadFollowUp: React.FC = () => {
         </div>
       </div>
 
+
+      {/* What This Tool Covers */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This System Does</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six automation components that maximize ROI from your home-service Google Ads spend</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: 'Instant Lead Response', desc: 'Responds to every form submission within 60 seconds via SMS and call' },
+            { label: 'After-Hours Coverage', desc: 'Captures Google Ads leads that arrive evenings and weekends automatically' },
+            { label: 'Lead Qualification', desc: 'Filters service area, job type, and urgency before connecting your team' },
+            { label: 'Voicemail Recovery', desc: 'Follows up with missed callers via automated 3-touch SMS sequence' },
+            { label: 'Appointment Booking', desc: 'Books estimates and service visits directly into your dispatch calendar' },
+            { label: 'Lead Source Reporting', desc: 'Monthly summary of every lead captured, qualified, and booked from ads' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

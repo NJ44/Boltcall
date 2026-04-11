@@ -828,6 +828,29 @@ const CleaningServiceBookingCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Calculator Measures</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">The booking metrics that determine your true revenue loss from missed calls</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Missed Booking Calls', desc: 'New-client calls going to voicemail while your crew is cleaning' },
+              { label: 'Average Job Value', desc: 'Revenue per recurring or one-time cleaning appointment' },
+              { label: 'Client Retention Rate', desc: 'How often customers rebook after their first service' },
+              { label: 'Recurring Revenue Value', desc: 'Annual income from a retained recurring cleaning client' },
+              { label: 'After-Hours Call Volume', desc: 'Calls arriving outside your office hours' },
+              { label: 'Annual Revenue Gap', desc: 'Total income lost to missed calls and slow response times' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

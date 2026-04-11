@@ -628,6 +628,29 @@ const SpeedToLeadGuide: React.FC = () => {
         </div>
       </motion.div>
 
+
+      {/* What This Tool Covers */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Guide Covers</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six proven strategies that help local businesses respond to leads faster and close more deals</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: 'The 391% Conversion Rule', desc: 'Why responding within 60 seconds multiplies your close rate by 4x' },
+            { label: 'After-Hours Lead Capture', desc: 'How to answer and qualify every lead that arrives outside office hours' },
+            { label: 'Automated SMS Follow-Up', desc: 'Word-for-word text templates to send within seconds of a new inquiry' },
+            { label: 'Voicemail Recovery', desc: 'Follow-up cadence to re-engage leads who go to voicemail' },
+            { label: 'Speed-to-Lead Benchmarks', desc: 'Industry-specific targets for response time and conversion rate' },
+            { label: '30-Day Action Plan', desc: 'Step-by-step checklist to reduce your average response time this month' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

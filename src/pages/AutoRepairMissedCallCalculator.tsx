@@ -759,6 +759,29 @@ const AutoRepairMissedCallCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Calculator Reveals</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Key metrics behind every missed auto-repair call and its true cost</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Missed Calls per Week', desc: 'Calls going to voicemail while your team is on the floor' },
+              { label: 'Average Repair Order Value', desc: 'Typical invoice amount per vehicle visit' },
+              { label: 'Customer Lifetime Value', desc: 'Total spend from a loyal auto-repair customer over 5 years' },
+              { label: 'Return Visit Rate', desc: 'How often customers rebook for maintenance or repairs' },
+              { label: 'After-Hours Call Volume', desc: 'Calls arriving outside staffed shop hours' },
+              { label: 'Annual Lost Revenue', desc: 'Total income slipping away from unanswered calls' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

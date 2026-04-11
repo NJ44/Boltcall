@@ -474,6 +474,32 @@ const FAQAIReceptionistVet: React.FC = () => {
         </section>
 
         {/* CTA */}
+
+        {/* What Boltcall Includes for Veterinary Clinics */}
+        <section className="py-10 bg-gray-50 border-t border-gray-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What Boltcall Includes for Veterinary Clinics</h2>
+            <p className="text-gray-500 text-sm text-center mb-6">Every plan includes these features — no add-ons, no hidden fees</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { label: '24/7 Emergency Call Answering', desc: 'Captures urgent after-hours calls for sick or injured pets' },
+                { label: 'Appointment Booking', desc: 'Books wellness exams, vaccinations, and procedures automatically' },
+                { label: 'New Client Intake', desc: 'Collects pet name, species, breed, and reason for visit upfront' },
+                { label: 'Recall Reminders', desc: 'Automated reminders for annual exams and vaccine boosters' },
+                { label: 'Post-Visit Review Requests', desc: 'SMS review sequences build your clinic online reputation' },
+                { label: 'Monthly Revenue Report', desc: 'See calls answered, appointments booked, and revenue recovered' },
+              ].map((item) => (
+                <div key={item.label} className="bg-white rounded-xl p-4 border border-gray-100 flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 flex-shrink-0"></div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">{item.label}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         <FinalCTA {...BLOG_CTA} />
         </main>
         <div className="hidden lg:block w-64 flex-shrink-0 pt-32">

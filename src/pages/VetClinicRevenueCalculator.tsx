@@ -668,6 +668,29 @@ const VetClinicRevenueCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Calculator Reveals</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six metrics that show how much revenue your veterinary clinic loses each month</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Missed Calls per Week', desc: 'Calls going to voicemail while your staff is with patients' },
+              { label: 'Average Appointment Value', desc: 'Revenue per wellness visit, procedure, or urgent care call' },
+              { label: 'Client Lifetime Value', desc: 'Total spend from a loyal pet-owner over your relationship' },
+              { label: 'After-Hours Emergency Calls', desc: 'Urgent calls arriving outside staffed hours' },
+              { label: 'Rebooking Recovery', desc: 'Revenue captured via automated follow-up for lapsed patients' },
+              { label: 'Annual Revenue Gap', desc: 'Total income lost to unanswered and mishandled calls' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

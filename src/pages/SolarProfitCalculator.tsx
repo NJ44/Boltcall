@@ -725,6 +725,29 @@ const SolarProfitCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Calculator Reveals</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six sales-cycle metrics that determine your true solar revenue potential</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Monthly Lead Volume', desc: 'Inbound solar inquiries from ads, referrals, and organic search' },
+              { label: 'Lead-to-Appointment Rate', desc: 'Percentage of leads who book a site assessment' },
+              { label: 'Average Deal Value', desc: 'Revenue per signed solar installation contract' },
+              { label: 'Speed-to-Response Impact', desc: 'Revenue uplift from responding within 60 seconds of inquiry' },
+              { label: 'No-Show Rate', desc: 'Site assessments booked but not attended' },
+              { label: 'Annual Revenue Gap', desc: 'Total income lost to slow follow-up and missed calls' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

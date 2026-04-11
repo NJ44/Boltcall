@@ -730,6 +730,29 @@ const MissedCallsStatistics2026: React.FC = () => {
       {/* ─── CTA ─────────────────────────────────────────────── */}
       <FinalCTA {...BLOG_CTA} />
 
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">How Boltcall Solves the Missed Call Problem</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six capabilities that turn missed call statistics into recovered revenue for your business</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: '24/7 AI Call Answering', desc: 'Every call answered after hours, weekends, and holidays — no voicemail' },
+            { label: 'Under-3-Ring Response', desc: 'Callers reach your AI receptionist faster than a human could pick up' },
+            { label: 'Live Appointment Booking', desc: 'Callers book directly into your calendar without waiting for a callback' },
+            { label: 'Instant SMS to Missed Callers', desc: 'Automatic follow-up text the moment a call is missed' },
+            { label: 'No-Show Reminder Sequences', desc: 'Reduces empty appointment slots by an average of 40%' },
+            { label: 'Monthly Missed Call Report', desc: 'Shows exactly how many calls were captured and how much revenue was saved' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -840,6 +840,29 @@ const MedSpaRebookingCalculator: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Calculator Analyzes</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six metrics that reveal the true cost of unrebooked med-spa clients</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Clients per Month', desc: 'Active clients visiting your med spa each month' },
+              { label: 'Rebooking Rate', desc: 'Percentage of clients who rebook before leaving' },
+              { label: 'Average Service Value', desc: 'Revenue per treatment session or package' },
+              { label: 'Client Lifetime Value', desc: 'Total spend from a loyal aesthetics client over 3+ years' },
+              { label: 'Lapse Recovery Rate', desc: 'Clients regained via automated re-engagement sequences' },
+              { label: 'Annual Revenue Gap', desc: 'Total income lost to clients who don't rebook' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
 
       {/* Slider thumb styling */}

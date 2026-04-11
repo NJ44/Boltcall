@@ -911,6 +911,29 @@ const ChiropractorPatientRecoveryCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Calculator Measures</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six revenue factors that determine how many patients you're losing each month</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Missed Calls per Week', desc: 'Unanswered calls during and after business hours' },
+              { label: 'Appointment Value', desc: 'Average revenue per new patient visit' },
+              { label: 'Lifetime Patient Value', desc: 'Total revenue a retained chiropractic patient generates' },
+              { label: 'No-Show Rate', desc: 'Percentage of booked appointments that are abandoned' },
+              { label: 'Rebooking Recovery', desc: 'Revenue recaptured via automated SMS follow-up' },
+              { label: 'Annual Revenue Gap', desc: 'Total yearly income lost to missed and lapsed patients' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

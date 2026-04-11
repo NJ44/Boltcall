@@ -270,6 +270,29 @@ const BestAIReceptionistHomeServices: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What the Best AI Receptionist Includes for Home Services</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Features that home-service businesses should demand from any AI receptionist solution</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: '24/7 Call Answering', desc: 'Every service call answered after hours, weekends, and peak-season rushes' },
+            { label: 'Service Appointment Booking', desc: 'Books jobs directly into your dispatch calendar without a callback' },
+            { label: 'Lead Qualification', desc: 'Collects job type, address, and urgency before routing to your team' },
+            { label: 'Instant SMS Follow-Up', desc: 'Auto-texts missed callers within seconds — before they call a competitor' },
+            { label: 'No-Show Reminders', desc: 'Reduces appointment cancellations by 40%+ with automated reminders' },
+            { label: 'Monthly Revenue Report', desc: 'See calls answered, jobs booked, and overflow revenue recovered' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

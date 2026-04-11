@@ -894,6 +894,29 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* What This Tool Measures */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Scorecard Evaluates</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Five lead-response metrics that reveal your agency's competitive speed gap</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { label: 'Response Time Score', desc: 'How quickly your agency responds to new insurance inquiries' },
+              { label: 'After-Hours Coverage', desc: 'Whether leads submitted evenings/weekends get same-day contact' },
+              { label: 'Follow-Up Sequence', desc: 'Automated touchpoints to re-engage leads who don't convert immediately' },
+              { label: 'Missed Call Recovery', desc: 'How many unanswered calls are followed up with SMS or email' },
+              { label: 'Quote-to-Bind Rate', desc: 'Percentage of quoted prospects who ultimately bind a policy' },
+              { label: 'Annual Revenue Gap', desc: 'Total income lost to slow response and poor follow-up' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

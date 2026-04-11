@@ -530,6 +530,29 @@ const AiPhoneAnsweringPlumbers: React.FC = () => {
         </div>
       </div>
 
+
+      {/* What This Includes */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What Boltcall Includes for Plumbers</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Complete AI call-answering system built for plumbing businesses — every plan includes:</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: '24/7 Emergency Call Answering', desc: 'Never miss a burst-pipe or flood call, even at 2am on weekends' },
+            { label: 'Appointment Booking', desc: 'Books repairs and installations directly into your dispatch calendar' },
+            { label: 'Lead Qualification', desc: 'Collects issue type, location, and urgency before connecting your team' },
+            { label: 'Instant SMS Follow-Up', desc: 'Automatic text to missed callers within seconds — before they call a competitor' },
+            { label: 'No-Show Reminders', desc: 'Automated appointment reminders that cut cancellation rates by 40%+' },
+            { label: 'Monthly Revenue Report', desc: 'See every call answered, job booked, and revenue recovered each month' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

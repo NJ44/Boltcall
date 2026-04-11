@@ -1001,6 +1001,29 @@ const FiveMinuteResponsePlaybook: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* What This Tool Covers */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What This Playbook Covers</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Six strategies to respond to every lead within 5 minutes and dramatically increase close rates</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+            { label: 'The 391% Conversion Rule', desc: 'Why responding within 60 seconds multiplies your close rate by 4x' },
+            { label: 'Instant SMS Templates', desc: 'Word-for-word text scripts to send the moment a lead submits a form' },
+            { label: 'After-Hours Automation', desc: 'How to capture and respond to evening and weekend leads automatically' },
+            { label: 'Voicemail Recovery Sequences', desc: 'Follow-up cadence to re-engage leads who miss your first callback' },
+            { label: 'CRM Speed-to-Lead Setup', desc: 'Workflow configuration to alert your team the instant a lead arrives' },
+            { label: '30-Day Implementation Plan', desc: 'Step-by-step checklist to deploy all five strategies in one month' },
+            ].map((item) => (
+              <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>
+                <div className="text-xs text-gray-500">{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
 
     </div>
