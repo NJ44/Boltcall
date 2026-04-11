@@ -996,6 +996,27 @@ const RealEstateSpeedScorecard: React.FC = () => {
         </AnimatedSection>
       </section>
 
+      {/* Why Boltcall */}
+      <section className="py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-8">Why Businesses Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { icon: "⚡", title: "Sub-60-Second Response", desc: "Every lead gets a personalised reply in under 60 seconds — day or night, weekends included — so you are always first to respond." },
+              { icon: "📅", title: "Automatic Appointment Booking", desc: "AI books directly into your calendar in real time. No back-and-forth, no double-bookings, no manual entry." },
+              { icon: "🤖", title: "Fully Customisable AI Agent", desc: "Train your agent on your listings, FAQs, and brand voice in minutes. It sounds like you — not a generic bot." },
+              { icon: "📊", title: "ROI-Tracked Dashboard", desc: "See calls answered, leads captured, and bookings won — with before/after comparisons so the value is always visible." },
+            ].map((item) => (
+              <div key={item.title} className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
+                <div className="text-2xl mb-3">{item.icon}</div>
+                <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
