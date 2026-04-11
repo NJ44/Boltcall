@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { createServiceSchema, injectSchemas } from '../lib/schema';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle, ArrowRight, Phone, Calendar, MessageSquare, Bell, Zap, Users, Target, CheckCircle as CheckCircleIcon, Clock } from 'lucide-react';
 import Header from '../components/Header';
