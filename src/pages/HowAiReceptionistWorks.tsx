@@ -588,6 +588,45 @@ const HowAiReceptionistWorks: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* How AI Receptionist Works: Steps and Timeline */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">How Boltcall Works: Setup to Revenue Recovery</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">From signup to your first appointment booked — what happens at each stage</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Stage</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">What Happens</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Who Does It</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Signup and onboarding', 'Enter your business name, services, hours, and FAQs', '10 minutes', 'You'],
+                  ['Calendar connection', 'Connect Google Calendar, Calendly, or your booking software', '5 minutes', 'You'],
+                  ['Phone number setup', 'Forward your line or get a new number — AI is live', '5 minutes', 'You + Boltcall'],
+                  ['First call answered', 'AI greets caller in under 3 rings with your business name', 'Immediate', 'AI automatically'],
+                  ['Appointment booked', 'Caller chooses time slot, confirmation sent by SMS', 'During the call', 'AI automatically'],
+                  ['No-show reminder sent', 'Automated text 24h before appointment', 'Automated forever', 'AI automatically'],
+                  ['Post-visit review request', 'SMS review request 2 hours after appointment', 'Automated forever', 'AI automatically'],
+                  ['Monthly revenue report', 'Dashboard shows calls answered, bookings, revenue recovered', 'Monthly', 'Boltcall generates'],
+                ].map(([stage, what, time, who]) => (
+                  <tr key={stage} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{stage}</td>
+                    <td className="px-4 py-3 text-gray-600">{what}</td>
+                    <td className="px-4 py-3 text-gray-600">{time}</td>
+                    <td className="px-4 py-3 text-gray-600">{who}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
