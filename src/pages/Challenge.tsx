@@ -230,7 +230,7 @@ const Challenge: React.FC = () => {
   };
 
   const handleReset = () => {
-    setStep('rules');
+    setStep('options');
     setCode('');
     setTechnique('');
     setCallDuration('');
