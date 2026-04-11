@@ -691,6 +691,41 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Phone Call Scripts Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Phone Script Elements That Convert vs. Ones That Fail</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What separates a high-converting call script from one that loses leads</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Script Element</th>
+                  <th className="px-4 py-3 font-semibold text-red-600 border-b border-gray-200">What Kills the Lead</th>
+                  <th className="px-4 py-3 font-semibold text-green-700 border-b border-gray-200">What Converts the Lead</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Opening greeting', '"Hello, hold please" or no greeting', '"Thank you for calling [Business], this is [AI Name]. How can I help you today?"'],
+                  ['First response to need', '"Let me check if someone is available"', '"I can help with that. Are mornings or afternoons better for you?"'],
+                  ['Booking flow', 'Putting caller on hold to check calendar', '"I have Tuesday at 2pm or Wednesday at 10am — which works?"'],
+                  ['Objection to price', '"That's our standard rate" (end of discussion)', '"Most customers recover the cost in the first visit. Would you like to see how?"'],
+                  ['Closing the call', '"We'll have someone call you back"', '"You're booked for Tuesday at 2pm. You'll get a reminder text tomorrow."'],
+                  ['No-show prevention', 'No reminder sent', 'Automated reminder 24h and 2h before appointment'],
+                ].map(([element, fail, win]) => (
+                  <tr key={element} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{element}</td>
+                    <td className="px-4 py-3 text-red-600 text-xs">{fail}</td>
+                    <td className="px-4 py-3 text-green-700 text-xs">{win}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

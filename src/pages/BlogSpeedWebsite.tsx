@@ -463,6 +463,44 @@ const BlogSpeedWebsite: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Website Speed Impact Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Website Load Time vs. Business Impact: The Data</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How every second of load time affects conversion rate, bounce rate, and revenue</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Load Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Bounce Rate</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Conversion Rate Change</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Google Core Web Vitals</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Under 1 second', '7%', 'Baseline (highest)', 'Pass — strong signal'],
+                  ['1–2 seconds', '11%', '-4.42% per second', 'Pass — good'],
+                  ['2–3 seconds', '22%', '-8.11% cumulative', 'Needs improvement'],
+                  ['3–5 seconds', '38%', '-22% vs 1-second', 'Fail — ranking risk'],
+                  ['5–10 seconds', '58%', '-35% vs 1-second', 'Fail — penalized'],
+                  ['Over 10 seconds', '123%', '-75% vs 1-second', 'Fail — severe penalty'],
+                ].map(([time, bounce, conversion, vitals]) => (
+                  <tr key={time} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{time}</td>
+                    <td className="px-4 py-3 text-red-600">{bounce}</td>
+                    <td className="px-4 py-3 text-gray-600">{conversion}</td>
+                    <td className="px-4 py-3 text-gray-600">{vitals}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Source: Google/Deloitte research and Portent load time study across e-commerce and service sites.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

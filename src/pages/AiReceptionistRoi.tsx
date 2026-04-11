@@ -940,6 +940,46 @@ const AiReceptionistRoi: React.FC = () => {
         </div>
       </section>
 
+
+      {/* ROI Calculation Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Receptionist ROI Calculator: Worked Examples</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Real numbers showing how quickly Boltcall pays for itself across different business types</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Business</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Missed Calls/Mo</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Avg. Job Value</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Revenue Recovered/Mo</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">ROI at $179/mo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['HVAC contractor', '13', '$850', '$3,315', '18.5x'],
+                  ['Dental practice', '10', '$680', '$2,040', '11.4x'],
+                  ['Plumbing company', '15', '$420', '$1,890', '10.6x'],
+                  ['Law firm (intake)', '17', '$2,400', '$12,240', '68x'],
+                  ['Roofing company', '10', '$9,200', '$27,600', '154x'],
+                  ['Med spa', '12', '$380', '$1,368', '7.6x'],
+                ].map(([biz, missed, value, recovered, roi]) => (
+                  <tr key={biz} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{biz}</td>
+                    <td className="px-4 py-3 text-gray-600">{missed}</td>
+                    <td className="px-4 py-3 text-gray-600">{value}</td>
+                    <td className="px-4 py-3 text-gray-600">{recovered}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-bold bg-indigo-50/30">{roi}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Revenue recovered assumes 30% of missed calls convert to booked jobs. Based on Boltcall customer data.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

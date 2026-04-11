@@ -558,6 +558,42 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Telephone Etiquette Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Professional Telephone Etiquette: Do's and Don'ts</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">The practices that build caller trust vs. the habits that lose customers</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Situation</th>
+                  <th className="px-4 py-3 font-semibold text-red-600 border-b border-gray-200">Unprofessional (Loses Trust)</th>
+                  <th className="px-4 py-3 font-semibold text-green-700 border-b border-gray-200">Professional (Builds Trust)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Answering the call', 'Ringing 6+ times, then voicemail', 'Answered within 3 rings with business name'],
+                  ['Placing on hold', '"Hold on" — then silence for 3+ minutes', '"May I place you on a brief hold? It will be under 2 minutes"'],
+                  ['Taking a message', 'Loose note, never followed up', 'Read back message, confirm callback time, follow through'],
+                  ['Transferring a call', 'Blind transfer with no context', 'Warm transfer with caller name and reason stated'],
+                  ['Handling a complaint', 'Defensive or dismissive tone', 'Acknowledgement, ownership, resolution timeline'],
+                  ['Ending the call', 'Hanging up abruptly', '"Is there anything else I can help you with?" + clear close'],
+                  ['After-hours calls', 'Voicemail with no callback ETA', 'AI answers, books appointment, sends confirmation'],
+                ].map(([situation, bad, good]) => (
+                  <tr key={situation} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{situation}</td>
+                    <td className="px-4 py-3 text-red-600 text-xs">{bad}</td>
+                    <td className="px-4 py-3 text-green-700 text-xs">{good}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

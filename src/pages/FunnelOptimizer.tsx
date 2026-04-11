@@ -660,6 +660,43 @@ const FunnelOptimizer: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Funnel Optimization Benchmarks Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Local Business Funnel Benchmarks: Average vs. Optimized</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Where local service businesses lose leads — and what top performers do differently</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Funnel Stage</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Average Business</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">Optimized with AI</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Key Lever</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Calls answered', '60–70%', '99%+', '24/7 AI call answering'],
+                  ['Lead qualified on first call', '45%', '85%+', 'AI qualification script'],
+                  ['Appointment booked on first call', '35%', '75%+', 'Live calendar booking'],
+                  ['Appointment kept (no-show rate)', '75–82%', '88–92%', 'Automated reminders'],
+                  ['Customer leaves a review', '5–10%', '18–25%', 'Post-visit review request SMS'],
+                  ['Repeat booking within 6 months', '30%', '55%+', 'Re-engagement SMS sequence'],
+                ].map(([stage, avg, opt, lever]) => (
+                  <tr key={stage} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{stage}</td>
+                    <td className="px-4 py-3 text-red-600">{avg}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{opt}</td>
+                    <td className="px-4 py-3 text-gray-600">{lever}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
