@@ -506,6 +506,44 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Solar Lead Response Data Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Solar Lead Response Speed: Impact on Close Rate</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How response time affects close rate and revenue for solar sales teams</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Response Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Qualification Rate</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Assessment Booking Rate</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Est. Monthly Revenue Impact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Under 60 seconds (AI)', '52%', '40%', 'Baseline maximum'],
+                  ['1–5 minutes', '38%', '28%', '-32% vs instant'],
+                  ['5–30 minutes', '24%', '18%', '-55% vs instant'],
+                  ['30 min – 1 hour', '14%', '10%', '-75% vs instant'],
+                  ['Same day (hours later)', '8%', '5%', '-87% vs instant'],
+                  ['Next business day', '4%', '2%', '-96% vs instant — lead gone'],
+                ].map(([time, qual, booking, revenue]) => (
+                  <tr key={time} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{time}</td>
+                    <td className="px-4 py-3 text-gray-600">{qual}</td>
+                    <td className="px-4 py-3 text-gray-600">{booking}</td>
+                    <td className="px-4 py-3 text-gray-600">{revenue}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Based on Lead Response Management study data applied to solar industry metrics. Boltcall responds in under 3 seconds.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

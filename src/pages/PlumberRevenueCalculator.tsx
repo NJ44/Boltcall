@@ -925,6 +925,43 @@ const PlumberRevenueCalculator: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Plumbing Industry Benchmark Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Plumbing Business Benchmarks: Call Capture and Revenue</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Industry average vs. top-performing plumbing companies on call response and revenue recovery</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Industry Average</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With AI Answering</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Monthly calls answered rate', '60–72%', '99%+'],
+                  ['Emergency after-hours calls captured', '0%', '100%'],
+                  ['Monthly missed calls (35 avg)', '10–14 per month', '0–1 per month'],
+                  ['Average repair order value', '$350 – $580', '$350 – $580 (same)'],
+                  ['Monthly revenue lost to missed calls', '$3,500 – $8,120', '$0 – $580'],
+                  ['Service appointment no-show rate', '15–20%', '7–10%'],
+                  ['Monthly Google review growth', '1–2 reviews/mo', '5–9 reviews/mo'],
+                  ['Setup time for 24/7 coverage', '2–4 weeks (hire)', '30 minutes'],
+                ].map(([metric, avg, ai]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{avg}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

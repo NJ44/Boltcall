@@ -363,6 +363,43 @@ const BestAIAnsweringServiceDentalMedical: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Dental/Medical AI Answering Benchmarks */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Answering for Dental and Medical Practices: Performance Data</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What dental and medical practices gain when they switch to AI phone answering</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Traditional Front Desk</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Answering (Boltcall)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Call answer rate', '65–75%', '99%+'],
+                  ['After-hours coverage', 'Voicemail only', '24/7 — all calls answered'],
+                  ['New patient no-show rate', '20–28%', '8–12% (automated reminders)'],
+                  ['Monthly new patient calls captured', '65–75% of total', '99%+ of total'],
+                  ['Time on routine FAQ calls', '2–3 hours/day', 'Under 30 min/day'],
+                  ['Post-visit review requests sent', '0–5% of patients', '95%+ (automated)'],
+                  ['Monthly cost', '$3,200 – $4,500 (salary)', '$79 – $179 flat'],
+                  ['Setup time', '2–4 weeks (hire + train)', '30 minutes'],
+                ].map(([metric, trad, ai]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{trad}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

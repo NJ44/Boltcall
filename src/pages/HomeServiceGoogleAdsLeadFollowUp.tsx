@@ -318,6 +318,42 @@ const HomeServiceGoogleAdsLeadFollowUp: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Home Service Google Ads Lead Response Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Google Ads Lead Follow-Up: Response Time vs. ROI</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How response speed affects your return on Google Ads spend for home service businesses</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Lead Response Setup</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Avg. Response Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Conversion Rate</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Cost Per Booked Job</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['AI answering + instant SMS', 'Under 60 seconds', '38–52%', 'Lowest — high conversion rate'],
+                  ['Staff callback (during hours)', '15–45 minutes', '22–35%', 'Moderate — faster than average'],
+                  ['Staff callback (next morning)', '8–14 hours', '8–15%', 'High — most leads have moved on'],
+                  ['Voicemail only', 'Never proactive', '3–8%', 'Very high — poor conversion'],
+                  ['No follow-up system', 'Never', '< 3%', 'Wasted spend — leads lost'],
+                ].map(([setup, time, conversion, cpa]) => (
+                  <tr key={setup} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{setup}</td>
+                    <td className="px-4 py-3 text-gray-600">{time}</td>
+                    <td className="px-4 py-3 text-gray-600">{conversion}</td>
+                    <td className="px-4 py-3 text-gray-600">{cpa}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

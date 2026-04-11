@@ -324,6 +324,43 @@ const RoofingMissedCallsLeadCapture: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Roofing Industry Benchmark Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Roofing Industry Benchmarks: Lead Capture and Revenue Impact</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How top-performing roofing companies compare to the average on call response and storm-season leads</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Industry Average</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With AI Lead Capture</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Storm-season call answer rate', '55–65%', '99%+'],
+                  ['After-hours emergency calls captured', '0%', '100%'],
+                  ['Monthly missed calls (storm season)', '14–18 per month', '0–1 per month'],
+                  ['Average job value (full replacement)', '$8,500 – $14,000', '$8,500 – $14,000 (same)'],
+                  ['Monthly revenue lost to missed calls', '$119,000 – $252,000', '$0 – $14,000'],
+                  ['Lead-to-inspection conversion rate', '22%', '38%+ (instant response)'],
+                  ['Inspection appointment no-show rate', '20–28%', '10–14%'],
+                  ['Monthly Google review growth', '1–2 reviews/mo', '4–8 reviews/mo'],
+                ].map(([metric, avg, ai]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{avg}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

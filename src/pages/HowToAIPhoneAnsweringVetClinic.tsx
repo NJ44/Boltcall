@@ -681,6 +681,43 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Vet Clinic AI Phone Answering Benchmark Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Vet Clinic AI Phone Answering: Before and After</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What veterinary clinics typically experience after implementing AI phone answering</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Before AI Answering</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">After Boltcall</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Call answer rate', '63–73%', '99%+'],
+                  ['After-hours emergency calls answered', '0%', '100%'],
+                  ['Annual wellness recall compliance', '48%', '65%+ (automated)'],
+                  ['Appointment no-show rate', '15–20%', '7–10%'],
+                  ['Staff time on routine call handling', '2–3 hours/day', 'Under 45 min/day'],
+                  ['Monthly revenue from missed calls recovered', '$0', '$3,000 – $8,500+'],
+                  ['Monthly Google review growth', '1–2 reviews/mo', '5–9 reviews/mo'],
+                  ['Monthly cost vs. front desk hire', '$3,200 – $4,200/mo', '$79 – $179/mo'],
+                ].map(([metric, before, after]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-gray-600">{before}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{after}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
