@@ -473,6 +473,44 @@ const BlogAIGuideStep1: React.FC = () => {
         </div>
       </div>
 
+
+      {/* AI Capabilities for Local Businesses Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What AI Can and Cannot Do for Local Businesses Today</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">A realistic assessment of current AI capabilities relevant to service businesses</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Task</th>
+                  <th className="px-4 py-3 font-semibold text-green-700 border-b border-gray-200">AI Can Do Now</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Maturity Level</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">ROI Timeline</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Answer phone calls 24/7', 'Yes — fully capable', 'Production-ready', 'Immediate (weeks)'],
+                  ['Book appointments live', 'Yes — with calendar integration', 'Production-ready', 'Immediate (weeks)'],
+                  ['Send automated follow-ups', 'Yes — SMS and email', 'Production-ready', 'Immediate (weeks)'],
+                  ['Write marketing copy', 'Yes — ChatGPT, Claude', 'Production-ready', 'Immediate (weeks)'],
+                  ['Manage Google Ads', 'Partial — assist only', 'Maturing', '1–3 months'],
+                  ['Perform physical tasks', 'No — not yet relevant', 'Early research stage', 'Not applicable'],
+                  ['Replace all staff judgment', 'No — supports, not replaces', 'Not the goal', 'Not applicable'],
+                ].map(([task, can, maturity, roi]) => (
+                  <tr key={task} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{task}</td>
+                    <td className="px-4 py-3 text-green-700">{can}</td>
+                    <td className="px-4 py-3 text-gray-600">{maturity}</td>
+                    <td className="px-4 py-3 text-gray-600">{roi}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -611,6 +611,44 @@ const BlogAIGuideStep2: React.FC = () => {
         </div>
       </div>
 
+
+      {/* AI Tools Comparison Table for Local Businesses */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Tool Categories: What Each Solves for Local Businesses</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Matching AI tool categories to the business problems they actually solve</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">AI Tool Category</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Problem It Solves</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Example</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Monthly Cost Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['AI phone receptionist', 'Missed calls, after-hours leads', 'Boltcall', '$79 – $179'],
+                  ['AI writing assistant', 'Marketing copy, emails, proposals', 'ChatGPT, Claude', '$20 – $100'],
+                  ['AI scheduling tool', 'Appointment booking and reminders', 'Calendly AI, Boltcall', '$15 – $179'],
+                  ['AI review management', 'Google review generation and response', 'Birdeye, Podium, Boltcall', '$100 – $400'],
+                  ['AI social media', 'Content creation and posting', 'Hootsuite AI, Buffer', '$50 – $200'],
+                  ['AI chatbot (website)', 'Website visitor questions', 'Intercom, Drift', '$100 – $500'],
+                  ['AI ads management', 'Google/Meta ad optimization', 'Madgicx, Adzooma', '$150 – $1,000'],
+                ].map(([category, problem, example, cost]) => (
+                  <tr key={category} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{category}</td>
+                    <td className="px-4 py-3 text-gray-600">{problem}</td>
+                    <td className="px-4 py-3 text-gray-600">{example}</td>
+                    <td className="px-4 py-3 text-gray-600">{cost}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -616,6 +616,45 @@ const AIVsHumanReceptionistBlog: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* AI vs Human Receptionist Data Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI vs. Human Receptionist: Side-by-Side Performance Data</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Key performance metrics comparing AI and human receptionists for local service businesses</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Human Receptionist</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Hours available', '168 hrs/week (24/7)', '40 hrs/week (business hours)'],
+                  ['Call answer rate', '99%+ (never misses)', '55–75% (hold times, breaks, busy)'],
+                  ['Average answer time', 'Under 3 seconds', '4–6 rings (10–25 seconds)'],
+                  ['Monthly cost', '$79 – $179', '$3,200 – $4,500+ (salary + benefits)'],
+                  ['Annual cost', '$948 – $2,148', '$38,400 – $54,000+'],
+                  ['After-hours coverage', 'Yes — always on', 'No — overtime cost or voicemail'],
+                  ['Sick days and vacation', 'Zero', '10–15 days per year'],
+                  ['Training time', '30 minutes setup', '2–4 weeks onboarding'],
+                  ['Turnover risk', 'None', 'High — avg. 2-year tenure'],
+                  ['Performance consistency', '100% — scripted', 'Variable — depends on staff'],
+                ].map(([metric, ai, human]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30">{ai}</td>
+                    <td className="px-4 py-3 text-gray-600">{human}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );

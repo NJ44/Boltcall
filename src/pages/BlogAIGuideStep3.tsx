@@ -626,6 +626,45 @@ const BlogAIGuideStep3: React.FC = () => {
         </div>
       </div>
 
+
+      {/* AI Implementation Checklist Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Implementation Checklist: 30-Day Launch Timeline</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">From choosing your first AI tool to measuring results in 30 days</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Week</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Action</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Time Required</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Expected Outcome</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Week 1', 'Set up AI phone receptionist (Boltcall)', '30 minutes', 'Zero missed calls from day 1'],
+                  ['Week 1', 'Connect your calendar for live booking', '15 minutes', 'Automated appointment booking'],
+                  ['Week 2', 'Configure SMS follow-up sequence', '20 minutes', 'Automated lead nurturing starts'],
+                  ['Week 2', 'Enable appointment reminder automation', '15 minutes', 'No-show rate begins to drop'],
+                  ['Week 3', 'Set up post-visit review request', '20 minutes', 'Google reviews start growing'],
+                  ['Week 3', 'Write AI-assisted FAQ content for website', '60 minutes', 'Better AI search visibility'],
+                  ['Week 4', 'Review first-month call and booking report', '30 minutes', 'Baseline data for optimization'],
+                  ['Week 4', 'Add second AI tool (writing or ads)', '60 minutes', 'Broader automation coverage'],
+                ].map(([week, action, time, outcome]) => (
+                  <tr key={action} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{week}</td>
+                    <td className="px-4 py-3 text-gray-600">{action}</td>
+                    <td className="px-4 py-3 text-gray-600">{time}</td>
+                    <td className="px-4 py-3 text-green-700">{outcome}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
