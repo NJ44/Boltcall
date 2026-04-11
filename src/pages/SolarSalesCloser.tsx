@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { createProductSchema, injectSchemas } from '../lib/schema';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -473,9 +474,20 @@ const SolarSalesCloser: React.FC = () => {
     });
     document.head.appendChild(breadcrumbSchema);
 
+    const cleanupProduct = injectSchemas([
+      createProductSchema({
+        name: 'Solar Sales Closer Toolkit',
+        description: 'Free Solar Sales Closer Toolkit — 14 objection-killing scripts, 6-step sales flow, 7 closing techniques, and practice mode to turn "let me think about it" into signed contracts.',
+        image: 'https://boltcall.org/og-image.jpg',
+        url: '/tools/solar-sales-closer',
+        price: '0',
+      }),
+    ]);
+
     return () => {
       document.getElementById('schema-service-solar-sales-closer')?.remove();
       document.getElementById('schema-breadcrumb-solar-sales-closer')?.remove();
+      cleanupProduct();
     };
   }, []);
 

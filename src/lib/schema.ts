@@ -57,6 +57,55 @@ export function createFAQSchema(faqs: FAQItem[]) {
   };
 }
 
+interface ServiceConfig {
+  name: string;
+  description: string;
+  url: string;
+}
+
+interface ProductConfig {
+  name: string;
+  description: string;
+  image: string;
+  url: string;
+  price?: string;
+  priceCurrency?: string;
+}
+
+export function createServiceSchema(config: ServiceConfig) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: config.name,
+    description: config.description,
+    provider: {
+      '@type': 'Organization',
+      name: 'Boltcall',
+      url: 'https://boltcall.org',
+    },
+    url: `https://boltcall.org${config.url}`,
+  };
+}
+
+export function createProductSchema(config: ProductConfig) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: config.name,
+    description: config.description,
+    image: config.image,
+    url: `https://boltcall.org${config.url}`,
+    brand: { '@type': 'Organization', name: 'Boltcall' },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: config.priceCurrency ?? 'USD',
+      price: config.price ?? '0',
+      availability: 'https://schema.org/InStock',
+      seller: { '@type': 'Organization', name: 'Boltcall' },
+    },
+  };
+}
+
 /**
  * Inject one or more JSON-LD schema objects into <head>.
  * Returns a cleanup function suitable for useEffect.

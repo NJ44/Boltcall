@@ -24,6 +24,7 @@ import {
   Mail,
 } from 'lucide-react';
 import { updateMetaDescription } from '../lib/utils';
+import { createServiceSchema, injectSchemas } from '../lib/schema';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -239,6 +240,14 @@ const RealEstateSpeedScorecard: React.FC = () => {
     updateMetaDescription(
       'Score your real estate lead response speed and see exactly how many deals slow follow-up is costing you. Free calculator for agents.'
     );
+
+    return injectSchemas([
+      createServiceSchema({
+        name: 'Real Estate Speed-to-Lead Scorecard',
+        description: 'A free scorecard tool for real estate agents to grade their lead response speed and calculate how many deals slow follow-up is costing them — with AI-powered recommendations to close the gap.',
+        url: '/tools/real-estate-speed-scorecard',
+      }),
+    ]);
   }, []);
 
   /* ━━ calculations ━━ */
