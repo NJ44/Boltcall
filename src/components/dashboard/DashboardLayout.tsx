@@ -54,6 +54,9 @@ const DashboardLayout: React.FC = () => {
     const saved = localStorage.getItem('sidebarCollapsed');
     return saved === 'true';
   });
+  const [showGettingStartedBox, setShowGettingStartedBox] = useState(() => {
+    return localStorage.getItem('gettingStartedBoxDismissed') !== 'true';
+  });
   // sidebarHovered removed — collapsed sidebar shows tooltips instead of expanding
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showHelpSidebar, setShowHelpSidebar] = useState(false);
