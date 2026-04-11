@@ -242,7 +242,7 @@ const integrations: Integration[] = [
   {
     id: 'servicetitan',
     name: 'ServiceTitan',
-    logo: '/servicetitan_logo.png',
+    logo: 'https://logo.clearbit.com/servicetitan.com',
     subtitle: 'Field Service Management',
     description: 'Automatically create customers and booking requests in ServiceTitan when leads call your AI receptionist.',
     fallbackColor: '#E8461A',
