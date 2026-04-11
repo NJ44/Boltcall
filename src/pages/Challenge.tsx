@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Trophy, Clock, Shield, Phone, Lock, ArrowRight,
-  Target, Zap, Award,
-  PhoneCall, MessageSquare, RefreshCw, CheckCircle2, CheckCircle,
+  Zap, Award,
+  PhoneCall, RefreshCw, CheckCircle2, CheckCircle,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';

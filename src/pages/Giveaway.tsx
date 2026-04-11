@@ -351,7 +351,6 @@ const GiveawayPage: React.FC = () => {
           </div>
         </div>
       </motion.div>
-    </div>
 
       {/* Winner selection transparency */}
       <div className="w-full max-w-4xl mx-auto px-4 pt-2 pb-4">
@@ -376,6 +375,7 @@ const GiveawayPage: React.FC = () => {
           <Link to="/challenge" className="hover:text-white underline">Break Our AI Challenge</Link>
         </div>
       </div>
+    </div>
   );
 };
 

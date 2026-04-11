@@ -416,7 +416,6 @@ const FreeWebsitePage: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
 
       {/* Internal navigation links */}
       <section className="w-full max-w-4xl mx-auto px-4 pb-10">
@@ -431,6 +430,7 @@ const FreeWebsitePage: React.FC = () => {
           <Link to="/contact" className="text-blue-600 hover:underline">Contact Us</Link>
         </div>
       </section>
+    </div>
   );
 };
 
