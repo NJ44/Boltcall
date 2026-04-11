@@ -959,6 +959,27 @@ const DentistChairCalculator: React.FC = () => {
         </div>
       </section>
 
+      {/* Why Boltcall */}
+      <section className="py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-8">Why Dental Practices Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { icon: "🔔", title: "Triple-Touch Reminders", desc: "SMS + email + voice reminders at 48 h, 24 h, and 2 h before each appointment. Industry data shows this cadence reduces no-shows by up to 38%." },
+              { icon: "📋", title: "Smart Waitlist Fill", desc: "When a cancellation comes in, AI automatically texts the next patient on your waitlist — filling the chair in minutes, not hours." },
+              { icon: "📞", title: "24/7 Patient Intake", desc: "New patients can call or text any time and get answers to FAQs, book their first appointment, and receive confirmation — without staff involvement." },
+              { icon: "📈", title: "Measurable Chair Utilisation", desc: "Track recovered appointments, staff hours saved, and incremental revenue month over month directly in your Boltcall dashboard." },
+            ].map((item) => (
+              <div key={item.title} className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 hover:border-teal-500/30 transition-colors">
+                <div className="text-2xl mb-3">{item.icon}</div>
+                <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
