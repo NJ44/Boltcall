@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { createProductSchema, injectSchemas } from '../lib/schema';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
