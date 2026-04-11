@@ -109,8 +109,8 @@ const KnowledgeBasePage: React.FC = () => {
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
   const [showCreateFolderModal, setShowCreateFolderModal] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
-  const [_renamingFolderId, setRenamingFolderId] = useState<string | null>(null);
-  const [_renamingFolderName, setRenamingFolderName] = useState('');
+  const [renamingFolderId, setRenamingFolderId] = useState<string | null>(null);
+  const [renamingFolderName, setRenamingFolderName] = useState('');
 
   // Fetch KB folders
   const fetchFolders = useCallback(async () => {
