@@ -396,6 +396,23 @@ const GiveawayPage: React.FC = () => {
           no credit card required — just enter your email and you're in.
         </p>
       </section>
+
+      {/* Risk Reversal */}
+      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-100">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">Common Questions About the Giveaway</h2>
+        <div className="space-y-4">
+          {[
+            { q: 'Is there any catch?', a: 'No purchase required. No credit card. The winner gets 30 days of full Boltcall access, completely free — setup included.' },
+            { q: 'How are winners selected?', a: 'Winners are chosen at random from all valid entries each week. We notify winners by email within 48 hours of selection.' },
+            { q: 'What happens after the 30 days?', a: 'Nothing automatic. If you want to continue, we'll reach out with options. No subscription is auto-started.' },
+          ].map((item) => (
+            <div key={item.q} className="py-3 border-b border-gray-100 last:border-0">
+              <p className="font-semibold text-gray-800 mb-1">{item.q}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

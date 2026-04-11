@@ -213,7 +213,39 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
             </motion.div>
           </div>
         </section>
-        <Footer />
+  
+      {/* Common Questions */}
+      <section className="py-14 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Common Questions</h2>
+          <div className="space-y-5">
+            {[
+              {
+                q: 'Is this playbook really free?',
+                a: 'Yes — 100% free. No credit card, no signup required. Download it and use it today.',
+              },
+              {
+                q: 'Do I need Boltcall to use this playbook?',
+                a: 'No. The playbook works with any lead response system. It documents the exact speed-to-lead framework that top solar closers use, regardless of their tools.',
+              },
+              {
+                q: 'How quickly should I follow up with a solar lead?',
+                a: 'Within 60 seconds if possible. Studies show contacting a lead within 1 minute increases your close rate by up to 391% compared to following up after 30 minutes. Every minute of delay costs conversions.',
+              },
+              {
+                q: 'What if I'm already using a different AI or CRM?',
+                a: 'The playbook complements any existing system. It focuses on process and timing, not specific tools.',
+              },
+            ].map((item) => (
+              <div key={item.q} className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                <h3 className="font-bold text-gray-900 mb-2">{item.q}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <Footer />
       </div>
     );
   }

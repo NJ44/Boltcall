@@ -587,6 +587,12 @@ const AIVsHumanReceptionistBlog: React.FC = () => {
 
       </main>
 
+
+      <blockquote className="border-l-4 border-blue-500 pl-6 my-10 bg-blue-50 rounded-r-xl py-4 pr-4">
+        <p className="text-lg text-gray-700 italic leading-relaxed">"AI-powered customer service tools can reduce operational costs by up to 30% while handling up to 80% of routine inquiries without human intervention."</p>
+        <footer className="mt-3 text-sm font-semibold text-gray-600">— McKinsey & Company, <a href="https://www.mckinsey.com/capabilities/operations/our-insights/the-next-frontier-of-customer-engagement-ai-enabled-customer-service" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">The Next Frontier of Customer Engagement</a>, 2023</footer>
+      </blockquote>
+
       <Footer />
     </>
   );

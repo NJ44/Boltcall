@@ -737,6 +737,12 @@ const BlogHowToMakeAIReceptionist: React.FC = () => {
         </div>
       </div>
 
+
+      <blockquote className="border-l-4 border-blue-500 pl-6 my-10 bg-blue-50 rounded-r-xl py-4 pr-4">
+        <p className="text-lg text-gray-700 italic leading-relaxed">"75% of customers expect a response within five minutes of making an online inquiry. Businesses that reply in under a minute see 391% higher conversion rates than those that wait 30 minutes or longer."</p>
+        <footer className="mt-3 text-sm font-semibold text-gray-600">— Lead Response Management Study, <a href="https://www.leadresponsemanagement.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">LeadResponseManagement.org</a></footer>
+      </blockquote>
+
       <Footer />
     </div>
   );

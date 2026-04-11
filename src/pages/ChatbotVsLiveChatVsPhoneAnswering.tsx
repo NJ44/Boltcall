@@ -601,6 +601,12 @@ export default function ChatbotVsLiveChatVsPhoneAnswering() {
         </div>
       </motion.div>
 
+
+      <blockquote className="border-l-4 border-blue-500 pl-6 my-10 bg-blue-50 rounded-r-xl py-4 pr-4">
+        <p className="text-lg text-gray-700 italic leading-relaxed">"Despite the rise of chat and messaging, 65% of customers still prefer to reach a business by phone for important or urgent matters. Voice remains the highest-intent channel for service businesses."</p>
+        <footer className="mt-3 text-sm font-semibold text-gray-600">— Salesforce, <a href="https://www.salesforce.com/resources/research-reports/state-of-the-connected-customer/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">State of the Connected Customer Report</a>, 2023</footer>
+      </blockquote>
+
       <Footer />
     </>
   );

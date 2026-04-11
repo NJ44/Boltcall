@@ -551,6 +551,11 @@ const BestAfterHoursAnsweringService: React.FC = () => {
                     </div>
                   </motion.section>
 
+
+                <blockquote className="border-l-4 border-blue-500 pl-6 my-10 bg-blue-50 rounded-r-xl py-4 pr-4">
+                  <p className="text-lg text-gray-700 italic leading-relaxed">"More than 60% of business calls happen outside traditional business hours. Companies that provide 24/7 phone coverage capture up to 40% more leads than those that only answer during the day."</p>
+                  <footer className="mt-3 text-sm font-semibold text-gray-600">— BIA/Kelsey, Local Commerce Monitor Research</footer>
+                </blockquote>
                 </article>
               </div>
             </div>
