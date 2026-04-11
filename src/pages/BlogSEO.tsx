@@ -544,6 +544,42 @@ const BlogSEO: React.FC = () => {
         </div>
       </div>
 
+
+      {/* SEO Strategy Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">SEO vs. AI Search Optimization: Key Differences</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How traditional SEO tactics compare to AEO (Answer Engine Optimization) for local businesses</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Factor</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Traditional SEO</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Search / AEO</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Primary goal', 'Rank on Google page 1', 'Be cited by ChatGPT, Perplexity, Gemini'],
+                  ['Content format', 'Keyword-rich pages', 'Q&A, structured data, authoritative answers'],
+                  ['Key technical signal', 'Backlinks and page speed', 'Schema markup and entity clarity'],
+                  ['Review importance', 'Moderate — affects local pack', 'High — AI engines use review signals heavily'],
+                  ['Citation type', 'Backlinks from other sites', 'NAP consistency and business citations'],
+                  ['Time to results', '3–6 months', '4–8 weeks for AI citation improvements'],
+                  ['Ongoing maintenance', 'Monthly content and links', 'Schema updates and answer freshness'],
+                ].map(([factor, trad, ai]) => (
+                  <tr key={factor} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{factor}</td>
+                    <td className="px-4 py-3 text-gray-600">{trad}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -807,6 +807,42 @@ const Blog: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* AI Answering Impact Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">The New Reality for Local Businesses: Before and After AI</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How AI phone answering changes the daily experience of running a local service business</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Challenge</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Before AI Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">After AI Receptionist</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Calls during busy periods', 'Go to voicemail, most not returned', 'Answered instantly, appointment booked'],
+                  ['After-hours inquiries', 'Lost — no coverage', 'Captured and scheduled automatically'],
+                  ['No-show rate', '18–25% of appointments', '8–12% with automated reminders'],
+                  ['Google review growth', '0–2 reviews per month', '8–15 per month via automated requests'],
+                  ['Staff time on calls', '2–4 hours per day', 'Under 30 minutes — only complex calls'],
+                  ['Response to web leads', '47 minutes average', 'Under 60 seconds'],
+                  ['Monthly missed revenue', '$4,000 – $25,000+', 'Near zero'],
+                ].map(([challenge, before, after]) => (
+                  <tr key={challenge} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{challenge}</td>
+                    <td className="px-4 py-3 text-red-600">{before}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30 font-medium">{after}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

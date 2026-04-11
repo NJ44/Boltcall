@@ -648,6 +648,43 @@ const BlogAnsweringServiceAppointmentScheduling: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Answering Service Scheduling Comparison */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Answering Service vs. AI Scheduling: How They Compare</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">A feature comparison of traditional answering services vs. AI-powered scheduling</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Capability</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Traditional Answering Service</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Phone Answering (Boltcall)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Live appointment booking', 'Message relay only — callback required', 'Directly into your calendar, real time'],
+                  ['After-hours coverage', 'Yes — at per-minute cost ($1–$2/min)', 'Yes — included in flat monthly rate'],
+                  ['Monthly cost', '$200 – $1,500+', '$79 – $179 flat'],
+                  ['No-show reminders', 'Not included', 'Automated — included in every plan'],
+                  ['SMS follow-up to missed callers', 'Not included', 'Automated within seconds'],
+                  ['Lead qualification', 'Basic message only', 'Full qualification before booking'],
+                  ['Google review requests', 'Not included', 'Automated post-visit'],
+                  ['Setup time', '2–5 days', '30 minutes'],
+                ].map(([cap, trad, ai]) => (
+                  <tr key={cap} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{cap}</td>
+                    <td className="px-4 py-3 text-gray-600">{trad}</td>
+                    <td className="px-4 py-3 text-indigo-700 bg-indigo-50/30">{ai}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

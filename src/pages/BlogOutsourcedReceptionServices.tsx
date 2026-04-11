@@ -617,6 +617,44 @@ const BlogOutsourcedReceptionServices: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Outsourced Reception Services Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Outsourced Reception Options: A Comparison</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">The main outsourced reception models and what businesses actually get from each</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Model</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Cost Range</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Booking</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">After-Hours</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Best For</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Virtual receptionist', '$250–$800/mo', 'Basic', 'Limited', 'Small offices wanting human voice'],
+                  ['Live answering service', '$300–$1,500/mo', 'Message relay', 'Yes, at cost', 'High volume call centers'],
+                  ['Offshore call center', '$500–$3,000/mo', 'Yes', 'Yes', 'Enterprise businesses'],
+                  ['AI receptionist', '$79–$179/mo', 'Real-time', 'Always on', 'Local service businesses'],
+                  ['In-house hire', '$3,200–$4,500/mo', 'Yes', 'No', 'Front-desk-heavy offices'],
+                ].map(([model, cost, booking, afterHours, bestFor]) => (
+                  <tr key={model} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{model}</td>
+                    <td className="px-4 py-3 text-gray-600">{cost}</td>
+                    <td className="px-4 py-3 text-gray-600">{booking}</td>
+                    <td className="px-4 py-3 text-gray-600">{afterHours}</td>
+                    <td className="px-4 py-3 text-gray-600">{bestFor}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

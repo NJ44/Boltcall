@@ -775,6 +775,45 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Live Answering Service Cost Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Live Answering Service Cost Comparison (2026)</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">What businesses actually pay for different types of call-answering solutions</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Service Type</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Monthly Cost</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Per-Minute Fee</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Books Appointments</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">24/7 Coverage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Voicemail', '$0', 'None', 'No', 'Recording only'],
+                  ['Virtual assistant (offshore)', '$200 – $600', '$0.75 – $1.50', 'Sometimes', 'Business hours only'],
+                  ['Live answering service', '$250 – $1,500', '$1.00 – $2.00', 'Message relay', 'Yes, at premium cost'],
+                  ['In-house receptionist', '$3,200 – $4,500', 'N/A (salary)', 'Yes', 'No (40 hrs/week)'],
+                  ['AI receptionist (Boltcall)', '$79 – $179', 'None — flat rate', 'Yes — real-time', 'Yes — always on'],
+                ].map(([type, monthly, perMin, books, coverage]) => (
+                  <tr key={type} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{type}</td>
+                    <td className="px-4 py-3 text-gray-600">{monthly}</td>
+                    <td className="px-4 py-3 text-gray-600">{perMin}</td>
+                    <td className="px-4 py-3 text-gray-600">{books}</td>
+                    <td className="px-4 py-3 text-gray-600">{coverage}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Prices as of 2026. Live answering costs vary by provider and include base fee plus per-minute overage charges.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

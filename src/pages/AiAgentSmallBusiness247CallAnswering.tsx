@@ -260,6 +260,47 @@ const AiAgentSmallBusiness247CallAnswering: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* 24/7 Coverage ROI Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">24/7 AI Call Answering: ROI by Business Type</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">Estimated monthly revenue recovered when small businesses add 24/7 AI coverage</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Business Type</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Missed Calls/Month</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Avg. Job Value</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Monthly Revenue Recovered</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">Est. ROI at $179/mo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['HVAC', '11–16', '$850', '$4,675 – $6,800', '26x – 38x'],
+                  ['Plumbing', '12–18', '$420', '$2,520 – $3,780', '14x – 21x'],
+                  ['Dental practice', '9–13', '$680', '$3,060 – $4,420', '17x – 25x'],
+                  ['Roofing', '8–14', '$9,200', '$36,800 – $64,400', '205x – 360x'],
+                  ['Law firm (intake)', '14–20', '$2,400', '$16,800 – $24,000', '94x – 134x'],
+                  ['Med spa', '10–15', '$380', '$1,900 – $2,850', '11x – 16x'],
+                  ['Auto repair', '8–11', '$310', '$1,240 – $1,705', '7x – 10x'],
+                ].map(([biz, missed, value, recovered, roi]) => (
+                  <tr key={biz} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{biz}</td>
+                    <td className="px-4 py-3 text-gray-600">{missed}</td>
+                    <td className="px-4 py-3 text-gray-600">{value}</td>
+                    <td className="px-4 py-3 text-gray-600">{recovered}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-bold bg-indigo-50/30">{roi}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">Revenue recovered assumes 30% of missed calls convert to booked jobs. Based on Boltcall customer data and industry averages.</p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

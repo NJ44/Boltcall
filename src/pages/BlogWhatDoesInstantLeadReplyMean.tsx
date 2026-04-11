@@ -497,6 +497,42 @@ const BlogWhatDoesInstantLeadReplyMean: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Instant Lead Reply Response Time Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What "Instant" Really Means: Lead Reply Times Compared</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How different systems handle a new lead arriving at 9:07pm on a Tuesday</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">System Type</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Actual Response Time</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">What the Lead Experiences</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Conversion Outcome</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['AI phone answering (Boltcall)', 'Under 3 seconds', 'Call answered, appointment booked', 'Highest — lead is qualified and confirmed'],
+                  ['Automated SMS only', '< 60 seconds', 'Text received, may or may not reply', 'High — if SMS triggers call-back'],
+                  ['Manual callback next morning', '8–12 hours', 'Voicemail at night, call in morning', 'Moderate — lead may have moved on'],
+                  ['Email auto-reply', '< 5 minutes', 'Email received, often ignored', 'Low — email open rates under 25%'],
+                  ['No system (voicemail)', 'Next business day', 'Voicemail, no callback guaranteed', 'Very low — competitor likely won the job'],
+                ].map(([system, time, experience, outcome]) => (
+                  <tr key={system} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{system}</td>
+                    <td className="px-4 py-3 text-gray-600">{time}</td>
+                    <td className="px-4 py-3 text-gray-600">{experience}</td>
+                    <td className="px-4 py-3 text-gray-600">{outcome}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -739,6 +739,43 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Google Review Automation Stats Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Google Review Impact by Business Type: Data Overview</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How Google review volume and rating affect revenue for local service businesses</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Review Metric</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Business Impact</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Moving from 3.5 to 4.0 stars', '+18% more customers', 'Harvard Business School study'],
+                  ['Moving from 4.0 to 4.5 stars', '+9% revenue increase', 'BrightLocal 2024'],
+                  ['1-star drop in Google rating', '5–9% revenue loss', 'University of California study'],
+                  ['Review response rate (business replies)', '+35% more engagement from searchers', 'Google Business Profile data'],
+                  ['Asking customers directly for reviews', '70% compliance rate', 'BrightLocal Consumer Review Survey'],
+                  ['Not asking (hoping organically)', '5–10% organic review rate', 'BrightLocal Consumer Review Survey'],
+                  ['Automated post-visit request (SMS)', '12–18% review completion rate', 'Boltcall customer data'],
+                  ['Time from visit to review request', 'Best within 2 hours', 'Podium / ReviewTrackers research'],
+                ].map(([metric, impact, source]) => (
+                  <tr key={metric} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{metric}</td>
+                    <td className="px-4 py-3 text-green-700 font-medium">{impact}</td>
+                    <td className="px-4 py-3 text-gray-500 text-xs">{source}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
