@@ -567,6 +567,26 @@ const AIFollowUpSystemPage: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Why Boltcall */}
+      <section className="py-14 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Why Businesses Choose Boltcall</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {[
+              { title: 'Setup in 30 minutes', desc: 'No developers, no tech team. Answer 5 questions about your business and your AI receptionist is live — configured to your services, hours, and voice.' },
+              { title: 'Flat monthly pricing', desc: 'Unlike per-call services that penalize you for growth, Boltcall charges a flat monthly fee. Handle 500 calls or 5,000 — your cost stays predictable.' },
+              { title: 'Trained on your business', desc: 'Not a generic bot. Boltcall learns your specific services, pricing, FAQs, and booking rules — so every interaction sounds like your best team member.' },
+              { title: 'ROI from day one', desc: 'One recovered call per month covers the entire subscription cost. Most customers see 5–10x ROI within the first 30 days from calls they would have otherwise missed.' },
+            ].map((item) => (
+              <div key={item.title} className="bg-white rounded-xl p-5 shadow-sm border border-white">
+                <h3 className="font-bold text-gray-900 mb-2">✓ {item.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
