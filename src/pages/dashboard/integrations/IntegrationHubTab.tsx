@@ -242,7 +242,7 @@ const integrations: Integration[] = [
   {
     id: 'servicetitan',
     name: 'ServiceTitan',
-    logo: '/servicetitan_logo.png',
+    logo: 'https://go.servicetitan.com/favicon-32x32.png',
     subtitle: 'Field Service Management',
     description: 'Automatically create customers and booking requests in ServiceTitan when leads call your AI receptionist.',
     fallbackColor: '#E8461A',
