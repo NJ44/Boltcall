@@ -67,6 +67,8 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
 
 
   return (
+    <>
+    <ContentDepthFooter />
     <footer className={`${bgClass} ${textClass} pt-12 md:pt-[100px]`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -248,6 +250,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
         </div>
       </div>
     </footer>
+    </>
   );
 };
 
