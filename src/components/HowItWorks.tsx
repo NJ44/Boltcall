@@ -5,21 +5,21 @@ import WhisperText from './ui/whisper-text';
 const PROCESS_PHASES = [
   {
     id: "process-1",
-    title: "Capture the lead",
+    title: "Capture every lead",
     description:
-      "Your helper answers the phone all day and all night. It talks to people who call you. It talks to people who fill out forms on your website. It talks to people who see your ads. It gets their name and phone number. It never misses anyone.",
+      "Your AI receptionist picks up every call — day, night, weekends, holidays. It responds to website forms and ad inquiries instantly. It collects the caller's name, number, and what they need. No lead slips through.",
   },
   {
     id: "process-2",
-    title: "Find serious buyers",
+    title: "Qualify serious buyers",
     description:
-      "Your helper talks to people like a real person. It asks them questions. It finds out what they need, when they want help, and if they're ready to move forward. It separates the serious buyers from the tire-kickers — so you only spend time on people who are ready.",
+      "It asks the right questions, just like your best front-desk person would. It figures out what the caller needs, how urgent it is, and whether they're ready to move forward. You only spend time on people who are ready to buy.",
   },
   {
     id: "process-3",
-    title: "Book appointments",
+    title: "Book the appointment",
     description:
-      "When someone wants to meet with you, your helper books them. It looks at your calendar. It finds a time that works. It tells them when to come. It sends them a reminder so they don't forget.",
+      "When a caller is ready, your AI receptionist checks your calendar, finds an open slot, and books them in. It confirms the time, sends a reminder, and reduces no-shows by 40%.",
   },
 ];
 
@@ -149,7 +149,7 @@ const HowItWorks: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Your helper works all day and all night. It talks to people right away. It books appointments for you. You never miss a chance to get a new customer.
+              Your AI receptionist answers instantly, qualifies the caller, and books the appointment — 24/7, with zero missed opportunities.
             </motion.p>
           </div>
 

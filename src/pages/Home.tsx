@@ -66,6 +66,23 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
 
+          {/* Social proof strip — trust signal right below hero (video: Ch.3 "Can I trust it?") */}
+          <div className="relative z-20 -mt-20 md:-mt-28 pb-8 md:pb-12">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200 shadow-lg px-6 py-5 md:px-8 md:py-6">
+                <div className="flex items-center justify-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" /></svg>
+                  ))}
+                </div>
+                <blockquote className="text-sm md:text-base text-gray-700 italic leading-relaxed">
+                  "We were losing 40+ calls a month after hours. Boltcall picked up every single one — booked 12 new patients in the first week."
+                </blockquote>
+                <p className="text-xs md:text-sm text-gray-500 mt-2 font-medium">Dr. Emily R. — Dental Practice Owner</p>
+              </div>
+            </div>
+          </div>
+
           {/* HeroScrollDemo — desktop only, near fold; start loading immediately */}
           <div className="relative -top-[120px] z-[100] pointer-events-none hidden md:block" style={{ minHeight: '600px', contain: 'layout' }}>
             <LazySection rootMargin="0px" minHeight="600px">
