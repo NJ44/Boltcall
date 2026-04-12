@@ -149,7 +149,7 @@ const HowItWorks: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Your helper works all day and all night. It talks to people right away. It books appointments for you. You never miss a chance to get a new customer.
+              Every lead gets an instant response, qualified in real time, and booked on your calendar — before your competitor even picks up the phone.
             </motion.p>
           </div>
 
