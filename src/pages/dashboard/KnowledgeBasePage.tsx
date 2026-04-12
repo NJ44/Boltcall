@@ -91,6 +91,11 @@ const KnowledgeBasePage: React.FC = () => {
   const [kbFaqs, setKbFaqs] = useState<Array<{ question: string; answer: string }>>([]);
   const [kbPolicies, setKbPolicies] = useState({ cancellation: '', reschedule: '', deposit: '' });
 
+  // Folder picker in popup modals
+  const [popupFolderId, setPopupFolderId] = useState<string | null>(null);
+  const [showNewFolderInline, setShowNewFolderInline] = useState(false);
+  const [inlineNewFolderName, setInlineNewFolderName] = useState('');
+
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
