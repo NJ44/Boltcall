@@ -379,10 +379,10 @@ const Header: React.FC = () => {
     />
   );
 
-  // Underline for dropdown items
+  // Underline for dropdown items (named group avoids conflicts with nav-level group)
   const DropdownUnderline = ({ isBlue }: { isBlue: boolean }) => (
     <span
-      className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${isBlue ? 'bg-white' : 'bg-blue-600'}`}
+      className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover/item:w-full transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${isBlue ? 'bg-white' : 'bg-blue-600'}`}
     />
   );
 
