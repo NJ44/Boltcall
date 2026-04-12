@@ -298,6 +298,43 @@ const RankOnGoogleOfferPage = () => {
           </div>
         </div>
       </section>
+
+      {/* SEO Audit Coverage Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">What the Rank on Google Audit Covers</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">A complete breakdown of the 30-factor SEO audit included in the Rank on Google package</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Audit Area</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">What We Check</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Why It Matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Technical SEO', 'Site speed, mobile friendliness, crawl errors, SSL', 'Google penalizes slow or broken sites'],
+                  ['On-Page SEO', 'Title tags, meta descriptions, heading structure, keyword usage', 'Determines what queries you rank for'],
+                  ['Schema Markup', 'LocalBusiness, FAQ, Service, Review structured data', 'Unlocks rich results and AI engine visibility'],
+                  ['Google Business Profile', 'Completeness, categories, photos, review signals', 'Drives local pack rankings and map results'],
+                  ['Content Quality', 'Depth, uniqueness, topical authority, E-E-A-T signals', 'Thin content loses to competitors with better pages'],
+                  ['Backlink Profile', 'Domain authority, citation consistency, toxic links', 'Backlinks remain the strongest ranking signal'],
+                  ['AI Engine Readiness', 'Entity clarity, FAQ coverage, citation network', 'Determines if ChatGPT and Perplexity recommend you'],
+                  ['Competitor Gap', 'Keywords competitors rank for that you do not', 'Shows the fastest path to more organic traffic'],
+                ].map(([area, check, why]) => (
+                  <tr key={area} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{area}</td>
+                    <td className="px-4 py-3 text-gray-600">{check}</td>
+                    <td className="px-4 py-3 text-gray-600">{why}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
         </div>
     );

@@ -247,6 +247,48 @@ const Comparisons: React.FC = () => {
         </div>
       </section>
 
+
+      {/* AI Receptionist Comparison Summary Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Boltcall vs. Competitors: Quick Comparison</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How Boltcall compares to the most common alternatives for local business phone handling</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Feature</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50 text-center">Boltcall</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 text-center">Smith.ai</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 text-center">Podium</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 text-center">GoHighLevel</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['AI phone answering', '\u2713', '\u2713', '\u2717', 'Partial'],
+                  ['24/7 coverage', '\u2713', '\u2713', '\u2713', '\u2713'],
+                  ['Live appointment booking', '\u2713', 'Message only', '\u2717', '\u2713'],
+                  ['SMS follow-up automation', '\u2713', '\u2717', '\u2713', '\u2713'],
+                  ['No-show reminders', '\u2713', '\u2717', '\u2717', '\u2713'],
+                  ['Google review automation', '\u2713', '\u2717', '\u2713', '\u2717'],
+                  ['Setup time', '30 min', '1-2 days', '1-2 weeks', '2-4 weeks'],
+                  ['Starting price', '$79/mo', '$292.50/mo', '$399/mo', '$97/mo'],
+                  ['Per-minute fees', 'None', '$7-9/call', 'None', 'None'],
+                ].map(([feature, boltcall, smith, podium, ghl]) => (
+                  <tr key={feature} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{feature}</td>
+                    <td className="px-4 py-3 text-center bg-indigo-50/30 text-indigo-700 font-semibold">{boltcall}</td>
+                    <td className="px-4 py-3 text-center text-gray-600">{smith}</td>
+                    <td className="px-4 py-3 text-center text-gray-600">{podium}</td>
+                    <td className="px-4 py-3 text-center text-gray-600">{ghl}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -714,6 +714,42 @@ const AIAuditPage: React.FC = () => {
       </section>
 
       <FAQ />
+
+      {/* AI Audit Scoring Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Audit Score Ranges: What Your Results Mean</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How to interpret your AI audit score and what action to take at each level</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Score</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Rating</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Estimated Revenue at Risk</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Recommended Next Step</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['0–30', 'Critical', '$10,000+ per month', 'Implement AI call answering and lead capture immediately'],
+                  ['31–50', 'Needs Work', '$5,000 – $10,000 per month', 'Add after-hours coverage and automated follow-up'],
+                  ['51–70', 'Average', '$2,000 – $5,000 per month', 'Optimize response time and add review automation'],
+                  ['71–85', 'Good', '$500 – $2,000 per month', 'Fine-tune scripts and add CRM integration'],
+                  ['86–100', 'Excellent', 'Minimal', 'Maintain current systems and focus on upsell automation'],
+                ].map(([score, rating, risk, step]) => (
+                  <tr key={score} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{score}</td>
+                    <td className="px-4 py-3 text-gray-600 font-medium">{rating}</td>
+                    <td className="px-4 py-3 text-red-600 font-medium">{risk}</td>
+                    <td className="px-4 py-3 text-gray-600">{step}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

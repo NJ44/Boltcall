@@ -173,6 +173,42 @@ const AIVisibilityCheck: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* AI Visibility Scoring Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Visibility Score: What Each Range Means</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How your AI visibility score translates to real business impact when customers search with AI tools</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Score Range</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">AI Visibility Level</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">What It Means</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Priority Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['0–20', 'Invisible to AI', 'AI tools never mention your business in answers', 'Add schema markup and complete your Google Business Profile'],
+                  ['21–40', 'Rarely Cited', 'AI mentions competitors but not you', 'Build review volume and add FAQ structured data'],
+                  ['41–60', 'Occasionally Visible', 'AI sometimes includes you in lists', 'Add industry-specific schema and improve content depth'],
+                  ['61–80', 'Frequently Cited', 'AI regularly recommends your business', 'Optimize for specific service queries and add testimonials'],
+                  ['81–100', 'AI Preferred', 'AI consistently ranks you as a top recommendation', 'Maintain review velocity and keep content fresh'],
+                ].map(([score, level, meaning, action]) => (
+                  <tr key={score} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{score}</td>
+                    <td className="px-4 py-3 text-gray-600 font-medium">{level}</td>
+                    <td className="px-4 py-3 text-gray-600">{meaning}</td>
+                    <td className="px-4 py-3 text-gray-600">{action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
