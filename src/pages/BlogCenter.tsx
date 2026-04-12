@@ -21,6 +21,17 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'Never Miss a <span className="text-blue-600">Call After Business Hours</span>',
+    slug: '/blog/never-miss-a-call-after-business-hours',
+    excerpt: 'Stop losing leads after hours. Learn how smart local businesses handle after-hours calls with AI — no staff, no voicemail, no missed revenue.',
+    date: 'April 12, 2026',
+    readTime: '11 min read',
+    category: 'After-Hours|AI Receptionist',
+    image: '/og-image.jpg'
+  },
+
+${NEW_ENTRY}
+  {
     title: 'Best AI Receptionist for Home Services (Plumbers, HVAC, Roofing) — 2026 Guide',
     slug: '/blog/best-ai-receptionist-home-services',
     excerpt: 'A practical buying guide for home service businesses. Learn what matters, compare options, and see how to capture every call and booking 24/7.',

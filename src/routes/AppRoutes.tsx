@@ -20,6 +20,7 @@ import ContentDepthFooter from '../components/seo/ContentDepthFooter';
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
 import BlogSchemaWrapper from '../components/BlogSchemaWrapper';
+import BlogNeverMissCallAfterHours from '../pages/BlogNeverMissCallAfterHours';
 // ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
 const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
@@ -541,6 +542,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="/blog/ai-receptionist-solar-faq" element={<FAQAIReceptionistSolar />} />
           <Route path="/blog/ai-receptionist-vet-faq" element={<FAQAIReceptionistVet />} />
           <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
+                <Route path="/blog/never-miss-a-call-after-business-hours" element={<BlogNeverMissCallAfterHours />} />
         </Route>
         {/* Industry-specific calculators */}
         <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
