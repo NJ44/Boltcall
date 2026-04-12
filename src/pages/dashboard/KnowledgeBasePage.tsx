@@ -1169,11 +1169,257 @@ const KnowledgeBasePage: React.FC = () => {
     return <KnowledgeBaseSkeleton />;
   }
 
+  // Folder picker JSX used inside popup modals
+  const folderPickerUI = (
+    <div className="mt-4">
+      <label className="block text-sm font-medium text-gray-700 mb-2">Add to Folder</label>
+      {!showNewFolderInline ? (
+        <div className="flex items-center gap-2">
+          <select
+            value={popupFolderId || ''}
+            onChange={(e) => setPopupFolderId(e.target.value || null)}
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">No folder (unassigned)</option>
+            {folders.map((f) => (
+              <option key={f.id} value={f.id}>{f.name}</option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={() => setShowNewFolderInline(true)}
+            className="px-3 py-2 text-sm text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4 inline -mt-0.5" /> New
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={inlineNewFolderName}
+            onChange={(e) => setInlineNewFolderName(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleCreateFolderInline(); if (e.key === 'Escape') setShowNewFolderInline(false); }}
+            placeholder="Folder name..."
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            autoFocus
+          />
+          <button type="button" onClick={handleCreateFolderInline} disabled={!inlineNewFolderName.trim()} className="px-3 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">Create</button>
+          <button type="button" onClick={() => setShowNewFolderInline(false)} className="px-2 py-2 text-sm text-gray-500 hover:text-gray-700"><X className="w-4 h-4" /></button>
+        </div>
+      )}
+    </div>
+  );
+
   return (
-    <div className="flex gap-6 px-1 md:px-0">
-      {/* ─── FOLDER SIDEBAR ─── */}
-      <div className="w-56 flex-shrink-0 hidden lg:block">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sticky top-24">
+    <div className="space-y-4 md:space-y-6 px-1 md:px-0">
+      {/* ─── TOP BAR: breadcrumb + actions ─── */}
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-2 text-sm">
+          {selectedFolderId ? (
+            <>
+              <button
+                onClick={() => setSelectedFolderId(null)}
+                className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Folders
+              </button>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-900 font-medium">{selectedFolder?.name}</span>
+            </>
+          ) : (
+            <h2 className="text-lg font-bold text-gray-900">Knowledge Base</h2>
+          )}
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* New KB Dropdown — always visible */}
+          <div className="relative" ref={dropdownRef}>
+            <PopButton color="blue" onClick={handleAddDocument} className="gap-2">
+              <Plus className="h-4 w-4" />
+              <span className="font-bold hidden md:inline">New Knowledge Base</span>
+              <span className="font-bold md:hidden">New KB</span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+            </PopButton>
+
+            <AnimatePresence>
+              {showDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+                >
+                  <div className="py-1">
+                    <button onClick={handleUploadFiles} className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2">
+                      <Upload className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                      <div><div className="text-sm font-medium text-gray-900">Upload files</div><div className="text-xs text-gray-500">PDF, DOC, TXT</div></div>
+                    </button>
+                    <button onClick={handleAddWebsite} className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-green-600 flex-shrink-0" />
+                      <div><div className="text-sm font-medium text-gray-900">Websites</div><div className="text-xs text-gray-500">Import from URL</div></div>
+                    </button>
+                    <button onClick={handleAddText} className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2">
+                      <PenTool className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <div><div className="text-sm font-medium text-gray-900">Add text</div><div className="text-xs text-gray-500">Create from scratch</div></div>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* New Folder button — only on folder view */}
+          {!selectedFolderId && (
+            <button
+              onClick={() => setShowCreateFolderModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <FolderOpen className="w-4 h-4" />
+              <span className="hidden md:inline">New Folder</span>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* KB Completeness Banner */}
+      {kbCompleteness.score < 100 && !selectedFolderId && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6"
+        >
+          <div className="flex items-start gap-3 md:gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg md:text-xl font-bold text-gray-900">Setup Progress</h3>
+                <span className="text-base font-bold text-blue-600">{kbCompleteness.score}%</span>
+              </div>
+              <div className="w-full h-2.5 bg-gray-100 rounded-full mb-4 overflow-hidden">
+                <motion.div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600" initial={{ width: 0 }} animate={{ width: `${kbCompleteness.score}%` }} transition={{ duration: 0.8, ease: 'easeOut' }} />
+              </div>
+              <p className="text-sm text-gray-500 mb-3">Your AI agent works better with more info:</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {kbCompleteness.items.map((item) => (
+                  <div key={item.label} className="flex items-center gap-2">
+                    {item.done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
+                    <span className={`text-xs ${item.done ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>{item.label}</span>
+                    {item.hint && !item.done && <span className="text-xs text-gray-400">— {item.hint}</span>}
+                  </div>
+                ))}
+              </div>
+              {kbCompleteness.items.some(i => !i.done && i.label !== 'Documents uploaded') && (
+                <button onClick={() => { setQuizStep(0); setQuizAnswers({}); setShowGapsQuiz(true); }} className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                  <Sparkles className="w-4 h-4" /> Fill the Gaps <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* ─── FOLDERS GRID (default view) ─── */}
+      {!selectedFolderId && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {folders.map((folder) => (
+            <div
+              key={folder.id}
+              className="group relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md hover:border-blue-200 transition-all cursor-pointer"
+              onClick={() => setSelectedFolderId(folder.id)}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${folder.is_default ? 'bg-amber-50' : 'bg-blue-50'}`}>
+                  {folder.is_default ? <Building2 className="w-5 h-5 text-amber-600" /> : <FolderOpen className="w-5 h-5 text-blue-600" />}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-gray-900 truncate">{folder.name}</div>
+                  <div className="text-xs text-gray-500">{folder.doc_count} {folder.doc_count === 1 ? 'document' : 'documents'}</div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+              </div>
+              {/* Rename / Delete on hover */}
+              {!folder.is_default && (
+                <div className="hidden group-hover:flex absolute top-2 right-2 items-center gap-1">
+                  <button onClick={(e) => { e.stopPropagation(); setRenamingFolderId(folder.id); setRenamingFolderName(folder.name); setShowCreateFolderModal(true); }} className="p-1 rounded hover:bg-gray-100"><Pencil className="w-3.5 h-3.5 text-gray-500" /></button>
+                  <button onClick={(e) => { e.stopPropagation(); if (confirm(`Delete "${folder.name}"? Documents will be moved to unassigned.`)) handleDeleteFolder(folder.id); }} className="p-1 rounded hover:bg-red-50"><Trash2 className="w-3.5 h-3.5 text-red-500" /></button>
+                </div>
+              )}
+            </div>
+          ))}
+          {folders.length === 0 && (
+            <div className="col-span-full text-center py-12 text-gray-400 text-sm">No folders yet. Create one to organize your knowledge base.</div>
+          )}
+        </div>
+      )}
+
+      {/* ─── DOCUMENTS TABLE (inside a folder) ─── */}
+      {selectedFolderId && (
+        <div className="bg-white rounded-lg shadow-sm">
+          {/* Search */}
+          <div className="p-3 md:p-6">
+            <div className="relative md:max-w-xs">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              </div>
+              <input type="text" placeholder="Search documents..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            </div>
+          </div>
+
+          <CardTableWithPanel
+            hideSearch={true}
+            data={documents.filter(doc => doc.name.toLowerCase().includes(searchTerm.toLowerCase()) || doc.content.toLowerCase().includes(searchTerm.toLowerCase()))}
+            columns={[
+              { key: 'name', label: 'Document Name', width: '25%' },
+              { key: 'content', label: 'Content Preview', width: '35%' },
+              { key: 'createdAt', label: 'Created', width: '15%' },
+              { key: 'updatedAt', label: 'Updated', width: '15%' },
+              { key: 'actions', label: 'Actions', width: '10%' }
+            ]}
+            renderRow={(doc) => (
+              <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
+                <div className="flex items-center justify-between md:contents">
+                  <div className="flex items-center gap-3 md:flex-1 min-w-0">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><FileText className="w-4 h-4 text-blue-600" /></div>
+                    <div className="font-medium text-gray-900 truncate">{doc.name}</div>
+                  </div>
+                  <div className="flex items-center gap-3 md:hidden flex-shrink-0">
+                    <button onClick={() => handleEditDocument(doc)} className="text-blue-600 hover:text-blue-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"><Edit className="w-5 h-5" /></button>
+                    <button onClick={() => handleDeleteDocument(doc.id)} className="text-red-600 hover:text-red-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"><Trash2 className="w-5 h-5" /></button>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-600 md:flex-1 truncate">{doc.content.substring(0, 50)}...</div>
+                <div className="flex items-center gap-4 text-xs md:text-sm text-gray-500 md:contents">
+                  <div className="md:flex-1"><span className="md:hidden">Created: </span>{doc.createdAt.toLocaleDateString()}</div>
+                  <div className="md:flex-1"><span className="md:hidden">Updated: </span>{doc.updatedAt.toLocaleDateString()}</div>
+                </div>
+                <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+                  <button onClick={() => handleEditDocument(doc)} className="text-blue-600 hover:text-blue-900 transition-colors"><Edit className="w-4 h-4" /></button>
+                  <button onClick={() => handleDeleteDocument(doc.id)} className="text-red-600 hover:text-red-900 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                </div>
+              </div>
+            )}
+            emptyStateText="No documents in this folder"
+            emptyStateAnimation="/No_Data_Preview.lottie"
+          />
+        </div>
+      )}
+
+      {/* ─── MODALS ─── */}
+
+      {/* New Knowledge Base Modal */}
+      <ModalShell
+        open={showNewKnowledgeBaseModal}
+        onClose={handleCloseNewKnowledgeBase}
+        title="Add Knowledge Base"
+        maxWidth="max-w-2xl"
+        footer={<>
+          <PopButton onClick={handleCloseNewKnowledgeBase}>Cancel</PopButton>
+          <PopButton color="blue" onClick={handleSaveNewKnowledgeBase} disabled={!knowledgeBaseName.trim()} className="gap-2"><Save className="w-4 h-4" /> Save</PopButton>
+        </>}
+      >
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6">PLACEHOLDER_REMOVE
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-gray-900">Folders</h3>
             <button
