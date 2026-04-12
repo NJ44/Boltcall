@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
-import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, FolderOpen, Building2, Users, Pencil } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, ChevronRight, FolderOpen, Building2, Pencil, ArrowLeft } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
 
 import { FileUpload } from '@/components/ui/file-upload';
