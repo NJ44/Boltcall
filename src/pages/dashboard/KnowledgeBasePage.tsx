@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { KnowledgeBaseSkeleton } from '../../components/ui/loading-skeleton';
-import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, FolderOpen, Building2, Users, Pencil } from 'lucide-react';
+import { X, FileText, Edit, Trash2, Save, Upload, Globe, PenTool, Plus, ChevronDown, ChevronRight, FolderOpen, Building2, Pencil, ArrowLeft } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
 
 import { FileUpload } from '@/components/ui/file-upload';
@@ -90,6 +90,11 @@ const KnowledgeBasePage: React.FC = () => {
   const [kbServices, setKbServices] = useState<Array<{ name: string; duration: number; price: number }>>([]);
   const [kbFaqs, setKbFaqs] = useState<Array<{ question: string; answer: string }>>([]);
   const [kbPolicies, setKbPolicies] = useState({ cancellation: '', reschedule: '', deposit: '' });
+
+  // Folder picker in popup modals
+  const [popupFolderId, setPopupFolderId] = useState<string | null>(null);
+  const [showNewFolderInline, setShowNewFolderInline] = useState(false);
+  const [inlineNewFolderName, setInlineNewFolderName] = useState('');
 
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
@@ -855,7 +860,7 @@ const KnowledgeBasePage: React.FC = () => {
           content_type: 'text',
           status: 'active',
           source: urlInput,
-          kb_folder_id: selectedFolderId || null,
+          kb_folder_id: popupFolderId || selectedFolderId || null,
         }])
         .select()
         .single();
@@ -866,13 +871,18 @@ const KnowledgeBasePage: React.FC = () => {
         return;
       }
 
-      setDocuments(prev => [{
-        id: data.id,
-        name: data.title,
-        content: data.content || '',
-        createdAt: new Date(data.created_at),
-        updatedAt: new Date(data.updated_at || data.created_at)
-      }, ...prev]);
+      // Refresh documents if the doc belongs to the currently viewed folder
+      const targetFolder = popupFolderId || selectedFolderId || null;
+      if (!selectedFolderId || targetFolder === selectedFolderId) {
+        setDocuments(prev => [{
+          id: data.id,
+          name: data.title,
+          content: data.content || '',
+          createdAt: new Date(data.created_at),
+          updatedAt: new Date(data.updated_at || data.created_at)
+        }, ...prev]);
+      }
+      fetchFolders();
 
       showToast({ title: 'Success', message: `Imported ${scraped.charCount || 0} characters from website`, variant: 'success', duration: 3000 });
       const urlDocResult = await claimReward('add_first_kb_document');
@@ -931,7 +941,7 @@ const KnowledgeBasePage: React.FC = () => {
           content_type: 'file',
           status: 'active',
           source: fileInput.name,
-          kb_folder_id: selectedFolderId || null,
+          kb_folder_id: popupFolderId || selectedFolderId || null,
         }])
         .select()
         .single();
@@ -942,13 +952,17 @@ const KnowledgeBasePage: React.FC = () => {
         return;
       }
 
-      setDocuments(prev => [{
-        id: data.id,
-        name: data.title,
+      const targetFolder = popupFolderId || selectedFolderId || null;
+      if (!selectedFolderId || targetFolder === selectedFolderId) {
+        setDocuments(prev => [{
+          id: data.id,
+          name: data.title,
         content: data.content || '',
         createdAt: new Date(data.created_at),
         updatedAt: new Date(data.updated_at || data.created_at)
-      }, ...prev]);
+        }, ...prev]);
+      }
+      fetchFolders();
 
       showToast({ title: 'Success', message: `File "${fileInput.name}" uploaded successfully`, variant: 'success', duration: 3000 });
       const fileDocResult = await claimReward('add_first_kb_document');
@@ -1000,7 +1014,7 @@ const KnowledgeBasePage: React.FC = () => {
           content: '',
           content_type: 'text',
           status: 'draft',
-          kb_folder_id: selectedFolderId || null,
+          kb_folder_id: popupFolderId || selectedFolderId || null,
         }])
         .select()
         .single();
@@ -1034,6 +1048,30 @@ const KnowledgeBasePage: React.FC = () => {
     setUrlInput('');
     setFileInput(null);
     setBlankPageTitle('');
+    setPopupFolderId(null);
+    setShowNewFolderInline(false);
+    setInlineNewFolderName('');
+  };
+
+  // Create folder inline from popup and select it
+  const handleCreateFolderInline = async () => {
+    if (!inlineNewFolderName.trim() || !user?.id) return;
+    try {
+      const res = await fetch(`${FUNCTIONS_BASE}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_folder', userId: user.id, name: inlineNewFolderName.trim() }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPopupFolderId(data.folder?.id || null);
+        setShowNewFolderInline(false);
+        setInlineNewFolderName('');
+        await fetchFolders();
+      }
+    } catch {
+      showToast({ title: 'Error', message: 'Failed to create folder', variant: 'error', duration: 3000 });
+    }
   };
 
   const handleEditDocument = (doc: Document) => {
@@ -1131,153 +1169,123 @@ const KnowledgeBasePage: React.FC = () => {
     return <KnowledgeBaseSkeleton />;
   }
 
-  return (
-    <div className="flex gap-6 px-1 md:px-0">
-      {/* ─── FOLDER SIDEBAR ─── */}
-      <div className="w-56 flex-shrink-0 hidden lg:block">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sticky top-24">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-gray-900">Folders</h3>
-            <button
-              onClick={() => setShowCreateFolderModal(true)}
-              className="p-1 rounded-md hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors"
-              title="New folder"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* All Documents option */}
-          <button
-            onClick={() => setSelectedFolderId(null)}
-            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors mb-1 ${
-              !selectedFolderId ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            <FileText className="w-4 h-4 flex-shrink-0" />
-            <span className="truncate">All Documents</span>
-          </button>
-
-          {/* Folder list */}
-          <div className="space-y-0.5">
-            {folders.map((folder) => (
-              <div key={folder.id} className="group relative">
-                {renamingFolderId === folder.id ? (
-                  <div className="flex items-center gap-1 px-2 py-1">
-                    <input
-                      type="text"
-                      value={renamingFolderName}
-                      onChange={(e) => setRenamingFolderName(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleRenameFolder(folder.id, renamingFolderName);
-                        if (e.key === 'Escape') setRenamingFolderId(null);
-                      }}
-                      onBlur={() => handleRenameFolder(folder.id, renamingFolderName)}
-                      className="flex-1 text-sm border rounded px-1.5 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-400 min-w-0"
-                      autoFocus
-                    />
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setSelectedFolderId(folder.id)}
-                    className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
-                      selectedFolderId === folder.id
-                        ? 'bg-blue-50 text-blue-700 font-medium'
-                        : 'text-gray-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    {folder.is_default ? (
-                      <Building2 className="w-4 h-4 flex-shrink-0" />
-                    ) : (
-                      <FolderOpen className="w-4 h-4 flex-shrink-0" />
-                    )}
-                    <span className="truncate flex-1 text-left">{folder.name}</span>
-                    <span className="text-xs text-gray-400 flex-shrink-0">{folder.doc_count}</span>
-
-                    {/* Edit/delete actions on hover */}
-                    {!folder.is_default && (
-                      <div className="hidden group-hover:flex items-center gap-0.5 flex-shrink-0">
-                        <span
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRenamingFolderId(folder.id);
-                            setRenamingFolderName(folder.name);
-                          }}
-                          className="p-0.5 rounded hover:bg-gray-200"
-                        >
-                          <Pencil className="w-3 h-3" />
-                        </span>
-                        <span
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (confirm(`Delete "${folder.name}"? Documents will be moved to unassigned.`)) {
-                              handleDeleteFolder(folder.id);
-                            }
-                          }}
-                          className="p-0.5 rounded hover:bg-red-100 text-red-500"
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </span>
-                      </div>
-                    )}
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {folders.length === 0 && (
-            <p className="text-xs text-gray-400 text-center py-3">No folders yet</p>
-          )}
-
-          {/* Agents using selected folder */}
-          {selectedFolder && selectedFolder.agents.length > 0 && (
-            <div className="mt-4 pt-3 border-t border-gray-100">
-              <div className="flex items-center gap-1.5 mb-2">
-                <Users className="w-3.5 h-3.5 text-gray-400" />
-                <span className="text-xs font-medium text-gray-500">Connected Agents</span>
-              </div>
-              <div className="space-y-1">
-                {selectedFolder.agents.map((a) => (
-                  <div key={a.agent_id} className="text-xs text-gray-600 flex items-center gap-1.5 pl-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    {a.agent_name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ─── MAIN CONTENT ─── */}
-      <div className="flex-1 min-w-0 space-y-4 md:space-y-6">
-
-      {/* Mobile folder selector */}
-      <div className="lg:hidden bg-white rounded-xl shadow-sm border border-gray-100 p-3">
+  // Folder picker JSX used inside popup modals
+  const folderPickerUI = (
+    <div className="mt-4">
+      <label className="block text-sm font-medium text-gray-700 mb-2">Add to Folder</label>
+      {!showNewFolderInline ? (
         <div className="flex items-center gap-2">
-          <FolderOpen className="w-4 h-4 text-gray-500" />
           <select
-            value={selectedFolderId || ''}
-            onChange={(e) => setSelectedFolderId(e.target.value || null)}
-            className="flex-1 text-sm border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            value={popupFolderId || ''}
+            onChange={(e) => setPopupFolderId(e.target.value || null)}
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">All Documents</option>
+            <option value="">No folder (unassigned)</option>
             {folders.map((f) => (
-              <option key={f.id} value={f.id}>{f.name} ({f.doc_count})</option>
+              <option key={f.id} value={f.id}>{f.name}</option>
             ))}
           </select>
           <button
-            onClick={() => setShowCreateFolderModal(true)}
-            className="p-1.5 rounded-lg border hover:bg-gray-50"
+            type="button"
+            onClick={() => setShowNewFolderInline(true)}
+            className="px-3 py-2 text-sm text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors whitespace-nowrap"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 inline -mt-0.5" /> New
           </button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={inlineNewFolderName}
+            onChange={(e) => setInlineNewFolderName(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleCreateFolderInline(); if (e.key === 'Escape') setShowNewFolderInline(false); }}
+            placeholder="Folder name..."
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            autoFocus
+          />
+          <button type="button" onClick={handleCreateFolderInline} disabled={!inlineNewFolderName.trim()} className="px-3 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">Create</button>
+          <button type="button" onClick={() => setShowNewFolderInline(false)} className="px-2 py-2 text-sm text-gray-500 hover:text-gray-700"><X className="w-4 h-4" /></button>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="space-y-4 md:space-y-6 px-1 md:px-0">
+      {/* ─── TOP BAR: breadcrumb + actions ─── */}
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-2 text-sm">
+          {selectedFolderId ? (
+            <>
+              <button
+                onClick={() => setSelectedFolderId(null)}
+                className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Folders
+              </button>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+              <span className="text-gray-900 font-medium">{selectedFolder?.name}</span>
+            </>
+          ) : (
+            <h2 className="text-lg font-bold text-gray-900">Knowledge Base</h2>
+          )}
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* New KB Dropdown — always visible */}
+          <div className="relative" ref={dropdownRef}>
+            <PopButton color="blue" onClick={handleAddDocument} className="gap-2">
+              <Plus className="h-4 w-4" />
+              <span className="font-bold hidden md:inline">New Knowledge Base</span>
+              <span className="font-bold md:hidden">New KB</span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
+            </PopButton>
+
+            <AnimatePresence>
+              {showDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+                >
+                  <div className="py-1">
+                    <button onClick={handleUploadFiles} className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2">
+                      <Upload className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                      <div><div className="text-sm font-medium text-gray-900">Upload files</div><div className="text-xs text-gray-500">PDF, DOC, TXT</div></div>
+                    </button>
+                    <button onClick={handleAddWebsite} className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-green-600 flex-shrink-0" />
+                      <div><div className="text-sm font-medium text-gray-900">Websites</div><div className="text-xs text-gray-500">Import from URL</div></div>
+                    </button>
+                    <button onClick={handleAddText} className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2">
+                      <PenTool className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <div><div className="text-sm font-medium text-gray-900">Add text</div><div className="text-xs text-gray-500">Create from scratch</div></div>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* New Folder button — only on folder view */}
+          {!selectedFolderId && (
+            <button
+              onClick={() => setShowCreateFolderModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <FolderOpen className="w-4 h-4" />
+              <span className="hidden md:inline">New Folder</span>
+            </button>
+          )}
         </div>
       </div>
 
-      {/* KB Completeness Banner */}
-      {kbCompleteness.score < 100 && (
+      {/* KB Completeness Banner — only on folder grid view */}
+      {kbCompleteness.score < 100 && !selectedFolderId && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1286,60 +1294,25 @@ const KnowledgeBasePage: React.FC = () => {
           <div className="flex items-start gap-3 md:gap-4">
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg md:text-xl font-bold text-gray-900">
-                  Setup Progress
-                </h3>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900">Setup Progress</h3>
                 <span className="text-base font-bold text-blue-600">{kbCompleteness.score}%</span>
               </div>
-
-              {/* Progress bar */}
               <div className="w-full h-2.5 bg-gray-100 rounded-full mb-4 overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${kbCompleteness.score}%` }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
-                />
+                <motion.div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600" initial={{ width: 0 }} animate={{ width: `${kbCompleteness.score}%` }} transition={{ duration: 0.8, ease: 'easeOut' }} />
               </div>
-
-              <p className="text-sm text-gray-500 mb-3">
-                Your AI agent works better with more info:
-              </p>
-
-              {/* Checklist */}
+              <p className="text-sm text-gray-500 mb-3">Your AI agent works better with more info:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                 {kbCompleteness.items.map((item) => (
                   <div key={item.label} className="flex items-center gap-2">
-                    {item.done ? (
-                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />
-                    )}
-                    <span className={`text-xs ${item.done ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>
-                      {item.label}
-                    </span>
-                    {item.hint && !item.done && (
-                      <span className="text-xs text-gray-400">
-                        — {item.hint}
-                      </span>
-                    )}
+                    {item.done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
+                    <span className={`text-xs ${item.done ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>{item.label}</span>
+                    {item.hint && !item.done && <span className="text-xs text-gray-400">— {item.hint}</span>}
                   </div>
                 ))}
               </div>
-
-              {/* Fill the Gaps button */}
               {kbCompleteness.items.some(i => !i.done && i.label !== 'Documents uploaded') && (
-                <button
-                  onClick={() => {
-                    setQuizStep(0);
-                    setQuizAnswers({});
-                    setShowGapsQuiz(true);
-                  }}
-                  className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Fill the Gaps
-                  <ArrowRight className="w-3.5 h-3.5" />
+                <button onClick={() => { setQuizStep(0); setQuizAnswers({}); setShowGapsQuiz(true); }} className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                  <Sparkles className="w-4 h-4" /> Fill the Gaps <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
@@ -1347,168 +1320,93 @@ const KnowledgeBasePage: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Knowledge Base Table */}
-      <div className="mt-2">
-        <div className="bg-white rounded-lg shadow-sm">
-          {/* Custom Header */}
-          <div className="p-3 md:p-6">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              {/* Search Input */}
-              <div className="relative flex-1 md:max-w-xs">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search documents..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
+      {/* ─── FOLDERS GRID (default view) ─── */}
+      {!selectedFolderId && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {folders.map((folder) => (
+            <div
+              key={folder.id}
+              className="group relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md hover:border-blue-200 transition-all cursor-pointer"
+              onClick={() => setSelectedFolderId(folder.id)}
+            >
               <div className="flex items-center gap-3">
-
-                {/* New Knowledge Base Dropdown */}
-                <div className="relative" ref={dropdownRef}>
-                  <PopButton color="blue"
-                    onClick={handleAddDocument}
-                    className="gap-2"
-                  >
-                    <span className="font-bold hidden md:inline">New Knowledge Base</span>
-                    <span className="font-bold md:hidden">New KB</span>
-                    <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-                  </PopButton>
-                  
-                  <AnimatePresence>
-                    {showDropdown && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10"
-                      >
-                        <div className="py-1">
-                          <button
-                            onClick={handleUploadFiles}
-                            className="w-full px-2 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
-                          >
-                            <Upload className="w-3 h-3 text-blue-600 flex-shrink-0" />
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-medium text-gray-900 truncate">Upload files</div>
-                              <div className="text-xs text-gray-500 truncate">PDF, DOC, TXT</div>
-                            </div>
-                          </button>
-                          <button
-                            onClick={handleAddWebsite}
-                            className="w-full px-2 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
-                          >
-                            <Globe className="w-3 h-3 text-green-600 flex-shrink-0" />
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-medium text-gray-900 truncate">Websites</div>
-                              <div className="text-xs text-gray-500 truncate">Import from URL</div>
-                            </div>
-                          </button>
-                          <button
-                            onClick={handleAddText}
-                            className="w-full px-2 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
-                          >
-                            <PenTool className="w-3 h-3 text-purple-600 flex-shrink-0" />
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-medium text-gray-900 truncate">Add text</div>
-                              <div className="text-xs text-gray-500 truncate">Create from scratch</div>
-                            </div>
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${folder.is_default ? 'bg-amber-50' : 'bg-blue-50'}`}>
+                  {folder.is_default ? <Building2 className="w-5 h-5 text-amber-600" /> : <FolderOpen className="w-5 h-5 text-blue-600" />}
                 </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-gray-900 truncate">{folder.name}</div>
+                  <div className="text-xs text-gray-500">{folder.doc_count} {folder.doc_count === 1 ? 'document' : 'documents'}</div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
               </div>
+              {/* Rename / Delete on hover */}
+              {!folder.is_default && (
+                <div className="hidden group-hover:flex absolute top-2 right-2 items-center gap-1">
+                  <button onClick={(e) => { e.stopPropagation(); setRenamingFolderId(folder.id); setRenamingFolderName(folder.name); setShowCreateFolderModal(true); }} className="p-1 rounded hover:bg-gray-100"><Pencil className="w-3.5 h-3.5 text-gray-500" /></button>
+                  <button onClick={(e) => { e.stopPropagation(); if (confirm(`Delete "${folder.name}"? Documents will be moved to unassigned.`)) handleDeleteFolder(folder.id); }} className="p-1 rounded hover:bg-red-50"><Trash2 className="w-3.5 h-3.5 text-red-500" /></button>
+                </div>
+              )}
+            </div>
+          ))}
+          {folders.length === 0 && (
+            <div className="col-span-full text-center py-12 text-gray-400 text-sm">No folders yet. Create one to organize your knowledge base.</div>
+          )}
+        </div>
+      )}
+
+      {/* ─── DOCUMENTS TABLE (inside a folder) ─── */}
+      {selectedFolderId && (
+        <div className="bg-white rounded-lg shadow-sm">
+          {/* Search */}
+          <div className="p-3 md:p-6">
+            <div className="relative md:max-w-xs">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              </div>
+              <input type="text" placeholder="Search documents..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
             </div>
           </div>
 
-        <CardTableWithPanel
-          hideSearch={true}
-          data={documents.filter(doc => 
-            doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            doc.content.toLowerCase().includes(searchTerm.toLowerCase())
-          )}
-          columns={[
-            { key: 'name', label: 'Document Name', width: '25%' },
-            { key: 'content', label: 'Content Preview', width: '35%' },
-            { key: 'createdAt', label: 'Created', width: '15%' },
-            { key: 'updatedAt', label: 'Updated', width: '15%' },
+          <CardTableWithPanel
+            hideSearch={true}
+            data={documents.filter(doc => doc.name.toLowerCase().includes(searchTerm.toLowerCase()) || doc.content.toLowerCase().includes(searchTerm.toLowerCase()))}
+            columns={[
+              { key: 'name', label: 'Document Name', width: '25%' },
+              { key: 'content', label: 'Content Preview', width: '35%' },
+              { key: 'createdAt', label: 'Created', width: '15%' },
+              { key: 'updatedAt', label: 'Updated', width: '15%' },
               { key: 'actions', label: 'Actions', width: '10%' }
-          ]}
-          renderRow={(doc) => (
-            <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
-              {/* Document Name + Actions (mobile: side by side) */}
-              <div className="flex items-center justify-between md:contents">
-                <div className="flex items-center gap-3 md:flex-1 min-w-0">
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-4 h-4 text-blue-600" />
+            ]}
+            renderRow={(doc) => (
+              <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
+                <div className="flex items-center justify-between md:contents">
+                  <div className="flex items-center gap-3 md:flex-1 min-w-0">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><FileText className="w-4 h-4 text-blue-600" /></div>
+                    <div className="font-medium text-gray-900 truncate">{doc.name}</div>
                   </div>
-                  <div className="font-medium text-gray-900 truncate">{doc.name}</div>
-                </div>
-
-                {/* Actions - visible on mobile next to name */}
-                <div className="flex items-center gap-3 md:hidden flex-shrink-0">
-                  <button
-                    onClick={() => handleEditDocument(doc)}
-                    className="text-blue-600 hover:text-blue-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  >
-                    <Edit className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteDocument(doc.id)}
-                    className="text-red-600 hover:text-red-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Content Preview */}
-              <div className="text-sm text-gray-600 md:flex-1 truncate">
-                {doc.content.substring(0, 50)}...
-              </div>
-
-              {/* Dates row on mobile */}
-              <div className="flex items-center gap-4 text-xs md:text-sm text-gray-500 md:contents">
-                <div className="md:flex-1">
-                  <span className="md:hidden">Created: </span>{doc.createdAt.toLocaleDateString()}
-                </div>
-                <div className="md:flex-1">
-                  <span className="md:hidden">Updated: </span>{doc.updatedAt.toLocaleDateString()}
-                </div>
-              </div>
-
-              {/* Actions - desktop only */}
-              <div className="hidden md:flex items-center gap-2 flex-shrink-0">
-                    <button
-                      onClick={() => handleEditDocument(doc)}
-                  className="text-blue-600 hover:text-blue-900 transition-colors"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteDocument(doc.id)}
-                  className="text-red-600 hover:text-red-900 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                  <div className="flex items-center gap-3 md:hidden flex-shrink-0">
+                    <button onClick={() => handleEditDocument(doc)} className="text-blue-600 hover:text-blue-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"><Edit className="w-5 h-5" /></button>
+                    <button onClick={() => handleDeleteDocument(doc.id)} className="text-red-600 hover:text-red-900 transition-colors p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"><Trash2 className="w-5 h-5" /></button>
                   </div>
                 </div>
-          )}
-          emptyStateText="No knowledge base documents found"
-          emptyStateAnimation="/No_Data_Preview.lottie"
-        />
+                <div className="text-sm text-gray-600 md:flex-1 truncate">{doc.content.substring(0, 50)}...</div>
+                <div className="flex items-center gap-4 text-xs md:text-sm text-gray-500 md:contents">
+                  <div className="md:flex-1"><span className="md:hidden">Created: </span>{doc.createdAt.toLocaleDateString()}</div>
+                  <div className="md:flex-1"><span className="md:hidden">Updated: </span>{doc.updatedAt.toLocaleDateString()}</div>
+                </div>
+                <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+                  <button onClick={() => handleEditDocument(doc)} className="text-blue-600 hover:text-blue-900 transition-colors"><Edit className="w-4 h-4" /></button>
+                  <button onClick={() => handleDeleteDocument(doc.id)} className="text-red-600 hover:text-red-900 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                </div>
+              </div>
+            )}
+            emptyStateText="No documents in this folder"
+            emptyStateAnimation="/No_Data_Preview.lottie"
+          />
         </div>
-      </div>
+      )}
+
+      {/* ─── MODALS ─── */}
 
       {/* New Knowledge Base Modal */}
       <ModalShell
@@ -1518,19 +1416,8 @@ const KnowledgeBasePage: React.FC = () => {
         maxWidth="max-w-2xl"
         footer={
           <>
-            <PopButton
-              onClick={handleCloseNewKnowledgeBase}
-            >
-              Cancel
-            </PopButton>
-            <PopButton color="blue"
-              onClick={handleSaveNewKnowledgeBase}
-              disabled={!knowledgeBaseName.trim()}
-              className="gap-2"
-            >
-              <Save className="w-4 h-4" />
-              Save
-            </PopButton>
+            <PopButton onClick={handleCloseNewKnowledgeBase}>Cancel</PopButton>
+            <PopButton color="blue" onClick={handleSaveNewKnowledgeBase} disabled={!knowledgeBaseName.trim()} className="gap-2"><Save className="w-4 h-4" /> Save</PopButton>
           </>
         }
       >
@@ -1813,32 +1700,19 @@ const KnowledgeBasePage: React.FC = () => {
         }
         footer={
           <>
-            <PopButton
-              onClick={handleClosePopup}
-            >
-              Cancel
-            </PopButton>
+            <PopButton onClick={handleClosePopup}>Cancel</PopButton>
             {popupType === 'url' && (
-              <PopButton color="blue"
-                onClick={handleSubmitUrl}
-                disabled={!urlInput}
-              >
+              <PopButton color="blue" onClick={handleSubmitUrl} disabled={!urlInput}>
                 {showNewKnowledgeBaseModal ? 'Add' : 'Import'}
               </PopButton>
             )}
             {popupType === 'file' && (
-              <PopButton color="blue"
-                onClick={handleSubmitFile}
-                disabled={!fileInput}
-              >
+              <PopButton color="blue" onClick={handleSubmitFile} disabled={!fileInput}>
                 {showNewKnowledgeBaseModal ? 'Add' : 'Upload'}
               </PopButton>
             )}
             {popupType === 'blank' && (
-              <PopButton color="blue"
-                onClick={handleSubmitBlankPage}
-                disabled={!blankPageTitle}
-              >
+              <PopButton color="blue" onClick={handleSubmitBlankPage} disabled={!blankPageTitle}>
                 {showNewKnowledgeBaseModal ? 'Add' : 'Create'}
               </PopButton>
             )}
@@ -1858,6 +1732,7 @@ const KnowledgeBasePage: React.FC = () => {
               placeholder="https://example.com"
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
+            {!showNewKnowledgeBaseModal && folderPickerUI}
           </div>
         )}
 
@@ -1868,6 +1743,7 @@ const KnowledgeBasePage: React.FC = () => {
               Select File
             </label>
             <FileUpload onChange={handleFileUpload} />
+            {!showNewKnowledgeBaseModal && folderPickerUI}
           </div>
         )}
 
@@ -1884,6 +1760,7 @@ const KnowledgeBasePage: React.FC = () => {
               placeholder="Enter page title..."
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
+            {!showNewKnowledgeBaseModal && folderPickerUI}
           </div>
         )}
       </ModalShell>
@@ -1916,34 +1793,27 @@ const KnowledgeBasePage: React.FC = () => {
                   <X className="w-6 h-6" />
                 </button>
               </div>
-              
+
               <textarea
                 value={editingDocumentContent}
                 onChange={(e) => setEditingDocumentContent(e.target.value)}
                 className="w-full h-64 md:h-96 p-3 md:p-4 border border-gray-300 dark:border-gray-600 rounded-lg resize-y mb-4 md:mb-6 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm md:text-base"
                 placeholder="Start writing your document here..."
               />
-              
+
               <div className="flex justify-end gap-3">
-                <PopButton
-                  onClick={handleCancelEdit}
-                >
-                  Cancel
+                <PopButton onClick={handleCancelEdit}>Cancel</PopButton>
+                <PopButton color="blue" onClick={handleSaveDocument} className="gap-2">
+                  <Save className="w-4 h-4" />
+                  Save Changes
                 </PopButton>
-                  <PopButton color="blue"
-                    onClick={handleSaveDocument}
-                    className="gap-2"
-                  >
-                    <Save className="w-4 h-4" />
-                    Save Changes
-                  </PopButton>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ─── Fill the Gaps Quiz Modal ─────────────────────────────────── */}
+      {/* Fill the Gaps Quiz Modal */}
       <ModalShell
         open={showGapsQuiz}
         onClose={() => setShowGapsQuiz(false)}
@@ -2045,20 +1915,31 @@ const KnowledgeBasePage: React.FC = () => {
         })()}
       </ModalShell>
 
-      {/* Create Folder Modal */}
+      {/* Create / Rename Folder Modal */}
       <ModalShell
         open={showCreateFolderModal}
-        onClose={() => { setShowCreateFolderModal(false); setNewFolderName(''); }}
-        title="Create New Folder"
+        onClose={() => { setShowCreateFolderModal(false); setNewFolderName(''); setRenamingFolderId(null); setRenamingFolderName(''); }}
+        title={renamingFolderId ? 'Rename Folder' : 'Create New Folder'}
       >
         <div className="space-y-4 p-2">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Folder Name</label>
             <input
               type="text"
-              value={newFolderName}
-              onChange={(e) => setNewFolderName(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleCreateFolder(); }}
+              value={renamingFolderId ? renamingFolderName : newFolderName}
+              onChange={(e) => renamingFolderId ? setRenamingFolderName(e.target.value) : setNewFolderName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  if (renamingFolderId) {
+                    handleRenameFolder(renamingFolderId, renamingFolderName);
+                    setShowCreateFolderModal(false);
+                    setRenamingFolderId(null);
+                    setRenamingFolderName('');
+                  } else {
+                    handleCreateFolder();
+                  }
+                }
+              }}
               placeholder="e.g. Product Catalog, HR Policies..."
               className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900"
               autoFocus
@@ -2066,23 +1947,30 @@ const KnowledgeBasePage: React.FC = () => {
           </div>
           <div className="flex justify-end gap-2">
             <button
-              onClick={() => { setShowCreateFolderModal(false); setNewFolderName(''); }}
+              onClick={() => { setShowCreateFolderModal(false); setNewFolderName(''); setRenamingFolderId(null); setRenamingFolderName(''); }}
               className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
             >
               Cancel
             </button>
             <button
-              onClick={handleCreateFolder}
-              disabled={!newFolderName.trim()}
+              onClick={() => {
+                if (renamingFolderId) {
+                  handleRenameFolder(renamingFolderId, renamingFolderName);
+                  setShowCreateFolderModal(false);
+                  setRenamingFolderId(null);
+                  setRenamingFolderName('');
+                } else {
+                  handleCreateFolder();
+                }
+              }}
+              disabled={renamingFolderId ? !renamingFolderName.trim() : !newFolderName.trim()}
               className="px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50"
             >
-              Create Folder
+              {renamingFolderId ? 'Save' : 'Create Folder'}
             </button>
           </div>
         </div>
       </ModalShell>
-
-      </div>{/* close main content */}
     </div>
   );
 };
