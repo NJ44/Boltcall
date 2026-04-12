@@ -22,7 +22,7 @@ const BlogSEO: React.FC = () => {
     const articleSchema = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Why SEO Can't Be Ignored",
+      "headline": "Complete Guide to SEO for Local Businesses",
       "description": "Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.",
       "author": {
         "@type": "Organization",
