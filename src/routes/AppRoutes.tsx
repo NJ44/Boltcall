@@ -568,7 +568,6 @@ const NavigationWrapper: React.FC = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <AeoGlobalIntro />
-      <ContentDepthFooter />
     </Suspense>
   );
 };
