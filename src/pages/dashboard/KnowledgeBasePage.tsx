@@ -1014,7 +1014,7 @@ const KnowledgeBasePage: React.FC = () => {
           content: '',
           content_type: 'text',
           status: 'draft',
-          kb_folder_id: selectedFolderId || null,
+          kb_folder_id: popupFolderId || selectedFolderId || null,
         }])
         .select()
         .single();
