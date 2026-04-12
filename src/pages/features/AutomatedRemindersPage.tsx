@@ -542,6 +542,41 @@ const AutomatedRemindersPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Feature Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Automated Reminders: Impact on No-Show Rates</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How automated appointment reminders reduce cancellations across industries</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">With Automated Reminders</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Without Reminders</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Dental no-show rate', '8–12%', '20–25%'],
+                  ['HVAC no-show rate', '8–12%', '18–22%'],
+                  ['Law firm no-show rate', '10–14%', '20–28%'],
+                  ['Med spa no-show rate', '8–12%', '18–25%'],
+                  ['Monthly revenue saved (avg business)', '$1,500 – $8,000', '$0'],
+                  ['Staff time on manual reminders/day', '0 min (automated)', '45–90 min'],
+                ].map((row) => (
+                  <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
+                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

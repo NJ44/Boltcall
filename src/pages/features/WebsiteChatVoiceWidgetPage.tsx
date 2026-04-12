@@ -576,6 +576,41 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Feature Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Website Chat + Voice Widget: Engagement Comparison</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How adding a combined chat and voice widget changes visitor conversion</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">Chat + Voice Widget (Boltcall)</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Contact Form Only</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Visitor engagement rate', '12–18% (chat + voice)', '2–5% (form only)'],
+                  ['Lead capture after hours', 'Active 24/7 (AI-powered)', 'Form only — reviewed next day'],
+                  ['Avg. response to visitor question', 'Under 5 seconds', '4–24 hours (if ever)'],
+                  ['Appointments booked from website', '35–50% of engaged visitors', '8–15% of form submissions'],
+                  ['Customer effort to book', 'Ask via chat or voice — done', 'Fill form, wait for callback'],
+                  ['Monthly cost', 'Included in plan', '$100–$500 (live chat tools)'],
+                ].map((row) => (
+                  <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
+                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

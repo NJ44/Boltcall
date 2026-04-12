@@ -714,6 +714,43 @@ const AIReceptionistPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Feature Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">AI Receptionist vs. Traditional Phone Handling</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How Boltcall AI receptionist compares to other ways businesses handle inbound calls</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Feature</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">AI Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Human Receptionist</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Voicemail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Call answer rate', '99%+', '55–75%', 'Recording only'],
+                  ['After-hours coverage', 'Always on', 'No', 'Recording only'],
+                  ['Live appointment booking', 'Yes — real-time', 'Yes (during hours)', 'No'],
+                  ['SMS follow-up', 'Automated', 'Manual', 'No'],
+                  ['No-show reminders', 'Automated', 'Manual', 'No'],
+                  ['Monthly cost', '$79–$179', '$3,200+', '$0'],
+                ].map((row) => (
+                  <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
+                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
+                    <td className="px-4 py-3 text-gray-600">{{row[3]}}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

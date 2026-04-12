@@ -644,6 +644,41 @@ const SMSBookingAssistantPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Feature Comparison Table */}
+      <section className="bg-white py-12 border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">SMS Booking Assistant vs. Phone-Only Booking</h2>
+          <p className="text-gray-500 text-sm text-center mb-6">How adding SMS booking changes appointment volume and customer experience</p>
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 text-left">
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Metric</th>
+                  <th className="px-4 py-3 font-semibold text-indigo-700 border-b border-gray-200 bg-indigo-50">SMS + AI Booking</th>
+                  <th className="px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">Phone-Only Booking</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Booking channels available', 'Phone + SMS + web', 'Phone only'],
+                  ['After-hours booking', 'Yes — SMS active 24/7', 'No — voicemail only'],
+                  ['Avg. time to book appointment', 'Under 2 minutes via text', '5–10 min phone call'],
+                  ['Booking conversion rate', '45–60%', '25–35%'],
+                  ['Customer preference (under 45)', '72% prefer texting', '28% prefer calling'],
+                  ['Monthly cost', 'Included in plan', 'Additional staff time'],
+                ].map((row) => (
+                  <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
+                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );
