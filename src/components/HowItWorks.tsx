@@ -5,21 +5,21 @@ import WhisperText from './ui/whisper-text';
 const PROCESS_PHASES = [
   {
     id: "process-1",
-    title: "Capture every lead",
+    title: "Respond instantly",
     description:
-      "Your AI receptionist picks up every call — day, night, weekends, holidays. It responds to website forms and ad inquiries instantly. It collects the caller's name, number, and what they need. No lead slips through.",
+      "A new lead comes in — phone call, web form, ad click — and Boltcall responds in under a second. Day, night, weekends, holidays. The first business to respond wins the job. That business is now you.",
   },
   {
     id: "process-2",
-    title: "Qualify serious buyers",
+    title: "Qualify the lead",
     description:
-      "It asks the right questions, just like your best front-desk person would. It figures out what the caller needs, how urgent it is, and whether they're ready to move forward. You only spend time on people who are ready to buy.",
+      "Boltcall asks the right questions automatically. What do they need? How urgent is it? Are they ready to move forward? Serious buyers get fast-tracked. Tire-kickers don't waste your time.",
   },
   {
     id: "process-3",
-    title: "Book the appointment",
+    title: "Book it on the calendar",
     description:
-      "When a caller is ready, your AI receptionist checks your calendar, finds an open slot, and books them in. It confirms the time, sends a reminder, and reduces no-shows by 40%.",
+      "Qualified leads get booked into your calendar instantly — no back-and-forth, no missed follow-ups. They get a confirmation and a reminder. You get a full schedule and 40% fewer no-shows.",
   },
 ];
 
@@ -149,7 +149,7 @@ const HowItWorks: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Your AI receptionist answers instantly, qualifies the caller, and books the appointment — 24/7, with zero missed opportunities.
+              Every lead gets an instant response, qualified in real time, and booked on your calendar — before your competitor even picks up the phone.
             </motion.p>
           </div>
 

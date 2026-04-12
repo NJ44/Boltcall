@@ -202,7 +202,7 @@ const Hero: React.FC = () => {
               </div>
             </div>
 
-            {/* Subheadline */}
+            {/* Subheadline — "What is this?" */}
             <p
               className="text-base md:text-xl text-text-muted mb-3 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
               style={{
@@ -210,7 +210,7 @@ const Hero: React.FC = () => {
                 animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.7s forwards',
               }}
             >
-              AI receptionist that answers calls 24/7, books appointments, and follows up — so you never lose a customer.
+              Every lead responded to instantly. Every opportunity booked on your calendar. 24/7, on autopilot.
             </p>
 
             {/* Audience specificity — "Is this for me?" */}
@@ -224,7 +224,7 @@ const Hero: React.FC = () => {
               Built for plumbers, dentists, lawyers, HVAC, med spas, and 50+ local service businesses.
             </p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons — primary action first */}
             <div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4 relative z-10"
               style={{
@@ -246,7 +246,7 @@ const Hero: React.FC = () => {
               </button>
             </div>
 
-            {/* Hesitation buster */}
+            {/* Hesitation buster — address peak hesitation at the decision point */}
             <p
               className="text-xs md:text-sm text-gray-400 mb-8 relative z-10"
               style={{
@@ -266,16 +266,16 @@ const Hero: React.FC = () => {
               }}
             >
               <div className="flex items-center gap-2 text-gray-500">
+                <Clock className="w-4 h-4 text-blue-600" />
+                <span className="text-xs md:text-sm font-medium">Responds in under 1 second</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-500">
                 <Phone className="w-4 h-4 text-blue-600" />
-                <span className="text-xs md:text-sm font-medium">500K+ calls answered</span>
+                <span className="text-xs md:text-sm font-medium">500K+ leads captured</span>
               </div>
               <div className="flex items-center gap-2 text-gray-500">
                 <Calendar className="w-4 h-4 text-blue-600" />
                 <span className="text-xs md:text-sm font-medium">40% fewer no-shows</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <Clock className="w-4 h-4 text-blue-600" />
-                <span className="text-xs md:text-sm font-medium">Answers in under 1 second</span>
               </div>
             </div>
 

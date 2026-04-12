@@ -20,14 +20,7 @@ const Home: React.FC = () => {
   // Add smooth-scroll class to body for homepage
   useEffect(() => {
     document.body.classList.add('smooth-scroll');
-
-    const bcScript = document.createElement('script');
-    bcScript.type = 'application/ld+json';
-    bcScript.id = 'breadcrumb-jsonld';
-    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Home", "item": "https://boltcall.org/"}]});
-    document.head.appendChild(bcScript);
     return () => {
-      document.getElementById('breadcrumb-jsonld')?.remove();
       document.body.classList.remove('smooth-scroll');
     };
   }, []);
@@ -66,7 +59,7 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
 
-          {/* Social proof strip — trust signal right below hero (video: Ch.3 "Can I trust it?") */}
+          {/* Social proof — trust signal right below hero */}
           <div className="relative z-20 -mt-20 md:-mt-28 pb-8 md:pb-12">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200 shadow-lg px-6 py-5 md:px-8 md:py-6">
@@ -76,7 +69,7 @@ const Home: React.FC = () => {
                   ))}
                 </div>
                 <blockquote className="text-sm md:text-base text-gray-700 italic leading-relaxed">
-                  "We were losing 40+ calls a month after hours. Boltcall picked up every single one — booked 12 new patients in the first week."
+                  "We were losing 40+ calls a month after hours. Boltcall responded to every single one — booked 12 new patients in the first week."
                 </blockquote>
                 <p className="text-xs md:text-sm text-gray-500 mt-2 font-medium">Dr. Emily R. — Dental Practice Owner</p>
               </div>
