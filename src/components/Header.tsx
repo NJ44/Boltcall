@@ -379,17 +379,16 @@ const Header: React.FC = () => {
     />
   );
 
-  // Underline for dropdown items
+  // Underline for dropdown items (named group avoids conflicts with nav-level group)
   const DropdownUnderline = ({ isBlue }: { isBlue: boolean }) => (
     <span
-      className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${isBlue ? 'bg-white' : 'bg-blue-600'}`}
+      className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover/item:w-full transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${isBlue ? 'bg-white' : 'bg-blue-600'}`}
     />
   );
 
   return (
     <header
-      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0 ${location.pathname === '/strike-ai' || location.pathname === '/free-website-package' ? 'top-0' : (isSticky ? 'top-0' : 'top-0 md:top-[43px]')
-        }`}
+      className={`fixed top-0 left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0`}
       style={{ contain: 'layout style' }}
     >
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
@@ -435,10 +434,13 @@ const Header: React.FC = () => {
                 </button>
 
                 <div
-                  className={`absolute top-full left-0 mt-1 w-64 rounded-lg shadow-xl border ${isOverBlueBackground
+                  className={`absolute top-full left-0 pt-2 z-[120] transition-all duration-200 ease-in-out ${isFeaturesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
+                >
+                <div
+                  className={`w-64 rounded-lg shadow-xl border ${isOverBlueBackground
                     ? 'bg-gray-800 border-gray-700'
                     : 'bg-white border-gray-200'
-                    } py-3 px-2 z-[120] transition-all duration-200 ease-in-out ${isFeaturesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
+                    } py-3 px-2`}
                 >
                   {featuresItems.map((item) => {
                     const Icon = item.icon;
@@ -453,7 +455,7 @@ const Header: React.FC = () => {
                             setIsFeaturesOpen(false);
                             setIsMenuOpen(false);
                           }}
-                          className={`group flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${isOverBlueBackground
+                          className={`group/item flex items-center gap-3 px-4 py-2 text-sm transition-colors relative ${isOverBlueBackground
                             ? 'text-gray-300 hover:text-white'
                             : 'text-gray-700 hover:text-gray-900'
                             }`}
@@ -467,6 +469,7 @@ const Header: React.FC = () => {
                       </div>
                     );
                   })}
+                </div>
                 </div>
               </div>
 
@@ -509,10 +512,13 @@ const Header: React.FC = () => {
                 </button>
 
                 <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 rounded-lg shadow-xl border ${isOverBlueBackground
+                  className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 z-[120] transition-all duration-200 ease-in-out ${isResourcesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
+                >
+                <div
+                  className={`rounded-lg shadow-xl border ${isOverBlueBackground
                     ? 'bg-gray-800 border-gray-700'
                     : 'bg-white border-gray-200'
-                    } py-4 px-6 z-[120] flex items-stretch transition-all duration-200 ease-in-out ${isResourcesOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2.5 pointer-events-none'}`}
+                    } py-4 px-6 flex items-stretch`}
                 >
                   {/* Content Section */}
                   <div className="flex-1 min-w-[198px] py-4">
@@ -536,7 +542,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`group flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                            className={`group/item flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
                               ? 'text-gray-300 hover:text-white'
                               : 'text-gray-700 hover:text-gray-900'
                               }`}
@@ -578,7 +584,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`group flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                            className={`group/item flex items-center gap-3 px-4 py-3 text-sm transition-colors relative ${isOverBlueBackground
                               ? 'text-gray-300 hover:text-white'
                               : 'text-gray-700 hover:text-gray-900'
                               }`}
@@ -641,6 +647,7 @@ const Header: React.FC = () => {
                       </div>
                     </Link>
                   </div>
+                </div>
                 </div>
               </div>
             </nav>
