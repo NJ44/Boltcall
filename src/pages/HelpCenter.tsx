@@ -203,7 +203,7 @@ const HelpCenter: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-2xl font-bold text-gray-900 mb-8 text-center"
           >
-            Essential Guides for Setting Up Your AI Receptionist
+            How to Set Up Your AI Receptionist: A Step-by-Step Guide
           </motion.h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
