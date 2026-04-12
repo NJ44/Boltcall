@@ -149,7 +149,7 @@ const HowItWorks: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Your helper works all day and all night. It talks to people right away. It books appointments for you. You never miss a chance to get a new customer.
+              Your AI receptionist answers instantly, qualifies the caller, and books the appointment — 24/7, with zero missed opportunities.
             </motion.p>
           </div>
 
