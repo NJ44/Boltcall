@@ -470,6 +470,7 @@ const Header: React.FC = () => {
                     );
                   })}
                 </div>
+                </div>
               </div>
 
               {/* About Link */}
