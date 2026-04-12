@@ -202,38 +202,81 @@ const Hero: React.FC = () => {
               </div>
             </div>
 
-            {/* Subheadline */}
+            {/* Subheadline — "What is this?" */}
             <p
-              className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
+              className="text-base md:text-xl text-text-muted mb-3 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
               style={{
                 opacity: 0,
                 animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.7s forwards',
               }}
             >
-              We answer calls 24/7, respond to website visitors instantly, and book appointments for you.
+              Every lead responded to instantly. Every opportunity booked on your calendar. 24/7, on autopilot.
             </p>
 
+            {/* Audience specificity — "Is this for me?" */}
+            <p
+              className="text-sm md:text-base text-gray-500 mb-8 max-w-xl mx-auto px-2 md:px-0 relative z-10"
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.82s forwards',
+              }}
+            >
+              Built for plumbers, dentists, lawyers, HVAC, med spas, and 50+ local service businesses.
+            </p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons — primary action first */}
             <div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 relative z-10"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4 relative z-10"
               style={{
                 opacity: 0,
                 animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.95s forwards',
               }}
             >
-              <button
-                onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
-              >
-                Learn More
-              </button>
               <Link
                 to="/signup"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
               >
                 Start For Free
               </Link>
+              <button
+                onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
+              >
+                See How It Works
+              </button>
+            </div>
+
+            {/* Hesitation buster — address peak hesitation at the decision point */}
+            <p
+              className="text-xs md:text-sm text-gray-400 mb-8 relative z-10"
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 1.05s forwards',
+              }}
+            >
+              Free setup · No credit card · Cancel anytime
+            </p>
+
+            {/* Trust strip — "Can I trust it?" */}
+            <div
+              className="flex flex-wrap justify-center items-center gap-6 md:gap-10 mb-16 relative z-10"
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 1.15s forwards',
+              }}
+            >
+              <div className="flex items-center gap-2 text-gray-500">
+                <Clock className="w-4 h-4 text-blue-600" />
+                <span className="text-xs md:text-sm font-medium">Responds in under 1 second</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <Phone className="w-4 h-4 text-blue-600" />
+                <span className="text-xs md:text-sm font-medium">500K+ leads captured</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-500">
+                <Calendar className="w-4 h-4 text-blue-600" />
+                <span className="text-xs md:text-sm font-medium">40% fewer no-shows</span>
+              </div>
             </div>
 
           </div>
