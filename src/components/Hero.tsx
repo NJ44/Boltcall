@@ -235,38 +235,6 @@ const Hero: React.FC = () => {
               </button>
             </div>
 
-            {/* Hesitation buster — address peak hesitation at the decision point */}
-            <p
-              className="text-xs md:text-sm text-gray-400 mb-8 relative z-10"
-              style={{
-                opacity: 0,
-                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 1.05s forwards',
-              }}
-            >
-              Free setup · No credit card · Cancel anytime
-            </p>
-
-            {/* Trust strip — "Can I trust it?" */}
-            <div
-              className="flex flex-wrap justify-center items-center gap-6 md:gap-10 mb-16 relative z-10"
-              style={{
-                opacity: 0,
-                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 1.15s forwards',
-              }}
-            >
-              <div className="flex items-center gap-2 text-gray-500">
-                <Clock className="w-4 h-4 text-blue-600" />
-                <span className="text-xs md:text-sm font-medium">Responds in under 1 second</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <Phone className="w-4 h-4 text-blue-600" />
-                <span className="text-xs md:text-sm font-medium">500K+ leads captured</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-500">
-                <Calendar className="w-4 h-4 text-blue-600" />
-                <span className="text-xs md:text-sm font-medium">40% fewer no-shows</span>
-              </div>
-            </div>
 
           </div>
         </div>
