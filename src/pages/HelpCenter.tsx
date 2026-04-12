@@ -323,7 +323,7 @@ const HelpCenter: React.FC = () => {
 
         {/* What You'll Find Here */}
         <div className="mt-16 mb-10 bg-white rounded-xl border border-gray-100 shadow-sm p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">What You'll Find in This Help Center</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">How Boltcall&apos;s Help Center Is Organized: Four Core Areas</h2>
           <p className="text-gray-600 leading-relaxed mb-4">
             This Help Center is organized into four core areas so you can quickly find the answer you need — whether you're just getting started, configuring your AI receptionist, or running into a technical issue.
           </p>
