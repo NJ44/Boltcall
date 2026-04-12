@@ -15,7 +15,6 @@ import ProtectedRoute from '../components/ProtectedRoute';
 // static import chain so supabase never lands in the critical-path bundle.
 const PlanGate = React.lazy(() => import('../components/PlanGate'));
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
-import ContentDepthFooter from '../components/seo/ContentDepthFooter';
 
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
