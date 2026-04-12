@@ -74,7 +74,7 @@
 - `/the-new-reality-for-local-businesses` - Why AI Services Are No Longer Optional
 - `/why-speed-matters-391-percent-advantage` - The 391% Advantage
 - `/why-website-speed-is-everything` - Why Website Speed Is Everything
-- `/complete-guide-to-seo` - Why SEO Can't Be Ignored
+- `/complete-guide-to-seo` - Complete Guide to SEO for Local Businesses
 - `/complete-guide-to-ai-for-local-businesses` - Complete Guide to AI for Local Businesses
 - `/best-ai-receptionist-tools-for-small-businesses` - Best AI Receptionist Tools
 - `/how-does-an-ai-receptionist-work` - How Does an AI Receptionist Work?

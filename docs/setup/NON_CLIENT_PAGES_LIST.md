@@ -79,7 +79,7 @@ This document lists all pages that Boltcall clients (users with dashboard access
 - `/blog/the-new-reality-for-local-businesses` - Why AI Services Are No Longer Optional
 - `/blog/why-speed-matters-391-percent-advantage` - The 391% Advantage: Responding in 60 Seconds
 - `/blog/why-website-speed-is-everything` - Why Website Speed Is Everything
-- `/blog/complete-guide-to-seo` - Why SEO Can't Be Ignored
+- `/blog/complete-guide-to-seo` - Complete Guide to SEO for Local Businesses
 - `/blog/complete-guide-to-ai-for-local-businesses` - Complete Guide to AI for Local Businesses
 - `/blog/best-ai-receptionist-tools-for-small-businesses` - Best AI Receptionist Tools for Small Businesses
 - `/blog/how-does-an-ai-receptionist-work` - How Does an AI Receptionist Work? A Complete Technical Guide

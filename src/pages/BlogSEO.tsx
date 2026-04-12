@@ -22,7 +22,7 @@ const BlogSEO: React.FC = () => {
     const articleSchema = {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Why SEO Can't Be Ignored",
+      "headline": "Complete Guide to SEO for Local Businesses",
       "description": "Complete SEO guide for local businesses. Learn how to rank higher on Google and attract more local customers.",
       "author": {
         "@type": "Organization",
@@ -98,11 +98,11 @@ const BlogSEO: React.FC = () => {
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
-              { label: 'Why SEO Can\'t Be Ignored', href: '/blog/complete-guide-to-seo' }
+              { label: 'Complete Guide to SEO for Local Businesses', href: '/blog/complete-guide-to-seo' }
             ]} />
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight text-left">
-              Why <span className="text-blue-600">SEO</span> Can't Be Ignored
+              Complete Guide to <span className="text-blue-600">SEO</span> for Local Businesses
             </h1>
             
             <div className="flex items-center gap-6 text-sm text-gray-600">
