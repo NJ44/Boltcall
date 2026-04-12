@@ -860,7 +860,7 @@ const KnowledgeBasePage: React.FC = () => {
           content_type: 'text',
           status: 'active',
           source: urlInput,
-          kb_folder_id: selectedFolderId || null,
+          kb_folder_id: popupFolderId || selectedFolderId || null,
         }])
         .select()
         .single();
@@ -871,13 +871,18 @@ const KnowledgeBasePage: React.FC = () => {
         return;
       }
 
-      setDocuments(prev => [{
-        id: data.id,
-        name: data.title,
-        content: data.content || '',
-        createdAt: new Date(data.created_at),
-        updatedAt: new Date(data.updated_at || data.created_at)
-      }, ...prev]);
+      // Refresh documents if the doc belongs to the currently viewed folder
+      const targetFolder = popupFolderId || selectedFolderId || null;
+      if (!selectedFolderId || targetFolder === selectedFolderId) {
+        setDocuments(prev => [{
+          id: data.id,
+          name: data.title,
+          content: data.content || '',
+          createdAt: new Date(data.created_at),
+          updatedAt: new Date(data.updated_at || data.created_at)
+        }, ...prev]);
+      }
+      fetchFolders();
 
       showToast({ title: 'Success', message: `Imported ${scraped.charCount || 0} characters from website`, variant: 'success', duration: 3000 });
       const urlDocResult = await claimReward('add_first_kb_document');
