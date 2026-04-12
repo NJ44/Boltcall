@@ -542,7 +542,7 @@ const Header: React.FC = () => {
                               setIsResourcesOpen(false);
                               setIsMenuOpen(false);
                             }}
-                            className={`group flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
+                            className={`group/item flex items-center gap-3 px-6 py-3 text-sm transition-colors relative ${isOverBlueBackground
                               ? 'text-gray-300 hover:text-white'
                               : 'text-gray-700 hover:text-gray-900'
                               }`}
