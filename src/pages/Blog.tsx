@@ -731,7 +731,7 @@ const Blog: React.FC = () => {
               className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
             >
               <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
-                Why SEO Can't Be Ignored
+                Complete Guide to SEO for Local Businesses
               </h3>
               <p className="text-gray-600 text-sm">
                 75% of users never go beyond the first page of search results. Discover why SEO is critical.
