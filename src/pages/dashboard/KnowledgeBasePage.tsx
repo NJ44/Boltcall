@@ -1039,6 +1039,30 @@ const KnowledgeBasePage: React.FC = () => {
     setUrlInput('');
     setFileInput(null);
     setBlankPageTitle('');
+    setPopupFolderId(null);
+    setShowNewFolderInline(false);
+    setInlineNewFolderName('');
+  };
+
+  // Create folder inline from popup and select it
+  const handleCreateFolderInline = async () => {
+    if (!inlineNewFolderName.trim() || !user?.id) return;
+    try {
+      const res = await fetch(`${FUNCTIONS_BASE}/kb-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_folder', userId: user.id, name: inlineNewFolderName.trim() }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPopupFolderId(data.folder?.id || null);
+        setShowNewFolderInline(false);
+        setInlineNewFolderName('');
+        await fetchFolders();
+      }
+    } catch {
+      showToast({ title: 'Error', message: 'Failed to create folder', variant: 'error', duration: 3000 });
+    }
   };
 
   const handleEditDocument = (doc: Document) => {
