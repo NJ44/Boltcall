@@ -300,9 +300,9 @@ const RoofingMissedCallsLeadCapture: React.FC = () => {
               { title: "Storm Season Lead Rush", story: "After a hail storm, a roofing company received 200+ calls in 3 days. The AI answered every call, captured contact details and damage description, and scheduled estimates automatically. The team arrived Monday with a full week's worth of estimates pre-booked." },
               { title: "Referral Lead Follow-Up", story: "A roofing contractor used AI to follow up with referral leads within 60 seconds of the referral text being sent. Conversion rate on referred leads increased from 34% to 61% — purely from faster response time." },
             ].map((item) => (
-              <div key={{item.title}} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-900 mb-2">{{item.title}}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{{item.story}}</p>
+              <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{item.story}</p>
               </div>
             ))}
           </div>

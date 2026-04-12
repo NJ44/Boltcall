@@ -339,9 +339,9 @@ const BestAIAnsweringServiceDentalMedical: React.FC = () => {
               { title: "Dental Practice — After Hours Calls", story: "A 3-dentist practice in Florida started capturing after-hours emergency calls with AI. In the first month: 14 calls answered that would have gone to voicemail, 9 booked next-morning emergency appointments. Monthly revenue impact: $3,200+." },
               { title: "Medical Spa — Rebooking", story: "A med spa used AI to send rebooking reminders to lapsed clients at day 30 and day 60 after their last appointment. Re-engagement rate: 28%. Revenue recovered: $6,400 in the first quarter — without a single extra staff hour." },
             ].map((item) => (
-              <div key={{item.title}} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-900 mb-2">{{item.title}}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{{item.story}}</p>
+              <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{item.story}</p>
               </div>
             ))}
           </div>

@@ -335,7 +335,7 @@ const HelpCenter: React.FC = () => {
               },
               {
                 title: 'AI Receptionist Setup',
-                desc: 'Configure your AI's voice, script, business hours, and call-handling rules. Learn how to customize responses for your specific services and frequently asked questions.',
+                desc: 'Configure your AI\'s voice, script, business hours, and call-handling rules. Learn how to customize responses for your specific services and frequently asked questions.',
               },
               {
                 title: 'Appointment Booking & SMS',

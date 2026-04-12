@@ -656,9 +656,9 @@ const HowToAIPhoneAnsweringVetClinic: React.FC = () => {
               { title: "Veterinary Clinic — After-Hours Triage", story: "A 2-vet clinic deployed an AI receptionist to handle after-hours calls. The AI screens for emergencies (routes to on-call vet), schedules next-day appointments, and captures callback details for non-urgent calls. Front desk time freed: 2 hours per day." },
               { title: "Boarding Inquiries During Peak Season", story: "During summer boarding season, a veterinary practice received 5x normal call volume. AI answered 100% of calls, provided pricing and availability, and captured $28,000 in boarding reservations — while the staff focused on in-clinic care." },
             ].map((item) => (
-              <div key={{item.title}} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-900 mb-2">{{item.title}}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{{item.story}}</p>
+              <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{item.story}</p>
               </div>
             ))}
           </div>

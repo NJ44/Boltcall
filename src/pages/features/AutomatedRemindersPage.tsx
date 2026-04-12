@@ -580,9 +580,9 @@ const AutomatedRemindersPage: React.FC = () => {
                   ['Staff time on manual reminders/day', '0 min (automated)', '45–90 min'],
                 ].map((row) => (
                   <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
-                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
-                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
-                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
+                    <td className="px-4 py-3 text-gray-700 font-medium">{row[0]}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{row[1]}</td>
+                    <td className="px-4 py-3 text-gray-600">{row[2]}</td>
                   </tr>
                 ))}
               </tbody>

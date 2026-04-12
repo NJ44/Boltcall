@@ -216,7 +216,7 @@ const MedSpaRebookingCalculator: React.FC = () => {
     const optimalLTV = optimalVisits * revenuePerVisit + (membershipRevenue * 36);
     const ltvGap = optimalLTV - currentLTV;
 
-    // Monthly rebooking gap = revenue lost from clients who don't rebook
+    // Monthly rebooking gap = revenue lost from clients who don\'t rebook
     const monthlyGap = clientsNotRebooking * currentLTV / treatmentsBeforeStop;
     const annualGap = monthlyGap * 12;
 
@@ -859,7 +859,7 @@ const MedSpaRebookingCalculator: React.FC = () => {
               { label: 'Average Service Value', desc: 'Revenue per treatment session or package' },
               { label: 'Client Lifetime Value', desc: 'Total spend from a loyal aesthetics client over 3+ years' },
               { label: 'Lapse Recovery Rate', desc: 'Clients regained via automated re-engagement sequences' },
-              { label: 'Annual Revenue Gap', desc: 'Total income lost to clients who don't rebook' },
+              { label: 'Annual Revenue Gap', desc: 'Total income lost to clients who don\'t rebook' },
             ].map((item) => (
               <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                 <div className="text-sm font-semibold text-gray-900 mb-1">{item.label}</div>

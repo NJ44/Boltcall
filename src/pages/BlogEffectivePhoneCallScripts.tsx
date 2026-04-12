@@ -718,8 +718,8 @@ const BlogEffectivePhoneCallScripts: React.FC = () => {
                   ['Opening greeting', '"Hello, hold please" or no greeting', '"Thank you for calling [Business], this is [AI Name]. How can I help you today?"'],
                   ['First response to need', '"Let me check if someone is available"', '"I can help with that. Are mornings or afternoons better for you?"'],
                   ['Booking flow', 'Putting caller on hold to check calendar', '"I have Tuesday at 2pm or Wednesday at 10am — which works?"'],
-                  ['Objection to price', '"That's our standard rate" (end of discussion)', '"Most customers recover the cost in the first visit. Would you like to see how?"'],
-                  ['Closing the call', '"We'll have someone call you back"', '"You're booked for Tuesday at 2pm. You'll get a reminder text tomorrow."'],
+                  ['Objection to price', '"That\'s our standard rate" (end of discussion)', '"Most customers recover the cost in the first visit. Would you like to see how?"'],
+                  ['Closing the call', '"We\'ll have someone call you back"', '"You\'re booked for Tuesday at 2pm. You\'ll get a reminder text tomorrow."'],
                   ['No-show prevention', 'No reminder sent', 'Automated reminder 24h and 2h before appointment'],
                 ].map(([element, fail, win]) => (
                   <tr key={element} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">

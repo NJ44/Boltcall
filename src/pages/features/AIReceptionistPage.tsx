@@ -752,10 +752,10 @@ const AIReceptionistPage: React.FC = () => {
                   ['Monthly cost', '$79–$179', '$3,200+', '$0'],
                 ].map((row) => (
                   <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
-                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
-                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
-                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
-                    <td className="px-4 py-3 text-gray-600">{{row[3]}}</td>
+                    <td className="px-4 py-3 text-gray-700 font-medium">{row[0]}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{row[1]}</td>
+                    <td className="px-4 py-3 text-gray-600">{row[2]}</td>
+                    <td className="px-4 py-3 text-gray-600">{row[3]}</td>
                   </tr>
                 ))}
               </tbody>

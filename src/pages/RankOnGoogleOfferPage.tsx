@@ -40,7 +40,7 @@ const RankOnGoogleOfferPage = () => {
     useEffect(() => {
         document.title = 'Boost Your Google Rankings with AI Receptionist and SEO Solutions | Boltcall';
         updateMetaDescription(
-            'Rank higher on Google and capture more local leads with Boltcall's AI receptionist and SEO solutions. Improve your Google reviews, local citations, and lead response speed.'
+            'Rank higher on Google and capture more local leads with Boltcall\'s AI receptionist and SEO solutions. Improve your Google reviews, local citations, and lead response speed.'
         );
         const bcScript = document.createElement('script');
         bcScript.type = 'application/ld+json';

@@ -404,7 +404,7 @@ const GiveawayPage: React.FC = () => {
           {[
             { q: 'Is there any catch?', a: 'No purchase required. No credit card. The winner gets 30 days of full Boltcall access, completely free — setup included.' },
             { q: 'How are winners selected?', a: 'Winners are chosen at random from all valid entries each week. We notify winners by email within 48 hours of selection.' },
-            { q: 'What happens after the 30 days?', a: 'Nothing automatic. If you want to continue, we'll reach out with options. No subscription is auto-started.' },
+            { q: 'What happens after the 30 days?', a: 'Nothing automatic. If you want to continue, we\'ll reach out with options. No subscription is auto-started.' },
           ].map((item) => (
             <div key={item.q} className="py-3 border-b border-gray-100 last:border-0">
               <p className="font-semibold text-gray-800 mb-1">{item.q}</p>

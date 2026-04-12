@@ -139,7 +139,7 @@ const BlogAIGuide: React.FC = () => {
         { '@type': 'Question', name: 'What does it cost to implement AI tools for a local business?', acceptedAnswer: { '@type': 'Answer', text: 'Boltcall starts at a flat monthly rate with no per-call fees. Most local businesses see ROI within the first month through recovered leads that would have otherwise gone to voicemail.' } },
         { '@type': 'Question', name: 'How long does it take to set up an AI receptionist?', acceptedAnswer: { '@type': 'Answer', text: 'Most businesses are fully live within 24–48 hours. You provide your business info, services, and FAQs — Boltcall handles the rest with no technical setup required.' } },
         { '@type': 'Question', name: 'Will AI replace my staff?', acceptedAnswer: { '@type': 'Answer', text: 'No. AI handles repetitive tasks like answering routine calls, booking appointments, and sending follow-up texts — freeing your team to focus on higher-value work and in-person customer service.' } },
-        { '@type': 'Question', name: 'Is AI right for a small local business?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely. Small businesses benefit most because they typically can't afford full-time receptionists. An AI receptionist gives you enterprise-level coverage at a fraction of the cost.' } },
+        { '@type': 'Question', name: 'Is AI right for a small local business?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely. Small businesses benefit most because they typically can\'t afford full-time receptionists. An AI receptionist gives you enterprise-level coverage at a fraction of the cost.' } },
       ]
     });
     document.head.appendChild(faqScript);
@@ -287,7 +287,7 @@ const BlogAIGuide: React.FC = () => {
     },
     {
       q: 'Is AI right for a small local business?',
-      a: 'Absolutely. Small businesses benefit most because they typically can't afford full-time receptionists. An AI receptionist gives you enterprise-level coverage at a fraction of the cost.'
+      a: 'Absolutely. Small businesses benefit most because they typically can\'t afford full-time receptionists. An AI receptionist gives you enterprise-level coverage at a fraction of the cost.'
     },
   ];
 

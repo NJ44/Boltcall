@@ -87,7 +87,7 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Insurance Lead Response Scorecard: Grade Your Speed (2026) | Boltcall';
     updateMetaDescription(
-      'Grade your insurance lead response speed and discover how much commission you're losing to slow follow-up. Learn how AI assistance can recover lost revenue and boost your close rate.'
+      'Grade your insurance lead response speed and discover how much commission you\'re losing to slow follow-up. Learn how AI assistance can recover lost revenue and boost your close rate.'
     );
 
     // FAQPage schema
@@ -904,7 +904,7 @@ const InsuranceLeadResponseScorecard: React.FC = () => {
             {[
               { label: 'Response Time Score', desc: 'How quickly your agency responds to new insurance inquiries' },
               { label: 'After-Hours Coverage', desc: 'Whether leads submitted evenings/weekends get same-day contact' },
-              { label: 'Follow-Up Sequence', desc: 'Automated touchpoints to re-engage leads who don't convert immediately' },
+              { label: 'Follow-Up Sequence', desc: 'Automated touchpoints to re-engage leads who don\'t convert immediately' },
               { label: 'Missed Call Recovery', desc: 'How many unanswered calls are followed up with SMS or email' },
               { label: 'Quote-to-Bind Rate', desc: 'Percentage of quoted prospects who ultimately bind a policy' },
               { label: 'Annual Revenue Gap', desc: 'Total income lost to slow response and poor follow-up' },

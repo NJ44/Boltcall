@@ -668,9 +668,9 @@ const AiReceptionistCostPricingGuide: React.FC = () => {
               { title: "Cost vs. In-House Receptionist", story: "A dental practice replaced a part-time front desk position ($28,000/year salary + benefits) with an AI receptionist at $179/month ($2,148/year). The AI answered 3x as many calls and was available 24/7 — resulting in $800+ in captured after-hours revenue every month." },
               { title: "Competing Against Larger Firms", story: "A two-person law firm used AI call answering to match the responsiveness of 5-lawyer competitors. By answering every call instantly and qualifying leads automatically, their intake conversion rate rose from 15% to 38% over 6 months." },
             ].map((item) => (
-              <div key={{item.title}} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                <h3 className="font-bold text-gray-900 mb-2">{{item.title}}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{{item.story}}</p>
+              <div key={item.title} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{item.story}</p>
               </div>
             ))}
           </div>

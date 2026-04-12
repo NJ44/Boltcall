@@ -503,7 +503,7 @@ const AIFollowUpSystemPage: React.FC = () => {
               </div>
 
               <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Will leads know it's automated?</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Will leads know it\'s automated?</h3>
                 <p className="text-gray-600">
                   The messages are designed to feel natural and human-like. However, you can choose to 
                   be transparent about using AI assistance or present it as your team. Many businesses 
@@ -626,10 +626,10 @@ const AIFollowUpSystemPage: React.FC = () => {
                   ['Monthly cost', 'Included in plan', '$3,200+ (staff time)', '$0'],
                 ].map((row) => (
                   <tr key={row[0]} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
-                    <td className="px-4 py-3 text-gray-700 font-medium">{{row[0]}}</td>
-                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{{row[1]}}</td>
-                    <td className="px-4 py-3 text-gray-600">{{row[2]}}</td>
-                    <td className="px-4 py-3 text-gray-600">{{row[3]}}</td>
+                    <td className="px-4 py-3 text-gray-700 font-medium">{row[0]}</td>
+                    <td className="px-4 py-3 text-indigo-700 font-medium bg-indigo-50/30">{row[1]}</td>
+                    <td className="px-4 py-3 text-gray-600">{row[2]}</td>
+                    <td className="px-4 py-3 text-gray-600">{row[3]}</td>
                   </tr>
                 ))}
               </tbody>

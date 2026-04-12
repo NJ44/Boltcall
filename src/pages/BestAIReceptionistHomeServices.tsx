@@ -269,9 +269,9 @@ const BestAIReceptionistHomeServices: React.FC = () => {
               { title: "Plumbing Company — Missed Call Recovery", story: "A 5-truck plumbing operation was missing 40+ calls per month during job hours. AI receptionist answered every call, captured the job details, and sent the caller a text confirmation. Next month: 18 additional booked jobs worth $14,000." },
               { title: "HVAC Contractor — Off-Season Engagement", story: "During the slow season, an HVAC contractor used AI outreach to contact past customers about maintenance plans. 22% responded positively. 11 signed annual service contracts at $399/year each — $4,389 in recurring revenue from one automated campaign." },
             ].map((item) => (
-              <div key={{item.title}} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-900 mb-2">{{item.title}}</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{{item.story}}</p>
+              <div key={item.title} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{item.story}</p>
               </div>
             ))}
           </div>

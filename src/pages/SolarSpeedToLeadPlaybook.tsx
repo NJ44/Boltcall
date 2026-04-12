@@ -246,7 +246,7 @@ const SolarSpeedToLeadPlaybook: React.FC = () => {
                 a: 'Within 60 seconds if possible. Studies show contacting a lead within 1 minute increases your close rate by up to 391% compared to following up after 30 minutes. Every minute of delay costs conversions.',
               },
               {
-                q: 'What if I'm already using a different AI or CRM?',
+                q: 'What if I\'m already using a different AI or CRM?',
                 a: 'The playbook complements any existing system. It focuses on process and timing, not specific tools.',
               },
             ].map((item) => (
