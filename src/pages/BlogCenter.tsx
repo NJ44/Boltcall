@@ -30,7 +30,6 @@ const blogPosts: BlogPost[] = [
     image: '/og-image.jpg'
   },
 
-${NEW_ENTRY}
   {
     title: 'Best AI Receptionist for Home Services (Plumbers, HVAC, Roofing) — 2026 Guide',
     slug: '/blog/best-ai-receptionist-home-services',

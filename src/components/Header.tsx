@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 const Header: React.FC = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSticky, setIsSticky] = useState(location.pathname === '/strike-ai');
+  const [_isSticky, setIsSticky] = useState(location.pathname === '/strike-ai');
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
