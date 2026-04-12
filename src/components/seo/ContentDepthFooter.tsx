@@ -56,27 +56,19 @@ const ContentDepthFooter: React.FC = () => {
   if (!shouldShow) return null;
 
   return (
-    <section className="bg-white border-t border-gray-200">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 className="text-base font-semibold text-gray-900 mb-3">Additional Page Context</h2>
-        <div className="space-y-3 text-sm text-gray-700">
-          <p>
-            This page is part of Boltcall&apos;s public resource library for AI receptionist
-            implementation, lead response optimization, and customer communication automation.
-            Content is written for local business operators who need practical, fast-to-apply
-            guidance across calls, forms, booking flows, and follow-up systems.
-          </p>
-          <p>
-            Boltcall content focuses on measurable business outcomes: faster response times, reduced
-            missed opportunities, more reliable customer handling, and clearer operational workflows.
-            Where relevant, pages include comparisons, implementation trade-offs, and examples to help
-            teams choose tools and processes that fit their business model.
-          </p>
-          <p>
-            To keep information useful for both users and AI-assisted search experiences, pages are
-            periodically reviewed for clarity, updated language, and coverage of common objections.
-            Supporting references and structured metadata are used where appropriate to improve
-            discoverability and answer quality.
+    <section className="bg-gray-50 border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+        <div className="flex items-baseline gap-3">
+          <span className="flex-shrink-0 text-[10px] font-semibold tracking-widest uppercase text-gray-400">
+            About this page
+          </span>
+          <p className="text-xs text-gray-400 leading-relaxed">
+            Part of Boltcall&apos;s resource library for AI receptionist implementation, lead
+            response optimization, and customer communication automation — written for local
+            business operators who need practical guidance across calls, forms, booking flows, and
+            follow-up systems. Content focuses on measurable outcomes: faster response times,
+            reduced missed opportunities, and clearer operational workflows. Pages are periodically
+            reviewed for clarity and updated to cover common objections and new use cases.
           </p>
         </div>
       </div>
