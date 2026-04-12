@@ -300,7 +300,7 @@ const HelpCenter: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.1 }}
           className="mt-16"
         >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Related Resources</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore Boltcall Features, Pricing, and Documentation</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {[
               { label: 'Documentation', to: '/documentation' },
