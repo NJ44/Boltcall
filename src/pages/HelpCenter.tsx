@@ -135,7 +135,7 @@ const HelpCenter: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">How can we help?</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Boltcall Help Center: Setup Guides, Troubleshooting &amp; Support</h1>
             <p className="text-xl text-gray-600 mb-8">Find answers, guides, and solutions to get the most out of Boltcall</p>
             
             {/* Search Input */}
