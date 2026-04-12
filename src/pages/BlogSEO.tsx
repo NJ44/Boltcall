@@ -98,7 +98,7 @@ const BlogSEO: React.FC = () => {
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
-              { label: 'Why SEO Can\'t Be Ignored', href: '/blog/complete-guide-to-seo' }
+              { label: 'Complete Guide to SEO for Local Businesses', href: '/blog/complete-guide-to-seo' }
             ]} />
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight text-left">
