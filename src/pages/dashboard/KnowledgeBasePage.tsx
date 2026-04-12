@@ -941,7 +941,7 @@ const KnowledgeBasePage: React.FC = () => {
           content_type: 'file',
           status: 'active',
           source: fileInput.name,
-          kb_folder_id: selectedFolderId || null,
+          kb_folder_id: popupFolderId || selectedFolderId || null,
         }])
         .select()
         .single();
@@ -952,9 +952,11 @@ const KnowledgeBasePage: React.FC = () => {
         return;
       }
 
-      setDocuments(prev => [{
-        id: data.id,
-        name: data.title,
+      const targetFolder = popupFolderId || selectedFolderId || null;
+      if (!selectedFolderId || targetFolder === selectedFolderId) {
+        setDocuments(prev => [{
+          id: data.id,
+          name: data.title,
         content: data.content || '',
         createdAt: new Date(data.created_at),
         updatedAt: new Date(data.updated_at || data.created_at)
