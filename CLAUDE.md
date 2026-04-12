@@ -1,6 +1,13 @@
 # Boltcall – Claude Project Context
 
-AI phone receptionist & lead engagement SaaS for local businesses.
+Speed-to-lead platform for local service businesses. Every inbound lead gets responded to immediately and booked on the calendar — no lead left waiting, no opportunity missed.
+
+## Brand / Positioning
+- **Core promise**: Every lead responded to instantly, every opportunity booked
+- **Category**: Speed-to-lead / lead engagement platform (NOT just "AI receptionist")
+- **Audience**: Local service businesses (plumbers, dentists, lawyers, HVAC, med spas, etc.)
+- **Differentiator**: Speed — the first business to respond wins the job. Boltcall makes that automatic.
+- When writing copy, lead with speed-to-lead and instant response. The AI receptionist is one feature, not the headline.
 
 ## Stack
 - **Framework**: React 19 + TypeScript + Vite
