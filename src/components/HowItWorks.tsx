@@ -5,21 +5,21 @@ import WhisperText from './ui/whisper-text';
 const PROCESS_PHASES = [
   {
     id: "process-1",
-    title: "Capture the lead",
+    title: "Respond instantly",
     description:
-      "Your helper answers the phone all day and all night. It talks to people who call you. It talks to people who fill out forms on your website. It talks to people who see your ads. It gets their name and phone number. It never misses anyone.",
+      "A new lead comes in — phone call, web form, ad click — and Boltcall responds in under a second. Day, night, weekends, holidays. The first business to respond wins the job. That business is now you.",
   },
   {
     id: "process-2",
-    title: "Find serious buyers",
+    title: "Qualify the lead",
     description:
-      "Your helper talks to people like a real person. It asks them questions. It finds out what they need, when they want help, and if they're ready to move forward. It separates the serious buyers from the tire-kickers — so you only spend time on people who are ready.",
+      "Boltcall asks the right questions automatically. What do they need? How urgent is it? Are they ready to move forward? Serious buyers get fast-tracked. Tire-kickers don't waste your time.",
   },
   {
     id: "process-3",
-    title: "Book appointments",
+    title: "Book it on the calendar",
     description:
-      "When someone wants to meet with you, your helper books them. It looks at your calendar. It finds a time that works. It tells them when to come. It sends them a reminder so they don't forget.",
+      "Qualified leads get booked into your calendar instantly — no back-and-forth, no missed follow-ups. They get a confirmation and a reminder. You get a full schedule and 40% fewer no-shows.",
   },
 ];
 
