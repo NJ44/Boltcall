@@ -364,7 +364,7 @@ const HelpCenter: React.FC = () => {
           transition={{ duration: 0.6, delay: 1.2 }}
           className="mt-10 bg-blue-50 rounded-xl p-8 text-center"
         >
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Still need help?</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">How to Contact Boltcall Support for Additional Help</h2>
           <p className="text-gray-600 mb-6">
             Can't find what you're looking for? Our support team is here to help you succeed.
             You can also explore{' '}
