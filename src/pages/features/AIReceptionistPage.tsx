@@ -34,6 +34,12 @@ const AIReceptionistPage: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "AI Receptionist", "item": "https://boltcall.org/features/ai-receptionist"}]});
     document.head.appendChild(bcScript);
+
+    const personScript = document.createElement('script');
+    personScript.type = 'application/ld+json';
+    personScript.id = 'person-schema';
+    personScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "Person", "name": "Boltcall Team", "url": "https://boltcall.org/about", "worksFor": {"@type": "Organization", "name": "Boltcall", "url": "https://boltcall.org"}});
+    document.head.appendChild(personScript);
     return () => { speakableScript.remove(); };
   }, []);
   return (

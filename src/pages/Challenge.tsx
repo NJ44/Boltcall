@@ -160,7 +160,14 @@ const Challenge: React.FC = () => {
     bcScript.id = 'breadcrumb-jsonld';
     bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Challenge", "item": "https://boltcall.org/challenge"}]});
     document.head.appendChild(bcScript);
+
+    const personScript = document.createElement('script');
+    personScript.type = 'application/ld+json';
+    personScript.id = 'person-schema';
+    personScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "Person", "name": "Boltcall Team", "url": "https://boltcall.org/about", "worksFor": {"@type": "Organization", "name": "Boltcall", "url": "https://boltcall.org"}});
+    document.head.appendChild(personScript);
     return () => {
+      document.getElementById('person-schema')?.remove();
       document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('challenge-schema')?.remove();
       document.getElementById('challenge-faq-schema')?.remove();
