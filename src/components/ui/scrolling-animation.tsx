@@ -5,15 +5,16 @@ interface Channel {
   title: string
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   href: string
+  description: string
 }
 
 const channels: Channel[] = [
-  { title: "Reminders", icon: AlarmClock, href: "/features/automated-reminders" },
-  { title: "Follow Ups", icon: RefreshCcw, href: "/features/ai-follow-up-system" },
-  { title: "Ads", icon: Megaphone, href: "/features/instant-form-reply" },
-  { title: "SMS", icon: MessageSquare, href: "/features/sms-booking-assistant" },
-  { title: "Website", icon: Globe, href: "/features/website-widget" },
-  { title: "AI Receptionist", icon: Phone, href: "/features/ai-receptionist" },
+  { title: "Reminders", icon: AlarmClock, href: "/features/automated-reminders", description: "Automatically send appointment reminders so clients show up — fewer no-shows, zero manual effort." },
+  { title: "Follow Ups", icon: RefreshCcw, href: "/features/ai-follow-up-system", description: "Re-engage leads who didn't book with smart follow-up messages sent at the right time." },
+  { title: "Ads", icon: Megaphone, href: "/features/instant-form-reply", description: "Instantly reply to Facebook and Google ad form leads before a competitor gets there first." },
+  { title: "SMS", icon: MessageSquare, href: "/features/sms-booking-assistant", description: "Book appointments via two-way SMS — customers reply in their own time, Boltcall handles the rest." },
+  { title: "Website", icon: Globe, href: "/features/website-widget", description: "Capture leads from your website with a smart chat widget that qualifies and books in real time." },
+  { title: "AI Receptionist", icon: Phone, href: "/features/ai-receptionist", description: "Answer every call 24/7, collect lead info, and book appointments — even while you're on another job." },
 ]
 
 interface ScrollingAnimationProps {
@@ -22,6 +23,7 @@ interface ScrollingAnimationProps {
 
 export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   const [animationProgress, setAnimationProgress] = useState(0)
+  const [hoveredChannel, setHoveredChannel] = useState<Channel | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number>(0)
 
@@ -48,7 +50,7 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
 
   return (
     <div ref={sectionRef} className="min-h-[130vh]">
-      <div className="h-screen flex items-center justify-center p-8 sticky top-0">
+      <div className="h-screen flex flex-col items-center justify-center p-8 sticky top-0">
         <div className="relative">
           {/* Outer ring */}
           <div
@@ -73,12 +75,15 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
                       <button
                         key={channel.title}
                         onClick={() => onNavigate?.(channel.href)}
-                        className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 ease-out z-0"
+                        onMouseEnter={() => setHoveredChannel(channel)}
+                        onMouseLeave={() => setHoveredChannel(null)}
+                        className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 ease-out z-0 gap-1"
                         style={{
                           transform: `translate(${expandRadius * Math.cos(angle)}px, ${expandRadius * Math.sin(angle)}px)`,
                         }}
                       >
-                        <Icon className="w-8 h-8 md:w-10 md:h-10 text-blue-600" />
+                        <Icon className="w-7 h-7 md:w-8 md:h-8 text-blue-600" />
+                        <span className="text-[9px] md:text-[10px] font-semibold text-gray-600 leading-none">{channel.title}</span>
                       </button>
                     )
                   })}
@@ -102,6 +107,17 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Hover description — shown below the circle */}
+        <div className="mt-8 h-16 flex items-center justify-center px-4">
+          <p
+            className={`text-center text-white/80 text-sm md:text-base max-w-sm transition-all duration-300 ${
+              hoveredChannel && animationProgress > 0.5 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            }`}
+          >
+            {hoveredChannel?.description ?? ""}
+          </p>
         </div>
       </div>
     </div>
