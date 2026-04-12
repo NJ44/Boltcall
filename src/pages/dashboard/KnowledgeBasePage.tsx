@@ -960,7 +960,9 @@ const KnowledgeBasePage: React.FC = () => {
         content: data.content || '',
         createdAt: new Date(data.created_at),
         updatedAt: new Date(data.updated_at || data.created_at)
-      }, ...prev]);
+        }, ...prev]);
+      }
+      fetchFolders();
 
       showToast({ title: 'Success', message: `File "${fileInput.name}" uploaded successfully`, variant: 'success', duration: 3000 });
       const fileDocResult = await claimReward('add_first_kb_document');
