@@ -213,17 +213,6 @@ const Hero: React.FC = () => {
               Every lead responded to instantly. Every opportunity booked on your calendar. 24/7, on autopilot.
             </p>
 
-            {/* Audience specificity — "Is this for me?" */}
-            <p
-              className="text-sm md:text-base text-gray-500 mb-8 max-w-xl mx-auto px-2 md:px-0 relative z-10"
-              style={{
-                opacity: 0,
-                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.82s forwards',
-              }}
-            >
-              Built for plumbers, dentists, lawyers, HVAC, med spas, and 50+ local service businesses.
-            </p>
-
             {/* CTA Buttons — primary action first */}
             <div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4 relative z-10"
