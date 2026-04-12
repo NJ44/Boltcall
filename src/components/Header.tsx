@@ -388,7 +388,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0`}
+      className={`fixed left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0 ${location.pathname === '/strike-ai' || location.pathname === '/free-website-package' ? 'top-0' : (isSticky ? 'top-0' : 'top-0 md:top-[43px]')}`}
       style={{ contain: 'layout style' }}
     >
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
