@@ -96,6 +96,13 @@ const FiveMinuteResponsePlaybook: React.FC = () => {
 
     );
 
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "5-Minute Response Playbook", "item": "https://boltcall.org/tools/5-minute-response-playbook"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
 

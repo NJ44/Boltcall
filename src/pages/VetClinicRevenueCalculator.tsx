@@ -57,6 +57,13 @@ const VetClinicRevenueCalculator: React.FC = () => {
     updateMetaDescription(
       'Free calculator for veterinary clinics \u2014 see how much revenue you lose to no-shows, missed calls, and late cancellations every month.'
     );
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "Vet Clinic Revenue Calculator", "item": "https://boltcall.org/tools/vet-clinic-revenue-calculator"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });

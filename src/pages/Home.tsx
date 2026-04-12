@@ -20,7 +20,14 @@ const Home: React.FC = () => {
   // Add smooth-scroll class to body for homepage
   useEffect(() => {
     document.body.classList.add('smooth-scroll');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Home", "item": "https://boltcall.org/"}]});
+    document.head.appendChild(bcScript);
     return () => {
+      document.getElementById('breadcrumb-jsonld')?.remove();
       document.body.classList.remove('smooth-scroll');
     };
   }, []);

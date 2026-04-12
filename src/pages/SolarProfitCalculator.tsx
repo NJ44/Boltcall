@@ -54,6 +54,13 @@ const SolarProfitCalculator: React.FC = () => {
       if (p('leadCost')) setLeadCost(Number(p('leadCost')));
       if (p('jobsPerMonth')) setJobsPerMonth(Number(p('jobsPerMonth')));
     }
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "Solar Profit Calculator", "item": "https://boltcall.org/tools/solar-profit-calculator"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   // Calculations

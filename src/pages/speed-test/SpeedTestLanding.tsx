@@ -18,6 +18,13 @@ const SpeedTestLanding: React.FC = () => {
   React.useEffect(() => {
     document.title = 'Free Website Speed & Health Check — See Your Score in Seconds | Boltcall';
     updateMetaDescription('Enter your URL for a free website health check. Instantly analyze your page load speed, Core Web Vitals, mobile performance score, and get specific fixes to rank higher and reduce bounce rate.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Speed Test", "item": "https://boltcall.org/speed-test"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);

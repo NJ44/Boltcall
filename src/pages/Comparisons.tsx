@@ -12,6 +12,13 @@ const Comparisons: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'AI Receptionist Comparisons & Alternatives | Boltcall';
     updateMetaDescription('Compare Boltcall AI receptionist with alternatives. See how Boltcall compares to traditional answering services. View now.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Comparisons", "item": "https://boltcall.org/comparisons"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   const comparisons = [

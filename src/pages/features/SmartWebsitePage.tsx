@@ -15,6 +15,13 @@ const SmartWebsitePage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Smart Website Optimization & AI Lead Generation';
     updateMetaDescription('Smart website optimization improves speed and conversions automatically. AI optimizes performance, enhances UX. Get started now.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "Smart Website", "item": "https://boltcall.org/features/smart-website"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   useEffect(() => {

@@ -15,6 +15,13 @@ const AIFollowUpSystemPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'AI Follow-Up System for Lead Nurturing | Boltcall';
     updateMetaDescription('AI follow-up system nurtures leads automatically. Send personalized messages, follow up with prospects, convert more. Learn more.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "AI Follow-Up System", "item": "https://boltcall.org/features/ai-follow-up-system"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   useEffect(() => {

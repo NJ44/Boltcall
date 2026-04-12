@@ -109,7 +109,14 @@ const CompareBoltcallVsBirdeye: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Comparisons", "item": "https://boltcall.org/comparisons"}, {"@type": "ListItem", "position": 3, "name": "Boltcall vs Birdeye", "item": "https://boltcall.org/compare/boltcall-vs-birdeye"}]});
+    document.head.appendChild(bcScript);
     return () => {
+      document.getElementById('breadcrumb-jsonld')?.remove();
       document.getElementById('person-schema')?.remove();
       const s1 = document.getElementById('article-schema');
       if (s1) s1.remove();

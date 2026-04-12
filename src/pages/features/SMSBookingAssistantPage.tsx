@@ -14,6 +14,13 @@ const SMSBookingAssistantPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'SMS Booking Assistant for Appointments | Boltcall';
     updateMetaDescription('SMS booking assistant handles appointment scheduling via text. Customers book appointments by texting your business. Try free.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "SMS Booking Assistant", "item": "https://boltcall.org/features/sms-booking-assistant"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   useEffect(() => {

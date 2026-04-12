@@ -15,6 +15,13 @@ const WebsiteChatVoiceWidgetPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Website Chat & Voice Widget for Customer Engagement';
     updateMetaDescription('Website chat and voice widget engages visitors 24/7. Answer questions, book appointments directly from your site. Start now.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "Website Chat & Voice Widget", "item": "https://boltcall.org/features/website-widget"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   useEffect(() => {

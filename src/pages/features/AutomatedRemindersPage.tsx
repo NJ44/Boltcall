@@ -15,6 +15,13 @@ const AutomatedRemindersPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Automated Appointment Reminders System | Boltcall';
     updateMetaDescription('Automated appointment reminders reduce no-shows. Send SMS and email reminders automatically before appointments. Start now.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "Automated Reminders", "item": "https://boltcall.org/features/automated-reminders"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   useEffect(() => {

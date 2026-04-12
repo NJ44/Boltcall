@@ -74,6 +74,13 @@ const DentistChairCalculator: React.FC = () => {
     updateMetaDescription(
       'Calculate how much revenue your dental practice loses to no-shows and late cancellations. Free empty chair cost calculator for dentists.'
     );
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "Dentist Chair Calculator", "item": "https://boltcall.org/tools/dentist-chair-calculator"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   const calc = useMemo(() => {

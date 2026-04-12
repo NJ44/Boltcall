@@ -15,6 +15,13 @@ const InstantFormReplyPage: React.FC = () => {
     window.scrollTo(0, 0);
     document.title = 'Instant Lead Response System for Small Businesses';
     updateMetaDescription('Automatically respond to form submissions in seconds. Qualify leads instantly, book appointments from forms and ads. Get started now.');
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Features", "item": "https://boltcall.org/features"}, {"@type": "ListItem", "position": 3, "name": "Instant Form Reply", "item": "https://boltcall.org/features/instant-form-reply"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   useEffect(() => {

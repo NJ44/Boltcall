@@ -92,7 +92,14 @@ const FreeWebsitePackagePage: React.FC = () => {
     // Set page title
     React.useEffect(() => {
         document.title = "Get Your Free Website | Boltcall";
-    }, []);
+  
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Free Website", "item": "https://boltcall.org/free-website"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
+  }, []);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 

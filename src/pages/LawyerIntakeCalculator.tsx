@@ -284,6 +284,13 @@ const LawyerIntakeCalculator: React.FC = () => {
     updateMetaDescription(
       'Free calculator for law firms: see how many cases you lose to missed calls, slow follow-up, and after-hours inquiries. Identify and fix your intake leaks.'
     );
+
+    const bcScript = document.createElement('script');
+    bcScript.type = 'application/ld+json';
+    bcScript.id = 'breadcrumb-jsonld';
+    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://boltcall.org/tools"}, {"@type": "ListItem", "position": 3, "name": "Lawyer Intake Calculator", "item": "https://boltcall.org/tools/lawyer-intake-calculator"}]});
+    document.head.appendChild(bcScript);
+    return () => { document.getElementById('breadcrumb-jsonld')?.remove(); };
   }, []);
 
   /* ── calculations ── */
