@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { motion } from "framer-motion"
 import { cn } from "../../lib/utils"
 import { Check as CheckIcon } from "lucide-react"
 import NumberFlow from "@number-flow/react"
@@ -94,12 +95,16 @@ export function PricingTable({
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          {plans.map((plan) => (
-            <div
+          {plans.map((plan, index) => (
+            <motion.div
               key={plan.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: index * 0.12 }}
+              viewport={{ once: true, amount: 0.1 }}
               className={cn(
                 "flex-1 p-4 rounded-xl text-left flex flex-col min-h-[360px]",
-                plan.isCustom 
+                plan.isCustom
                   ? "bg-gray-900 text-white border border-gray-700 shadow-2xl shadow-gray-900/50 hover:shadow-3xl hover:shadow-gray-900/60 transition-all duration-300"
                   : "bg-white border border-zinc-200 dark:border-zinc-800 shadow-lg",
               )}
@@ -254,7 +259,7 @@ export function PricingTable({
                   {plan.isCustom ? "\u00A0" : "No credit card required for trial"}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

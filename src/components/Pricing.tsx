@@ -84,7 +84,7 @@ const Pricing: React.FC = () => {
             duration={0.625}
             x={-20}
             y={0}
-            triggerStart="top 95%"
+            triggerStart="top 80%"
           />{' '}
           <WhisperText
             text="Scales"
@@ -93,7 +93,7 @@ const Pricing: React.FC = () => {
             duration={0.625}
             x={-20}
             y={0}
-            triggerStart="top 95%"
+            triggerStart="top 80%"
           />{' '}
           <WhisperText
             text="With You"
@@ -102,17 +102,17 @@ const Pricing: React.FC = () => {
             duration={0.625}
             x={-20}
             y={0}
-            triggerStart="top 95%"
+            triggerStart="top 80%"
           />
         </h2>
       </div>
 
       {/* New PricingTable Component */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 1.0 }}
-        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.4 }}
+        viewport={{ once: true, amount: 0.05 }}
       >
         <PricingTable
           features={pricingFeatures}
