@@ -92,7 +92,7 @@ function extractPromptsFromTSX(filePath) {
 // ── Napkin API helpers ────────────────────────────────────────────────────────
 const NAPKIN_BASE = 'https://api.napkin.ai';
 
-async function createVisual(token, content, styleId, variations) {
+async function createVisual(token, content, styleId, variations, format) {
   const res = await fetch(`${NAPKIN_BASE}/v1/visual`, {
     method: 'POST',
     headers: {
@@ -103,6 +103,7 @@ async function createVisual(token, content, styleId, variations) {
       content,
       style_id: styleId,
       variations,
+      format,
       transparent: false,
     }),
   });
@@ -130,8 +131,10 @@ async function pollStatus(token, requestId, maxWaitMs = 120_000) {
   throw new Error('Timed out waiting for Napkin visual (120s)');
 }
 
-async function downloadFile(url, destPath) {
-  const res = await fetch(url);
+async function downloadFile(url, destPath, token) {
+  const res = await fetch(url, {
+    headers: { 'Authorization': `Bearer ${token}` },
+  });
   if (!res.ok) throw new Error(`Download failed (${res.status})`);
   const buffer = Buffer.from(await res.arrayBuffer());
   fs.writeFileSync(destPath, buffer);
@@ -216,7 +219,8 @@ async function main() {
 
     let statusData;
     try {
-      const created = await createVisual(token, content, args.style, args.variations);
+      if (i > 0) await new Promise(r => setTimeout(r, 1000)); // stay under 2 req/s
+      const created = await createVisual(token, content, args.style, args.variations, format);
       const requestId = created.request_id || created.id;
       if (!requestId) throw new Error(`No request ID in response: ${JSON.stringify(created)}`);
       process.stdout.write(` → id: ${requestId} — waiting`);
@@ -226,8 +230,8 @@ async function main() {
       continue;
     }
 
-    // ── Download (URLs expire in 30 min — download immediately)
-    const files = statusData.files || statusData.visuals || [];
+    // ── Download (URLs require auth header — download immediately, expire in 30 min)
+    const files = statusData.generated_files || statusData.files || statusData.visuals || [];
     if (!files.length) {
       console.warn('\n   ⚠️  No files returned');
       continue;
@@ -236,15 +240,15 @@ async function main() {
     const downloaded = [];
     for (let v = 0; v < files.length; v++) {
       const file = files[v];
-      const fileUrl = file[format] || file.svg || file.png || file.url;
-      if (!fileUrl) { console.warn(`\n   ⚠️  No ${format} URL in variation ${v + 1}`); continue; }
+      const fileUrl = file.url || file[format] || file.svg || file.png;
+      if (!fileUrl) { console.warn(`\n   ⚠️  No URL in variation ${v + 1}`); continue; }
 
       const varSuffix = files.length > 1 ? `-v${v + 1}` : '';
       const filename = `${filenameBase}${varSuffix}.${format}`;
       const destPath = path.join(outDir, filename);
 
       try {
-        await downloadFile(fileUrl, destPath);
+        await downloadFile(fileUrl, destPath, token);
         downloaded.push(filename);
         console.log(`\n   ✅ public/images/blog/${filename}`);
       } catch (err) {
