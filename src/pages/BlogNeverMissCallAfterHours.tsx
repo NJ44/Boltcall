@@ -122,7 +122,7 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                   <p className="text-gray-700">of calls to the average small business go unanswered — with after-hours being the single largest source of missed calls.</p>
                 </div>
               </div>
-              <img src="/images/blog/never-miss-call-after-hours-01-why-afterhours-calls-are-costing-you-more-than-yo.svg" alt="Why After-Hours Calls Are Costing You More Than You Think" width={800} height={450} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
+              <img src="/images/blog/after-hours-01.jpg" alt="Missed call on a business owner's phone late at night — the cost of not having after-hours coverage" width={1200} height={675} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 2 */}
@@ -155,7 +155,6 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                 </ol>
                 <p className="text-gray-700 leading-relaxed">Notice that a blank voicemail with no follow-up isn't on the list. That's the version most businesses offer — and it's why they keep losing after-hours leads.</p>
               </div>
-              <img src="/images/blog/never-miss-call-after-hours-02-what-customers-actually-expect-when-they-call-afte.svg" alt="What Customers Actually Expect When They Call After Hours" width={800} height={450} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 3 */}
@@ -188,7 +187,6 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                 </div>
                 <p className="text-gray-700 leading-relaxed">All three of these approaches have one thing in common: they rely on the customer to be patient. In 2026, patience is not a feature most leads have — especially when they can find a competitor who answers immediately.</p>
               </div>
-              <img src="/images/blog/never-miss-call-after-hours-03-the-3-ways-most-businesses-handle-afterhours-call.svg" alt="The 3 Ways Most Businesses Handle After-Hours Calls Wrong" width={800} height={450} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 4 */}
@@ -217,7 +215,7 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                 <p className="text-gray-700 leading-relaxed mb-6">This doesn't require a 24/7 live receptionist — those cost $1,500–$3,000/month and still have gaps. What it requires is a system that runs on its own: intelligent enough to handle routine after-hours calls, and smart enough to know when to alert you for something genuinely urgent.</p>
                 <p className="text-gray-700 leading-relaxed">The key distinction is automation with intelligence — not a voicemail box, not a call center that reads a script, but a system that understands the context of why someone is calling and responds accordingly.</p>
               </div>
-              <img src="/images/blog/never-miss-call-after-hours-04-what-a-proper-afterhours-call-system-looks-like.svg" alt="What a Proper After-Hours Call System Looks Like" width={800} height={450} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
+              <img src="/images/blog/after-hours-02.jpg" alt="AI phone receptionist dashboard automatically handling after-hours calls and booking appointments" width={1200} height={675} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 5 */}
@@ -236,7 +234,6 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                 <p className="text-gray-700 leading-relaxed mb-6">The caller never knows they're speaking with AI. The conversation feels natural, the response is immediate, and you wake up in the morning with a full briefing of every after-hours interaction — who called, why, what was discussed, and what action was taken.</p>
                 <p className="text-gray-700 leading-relaxed">This is what makes AI the category winner for after-hours call handling. It's not just cheaper than a live answering service — it's more capable, available every night of the year, and gets smarter the more it learns about your business.</p>
               </div>
-              <img src="/images/blog/never-miss-call-after-hours-05-how-ai-receptionists-handle-afterhours-calls-diff.svg" alt="How AI Receptionists Handle After-Hours Calls Differently" width={800} height={450} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 6 */}
@@ -263,7 +260,6 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                 </div>
                 <p className="text-gray-700 leading-relaxed">The pattern is consistent across industries: the AI handles the routine, escalates the urgent, and makes sure you never start a business day wondering how many leads you lost the night before. See how <Link to="/blog/ai-receptionist-how-it-works" className="text-blue-600 hover:underline">AI receptionists work in detail</Link> for a deeper look.</p>
               </div>
-              <img src="/images/blog/never-miss-call-after-hours-06-afterhours-call-setup-by-industry-real-examples.svg" alt="After-Hours Call Setup by Industry (Real Examples)" width={800} height={450} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 7 — FAQ */}
