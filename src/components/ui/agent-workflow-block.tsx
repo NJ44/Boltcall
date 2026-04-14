@@ -370,9 +370,18 @@ export function AgentWorkflowBlock() {
             <span className="uppercase tracking-[0.15em]">{connections.length} Connections</span>
           </div>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40">
-          Hover for details · Drag to reposition
-        </p>
+        {unconfiguredCount > 0 ? (
+          <Link
+            to="/dashboard/agents"
+            className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-amber-400 hover:bg-amber-400/20 transition-colors"
+          >
+            {unconfiguredCount} output{unconfiguredCount !== 1 ? "s" : ""} not set up →
+          </Link>
+        ) : (
+          <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+            Hover for details · Drag to reposition
+          </p>
+        )}
       </div>
     </div>
   );
