@@ -55,7 +55,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="text-2xl font-bold text-gray-900 mb-2"
                 >
-                  Congratulations!
+                  You're live.
                 </motion.h2>
 
                 <motion.p
@@ -64,22 +64,28 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-gray-600 mb-6"
                 >
-                  Your AI receptionist setup is complete! Your system is now ready to start receiving calls and booking appointments. 
-                  You can manage your settings and view analytics from your dashboard.
+                  The next call that comes in — your agent has it. Want to book more from leads already sitting cold in your pipeline?
                 </motion.p>
 
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex space-x-3"
+                  className="flex flex-col space-y-3"
                 >
                   <button
                     onClick={onClose}
                     className="flex-1 bg-gradient-to-r from-brand-blue to-brand-sky text-white px-6 py-3 rounded-xl font-medium hover:from-brand-blue/90 hover:to-brand-sky/90 transition-all"
                   >
-                    Get Started
+                    Open Dashboard
                   </button>
+                  <a
+                    href="/dashboard/agents"
+                    className="text-sm text-center text-brand-blue hover:underline"
+                    onClick={onClose}
+                  >
+                    Set up Lead Reactivation →
+                  </a>
                 </motion.div>
               </div>
             </div>
