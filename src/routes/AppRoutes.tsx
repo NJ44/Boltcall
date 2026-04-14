@@ -37,6 +37,7 @@ const DashboardLayout = React.lazy(() => import('../components/dashboard/Dashboa
 const SettingsLayout = React.lazy(() => import('../components/dashboard/SettingsLayout'));
 const DashboardPage = React.lazy(() => import('../pages/dashboard/DashboardPage'));
 const AnalyticsPage = React.lazy(() => import('../pages/dashboard/AnalyticsPage'));
+const DeepAnalyticsPage = React.lazy(() => import('../pages/dashboard/DeepAnalyticsPage'));
 const AgentsPage = React.lazy(() => import('../pages/dashboard/AgentsPage'));
 const AgentDetailPage = React.lazy(() => import('../pages/dashboard/AgentDetailPage'));
 const ReceptionistPage = React.lazy(() => import('../pages/dashboard/ReceptionistPage'));
@@ -314,6 +315,7 @@ const NavigationWrapper: React.FC = () => {
 
           {/* Pro-gated pages */}
           <Route path="analytics" element={<PlanGate requiredPlan="pro"><AnalyticsPage /></PlanGate>} />
+          <Route path="deep-analytics" element={<PlanGate requiredPlan="pro"><DeepAnalyticsPage /></PlanGate>} />
           <Route path="reminders" element={<PlanGate requiredPlan="pro"><RemindersPage /></PlanGate>} />
           <Route path="reputation" element={<PlanGate requiredPlan="pro"><ReputationPage /></PlanGate>} />
           <Route path="instant-lead-response" element={<PlanGate requiredPlan="pro"><InstantLeadReplyPage /></PlanGate>} />

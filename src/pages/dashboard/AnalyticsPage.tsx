@@ -14,6 +14,8 @@ import {
   Coins,
   CalendarDays,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { BarChart3 } from 'lucide-react';
 import KpiTile from '../../components/dashboard/KpiTile';
 import TimeSeriesCard from '../../components/dashboard/TimeSeriesCard';
 import Card from '../../components/ui/Card';
@@ -217,6 +219,25 @@ const AnalyticsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
+
+      {/* Deep Analytics banner */}
+      <Link
+        to="/dashboard/deep-analytics"
+        className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl hover:shadow-md transition-shadow group"
+      >
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-brand-blue/10 rounded-lg">
+            <BarChart3 className="w-5 h-5 text-brand-blue" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-text-main">Deep Analytics</p>
+            <p className="text-xs text-text-muted">Conversion funnels, ROI metrics, agent performance, and more</p>
+          </div>
+        </div>
+        <span className="text-sm font-medium text-brand-blue group-hover:underline">
+          Open &rarr;
+        </span>
+      </Link>
 
       {/* Header with date range picker and refresh */}
       <div className="flex items-center justify-between flex-wrap gap-3">
