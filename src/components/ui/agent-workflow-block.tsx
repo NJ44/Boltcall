@@ -212,6 +212,7 @@ export function AgentWorkflowBlock() {
   const useCaseCount = nodes.filter((n) => n.type === "use-case").length;
   const agentCount = nodes.filter((n) => n.type === "agent").length;
   const outputCount = nodes.filter((n) => n.type === "output").length;
+  const unconfiguredCount = nodes.filter((n) => !n.configured && !n.locked).length;
 
   return (
     <div className="relative w-full overflow-hidden rounded-2xl border border-border/40 bg-background/60 backdrop-blur p-4 sm:p-6">
