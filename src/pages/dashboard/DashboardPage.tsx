@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
+import dayjs from 'dayjs';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
+import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
+import RecentWinBanner from '../../components/dashboard/RecentWinBanner';
+import { useDashboardStore } from '../../stores/dashboardStore';
+
+interface LatestBooking {
+  client_name: string;
+  completed_at: string;
+}
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -15,6 +24,14 @@ const DashboardPage: React.FC = () => {
   const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
+
+  const fetchLiveData = useDashboardStore((s) => s.fetchLiveData);
+
+  // Fetch live stats for TodayGlanceCard
+  useEffect(() => {
+    fetchLiveData();
+  }, [fetchLiveData]);
 
   // Fetch user's primary agent for "Talk to Agent" button
   useEffect(() => {
@@ -28,6 +45,24 @@ const DashboardPage: React.FC = () => {
       .limit(1)
       .then(({ data }) => {
         if (data?.[0]) setPrimaryAgent(data[0]);
+      });
+  }, [user?.id]);
+
+  // Fetch today's most recent completed booking for RecentWinBanner
+  useEffect(() => {
+    if (!user?.id) return;
+    const dismissed = sessionStorage.getItem('recentWinDismissed');
+    if (dismissed) return;
+    supabase
+      .from('callbacks')
+      .select('client_name, completed_at')
+      .eq('user_id', user.id)
+      .eq('status', 'completed')
+      .gte('completed_at', dayjs().startOf('day').toISOString())
+      .order('completed_at', { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (data?.[0]) setLatestBooking(data[0] as LatestBooking);
       });
   }, [user?.id]);
 
@@ -59,6 +94,18 @@ const DashboardPage: React.FC = () => {
         isOpen={showCompletionPopup}
         onClose={() => setShowCompletionPopup(false)}
       />
+
+      {/* Today at a Glance */}
+      <TodayGlanceCard />
+
+      {/* Recent Win Banner */}
+      {latestBooking && (
+        <RecentWinBanner
+          clientName={latestBooking.client_name}
+          completedAt={latestBooking.completed_at}
+          onDismiss={() => setLatestBooking(null)}
+        />
+      )}
 
       {/* Agent Architecture */}
       <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] overflow-hidden">

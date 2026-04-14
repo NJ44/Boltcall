@@ -2,6 +2,7 @@ import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import type React from "react";
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
+import { Link } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card-shadcn";
@@ -211,6 +212,7 @@ export function AgentWorkflowBlock() {
   const useCaseCount = nodes.filter((n) => n.type === "use-case").length;
   const agentCount = nodes.filter((n) => n.type === "agent").length;
   const outputCount = nodes.filter((n) => n.type === "output").length;
+  const unconfiguredCount = nodes.filter((n) => !n.configured && !n.locked).length;
 
   return (
     <div className="relative w-full overflow-hidden rounded-2xl border border-border/40 bg-background/60 backdrop-blur p-4 sm:p-6">
@@ -368,9 +370,18 @@ export function AgentWorkflowBlock() {
             <span className="uppercase tracking-[0.15em]">{connections.length} Connections</span>
           </div>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40">
-          Hover for details · Drag to reposition
-        </p>
+        {unconfiguredCount > 0 ? (
+          <Link
+            to="/dashboard/agents"
+            className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-amber-400 hover:bg-amber-400/20 transition-colors"
+          >
+            {unconfiguredCount} output{unconfiguredCount !== 1 ? "s" : ""} not set up →
+          </Link>
+        ) : (
+          <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+            Hover for details · Drag to reposition
+          </p>
+        )}
       </div>
     </div>
   );

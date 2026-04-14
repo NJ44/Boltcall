@@ -35,9 +35,9 @@ export const COMPARISON_CTA: FinalCTAProps = {
 };
 
 export const BLOG_CTA: FinalCTAProps = {
-  headline: 'Put This Into Practice Today.',
-  description: 'Boltcall handles calls, texts, and bookings for you 24/7. Free to set up, no contract.',
-  buttonText: 'Get started free',
+  headline: 'Fast. Simple. Scalable.',
+  description: 'Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.',
+  buttonText: 'Start the free setup',
   buttonHref: '/signup',
 };
 

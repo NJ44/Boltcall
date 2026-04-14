@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Sparkles, Zap, CheckCircle, TrendingUp, Users, FileText, MessageSquare, Target } from 'lucide-react';
+import { Calendar, Clock, Sparkles, Zap, CheckCircle, TrendingUp, Users, FileText, MessageSquare, Target, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -709,19 +709,19 @@ const BlogGeminiGemBusinessAssistant: React.FC = () => {
                   <Users className="w-6 h-6 text-blue-500" />
                 </div>
                 <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Sparkles className="w-6 h-6 text-blue-500" />
+                  <Phone className="w-6 h-6 text-blue-500" />
                 </div>
                 <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Zap className="w-6 h-6 text-blue-500" />
+                  <Calendar className="w-6 h-6 text-blue-500" />
                 </div>
               </div>
-              <h2 className="text-gray-900 font-medium mt-4 text-4xl">Need More Business Automation?</h2>
-              <p className="text-base text-gray-600 mt-2 whitespace-pre-line">While Gemini Gems are great for content and marketing, Boltcall handles your customer communication—calls, SMS, and lead capture—24/7.</p>
+              <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+              <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.</p>
               <Link
                 to="/signup"
                 className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
               >
-                Learn More About Boltcall
+                Start the free setup
               </Link>
             </div>
           </div>

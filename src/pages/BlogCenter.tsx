@@ -542,43 +542,6 @@ const BlogCenter: React.FC = () => {
         </div>
       </section>
 
-      {/* Blog Intro */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-2">
-        <p className="text-gray-600 text-lg text-center max-w-3xl mx-auto leading-relaxed">
-          Expert guides, industry research, and practical advice on AI receptionists, missed call recovery,
-          lead engagement, and 24/7 call answering for local businesses. Whether you run a plumbing company,
-          dental practice, HVAC business, law firm, or any local service, our guides help you capture more
-          leads, book more appointments, and grow your revenue with AI.
-        </p>
-        <div className="flex flex-wrap justify-center gap-2 mt-6 mb-2">
-          {['AI Receptionist', 'Missed Calls', 'Lead Engagement', 'Industry Guides', 'Comparisons', 'Setup Guides', 'ROI & Pricing'].map(tag => (
-            <span key={tag} className="bg-blue-50 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full border border-blue-100">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* Table of Contents */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">On This Page</h2>
-          <nav className="flex flex-wrap gap-3">
-            {[
-              { label: 'All Posts', href: '#blog-posts' },
-              { label: 'AI Receptionist Stats', href: '#stats' },
-              { label: 'Expert Insights', href: '#expert-insights' },
-              { label: 'Pros & Cons', href: '#pros-cons' },
-              { label: 'Pricing Overview', href: '#pricing' },
-            ].map(({ label, href }) => (
-              <a key={href} href={href} className="text-sm text-blue-600 border border-blue-200 bg-white hover:bg-blue-50 px-3 py-1.5 rounded-full transition-colors">
-                {label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </section>
-
       {/* Blog Posts Grid */}
       <section id="blog-posts" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {blogPosts.length > 0 ? (
