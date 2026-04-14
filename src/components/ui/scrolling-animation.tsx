@@ -77,7 +77,7 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
                         onClick={() => onNavigate?.(channel.href)}
                         onMouseEnter={() => setHoveredChannel(channel)}
                         onMouseLeave={() => setHoveredChannel(null)}
-                        className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 ease-out z-0 gap-1"
+                        className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex flex-col items-center justify-center cursor-pointer z-0 gap-1"
                         style={{
                           transform: `translate(${expandRadius * Math.cos(angle)}px, ${expandRadius * Math.sin(angle)}px)`,
                         }}
