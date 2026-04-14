@@ -73,6 +73,10 @@
 [functions."email-inbox-poller"]
   schedule = "*/3 * * * *"
 
+# Send daily lead summary email to all active users at 07:00 UTC (10 AM Israel / 3 AM EST)
+[functions."daily-lead-summary"]
+  schedule = "0 7 * * *"
+
 # Netlify handles /.netlify/functions/* routing automatically — no redirect needed
 
 # Long cache for hashed static assets
