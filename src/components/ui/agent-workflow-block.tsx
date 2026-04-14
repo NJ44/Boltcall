@@ -2,6 +2,7 @@ import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import type React from "react";
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
+import { Link } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card-shadcn";
