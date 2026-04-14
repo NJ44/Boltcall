@@ -709,10 +709,10 @@ const BlogGeminiGemBusinessAssistant: React.FC = () => {
                   <Users className="w-6 h-6 text-blue-500" />
                 </div>
                 <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Sparkles className="w-6 h-6 text-blue-500" />
+                  <Phone className="w-6 h-6 text-blue-500" />
                 </div>
                 <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
-                  <Zap className="w-6 h-6 text-blue-500" />
+                  <Calendar className="w-6 h-6 text-blue-500" />
                 </div>
               </div>
               <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
