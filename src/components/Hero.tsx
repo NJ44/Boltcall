@@ -235,6 +235,19 @@ const Hero: React.FC = () => {
               </button>
             </div>
 
+            {/* Social proof stat line — links to striking distance blog post */}
+            <p
+              className="text-sm text-text-muted relative z-10 mt-2"
+              style={{
+                opacity: 0,
+                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 1.1s forwards',
+              }}
+            >
+              Businesses that respond in 5 minutes are{' '}
+              <Link to="/blog/why-speed-matters" className="text-blue-600 font-semibold hover:underline">
+                391% more likely to close the deal
+              </Link>
+            </p>
 
           </div>
         </div>
