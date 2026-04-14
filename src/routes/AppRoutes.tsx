@@ -114,6 +114,7 @@ const FunnelOptimizer = React.lazy(() => import('../pages/FunnelOptimizer'));
 const FunnelOptimiser = React.lazy(() => import('../pages/FunnelOptimiser'));
 const SolarSpeedToLeadPlaybook = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybook'));
 const SolarSpeedToLeadPlaybookThankYou = React.lazy(() => import('../pages/SolarSpeedToLeadPlaybookThankYou'));
+const SolarBenchmarkPage = React.lazy(() => import('../pages/SolarBenchmarkPage'));
 const VoiceAgentOnboarding = React.lazy(() => import('../pages/VoiceAgentOnboarding'));
 const AiReadinessScorecard = React.lazy(() => import('../pages/AiReadinessScorecard'));
 const AiReceptionistRoi = React.lazy(() => import('../pages/AiReceptionistRoi'));
@@ -523,6 +524,8 @@ const NavigationWrapper: React.FC = () => {
         {/* Solar Speed-to-Lead Playbook */}
         <Route path="/solar-speed-playbook" element={<SolarSpeedToLeadPlaybook />} />
         <Route path="/solar-speed-playbook/thank-you" element={<SolarSpeedToLeadPlaybookThankYou />} />
+        {/* Solar Speed-to-Lead Benchmark */}
+        <Route path="/solar-benchmark" element={<SolarBenchmarkPage />} />
         {/* 5-Minute Response Playbook lead magnet */}
         <Route path="/tools/5-minute-response-playbook" element={<FiveMinuteResponsePlaybook />} />
         {/* Vet Clinic Revenue Calculator */}
