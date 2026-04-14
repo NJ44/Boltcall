@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, PhoneOff, Zap, CheckCircle, XCircle, Moon, ArrowRight, Users } from 'lucide-react';
+import { Calendar, Clock, Phone, Zap, CheckCircle, XCircle, Moon, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
