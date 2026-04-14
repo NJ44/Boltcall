@@ -777,7 +777,7 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
                   </div>
                   <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
                   <p className="text-base text-gray-600 mt-2 whitespace-pre-line">
-                    Launch an AI agent in 5 minutes at no cost. Connect it to all your business channels.
+                    Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.
                   </p>
                   <Link
                     to="/signup"
