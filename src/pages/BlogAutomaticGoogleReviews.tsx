@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Star, CheckCircle, Zap, TrendingUp, MessageSquare, BarChart3, Shield, Users } from 'lucide-react';
+import { Calendar, Clock, Star, CheckCircle, Zap, TrendingUp, MessageSquare, BarChart3, Shield, Users, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
