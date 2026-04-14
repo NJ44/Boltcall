@@ -128,6 +128,8 @@ export function PricingTable({
                       format={{
                         style: "currency",
                         currency: "USD",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
                       }}
                       value={isYearly ? plan.price.yearly / 12 : plan.price.monthly}
                       className="text-lg font-bold text-gray-900"
