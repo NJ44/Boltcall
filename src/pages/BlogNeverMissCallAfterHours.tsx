@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, PhoneOff, Zap, CheckCircle, XCircle, Moon, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, Phone, PhoneOff, Zap, CheckCircle, XCircle, Moon, ArrowRight, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -286,13 +286,30 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
             </motion.section>
 
             {/* CTA */}
-            <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 md:p-12 text-white">
-              <div className="flex items-center gap-3 mb-4"><PhoneOff className="w-8 h-8 text-blue-200" /></div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Stop Losing Leads After Hours</h2>
-              <p className="text-blue-100 text-lg mb-8 max-w-2xl">Boltcall's AI receptionist answers every call — day or night — qualifies the lead, books the appointment, and sends you a full summary. Set up in under 24 hours. No staff required.</p>
-              <Link to="/ai-receptionist" className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-colors">
-                See How It Works <ArrowRight className="w-5 h-5" />
-              </Link>
+            <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-16">
+              <div className="flex flex-col items-center justify-center text-center">
+                <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
+                  <div className="flex justify-center isolate">
+                    <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                      <Users className="w-6 h-6 text-blue-500" />
+                    </div>
+                    <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                      <Phone className="w-6 h-6 text-blue-500" />
+                    </div>
+                    <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                      <Calendar className="w-6 h-6 text-blue-500" />
+                    </div>
+                  </div>
+                  <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+                  <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.</p>
+                  <Link
+                    to="/signup"
+                    className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
+                  >
+                    Start the free setup
+                  </Link>
+                </div>
+              </div>
             </motion.section>
 
             {/* Related Posts */}

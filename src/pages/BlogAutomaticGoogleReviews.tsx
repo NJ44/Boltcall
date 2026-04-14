@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Star, CheckCircle, Zap, TrendingUp, MessageSquare, BarChart3, Shield, Users } from 'lucide-react';
+import { Calendar, Clock, Star, CheckCircle, Zap, TrendingUp, MessageSquare, BarChart3, Shield, Users, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -688,21 +688,28 @@ const BlogAutomaticGoogleReviews: React.FC = () => {
               </li>
             </ul>
             
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Ready to Automate Your Review Requests?</h3>
-              <p className="text-blue-100 mb-6 text-lg">
-                Boltcall makes it easy to set up automatic Google review requests as part of a comprehensive AI-powered business automation platform. Get started in 5 minutes and start collecting more reviews automatically.
-              </p>
-              <Link to="/signup">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="bg-white text-blue-600 hover:bg-gray-100"
+            <div className="flex flex-col items-center justify-center text-center">
+              <div className="bg-white border-2 border-dashed border-gray-200 rounded-xl p-8 w-full max-w-[800px] group hover:bg-gray-50 transition duration-500 hover:duration-200">
+                <div className="flex justify-center isolate">
+                  <div className="bg-white size-12 grid place-items-center rounded-xl relative left-2.5 top-1.5 -rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:-translate-x-5 group-hover:-rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                    <Users className="w-6 h-6 text-blue-500" />
+                  </div>
+                  <div className="bg-white size-12 grid place-items-center rounded-xl relative z-10 shadow-lg ring-1 ring-gray-200 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                    <Phone className="w-6 h-6 text-blue-500" />
+                  </div>
+                  <div className="bg-white size-12 grid place-items-center rounded-xl relative right-2.5 top-1.5 rotate-6 shadow-lg ring-1 ring-gray-200 group-hover:translate-x-5 group-hover:rotate-12 group-hover:-translate-y-0.5 transition duration-500 group-hover:duration-200">
+                    <Calendar className="w-6 h-6 text-blue-500" />
+                  </div>
+                </div>
+                <h2 className="text-gray-900 font-medium mt-4 text-4xl">Fast. Simple. Scalable.</h2>
+                <p className="text-base text-gray-600 mt-2 whitespace-pre-line">Get your helper ready in 5 minutes. It is free. Connect it to your phone, website, and messages.</p>
+                <Link
+                  to="/signup"
+                  className="mt-4 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 h-10 px-4 py-2 shadow-sm active:shadow-none"
                 >
-                  Get Started Free
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
+                  Start the free setup
+                </Link>
+              </div>
             </div>
           </div>
         </motion.section>
