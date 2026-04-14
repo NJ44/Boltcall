@@ -1,507 +1,428 @@
-"use client";
-
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Zap, Star, BarChart3 } from 'lucide-react';
 
-// A simple utility function to merge class names, replacing the need for an external file.
 const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(' ');
 
-// --- Component Props & Data Types ---
+// ─── SMS Agent Illustration ──────────────────────────────────────────────────
 
-interface ProcessStep {
+const SMSIllustration = () => (
+  <div className="flex items-center justify-center h-full">
+    <div className="relative">
+      {/* Phone shell */}
+      <div className="w-[188px] bg-slate-900 rounded-[32px] p-[6px] shadow-2xl ring-1 ring-white/10">
+        {/* Notch */}
+        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-16 h-4 bg-slate-900 rounded-full z-10" />
+        {/* Screen */}
+        <div className="rounded-[27px] overflow-hidden bg-white">
+          {/* Status bar */}
+          <div className="bg-white px-4 pt-5 pb-1 flex justify-between">
+            <span className="text-[9px] font-semibold text-slate-800">9:41</span>
+            <span className="text-[9px] text-slate-500">●●●</span>
+          </div>
+          {/* Chat header */}
+          <div className="bg-slate-900 px-3 py-2 flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">BC</div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white text-[10px] font-semibold leading-tight">Boltcall Agent</p>
+              <p className="text-green-400 text-[8px]">● Online now</p>
+            </div>
+          </div>
+          {/* Message thread */}
+          <div className="bg-[#f0f0f5] px-2 py-2 space-y-2 min-h-[200px]">
+            {/* Lead inbound */}
+            <div className="flex justify-end">
+              <div className="bg-white rounded-2xl rounded-br-sm px-2.5 py-1.5 max-w-[130px] shadow-sm">
+                <p className="text-[9px] text-slate-800 leading-relaxed">Hi, need AC repair today — it's urgent!</p>
+                <p className="text-[8px] text-slate-400 text-right mt-0.5">2:14 PM</p>
+              </div>
+            </div>
+            {/* Speed badge */}
+            <div className="flex justify-center">
+              <span className="bg-emerald-100 text-emerald-700 text-[8px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Responded in 3 sec
+              </span>
+            </div>
+            {/* AI reply */}
+            <div className="flex justify-start">
+              <div className="bg-blue-600 rounded-2xl rounded-tl-sm px-2.5 py-1.5 max-w-[140px]">
+                <p className="text-[9px] text-white leading-relaxed">Hi! I'm your AI from Cool Air. I'm calling you right now to get you booked 👋</p>
+                <p className="text-[8px] text-blue-200 text-right mt-0.5">2:14 PM ✓✓</p>
+              </div>
+            </div>
+            {/* Lead confirm */}
+            <div className="flex justify-end">
+              <div className="bg-white rounded-2xl rounded-br-sm px-2.5 py-1.5 shadow-sm">
+                <p className="text-[9px] text-slate-800">Sounds good!</p>
+                <p className="text-[8px] text-slate-400 text-right mt-0.5">2:15 PM</p>
+              </div>
+            </div>
+            {/* Booking confirm */}
+            <div className="flex justify-start">
+              <div className="bg-blue-600 rounded-2xl rounded-tl-sm px-2.5 py-1.5 max-w-[140px]">
+                <p className="text-[9px] text-white leading-relaxed">Booked! John arrives at 4pm today ✅</p>
+                <p className="text-[8px] text-blue-200 text-right mt-0.5">2:15 PM ✓✓</p>
+              </div>
+            </div>
+          </div>
+          {/* Input bar */}
+          <div className="bg-white px-2 py-1.5 flex items-center gap-1.5">
+            <div className="flex-1 bg-slate-100 rounded-full px-2.5 py-1">
+              <span className="text-[8px] text-slate-400">Message...</span>
+            </div>
+            <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Floating tags */}
+      <div className="absolute -top-2 -right-16 bg-white border border-slate-100 rounded-xl px-2.5 py-1.5 shadow-lg text-[9px] font-semibold text-slate-700 whitespace-nowrap">
+        📲 Lead captured
+      </div>
+      <div className="absolute -bottom-2 -left-16 bg-white border border-slate-100 rounded-xl px-2.5 py-1.5 shadow-lg text-[9px] font-semibold text-slate-700 whitespace-nowrap">
+        🕐 24/7 auto-reply
+      </div>
+    </div>
+  </div>
+);
+
+// ─── AI Receptionist Illustration ───────────────────────────────────────────
+
+const ReceptionistIllustration = () => (
+  <div className="flex items-center justify-center h-full">
+    <div className="space-y-3 w-[256px]">
+      {/* Live call card */}
+      <div className="bg-slate-900 rounded-2xl p-4 shadow-2xl">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">JD</div>
+          <div className="flex-1 min-w-0">
+            <p className="text-white text-sm font-semibold">John Davis</p>
+            <p className="text-slate-400 text-[11px]">+1 (555) 847-2091</p>
+          </div>
+          <div className="w-9 h-9 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-500/30">
+            <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          </div>
+        </div>
+        {/* Voice waveform */}
+        <div className="mt-3 flex items-end gap-[3px] h-7 justify-center">
+          {[4, 9, 14, 8, 18, 11, 7, 16, 10, 5, 13, 8, 17, 9, 6, 12, 15, 8, 4, 11].map((h, i) => (
+            <div
+              key={i}
+              className="w-[3px] rounded-full bg-blue-400"
+              style={{ height: `${h}px`, opacity: 0.55 + (i % 4) * 0.12 }}
+            />
+          ))}
+        </div>
+        <div className="mt-2 flex items-center justify-center gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-green-400" />
+          <span className="text-green-400 text-[10px] font-semibold">AI Answering · 0:23</span>
+        </div>
+        {/* Transcript snippet */}
+        <div className="mt-3 bg-slate-800 rounded-xl p-2.5">
+          <p className="text-slate-300 text-[9px] leading-relaxed italic">
+            "…I have Thursday at 2pm or Friday at 10am available. Which works better for you?"
+          </p>
+        </div>
+      </div>
+      {/* Booking confirmation */}
+      <div className="bg-white rounded-xl p-3 shadow-lg border border-slate-100">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <p className="text-[11px] font-semibold text-slate-800">Appointment Confirmed</p>
+          <div className="ml-auto w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="white" strokeWidth="2"><polyline points="2 6 5 9 10 3"/></svg>
+          </div>
+        </div>
+        <div className="bg-blue-50 rounded-lg px-3 py-2">
+          <p className="text-[10px] font-semibold text-blue-800">Thursday, Apr 17 · 2:00 PM</p>
+          <p className="text-[9px] text-blue-600 mt-0.5">AC Repair — John Davis · Confirmed via AI call</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Instant Ads Response Illustration ──────────────────────────────────────
+
+const AdsIllustration = () => (
+  <div className="flex items-center justify-center h-full gap-4">
+    {/* Facebook lead form card */}
+    <div className="bg-white rounded-xl shadow-lg border border-slate-100 w-[130px] overflow-hidden flex-shrink-0">
+      <div className="bg-[#1877F2] px-2.5 py-2 flex items-center gap-1.5">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <span className="text-white text-[9px] font-bold">Lead Ad</span>
+      </div>
+      <div className="p-2 space-y-1.5">
+        <div>
+          <p className="text-[7px] text-slate-400 uppercase font-semibold mb-0.5">Name</p>
+          <div className="bg-slate-50 border border-slate-200 rounded px-1.5 py-1">
+            <p className="text-[9px] text-slate-800 font-medium">Sarah Johnson</p>
+          </div>
+        </div>
+        <div>
+          <p className="text-[7px] text-slate-400 uppercase font-semibold mb-0.5">Service</p>
+          <div className="bg-slate-50 border border-slate-200 rounded px-1.5 py-1">
+            <p className="text-[9px] text-slate-800 font-medium">Teeth Whitening</p>
+          </div>
+        </div>
+        <div>
+          <p className="text-[7px] text-slate-400 uppercase font-semibold mb-0.5">Phone</p>
+          <div className="bg-slate-50 border border-slate-200 rounded px-1.5 py-1">
+            <p className="text-[9px] text-slate-800 font-medium">555-821-4490</p>
+          </div>
+        </div>
+        <div className="bg-[#1877F2] rounded-lg py-1.5 text-center mt-1">
+          <span className="text-white text-[9px] font-bold">Submitted ✓</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Pipeline arrow */}
+    <div className="flex flex-col items-center gap-1 flex-shrink-0">
+      <svg width="32" height="16" viewBox="0 0 32 16" fill="none">
+        <path d="M0 8 L26 8" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="3 2"/>
+        <path d="M24 4 L30 8 L24 12" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+      </svg>
+      <span className="text-[8px] text-slate-500 font-semibold whitespace-nowrap">⚡ 4 sec</span>
+    </div>
+
+    {/* SMS notification card */}
+    <div className="bg-slate-900 rounded-xl p-3 w-[126px] shadow-2xl flex-shrink-0">
+      <div className="flex items-center gap-1.5 mb-2">
+        <div className="w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        </div>
+        <p className="text-white text-[10px] font-semibold">SMS Sent</p>
+        <span className="ml-auto bg-emerald-500 text-white text-[7px] font-bold px-1.5 py-0.5 rounded-md">NOW</span>
+      </div>
+      <div className="bg-slate-800 rounded-lg p-2">
+        <p className="text-slate-300 text-[8px] leading-relaxed">Hi Sarah! Saw your interest in teeth whitening. Are you free for a quick call? 😊</p>
+      </div>
+      <div className="mt-1.5 flex items-center gap-1">
+        <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+        <span className="text-emerald-400 text-[8px] font-medium">Delivered · just now</span>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Website Response Illustration ──────────────────────────────────────────
+
+const WebsiteIllustration = () => (
+  <div className="flex items-center justify-center h-full">
+    <div className="relative w-[272px]">
+      {/* Browser frame */}
+      <div className="bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
+        {/* Browser chrome */}
+        <div className="bg-slate-100 px-2.5 py-1.5 flex items-center gap-2 border-b border-slate-200">
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+          </div>
+          <div className="flex-1 bg-white rounded-md px-2 py-0.5 flex items-center gap-1">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span className="text-[8px] text-slate-400">yoursite.com/contact</span>
+          </div>
+        </div>
+
+        {/* Page content */}
+        <div className="px-4 py-3 bg-slate-50 relative">
+          {/* Hero area stub */}
+          <div className="mb-3">
+            <div className="h-2.5 w-28 bg-blue-600 rounded-sm mb-1.5" />
+            <div className="h-1.5 w-36 bg-slate-200 rounded-sm mb-1" />
+            <div className="h-1.5 w-28 bg-slate-200 rounded-sm" />
+          </div>
+
+          {/* Contact form */}
+          <div className="bg-white rounded-xl p-3 shadow-sm border border-slate-100">
+            <p className="text-[9px] font-semibold text-slate-700 mb-2">Contact Us</p>
+            <div className="space-y-1.5">
+              <div className="bg-slate-50 border border-slate-200 rounded-md h-5 flex items-center px-2">
+                <span className="text-[8px] text-slate-600">Mike Thompson</span>
+              </div>
+              <div className="bg-slate-50 border border-slate-200 rounded-md h-5 flex items-center px-2">
+                <span className="text-[8px] text-slate-600">Need emergency plumber</span>
+              </div>
+              <div className="bg-blue-600 rounded-md py-1.5 text-center">
+                <span className="text-white text-[8px] font-bold">Submit ✓</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Chat widget */}
+          <div className="absolute bottom-3 right-3">
+            <div className="bg-white rounded-xl shadow-2xl border border-slate-200 w-[148px]">
+              {/* Widget header */}
+              <div className="bg-blue-600 rounded-t-xl px-2.5 py-1.5 flex items-center gap-1.5">
+                <div className="w-2 h-2 bg-green-400 rounded-full" />
+                <span className="text-white text-[9px] font-semibold">Boltcall</span>
+              </div>
+              {/* Messages */}
+              <div className="p-2 space-y-1.5">
+                <div className="bg-blue-600 rounded-xl rounded-tl-sm px-2 py-1.5">
+                  <p className="text-white text-[8px] leading-relaxed">Hi Mike! Saw your request — calling you now to help fast 🔧</p>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                  <span className="text-[7px] text-emerald-600 font-semibold">Sent in 5 seconds</span>
+                </div>
+              </div>
+              {/* Input */}
+              <div className="px-2 pb-2">
+                <div className="bg-slate-100 rounded-full px-2 py-1 flex items-center justify-between">
+                  <span className="text-[7px] text-slate-400">Reply...</span>
+                  <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
+                    <svg width="7" height="7" viewBox="0 0 24 24" fill="white"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Notification dot */}
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center ring-2 ring-white">
+              <span className="text-white text-[8px] font-bold">1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Tab data ────────────────────────────────────────────────────────────────
+
+interface TabData {
   id: string;
+  label: string;
   title: string;
-  subtitle: string;
   description: string;
-  details: string[];
+  features: string[];
+  illustration: React.ReactNode;
 }
 
-interface QuantumTimelineProps {
-  steps?: ProcessStep[];
-  defaultStep?: string;
-}
-
-// --- Default Data ---
-const DEMO_STEPS: ProcessStep[] = [
+const TABS: TabData[] = [
   {
-    id: "01",
-    title: "AI Receptionist",
-    subtitle: "",
-    description: "Your AI receptionist answers every call 24/7 with a natural human voice. It books appointments, answers FAQs, and transfers urgent calls \u2014 so you never lose a lead.",
-    details: ["24/7 Call Answering", "Natural Voice AI", "Appointment Booking", "Call Transfer"],
+    id: 'sms',
+    label: 'SMS Agent',
+    title: 'SMS Lead Agent',
+    description:
+      'Every text message lead gets an instant, personalized reply — day or night. Your AI agent handles the whole conversation and books the appointment before a competitor even reads the notification.',
+    features: [
+      'Responds in under 5 seconds',
+      'Qualifies & books via SMS',
+      'Handles objections & follow-ups',
+      'Works for any local service business',
+    ],
+    illustration: <SMSIllustration />,
   },
   {
-    id: "02",
-    title: "Instant Lead Response",
-    subtitle: "",
-    description: "When a new lead comes in from your website, Facebook Ads, or missed call \u2014 Boltcall responds instantly via SMS, email, or callback. Beat your competition by being first.",
-    details: ["Instant SMS Response", "Auto Email Follow-up", "Missed Call Text-back", "Facebook Lead Capture"],
+    id: 'receptionist',
+    label: 'AI Receptionist',
+    title: 'AI Receptionist',
+    description:
+      'Never miss a call again. Your AI receptionist answers every call with a natural human voice, handles FAQs, and drops bookings straight into your calendar — around the clock, even on weekends.',
+    features: [
+      'Answers every call instantly',
+      'Natural conversational voice',
+      'Books into your calendar live',
+      'Transfers urgent calls to you',
+    ],
+    illustration: <ReceptionistIllustration />,
   },
   {
-    id: "03",
-    title: "Review Automation",
-    subtitle: "",
-    description: "Automatically send review requests after every appointment. Happy customers get directed to Google, unhappy ones get routed to you first \u2014 protecting your reputation.",
-    details: ["Google Review Requests", "Smart Routing", "Review Monitoring", "Reputation Dashboard"],
+    id: 'ads',
+    label: 'Instant Ads Response',
+    title: 'Instant Ads Response',
+    description:
+      'When someone fills out your Facebook or Google lead form, Boltcall fires a personalized SMS in under 5 seconds. Be the first to reply — and win the job before your competition wakes up.',
+    features: [
+      'Works with Facebook & Google Ads',
+      'Personalised to every lead',
+      'Auto-qualifies & schedules',
+      'Zero manual work required',
+    ],
+    illustration: <AdsIllustration />,
   },
   {
-    id: "04",
-    title: "Analytics",
-    subtitle: "",
-    description: "Track every call, message, lead, and booking in one dashboard. See which channels drive the most revenue and optimize your marketing spend.",
-    details: ["Call Analytics", "Lead Source Tracking", "Revenue Attribution", "Token Usage Dashboard"],
+    id: 'website',
+    label: 'Website Response',
+    title: 'Website Response',
+    description:
+      'The moment a lead submits your contact form or chat widget, your AI agent responds — reaching out before they close the tab. Turn casual browsers into booked appointments on autopilot.',
+    features: [
+      'Instant form submission response',
+      'Works with any website',
+      'Live chat widget included',
+      'Syncs with your CRM',
+    ],
+    illustration: <WebsiteIllustration />,
   },
 ];
 
+// ─── Main Component ──────────────────────────────────────────────────────────
 
-// --- Main Timeline Component ---
-
-export const QuantumTimeline = ({ steps = DEMO_STEPS, defaultStep }: QuantumTimelineProps) => {
-  const [activeStep, setActiveStep] = useState(defaultStep || steps[0]?.id);
-
-  const activeStepData = steps.find(step => step.id === activeStep);
+export const QuantumTimeline = () => {
+  const [activeTab, setActiveTab] = useState('sms');
+  const active = TABS.find((t) => t.id === activeTab)!;
 
   return (
-    <div className="w-full max-w-[calc(70rem+200px)] mx-auto pt-4 px-5 pb-0 -mb-[100px] -mt-[105px] font-sans bg-white dark:bg-black rounded-2xl shadow-2xl" style={{ width: 'calc(100% + 80px)', maxWidth: 'calc(70rem + 200px)', marginLeft: '-40px', marginRight: '-40px' }}>
-      {/* Top Navigation */}
-      <TimelineNav steps={steps} activeStep={activeStep} onStepClick={setActiveStep} />
+    <div
+      className="w-full mx-auto px-6 pt-5 pb-4 font-sans bg-white rounded-2xl shadow-2xl"
+      style={{
+        width: 'calc(100% + 80px)',
+        maxWidth: 'calc(70rem + 200px)',
+        marginLeft: '-40px',
+        marginRight: '-40px',
+        marginTop: '-105px',
+        marginBottom: '-100px',
+      }}
+    >
+      {/* Tab navigation */}
+      <div className="flex justify-center mb-5">
+        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-full">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-150',
+                activeTab === tab.id
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700',
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
-      {/* Main Content */}
-      <AnimatePresence mode="wait">
-        {activeStepData && (
-          <motion.div
-            key={activeStepData.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 grid md:grid-cols-2 gap-8"
-          >
-            <TimelineContent step={activeStepData} />
-            <TimelineAnimation stepId={activeStepData.id} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Content area */}
+      <div className="grid md:grid-cols-2 gap-8 items-center min-h-[260px]">
+        {/* Left: text */}
+        <div className="text-left">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">{active.title}</h2>
+          <p className="mt-3 text-slate-600 text-sm leading-relaxed">{active.description}</p>
+          <ul className="mt-5 space-y-2.5">
+            {active.features.map((f) => (
+              <li key={f} className="flex items-center gap-3">
+                <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                  <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#2563eb" strokeWidth="2.2">
+                    <polyline points="2 6 5 9 10 3" />
+                  </svg>
+                </div>
+                <span className="text-sm text-slate-700">{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Right: illustration */}
+        <div className="h-[280px]">{active.illustration}</div>
+      </div>
     </div>
   );
-};
-
-// --- Sub-components ---
-
-const TimelineNav = ({ steps, activeStep, onStepClick }: { steps: ProcessStep[], activeStep: string, onStepClick: (id: string) => void }) => (
-  <div className="flex items-center justify-center">
-    <div className="hidden md:flex items-center gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-full">
-      {steps.map(step => (
-        <button
-          key={step.id}
-          onClick={() => onStepClick(step.id)}
-          className={cn(
-            "px-4 py-1 rounded-full text-sm font-semibold transition-colors",
-            activeStep === step.id
-              ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm"
-              : "text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700"
-          )}
-        >
-          {step.title.split(' ').slice(0, 2).join(' ')}
-        </button>
-      ))}
-    </div>
-  </div>
-);
-
-const TimelineContent = ({ step }: { step: ProcessStep }) => (
-  <div className="text-left mt-16">
-    <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">{step.title}</h2>
-    <p className="mt-3 text-slate-700 dark:text-slate-300">{step.description}</p>
-    <div className="mt-4 grid sm:grid-cols-2 gap-4">
-      {step.details.map((detail, i) => (
-        <div key={i} className="flex items-center gap-3">
-          <div className="w-5 h-5 bg-green-500/10 dark:bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-xs">{'\u2713'}</div>
-          <span className="text-sm text-slate-700 dark:text-slate-300">{detail}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-const TimelineAnimation = ({ stepId }: { stepId: string }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  // AI Receptionist - Phone with sound waves and conversation bubbles
-  if (stepId === "01") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative w-full h-[400px] flex items-center justify-center"
-        >
-          {/* Phone Icon Center */}
-          <motion.div
-            variants={itemVariants}
-            className="relative z-10 w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30"
-            animate={{
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Phone className="w-10 h-10 text-white" />
-          </motion.div>
-
-          {/* Sound Waves */}
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={`wave-${i}`}
-              className="absolute w-20 h-20 rounded-2xl border-2 border-blue-400/40"
-              initial={{ scale: 1, opacity: 0.6 }}
-              animate={{
-                scale: [1, 1.6 + i * 0.4],
-                opacity: [0.6, 0],
-              }}
-              transition={{
-                duration: 2,
-                delay: i * 0.5,
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-            />
-          ))}
-
-          {/* Conversation Bubbles */}
-          <motion.div
-            variants={itemVariants}
-            className="absolute top-[15%] right-[10%] bg-white dark:bg-slate-800 rounded-2xl rounded-br-sm px-4 py-3 shadow-lg max-w-[180px]"
-          >
-            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">{'\u201C'}Hi, I\u2019d like to book an appointment for Thursday.{'\u201D'}</p>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="absolute bottom-[15%] left-[10%] bg-blue-600 rounded-2xl rounded-bl-sm px-4 py-3 shadow-lg max-w-[200px]"
-          >
-            <p className="text-xs text-white font-medium">{'\u201C'}Of course! I have 2pm and 4pm available. Which works best?{'\u201D'}</p>
-          </motion.div>
-
-          {/* Floating badges */}
-          <motion.div
-            className="absolute top-[10%] left-[15%] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-[10px] font-bold px-2 py-1 rounded-full"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            24/7 Active
-          </motion.div>
-
-          <motion.div
-            className="absolute bottom-[10%] right-[15%] bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-bold px-2 py-1 rounded-full"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeInOut" }}
-          >
-            Natural Voice
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  // Speed to Lead - Lightning bolt with notification badges
-  if (stepId === "02") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative w-full h-[400px] flex items-center justify-center"
-        >
-          {/* Central Lightning Bolt */}
-          <motion.div
-            variants={itemVariants}
-            className="relative z-10 w-20 h-20 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-xl shadow-amber-500/30"
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Zap className="w-10 h-10 text-white" fill="white" />
-          </motion.div>
-
-          {/* Energy Burst */}
-          <motion.div
-            className="absolute w-32 h-32 rounded-full bg-gradient-to-r from-amber-400/20 to-orange-400/20"
-            animate={{
-              scale: [1, 1.8, 1],
-              opacity: [0.4, 0, 0.4],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeOut",
-            }}
-          />
-
-          {/* Notification Cards flying in */}
-          {[
-            { label: "SMS Sent", icon: "💬", pos: "top-[12%] right-[8%]", delay: 0, color: "from-green-500 to-emerald-500" },
-            { label: "Email Sent", icon: "📧", pos: "top-[35%] left-[5%]", delay: 0.4, color: "from-blue-500 to-blue-600" },
-            { label: "Callback Queued", icon: "📞", pos: "bottom-[18%] right-[12%]", delay: 0.8, color: "from-purple-500 to-indigo-500" },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className={`absolute ${item.pos} flex items-center gap-2 bg-white dark:bg-slate-800 rounded-xl px-3 py-2 shadow-lg`}
-            >
-              <div className={`w-8 h-8 bg-gradient-to-br ${item.color} rounded-lg flex items-center justify-center text-sm`}>
-                {item.icon}
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{item.label}</p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400">Just now</p>
-              </div>
-              <motion.div
-                className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"
-                animate={{ scale: [1, 1.3, 1] }}
-                transition={{ duration: 1, delay: item.delay, repeat: Infinity }}
-              />
-            </motion.div>
-          ))}
-
-          {/* Speed indicator */}
-          <motion.div
-            className="absolute bottom-[8%] left-[15%] bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-[10px] font-bold px-3 py-1 rounded-full"
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            Avg response: 3 seconds
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  // Review Automation - Stars and Google review animation
-  if (stepId === "03") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative w-full h-[400px] flex items-center justify-center"
-        >
-          {/* Review Card */}
-          <motion.div
-            variants={itemVariants}
-            className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-5 w-[260px] border border-slate-200 dark:border-slate-700"
-          >
-            {/* Google-style header */}
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-red-500 to-yellow-500 rounded-full flex items-center justify-center text-white text-xs font-bold">G</div>
-              <div>
-                <p className="text-xs font-bold text-slate-800 dark:text-slate-200">Google Reviews</p>
-                <p className="text-[10px] text-slate-500 dark:text-slate-400">Your Business</p>
-              </div>
-            </div>
-
-            {/* Stars animation */}
-            <div className="flex items-center gap-1 mb-2">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{
-                    delay: 0.5 + i * 0.2,
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 10,
-                  }}
-                >
-                  <Star className="w-6 h-6 text-yellow-400" fill="#facc15" />
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Rating number */}
-            <motion.div
-              className="flex items-baseline gap-1 mb-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
-            >
-              <span className="text-2xl font-bold text-slate-900 dark:text-white">4.9</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">out of 5</span>
-            </motion.div>
-
-            {/* Recent review */}
-            <motion.div
-              className="bg-slate-50 dark:bg-slate-700 rounded-xl p-2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2 }}
-            >
-              <div className="flex items-center gap-1 mb-1">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} className="w-3 h-3 text-yellow-400" fill="#facc15" />
-                ))}
-              </div>
-              <p className="text-[10px] text-slate-600 dark:text-slate-300">{'\u201C'}Amazing service! They responded so fast and were very professional.{'\u201D'}</p>
-              <p className="text-[9px] text-slate-400 mt-1">- Sarah M., 2 hours ago</p>
-            </motion.div>
-          </motion.div>
-
-          {/* Floating badges */}
-          <motion.div
-            className="absolute top-[8%] right-[10%] bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Star className="w-3 h-3" fill="currentColor" /> Auto-Sent
-          </motion.div>
-
-          <motion.div
-            className="absolute bottom-[10%] left-[8%] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-[10px] font-bold px-3 py-1 rounded-full"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeInOut" }}
-          >
-            +47 reviews this month
-          </motion.div>
-
-          {/* Smart routing indicator */}
-          <motion.div
-            className="absolute top-[12%] left-[5%] bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-bold px-2 py-1 rounded-full"
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 2.5, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            Smart Routing
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  // Analytics - Animated charts and KPIs
-  if (stepId === "04") {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative w-full h-[400px] flex items-center justify-center"
-        >
-          {/* Dashboard Card */}
-          <motion.div
-            variants={itemVariants}
-            className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-5 w-[300px] border border-slate-200 dark:border-slate-700"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-indigo-500 rounded-lg flex items-center justify-center">
-                  <BarChart3 className="w-4 h-4 text-white" />
-                </div>
-                <p className="text-xs font-bold text-slate-800 dark:text-slate-200">Dashboard</p>
-              </div>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400">This Month</p>
-            </div>
-
-            {/* KPI Row */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
-              {[
-                { label: "Calls", value: "342", change: "+12%", color: "text-blue-600" },
-                { label: "Leads", value: "89", change: "+23%", color: "text-emerald-600" },
-                { label: "Booked", value: "67", change: "+18%", color: "text-purple-600" },
-              ].map((kpi, i) => (
-                <motion.div
-                  key={i}
-                  className="bg-slate-50 dark:bg-slate-700 rounded-lg p-2 text-center"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.2 }}
-                >
-                  <p className={`text-lg font-bold ${kpi.color} dark:text-white`}>{kpi.value}</p>
-                  <p className="text-[9px] text-slate-500 dark:text-slate-400">{kpi.label}</p>
-                  <p className="text-[9px] text-green-500 font-semibold">{kpi.change}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Animated Bar Chart */}
-            <div className="flex items-end gap-1.5 h-[80px] px-1">
-              {[45, 65, 40, 80, 55, 70, 90].map((height, i) => (
-                <motion.div
-                  key={i}
-                  className="flex-1 bg-gradient-to-t from-purple-600 to-indigo-400 rounded-t-sm"
-                  initial={{ height: 0 }}
-                  animate={{ height: `${height}%` }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 1 + i * 0.1,
-                    ease: "easeOut",
-                  }}
-                />
-              ))}
-            </div>
-            <div className="flex justify-between px-1 mt-1">
-              {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
-                <span key={i} className="flex-1 text-center text-[8px] text-slate-400">{day}</span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Floating badges */}
-          <motion.div
-            className="absolute top-[6%] left-[5%] bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <BarChart3 className="w-3 h-3" /> Real-time
-          </motion.div>
-
-          <motion.div
-            className="absolute bottom-[8%] right-[8%] bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-3 py-1 rounded-full"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 3, delay: 1, repeat: Infinity, ease: "easeInOut" }}
-          >
-            Revenue: $12,400
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  return null;
 };
