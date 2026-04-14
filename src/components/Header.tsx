@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 const Header: React.FC = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [_isSticky, setIsSticky] = useState(location.pathname === '/strike-ai');
+  const [isSticky, setIsSticky] = useState(location.pathname === '/strike-ai');
   const [isOverBlueBackground, setIsOverBlueBackground] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
@@ -388,7 +388,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 md:top-[43px] left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0`}
+      className={`fixed top-0 ${!isSticky ? 'md:top-[43px]' : ''} left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0`}
       style={{ contain: 'layout style' }}
     >
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
