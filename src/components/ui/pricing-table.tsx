@@ -248,17 +248,17 @@ export function PricingTable({
                 <div className="w-3/4 mx-auto border-t border-gray-200 mb-3"></div>
                 
                 <button
-                  onClick={() => plan.isCustom ? window.location.href = '/contact' : onPlanSelect?.(plan.level, isYearly ? "yearly" : "monthly")}
+                  onClick={() => (plan.isCustom || plan.level === 'all') ? window.location.href = '/contact' : onPlanSelect?.(plan.level, isYearly ? "yearly" : "monthly")}
                   className={cn(
                     "w-full px-6 py-3 text-sm font-medium rounded-lg transition-all duration-300 shadow-lg",
                     "bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-600/90 hover:to-blue-400/90 text-white",
                     buttonClassName
                   )}
                 >
-                  {plan.isCustom ? "Contact Us" : "Start 7-Day Free Trial"}
+                  {(plan.isCustom || plan.level === 'all') ? "Contact Us" : "Start 7-Day Free Trial"}
                 </button>
-                <p className={cn("text-[10px] mt-1.5 text-center", plan.isCustom ? "text-transparent select-none" : "text-zinc-500")}>
-                  {plan.isCustom ? "\u00A0" : "No credit card required for trial"}
+                <p className={cn("text-[10px] mt-1.5 text-center", (plan.isCustom || plan.level === 'all') ? "text-transparent select-none" : "text-zinc-500")}>
+                  {(plan.isCustom || plan.level === 'all') ? "\u00A0" : "No credit card required for trial"}
                 </p>
               </div>
             </motion.div>
