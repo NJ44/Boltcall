@@ -159,6 +159,14 @@ const AgentDetailPage: React.FC = () => {
     fetchCalls();
   }, [agentId]);
 
+  // Set document title from agent name
+  useEffect(() => {
+    if (agent?.name) {
+      document.title = `${agent.name} | Boltcall`;
+      return () => { document.title = 'Boltcall'; };
+    }
+  }, [agent?.name]);
+
   // Track changes
   useEffect(() => {
     if (!agent) return;
