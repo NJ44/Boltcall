@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Phone,
