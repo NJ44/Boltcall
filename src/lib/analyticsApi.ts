@@ -302,7 +302,7 @@ export async function fetchRoiTrend(months: number = 6): Promise<RoiTrendPoint[]
     const m = data || [];
     const leads = m.reduce((s, r) => s + (r.leads || 0), 0);
     const revenue = leads * 500 * 0.3; // rough estimate
-    const cost = 179; // Pro plan
+    const cost = 897; // Pro plan
     const roi = cost > 0 ? ((revenue - cost) / cost) * 100 : 0;
 
     result.push({

@@ -73,9 +73,9 @@ const PlanBillingPage: React.FC = () => {
 
   const planDetails: Record<string, { name: string; price: { monthly: number; yearly: number } }> = {
     free: { name: 'Free', price: { monthly: 0, yearly: 0 } },
-    starter: { name: 'Starter', price: { monthly: 99, yearly: 948 } },
-    pro: { name: 'Pro', price: { monthly: 179, yearly: 1716 } },
-    ultimate: { name: 'Ultimate', price: { monthly: 249, yearly: 2388 } },
+    starter: { name: 'Starter', price: { monthly: 549, yearly: 4941 } },
+    pro: { name: 'Pro', price: { monthly: 897, yearly: 8073 } },
+    ultimate: { name: 'Ultimate', price: { monthly: 4997, yearly: 44973 } },
     enterprise: { name: 'Enterprise', price: { monthly: 997, yearly: 11964 } },
   };
 

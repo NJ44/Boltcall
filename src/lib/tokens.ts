@@ -1,8 +1,8 @@
 // Token plan allocations
 export const TOKEN_PLANS = {
-  starter: { monthlyTokens: 1000, price: 99 },
-  pro: { monthlyTokens: 3000, price: 179 },
-  ultimate: { monthlyTokens: 10000, price: 249 },
+  starter: { monthlyTokens: 1000, price: 549 },
+  pro: { monthlyTokens: 3000, price: 897 },
+  ultimate: { monthlyTokens: 10000, price: 4997 },
 } as const;
 
 // Token costs per feature action
