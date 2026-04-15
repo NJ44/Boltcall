@@ -180,6 +180,7 @@ export async function fetchFunnelData(filters: AnalyticsFilters): Promise<Funnel
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
 
+  if (filters.userId) leadsQuery = leadsQuery.eq('user_id', filters.userId);
   if (filters.source) leadsQuery = leadsQuery.eq('source', filters.source);
   if (filters.leadStatus) leadsQuery = leadsQuery.eq('status', filters.leadStatus);
 
