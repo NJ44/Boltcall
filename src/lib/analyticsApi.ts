@@ -250,11 +250,13 @@ export async function fetchRoiMetrics(
     .gte('date', dateRange.start)
     .lte('date', dateRange.end);
 
-  const { data: leads } = await supabase
+  let leadsQuery = supabase
     .from('callbacks')
     .select('id')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (filters.userId) leadsQuery = leadsQuery.eq('user_id', filters.userId);
+  const { data: leads } = await leadsQuery;
 
   const m = metrics || [];
   const totalLeads = (leads || []).length || m.reduce((s, r) => s + (r.leads || 0), 0);
