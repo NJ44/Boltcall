@@ -538,15 +538,17 @@ export async function fetchMissedOpportunities(filters: AnalyticsFilters): Promi
 /*  Activity Feed                                                      */
 /* ------------------------------------------------------------------ */
 
-export async function fetchActivityFeed(limit: number = 20): Promise<ActivityEvent[]> {
+export async function fetchActivityFeed(limit: number = 20, userId?: string): Promise<ActivityEvent[]> {
   const events: ActivityEvent[] = [];
 
   // Recent callbacks
-  const { data: callbacks } = await supabase
+  let activityQuery = supabase
     .from('callbacks')
     .select('id, caller_name, status, source, created_at')
     .order('created_at', { ascending: false })
     .limit(limit);
+  if (userId) activityQuery = activityQuery.eq('user_id', userId);
+  const { data: callbacks } = await activityQuery;
 
   (callbacks || []).forEach(c => {
     const type = c.status === 'missed' ? 'missed_call'
