@@ -234,7 +234,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
             </div>
             <div className="divide-y divide-gray-100 dark:divide-[#1e1e24]">
               {[
-                { label: 'Test Your Receptionist', description: 'Make a test call to hear your AI in action', icon: PhoneCall, link: '/dashboard/agents', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-950/30' },
+                { label: 'Test Your Receptionist', description: 'Make a test call to hear your AI in action', icon: PhoneCall, link: '/dashboard/agents?tab=agent-tests', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-950/30' },
                 { label: 'View Call History', description: 'See all calls your receptionist has handled', icon: BarChart3, link: '/dashboard/calls', color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-950/30' },
                 { label: 'Update Knowledge Base', description: 'Add or edit the information your AI knows', icon: BookOpen, link: '/dashboard/knowledge-base', color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-950/30' },
                 { label: 'Change Voice', description: 'Pick a different voice for your receptionist', icon: Volume2, link: '/dashboard/voice-library', color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-950/30' },
