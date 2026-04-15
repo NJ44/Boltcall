@@ -41,6 +41,7 @@ const PricingSection: React.FC = () => {
         'Everything in Starter',
         '3 AI agents — voice calls + outbound campaigns',
         'Live transfer to human when needed',
+        'WhatsApp messaging (speed-to-lead)',
         '1 CRM integration + Zapier/Make',
         'Full analytics, transcripts & call recordings',
         'Google review requests (post-appointment)'
