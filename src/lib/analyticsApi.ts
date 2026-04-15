@@ -636,6 +636,8 @@ export async function fetchFunnelDrilldown(
     .order('created_at', { ascending: false })
     .limit(100);
 
+  if (filters.userId) query = query.eq('user_id', filters.userId);
+
   // Filter by stage
   switch (stageName) {
     case 'Leads Captured':
