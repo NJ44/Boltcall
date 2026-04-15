@@ -141,7 +141,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
           <div className="flex items-center justify-between">
             <StatusBadge status={isEnabled ? 'active' : 'inactive'} />
             <Link
-              to="/dashboard/agents"
+              to={agent ? `/dashboard/agents/${agent.id}` : '/dashboard/agents'}
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 font-medium transition-colors"
             >
               <Settings className="w-3.5 h-3.5" />
