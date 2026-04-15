@@ -7,7 +7,6 @@ import { z } from "zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { resetPassword } from "../../lib/auth";
-import { OTPVerification } from "./otp-verify";
 import PasswordInput from "./password-input";
 
 const loginSchema = z.object({
@@ -86,8 +85,6 @@ export default function AuthSwitch({
   const [mode, setMode] = useState<"login" | "signup">(defaultMode);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showOtp, setShowOtp] = useState(false);
-  const [signedUpEmail, setSignedUpEmail] = useState("");
   const [resetSent, setResetSent] = useState(false);
 
   const { login, signup, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } = useAuth();
@@ -141,16 +138,13 @@ export default function AuthSwitch({
       setIsLoading(true);
       setError("");
       await signup({ name: '', email: data.email, password: data.password, company: "" });
-      setSignedUpEmail(data.email);
-      setShowOtp(true);
+      navigate(redirectTo);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create account.");
     } finally {
       setIsLoading(false);
     }
   };
-
-  const handleOtpVerified = async () => navigate(redirectTo);
 
   const handleForgotPassword = async () => {
     const email = loginForm.getValues("email");
@@ -185,10 +179,6 @@ export default function AuthSwitch({
     catch (err) { if (err instanceof Error && err.message === "OAuth redirect initiated") return; setError("Facebook login failed."); }
     finally { setIsLoading(false); }
   };
-
-  if (showOtp) {
-    return <OTPVerification email={signedUpEmail} onVerified={handleOtpVerified} />;
-  }
 
   const submitButton = (text: string, loadingText: string) => (
     <button
