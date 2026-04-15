@@ -120,26 +120,7 @@ const generateTranscripts = (): Transcript[] => {
 };
 
 const generateAlerts = (): Alert[] => {
-  return [
-    {
-      id: '1',
-      type: 'warning',
-      message: 'Median first reply > 60s today',
-      link: '/dashboard?filter=slow-replies',
-    },
-    {
-      id: '2',
-      type: 'error',
-      message: 'Booking drop on WhatsApp this week',
-      link: '/dashboard?filter=whatsapp-bookings',
-    },
-    {
-      id: '3',
-      type: 'warning',
-      message: 'No-show rate > 20% last 7d',
-      link: '/dashboard?filter=no-shows',
-    },
-  ];
+  return [];
 };
 
 const generateFunnelSteps = (): FunnelStep[] => {

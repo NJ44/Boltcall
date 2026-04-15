@@ -108,6 +108,7 @@ export interface DateRangeFilter {
 
 export interface AnalyticsFilters {
   dateRange: DateRangeFilter;
+  userId?: string;
   agentId?: string;
   source?: string;
   leadStatus?: string;
@@ -179,6 +180,7 @@ export async function fetchFunnelData(filters: AnalyticsFilters): Promise<Funnel
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
 
+  if (filters.userId) leadsQuery = leadsQuery.eq('user_id', filters.userId);
   if (filters.source) leadsQuery = leadsQuery.eq('source', filters.source);
   if (filters.leadStatus) leadsQuery = leadsQuery.eq('status', filters.leadStatus);
 
@@ -248,11 +250,13 @@ export async function fetchRoiMetrics(
     .gte('date', dateRange.start)
     .lte('date', dateRange.end);
 
-  const { data: leads } = await supabase
+  let leadsQuery = supabase
     .from('callbacks')
     .select('id')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (filters.userId) leadsQuery = leadsQuery.eq('user_id', filters.userId);
+  const { data: leads } = await leadsQuery;
 
   const m = metrics || [];
   const totalLeads = (leads || []).length || m.reduce((s, r) => s + (r.leads || 0), 0);
@@ -332,11 +336,13 @@ export async function fetchResponseTimeStats(filters: AnalyticsFilters): Promise
     .order('created_at', { ascending: true });
 
   // Also try callbacks table for response times
-  const { data: callbacks } = await supabase
+  let cbRtQuery = supabase
     .from('callbacks')
     .select('created_at, first_reply_seconds')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (filters.userId) cbRtQuery = cbRtQuery.eq('user_id', filters.userId);
+  const { data: callbacks } = await cbRtQuery;
 
   const responseTimes = [
     ...(calls || []).map(c => c.response_time_seconds || c.duration_seconds || 0).filter(t => t > 0),
@@ -426,11 +432,13 @@ export async function fetchHeatmapData(filters: AnalyticsFilters): Promise<Heatm
 export async function fetchSourceAttribution(filters: AnalyticsFilters): Promise<SourceAttribution[]> {
   const { dateRange } = filters;
 
-  const { data } = await supabase
+  let srcQuery = supabase
     .from('callbacks')
     .select('source')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (filters.userId) srcQuery = srcQuery.eq('user_id', filters.userId);
+  const { data } = await srcQuery;
 
   const counts: Record<string, number> = {};
   (data || []).forEach(r => {
@@ -505,7 +513,7 @@ export async function fetchAgentPerformance(filters: AnalyticsFilters): Promise<
 export async function fetchMissedOpportunities(filters: AnalyticsFilters): Promise<MissedOpportunity[]> {
   const { dateRange } = filters;
 
-  const { data } = await supabase
+  let missedQuery = supabase
     .from('callbacks')
     .select('id, caller_number, caller_name, created_at, status, source')
     .eq('status', 'missed')
@@ -513,6 +521,8 @@ export async function fetchMissedOpportunities(filters: AnalyticsFilters): Promi
     .lte('created_at', dateRange.end + 'T23:59:59')
     .order('created_at', { ascending: false })
     .limit(50);
+  if (filters.userId) missedQuery = missedQuery.eq('user_id', filters.userId);
+  const { data } = await missedQuery;
 
   return (data || []).map(r => ({
     id: r.id,
@@ -528,15 +538,17 @@ export async function fetchMissedOpportunities(filters: AnalyticsFilters): Promi
 /*  Activity Feed                                                      */
 /* ------------------------------------------------------------------ */
 
-export async function fetchActivityFeed(limit: number = 20): Promise<ActivityEvent[]> {
+export async function fetchActivityFeed(limit: number = 20, userId?: string): Promise<ActivityEvent[]> {
   const events: ActivityEvent[] = [];
 
   // Recent callbacks
-  const { data: callbacks } = await supabase
+  let activityQuery = supabase
     .from('callbacks')
     .select('id, caller_name, status, source, created_at')
     .order('created_at', { ascending: false })
     .limit(limit);
+  if (userId) activityQuery = activityQuery.eq('user_id', userId);
+  const { data: callbacks } = await activityQuery;
 
   (callbacks || []).forEach(c => {
     const type = c.status === 'missed' ? 'missed_call'
@@ -577,8 +589,11 @@ export async function fetchActivityFeed(limit: number = 20): Promise<ActivityEve
 /*  Live Counters                                                      */
 /* ------------------------------------------------------------------ */
 
-export async function fetchLiveCounters(): Promise<LiveCounters> {
+export async function fetchLiveCounters(userId?: string): Promise<LiveCounters> {
   const today = new Date().toISOString().split('T')[0];
+
+  let callbacksQuery = supabase.from('callbacks').select('id, status').gte('created_at', today);
+  if (userId) callbacksQuery = callbacksQuery.eq('user_id', userId);
 
   const [
     { count: activeChats },
@@ -586,7 +601,7 @@ export async function fetchLiveCounters(): Promise<LiveCounters> {
     { data: todayMetrics },
   ] = await Promise.all([
     supabase.from('chats').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-    supabase.from('callbacks').select('id, status').gte('created_at', today),
+    callbacksQuery,
     supabase.from('daily_metrics').select('*').eq('date', today).single(),
   ]);
 
@@ -620,6 +635,8 @@ export async function fetchFunnelDrilldown(
     .lte('created_at', dateRange.end + 'T23:59:59')
     .order('created_at', { ascending: false })
     .limit(100);
+
+  if (filters.userId) query = query.eq('user_id', filters.userId);
 
   // Filter by stage
   switch (stageName) {

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import { motion } from 'framer-motion';
 import {
   BarChart3,
@@ -50,17 +51,19 @@ const TABS: { key: TabKey; label: string; icon: React.ElementType }[] = [
 /* ------------------------------------------------------------------ */
 
 const DeepAnalyticsPage: React.FC = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [filters, setFilters] = useState<AnalyticsFilterValues>(getDefaultFilters);
 
   // Convert filter values to AnalyticsFilters shape for the hook
   const analyticsFilters = useMemo(() => ({
     dateRange: filters.dateRange,
+    userId: user?.id,
     agentId: filters.agentId || undefined,
     source: filters.source || undefined,
     leadStatus: filters.leadStatus || undefined,
     phone: filters.phone || undefined,
-  }), [filters]);
+  }), [filters, user?.id]);
 
   const data = useAnalytics(analyticsFilters);
 

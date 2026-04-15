@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Phone,
@@ -45,6 +46,7 @@ function timeAgo(timestamp: string): string {
 }
 
 const LiveDashboard: React.FC = () => {
+  const { user } = useAuth();
   const [counters, setCounters] = useState<LiveCounters>({
     activeCalls: 0,
     activeChats: 0,
@@ -59,8 +61,8 @@ const LiveDashboard: React.FC = () => {
   const loadData = useCallback(async () => {
     try {
       const [c, e] = await Promise.all([
-        fetchLiveCounters(),
-        fetchActivityFeed(20),
+        fetchLiveCounters(user?.id),
+        fetchActivityFeed(20, user?.id),
       ]);
       setCounters(c);
       setEvents(e);
