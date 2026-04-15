@@ -1,6 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { updateMetaDescription } from '../lib/utils';
-import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LazySection from '../components/LazySection';
