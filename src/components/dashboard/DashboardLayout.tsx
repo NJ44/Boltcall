@@ -679,7 +679,7 @@ const DashboardLayout: React.FC = () => {
                          { key: 'phoneSystem' as const, label: 'Phone System', icon: <Phone className="w-4 h-4" />, enabled: services.phoneSystem, configLink: '/dashboard/phone' },
                          { key: 'sms' as const, label: 'SMS', icon: <MessageSquare className="w-4 h-4" />, enabled: services.sms, configLink: '/dashboard/messages' },
                          { key: 'websiteBubble' as const, label: 'Website Widget', icon: <Globe className="w-4 h-4" />, enabled: services.websiteBubble, configLink: '/dashboard/chat-widget' },
-                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, enabled: services.whatsapp, configLink: null },
+                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, enabled: services.whatsapp, configLink: '/dashboard/whatsapp' },
                        ] as const).map((svc) => (
                          <div
                            key={svc.key}
