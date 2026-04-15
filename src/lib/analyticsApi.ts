@@ -513,7 +513,7 @@ export async function fetchAgentPerformance(filters: AnalyticsFilters): Promise<
 export async function fetchMissedOpportunities(filters: AnalyticsFilters): Promise<MissedOpportunity[]> {
   const { dateRange } = filters;
 
-  const { data } = await supabase
+  let missedQuery = supabase
     .from('callbacks')
     .select('id, caller_number, caller_name, created_at, status, source')
     .eq('status', 'missed')
@@ -521,6 +521,8 @@ export async function fetchMissedOpportunities(filters: AnalyticsFilters): Promi
     .lte('created_at', dateRange.end + 'T23:59:59')
     .order('created_at', { ascending: false })
     .limit(50);
+  if (filters.userId) missedQuery = missedQuery.eq('user_id', filters.userId);
+  const { data } = await missedQuery;
 
   return (data || []).map(r => ({
     id: r.id,
