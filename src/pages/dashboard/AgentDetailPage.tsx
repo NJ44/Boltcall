@@ -176,7 +176,7 @@ const AgentDetailPage: React.FC = () => {
     setIsSaving(true);
 
     try {
-      const { error } = await supabase
+      const { data: updated, error } = await supabase
         .from('agents')
         .update({
           name,
@@ -187,9 +187,11 @@ const AgentDetailPage: React.FC = () => {
           updated_at: new Date().toISOString(),
         })
         .eq('id', agent.id)
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .select();
 
       if (error) throw error;
+      if (!updated || updated.length === 0) throw new Error('Save blocked by RLS — check agents UPDATE policy in Supabase.');
 
       // Sync with Retell if connected
       if (agent.retell_agent_id) {
