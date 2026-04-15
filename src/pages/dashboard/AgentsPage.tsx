@@ -109,10 +109,13 @@ interface IndustryTemplate {
 
 const AgentsPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const { showToast } = useToast();
   const { claimReward } = useTokens();
-  const [activeTab, setActiveTab] = useState<'agents' | 'tests'>('agents');
+  const [activeTab, setActiveTab] = useState<'agents' | 'tests'>(
+    searchParams.get('tab') === 'agent-tests' ? 'tests' : 'agents'
+  );
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
