@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase, FileText } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import GiveawayBar from './GiveawayBar';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -388,9 +389,14 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 ${!isSticky ? 'md:top-[43px]' : ''} left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0`}
+      className="fixed top-0 left-0 right-0 z-[110] bg-transparent backdrop-blur-md transition-all duration-300 overflow-visible shadow-none border-none ring-0"
       style={{ contain: 'layout style' }}
     >
+      {!isSticky && (
+        <div className="hidden md:block">
+          <GiveawayBar />
+        </div>
+      )}
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
         <div className="flex items-center justify-between h-14 max-w-7xl mx-auto overflow-visible">
           {/* Left Side - Logo and Navigation */}

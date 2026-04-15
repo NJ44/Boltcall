@@ -1,6 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { updateMetaDescription } from '../lib/utils';
-import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LazySection from '../components/LazySection';
@@ -48,11 +47,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative bg-brand-blue">
-      {/* Giveaway Bar (hidden on mobile) */}
-      <div className="hidden md:block">
-        <GiveawayBar />
-      </div>
-
       {/* Content */}
       <div className="relative z-10 pt-32">
         <Header />
