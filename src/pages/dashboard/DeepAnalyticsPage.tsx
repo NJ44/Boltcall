@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import { motion } from 'framer-motion';
 import {
   BarChart3,
