@@ -63,7 +63,7 @@ const PricingSection: React.FC = () => {
         'Everything in Pro',
         'We run your ads (Meta + Google)',
         'Full funnel: Ads → AI Agent → Booked appointments',
-        'Unlimited agents, all channels incl. WhatsApp & DMs',
+        'Unlimited agents + Instagram/Facebook DMs',
         'Done-for-you setup in 48h + branded voice',
         'Dedicated account manager + quarterly strategy reviews'
       ],
