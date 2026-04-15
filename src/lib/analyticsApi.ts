@@ -108,6 +108,7 @@ export interface DateRangeFilter {
 
 export interface AnalyticsFilters {
   dateRange: DateRangeFilter;
+  userId?: string;
   agentId?: string;
   source?: string;
   leadStatus?: string;
