@@ -336,11 +336,13 @@ export async function fetchResponseTimeStats(filters: AnalyticsFilters): Promise
     .order('created_at', { ascending: true });
 
   // Also try callbacks table for response times
-  const { data: callbacks } = await supabase
+  let cbRtQuery = supabase
     .from('callbacks')
     .select('created_at, first_reply_seconds')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (filters.userId) cbRtQuery = cbRtQuery.eq('user_id', filters.userId);
+  const { data: callbacks } = await cbRtQuery;
 
   const responseTimes = [
     ...(calls || []).map(c => c.response_time_seconds || c.duration_seconds || 0).filter(t => t > 0),
