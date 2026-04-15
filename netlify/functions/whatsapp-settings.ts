@@ -1,0 +1,194 @@
+import { Handler } from '@netlify/functions';
+import crypto from 'crypto';
+import { getSupabase } from './_shared/token-utils';
+import { notifyError } from './_shared/notify';
+
+/**
+ * WhatsApp Settings — manage WhatsApp integration config.
+ *
+ * POST /.netlify/functions/whatsapp-settings
+ * Body: { userId, action, ...params }
+ * Actions: get | save | test | disconnect
+ */
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json',
+};
+
+function maskSettings(row: any) {
+  if (!row) return null;
+  return { ...row, wa_access_token: row.wa_access_token ? '***' : null };
+}
+
+const SAVEABLE_FIELDS = [
+  'wa_phone_number_id',
+  'wa_business_account_id',
+  'is_enabled',
+  'auto_reply_enabled',
+  'response_tone',
+  'qualification_enabled',
+  'booking_enabled',
+  'business_hours_only',
+  'business_hours_start',
+  'business_hours_end',
+  'business_timezone',
+  'max_ai_messages_per_conversation',
+  'greeting_template',
+  'out_of_hours_message',
+];
+
+export const handler: Handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
+  }
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
+
+  let payload: any;
+  try {
+    payload = JSON.parse(event.body || '{}');
+  } catch {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid JSON' }) };
+  }
+
+  const { userId, action } = payload;
+  if (!userId || !action) {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'userId and action required' }) };
+  }
+
+  const supabase = getSupabase();
+
+  try {
+    // ─── GET ───────────────────────────────────────────────────────
+    if (action === 'get') {
+      const { data: row } = await supabase
+        .from('whatsapp_settings')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      return {
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ success: true, settings: maskSettings(row) }),
+      };
+    }
+
+    // ─── SAVE ──────────────────────────────────────────────────────
+    if (action === 'save') {
+      const { data: existing } = await supabase
+        .from('whatsapp_settings')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      const update: Record<string, any> = {
+        user_id: userId,
+        updated_at: new Date().toISOString(),
+      };
+
+      for (const field of SAVEABLE_FIELDS) {
+        if (payload[field] !== undefined) update[field] = payload[field];
+      }
+
+      // Only update token if provided and not the masked placeholder
+      if (payload.wa_access_token !== undefined && payload.wa_access_token !== '***') {
+        update.wa_access_token = payload.wa_access_token;
+      }
+
+      // Auto-generate webhook_verify_token if not set
+      if (!existing?.webhook_verify_token) {
+        update.webhook_verify_token = crypto.randomUUID();
+      }
+
+      const { data: saved, error: saveErr } = await supabase
+        .from('whatsapp_settings')
+        .upsert(update, { onConflict: 'user_id' })
+        .select('*')
+        .single();
+
+      if (saveErr) {
+        console.error('[whatsapp-settings] Save failed:', saveErr);
+        return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Save failed', detail: saveErr.message }) };
+      }
+
+      return {
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ success: true, settings: maskSettings(saved) }),
+      };
+    }
+
+    // ─── TEST ──────────────────────────────────────────────────────
+    if (action === 'test') {
+      const testPhone = payload.testPhone;
+      if (!testPhone) {
+        return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'testPhone required' }) };
+      }
+
+      const sendUrl = (process.env.URL || '') + '/.netlify/functions/whatsapp-send';
+      const res = await fetch(sendUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          to: testPhone,
+          body: 'Test message from Boltcall — your WhatsApp integration is working.',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        return {
+          statusCode: 500,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ success: false, error: data?.error || 'Test send failed', detail: data }),
+        };
+      }
+
+      return {
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ success: true, message: `Test message sent to ${testPhone}` }),
+      };
+    }
+
+    // ─── DISCONNECT ────────────────────────────────────────────────
+    if (action === 'disconnect') {
+      const { error: disconnectErr } = await supabase
+        .from('whatsapp_settings')
+        .update({
+          wa_phone_number_id: null,
+          wa_access_token: null,
+          wa_business_account_id: null,
+          is_enabled: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', userId);
+
+      if (disconnectErr) {
+        return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Disconnect failed', detail: disconnectErr.message }) };
+      }
+
+      return {
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ success: true }),
+      };
+    }
+
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: `Unknown action: ${action}` }) };
+  } catch (error) {
+    console.error('[whatsapp-settings] Error:', error);
+    await notifyError('whatsapp-settings', error as Error, { userId, action });
+    return {
+      statusCode: 500,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Internal server error' }),
+    };
+  }
+};
