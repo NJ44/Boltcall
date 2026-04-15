@@ -99,7 +99,7 @@ const DashboardLayout: React.FC = () => {
     if (!user?.id) return;
     (async () => {
       try {
-        const [{ data: features }, { data: fbConnections }] = await Promise.all([
+        const [{ data: features }, { data: fbConnections }, { data: waSettings }] = await Promise.all([
           supabase
             .from('business_features')
             .select('ai_receptionist_enabled, phone_system_enabled, sms_enabled, chat_widget_enabled, reminders_enabled, reminders_config, reputation_manager_enabled, reputation_manager_config')
@@ -110,13 +110,18 @@ const DashboardLayout: React.FC = () => {
             .select('id')
             .or(`workspace_id.eq.${user.id},user_id.eq.${user.id}`)
             .limit(1),
+          supabase
+            .from('whatsapp_settings')
+            .select('is_enabled')
+            .eq('user_id', user.id)
+            .maybeSingle(),
         ]);
 
         setServices({
           aiReceptionist: features?.ai_receptionist_enabled ?? false,
           phoneSystem: features?.phone_system_enabled ?? false,
           sms: features?.sms_enabled ?? false,
-          whatsapp: false,
+          whatsapp: waSettings?.is_enabled ?? false,
           websiteBubble: features?.chat_widget_enabled ?? false,
           reminders: features?.reminders_enabled ?? false,
           reputation: !!(features?.reputation_manager_enabled || features?.reputation_manager_config?.google_review_url),
@@ -674,7 +679,7 @@ const DashboardLayout: React.FC = () => {
                          { key: 'phoneSystem' as const, label: 'Phone System', icon: <Phone className="w-4 h-4" />, enabled: services.phoneSystem, configLink: '/dashboard/phone' },
                          { key: 'sms' as const, label: 'SMS', icon: <MessageSquare className="w-4 h-4" />, enabled: services.sms, configLink: '/dashboard/messages' },
                          { key: 'websiteBubble' as const, label: 'Website Widget', icon: <Globe className="w-4 h-4" />, enabled: services.websiteBubble, configLink: '/dashboard/chat-widget' },
-                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, enabled: services.whatsapp, configLink: null },
+                         { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, enabled: services.whatsapp, configLink: '/dashboard/whatsapp' },
                        ] as const).map((svc) => (
                          <div
                            key={svc.key}

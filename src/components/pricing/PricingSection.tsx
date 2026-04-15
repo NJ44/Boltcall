@@ -41,6 +41,7 @@ const PricingSection: React.FC = () => {
         'Everything in Starter',
         '3 AI agents — voice calls + outbound campaigns',
         'Live transfer to human when needed',
+        'WhatsApp messaging (speed-to-lead)',
         '1 CRM integration + Zapier/Make',
         'Full analytics, transcripts & call recordings',
         'Google review requests (post-appointment)'
@@ -62,7 +63,7 @@ const PricingSection: React.FC = () => {
         'Everything in Pro',
         'We run your ads (Meta + Google)',
         'Full funnel: Ads → AI Agent → Booked appointments',
-        'Unlimited agents, all channels incl. WhatsApp & DMs',
+        'Unlimited agents + Instagram/Facebook DMs',
         'Done-for-you setup in 48h + branded voice',
         'Dedicated account manager + quarterly strategy reviews'
       ],
@@ -86,7 +87,7 @@ const PricingSection: React.FC = () => {
     { name: 'Money-back guarantee', starter: false, pro: true, ultimate: true },
     { name: 'We run your ads (Meta + Google)', starter: false, pro: false, ultimate: true },
     { name: 'Full funnel: Ads → AI → Bookings', starter: false, pro: false, ultimate: true },
-    { name: 'WhatsApp + Facebook/Instagram DMs', starter: false, pro: false, ultimate: true },
+    { name: 'WhatsApp + Facebook/Instagram DMs', starter: false, pro: true, ultimate: true },
     { name: 'Done-for-you setup in 48h', starter: false, pro: false, ultimate: true },
     { name: 'Dedicated account manager', starter: false, pro: false, ultimate: true },
     { name: 'Quarterly strategy reviews', starter: false, pro: false, ultimate: true },
