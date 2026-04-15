@@ -589,8 +589,11 @@ export async function fetchActivityFeed(limit: number = 20, userId?: string): Pr
 /*  Live Counters                                                      */
 /* ------------------------------------------------------------------ */
 
-export async function fetchLiveCounters(): Promise<LiveCounters> {
+export async function fetchLiveCounters(userId?: string): Promise<LiveCounters> {
   const today = new Date().toISOString().split('T')[0];
+
+  let callbacksQuery = supabase.from('callbacks').select('id, status').gte('created_at', today);
+  if (userId) callbacksQuery = callbacksQuery.eq('user_id', userId);
 
   const [
     { count: activeChats },
@@ -598,7 +601,7 @@ export async function fetchLiveCounters(): Promise<LiveCounters> {
     { data: todayMetrics },
   ] = await Promise.all([
     supabase.from('chats').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-    supabase.from('callbacks').select('id, status').gte('created_at', today),
+    callbacksQuery,
     supabase.from('daily_metrics').select('*').eq('date', today).single(),
   ]);
 
