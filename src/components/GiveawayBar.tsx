@@ -17,7 +17,7 @@ const GiveawayBar: React.FC = () => {
                 </div>
               </div>
 
-              <span className="bg-black hover:bg-gray-900 transition-colors text-white text-[10px] sm:text-sm font-bold px-2 sm:px-4 py-1 sm:py-1.5 rounded-lg whitespace-nowrap">
+              <span className="bg-black hover:bg-gray-900 transition-colors text-white text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg whitespace-nowrap">
                 Try Now
               </span>
             </div>
