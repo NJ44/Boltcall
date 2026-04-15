@@ -77,6 +77,16 @@ const DashboardPage: React.FC = () => {
     }
   }, [searchParams, setSearchParams]);
 
+  // Scroll to relevant section when filter param is present
+  useEffect(() => {
+    const activeFilter = searchParams.get('filter');
+    if (!activeFilter) return;
+    const el = document.getElementById(`section-${activeFilter}`);
+    if (el) {
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  }, [searchParams]);
+
   // Fire confetti effect
   useEffect(() => {
     if (!showConfetti) return;
