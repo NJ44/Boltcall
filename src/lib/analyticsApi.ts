@@ -432,11 +432,13 @@ export async function fetchHeatmapData(filters: AnalyticsFilters): Promise<Heatm
 export async function fetchSourceAttribution(filters: AnalyticsFilters): Promise<SourceAttribution[]> {
   const { dateRange } = filters;
 
-  const { data } = await supabase
+  let srcQuery = supabase
     .from('callbacks')
     .select('source')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (filters.userId) srcQuery = srcQuery.eq('user_id', filters.userId);
+  const { data } = await srcQuery;
 
   const counts: Record<string, number> = {};
   (data || []).forEach(r => {
