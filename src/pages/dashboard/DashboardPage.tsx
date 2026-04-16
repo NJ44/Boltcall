@@ -18,8 +18,6 @@ interface LatestBooking {
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [showTalkModal, setShowTalkModal] = useState(false);
-  const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
