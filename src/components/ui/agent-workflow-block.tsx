@@ -243,11 +243,11 @@ export function AgentWorkflowBlock() {
         ))}
       </div>
 
-      {/* Canvas */}
+      {/* Canvas — height grows with content, no scrollbar */}
       <div
         ref={canvasRef}
-        className="relative h-[520px] w-full overflow-auto rounded-xl border border-border/30 bg-background/40"
-        style={{ minHeight: "520px" }}
+        className="relative w-full overflow-hidden rounded-xl border border-border/30 bg-background/40"
+        style={{ height: contentSize.height + 20 }}
         role="region"
         aria-label="Agent architecture canvas"
         tabIndex={0}
