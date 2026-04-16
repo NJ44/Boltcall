@@ -402,15 +402,26 @@ const WhatsappPage: React.FC = () => {
   };
 
   const handleSend = async () => {
-    if (!user?.id || !selectedThread || !composeText.trim()) return;
+    if (!user?.id || !selectedThread) return;
+    const trimmed = composeText.trim();
+    if (!trimmed) return;
+    if (trimmed.length > 4096) {
+      showToast('error', 'Message too long (max 4096 characters)');
+      return;
+    }
     const thread = threads.find((t) => t.threadId === selectedThread);
     if (!thread) return;
+    const contactPhone = thread.contactPhone || '';
+    if (!/^\+?[1-9]\d{6,14}$/.test(contactPhone.replace(/\D/g, ''))) {
+      showToast('error', 'Invalid contact phone number');
+      return;
+    }
     setSending(true);
     try {
       await callWhatsAppFn('whatsapp-send', {
         userId: user.id,
-        to: thread.contactPhone,
-        body: composeText.trim(),
+        to: contactPhone,
+        body: trimmed,
         threadId: selectedThread,
       });
       setComposeText('');
