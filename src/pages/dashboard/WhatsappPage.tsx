@@ -239,6 +239,39 @@ const WhatsappPage: React.FC = () => {
     if (activeTab === 'conversations' && isConnected) loadThreads();
   }, [activeTab, isConnected, loadThreads]);
 
+  // ─── Realtime subscription ────────────────────────────────────────
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const channel = supabase
+      .channel(`whatsapp-conversations-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'whatsapp_conversations',
+          filter: `user_id=eq.${user.id}`,
+        },
+        (payload) => {
+          const record = payload.new as WaMessage & { user_id?: string };
+          loadThreads();
+          const tid = record.thread_id || `${record.from_number}_${record.to_number}`;
+          if (selectedThread && tid === selectedThread) {
+            setMessages((prev) => {
+              if (prev.some((m) => m.id === record.id)) return prev;
+              return [...prev, record];
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id, selectedThread, loadThreads]);
+
   // ─── Load messages for selected thread ────────────────────────────
 
   const loadMessages = useCallback(
