@@ -195,7 +195,7 @@ const WhatsappPage: React.FC = () => {
       if (error) throw error;
 
       const map = new Map<string, WaMessage[]>();
-      for (const m of (data || []) as (WaMessage & { thread_id?: string })[]) {
+      for (const m of (data || []) as WaMessage[]) {
         const tid = m.thread_id || `${m.from_number}_${m.to_number}`;
         if (!map.has(tid)) map.set(tid, []);
         map.get(tid)!.push(m);
@@ -209,6 +209,7 @@ const WhatsappPage: React.FC = () => {
         const latest = sorted[0];
         const inbound = sorted.find((m) => m.direction === 'inbound');
         const contactPhone = inbound?.from_number || latest.to_number || '';
+        const latestInbound = sorted.find((m) => m.direction === 'inbound' && m.qualification);
         out.push({
           threadId: tid,
           contactPhone,
@@ -217,6 +218,8 @@ const WhatsappPage: React.FC = () => {
           direction: latest.direction,
           messageCount: sorted.length,
           hasPendingDraft: sorted.some((m) => m.ai_draft_status === 'pending'),
+          hasApprovedDraft: sorted.some((m) => m.ai_draft_status === 'approved'),
+          latestQualification: (latestInbound?.qualification as WaQualification | undefined) || undefined,
         });
       }
 
