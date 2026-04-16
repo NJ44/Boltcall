@@ -83,6 +83,21 @@ async function runAgentTests(agentId: string): Promise<TestRunResult> {
 // Helpers
 // ---------------------------------------------------------------------------
 
+const AGENT_TYPE_LABELS: Record<string, string> = {
+  ai_receptionist: 'AI Receptionist',
+  follow_up: 'Follow-Up Agent',
+  inbound: 'Inbound Receptionist',
+  outbound_speed_to_lead: 'Speed to Lead',
+  outbound_reactivation: 'Reactivation',
+  outbound_reminder: 'Appointment Reminder',
+  outbound_review: 'Review Request',
+  outbound: 'Outbound Agent',
+};
+
+function formatAgentType(type: string): string {
+  return AGENT_TYPE_LABELS[type] ?? type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
 function getPassRateColor(passed: number, total: number): string {
   if (total === 0) return 'text-gray-500';
   const rate = (passed / total) * 100;
