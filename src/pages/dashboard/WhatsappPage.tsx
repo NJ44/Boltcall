@@ -29,6 +29,13 @@ interface WhatsAppSettings {
   out_of_hours_message: string | null;
 }
 
+interface WaQualification {
+  intent?: string;
+  score?: number;
+  reason?: string;
+  suggested_action?: string;
+}
+
 interface WaThread {
   threadId: string;
   contactPhone: string;
@@ -37,6 +44,8 @@ interface WaThread {
   direction: 'inbound' | 'outbound';
   messageCount: number;
   hasPendingDraft: boolean;
+  hasApprovedDraft: boolean;
+  latestQualification?: WaQualification;
 }
 
 interface WaMessage {
@@ -48,6 +57,8 @@ interface WaMessage {
   created_at: string;
   ai_draft: string | null;
   ai_draft_status: string | null;
+  qualification?: WaQualification | null;
+  thread_id?: string;
 }
 
 const DEFAULT_SETTINGS: WhatsAppSettings = {
