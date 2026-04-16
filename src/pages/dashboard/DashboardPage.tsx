@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Phone } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
@@ -27,11 +27,14 @@ const DashboardPage: React.FC = () => {
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
 
   const fetchLiveData = useDashboardStore((s) => s.fetchLiveData);
+  const hasFetchedLiveData = useRef(false);
 
-  // Fetch live stats for TodayGlanceCard
+  // Fetch live stats for TodayGlanceCard — guarded by ref to prevent duplicate fires
   useEffect(() => {
+    if (hasFetchedLiveData.current) return;
+    hasFetchedLiveData.current = true;
     fetchLiveData();
-  }, [fetchLiveData]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Fetch user's primary agent for "Talk to Agent" button
   useEffect(() => {

@@ -328,12 +328,15 @@ export async function fetchRoiTrend(months: number = 6): Promise<RoiTrendPoint[]
 export async function fetchResponseTimeStats(filters: AnalyticsFilters): Promise<ResponseTimeStats> {
   const { dateRange } = filters;
 
-  const { data: calls } = await supabase
+  const { data: calls, error: callsError } = await supabase
     .from('call_logs')
     .select('duration_seconds, created_at, response_time_seconds')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59')
     .order('created_at', { ascending: true });
+  if (callsError) {
+    console.warn('call_logs unavailable (fetchResponseTimeStats):', callsError.message);
+  }
 
   // Also try callbacks table for response times
   let cbRtQuery = supabase
@@ -396,11 +399,14 @@ export async function fetchResponseTimeStats(filters: AnalyticsFilters): Promise
 export async function fetchHeatmapData(filters: AnalyticsFilters): Promise<HeatmapCell[]> {
   const { dateRange } = filters;
 
-  const { data: calls } = await supabase
+  const { data: calls, error: callsHeatmapError } = await supabase
     .from('call_logs')
     .select('created_at')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (callsHeatmapError) {
+    console.warn('call_logs unavailable (fetchHeatmapData):', callsHeatmapError.message);
+  }
 
   const { data: chats } = await supabase
     .from('chats')
@@ -465,11 +471,14 @@ export async function fetchSourceAttribution(filters: AnalyticsFilters): Promise
 export async function fetchAgentPerformance(filters: AnalyticsFilters): Promise<AgentPerformance[]> {
   const { dateRange } = filters;
 
-  const { data: calls } = await supabase
+  const { data: calls, error: callsAgentError } = await supabase
     .from('call_logs')
     .select('agent_id, agent_name, duration_seconds, status, customer_sentiment')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (callsAgentError) {
+    console.warn('call_logs unavailable (fetchAgentPerformance):', callsAgentError.message);
+  }
 
   const agentMap: Record<string, {
     name: string;
