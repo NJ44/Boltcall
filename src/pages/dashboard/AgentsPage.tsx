@@ -114,7 +114,7 @@ const AgentsPage: React.FC = () => {
   const { showToast } = useToast();
   const { claimReward } = useTokens();
   const [activeTab, setActiveTab] = useState<'agents' | 'tests'>(
-    searchParams.get('tab') === 'agent-tests' ? 'tests' : 'agents'
+    searchParams.get('tab') === 'tests' ? 'tests' : 'agents'
   );
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);

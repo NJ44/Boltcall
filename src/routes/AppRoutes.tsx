@@ -56,6 +56,7 @@ const CalcomPage = React.lazy(() => import('../pages/dashboard/CalcomPage'));
 const CallHistoryPage = React.lazy(() => import('../pages/dashboard/CallHistoryPage'));
 const ReputationPage = React.lazy(() => import('../pages/dashboard/ReputationPage'));
 const LeadsPage = React.lazy(() => import('../pages/dashboard/LeadsPage'));
+const MissedCallsPage = React.lazy(() => import('../pages/dashboard/MissedCallsPage'));
 const MessagesPage = React.lazy(() => import('../pages/dashboard/MessagesPage'));
 const LocationDashboardPage = React.lazy(() => import('../pages/dashboard/LocationDashboardPage'));
 const GettingStartedPage = React.lazy(() => import('../pages/dashboard/GettingStartedPage'));
@@ -329,7 +330,7 @@ const NavigationWrapper: React.FC = () => {
 
           {/* Redirects from old paths to new merged pages */}
           <Route path="speed-to-lead" element={<Navigate to="/dashboard/leads" replace />} />
-          <Route path="missed-calls" element={<Navigate to="/dashboard/leads" replace />} />
+          <Route path="missed-calls" element={<PlanGate requiredPlan="pro"><MissedCallsPage /></PlanGate>} />
           <Route path="lead-reactivation" element={<Navigate to="/dashboard/leads" replace />} />
           <Route path="call-history" element={<Navigate to="/dashboard/calls" replace />} />
           <Route path="assistant" element={<Navigate to="/dashboard/calls" replace />} />
