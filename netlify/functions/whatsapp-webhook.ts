@@ -120,6 +120,11 @@ export const handler: Handler = async (event) => {
           const body = message.text?.body || '[media]';
           const waMessageId = message.id;
 
+          if (!validatePhone(from)) {
+            console.warn('[whatsapp-webhook] Invalid from phone, skipping:', from);
+            continue;
+          }
+
           const mediaUrls: any[] = [];
           for (const mediaType of ['image', 'video', 'audio', 'document', 'sticker']) {
             if (message[mediaType]?.id) {
