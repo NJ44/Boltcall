@@ -57,9 +57,11 @@ const initialNodes: WorkflowNode[] = [
   { id: "uc-instant-ad-reply", type: "use-case", title: "Ad Lead", description: "Responds to Facebook/Google ad leads within seconds via SMS", icon: Megaphone, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 3 } },
   { id: "uc-instant-web-reply", type: "use-case", title: "Website Lead", description: "Auto-responds to website form submissions and chat inquiries", icon: Globe, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 4 } },
 
-  // Agents
-  { id: "agent-inbound", type: "agent", direction: "inbound", title: "Inbound Agent", description: "Handles all incoming leads & customer requests across channels", icon: ShieldCheck, color: "blue", configured: true, position: { x: 290, y: 30 + ROW_GAP } },
-  { id: "agent-outbound", type: "agent", direction: "outbound", title: "Outbound Agent", description: "Proactively reaches out to existing leads & past customers", icon: Zap, color: "purple", configured: false, position: { x: 290, y: 30 + ROW_GAP * 3 } },
+  // Agents — centered vertically against their use-case groups
+  // inbound: avg center of 3 use-cases (y 30,98,166) = 126 → y = 126 - AGENT_SIZE/2
+  { id: "agent-inbound", type: "agent", direction: "inbound", title: "Inbound Agent", description: "Handles all incoming leads & customer requests across channels", icon: ShieldCheck, color: "blue", configured: true, position: { x: 290, y: 81 } },
+  // outbound: avg center of 2 use-cases (y 234,302) = 296 → y = 296 - AGENT_SIZE/2
+  { id: "agent-outbound", type: "agent", direction: "outbound", title: "Outbound Agent", description: "Proactively reaches out to existing leads & past customers", icon: Zap, color: "purple", configured: false, position: { x: 290, y: 251 } },
 
   // Outputs — configured
   { id: "out-calendar", type: "output", title: "Calendar Booking", description: "Appointment scheduled automatically into your calendar", icon: CalendarCheck, color: "amber", configured: true, position: { x: 550, y: 30 } },
