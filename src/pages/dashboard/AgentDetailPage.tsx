@@ -125,6 +125,7 @@ const AgentDetailPage: React.FC = () => {
         setGreeting(data.greeting || '');
         setVoiceId(data.voice_id || '');
         setTransferPhone(data.transfer_phone_number || '');
+        document.title = `${data.name} | Boltcall`;
       } catch {
         navigate('/dashboard/agents');
       } finally {
