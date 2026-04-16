@@ -18,7 +18,9 @@ export type TokenCategory =
   | 'kb_document_sync'
   | 'web_scrape'
   | 'ai_self_heal'
-  | 'ai_kb_extract';
+  | 'ai_kb_extract'
+  | 'whatsapp_sent'
+  | 'whatsapp_ai_draft';
 
 export const TOKEN_COSTS: Record<TokenCategory, number> = {
   ai_voice_minute: 10,
@@ -33,6 +35,8 @@ export const TOKEN_COSTS: Record<TokenCategory, number> = {
   web_scrape: 5,
   ai_self_heal: 20,
   ai_kb_extract: 5,
+  whatsapp_sent: 6,
+  whatsapp_ai_draft: 8,
 };
 
 interface DeductResult {
