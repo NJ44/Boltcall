@@ -273,6 +273,16 @@ const WhatsappPage: React.FC = () => {
   const filteredThreads = threads.filter((t) => {
     if (filter === 'all') return true;
     if (filter === 'pending') return t.hasPendingDraft;
+    if (filter === 'qualified') {
+      const q = t.latestQualification;
+      return !!q && (!!q.intent || (typeof q.score === 'number' && q.score >= 60));
+    }
+    if (filter === 'booked') {
+      return (
+        t.latestQualification?.intent === 'booking' ||
+        t.hasApprovedDraft
+      );
+    }
     return true;
   });
 
