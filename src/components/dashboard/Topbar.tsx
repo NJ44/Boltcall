@@ -13,7 +13,7 @@ const Topbar: React.FC<TopbarProps> = ({ onMenuClick }) => {
   const businessName = useDashboardStore((s) => s.businessName);
 
   // Display business name if set, otherwise fall back to user's name/email
-  const displayName = businessName || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Account';
+  const displayName = businessName || (user as any)?.user_metadata?.name || user?.email?.split('@')[0] || 'Account';
 
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-sm border-b border-zinc-200">
