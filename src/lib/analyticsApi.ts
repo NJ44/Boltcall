@@ -393,11 +393,14 @@ export async function fetchResponseTimeStats(filters: AnalyticsFilters): Promise
 export async function fetchHeatmapData(filters: AnalyticsFilters): Promise<HeatmapCell[]> {
   const { dateRange } = filters;
 
-  const { data: calls } = await supabase
+  const { data: calls, error: callsHeatmapError } = await supabase
     .from('call_logs')
     .select('created_at')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (callsHeatmapError) {
+    console.warn('call_logs unavailable (fetchHeatmapData):', callsHeatmapError.message);
+  }
 
   const { data: chats } = await supabase
     .from('chats')
