@@ -324,12 +324,15 @@ export async function fetchRoiTrend(months: number = 6): Promise<RoiTrendPoint[]
 export async function fetchResponseTimeStats(filters: AnalyticsFilters): Promise<ResponseTimeStats> {
   const { dateRange } = filters;
 
-  const { data: calls } = await supabase
+  const { data: calls, error: callsError } = await supabase
     .from('call_logs')
     .select('duration_seconds, created_at, response_time_seconds')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59')
     .order('created_at', { ascending: true });
+  if (callsError) {
+    console.warn('call_logs unavailable (fetchResponseTimeStats):', callsError.message);
+  }
 
   // Also try callbacks table for response times
   const { data: callbacks } = await supabase
