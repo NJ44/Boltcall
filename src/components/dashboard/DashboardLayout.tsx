@@ -435,7 +435,7 @@ const DashboardLayout: React.FC = () => {
 
           <div className="flex flex-col h-full pt-2 pb-4">
             {/* Logo at Top - Aligned Left */}
-            <div className="mb-3 px-2">
+            <div className="mb-2 px-2">
             <Link
               to="/dashboard"
               className="flex items-center justify-start"
@@ -455,15 +455,49 @@ const DashboardLayout: React.FC = () => {
               )}
             </Link>
           </div>
-          
+
+            {/* Getting Started box — top, below logo */}
+            {showGettingStartedBox && !sidebarCollapsed && (
+              <div className="mx-2 mb-2">
+                <Link
+                  to="/dashboard/getting-started"
+                  onClick={closeSidebar}
+                  className="block rounded-lg border border-gray-200 dark:border-[#1e1e24] bg-gray-50 dark:bg-[#0e0e11] overflow-hidden hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors"
+                >
+                  <div className="flex items-center justify-between px-3 pt-2.5 pb-1">
+                    <span className="text-xs font-semibold text-gray-800 dark:text-gray-100">Getting Started</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] text-gray-400 font-medium">4 of 7</span>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          localStorage.setItem('gettingStartedBoxDismissed', 'true');
+                          setShowGettingStartedBox(false);
+                        }}
+                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                        aria-label="Dismiss"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Progress bar */}
+                  <div className="mx-3 mb-2.5 h-1.5 rounded-full bg-gray-200 dark:bg-[#1e1e24] overflow-hidden">
+                    <div className="h-full bg-green-500 rounded-full" style={{ width: '57%' }} />
+                  </div>
+                </Link>
+              </div>
+            )}
+
             {/* User profile moved to top-right bar */}
 
             {/* Mobile menu button */}
               <button
                 onClick={toggleSidebar}
                 className={`lg:hidden absolute top-2 right-2 p-2 rounded-md transition-colors ${
-           isDarkMode 
-                    ? 'text-gray-300 hover:text-white hover:bg-[#1a1a1f]' 
+           isDarkMode
+                    ? 'text-gray-300 hover:text-white hover:bg-[#1a1a1f]'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-300/50'
                 }`}
                 aria-label="Toggle navigation menu"
@@ -471,9 +505,9 @@ const DashboardLayout: React.FC = () => {
                 <X className="w-5 h-5" />
               </button>
 
-            
-            {/* Navigation */}
-            <nav className="flex-1 flex flex-col overflow-y-auto dashboard-sidebar" aria-label="Main navigation">
+
+            {/* Navigation — scrollbar hidden by default, visible on sidebar hover */}
+            <nav className="flex-1 flex flex-col overflow-y-auto sidebar-nav-scroll" aria-label="Main navigation">
               <div className="flex-1 px-2">
                 {/* Main */}
                 <div className="space-y-1 mb-4">
@@ -514,40 +548,6 @@ const DashboardLayout: React.FC = () => {
 
 
               </div>
-
-              {/* Getting Started box */}
-              {showGettingStartedBox && !sidebarCollapsed && (
-                <div className="mx-2 mb-3">
-                  <Link
-                    to="/dashboard/getting-started"
-                    onClick={closeSidebar}
-                    className="block rounded-lg border border-gray-200 dark:border-[#1e1e24] bg-gray-50 dark:bg-[#0e0e11] overflow-hidden hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors"
-                  >
-                    <div className="flex items-center justify-between px-3 pt-2.5 pb-1">
-                      <span className="text-xs font-semibold text-gray-800 dark:text-gray-100">Getting Started</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-gray-400 font-medium">4 of 7</span>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            localStorage.setItem('gettingStartedBoxDismissed', 'true');
-                            setShowGettingStartedBox(false);
-                          }}
-                          className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-                          aria-label="Dismiss"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
-                    </div>
-                    {/* Progress bar */}
-                    <div className="mx-3 mb-2.5 h-1.5 rounded-full bg-gray-200 dark:bg-[#1e1e24] overflow-hidden">
-                      <div className="h-full bg-green-500 rounded-full" style={{ width: '57%' }} />
-                    </div>
-                  </Link>
-                </div>
-              )}
 
               {/* Footer Group - Always at very bottom */}
               <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-[#1e1e24] px-2">
