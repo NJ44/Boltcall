@@ -124,8 +124,8 @@ export const handler: Handler = async (event) => {
       status: 'sent',
     });
 
-    // 4. Deduct 6 tokens (sms_sent category — WhatsApp is a messaging channel)
-    await deductTokens(userId, WA_SEND_TOKEN_COST, 'sms_sent', 'WhatsApp message sent', {}, supabase);
+    // 4. Deduct WhatsApp send tokens
+    await deductTokens(userId, TOKEN_COSTS.whatsapp_sent, 'whatsapp_sent', 'WhatsApp message sent', {}, supabase);
 
     return {
       statusCode: 200,
