@@ -292,6 +292,8 @@ export function AgentWorkflowBlock() {
             const isDragging = draggingNodeId === node.id;
             const isHovered = hoveredNodeId === node.id;
 
+            const isAgent = node.type === "agent";
+
             return (
               <motion.div
                 key={node.id}
@@ -306,7 +308,8 @@ export function AgentWorkflowBlock() {
                 style={{
                   x: node.position.x,
                   y: node.position.y,
-                  width: NODE_WIDTH,
+                  width: isAgent ? AGENT_SIZE : NODE_WIDTH,
+                  height: isAgent ? AGENT_SIZE : undefined,
                   transformOrigin: "0 0",
                   zIndex: isHovered ? 100 : isDragging ? 50 : 1,
                 }}
@@ -314,49 +317,90 @@ export function AgentWorkflowBlock() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.2, delay: nodes.indexOf(node) * 0.03 }}
-                whileHover={{ scale: 1.04 }}
-                whileDrag={{ scale: 1.06, cursor: "grabbing" }}
+                whileHover={{ scale: 1.06 }}
+                whileDrag={{ scale: 1.08, cursor: "grabbing" }}
                 aria-grabbed={isDragging}
               >
-                <Card
-                  className={`group/node relative w-full overflow-visible rounded-lg border ${colorClasses[node.color]} bg-background/70 px-2.5 py-2 backdrop-blur transition-all hover:shadow-lg ${isDragging ? "shadow-xl ring-2 ring-primary/50 " : ""}${node.type === "agent" ? "ring-1 ring-offset-1 ring-offset-background " + (node.direction === "inbound" ? "ring-blue-400/30 " : "ring-purple-400/30 ") : ""}${node.locked ? "opacity-40 border-dashed" : !node.configured ? "opacity-75 border-dashed" : ""}`}
-                  role="article"
-                  aria-label={`${node.type} node: ${node.title}`}
-                >
-                  <div className="relative flex items-center gap-2">
+                {isAgent ? (
+                  /* Circular agent node */
+                  <div
+                    className={`relative flex flex-col items-center justify-center rounded-full border-2 ${colorClasses[node.color]} bg-background/80 backdrop-blur transition-all ${isDragging ? "shadow-2xl" : "shadow-lg"} ${node.direction === "inbound" ? "ring-2 ring-blue-400/30 ring-offset-2 ring-offset-background" : "ring-2 ring-purple-400/30 ring-offset-2 ring-offset-background"} ${!node.configured ? "opacity-75 border-dashed" : ""}`}
+                    style={{ width: AGENT_SIZE, height: AGENT_SIZE }}
+                    role="article"
+                    aria-label={`agent node: ${node.title}`}
+                  >
+                    {/* Glow backdrop */}
                     <div
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${colorClasses[node.color]} bg-background/80 backdrop-blur`}
+                      className={`absolute inset-0 rounded-full opacity-20 blur-md ${node.direction === "inbound" ? "bg-blue-400" : "bg-purple-400"}`}
+                      aria-hidden="true"
+                    />
+                    <div
+                      className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border ${colorClasses[node.color]} bg-background/90 mb-1 shadow-sm`}
                       aria-hidden="true"
                     >
-                      <Icon className="h-3.5 w-3.5" />
+                      <Icon className="h-4.5 w-4.5 h-[18px] w-[18px]" />
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="truncate text-sm font-semibold tracking-tight text-foreground leading-tight">
-                        {node.title}
-                      </h3>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <Badge
-                          variant="outline"
-                          className="rounded-full border-border/40 bg-background/80 px-1.5 py-0 text-[8px] uppercase tracking-[0.12em] text-foreground/50 leading-none"
-                        >
-                          {node.type === "use-case" ? "trigger" : node.type === "agent" ? node.direction : "result"}
-                        </Badge>
-                        {node.locked && (
-                          <Lock className="h-2.5 w-2.5 text-amber-400/60" aria-label="Premium feature" />
-                        )}
+                    <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
+                      {node.title}
+                    </span>
+                    <Badge
+                      variant="outline"
+                      className={`relative mt-0.5 rounded-full px-1.5 py-0 text-[7px] uppercase tracking-[0.12em] leading-none border-border/40 bg-background/80 text-foreground/50`}
+                    >
+                      {node.direction}
+                    </Badge>
+                    <AnimatePresence>
+                      {isHovered && !isDragging && (
+                        <NodeTooltip
+                          description={node.description}
+                          configured={node.configured}
+                          locked={node.locked}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  /* Standard rectangular node */
+                  <Card
+                    className={`group/node relative w-full overflow-visible rounded-lg border ${colorClasses[node.color]} bg-background/70 px-2.5 py-2 backdrop-blur transition-all hover:shadow-lg ${isDragging ? "shadow-xl ring-2 ring-primary/50 " : ""}${node.locked ? "opacity-40 border-dashed" : !node.configured ? "opacity-75 border-dashed" : ""}`}
+                    role="article"
+                    aria-label={`${node.type} node: ${node.title}`}
+                  >
+                    <div className="relative flex items-center gap-2">
+                      <div
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${colorClasses[node.color]} bg-background/80 backdrop-blur`}
+                        aria-hidden="true"
+                      >
+                        <Icon className="h-3.5 w-3.5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate text-sm font-semibold tracking-tight text-foreground leading-tight">
+                          {node.title}
+                        </h3>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <Badge
+                            variant="outline"
+                            className="rounded-full border-border/40 bg-background/80 px-1.5 py-0 text-[8px] uppercase tracking-[0.12em] text-foreground/50 leading-none"
+                          >
+                            {node.type === "use-case" ? "trigger" : "result"}
+                          </Badge>
+                          {node.locked && (
+                            <Lock className="h-2.5 w-2.5 text-amber-400/60" aria-label="Premium feature" />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <AnimatePresence>
-                    {isHovered && !isDragging && (
-                      <NodeTooltip
-                        description={node.description}
-                        configured={node.configured}
-                        locked={node.locked}
-                      />
-                    )}
-                  </AnimatePresence>
-                </Card>
+                    <AnimatePresence>
+                      {isHovered && !isDragging && (
+                        <NodeTooltip
+                          description={node.description}
+                          configured={node.configured}
+                          locked={node.locked}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </Card>
+                )}
               </motion.div>
             );
           })}
