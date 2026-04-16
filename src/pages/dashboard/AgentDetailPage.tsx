@@ -160,6 +160,15 @@ const AgentDetailPage: React.FC = () => {
     fetchCalls();
   }, [agentId]);
 
+  // Keep document title in sync with agent name; restore on unmount
+  useEffect(() => {
+    if (!agent) return;
+    document.title = `${agent.name} | Boltcall`;
+    return () => {
+      document.title = 'Boltcall';
+    };
+  }, [agent?.name]);
+
   // Track changes
   useEffect(() => {
     if (!agent) return;
