@@ -112,14 +112,6 @@ const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {primaryAgent && (
-        <TalkToAgentModal
-          open={showTalkModal}
-          onClose={() => setShowTalkModal(false)}
-          agentId={primaryAgent.retell_agent_id || primaryAgent.id}
-          agentName={primaryAgent.name}
-        />
-      )}
     </div>
   );
 };
