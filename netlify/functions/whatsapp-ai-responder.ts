@@ -86,6 +86,20 @@ export const handler: Handler = async (event) => {
 
   const supabase = getSupabase();
 
+  // Verify auth: Supabase JWT from Authorization header, sub must match userId
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Authentication required' }) };
+  }
+  const token = authHeader.substring(7);
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !authUser) {
+    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+  }
+  if (authUser.id !== userId) {
+    return { statusCode: 403, headers: CORS_HEADERS, body: JSON.stringify({ error: 'userId does not match authenticated user' }) };
+  }
+
   try {
     // ─── Reject action ─────────────────────────────────────────────
     if (action === 'reject') {
