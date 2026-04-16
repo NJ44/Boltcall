@@ -16,6 +16,10 @@ function buildThreadId(phone1: string, phone2: string): string {
   return `${sorted[0]}_${sorted[1]}`;
 }
 
+function validatePhone(phone: string): boolean {
+  return /^\+?[1-9]\d{6,14}$/.test(phone.replace(/\D/g, ''));
+}
+
 /**
  * WhatsApp Webhook — Meta Cloud API
  * GET:  verification challenge
@@ -116,6 +120,11 @@ export const handler: Handler = async (event) => {
           const body = message.text?.body || '[media]';
           const waMessageId = message.id;
 
+          if (!validatePhone(from)) {
+            console.warn('[whatsapp-webhook] Invalid from phone, skipping:', from);
+            continue;
+          }
+
           const mediaUrls: any[] = [];
           for (const mediaType of ['image', 'video', 'audio', 'document', 'sticker']) {
             if (message[mediaType]?.id) {
@@ -161,6 +170,20 @@ export const handler: Handler = async (event) => {
             }).catch((err) => {
               console.error('[whatsapp-webhook] Failed to trigger AI responder:', err);
             });
+          }
+        }
+
+        // Process delivery status updates from Meta
+        const statuses = value.statuses || [];
+        for (const status of statuses) {
+          if (!status.id || !status.status) continue;
+          const dbStatus = status.status === 'delivered' ? 'sent'
+                         : status.status === 'failed'    ? 'failed'
+                         : null;
+          if (dbStatus) {
+            await supabase.from('whatsapp_conversations')
+              .update({ status: dbStatus })
+              .eq('wa_message_id', status.id);
           }
         }
       }

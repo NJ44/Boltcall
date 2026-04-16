@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions';
-import { getSupabase, deductTokens } from './_shared/token-utils';
+import { getSupabase, deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError, notifyInfo } from './_shared/notify';
 
 /**
@@ -22,8 +22,6 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Content-Type': 'application/json',
 };
-
-const WA_AI_TOKEN_COST = 8;
 
 function buildThreadId(phone1: string, phone2: string): string {
   const sorted = [phone1, phone2].sort();
@@ -85,6 +83,20 @@ export const handler: Handler = async (event) => {
   }
 
   const supabase = getSupabase();
+
+  // Verify auth: Supabase JWT from Authorization header, sub must match userId
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Authentication required' }) };
+  }
+  const token = authHeader.substring(7);
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !authUser) {
+    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+  }
+  if (authUser.id !== userId) {
+    return { statusCode: 403, headers: CORS_HEADERS, body: JSON.stringify({ error: 'userId does not match authenticated user' }) };
+  }
 
   try {
     // ─── Reject action ─────────────────────────────────────────────
@@ -334,8 +346,8 @@ Generate a reply to the latest customer message and qualify the lead.`;
       await notifyInfo(`Hot WhatsApp lead — draft ready. From: ${message.from_number} | Intent: ${qualification.intent} (${qualification.score}/100)`);
     }
 
-    // 12. Deduct 8 tokens for AI draft generation
-    await deductTokens(userId, WA_AI_TOKEN_COST, 'ai_chat_message', 'WhatsApp AI draft', { messageId }, supabase);
+    // 12. Deduct tokens for AI draft generation
+    await deductTokens(userId, TOKEN_COSTS.whatsapp_ai_draft, 'whatsapp_ai_draft', 'WhatsApp AI draft', { messageId }, supabase);
 
     return {
       statusCode: 200,

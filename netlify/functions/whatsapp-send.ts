@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions';
-import { getSupabase, deductTokens } from './_shared/token-utils';
+import { getSupabase, deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 
 /**
@@ -16,7 +16,7 @@ const CORS_HEADERS = {
   'Content-Type': 'application/json',
 };
 
-const WA_SEND_TOKEN_COST = 6;
+const PHONE_REGEX = /^\+?[1-9]\d{6,14}$/;
 
 function buildThreadId(phone1: string, phone2: string): string {
   const sorted = [phone1, phone2].sort();
@@ -44,6 +44,29 @@ export const handler: Handler = async (event) => {
   }
 
   const supabase = getSupabase();
+
+  // Verify auth: Supabase JWT from Authorization header, sub must match userId
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Authentication required' }) };
+  }
+  const token = authHeader.substring(7);
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !authUser) {
+    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+  }
+  if (authUser.id !== userId) {
+    return { statusCode: 403, headers: CORS_HEADERS, body: JSON.stringify({ error: 'userId does not match authenticated user' }) };
+  }
+
+  // Validate `to` phone and `body` text
+  const toDigits = String(to).replace(/\D/g, '');
+  if (!PHONE_REGEX.test(toDigits)) {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid phone number' }) };
+  }
+  if (typeof messageBody !== 'string' || messageBody.length === 0 || messageBody.length > 4096) {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Message must be 1-4096 characters' }) };
+  }
 
   try {
     // 1. Load WhatsApp settings
@@ -101,8 +124,8 @@ export const handler: Handler = async (event) => {
       status: 'sent',
     });
 
-    // 4. Deduct 6 tokens (sms_sent category — WhatsApp is a messaging channel)
-    await deductTokens(userId, WA_SEND_TOKEN_COST, 'sms_sent', 'WhatsApp message sent', {}, supabase);
+    // 4. Deduct WhatsApp send tokens
+    await deductTokens(userId, TOKEN_COSTS.whatsapp_sent, 'whatsapp_sent', 'WhatsApp message sent', {}, supabase);
 
     return {
       statusCode: 200,

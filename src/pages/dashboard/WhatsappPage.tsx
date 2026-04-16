@@ -29,6 +29,13 @@ interface WhatsAppSettings {
   out_of_hours_message: string | null;
 }
 
+interface WaQualification {
+  intent?: string;
+  score?: number;
+  reason?: string;
+  suggested_action?: string;
+}
+
 interface WaThread {
   threadId: string;
   contactPhone: string;
@@ -37,6 +44,8 @@ interface WaThread {
   direction: 'inbound' | 'outbound';
   messageCount: number;
   hasPendingDraft: boolean;
+  hasApprovedDraft: boolean;
+  latestQualification?: WaQualification;
 }
 
 interface WaMessage {
@@ -48,6 +57,8 @@ interface WaMessage {
   created_at: string;
   ai_draft: string | null;
   ai_draft_status: string | null;
+  qualification?: WaQualification | null;
+  thread_id?: string;
 }
 
 const DEFAULT_SETTINGS: WhatsAppSettings = {
@@ -121,6 +132,9 @@ const WhatsappPage: React.FC = () => {
   const [selectedThread, setSelectedThread] = useState<string | null>(null);
   const [messages, setMessages] = useState<WaMessage[]>([]);
   const [messagesLoading, setMessagesLoading] = useState(false);
+  const [msgPage, setMsgPage] = useState(0);
+  const [hasMoreMessages, setHasMoreMessages] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [filter, setFilter] = useState<FilterKey>('all');
   const [composeText, setComposeText] = useState('');
   const [sending, setSending] = useState(false);
@@ -184,7 +198,7 @@ const WhatsappPage: React.FC = () => {
       if (error) throw error;
 
       const map = new Map<string, WaMessage[]>();
-      for (const m of (data || []) as (WaMessage & { thread_id?: string })[]) {
+      for (const m of (data || []) as WaMessage[]) {
         const tid = m.thread_id || `${m.from_number}_${m.to_number}`;
         if (!map.has(tid)) map.set(tid, []);
         map.get(tid)!.push(m);
@@ -198,6 +212,7 @@ const WhatsappPage: React.FC = () => {
         const latest = sorted[0];
         const inbound = sorted.find((m) => m.direction === 'inbound');
         const contactPhone = inbound?.from_number || latest.to_number || '';
+        const latestInbound = sorted.find((m) => m.direction === 'inbound' && m.qualification);
         out.push({
           threadId: tid,
           contactPhone,
@@ -206,6 +221,8 @@ const WhatsappPage: React.FC = () => {
           direction: latest.direction,
           messageCount: sorted.length,
           hasPendingDraft: sorted.some((m) => m.ai_draft_status === 'pending'),
+          hasApprovedDraft: sorted.some((m) => m.ai_draft_status === 'approved'),
+          latestQualification: (latestInbound?.qualification as WaQualification | undefined) || undefined,
         });
       }
 
@@ -225,23 +242,63 @@ const WhatsappPage: React.FC = () => {
     if (activeTab === 'conversations' && isConnected) loadThreads();
   }, [activeTab, isConnected, loadThreads]);
 
+  // ─── Realtime subscription ────────────────────────────────────────
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const channel = supabase
+      .channel(`whatsapp-conversations-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'whatsapp_conversations',
+          filter: `user_id=eq.${user.id}`,
+        },
+        (payload) => {
+          const record = payload.new as WaMessage & { user_id?: string };
+          loadThreads();
+          const tid = record.thread_id || `${record.from_number}_${record.to_number}`;
+          if (selectedThread && tid === selectedThread) {
+            setMessages((prev) => {
+              if (prev.some((m) => m.id === record.id)) return prev;
+              return [...prev, record];
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id, selectedThread, loadThreads]);
+
   // ─── Load messages for selected thread ────────────────────────────
+
+  const MESSAGE_PAGE_SIZE = 30;
 
   const loadMessages = useCallback(
     async (threadId: string) => {
       if (!user?.id) return;
       setMessagesLoading(true);
+      setMsgPage(0);
       try {
         const { data, error } = await supabase
           .from('whatsapp_conversations')
           .select('*')
           .eq('user_id', user.id)
           .eq('thread_id', threadId)
-          .order('created_at', { ascending: true });
+          .order('created_at', { ascending: false })
+          .limit(MESSAGE_PAGE_SIZE);
         if (error) throw error;
-        setMessages((data || []) as WaMessage[]);
+        const rows = (data || []) as WaMessage[];
+        setHasMoreMessages(rows.length === MESSAGE_PAGE_SIZE);
+        setMessages(rows.slice().reverse());
       } catch {
         setMessages([]);
+        setHasMoreMessages(false);
       } finally {
         setMessagesLoading(false);
       }
@@ -249,9 +306,38 @@ const WhatsappPage: React.FC = () => {
     [user?.id]
   );
 
+  const loadMoreMessages = useCallback(async () => {
+    if (!user?.id || !selectedThread || loadingMore || !hasMoreMessages) return;
+    setLoadingMore(true);
+    try {
+      const nextPage = msgPage + 1;
+      const offset = nextPage * MESSAGE_PAGE_SIZE;
+      const { data, error } = await supabase
+        .from('whatsapp_conversations')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('thread_id', selectedThread)
+        .order('created_at', { ascending: false })
+        .range(offset, offset + MESSAGE_PAGE_SIZE - 1);
+      if (error) throw error;
+      const rows = (data || []) as WaMessage[];
+      setHasMoreMessages(rows.length === MESSAGE_PAGE_SIZE);
+      setMsgPage(nextPage);
+      setMessages((prev) => [...rows.slice().reverse(), ...prev]);
+    } catch {
+      // ignore
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [user?.id, selectedThread, msgPage, loadingMore, hasMoreMessages]);
+
   useEffect(() => {
     if (selectedThread) loadMessages(selectedThread);
-    else setMessages([]);
+    else {
+      setMessages([]);
+      setHasMoreMessages(false);
+      setMsgPage(0);
+    }
   }, [selectedThread, loadMessages]);
 
   // ─── Filters ──────────────────────────────────────────────────────
@@ -259,6 +345,16 @@ const WhatsappPage: React.FC = () => {
   const filteredThreads = threads.filter((t) => {
     if (filter === 'all') return true;
     if (filter === 'pending') return t.hasPendingDraft;
+    if (filter === 'qualified') {
+      const q = t.latestQualification;
+      return !!q && (!!q.intent || (typeof q.score === 'number' && q.score >= 60));
+    }
+    if (filter === 'booked') {
+      return (
+        t.latestQualification?.intent === 'booking' ||
+        t.hasApprovedDraft
+      );
+    }
     return true;
   });
 
@@ -283,7 +379,7 @@ const WhatsappPage: React.FC = () => {
       await callWhatsAppFn('whatsapp-settings', {
         action: 'save',
         userId: user.id,
-        settings,
+        ...settings,
       });
       showToast('success', 'Settings saved');
       await loadSettings();
@@ -296,18 +392,24 @@ const WhatsappPage: React.FC = () => {
 
   const handleSaveConnection = async () => {
     if (!user?.id || !settings) return;
+    if (!connectForm.wa_phone_number_id.trim()) {
+      showToast('error', 'Phone Number ID is required');
+      return;
+    }
+    if (!connectForm.wa_access_token.trim()) {
+      showToast('error', 'Access Token is required');
+      return;
+    }
     setSaving(true);
     try {
       await callWhatsAppFn('whatsapp-settings', {
         action: 'save',
         userId: user.id,
-        settings: {
-          ...settings,
-          wa_phone_number_id: connectForm.wa_phone_number_id,
-          wa_access_token: connectForm.wa_access_token,
-          wa_business_account_id: connectForm.wa_business_account_id,
-          is_enabled: true,
-        },
+        ...settings,
+        wa_phone_number_id: connectForm.wa_phone_number_id.trim(),
+        wa_access_token: connectForm.wa_access_token.trim(),
+        wa_business_account_id: connectForm.wa_business_account_id.trim(),
+        is_enabled: true,
       });
       showToast('success', 'Connection saved');
       await loadSettings();
@@ -372,15 +474,26 @@ const WhatsappPage: React.FC = () => {
   };
 
   const handleSend = async () => {
-    if (!user?.id || !selectedThread || !composeText.trim()) return;
+    if (!user?.id || !selectedThread) return;
+    const trimmed = composeText.trim();
+    if (!trimmed) return;
+    if (trimmed.length > 4096) {
+      showToast('error', 'Message too long (max 4096 characters)');
+      return;
+    }
     const thread = threads.find((t) => t.threadId === selectedThread);
     if (!thread) return;
+    const contactPhone = thread.contactPhone || '';
+    if (!/^\+?[1-9]\d{6,14}$/.test(contactPhone.replace(/\D/g, ''))) {
+      showToast('error', 'Invalid contact phone number');
+      return;
+    }
     setSending(true);
     try {
       await callWhatsAppFn('whatsapp-send', {
         userId: user.id,
-        to: thread.contactPhone,
-        body: composeText.trim(),
+        to: contactPhone,
+        body: trimmed,
         threadId: selectedThread,
       });
       setComposeText('');
@@ -546,6 +659,20 @@ const WhatsappPage: React.FC = () => {
                             <p className="text-xs text-gray-500 truncate mt-0.5">
                               {t.lastMessage}
                             </p>
+                            {(t.latestQualification?.score != null || t.latestQualification?.intent) && (
+                              <div className="flex items-center gap-1 mt-1 flex-wrap">
+                                {typeof t.latestQualification?.score === 'number' && (
+                                  <span className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded font-medium">
+                                    Score: {t.latestQualification.score}
+                                  </span>
+                                )}
+                                {t.latestQualification?.intent && (
+                                  <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] rounded font-medium">
+                                    {t.latestQualification.intent}
+                                  </span>
+                                )}
+                              </div>
+                            )}
                           </div>
                           {t.hasPendingDraft && (
                             <span
@@ -583,6 +710,22 @@ const WhatsappPage: React.FC = () => {
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                      {hasMoreMessages && !messagesLoading && (
+                        <div className="flex justify-center pb-2">
+                          <button
+                            onClick={loadMoreMessages}
+                            disabled={loadingMore}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                          >
+                            {loadingMore ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            ) : (
+                              <RefreshCw className="w-3.5 h-3.5" />
+                            )}
+                            Load more
+                          </button>
+                        </div>
+                      )}
                       {messagesLoading ? (
                         <div className="flex justify-center py-6">
                           <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
@@ -590,6 +733,7 @@ const WhatsappPage: React.FC = () => {
                       ) : (
                         messages.map((m) => {
                           const inbound = m.direction === 'inbound';
+                          const isAi = !inbound && (m.ai_draft_status === 'auto_sent' || m.ai_draft_status === 'approved');
                           return (
                             <div key={m.id}>
                               <div
@@ -603,13 +747,20 @@ const WhatsappPage: React.FC = () => {
                                   }`}
                                 >
                                   <p className="whitespace-pre-wrap">{m.body}</p>
-                                  <p
-                                    className={`text-[10px] mt-1 ${
-                                      inbound ? 'text-gray-400' : 'text-green-100'
-                                    }`}
-                                  >
-                                    {formatTime(m.created_at)}
-                                  </p>
+                                  <div className={`flex items-center gap-2 mt-1 ${inbound ? 'justify-start' : 'justify-end'}`}>
+                                    {isAi && (
+                                      <span className="text-[10px] font-semibold text-indigo-200 bg-indigo-700/40 px-1.5 py-0.5 rounded">
+                                        AI
+                                      </span>
+                                    )}
+                                    <p
+                                      className={`text-[10px] ${
+                                        inbound ? 'text-gray-400' : 'text-green-100'
+                                      }`}
+                                    >
+                                      {formatTime(m.created_at)}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                               {m.ai_draft_status === 'pending' && m.ai_draft && (
