@@ -294,7 +294,7 @@ const WhatsappPage: React.FC = () => {
       await callWhatsAppFn('whatsapp-settings', {
         action: 'save',
         userId: user.id,
-        settings,
+        ...settings,
       });
       showToast('success', 'Settings saved');
       await loadSettings();
@@ -307,18 +307,24 @@ const WhatsappPage: React.FC = () => {
 
   const handleSaveConnection = async () => {
     if (!user?.id || !settings) return;
+    if (!connectForm.wa_phone_number_id.trim()) {
+      showToast('error', 'Phone Number ID is required');
+      return;
+    }
+    if (!connectForm.wa_access_token.trim()) {
+      showToast('error', 'Access Token is required');
+      return;
+    }
     setSaving(true);
     try {
       await callWhatsAppFn('whatsapp-settings', {
         action: 'save',
         userId: user.id,
-        settings: {
-          ...settings,
-          wa_phone_number_id: connectForm.wa_phone_number_id,
-          wa_access_token: connectForm.wa_access_token,
-          wa_business_account_id: connectForm.wa_business_account_id,
-          is_enabled: true,
-        },
+        ...settings,
+        wa_phone_number_id: connectForm.wa_phone_number_id.trim(),
+        wa_access_token: connectForm.wa_access_token.trim(),
+        wa_business_account_id: connectForm.wa_business_account_id.trim(),
+        is_enabled: true,
       });
       showToast('success', 'Connection saved');
       await loadSettings();
