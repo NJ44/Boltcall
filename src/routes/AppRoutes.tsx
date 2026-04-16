@@ -59,6 +59,7 @@ const LeadsPage = React.lazy(() => import('../pages/dashboard/LeadsPage'));
 const MessagesPage = React.lazy(() => import('../pages/dashboard/MessagesPage'));
 const LocationDashboardPage = React.lazy(() => import('../pages/dashboard/LocationDashboardPage'));
 const GettingStartedPage = React.lazy(() => import('../pages/dashboard/GettingStartedPage'));
+const FeedbackPage = React.lazy(() => import('../pages/dashboard/FeedbackPage'));
 
 // ── Lazy loads — Dashboard settings ──────────────────────────────────────
 const GeneralPage = React.lazy(() => import('../pages/dashboard/settings/GeneralPage'));
