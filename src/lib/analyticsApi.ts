@@ -463,11 +463,14 @@ export async function fetchSourceAttribution(filters: AnalyticsFilters): Promise
 export async function fetchAgentPerformance(filters: AnalyticsFilters): Promise<AgentPerformance[]> {
   const { dateRange } = filters;
 
-  const { data: calls } = await supabase
+  const { data: calls, error: callsAgentError } = await supabase
     .from('call_logs')
     .select('agent_id, agent_name, duration_seconds, status, customer_sentiment')
     .gte('created_at', dateRange.start)
     .lte('created_at', dateRange.end + 'T23:59:59');
+  if (callsAgentError) {
+    console.warn('call_logs unavailable (fetchAgentPerformance):', callsAgentError.message);
+  }
 
   const agentMap: Record<string, {
     name: string;
