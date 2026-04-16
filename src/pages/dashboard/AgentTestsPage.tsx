@@ -236,7 +236,7 @@ const AgentTestsPage: React.FC = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900">{agent.name}</h3>
                       <div className="flex items-center gap-3 mt-0.5 text-sm text-gray-500">
-                        {agent.agent_type && <span className="capitalize">{agent.agent_type}</span>}
+                        {agent.agent_type && <span>{formatAgentType(agent.agent_type)}</span>}
                         {lastTest && (
                           <>
                             <span className="text-gray-300">|</span>
