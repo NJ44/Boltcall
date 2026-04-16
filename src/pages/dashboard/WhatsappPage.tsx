@@ -277,21 +277,28 @@ const WhatsappPage: React.FC = () => {
 
   // ─── Load messages for selected thread ────────────────────────────
 
+  const MESSAGE_PAGE_SIZE = 30;
+
   const loadMessages = useCallback(
     async (threadId: string) => {
       if (!user?.id) return;
       setMessagesLoading(true);
+      setMsgPage(0);
       try {
         const { data, error } = await supabase
           .from('whatsapp_conversations')
           .select('*')
           .eq('user_id', user.id)
           .eq('thread_id', threadId)
-          .order('created_at', { ascending: true });
+          .order('created_at', { ascending: false })
+          .limit(MESSAGE_PAGE_SIZE);
         if (error) throw error;
-        setMessages((data || []) as WaMessage[]);
+        const rows = (data || []) as WaMessage[];
+        setHasMoreMessages(rows.length === MESSAGE_PAGE_SIZE);
+        setMessages(rows.slice().reverse());
       } catch {
         setMessages([]);
+        setHasMoreMessages(false);
       } finally {
         setMessagesLoading(false);
       }
@@ -299,9 +306,38 @@ const WhatsappPage: React.FC = () => {
     [user?.id]
   );
 
+  const loadMoreMessages = useCallback(async () => {
+    if (!user?.id || !selectedThread || loadingMore || !hasMoreMessages) return;
+    setLoadingMore(true);
+    try {
+      const nextPage = msgPage + 1;
+      const offset = nextPage * MESSAGE_PAGE_SIZE;
+      const { data, error } = await supabase
+        .from('whatsapp_conversations')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('thread_id', selectedThread)
+        .order('created_at', { ascending: false })
+        .range(offset, offset + MESSAGE_PAGE_SIZE - 1);
+      if (error) throw error;
+      const rows = (data || []) as WaMessage[];
+      setHasMoreMessages(rows.length === MESSAGE_PAGE_SIZE);
+      setMsgPage(nextPage);
+      setMessages((prev) => [...rows.slice().reverse(), ...prev]);
+    } catch {
+      // ignore
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [user?.id, selectedThread, msgPage, loadingMore, hasMoreMessages]);
+
   useEffect(() => {
     if (selectedThread) loadMessages(selectedThread);
-    else setMessages([]);
+    else {
+      setMessages([]);
+      setHasMoreMessages(false);
+      setMsgPage(0);
+    }
   }, [selectedThread, loadMessages]);
 
   // ─── Filters ──────────────────────────────────────────────────────
