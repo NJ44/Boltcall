@@ -32,21 +32,6 @@ const DashboardPage: React.FC = () => {
     fetchLiveData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Fetch user's primary agent for "Talk to Agent" button
-  useEffect(() => {
-    if (!user?.id) return;
-    supabase
-      .from('agents')
-      .select('id, name, retell_agent_id')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .then(({ data }) => {
-        if (data?.[0]) setPrimaryAgent(data[0]);
-      });
-  }, [user?.id]);
-
   // Fetch today's most recent completed booking for RecentWinBanner
   useEffect(() => {
     if (!user?.id) return;
