@@ -659,6 +659,20 @@ const WhatsappPage: React.FC = () => {
                             <p className="text-xs text-gray-500 truncate mt-0.5">
                               {t.lastMessage}
                             </p>
+                            {(t.latestQualification?.score != null || t.latestQualification?.intent) && (
+                              <div className="flex items-center gap-1 mt-1 flex-wrap">
+                                {typeof t.latestQualification?.score === 'number' && (
+                                  <span className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded font-medium">
+                                    Score: {t.latestQualification.score}
+                                  </span>
+                                )}
+                                {t.latestQualification?.intent && (
+                                  <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] rounded font-medium">
+                                    {t.latestQualification.intent}
+                                  </span>
+                                )}
+                              </div>
+                            )}
                           </div>
                           {t.hasPendingDraft && (
                             <span
