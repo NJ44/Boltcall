@@ -16,6 +16,10 @@ function buildThreadId(phone1: string, phone2: string): string {
   return `${sorted[0]}_${sorted[1]}`;
 }
 
+function validatePhone(phone: string): boolean {
+  return /^\+?[1-9]\d{6,14}$/.test(phone.replace(/\D/g, ''));
+}
+
 /**
  * WhatsApp Webhook — Meta Cloud API
  * GET:  verification challenge
