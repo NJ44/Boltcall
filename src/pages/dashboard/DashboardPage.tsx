@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Phone } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import dayjs from 'dayjs';
@@ -7,7 +6,6 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
-import TalkToAgentModal from '../../components/TalkToAgentModal';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
 import RecentWinBanner from '../../components/dashboard/RecentWinBanner';
 import { useDashboardStore } from '../../stores/dashboardStore';
