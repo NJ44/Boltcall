@@ -15,6 +15,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 // static import chain so supabase never lands in the critical-path bundle.
 const PlanGate = React.lazy(() => import('../components/PlanGate'));
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
+import PencilPageLoader from '../components/PageLoader';
 
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
@@ -25,11 +26,7 @@ const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
 const AuthCallback = React.lazy(() => import('../pages/AuthCallback'));
 // ── Route-level loading fallback ─────────────────────────────────────────
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="w-8 h-8 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
+const PageLoader = () => <PencilPageLoader isLoading={true} />;
 
 // ── Lazy loads — Dashboard shell & pages ─────────────────────────────────
 const Dashboard = React.lazy(() => import('../pages/Dashboard'));
