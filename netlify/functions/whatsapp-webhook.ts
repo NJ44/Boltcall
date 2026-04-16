@@ -172,6 +172,20 @@ export const handler: Handler = async (event) => {
             });
           }
         }
+
+        // Process delivery status updates from Meta
+        const statuses = value.statuses || [];
+        for (const status of statuses) {
+          if (!status.id || !status.status) continue;
+          const dbStatus = status.status === 'delivered' ? 'sent'
+                         : status.status === 'failed'    ? 'failed'
+                         : null;
+          if (dbStatus) {
+            await supabase.from('whatsapp_conversations')
+              .update({ status: dbStatus })
+              .eq('wa_message_id', status.id);
+          }
+        }
       }
     }
   } catch (err) {
