@@ -208,9 +208,12 @@ export function AgentWorkflowBlock() {
         )
       );
     });
+    const draggedNode = nodes.find((n) => n.id === nodeId);
+    const w = draggedNode?.type === "agent" ? AGENT_SIZE : NODE_WIDTH;
+    const h = draggedNode?.type === "agent" ? AGENT_SIZE : NODE_HEIGHT;
     setContentSize((prev) => ({
-      width: Math.max(prev.width, constrainedX + NODE_WIDTH + 50),
-      height: Math.max(prev.height, constrainedY + NODE_HEIGHT + 50),
+      width: Math.max(prev.width, constrainedX + w + 50),
+      height: Math.max(prev.height, constrainedY + h + 50),
     }));
   };
 
