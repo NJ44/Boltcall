@@ -110,12 +110,14 @@ export const handler: Handler = async (event) => {
       };
 
       for (const field of SAVEABLE_FIELDS) {
-        if (payload[field] !== undefined) update[field] = payload[field];
+        const val = fieldFrom(field);
+        if (val !== undefined) update[field] = val;
       }
 
       // Only update token if provided and not the masked placeholder
-      if (payload.wa_access_token !== undefined && payload.wa_access_token !== '***') {
-        update.wa_access_token = payload.wa_access_token;
+      const accessTokenInput = fieldFrom('wa_access_token');
+      if (accessTokenInput !== undefined && accessTokenInput !== '***') {
+        update.wa_access_token = accessTokenInput;
       }
 
       // Auto-generate webhook_verify_token if not set
