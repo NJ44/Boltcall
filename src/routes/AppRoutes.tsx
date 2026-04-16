@@ -19,7 +19,9 @@ import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
 import BlogSchemaWrapper from '../components/BlogSchemaWrapper';
-import BlogNeverMissCallAfterHours from '../pages/BlogNeverMissCallAfterHours';
+// Lazy — imports framer-motion; keeping it eager pulled that library into the
+// initial bundle, inflating TBT by ~200 KiB of parse work on every page load.
+const BlogNeverMissCallAfterHours = React.lazy(() => import('../pages/BlogNeverMissCallAfterHours'));
 // ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
 const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
