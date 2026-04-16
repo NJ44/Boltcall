@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import Lenis from 'lenis';
+import type Lenis from 'lenis';
 
 // Extend Window interface to include lenis
 declare global {
@@ -29,61 +29,64 @@ export const useLenis = () => {
       return;
     }
 
-    // Custom easing function as specified
-    const customEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
-
-    // Initialize Lenis with the specified configuration
-    const lenis = new Lenis({
-      duration: 1.5,
-      easing: customEasing,
-      infinite: false,
-      // Performance optimizations for smoother scrolling
-      lerp: 0.15, // Smoother interpolation (higher = smoother)
-      wheelMultiplier: 0.8, // Lower wheel sensitivity
-      touchMultiplier: 1.2, // Lower touch sensitivity
-      smoothWheel: true, // Enable smooth wheel scrolling
-    });
-
-    // Store the instance globally
-    window.lenis = lenis;
-    lenisRef.current = lenis;
-
-    // RAF loop that pauses when tab is hidden
-    let rafId: number;
     let isRunning = true;
+    let rafId: number;
+    let cleanup: (() => void) | undefined;
 
-    function raf(time: number) {
-      if (isRunning) {
-        lenis.raf(time);
-        rafId = requestAnimationFrame(raf);
+    // Dynamic import — keeps Lenis out of the initial parse budget.
+    // useEffect only runs after paint, so there's no UX cost to loading it here.
+    import('lenis').then(({ default: LenisClass }) => {
+      if (!isRunning) return; // component unmounted before module arrived
+
+      const customEasing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
+
+      const lenis = new LenisClass({
+        duration: 1.5,
+        easing: customEasing,
+        infinite: false,
+        lerp: 0.15,
+        wheelMultiplier: 0.8,
+        touchMultiplier: 1.2,
+        smoothWheel: true,
+      });
+
+      window.lenis = lenis;
+      lenisRef.current = lenis;
+
+      function raf(time: number) {
+        if (isRunning) {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        }
       }
-    }
 
-    rafId = requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
 
-    // Pause/resume when tab visibility changes
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
+      const handleVisibilityChange = () => {
+        if (document.hidden) {
+          isRunning = false;
+          cancelAnimationFrame(rafId);
+        } else {
+          isRunning = true;
+          rafId = requestAnimationFrame(raf);
+        }
+      };
+
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+
+      cleanup = () => {
         isRunning = false;
         cancelAnimationFrame(rafId);
-      } else {
-        isRunning = true;
-        rafId = requestAnimationFrame(raf);
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Cleanup function
-    return () => {
-      isRunning = false;
-      cancelAnimationFrame(rafId);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        lenis.destroy();
         lenisRef.current = null;
         delete window.lenis;
-      }
+      };
+    });
+
+    return () => {
+      isRunning = false;
+      if (cleanup) cleanup();
     };
   }, [location.pathname]);
 
