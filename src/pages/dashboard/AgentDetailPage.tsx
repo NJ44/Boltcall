@@ -176,7 +176,7 @@ const AgentDetailPage: React.FC = () => {
     setIsSaving(true);
 
     try {
-      const { error } = await supabase
+      const { data: updated, error } = await supabase
         .from('agents')
         .update({
           name,
@@ -187,9 +187,15 @@ const AgentDetailPage: React.FC = () => {
           updated_at: new Date().toISOString(),
         })
         .eq('id', agent.id)
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .select()
+        .single();
 
       if (error) throw error;
+
+      if (!updated) {
+        throw new Error('No rows updated — agent not found or permission denied');
+      }
 
       // Sync with Retell if connected
       if (agent.retell_agent_id) {
@@ -203,10 +209,12 @@ const AgentDetailPage: React.FC = () => {
         }
       }
 
-      setAgent(prev => prev ? { ...prev, name, status, greeting, voice_id: voiceId, transfer_phone_number: transferPhone } : null);
+      // Update local state from the confirmed DB response
+      setAgent(updated as AgentData);
       setHasChanges(false);
       showToast({ title: 'Saved', message: 'Agent settings updated', variant: 'success', duration: 2000 });
-    } catch {
+    } catch (err) {
+      console.error('Save failed:', err);
       showToast({ title: 'Error', message: 'Failed to save changes', variant: 'error', duration: 3000 });
     } finally {
       setIsSaving(false);
