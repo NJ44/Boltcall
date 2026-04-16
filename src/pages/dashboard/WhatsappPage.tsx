@@ -710,6 +710,22 @@ const WhatsappPage: React.FC = () => {
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                      {hasMoreMessages && !messagesLoading && (
+                        <div className="flex justify-center pb-2">
+                          <button
+                            onClick={loadMoreMessages}
+                            disabled={loadingMore}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                          >
+                            {loadingMore ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            ) : (
+                              <RefreshCw className="w-3.5 h-3.5" />
+                            )}
+                            Load more
+                          </button>
+                        </div>
+                      )}
                       {messagesLoading ? (
                         <div className="flex justify-center py-6">
                           <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
@@ -717,6 +733,7 @@ const WhatsappPage: React.FC = () => {
                       ) : (
                         messages.map((m) => {
                           const inbound = m.direction === 'inbound';
+                          const isAi = !inbound && (m.ai_draft_status === 'auto_sent' || m.ai_draft_status === 'approved');
                           return (
                             <div key={m.id}>
                               <div
@@ -730,13 +747,20 @@ const WhatsappPage: React.FC = () => {
                                   }`}
                                 >
                                   <p className="whitespace-pre-wrap">{m.body}</p>
-                                  <p
-                                    className={`text-[10px] mt-1 ${
-                                      inbound ? 'text-gray-400' : 'text-green-100'
-                                    }`}
-                                  >
-                                    {formatTime(m.created_at)}
-                                  </p>
+                                  <div className={`flex items-center gap-2 mt-1 ${inbound ? 'justify-start' : 'justify-end'}`}>
+                                    {isAi && (
+                                      <span className="text-[10px] font-semibold text-indigo-200 bg-indigo-700/40 px-1.5 py-0.5 rounded">
+                                        AI
+                                      </span>
+                                    )}
+                                    <p
+                                      className={`text-[10px] ${
+                                        inbound ? 'text-gray-400' : 'text-green-100'
+                                      }`}
+                                    >
+                                      {formatTime(m.created_at)}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                               {m.ai_draft_status === 'pending' && m.ai_draft && (
