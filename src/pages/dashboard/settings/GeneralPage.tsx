@@ -7,6 +7,7 @@ import { useToast } from '../../../contexts/ToastContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTokens } from '../../../contexts/TokenContext';
 import { supabase } from '../../../lib/supabase';
+import { useDashboardStore } from '../../../stores/dashboardStore';
 import { PopButton } from '../../../components/ui/pop-button';
 import Button from '../../../components/ui/Button';
 import ModalShell from '../../../components/ui/modal-shell';
@@ -18,6 +19,7 @@ const GeneralPage: React.FC = () => {
   const { user } = useAuth();
   const { claimReward } = useTokens();
   const navigate = useNavigate();
+  const setBusinessName = useDashboardStore((s) => s.setBusinessName);
   const [businessInfo, setBusinessInfo] = useState({
     businessName: '',
     language: 'en',
@@ -62,6 +64,8 @@ const GeneralPage: React.FC = () => {
 
         if (profile) {
           setBusinessProfileId(profile.id);
+          // Seed the dashboard store so Topbar shows the name immediately
+          if (profile.business_name) setBusinessName(profile.business_name);
           setBusinessInfo({
             businessName: profile.business_name || '',
             language: profile.languages?.[0] || 'en',
@@ -170,6 +174,8 @@ const GeneralPage: React.FC = () => {
 
       showToast({ title: 'Saved', message: 'Settings saved successfully!', variant: 'success', duration: 3000 });
       setSaveSuccess(true);
+      // Update the shared store so Topbar reflects the new name immediately
+      if (businessInfo.businessName) setBusinessName(businessInfo.businessName);
       setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
 
       // Claim bonus token reward for completing business profile

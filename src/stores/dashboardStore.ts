@@ -47,6 +47,10 @@ interface DashboardState {
   sidebarCollapsed: boolean;
   selectedLead: Lead | null;
 
+  // Business profile (shared across dashboard)
+  businessName: string | null;
+  setBusinessName: (name: string) => void;
+
   // Actions
   setFilters: (filters: Partial<DashboardFilters>) => void;
   setSelectedClient: (client: string) => void;
@@ -99,6 +103,9 @@ export const useDashboardStore = create<DashboardState>()(
       loading: false,
       sidebarCollapsed: false,
       selectedLead: null,
+
+      businessName: null,
+      setBusinessName: (name) => set({ businessName: name }),
 
       // Filter actions
       setFilters: (newFilters) => {

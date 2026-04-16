@@ -18,6 +18,14 @@ import { authenticateApiKey } from './_shared/validate-api-key';
  *   - SUPABASE_SERVICE_KEY — Supabase service-role key (NOT the anon key)
  *   - FB_APP_ID — Facebook App ID (for fetching lead details)
  *   - FB_WEBHOOK_VERIFY_TOKEN — shared secret for Facebook webhook verification
+ *   - WEBHOOK_SECRET — (optional) global shared secret for form-based lead submissions
+ *
+ * Security model for generic/web-form submissions:
+ *   - Requests authenticated via API key (Authorization: Bearer bc_...) are trusted — the
+ *     authenticateApiKey helper validates the key and resolves the userId.
+ *   - Unauthenticated requests that supply a raw user_id are validated by checking that the
+ *     userId exists in business_profiles. This prevents unknown UUIDs from injecting fake leads.
+ *   - Optionally, callers may also pass a `webhookSecret` field that must match WEBHOOK_SECRET.
  */
 
 const headers = {
@@ -254,6 +262,27 @@ export const handler: Handler = async (event) => {
       return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
     }
     if (auth.userId) body.user_id = auth.userId;
+
+    // Security: if a raw user_id was supplied without an API key, verify it belongs to a real
+    // business_profiles row. This prevents anyone who guesses a UUID from injecting fake leads.
+    if (!auth.hasKey && body.user_id) {
+      // Optional global shared secret check
+      const globalSecret = process.env.WEBHOOK_SECRET;
+      if (globalSecret && body.webhookSecret !== globalSecret) {
+        return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized: invalid webhook secret' }) };
+      }
+
+      // Confirm the userId maps to a real user
+      const { data: profile, error: profileErr } = await supabase
+        .from('business_profiles')
+        .select('user_id')
+        .eq('user_id', body.user_id)
+        .maybeSingle();
+
+      if (profileErr || !profile) {
+        return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized: unknown user' }) };
+      }
+    }
 
     // Validate: need at least email or phone
     if (!body.email && !body.phone && !body.phone_number) {

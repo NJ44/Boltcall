@@ -167,7 +167,7 @@ const integrations: Integration[] = [
     name: 'Cal.com',
     logo: '/cal.com_logo.png',
     subtitle: 'Calendar & Scheduling',
-    description: 'Already connected — your AI receptionist checks availability and books appointments via Cal.com.',
+    description: 'Connect Cal.com so your AI receptionist can check availability and book appointments automatically.',
     fallbackColor: '#292929',
     type: 'api_key',
     category: 'calendar',

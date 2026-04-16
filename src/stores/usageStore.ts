@@ -121,23 +121,36 @@ export const useUsageStore = create<UsageState>()((set, get) => ({
         }
       }
 
-      // Get phone numbers count
-      const { count: phoneCount } = await supabase
-        .from('phone_numbers')
-        .select('id', { count: 'exact', head: true })
-        .eq('user_id', userId);
+      // Get phone numbers count — wrapped to gracefully handle 503 / table-not-found errors
+      try {
+        const { count: phoneCount, error: phoneErr } = await supabase
+          .from('phone_numbers')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', userId);
 
-      usage.phone_numbers = phoneCount || 0;
+        if (!phoneErr) {
+          usage.phone_numbers = phoneCount || 0;
+        }
+      } catch {
+        // Non-blocking: treat as 0 if the table is unavailable
+      }
 
-      // Get team members count (workspace_members table)
-      const { count: memberCount } = await supabase
-        .from('workspace_members')
-        .select('id', { count: 'exact', head: true })
-        .eq('workspace_id', userId)
-        .in('status', ['active', 'accepted']);
+      // Get team members count — wrapped to gracefully handle 503 / table-not-found errors
+      try {
+        const { count: memberCount, error: memberErr } = await supabase
+          .from('workspace_members')
+          .select('id', { count: 'exact', head: true })
+          .eq('workspace_id', userId)
+          .in('status', ['active', 'accepted']);
 
-      // At minimum 1 (the owner)
-      usage.team_members = Math.max(memberCount || 0, 1);
+        // At minimum 1 (the owner) — only update if the query succeeded
+        if (!memberErr) {
+          usage.team_members = Math.max(memberCount || 0, 1);
+        }
+      } catch {
+        // Non-blocking: keep default of 1 (owner) if the table is unavailable
+        usage.team_members = 1;
+      }
 
       // Get KB storage (sum of file sizes)
       const { data: kbFiles } = await supabase

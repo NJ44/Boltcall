@@ -1,12 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, User } from 'lucide-react';
+import { useDashboardStore } from '../../stores/dashboardStore';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface TopbarProps {
   onMenuClick: () => void;
 }
 
 const Topbar: React.FC<TopbarProps> = ({ onMenuClick }) => {
+  const { user } = useAuth();
+  const businessName = useDashboardStore((s) => s.businessName);
+
+  // Display business name if set, otherwise fall back to user's name/email
+  const displayName = businessName || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Account';
+
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-sm border-b border-zinc-200">
       <div className="flex items-center justify-between h-16 px-6">
@@ -39,7 +47,7 @@ const Topbar: React.FC<TopbarProps> = ({ onMenuClick }) => {
               <User className="w-4 h-4 text-zinc-600" />
             </div>
             <div className="hidden sm:block">
-              <div className="text-sm font-medium text-zinc-900">noam</div>
+              <div className="text-sm font-medium text-zinc-900">{displayName}</div>
             </div>
           </div>
           
