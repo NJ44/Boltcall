@@ -83,6 +83,21 @@ async function runAgentTests(agentId: string): Promise<TestRunResult> {
 // Helpers
 // ---------------------------------------------------------------------------
 
+const AGENT_TYPE_LABELS: Record<string, string> = {
+  ai_receptionist: 'AI Receptionist',
+  follow_up: 'Follow-Up Agent',
+  inbound: 'Inbound Receptionist',
+  outbound_speed_to_lead: 'Speed to Lead',
+  outbound_reactivation: 'Reactivation',
+  outbound_reminder: 'Appointment Reminder',
+  outbound_review: 'Review Request',
+  outbound: 'Outbound Agent',
+};
+
+function formatAgentType(type: string): string {
+  return AGENT_TYPE_LABELS[type] ?? type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
 function getPassRateColor(passed: number, total: number): string {
   if (total === 0) return 'text-gray-500';
   const rate = (passed / total) * 100;
@@ -236,7 +251,7 @@ const AgentTestsPage: React.FC = () => {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900">{agent.name}</h3>
                       <div className="flex items-center gap-3 mt-0.5 text-sm text-gray-500">
-                        {agent.agent_type && <span className="capitalize">{agent.agent_type}</span>}
+                        {agent.agent_type && <span>{formatAgentType(agent.agent_type)}</span>}
                         {lastTest && (
                           <>
                             <span className="text-gray-300">|</span>

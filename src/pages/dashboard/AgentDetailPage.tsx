@@ -164,12 +164,13 @@ const AgentDetailPage: React.FC = () => {
     fetchCalls();
   }, [agentId]);
 
-  // Set document title from agent name
+  // Keep document title in sync with agent name; restore on unmount
   useEffect(() => {
-    if (agent?.name) {
-      document.title = `${agent.name} | Boltcall`;
-      return () => { document.title = 'Boltcall'; };
-    }
+    if (!agent) return;
+    document.title = `${agent.name} | Boltcall`;
+    return () => {
+      document.title = 'Boltcall';
+    };
   }, [agent?.name]);
 
   // Track changes
@@ -201,10 +202,13 @@ const AgentDetailPage: React.FC = () => {
         })
         .eq('id', agent.id)
         .eq('user_id', user.id)
-        .select();
+        .select()
+        .single();
 
       if (error) throw error;
-      if (!updated || updated.length === 0) throw new Error('Save blocked by RLS — check agents UPDATE policy in Supabase.');
+      if (!updated) {
+        throw new Error('No rows updated — agent not found or permission denied');
+      }
 
       // Sync with Retell if connected
       if (agent.retell_agent_id) {
@@ -218,10 +222,12 @@ const AgentDetailPage: React.FC = () => {
         }
       }
 
-      setAgent(prev => prev ? { ...prev, name, status, greeting, voice_id: voiceId, transfer_phone_number: transferPhone } : null);
+      // Update local state from the confirmed DB response
+      setAgent(updated as AgentData);
       setHasChanges(false);
       showToast({ title: 'Saved', message: 'Agent settings updated', variant: 'success', duration: 2000 });
-    } catch {
+    } catch (err) {
+      console.error('Save failed:', err);
       showToast({ title: 'Error', message: 'Failed to save changes', variant: 'error', duration: 3000 });
     } finally {
       setIsSaving(false);
