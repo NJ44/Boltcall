@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Phone } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import dayjs from 'dayjs';
@@ -7,7 +6,6 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
-import TalkToAgentModal from '../../components/TalkToAgentModal';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
 import RecentWinBanner from '../../components/dashboard/RecentWinBanner';
 import { useDashboardStore } from '../../stores/dashboardStore';
@@ -20,8 +18,6 @@ interface LatestBooking {
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [showTalkModal, setShowTalkModal] = useState(false);
-  const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
@@ -35,21 +31,6 @@ const DashboardPage: React.FC = () => {
     hasFetchedLiveData.current = true;
     fetchLiveData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Fetch user's primary agent for "Talk to Agent" button
-  useEffect(() => {
-    if (!user?.id) return;
-    supabase
-      .from('agents')
-      .select('id, name, retell_agent_id')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .then(({ data }) => {
-        if (data?.[0]) setPrimaryAgent(data[0]);
-      });
-  }, [user?.id]);
 
   // Fetch today's most recent completed booking for RecentWinBanner
   useEffect(() => {
@@ -131,30 +112,6 @@ const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Talk to Agent */}
-      {primaryAgent && (
-        <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] p-4">
-          <button
-            onClick={() => setShowTalkModal(true)}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
-          >
-            <Phone className="w-5 h-5" />
-            Talk to Your Agent
-          </button>
-          <p className="text-xs text-gray-500 text-center mt-2">
-            Your AI agent will call your phone so you can test it live
-          </p>
-        </div>
-      )}
-
-      {primaryAgent && (
-        <TalkToAgentModal
-          open={showTalkModal}
-          onClose={() => setShowTalkModal(false)}
-          agentId={primaryAgent.retell_agent_id || primaryAgent.id}
-          agentName={primaryAgent.name}
-        />
-      )}
     </div>
   );
 };

@@ -45,6 +45,7 @@ interface WorkflowConnection {
 
 const NODE_WIDTH = 170;
 const NODE_HEIGHT = 56;
+const AGENT_SIZE = 90; // circular agent nodes
 const ROW_GAP = 68;
 
 const initialNodes: WorkflowNode[] = [
@@ -56,9 +57,11 @@ const initialNodes: WorkflowNode[] = [
   { id: "uc-instant-ad-reply", type: "use-case", title: "Ad Lead", description: "Responds to Facebook/Google ad leads within seconds via SMS", icon: Megaphone, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 3 } },
   { id: "uc-instant-web-reply", type: "use-case", title: "Website Lead", description: "Auto-responds to website form submissions and chat inquiries", icon: Globe, color: "purple", configured: true, position: { x: 30, y: 30 + ROW_GAP * 4 } },
 
-  // Agents
-  { id: "agent-inbound", type: "agent", direction: "inbound", title: "Inbound Agent", description: "Handles all incoming leads & customer requests across channels", icon: ShieldCheck, color: "blue", configured: true, position: { x: 290, y: 30 + ROW_GAP } },
-  { id: "agent-outbound", type: "agent", direction: "outbound", title: "Outbound Agent", description: "Proactively reaches out to existing leads & past customers", icon: Zap, color: "purple", configured: false, position: { x: 290, y: 30 + ROW_GAP * 3 } },
+  // Agents — centered vertically against their use-case groups
+  // inbound: avg center of 3 use-cases (y 30,98,166) = 126 → y = 126 - AGENT_SIZE/2
+  { id: "agent-inbound", type: "agent", direction: "inbound", title: "Inbound Agent", description: "Handles all incoming leads & customer requests across channels", icon: ShieldCheck, color: "blue", configured: true, position: { x: 290, y: 81 } },
+  // outbound: avg center of 2 use-cases (y 234,302) = 296 → y = 296 - AGENT_SIZE/2
+  { id: "agent-outbound", type: "agent", direction: "outbound", title: "Outbound Agent", description: "Proactively reaches out to existing leads & past customers", icon: Zap, color: "purple", configured: false, position: { x: 290, y: 251 } },
 
   // Outputs — configured
   { id: "out-calendar", type: "output", title: "Calendar Booking", description: "Appointment scheduled automatically into your calendar", icon: CalendarCheck, color: "amber", configured: true, position: { x: 550, y: 30 } },
@@ -104,14 +107,21 @@ const colorClasses: Record<string, string> = {
 const columnLabels: Record<string, string> = { "use-case": "USE CASES", agent: "AGENTS", output: "OUTPUTS" };
 const columnColors: Record<string, string> = { "use-case": "text-emerald-400", agent: "text-blue-400", output: "text-amber-400" };
 
+function nodeRight(node: WorkflowNode) {
+  return node.position.x + (node.type === "agent" ? AGENT_SIZE : NODE_WIDTH);
+}
+function nodeCenterY(node: WorkflowNode) {
+  return node.position.y + (node.type === "agent" ? AGENT_SIZE / 2 : NODE_HEIGHT / 2);
+}
+
 function WorkflowConnectionLine({ from, to, nodes, locked }: { from: string; to: string; nodes: WorkflowNode[]; locked?: boolean }) {
   const fromNode = nodes.find((n) => n.id === from);
   const toNode = nodes.find((n) => n.id === to);
   if (!fromNode || !toNode) return null;
-  const startX = fromNode.position.x + NODE_WIDTH;
-  const startY = fromNode.position.y + NODE_HEIGHT / 2;
+  const startX = nodeRight(fromNode);
+  const startY = nodeCenterY(fromNode);
   const endX = toNode.position.x;
-  const endY = toNode.position.y + NODE_HEIGHT / 2;
+  const endY = nodeCenterY(toNode);
   const cp1X = startX + (endX - startX) * 0.5;
   const cp2X = endX - (endX - startX) * 0.5;
   const d = `M${startX},${startY} C${cp1X},${startY} ${cp2X},${endY} ${endX},${endY}`;
@@ -174,8 +184,8 @@ export function AgentWorkflowBlock() {
   const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [contentSize, setContentSize] = useState(() => {
-    const maxX = Math.max(...initialNodes.map((n) => n.position.x + NODE_WIDTH));
-    const maxY = Math.max(...initialNodes.map((n) => n.position.y + NODE_HEIGHT));
+    const maxX = Math.max(...initialNodes.map((n) => n.position.x + (n.type === "agent" ? AGENT_SIZE : NODE_WIDTH)));
+    const maxY = Math.max(...initialNodes.map((n) => n.position.y + (n.type === "agent" ? AGENT_SIZE : NODE_HEIGHT)));
     return { width: maxX + 50, height: maxY + 50 };
   });
 
@@ -198,9 +208,12 @@ export function AgentWorkflowBlock() {
         )
       );
     });
+    const draggedNode = nodes.find((n) => n.id === nodeId);
+    const w = draggedNode?.type === "agent" ? AGENT_SIZE : NODE_WIDTH;
+    const h = draggedNode?.type === "agent" ? AGENT_SIZE : NODE_HEIGHT;
     setContentSize((prev) => ({
-      width: Math.max(prev.width, constrainedX + NODE_WIDTH + 50),
-      height: Math.max(prev.height, constrainedY + NODE_HEIGHT + 50),
+      width: Math.max(prev.width, constrainedX + w + 50),
+      height: Math.max(prev.height, constrainedY + h + 50),
     }));
   };
 
@@ -279,6 +292,8 @@ export function AgentWorkflowBlock() {
             const isDragging = draggingNodeId === node.id;
             const isHovered = hoveredNodeId === node.id;
 
+            const isAgent = node.type === "agent";
+
             return (
               <motion.div
                 key={node.id}
@@ -293,7 +308,8 @@ export function AgentWorkflowBlock() {
                 style={{
                   x: node.position.x,
                   y: node.position.y,
-                  width: NODE_WIDTH,
+                  width: isAgent ? AGENT_SIZE : NODE_WIDTH,
+                  height: isAgent ? AGENT_SIZE : undefined,
                   transformOrigin: "0 0",
                   zIndex: isHovered ? 100 : isDragging ? 50 : 1,
                 }}
@@ -301,49 +317,90 @@ export function AgentWorkflowBlock() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.2, delay: nodes.indexOf(node) * 0.03 }}
-                whileHover={{ scale: 1.04 }}
-                whileDrag={{ scale: 1.06, cursor: "grabbing" }}
+                whileHover={{ scale: 1.06 }}
+                whileDrag={{ scale: 1.08, cursor: "grabbing" }}
                 aria-grabbed={isDragging}
               >
-                <Card
-                  className={`group/node relative w-full overflow-visible rounded-lg border ${colorClasses[node.color]} bg-background/70 px-2.5 py-2 backdrop-blur transition-all hover:shadow-lg ${isDragging ? "shadow-xl ring-2 ring-primary/50 " : ""}${node.type === "agent" ? "ring-1 ring-offset-1 ring-offset-background " + (node.direction === "inbound" ? "ring-blue-400/30 " : "ring-purple-400/30 ") : ""}${node.locked ? "opacity-40 border-dashed" : !node.configured ? "opacity-75 border-dashed" : ""}`}
-                  role="article"
-                  aria-label={`${node.type} node: ${node.title}`}
-                >
-                  <div className="relative flex items-center gap-2">
+                {isAgent ? (
+                  /* Circular agent node */
+                  <div
+                    className={`relative flex flex-col items-center justify-center rounded-full border-2 ${colorClasses[node.color]} bg-background/80 backdrop-blur transition-all ${isDragging ? "shadow-2xl" : "shadow-lg"} ${node.direction === "inbound" ? "ring-2 ring-blue-400/30 ring-offset-2 ring-offset-background" : "ring-2 ring-purple-400/30 ring-offset-2 ring-offset-background"} ${!node.configured ? "opacity-75 border-dashed" : ""}`}
+                    style={{ width: AGENT_SIZE, height: AGENT_SIZE }}
+                    role="article"
+                    aria-label={`agent node: ${node.title}`}
+                  >
+                    {/* Glow backdrop */}
                     <div
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${colorClasses[node.color]} bg-background/80 backdrop-blur`}
+                      className={`absolute inset-0 rounded-full opacity-20 blur-md ${node.direction === "inbound" ? "bg-blue-400" : "bg-purple-400"}`}
+                      aria-hidden="true"
+                    />
+                    <div
+                      className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border ${colorClasses[node.color]} bg-background/90 mb-1 shadow-sm`}
                       aria-hidden="true"
                     >
-                      <Icon className="h-3.5 w-3.5" />
+                      <Icon className="h-4.5 w-4.5 h-[18px] w-[18px]" />
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="truncate text-sm font-semibold tracking-tight text-foreground leading-tight">
-                        {node.title}
-                      </h3>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <Badge
-                          variant="outline"
-                          className="rounded-full border-border/40 bg-background/80 px-1.5 py-0 text-[8px] uppercase tracking-[0.12em] text-foreground/50 leading-none"
-                        >
-                          {node.type === "use-case" ? "trigger" : node.type === "agent" ? node.direction : "result"}
-                        </Badge>
-                        {node.locked && (
-                          <Lock className="h-2.5 w-2.5 text-amber-400/60" aria-label="Premium feature" />
-                        )}
+                    <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
+                      {node.title}
+                    </span>
+                    <Badge
+                      variant="outline"
+                      className={`relative mt-0.5 rounded-full px-1.5 py-0 text-[7px] uppercase tracking-[0.12em] leading-none border-border/40 bg-background/80 text-foreground/50`}
+                    >
+                      {node.direction}
+                    </Badge>
+                    <AnimatePresence>
+                      {isHovered && !isDragging && (
+                        <NodeTooltip
+                          description={node.description}
+                          configured={node.configured}
+                          locked={node.locked}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  /* Standard rectangular node */
+                  <Card
+                    className={`group/node relative w-full overflow-visible rounded-lg border ${colorClasses[node.color]} bg-background/70 px-2.5 py-2 backdrop-blur transition-all hover:shadow-lg ${isDragging ? "shadow-xl ring-2 ring-primary/50 " : ""}${node.locked ? "opacity-40 border-dashed" : !node.configured ? "opacity-75 border-dashed" : ""}`}
+                    role="article"
+                    aria-label={`${node.type} node: ${node.title}`}
+                  >
+                    <div className="relative flex items-center gap-2">
+                      <div
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${colorClasses[node.color]} bg-background/80 backdrop-blur`}
+                        aria-hidden="true"
+                      >
+                        <Icon className="h-3.5 w-3.5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate text-sm font-semibold tracking-tight text-foreground leading-tight">
+                          {node.title}
+                        </h3>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <Badge
+                            variant="outline"
+                            className="rounded-full border-border/40 bg-background/80 px-1.5 py-0 text-[8px] uppercase tracking-[0.12em] text-foreground/50 leading-none"
+                          >
+                            {node.type === "use-case" ? "trigger" : "result"}
+                          </Badge>
+                          {node.locked && (
+                            <Lock className="h-2.5 w-2.5 text-amber-400/60" aria-label="Premium feature" />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <AnimatePresence>
-                    {isHovered && !isDragging && (
-                      <NodeTooltip
-                        description={node.description}
-                        configured={node.configured}
-                        locked={node.locked}
-                      />
-                    )}
-                  </AnimatePresence>
-                </Card>
+                    <AnimatePresence>
+                      {isHovered && !isDragging && (
+                        <NodeTooltip
+                          description={node.description}
+                          configured={node.configured}
+                          locked={node.locked}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </Card>
+                )}
               </motion.div>
             );
           })}
