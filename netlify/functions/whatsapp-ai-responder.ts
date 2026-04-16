@@ -84,18 +84,24 @@ export const handler: Handler = async (event) => {
 
   const supabase = getSupabase();
 
-  // Verify auth: Supabase JWT from Authorization header, sub must match userId
-  const authHeader = event.headers.authorization || event.headers.Authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Authentication required' }) };
-  }
-  const token = authHeader.substring(7);
-  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
-  if (authError || !authUser) {
-    return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid or expired token' }) };
-  }
-  if (authUser.id !== userId) {
-    return { statusCode: 403, headers: CORS_HEADERS, body: JSON.stringify({ error: 'userId does not match authenticated user' }) };
+  // Verify auth: internal webhook calls bypass JWT using a shared secret header;
+  // all other callers must supply a valid Supabase Bearer JWT.
+  const internalSecret = event.headers['x-internal-secret'];
+  const isInternalCall = !!(process.env.INTERNAL_WEBHOOK_SECRET && internalSecret === process.env.INTERNAL_WEBHOOK_SECRET);
+
+  if (!isInternalCall) {
+    const authHeader = event.headers.authorization || event.headers.Authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Authentication required' }) };
+    }
+    const token = authHeader.substring(7);
+    const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+    if (authError || !authUser) {
+      return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+    }
+    if (authUser.id !== userId) {
+      return { statusCode: 403, headers: CORS_HEADERS, body: JSON.stringify({ error: 'userId does not match authenticated user' }) };
+    }
   }
 
   try {

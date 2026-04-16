@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 import { notifyError } from './_shared/notify';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
@@ -165,7 +165,10 @@ export const handler: Handler = async (event) => {
             const responderUrl = (process.env.URL || '') + '/.netlify/functions/whatsapp-ai-responder';
             fetch(responderUrl, {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: {
+                'Content-Type': 'application/json',
+                'x-internal-secret': process.env.INTERNAL_WEBHOOK_SECRET || '',
+              },
               body: JSON.stringify({ messageId: insertedMsg.id, userId, action: 'generate' }),
             }).catch((err) => {
               console.error('[whatsapp-webhook] Failed to trigger AI responder:', err);

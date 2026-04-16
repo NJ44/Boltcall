@@ -1,5 +1,5 @@
 import { Handler } from '@netlify/functions';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 import { getSupabase } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 
