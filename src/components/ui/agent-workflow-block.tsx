@@ -107,14 +107,21 @@ const colorClasses: Record<string, string> = {
 const columnLabels: Record<string, string> = { "use-case": "USE CASES", agent: "AGENTS", output: "OUTPUTS" };
 const columnColors: Record<string, string> = { "use-case": "text-emerald-400", agent: "text-blue-400", output: "text-amber-400" };
 
+function nodeRight(node: WorkflowNode) {
+  return node.position.x + (node.type === "agent" ? AGENT_SIZE : NODE_WIDTH);
+}
+function nodeCenterY(node: WorkflowNode) {
+  return node.position.y + (node.type === "agent" ? AGENT_SIZE / 2 : NODE_HEIGHT / 2);
+}
+
 function WorkflowConnectionLine({ from, to, nodes, locked }: { from: string; to: string; nodes: WorkflowNode[]; locked?: boolean }) {
   const fromNode = nodes.find((n) => n.id === from);
   const toNode = nodes.find((n) => n.id === to);
   if (!fromNode || !toNode) return null;
-  const startX = fromNode.position.x + NODE_WIDTH;
-  const startY = fromNode.position.y + NODE_HEIGHT / 2;
+  const startX = nodeRight(fromNode);
+  const startY = nodeCenterY(fromNode);
   const endX = toNode.position.x;
-  const endY = toNode.position.y + NODE_HEIGHT / 2;
+  const endY = nodeCenterY(toNode);
   const cp1X = startX + (endX - startX) * 0.5;
   const cp2X = endX - (endX - startX) * 0.5;
   const d = `M${startX},${startY} C${cp1X},${startY} ${cp2X},${endY} ${endX},${endY}`;
