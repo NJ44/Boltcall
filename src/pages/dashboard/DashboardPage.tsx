@@ -131,22 +131,6 @@ const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Talk to Agent */}
-      {primaryAgent && (
-        <div className="bg-white dark:bg-[#111114] rounded-lg border border-gray-200 dark:border-[#1e1e24] p-4">
-          <button
-            onClick={() => setShowTalkModal(true)}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
-          >
-            <Phone className="w-5 h-5" />
-            Talk to Your Agent
-          </button>
-          <p className="text-xs text-gray-500 text-center mt-2">
-            Your AI agent will call your phone so you can test it live
-          </p>
-        </div>
-      )}
-
       {primaryAgent && (
         <TalkToAgentModal
           open={showTalkModal}
