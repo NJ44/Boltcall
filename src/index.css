@@ -304,6 +304,40 @@ button:active,
   scrollbar-color: transparent transparent;
 }
 
+/* Sidebar nav scrollbar — hidden by default, appears when sidebar panel is hovered */
+.sidebar-nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease;
+}
+
+.sidebar-nav-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-nav-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+/* Reveal scrollbar when the whole sidebar panel is hovered */
+.dashboard-sidebar:hover .sidebar-nav-scroll {
+  scrollbar-color: rgba(156, 163, 175, 0.35) transparent;
+}
+
+.dashboard-sidebar:hover .sidebar-nav-scroll::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.35);
+}
+
+.dashboard-sidebar:hover .sidebar-nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.55);
+}
+
 /* Chart component CSS variables */
 :root {
   --destructive-foreground: oklch(1 0 0);
