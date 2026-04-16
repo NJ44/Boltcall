@@ -184,8 +184,8 @@ export function AgentWorkflowBlock() {
   const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [contentSize, setContentSize] = useState(() => {
-    const maxX = Math.max(...initialNodes.map((n) => n.position.x + NODE_WIDTH));
-    const maxY = Math.max(...initialNodes.map((n) => n.position.y + NODE_HEIGHT));
+    const maxX = Math.max(...initialNodes.map((n) => n.position.x + (n.type === "agent" ? AGENT_SIZE : NODE_WIDTH)));
+    const maxY = Math.max(...initialNodes.map((n) => n.position.y + (n.type === "agent" ? AGENT_SIZE : NODE_HEIGHT)));
     return { width: maxX + 50, height: maxY + 50 };
   });
 
