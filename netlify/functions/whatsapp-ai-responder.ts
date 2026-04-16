@@ -23,8 +23,6 @@ const CORS_HEADERS = {
   'Content-Type': 'application/json',
 };
 
-const WA_AI_TOKEN_COST = 8;
-
 function buildThreadId(phone1: string, phone2: string): string {
   const sorted = [phone1, phone2].sort();
   return `${sorted[0]}_${sorted[1]}`;
