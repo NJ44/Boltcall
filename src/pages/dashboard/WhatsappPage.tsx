@@ -132,6 +132,9 @@ const WhatsappPage: React.FC = () => {
   const [selectedThread, setSelectedThread] = useState<string | null>(null);
   const [messages, setMessages] = useState<WaMessage[]>([]);
   const [messagesLoading, setMessagesLoading] = useState(false);
+  const [msgPage, setMsgPage] = useState(0);
+  const [hasMoreMessages, setHasMoreMessages] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [filter, setFilter] = useState<FilterKey>('all');
   const [composeText, setComposeText] = useState('');
   const [sending, setSending] = useState(false);
