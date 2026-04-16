@@ -327,7 +327,7 @@ const NavigationWrapper: React.FC = () => {
 
           {/* Redirects from old paths to new merged pages */}
           <Route path="speed-to-lead" element={<Navigate to="/dashboard/leads" replace />} />
-          <Route path="missed-calls" element={<Navigate to="/dashboard/leads" replace />} />
+          <Route path="missed-calls" element={<PlanGate requiredPlan="pro"><MissedCallsPage /></PlanGate>} />
           <Route path="lead-reactivation" element={<Navigate to="/dashboard/leads" replace />} />
           <Route path="call-history" element={<Navigate to="/dashboard/calls" replace />} />
           <Route path="assistant" element={<Navigate to="/dashboard/calls" replace />} />
