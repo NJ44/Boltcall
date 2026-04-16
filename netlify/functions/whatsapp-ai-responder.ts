@@ -348,8 +348,8 @@ Generate a reply to the latest customer message and qualify the lead.`;
       await notifyInfo(`Hot WhatsApp lead — draft ready. From: ${message.from_number} | Intent: ${qualification.intent} (${qualification.score}/100)`);
     }
 
-    // 12. Deduct 8 tokens for AI draft generation
-    await deductTokens(userId, WA_AI_TOKEN_COST, 'ai_chat_message', 'WhatsApp AI draft', { messageId }, supabase);
+    // 12. Deduct tokens for AI draft generation
+    await deductTokens(userId, TOKEN_COSTS.whatsapp_ai_draft, 'whatsapp_ai_draft', 'WhatsApp AI draft', { messageId }, supabase);
 
     return {
       statusCode: 200,
