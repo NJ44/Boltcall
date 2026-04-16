@@ -146,13 +146,18 @@ const AgentDetailPage: React.FC = () => {
     const fetchCalls = async () => {
       if (!agentId) return;
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('call_logs')
         .select('id, caller_number, duration, outcome, created_at')
         .eq('agent_id', agentId)
         .order('created_at', { ascending: false })
         .limit(5);
 
+      if (error) {
+        // call_logs table may not exist yet — show empty state, don't throw
+        console.warn('call_logs unavailable (AgentDetailPage):', error.message);
+        return;
+      }
       if (data) setRecentCalls(data);
     };
 
