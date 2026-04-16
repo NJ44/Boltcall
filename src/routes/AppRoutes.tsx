@@ -56,6 +56,7 @@ const CalcomPage = React.lazy(() => import('../pages/dashboard/CalcomPage'));
 const CallHistoryPage = React.lazy(() => import('../pages/dashboard/CallHistoryPage'));
 const ReputationPage = React.lazy(() => import('../pages/dashboard/ReputationPage'));
 const LeadsPage = React.lazy(() => import('../pages/dashboard/LeadsPage'));
+const MissedCallsPage = React.lazy(() => import('../pages/dashboard/MissedCallsPage'));
 const MessagesPage = React.lazy(() => import('../pages/dashboard/MessagesPage'));
 const LocationDashboardPage = React.lazy(() => import('../pages/dashboard/LocationDashboardPage'));
 const GettingStartedPage = React.lazy(() => import('../pages/dashboard/GettingStartedPage'));
