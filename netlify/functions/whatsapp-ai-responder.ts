@@ -51,7 +51,10 @@ async function callWhatsappSend(userId: string, to: string, body: string): Promi
     const sendUrl = (process.env.URL || '') + '/.netlify/functions/whatsapp-send';
     const res = await fetch(sendUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-internal-secret': process.env.INTERNAL_WEBHOOK_SECRET || '',
+      },
       body: JSON.stringify({ userId, to, body }),
     });
     const data = await res.json().catch(() => ({}));
