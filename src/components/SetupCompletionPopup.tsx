@@ -29,7 +29,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             transition={{ type: "spring", duration: 0.6 }}
             className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
           >
-            <div className="relative p-8">
+            <div className="relative p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full">
               {/* Close button */}
               <button
                 onClick={onClose}
