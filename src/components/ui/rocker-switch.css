@@ -1,0 +1,99 @@
+/* ── Rocker Switch ── */
+.rocker {
+  display: inline-block;
+  position: relative;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 7em;
+  height: 4em;
+  overflow: hidden;
+  border-bottom: 0.5em solid #1a1a2e;
+  border-radius: 0.3em;
+}
+
+.rocker-small {
+  font-size: 0.75em;
+}
+
+.rocker input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.switch-left,
+.switch-right {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  transition: all 0.18s cubic-bezier(0.4, 0.0, 0.2, 1);
+  user-select: none;
+  letter-spacing: 0.08em;
+  font-size: 0.9em;
+}
+
+/* Default state: left = YES (active / lit green) */
+.switch-left {
+  left: 0;
+  border-radius: 0.2em 0 0 0.2em;
+  background: linear-gradient(160deg, #0d2818 0%, #14532d 100%);
+  color: #4ade80;
+  border: 2px solid #22c55e;
+  border-right: 1px solid #0a1a10;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 0 10px rgba(74, 222, 128, 0.2);
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
+  transform: perspective(80px) rotateY(-6deg) translateY(0.18em);
+  transform-origin: right center;
+}
+
+/* Default state: right = NO (dimmed / depressed) */
+.switch-right {
+  right: 0;
+  border-radius: 0 0.2em 0.2em 0;
+  background: linear-gradient(160deg, #1c1c2e 0%, #111827 100%);
+  color: #374151;
+  border: 2px solid #1f2937;
+  border-left: 1px solid #0a0a14;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.5);
+  transform: perspective(80px) rotateY(6deg) translateY(-0.18em);
+  transform-origin: left center;
+}
+
+/* Checked = YES is now OFF (dimmed), NO is active */
+.rocker input:checked + .switch-left {
+  background: linear-gradient(160deg, #1c1c2e 0%, #111827 100%);
+  color: #374151;
+  border-color: #1f2937;
+  border-right: 1px solid #0a0a14;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.5);
+  text-shadow: none;
+  transform: perspective(80px) rotateY(-6deg) translateY(-0.18em);
+}
+
+.rocker input:checked + .switch-left + .switch-right {
+  background: linear-gradient(160deg, #3b0a0a 0%, #7f1d1d 100%);
+  color: #f87171;
+  border-color: #dc2626;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 0 10px rgba(248, 113, 113, 0.2);
+  text-shadow: 0 0 10px rgba(248, 113, 113, 0.7);
+  transform: perspective(80px) rotateY(6deg) translateY(0.18em);
+}
+
+/* Hover micro-feedback */
+.rocker:hover .switch-left:not(:has(~ .switch-right)) {
+  filter: brightness(1.1);
+}
+
+/* Focus accessibility */
+.rocker:focus-within .switch-left,
+.rocker:focus-within .switch-right {
+  outline: none;
+}
