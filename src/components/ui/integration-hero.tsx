@@ -12,7 +12,7 @@ const ICONS_ROW2 = [
   { src: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg", alt: "Google Calendar" },
   { src: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico", alt: "Gmail" },
   { src: "/google_business_logo.svg", alt: "Google Business Profile" },
-  { src: "https://logo.clearbit.com/servicetitan.com", alt: "ServiceTitan" },
+  { src: "/servicetitan-logo.png", alt: "ServiceTitan" },
 ];
 
 const repeatedIcons = (icons: { src: string; alt: string }[], repeat = 4) =>
