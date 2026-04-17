@@ -366,9 +366,6 @@ const DashboardLayout: React.FC = () => {
       <>
         <span className={`relative flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
-          {item.needsSetup && (
-            <span className="absolute -top-1.5 -right-1.5 w-2 h-2 rounded-full bg-orange-400 border border-white dark:border-[#111114]" />
-          )}
         </span>
         {/* Custom tooltip — card to the outside of icon (flips for RTL) */}
         {isCollapsedView && (
