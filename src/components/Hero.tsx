@@ -163,7 +163,7 @@ const Hero: React.FC = () => {
               }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap pl-8 md:pl-16">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16">
                   <span
                     style={{
                       opacity: 0,
