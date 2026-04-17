@@ -76,7 +76,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
         <div className="py-12">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {/* Company Info */}
-            <div className="lg:col-span-1">
+            <div className="col-span-2 lg:col-span-1">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
