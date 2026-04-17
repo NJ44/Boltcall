@@ -74,7 +74,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
 
         {/* Main Footer Content */}
         <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {/* Company Info */}
             <div className="lg:col-span-1">
               <motion.div
