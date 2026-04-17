@@ -64,6 +64,7 @@ const DashboardLayout: React.FC = () => {
   // Language switcher removed
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollbarVisible, setScrollbarVisible] = useState(false);
+  const [showLanguageExpanded, setShowLanguageExpanded] = useState(false);
 
   // Get current user from auth context
   const { user } = useAuth();
