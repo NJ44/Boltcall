@@ -1,21 +1,27 @@
-/* ── Rocker Switch ── */
+/* ═══════════════════════════════════════════════════
+   Rocker Switch — 3D skew-based toggle
+   Classic physical rocker with rotate + skew transforms
+   ═══════════════════════════════════════════════════ */
+
 .rocker {
   display: inline-block;
   position: relative;
-  font-size: 1em;
+  font-size: 2em;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
-  cursor: pointer;
+  color: #888;
   width: 7em;
   height: 4em;
   overflow: hidden;
-  border-bottom: 0.5em solid #1a1a2e;
-  border-radius: 0.3em;
+  border-bottom: 0.5em solid #e0e0e0;
+  cursor: pointer;
+  user-select: none;
 }
 
 .rocker-small {
   font-size: 0.75em;
+  margin: 1em;
 }
 
 .rocker input {
@@ -32,68 +38,73 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  height: 100%;
-  transition: all 0.18s cubic-bezier(0.4, 0.0, 0.2, 1);
+  height: 2.5em;
+  width: 3em;
+  transition: 0.2s;
   user-select: none;
-  letter-spacing: 0.08em;
-  font-size: 0.9em;
 }
 
-/* Default state: left = YES (active / lit green) */
+/* ── Default (unchecked): LEFT is active ── */
 .switch-left {
-  left: 0;
-  border-radius: 0.2em 0 0 0.2em;
-  background: linear-gradient(160deg, #0d2818 0%, #14532d 100%);
-  color: #4ade80;
-  border: 2px solid #22c55e;
-  border-right: 1px solid #0a1a10;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 0 10px rgba(74, 222, 128, 0.2);
-  text-shadow: 0 0 10px rgba(74, 222, 128, 0.7);
-  transform: perspective(80px) rotateY(-6deg) translateY(0.18em);
-  transform-origin: right center;
+  height: 2.4em;
+  width: 2.75em;
+  left: 0.85em;
+  bottom: 0.4em;
+  background-color: #ddd;
+  transform: rotate(15deg) skewX(15deg);
 }
 
-/* Default state: right = NO (dimmed / depressed) */
 .switch-right {
-  right: 0;
-  border-radius: 0 0.2em 0.2em 0;
-  background: linear-gradient(160deg, #1c1c2e 0%, #111827 100%);
-  color: #374151;
-  border: 2px solid #1f2937;
-  border-left: 1px solid #0a0a14;
-  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.5);
-  transform: perspective(80px) rotateY(6deg) translateY(-0.18em);
-  transform-origin: left center;
+  right: 0.5em;
+  bottom: 0;
+  background-color: #bd5757;
+  color: #fff;
 }
 
-/* Checked = YES is now OFF (dimmed), NO is active */
+.switch-left {
+  background-color: #0084d0;
+  color: #fff;
+  bottom: 0px;
+  left: 0.5em;
+  height: 2.5em;
+  width: 3em;
+  transform: rotate(0deg) skewX(0deg);
+}
+
+.switch-right {
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.4em;
+  right: 0.85em;
+  height: 2.4em;
+  width: 2.75em;
+  transform: rotate(-15deg) skewX(-15deg);
+}
+
+/* ── Checked: RIGHT is active ── */
 .rocker input:checked + .switch-left {
-  background: linear-gradient(160deg, #1c1c2e 0%, #111827 100%);
-  color: #374151;
-  border-color: #1f2937;
-  border-right: 1px solid #0a0a14;
-  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.5);
-  text-shadow: none;
-  transform: perspective(80px) rotateY(-6deg) translateY(-0.18em);
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.4em;
+  left: 0.85em;
+  height: 2.4em;
+  width: 2.75em;
+  transform: rotate(15deg) skewX(15deg);
 }
 
 .rocker input:checked + .switch-left + .switch-right {
-  background: linear-gradient(160deg, #3b0a0a 0%, #7f1d1d 100%);
-  color: #f87171;
-  border-color: #dc2626;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 0 10px rgba(248, 113, 113, 0.2);
-  text-shadow: 0 0 10px rgba(248, 113, 113, 0.7);
-  transform: perspective(80px) rotateY(6deg) translateY(0.18em);
+  background-color: #0084d0;
+  color: #fff;
+  bottom: 0px;
+  right: 0.5em;
+  height: 2.5em;
+  width: 3em;
+  transform: rotate(0deg) skewX(0deg);
 }
 
-/* Hover micro-feedback */
-.rocker:hover .switch-left:not(:has(~ .switch-right)) {
-  filter: brightness(1.1);
-}
-
-/* Focus accessibility */
-.rocker:focus-within .switch-left,
-.rocker:focus-within .switch-right {
-  outline: none;
+/* ── Focus ring ── */
+.rocker:focus-within {
+  outline: 2px solid #0084d0;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
