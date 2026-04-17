@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import WhisperText from './ui/whisper-text';
 import { ContainerScroll, CardSticky } from './ui/cards-stack';
 import { Check } from 'lucide-react';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 
 const PROCESS_PHASES = [
@@ -18,7 +17,6 @@ const PROCESS_PHASES = [
       "Appointment scheduling",
       "Call transcription"
     ],
-    animationUrl: "/AI_assistant.lottie"
   },
   {
     id: "process-2",
@@ -31,7 +29,6 @@ const PROCESS_PHASES = [
       "Lead capture forms",
       "Follow-up automation"
     ],
-    animationUrl: "/statistics_on_tab.lottie"
   },
   {
     id: "process-3",
@@ -44,7 +41,6 @@ const PROCESS_PHASES = [
       "Appointment reminders",
       "Calendar integration"
     ],
-    animationUrl: "/sms_agent.lottie"
   },
 ];
 
@@ -105,45 +101,32 @@ const HowItWorks: React.FC = () => {
             {PROCESS_PHASES.map((phase, index) => (
               <CardSticky
                 key={phase.id}
-                index={index + 2}
-                incrementY={14}
+                index={index + 8}
+                incrementY={10}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '600px', top: '128px', bottom: 'auto' }}
+                style={{ maxWidth: '600px' }}
               >
-                <div className="p-5 md:p-7 h-full flex">
-                  {/* Left side - Header, text, and checklist */}
-                  <div className="flex-1 pr-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
-                        {phase.title}
-                      </h2>
-                      <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
-                        <span className="text-lg font-bold">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
-
-                    {/* Checklist */}
-                    <div className="space-y-2">
-                      {phase.checklist.map((item, itemIndex) => (
-                        <div key={itemIndex} className="flex items-center gap-2">
-                          <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
-                          <span className="text-sm text-gray-700">{item}</span>
-                        </div>
-                      ))}
+                <div className="p-5 md:p-7 h-full">
+                  <div className="flex items-center justify-between mb-3">
+                    <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
+                      {phase.title}
+                    </h2>
+                    <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
+                      <span className="text-lg font-bold">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
                     </div>
                   </div>
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
 
-                  {/* Right side - Animation */}
-                  <div className="flex-shrink-0 w-48 h-48">
-                    <DotLottieReact
-                      src={phase.animationUrl}
-                      loop
-                      autoplay
-                      className="w-full h-full"
-                    />
+                  {/* Checklist */}
+                  <div className="space-y-2">
+                    {phase.checklist.map((item, itemIndex) => (
+                      <div key={itemIndex} className="flex items-center gap-2">
+                        <Check className="w-4 h-4 text-green-500 flex-shrink-0" />
+                        <span className="text-sm text-gray-700">{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </CardSticky>
