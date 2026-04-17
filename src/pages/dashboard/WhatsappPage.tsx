@@ -407,6 +407,7 @@ const WhatsappPage: React.FC = () => {
     }
     setSaving(true);
     try {
+      // 1. Save credentials
       await callWhatsAppFn('whatsapp-settings', {
         action: 'save',
         userId: user.id,
@@ -416,7 +417,21 @@ const WhatsappPage: React.FC = () => {
         wa_business_account_id: connectForm.wa_business_account_id.trim(),
         is_enabled: true,
       });
-      showToast('success', 'Connection saved');
+
+      // 2. Validate credentials against Meta API
+      const validation = await callWhatsAppFn('whatsapp-settings', {
+        action: 'validate',
+        userId: user.id,
+        wa_phone_number_id: connectForm.wa_phone_number_id.trim(),
+        wa_access_token: connectForm.wa_access_token.trim(),
+      });
+
+      if (!validation?.valid) {
+        showToast('error', `Credentials saved but Meta rejected them: ${validation?.error || 'Invalid Phone Number ID or Access Token'}`);
+        return;
+      }
+
+      showToast('success', `Connected — ${validation.name || ''} (${validation.phone || ''})`.trim().replace(/\s+\(\)$/, ''));
       await loadSettings();
       setActiveTab('conversations');
     } catch (e: any) {

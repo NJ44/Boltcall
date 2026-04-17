@@ -143,6 +143,46 @@ export const handler: Handler = async (event) => {
       };
     }
 
+    // ─── VALIDATE ─────────────────────────────────────────────────
+    // Calls Meta Graph API read-only to verify credentials without sending a message
+    if (action === 'validate') {
+      let phoneNumberId = fieldFrom('wa_phone_number_id');
+      let accessToken = fieldFrom('wa_access_token');
+
+      // Fall back to stored credentials if not provided or masked
+      if (!phoneNumberId || !accessToken || accessToken === '***') {
+        const { data: stored } = await supabase
+          .from('whatsapp_settings')
+          .select('wa_phone_number_id, wa_access_token')
+          .eq('user_id', userId)
+          .maybeSingle();
+        phoneNumberId = phoneNumberId || stored?.wa_phone_number_id;
+        accessToken = (!accessToken || accessToken === '***') ? stored?.wa_access_token : accessToken;
+      }
+
+      if (!phoneNumberId || !accessToken) {
+        return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'No credentials to validate' }) };
+      }
+
+      const metaRes = await fetch(
+        `https://graph.facebook.com/v19.0/${phoneNumberId}?fields=display_phone_number,verified_name`,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const metaData = await metaRes.json().catch(() => ({}));
+      if (!metaRes.ok) {
+        return {
+          statusCode: 200,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ valid: false, error: metaData?.error?.message || 'Invalid credentials' }),
+        };
+      }
+      return {
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ valid: true, phone: metaData.display_phone_number, name: metaData.verified_name }),
+      };
+    }
+
     // ─── TEST ──────────────────────────────────────────────────────
     if (action === 'test') {
       const testPhone = payload.testPhone;
