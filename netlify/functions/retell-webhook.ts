@@ -193,6 +193,40 @@ export const handler: Handler = async (event) => {
             summary: call.call_analysis?.call_summary || null,
             sentiment: call.call_analysis?.user_sentiment || null,
           });
+
+          // Create a lead and sync to connected CRMs (fire-and-forget)
+          if (call.from_number) {
+            const supabaseForLead = getSupabase();
+            await supabaseForLead
+              .from('leads')
+              .insert({
+                phone: call.from_number,
+                source: 'ai_call',
+                status: 'new',
+                user_id: agentOwner.user_id,
+                raw_data: call,
+              });
+
+            const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
+            fetch(`${baseUrl}/.netlify/functions/integration-sync`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'sync_lead',
+                userId: agentOwner.user_id,
+                lead: {
+                  name: null,
+                  first_name: null,
+                  last_name: null,
+                  phone: call.from_number,
+                  email: null,
+                  source: 'ai_call',
+                  status: 'new',
+                  notes: call.call_analysis?.call_summary || null,
+                },
+              }),
+            }).catch(err => console.error('[retell-webhook] Completed call CRM sync failed:', err));
+          }
         }
       }
 
