@@ -572,11 +572,13 @@ const DashboardLayout: React.FC = () => {
               </div>
 
               {/* Footer Group - Always at very bottom */}
-              <div className="space-y-1 mt-2 pt-2 border-t border-gray-200 dark:border-[#1e1e24] px-2">
-                {navItemsFooter.map((item) => {
-                  const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
-                  return renderNavItem(item, isActive);
-                })}
+              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-[#1e1e24] px-2">
+                <div className={sidebarCollapsed ? 'space-y-1' : 'flex gap-1'}>
+                  {navItemsFooter.map((item) => {
+                    const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
+                    return renderNavItem(item, isActive);
+                  })}
+                </div>
 
                 {/* Give Us Feedback */}
                 <button
