@@ -17,7 +17,6 @@ const handler: Handler = async (event) => {
   const retellApiKey = process.env.RETELL_API_KEY;
   const agentId = process.env.CHALLENGE_AGENT_ID;
   const secretWord = process.env.CHALLENGE_SECRET_WORD || 'boltcall';
-  const challengeType = (process.env.CHALLENGE_TYPE || 'guard') as string;
 
   if (!retellApiKey) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Retell API key not configured' }) };
@@ -36,7 +35,6 @@ const handler: Handler = async (event) => {
       agent_id: agentId,
       retell_llm_dynamic_variables: {
         secret_word: secretWord,
-        challenge_type: challengeType,
       },
       metadata: {
         name: name || '',
