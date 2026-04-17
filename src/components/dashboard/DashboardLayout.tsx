@@ -746,7 +746,7 @@ const DashboardLayout: React.FC = () => {
                         {/* Menu Items */}
                         <div className="py-2">
                           <Link
-                            to="/dashboard/settings/plan-billing"
+                            to="/partners"
                             onClick={() => setShowUserMenu(false)}
                             className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                           >
