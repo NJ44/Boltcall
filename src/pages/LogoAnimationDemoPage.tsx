@@ -82,8 +82,8 @@ const FloatingLogo: React.FC = () => {
           className="absolute inset-0 rounded-3xl pointer-events-none"
           style={{
             background: useTransform(
-              [glowX, glowY] as const,
-              ([gx, gy]: [string, string]) =>
+              [glowX, glowY],
+              ([gx, gy]: string[]) =>
                 `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.12) 0%, transparent 60%)`,
             ),
             translateZ: 10,
