@@ -1,6 +1,5 @@
 /* ═══════════════════════════════════════════════════
    Rocker Switch — 3D skew-based toggle
-   Classic physical rocker with rotate + skew transforms
    ═══════════════════════════════════════════════════ */
 
 .rocker {
@@ -44,27 +43,12 @@
   user-select: none;
 }
 
-/* ── Default (unchecked): LEFT is active ── */
-.switch-left {
-  height: 2.4em;
-  width: 2.75em;
-  left: 0.85em;
-  bottom: 0.4em;
-  background-color: #ddd;
-  transform: rotate(15deg) skewX(15deg);
-}
-
-.switch-right {
-  right: 0.5em;
-  bottom: 0;
-  background-color: #bd5757;
-  color: #fff;
-}
+/* ── Unchecked: YES is pressed down (active), NO is tilted up ── */
 
 .switch-left {
   background-color: #0084d0;
   color: #fff;
-  bottom: 0px;
+  bottom: 0;
   left: 0.5em;
   height: 2.5em;
   width: 3em;
@@ -81,7 +65,8 @@
   transform: rotate(-15deg) skewX(-15deg);
 }
 
-/* ── Checked: RIGHT is active ── */
+/* ── Checked: YES tilts up, NO presses down ── */
+
 .rocker input:checked + .switch-left {
   background-color: #ddd;
   color: #888;
@@ -95,7 +80,7 @@
 .rocker input:checked + .switch-left + .switch-right {
   background-color: #0084d0;
   color: #fff;
-  bottom: 0px;
+  bottom: 0;
   right: 0.5em;
   height: 2.5em;
   width: 3em;
