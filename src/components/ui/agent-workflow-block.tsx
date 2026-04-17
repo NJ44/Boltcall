@@ -241,8 +241,6 @@ export function AgentWorkflowBlock() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="rounded-full border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] text-emerald-400">Inbound</Badge>
-          <Badge variant="outline" className="rounded-full border-purple-400/40 bg-purple-400/10 px-2.5 py-0.5 text-[10px] text-purple-400">Outbound</Badge>
         </div>
       </div>
 
