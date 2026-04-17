@@ -59,6 +59,16 @@ if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @media (prefers-reduced-motion: reduce) {
+      [style*="heroFadeInUp"], [style*="heroFadeInScale"], [style*="heroWordFadeUp"] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      [style*="heroFloat"] {
+        animation: none !important;
+      }
+    }
   `;
   document.head.appendChild(style);
 }
