@@ -345,7 +345,7 @@ const DashboardLayout: React.FC = () => {
 
   const navItemsFooter = [
     { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" />, onboardingId: 'nav-settings' },
-    { to: '/documentation', label: 'Documentation', icon: <BookOpen className="w-5 h-5 scale-[0.95]" /> },
+    { to: '/documentation', href: 'https://boltcall.mintlify.app/', label: 'Documentation', icon: <BookOpen className="w-5 h-5 scale-[0.95]" /> },
     { to: '/help-center', label: t('nav.helpCenter'), icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
   ];
 
@@ -354,22 +354,17 @@ const DashboardLayout: React.FC = () => {
   // Helper function to render navigation items
   const renderNavItem = (item: any, isActive: boolean) => {
     const isCollapsedView = sidebarCollapsed;
-    return (
-      <Link
-        key={item.to}
-        to={item.to}
-        data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
-        onClick={closeSidebar}
-        className={`relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
-          isActive
-            ? isDarkMode
-              ? 'bg-[#1a1a1f] text-white'
-              : 'bg-blue-50 text-blue-700'
-            : isDarkMode
-              ? 'text-white hover:bg-[#1a1a1f]'
-              : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-        }`}
-      >
+    const sharedClassName = `relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
+      isActive
+        ? isDarkMode
+          ? 'bg-[#1a1a1f] text-white'
+          : 'bg-blue-50 text-blue-700'
+        : isDarkMode
+          ? 'text-white hover:bg-[#1a1a1f]'
+          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+    }`;
+    const innerContent = (
+      <>
         <span className={`relative flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
           {item.needsSetup && (
@@ -404,6 +399,32 @@ const DashboardLayout: React.FC = () => {
             {item.badge}
           </span>
         )}
+      </>
+    );
+    if (item.href) {
+      return (
+        <a
+          key={item.to}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+          onClick={closeSidebar}
+          className={sharedClassName}
+        >
+          {innerContent}
+        </a>
+      );
+    }
+    return (
+      <Link
+        key={item.to}
+        to={item.to}
+        data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+        onClick={closeSidebar}
+        className={sharedClassName}
+      >
+        {innerContent}
       </Link>
     );
   };
@@ -930,8 +951,10 @@ const DashboardLayout: React.FC = () => {
               <div>
                 <h3 className="text-sm font-medium text-gray-900 mb-4">{t('help.documentation')}</h3>
                 <div className="space-y-3">
-                  <Link
-                    to="/documentation"
+                  <a
+                    href="https://boltcall.mintlify.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                     onClick={() => setShowHelpSidebar(false)}
                   >
@@ -944,8 +967,8 @@ const DashboardLayout: React.FC = () => {
                       </div>
                       <div className="text-sm text-gray-500">{t('help.documentationDesc')}</div>
                     </div>
-                  </Link>
-                  
+                  </a>
+
                   <Link
                     to="/help-center"
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
