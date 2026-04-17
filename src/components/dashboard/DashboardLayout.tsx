@@ -345,7 +345,7 @@ const DashboardLayout: React.FC = () => {
 
   const navItemsFooter = [
     { to: '/dashboard/settings', label: t('nav.settings'), icon: <Settings className="w-5 h-5 scale-[0.95]" />, onboardingId: 'nav-settings' },
-    { to: '/documentation', label: 'Documentation', icon: <BookOpen className="w-5 h-5 scale-[0.95]" /> },
+    { to: '/documentation', href: 'https://boltcall.mintlify.app/', label: 'Documentation', icon: <BookOpen className="w-5 h-5 scale-[0.95]" /> },
     { to: '/help-center', label: t('nav.helpCenter'), icon: <HelpCircle className="w-5 h-5 scale-[0.95]" /> },
   ];
 
