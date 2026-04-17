@@ -967,8 +967,8 @@ const DashboardLayout: React.FC = () => {
                       </div>
                       <div className="text-sm text-gray-500">{t('help.documentationDesc')}</div>
                     </div>
-                  </Link>
-                  
+                  </a>
+
                   <Link
                     to="/help-center"
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
