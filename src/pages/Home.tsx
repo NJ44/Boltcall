@@ -71,10 +71,10 @@ const Home: React.FC = () => {
             </LazySection>
           </div>
 
-          {/* StickyScrollSection — desktop only, behind HowItWorks */}
-          <div className="relative -top-[60px] md:-top-[200px] hidden md:block" style={{ minHeight: '400px', contain: 'layout' }}>
+          {/* StickyScrollSection — "Why Businesses Choose BoltCall", visible on all breakpoints */}
+          <div className="relative md:-top-[200px]" style={{ minHeight: '400px' }}>
             <LazySection rootMargin="400px" minHeight="400px">
-              <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
+              <Suspense fallback={<div className="h-[400px] w-full" />}>
                 <StickyScrollSection />
               </Suspense>
             </LazySection>
