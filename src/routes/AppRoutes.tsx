@@ -521,6 +521,7 @@ const NavigationWrapper: React.FC = () => {
         {/* Demo Pages */}
         <Route path="/challenge" element={<Challenge />} />
         <Route path="/button-demo" element={<ButtonDemoPage />} />
+        <Route path="/logo-demo" element={<LogoAnimationDemoPage />} />
         <Route path="/demo" element={<DemoFlowPage />} />
         <Route path="/agent-architecture" element={<AgentArchitecturePage />} />
         <Route path="/funnel-optimizer" element={<FunnelOptimizer />} />
