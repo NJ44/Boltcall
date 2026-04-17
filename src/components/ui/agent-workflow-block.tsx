@@ -241,8 +241,6 @@ export function AgentWorkflowBlock() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="rounded-full border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] text-emerald-400">Inbound</Badge>
-          <Badge variant="outline" className="rounded-full border-purple-400/40 bg-purple-400/10 px-2.5 py-0.5 text-[10px] text-purple-400">Outbound</Badge>
         </div>
       </div>
 
@@ -335,20 +333,18 @@ export function AgentWorkflowBlock() {
                       aria-hidden="true"
                     />
                     <div
-                      className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border ${colorClasses[node.color]} bg-background/90 mb-1 shadow-sm`}
+                      className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full mb-1"
                       aria-hidden="true"
                     >
-                      <Icon className="h-4.5 w-4.5 h-[18px] w-[18px]" />
+                      <img
+                        src="/boltcall_small_logo.webp"
+                        alt="Boltcall"
+                        className={`h-7 w-7 object-contain ${node.direction === "outbound" ? "brightness-0 invert" : ""}`}
+                      />
                     </div>
                     <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
                       {node.title}
                     </span>
-                    <Badge
-                      variant="outline"
-                      className={`relative mt-0.5 rounded-full px-1.5 py-0 text-[7px] uppercase tracking-[0.12em] leading-none border-border/40 bg-background/80 text-foreground/50`}
-                    >
-                      {node.direction}
-                    </Badge>
                     <AnimatePresence>
                       {isHovered && !isDragging && (
                         <NodeTooltip

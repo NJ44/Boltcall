@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Moon, Sun, Save, RefreshCw, Smartphone, Monitor, Check, Clock, Calendar, ChevronDown } from 'lucide-react';
+import { Globe, Moon, Sun, Smartphone, Monitor, Check, Clock, Calendar, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Button from '../../../components/ui/Button';
 import LanguageSwitcher from '../../../components/dashboard/LanguageSwitcher';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { supabase } from '../../../lib/supabase';
+import { UnsavedChanges } from '../../../components/ui/unsaved-changes';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -30,6 +31,9 @@ const PreferencesPage: React.FC = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   // PWA install state
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
@@ -153,9 +157,14 @@ const PreferencesPage: React.FC = () => {
       showToast({ title: t('common:save'), message: t('settings:prefsSavedSuccess'), variant: 'success', duration: 3000 });
       setSaveMessage(t('settings:prefsSavedSuccess'));
       setTimeout(() => setSaveMessage(''), 3000);
+      setIsDirty(false);
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
       console.error('Error saving preferences:', err);
       showToast({ title: t('common:error'), message: t('settings:prefsSaveError'), variant: 'error', duration: 4000 });
+      setSaveError(true);
+      setTimeout(() => setSaveError(false), 4000);
     } finally {
       setIsSaving(false);
     }
@@ -181,24 +190,10 @@ const PreferencesPage: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-3xl">
-      {/* Header with sticky save bar */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">Preferences</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Customize your workspace appearance and regional settings.</p>
-        </div>
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-medium rounded-xl shadow-sm shadow-blue-600/20 transition-all active:scale-[0.98]"
-        >
-          {isSaving ? (
-            <RefreshCw className="w-4 h-4 animate-spin" />
-          ) : (
-            <Save className="w-4 h-4" />
-          )}
-          {isSaving ? t('common:saving') : t('common:saveChanges')}
-        </button>
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">Preferences</h1>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Customize your workspace appearance and regional settings.</p>
       </div>
 
       {/* Save success message */}
@@ -235,7 +230,7 @@ const PreferencesPage: React.FC = () => {
             return (
               <button
                 key={theme.value}
-                onClick={() => setPreferences(prev => ({ ...prev, theme: theme.value }))}
+                onClick={() => { setPreferences(prev => ({ ...prev, theme: theme.value })); setIsDirty(true); }}
                 className={`relative flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-colors z-10 ${
                   isSelected ? 'text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                 }`}
@@ -281,7 +276,7 @@ const PreferencesPage: React.FC = () => {
             <div className="relative">
               <select
                 value={preferences.timezone}
-                onChange={(e) => setPreferences(prev => ({ ...prev, timezone: e.target.value }))}
+                onChange={(e) => { setPreferences(prev => ({ ...prev, timezone: e.target.value })); setIsDirty(true); }}
                 className={selectClass}
               >
                 {timezones.map((tz) => (
@@ -301,7 +296,7 @@ const PreferencesPage: React.FC = () => {
             <div className="relative">
               <select
                 value={preferences.dateFormat}
-                onChange={(e) => setPreferences(prev => ({ ...prev, dateFormat: e.target.value }))}
+                onChange={(e) => { setPreferences(prev => ({ ...prev, dateFormat: e.target.value })); setIsDirty(true); }}
                 className={selectClass}
               >
                 <option value="MM/DD/YYYY">MM/DD/YYYY</option>
@@ -321,7 +316,7 @@ const PreferencesPage: React.FC = () => {
             <div className="relative">
               <select
                 value={preferences.timeFormat}
-                onChange={(e) => setPreferences(prev => ({ ...prev, timeFormat: e.target.value }))}
+                onChange={(e) => { setPreferences(prev => ({ ...prev, timeFormat: e.target.value })); setIsDirty(true); }}
                 className={selectClass}
               >
                 <option value="12h">{t('settings:preferences.timeFormat12')}</option>
@@ -374,6 +369,15 @@ const PreferencesPage: React.FC = () => {
           ) : null}
         </div>
       </div>
+
+      <UnsavedChanges
+        open={isDirty || isSaving || saveSuccess || saveError}
+        isSaving={isSaving}
+        success={saveSuccess}
+        error={saveError}
+        onSave={handleSave}
+        onReset={() => setIsDirty(false)}
+      />
     </div>
   );
 };

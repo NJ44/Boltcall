@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Shield, Plus, Edit, Trash2, Loader2, Crown, Briefcase, Headphones, Eye,
-  Check, X, ChevronDown, ChevronRight, Lock,
+  ChevronDown, ChevronRight, Lock,
 } from 'lucide-react';
 import { PopButton } from '../../../components/ui/pop-button';
 import ModalShell from '../../../components/ui/modal-shell';
@@ -49,7 +49,6 @@ const RolesPage: React.FC = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showMatrixView, setShowMatrixView] = useState(false);
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -206,9 +205,6 @@ const RolesPage: React.FC = () => {
           <p className="text-sm text-gray-500 mt-1">Define what each team role can access</p>
         </div>
         <div className="flex items-center gap-2">
-          <PopButton onClick={() => setShowMatrixView(!showMatrixView)}>
-            {showMatrixView ? 'Card View' : 'Matrix View'}
-          </PopButton>
           <PopButton
             color="blue"
             onClick={() => {
@@ -224,8 +220,7 @@ const RolesPage: React.FC = () => {
       </div>
 
       {/* ─── Card View ──────────────────────────────────────────── */}
-      {!showMatrixView && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {displayRoles.map((role, i) => {
             const colorCls = ROLE_COLOR_MAP[role.color] || ROLE_COLOR_MAP.blue;
             const icon = ICON_MAP[role.icon] || <Shield className="w-4 h-4" />;
@@ -287,65 +282,6 @@ const RolesPage: React.FC = () => {
             );
           })}
         </div>
-      )}
-
-      {/* ─── Matrix View ────────────────────────────────────────── */}
-      {showMatrixView && (
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase w-64 sticky left-0 bg-gray-50 z-10">
-                    Permission
-                  </th>
-                  {displayRoles.map((role) => (
-                    <th key={role.id} className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase min-w-[80px]">
-                      {role.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {(Object.keys(PERMISSION_GROUPS) as PermissionGroup[]).map((group) => (
-                  <React.Fragment key={group}>
-                    <tr className="bg-gray-50/50">
-                      <td colSpan={displayRoles.length + 1} className="px-4 py-2 text-xs font-semibold text-gray-700 uppercase sticky left-0 bg-gray-50/50 z-10">
-                        {PERMISSION_GROUPS[group]}
-                      </td>
-                    </tr>
-                    {groupedPermissions[group].map((perm) => (
-                      <tr key={perm.id} className="hover:bg-gray-50">
-                        <td className="px-4 py-2 text-sm text-gray-700 sticky left-0 bg-white z-10">
-                          <div>
-                            <span className="font-medium">{perm.label}</span>
-                            <p className="text-xs text-gray-400">{perm.description}</p>
-                          </div>
-                        </td>
-                        {displayRoles.map((role) => {
-                          const perms = role.is_system
-                            ? DEFAULT_ROLE_PERMISSIONS[role.slug as PredefinedRole] || []
-                            : getPermissionsForRole(role as Role);
-                          const has = perms.includes(perm.id);
-                          return (
-                            <td key={role.id} className="px-3 py-2 text-center">
-                              {has ? (
-                                <Check className="w-4 h-4 text-green-500 mx-auto" />
-                              ) : (
-                                <X className="w-4 h-4 text-gray-300 mx-auto" />
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
 
       {/* ═══════════════════════════════════════════════════════════
           CREATE / EDIT MODAL

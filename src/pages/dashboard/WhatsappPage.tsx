@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle, Send, Check, X, RefreshCw, Copy, Link2,
-  AlertCircle, Loader2, Phone,
+  Loader2, Phone, Zap, Clock, MessageSquare,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -121,15 +122,32 @@ const callWhatsAppFn = async (
   return json;
 };
 
+const setupDoneKey = (userId: string) => `wa_setup_done_${userId}`;
+
 // ─── Component ──────────────────────────────────────────────────────
 
 const WhatsappPage: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabKey>('conversations');
   const [settings, setSettings] = useState<WhatsAppSettings | null>(null);
   const [settingsLoading, setSettingsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
+
+  // Whether the user has completed the initial setup wizard
+  const [setupDone, setSetupDone] = useState(false);
+
+  // Initial setup form fields
+  const [setupForm, setSetupForm] = useState({
+    auto_reply_enabled: false,
+    response_tone: 'professional',
+    business_hours_only: false,
+    business_hours_start: '09:00',
+    business_hours_end: '17:00',
+    business_timezone: 'UTC',
+    greeting_template: '',
+  });
 
   // Conversations state
   const [threads, setThreads] = useState<WaThread[]>([]);
@@ -144,12 +162,7 @@ const WhatsappPage: React.FC = () => {
   const [composeText, setComposeText] = useState('');
   const [sending, setSending] = useState(false);
 
-  // Connect tab state
-  const [connectForm, setConnectForm] = useState({
-    wa_phone_number_id: '',
-    wa_access_token: '',
-    wa_business_account_id: '',
-  });
+  // Connection tab state
   const [testPhone, setTestPhone] = useState('');
   const [testing, setTesting] = useState(false);
 
@@ -169,16 +182,17 @@ const WhatsappPage: React.FC = () => {
         ? { ...DEFAULT_SETTINGS, ...res.settings }
         : { ...DEFAULT_SETTINGS };
       setSettings(s);
-      setConnectForm({
-        wa_phone_number_id: s.wa_phone_number_id || '',
-        wa_access_token: s.wa_access_token || '',
-        wa_business_account_id: s.wa_business_account_id || '',
-      });
-      if (!s.wa_phone_number_id) setActiveTab('connect');
-      else setActiveTab('conversations');
+
+      if (s.wa_phone_number_id) {
+        const done = !!localStorage.getItem(setupDoneKey(user.id));
+        setSetupDone(done);
+        if (done) setActiveTab('conversations');
+      } else {
+        setSetupDone(false);
+      }
     } catch {
       setSettings({ ...DEFAULT_SETTINGS });
-      setActiveTab('connect');
+      setSetupDone(false);
     } finally {
       setSettingsLoading(false);
     }
@@ -395,47 +409,30 @@ const WhatsappPage: React.FC = () => {
     }
   };
 
-  const handleSaveConnection = async () => {
+  const handleCompleteSetup = async () => {
     if (!user?.id || !settings) return;
-    if (!connectForm.wa_phone_number_id.trim()) {
-      showToast('error', 'Phone Number ID is required');
-      return;
-    }
-    if (!connectForm.wa_access_token.trim()) {
-      showToast('error', 'Access Token is required');
-      return;
-    }
     setSaving(true);
     try {
-      // 1. Save credentials
       await callWhatsAppFn('whatsapp-settings', {
         action: 'save',
         userId: user.id,
         ...settings,
-        wa_phone_number_id: connectForm.wa_phone_number_id.trim(),
-        wa_access_token: connectForm.wa_access_token.trim(),
-        wa_business_account_id: connectForm.wa_business_account_id.trim(),
+        auto_reply_enabled: setupForm.auto_reply_enabled,
+        response_tone: setupForm.response_tone,
+        business_hours_only: setupForm.business_hours_only,
+        business_hours_start: setupForm.business_hours_start,
+        business_hours_end: setupForm.business_hours_end,
+        business_timezone: setupForm.business_timezone,
+        greeting_template: setupForm.greeting_template,
         is_enabled: true,
       });
-
-      // 2. Validate credentials against Meta API
-      const validation = await callWhatsAppFn('whatsapp-settings', {
-        action: 'validate',
-        userId: user.id,
-        wa_phone_number_id: connectForm.wa_phone_number_id.trim(),
-        wa_access_token: connectForm.wa_access_token.trim(),
-      });
-
-      if (!validation?.valid) {
-        showToast('error', `Credentials saved but Meta rejected them: ${validation?.error || 'Invalid Phone Number ID or Access Token'}`);
-        return;
-      }
-
-      showToast('success', `Connected — ${validation.name || ''} (${validation.phone || ''})`.trim().replace(/\s+\(\)$/, ''));
-      await loadSettings();
+      localStorage.setItem(setupDoneKey(user.id), '1');
+      setSetupDone(true);
       setActiveTab('conversations');
+      showToast('success', 'WhatsApp is ready');
+      await loadSettings();
     } catch (e: any) {
-      showToast('error', e?.message || 'Failed to save connection');
+      showToast('error', e?.message || 'Failed to save setup');
     } finally {
       setSaving(false);
     }
@@ -449,6 +446,8 @@ const WhatsappPage: React.FC = () => {
         action: 'disconnect',
         userId: user.id,
       });
+      localStorage.removeItem(setupDoneKey(user.id));
+      setSetupDone(false);
       showToast('success', 'Disconnected');
       await loadSettings();
     } catch (e: any) {
@@ -546,10 +545,67 @@ const WhatsappPage: React.FC = () => {
     );
   }
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+  // ─── Pre-connect screen ───────────────────────────────────────────
+  if (!isConnected) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+            <MessageCircle className="w-5 h-5 text-green-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900">WhatsApp</h1>
+        </div>
+
+        <div className="max-w-lg">
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center space-y-5">
+            <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center mx-auto">
+              <MessageCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">Connect WhatsApp Business</h2>
+              <p className="text-sm text-gray-500 mt-1.5">
+                Link your Meta WhatsApp Business number to start responding to leads instantly.
+              </p>
+            </div>
+            <div className="grid grid-cols-3 gap-3 text-center">
+              {[
+                { icon: <Zap className="w-4 h-4" />, label: 'Instant replies' },
+                { icon: <MessageSquare className="w-4 h-4" />, label: 'AI drafts' },
+                { icon: <Clock className="w-4 h-4" />, label: '24/7 coverage' },
+              ].map((f) => (
+                <div key={f.label} className="bg-gray-50 rounded-xl p-3 space-y-1">
+                  <div className="flex justify-center text-green-600">{f.icon}</div>
+                  <p className="text-xs text-gray-600 font-medium">{f.label}</p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => navigate('/dashboard/integrations')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 text-sm font-medium w-full justify-center"
+            >
+              <Link2 className="w-4 h-4" />
+              Connect on Integrations
+            </button>
+          </div>
+        </div>
+
+        {toast && (
+          <div
+            className={`fixed bottom-6 right-6 z-50 px-4 py-3 rounded-lg shadow-lg text-sm font-medium ${
+              toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+            }`}
+          >
+            {toast.msg}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ─── Initial setup screen (connected but not yet configured) ──────
+  if (!setupDone) {
+    return (
+      <div className="space-y-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
             <MessageCircle className="w-5 h-5 text-green-600" />
@@ -557,15 +613,168 @@ const WhatsappPage: React.FC = () => {
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
               WhatsApp
-              {isConnected && (
-                <span className="w-2 h-2 rounded-full bg-green-500" title="Connected" />
-              )}
+              <span className="w-2 h-2 rounded-full bg-green-500" title="Connected" />
             </h1>
-            <p className="text-sm text-gray-500">
-              Speed-to-lead on WhatsApp — instant AI replies, approvals, and bookings.
-            </p>
+            <p className="text-sm text-gray-500">Finish setup to start receiving leads.</p>
           </div>
         </div>
+
+        <div className="max-w-lg space-y-4">
+          {/* AI Auto-Reply */}
+          <div className="bg-white border border-gray-200 rounded-xl p-5 flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-gray-900">AI Auto-Reply</p>
+              <p className="text-xs text-gray-500 mt-0.5">
+                AI responds to every inbound message instantly — no approval needed.
+              </p>
+            </div>
+            <Toggle
+              value={setupForm.auto_reply_enabled}
+              onChange={(v) => setSetupForm((f) => ({ ...f, auto_reply_enabled: v }))}
+            />
+          </div>
+
+          {/* Response Tone */}
+          <div className="bg-white border border-gray-200 rounded-xl p-5 space-y-2">
+            <p className="text-sm font-medium text-gray-900">Response Tone</p>
+            <p className="text-xs text-gray-500">How the AI sounds when replying to leads.</p>
+            <div className="grid grid-cols-3 gap-2 mt-1">
+              {(['professional', 'friendly', 'formal'] as const).map((tone) => (
+                <button
+                  key={tone}
+                  onClick={() => setSetupForm((f) => ({ ...f, response_tone: tone }))}
+                  className={`py-2 text-sm rounded-lg border transition-colors font-medium capitalize ${
+                    setupForm.response_tone === tone
+                      ? 'bg-green-600 text-white border-green-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
+                  }`}
+                >
+                  {tone}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Business Hours */}
+          <div className="bg-white border border-gray-200 rounded-xl p-5 space-y-3">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-900">Business Hours Only</p>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Limit AI replies to your working hours.
+                </p>
+              </div>
+              <Toggle
+                value={setupForm.business_hours_only}
+                onChange={(v) => setSetupForm((f) => ({ ...f, business_hours_only: v }))}
+              />
+            </div>
+            {setupForm.business_hours_only && (
+              <div className="grid grid-cols-3 gap-3 pt-1">
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">Start</label>
+                  <input
+                    type="time"
+                    value={setupForm.business_hours_start}
+                    onChange={(e) =>
+                      setSetupForm((f) => ({ ...f, business_hours_start: e.target.value }))
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">End</label>
+                  <input
+                    type="time"
+                    value={setupForm.business_hours_end}
+                    onChange={(e) =>
+                      setSetupForm((f) => ({ ...f, business_hours_end: e.target.value }))
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">Timezone</label>
+                  <select
+                    value={setupForm.business_timezone}
+                    onChange={(e) =>
+                      setSetupForm((f) => ({ ...f, business_timezone: e.target.value }))
+                    }
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                  >
+                    <option value="UTC">UTC</option>
+                    <option value="America/New_York">Eastern</option>
+                    <option value="America/Chicago">Central</option>
+                    <option value="America/Denver">Mountain</option>
+                    <option value="America/Los_Angeles">Pacific</option>
+                    <option value="Europe/London">London</option>
+                    <option value="Asia/Jerusalem">Jerusalem</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Greeting Template */}
+          <div className="bg-white border border-gray-200 rounded-xl p-5 space-y-2">
+            <p className="text-sm font-medium text-gray-900">
+              Greeting Message{' '}
+              <span className="text-gray-400 font-normal">(optional)</span>
+            </p>
+            <p className="text-xs text-gray-500">
+              First message sent to every new lead. Leave blank to let the AI decide.
+            </p>
+            <textarea
+              value={setupForm.greeting_template}
+              onChange={(e) =>
+                setSetupForm((f) => ({ ...f, greeting_template: e.target.value }))
+              }
+              rows={3}
+              placeholder="Hi! Thanks for reaching out. How can we help you today?"
+              className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <button
+            onClick={handleCompleteSetup}
+            disabled={saving}
+            className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 text-sm font-semibold"
+          >
+            {saving ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Check className="w-4 h-4" />
+            )}
+            Finish Setup
+          </button>
+        </div>
+
+        {toast && (
+          <div
+            className={`fixed bottom-6 right-6 z-50 px-4 py-3 rounded-lg shadow-lg text-sm font-medium ${
+              toast.type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+            }`}
+          >
+            {toast.msg}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ─── Full UI (connected + setup done) ────────────────────────────
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+          <MessageCircle className="w-5 h-5 text-green-600" />
+        </div>
+        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+          WhatsApp
+          <span className="w-2 h-2 rounded-full bg-green-500" title="Connected" />
+        </h1>
       </div>
 
       {/* Tab bar */}
@@ -573,7 +782,7 @@ const WhatsappPage: React.FC = () => {
         {([
           { key: 'conversations', label: 'Conversations' },
           { key: 'settings', label: 'Settings' },
-          { key: 'connect', label: isConnected ? 'Connection' : 'Connect' },
+          { key: 'connect', label: 'Connection' },
         ] as const).map((tab) => (
           <button
             key={tab.key}
@@ -604,255 +813,236 @@ const WhatsappPage: React.FC = () => {
 
       {/* ─── Conversations Tab ───────────────────────────────────── */}
       {activeTab === 'conversations' && (
-        <>
-          {!isConnected ? (
-            <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
-              <AlertCircle className="w-8 h-8 text-gray-400 mx-auto mb-3" />
-              <p className="text-gray-700 font-medium">WhatsApp is not connected yet</p>
-              <p className="text-sm text-gray-500 mt-1">
-                Connect your Meta WhatsApp Business number to start receiving leads.
-              </p>
-              <button
-                onClick={() => setActiveTab('connect')}
-                className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium"
-              >
-                <Link2 className="w-4 h-4" />
-                Connect WhatsApp
-              </button>
+        <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden min-h-[70vh]">
+          {/* Left: thread list */}
+          <div className="w-80 border-r border-gray-200 flex flex-col">
+            <div className="p-4 border-b border-gray-200">
+              <h2 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                WhatsApp
+                <span className="w-2 h-2 rounded-full bg-green-500" />
+              </h2>
+              <div className="mt-3 flex gap-1 flex-wrap">
+                {(['all', 'pending', 'qualified', 'booked'] as FilterKey[]).map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
+                      filter === f
+                        ? 'bg-green-600 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {f[0].toUpperCase() + f.slice(1)}
+                  </button>
+                ))}
+              </div>
             </div>
-          ) : (
-            <div className="flex bg-white border border-gray-200 rounded-xl overflow-hidden min-h-[70vh]">
-              {/* Left: thread list */}
-              <div className="w-80 border-r border-gray-200 flex flex-col">
-                <div className="p-4 border-b border-gray-200">
-                  <h2 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-                    WhatsApp
-                    {isConnected && <span className="w-2 h-2 rounded-full bg-green-500" />}
-                  </h2>
-                  <div className="mt-3 flex gap-1 flex-wrap">
-                    {(['all', 'pending', 'qualified', 'booked'] as FilterKey[]).map((f) => (
-                      <button
-                        key={f}
-                        onClick={() => setFilter(f)}
-                        className={`px-2.5 py-1 text-xs rounded-full transition-colors ${
-                          filter === f
-                            ? 'bg-green-600 text-white'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                        }`}
-                      >
-                        {f[0].toUpperCase() + f.slice(1)}
-                      </button>
-                    ))}
+            <div className="flex-1 overflow-y-auto">
+              {threadsLoading ? (
+                <div className="p-6 flex justify-center">
+                  <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                </div>
+              ) : filteredThreads.length === 0 ? (
+                <div className="p-6 text-center text-sm text-gray-500">
+                  No conversations yet
+                </div>
+              ) : (
+                filteredThreads.map((t) => (
+                  <button
+                    key={t.threadId}
+                    onClick={() => setSelectedThread(t.threadId)}
+                    className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                      selectedThread === t.threadId ? 'bg-green-50' : ''
+                    }`}
+                  >
+                    <div className="flex items-start gap-2">
+                      <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                        <MessageCircle className="w-4 h-4 text-green-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-sm font-medium text-gray-900 truncate">
+                            {t.contactPhone || 'Unknown'}
+                          </span>
+                          <span className="text-xs text-gray-400 shrink-0">
+                            {formatTime(t.lastMessageAt)}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500 truncate mt-0.5">
+                          {t.lastMessage}
+                        </p>
+                        {(t.latestQualification?.score != null || t.latestQualification?.intent) && (
+                          <div className="flex items-center gap-1 mt-1 flex-wrap">
+                            {typeof t.latestQualification?.score === 'number' && (
+                              <span className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded font-medium">
+                                Score: {t.latestQualification.score}
+                              </span>
+                            )}
+                            {t.latestQualification?.intent && (
+                              <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] rounded font-medium">
+                                {t.latestQualification.intent}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      {t.hasPendingDraft && (
+                        <span
+                          className="w-2 h-2 rounded-full bg-yellow-400 shrink-0 mt-1.5"
+                          title="Pending AI draft"
+                        />
+                      )}
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Right: conversation */}
+          <div className="flex-1 flex flex-col">
+            {!selectedThread ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
+                <MessageCircle className="w-10 h-10 mb-3" />
+                <p className="text-sm">Select a conversation</p>
+              </div>
+            ) : (
+              <>
+                <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-gray-500" />
+                    <span className="text-sm font-medium text-gray-900">
+                      {threads.find((t) => t.threadId === selectedThread)?.contactPhone ||
+                        'Unknown'}
+                    </span>
+                    <span className="text-xs px-2 py-0.5 bg-green-50 text-green-700 rounded-full">
+                      via WhatsApp
+                    </span>
                   </div>
                 </div>
-                <div className="flex-1 overflow-y-auto">
-                  {threadsLoading ? (
-                    <div className="p-6 flex justify-center">
+
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+                  {hasMoreMessages && !messagesLoading && (
+                    <div className="flex justify-center pb-2">
+                      <button
+                        onClick={loadMoreMessages}
+                        disabled={loadingMore}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                      >
+                        {loadingMore ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <RefreshCw className="w-3.5 h-3.5" />
+                        )}
+                        Load more
+                      </button>
+                    </div>
+                  )}
+                  {messagesLoading ? (
+                    <div className="flex justify-center py-6">
                       <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
                     </div>
-                  ) : filteredThreads.length === 0 ? (
-                    <div className="p-6 text-center text-sm text-gray-500">
-                      No conversations yet
-                    </div>
                   ) : (
-                    filteredThreads.map((t) => (
-                      <button
-                        key={t.threadId}
-                        onClick={() => setSelectedThread(t.threadId)}
-                        className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
-                          selectedThread === t.threadId ? 'bg-green-50' : ''
-                        }`}
-                      >
-                        <div className="flex items-start gap-2">
-                          <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
-                            <MessageCircle className="w-4 h-4 text-green-600" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between gap-2">
-                              <span className="text-sm font-medium text-gray-900 truncate">
-                                {t.contactPhone || 'Unknown'}
-                              </span>
-                              <span className="text-xs text-gray-400 shrink-0">
-                                {formatTime(t.lastMessageAt)}
-                              </span>
-                            </div>
-                            <p className="text-xs text-gray-500 truncate mt-0.5">
-                              {t.lastMessage}
-                            </p>
-                            {(t.latestQualification?.score != null || t.latestQualification?.intent) && (
-                              <div className="flex items-center gap-1 mt-1 flex-wrap">
-                                {typeof t.latestQualification?.score === 'number' && (
-                                  <span className="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded font-medium">
-                                    Score: {t.latestQualification.score}
-                                  </span>
-                                )}
-                                {t.latestQualification?.intent && (
-                                  <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 text-[10px] rounded font-medium">
-                                    {t.latestQualification.intent}
-                                  </span>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                          {t.hasPendingDraft && (
-                            <span
-                              className="w-2 h-2 rounded-full bg-yellow-400 shrink-0 mt-1.5"
-                              title="Pending AI draft"
-                            />
-                          )}
-                        </div>
-                      </button>
-                    ))
-                  )}
-                </div>
-              </div>
-
-              {/* Right: conversation */}
-              <div className="flex-1 flex flex-col">
-                {!selectedThread ? (
-                  <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
-                    <MessageCircle className="w-10 h-10 mb-3" />
-                    <p className="text-sm">Select a conversation</p>
-                  </div>
-                ) : (
-                  <>
-                    <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm font-medium text-gray-900">
-                          {threads.find((t) => t.threadId === selectedThread)?.contactPhone ||
-                            'Unknown'}
-                        </span>
-                        <span className="text-xs px-2 py-0.5 bg-green-50 text-green-700 rounded-full">
-                          via WhatsApp
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
-                      {hasMoreMessages && !messagesLoading && (
-                        <div className="flex justify-center pb-2">
-                          <button
-                            onClick={loadMoreMessages}
-                            disabled={loadingMore}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    messages.map((m) => {
+                      const inbound = m.direction === 'inbound';
+                      const isAi = !inbound && (m.ai_draft_status === 'auto_sent' || m.ai_draft_status === 'approved');
+                      return (
+                        <div key={m.id}>
+                          <div
+                            className={`flex ${inbound ? 'justify-start' : 'justify-end'}`}
                           >
-                            {loadingMore ? (
-                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            ) : (
-                              <RefreshCw className="w-3.5 h-3.5" />
-                            )}
-                            Load more
-                          </button>
-                        </div>
-                      )}
-                      {messagesLoading ? (
-                        <div className="flex justify-center py-6">
-                          <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
-                        </div>
-                      ) : (
-                        messages.map((m) => {
-                          const inbound = m.direction === 'inbound';
-                          const isAi = !inbound && (m.ai_draft_status === 'auto_sent' || m.ai_draft_status === 'approved');
-                          return (
-                            <div key={m.id}>
-                              <div
-                                className={`flex ${inbound ? 'justify-start' : 'justify-end'}`}
-                              >
-                                <div
-                                  className={`max-w-[70%] px-3 py-2 rounded-lg text-sm shadow-sm ${
-                                    inbound
-                                      ? 'bg-white text-gray-900 border border-gray-200'
-                                      : 'bg-green-600 text-white'
+                            <div
+                              className={`max-w-[70%] px-3 py-2 rounded-lg text-sm shadow-sm ${
+                                inbound
+                                  ? 'bg-white text-gray-900 border border-gray-200'
+                                  : 'bg-green-600 text-white'
+                              }`}
+                            >
+                              <p className="whitespace-pre-wrap">{m.body}</p>
+                              <div className={`flex items-center gap-2 mt-1 ${inbound ? 'justify-start' : 'justify-end'}`}>
+                                {isAi && (
+                                  <span className="text-[10px] font-semibold text-indigo-200 bg-indigo-700/40 px-1.5 py-0.5 rounded">
+                                    AI
+                                  </span>
+                                )}
+                                <p
+                                  className={`text-[10px] ${
+                                    inbound ? 'text-gray-400' : 'text-green-100'
                                   }`}
                                 >
-                                  <p className="whitespace-pre-wrap">{m.body}</p>
-                                  <div className={`flex items-center gap-2 mt-1 ${inbound ? 'justify-start' : 'justify-end'}`}>
-                                    {isAi && (
-                                      <span className="text-[10px] font-semibold text-indigo-200 bg-indigo-700/40 px-1.5 py-0.5 rounded">
-                                        AI
-                                      </span>
-                                    )}
-                                    <p
-                                      className={`text-[10px] ${
-                                        inbound ? 'text-gray-400' : 'text-green-100'
-                                      }`}
-                                    >
-                                      {formatTime(m.created_at)}
-                                    </p>
-                                  </div>
-                                </div>
+                                  {formatTime(m.created_at)}
+                                </p>
                               </div>
-                              {m.ai_draft_status === 'pending' && m.ai_draft && (
-                                <div className="mt-2 ml-auto max-w-[70%] border-2 border-yellow-400 bg-yellow-50 rounded-lg p-3">
-                                  <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-xs font-semibold text-yellow-800 uppercase tracking-wide">
-                                      AI Draft — Pending
-                                    </span>
-                                  </div>
-                                  <p className="text-sm text-gray-800 whitespace-pre-wrap">
-                                    {m.ai_draft}
-                                  </p>
-                                  <div className="flex gap-2 mt-3">
-                                    <button
-                                      onClick={() => handleDraftAction(m.id, 'approve')}
-                                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white rounded-md text-xs font-medium hover:bg-green-700"
-                                    >
-                                      <Check className="w-3.5 h-3.5" />
-                                      Approve
-                                    </button>
-                                    <button
-                                      onClick={() => handleDraftAction(m.id, 'reject')}
-                                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-50"
-                                    >
-                                      <X className="w-3.5 h-3.5" />
-                                      Reject
-                                    </button>
-                                    <button
-                                      onClick={() => handleDraftAction(m.id, 'regenerate')}
-                                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-50"
-                                    >
-                                      <RefreshCw className="w-3.5 h-3.5" />
-                                      Regenerate
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
                             </div>
-                          );
-                        })
-                      )}
-                    </div>
-
-                    <div className="p-3 border-t border-gray-200 bg-white">
-                      <div className="flex gap-2 items-end">
-                        <textarea
-                          value={composeText}
-                          onChange={(e) => setComposeText(e.target.value)}
-                          placeholder="Type a message…"
-                          rows={2}
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                        />
-                        <button
-                          onClick={handleSend}
-                          disabled={sending || !composeText.trim()}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 text-sm font-medium"
-                        >
-                          {sending ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : (
-                            <Send className="w-4 h-4" />
+                          </div>
+                          {m.ai_draft_status === 'pending' && m.ai_draft && (
+                            <div className="mt-2 ml-auto max-w-[70%] border-2 border-yellow-400 bg-yellow-50 rounded-lg p-3">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-xs font-semibold text-yellow-800 uppercase tracking-wide">
+                                  AI Draft — Pending
+                                </span>
+                              </div>
+                              <p className="text-sm text-gray-800 whitespace-pre-wrap">
+                                {m.ai_draft}
+                              </p>
+                              <div className="flex gap-2 mt-3">
+                                <button
+                                  onClick={() => handleDraftAction(m.id, 'approve')}
+                                  className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white rounded-md text-xs font-medium hover:bg-green-700"
+                                >
+                                  <Check className="w-3.5 h-3.5" />
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleDraftAction(m.id, 'reject')}
+                                  className="inline-flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-50"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                  Reject
+                                </button>
+                                <button
+                                  onClick={() => handleDraftAction(m.id, 'regenerate')}
+                                  className="inline-flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-50"
+                                >
+                                  <RefreshCw className="w-3.5 h-3.5" />
+                                  Regenerate
+                                </button>
+                              </div>
+                            </div>
                           )}
-                          Send
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-        </>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+
+                <div className="p-3 border-t border-gray-200 bg-white">
+                  <div className="flex gap-2 items-end">
+                    <textarea
+                      value={composeText}
+                      onChange={(e) => setComposeText(e.target.value)}
+                      placeholder="Type a message…"
+                      rows={2}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    />
+                    <button
+                      onClick={handleSend}
+                      disabled={sending || !composeText.trim()}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 text-sm font-medium"
+                    >
+                      {sending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Send className="w-4 h-4" />
+                      )}
+                      Send
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       )}
 
       {/* ─── Settings Tab ─────────────────────────────────────────── */}
@@ -1005,139 +1195,59 @@ const WhatsappPage: React.FC = () => {
         </div>
       )}
 
-      {/* ─── Connect Tab ──────────────────────────────────────────── */}
+      {/* ─── Connection Tab ───────────────────────────────────────── */}
       {activeTab === 'connect' && settings && (
         <div className="space-y-6 max-w-2xl">
-          {isConnected ? (
-            <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                  <Check className="w-4 h-4 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">Connected</p>
-                  <p className="text-xs text-gray-500">
-                    Phone Number ID:{' '}
-                    <span className="font-mono">{settings.wa_phone_number_id}</span>
-                  </p>
-                  {settings.wa_business_account_id && (
-                    <p className="text-xs text-gray-500">
-                      WABA ID:{' '}
-                      <span className="font-mono">{settings.wa_business_account_id}</span>
-                    </p>
-                  )}
-                </div>
+          <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                <Check className="w-4 h-4 text-green-600" />
               </div>
-              <button
-                onClick={handleDisconnect}
-                disabled={saving}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 text-sm font-medium"
-              >
-                <X className="w-4 h-4" />
-                Disconnect
-              </button>
-            </div>
-          ) : (
-            <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-5">
               <div>
-                <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3">
-                  Set up WhatsApp Business
-                </h2>
-                <ol className="space-y-2 text-sm text-gray-700 list-decimal list-inside">
-                  <li>
-                    Create a Meta Business Account at{' '}
-                    <a
-                      href="https://business.facebook.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-green-700 underline"
-                    >
-                      business.facebook.com
-                    </a>
-                  </li>
-                  <li>
-                    Add a WhatsApp product in Meta Developer Console (
-                    <a
-                      href="https://developers.facebook.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-green-700 underline"
-                    >
-                      developers.facebook.com
-                    </a>
-                    )
-                  </li>
-                  <li>
-                    Generate a System User Access Token with{' '}
-                    <span className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">
-                      whatsapp_business_messaging
-                    </span>{' '}
-                    permission
-                  </li>
-                  <li>Copy your Phone Number ID and Access Token</li>
-                  <li>Paste them below and click Save</li>
-                </ol>
+                <p className="text-sm font-semibold text-gray-900">Connected</p>
+                <p className="text-xs text-gray-500">
+                  Phone Number ID:{' '}
+                  <span className="font-mono">{settings.wa_phone_number_id}</span>
+                </p>
+                {settings.wa_business_account_id && (
+                  <p className="text-xs text-gray-500">
+                    WABA ID:{' '}
+                    <span className="font-mono">{settings.wa_business_account_id}</span>
+                  </p>
+                )}
               </div>
+            </div>
 
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-1">
-                    Phone Number ID
-                  </label>
-                  <input
-                    type="text"
-                    value={connectForm.wa_phone_number_id}
-                    onChange={(e) =>
-                      setConnectForm((f) => ({ ...f, wa_phone_number_id: e.target.value }))
-                    }
-                    placeholder="1234567890"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-1">
-                    Access Token
-                  </label>
-                  <input
-                    type="password"
-                    value={connectForm.wa_access_token}
-                    onChange={(e) =>
-                      setConnectForm((f) => ({ ...f, wa_access_token: e.target.value }))
-                    }
-                    placeholder="EAAG…"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-1">
-                    Business Account ID
-                  </label>
-                  <input
-                    type="text"
-                    value={connectForm.wa_business_account_id}
-                    onChange={(e) =>
-                      setConnectForm((f) => ({
-                        ...f,
-                        wa_business_account_id: e.target.value,
-                      }))
-                    }
-                    placeholder="1234567890"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
+            {/* Webhook info */}
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3">
+              <div>
+                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
+                  Webhook URL
+                </p>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 text-xs bg-white border border-gray-200 rounded px-2 py-1.5 font-mono break-all">
+                    {webhookUrl}
+                  </code>
+                  <button
+                    onClick={() => copyToClipboard(webhookUrl)}
+                    className="p-1.5 hover:bg-gray-200 rounded"
+                    title="Copy"
+                  >
+                    <Copy className="w-4 h-4 text-gray-600" />
+                  </button>
                 </div>
               </div>
-
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3">
+              {settings.webhook_verify_token && (
                 <div>
                   <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
-                    Webhook URL
+                    Verify Token
                   </p>
                   <div className="flex items-center gap-2">
                     <code className="flex-1 text-xs bg-white border border-gray-200 rounded px-2 py-1.5 font-mono break-all">
-                      {webhookUrl}
+                      {settings.webhook_verify_token}
                     </code>
                     <button
-                      onClick={() => copyToClipboard(webhookUrl)}
+                      onClick={() => copyToClipboard(settings.webhook_verify_token || '')}
                       className="p-1.5 hover:bg-gray-200 rounded"
                       title="Copy"
                     >
@@ -1145,78 +1255,47 @@ const WhatsappPage: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
-                    Verify Token
-                  </p>
-                  {settings.webhook_verify_token ? (
-                    <div className="flex items-center gap-2">
-                      <code className="flex-1 text-xs bg-white border border-gray-200 rounded px-2 py-1.5 font-mono break-all">
-                        {settings.webhook_verify_token}
-                      </code>
-                      <button
-                        onClick={() => copyToClipboard(settings.webhook_verify_token || '')}
-                        className="p-1.5 hover:bg-gray-200 rounded"
-                        title="Copy"
-                      >
-                        <Copy className="w-4 h-4 text-gray-600" />
-                      </button>
-                    </div>
-                  ) : (
-                    <p className="text-xs text-gray-500 italic">
-                      Will be auto-generated on save
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <button
-                onClick={handleSaveConnection}
-                disabled={
-                  saving || !connectForm.wa_phone_number_id || !connectForm.wa_access_token
-                }
-                className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 text-sm font-medium"
-              >
-                {saving ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Link2 className="w-4 h-4" />
-                )}
-                Save Connection
-              </button>
+              )}
             </div>
-          )}
+
+            <button
+              onClick={handleDisconnect}
+              disabled={saving}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 text-sm font-medium"
+            >
+              <X className="w-4 h-4" />
+              Disconnect
+            </button>
+          </div>
 
           {/* Test Connection */}
-          {settings.wa_phone_number_id && (
-            <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-3">
-              <h3 className="text-sm font-semibold text-gray-900">Test Connection</h3>
-              <p className="text-xs text-gray-500">
-                Send a test WhatsApp message to verify your setup.
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="tel"
-                  value={testPhone}
-                  onChange={(e) => setTestPhone(e.target.value)}
-                  placeholder="+1 555 123 4567"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                />
-                <button
-                  onClick={handleTestConnection}
-                  disabled={testing || !testPhone}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 disabled:opacity-50 text-sm font-medium"
-                >
-                  {testing ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4" />
-                  )}
-                  Send Test
-                </button>
-              </div>
+          <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-3">
+            <h3 className="text-sm font-semibold text-gray-900">Test Connection</h3>
+            <p className="text-xs text-gray-500">
+              Send a test WhatsApp message to verify your setup.
+            </p>
+            <div className="flex gap-2">
+              <input
+                type="tel"
+                value={testPhone}
+                onChange={(e) => setTestPhone(e.target.value)}
+                placeholder="+1 555 123 4567"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+              <button
+                onClick={handleTestConnection}
+                disabled={testing || !testPhone}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 disabled:opacity-50 text-sm font-medium"
+              >
+                {testing ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+                Send Test
+              </button>
             </div>
-          )}
+          </div>
         </div>
       )}
     </div>

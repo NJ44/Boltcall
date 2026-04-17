@@ -288,6 +288,7 @@ function UnsavedChanges({
                     </Button>
                   )}
                   <Button
+                    variant="ghost"
                     size="sm"
                     className="h-7 rounded-full cursor-pointer text-xs bg-blue-600 text-white hover:bg-blue-700 border-none shadow-none"
                     onClick={onSave}

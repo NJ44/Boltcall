@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import {
-  Phone, PhoneCall, PhoneOff, Clock, Calendar, CheckCircle2,
+  Phone, PhoneCall, Calendar,
   Settings, Volume2, BookOpen, ArrowRight, BarChart3,
-  TrendingUp, Users, Headphones, AlertCircle, X, Mic, Brain, Hash,
-  Zap
+  Headphones, AlertCircle, X, Mic, Brain, Hash,
+  ChevronRight
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -14,20 +14,13 @@ import { PopButton } from '../../components/ui/pop-button';
 import { StatusBadge } from '../../components/ui/status-badge';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface ReceptionistStats {
-  totalCalls: number;
-  answeredCalls: number;
-  appointmentsBooked: number;
-  avgCallDuration: string;
-  missedCalls: number;
-}
-
 interface AgentInfo {
   id: string;
   name: string;
   status: string;
   voice_id?: string;
   created_at?: string;
+  type?: string;
 }
 
 const SETUP_STEPS = [
@@ -64,17 +57,10 @@ const SETUP_STEPS = [
 const AIReceptionistDashboardPage: React.FC = () => {
   const { user } = useAuth();
   useTranslation();
-  const [agent, setAgent] = useState<AgentInfo | null>(null);
+  const [agents, setAgents] = useState<AgentInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEnabled, setIsEnabled] = useState(false);
   const [showSetupModal, setShowSetupModal] = useState(false);
-  const [stats] = useState<ReceptionistStats>({
-    totalCalls: 0,
-    answeredCalls: 0,
-    appointmentsBooked: 0,
-    avgCallDuration: '0:00',
-    missedCalls: 0
-  });
 
   useEffect(() => {
     if (!user) return;
@@ -85,8 +71,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
             .from('agents')
             .select('id, name, status, voice_id, created_at')
             .eq('user_id', user.id)
-            .limit(1)
-            .maybeSingle(),
+            .order('created_at', { ascending: false }),
           supabase
             .from('business_features')
             .select('voice_agent_enabled')
@@ -95,7 +80,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
         ]);
 
         if (agentRes.data) {
-          setAgent(agentRes.data);
+          setAgents(agentRes.data);
         }
         if (featuresRes.data) {
           setIsEnabled(featuresRes.data.voice_agent_enabled ?? false);
@@ -113,8 +98,8 @@ const AIReceptionistDashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      {/* ── No Agent — Setup CTA ── */}
-      {!agent && (
+      {/* No Agent — Setup CTA */}
+      {agents.length === 0 && (
         <div className="bg-white dark:bg-[#111114] rounded-xl border border-gray-200 dark:border-[#1e1e24] p-8 text-center">
           <div className="w-16 h-16 bg-blue-50 dark:bg-blue-950/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Phone className="w-8 h-8 text-blue-600" />
@@ -134,14 +119,13 @@ const AIReceptionistDashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* ── Agent Active — Organized Details ── */}
-      {agent && (
+      {agents.length > 0 && (
         <>
           {/* Status + Configure */}
           <div className="flex items-center justify-between">
             <StatusBadge status={isEnabled ? 'active' : 'inactive'} />
             <Link
-              to={agent ? `/dashboard/agents/${agent.id}` : '/dashboard/agents'}
+              to="/dashboard/agents"
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 font-medium transition-colors"
             >
               <Settings className="w-3.5 h-3.5" />
@@ -149,81 +133,46 @@ const AIReceptionistDashboardPage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: 'Total Calls', value: stats.totalCalls, icon: PhoneCall, color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-950/30' },
-              { label: 'Answered', value: stats.answeredCalls, icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-950/30' },
-              { label: 'Appointments', value: stats.appointmentsBooked, icon: Calendar, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-950/30' },
-              { label: 'Missed', value: stats.missedCalls, icon: PhoneOff, color: 'text-red-600', bg: 'bg-red-50 dark:bg-red-950/30' },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-white dark:bg-[#111114] rounded-xl border border-gray-200 dark:border-[#1e1e24] p-4"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-9 h-9 rounded-lg ${stat.bg} flex items-center justify-center`}>
-                    <stat.icon className={`w-4.5 h-4.5 ${stat.color}`} />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Receptionist Details Card */}
+          {/* Agent List */}
           <div className="bg-white dark:bg-[#111114] rounded-xl border border-gray-200 dark:border-[#1e1e24] overflow-hidden">
-            <div className="px-5 py-4 border-b border-gray-200 dark:border-[#1e1e24] flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center">
-                <Headphones className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{agent.name}</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">AI Receptionist</p>
-              </div>
+            <div className="px-5 py-4 border-b border-gray-200 dark:border-[#1e1e24] flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Your AI Receptionists</h3>
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 dark:bg-[#1e1e24] text-xs font-medium text-gray-600 dark:text-gray-400">
+                {agents.length}
+              </span>
             </div>
-
-            <div className="p-5">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-[#0e0e11]">
-                  <Clock className="w-4 h-4 text-gray-400" />
-                  <div>
-                    <p className="text-xs text-gray-500">Avg. Call Duration</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">{stats.avgCallDuration}</p>
+            <div className="divide-y divide-gray-100 dark:divide-[#1e1e24]">
+              {agents.map((agent) => (
+                <Link
+                  key={agent.id}
+                  to={`/dashboard/agents/${agent.id}`}
+                  className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 dark:hover:bg-[#0e0e11] transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center flex-shrink-0">
+                    <Headphones className="w-5 h-5 text-blue-600" />
                   </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-[#0e0e11]">
-                  <TrendingUp className="w-4 h-4 text-gray-400" />
-                  <div>
-                    <p className="text-xs text-gray-500">Answer Rate</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      {stats.totalCalls > 0 ? Math.round((stats.answeredCalls / stats.totalCalls) * 100) : 0}%
-                    </p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm text-gray-900 dark:text-white">{agent.name}</p>
+                    <p className="text-xs text-gray-500">AI Receptionist</p>
+                    {(agent.created_at || agent.voice_id) && (
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {agent.created_at && (
+                          <span>Created {new Date(agent.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        )}
+                        {agent.created_at && agent.voice_id && <span> · </span>}
+                        {agent.voice_id && <span>Voice ID: {agent.voice_id.slice(0, 8)}...</span>}
+                      </p>
+                    )}
                   </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-[#0e0e11]">
-                  <Users className="w-4 h-4 text-gray-400" />
-                  <div>
-                    <p className="text-xs text-gray-500">Booking Rate</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      {stats.answeredCalls > 0 ? Math.round((stats.appointmentsBooked / stats.answeredCalls) * 100) : 0}%
-                    </p>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${agent.status === 'active' ? 'text-green-600' : 'text-gray-400'}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`} />
+                      {agent.status === 'active' ? 'active' : 'inactive'}
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-gray-300 dark:text-gray-600" />
                   </div>
-                </div>
-              </div>
-
-              {/* Agent meta info */}
-              {agent.created_at && (
-                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-[#1e1e24] flex items-center gap-4 text-xs text-gray-400">
-                  <span>Created {new Date(agent.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                  {agent.voice_id && <span>Voice ID: {agent.voice_id.slice(0, 8)}...</span>}
-                  <span className={`inline-flex items-center gap-1 ${agent.status === 'active' ? 'text-green-600' : 'text-gray-400'}`}>
-                    <Zap className="w-3 h-3" />
-                    {agent.status}
-                  </span>
-                </div>
-              )}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -258,7 +207,6 @@ const AIReceptionistDashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Not enabled warning */}
           {!isEnabled && (
             <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 rounded-xl p-4 flex items-start gap-3">
               <AlertCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
@@ -292,7 +240,6 @@ const AIReceptionistDashboardPage: React.FC = () => {
               className="fixed inset-0 z-50 flex items-center justify-center p-4"
             >
               <div className="bg-white dark:bg-[#111114] rounded-2xl border border-gray-200 dark:border-[#1e1e24] shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-                {/* Modal Header */}
                 <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-[#1e1e24]">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-xl flex items-center justify-center">
@@ -311,7 +258,6 @@ const AIReceptionistDashboardPage: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Steps */}
                 <div className="px-6 py-5 space-y-4">
                   {SETUP_STEPS.map((step, i) => (
                     <div key={i} className="flex items-start gap-4">
@@ -329,7 +275,6 @@ const AIReceptionistDashboardPage: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Footer */}
                 <div className="px-6 py-4 border-t border-gray-200 dark:border-[#1e1e24] flex items-center justify-between gap-3">
                   <p className="text-xs text-gray-400">Takes about 5 minutes</p>
                   <Link

@@ -192,7 +192,7 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/leads': t('page.leads'),
       '/dashboard/calls': t('page.calls'),
       '/dashboard/messages': t('page.messages'),
-      '/dashboard/sms': 'SMS',
+      '/dashboard/sms': 'SMS Agent',
       '/dashboard/instant-lead-response': t('page.instantLeadResponse'),
       '/dashboard/ai-receptionist': 'AI Receptionist',
       '/dashboard/agents': t('page.aiAgents'),
@@ -329,7 +329,7 @@ const DashboardLayout: React.FC = () => {
   const navItemsServices = [
     { to: '/dashboard/ai-receptionist', label: t('nav.aiReceptionist'), icon: <Bot className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.aiReceptionist },
     { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('beta') as string, needsSetup: !services.phoneSystem },
-    { to: '/dashboard/sms', label: 'SMS', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
+    { to: '/dashboard/sms', label: 'SMS Agent', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/whatsapp', label: 'WhatsApp', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.whatsapp },
     { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.instantLeadResponse },
     { to: '/dashboard/email', label: 'AI Email', icon: <Mail className="w-3.5 h-3.5 scale-[0.95]" /> },
@@ -366,9 +366,6 @@ const DashboardLayout: React.FC = () => {
       <>
         <span className={`relative flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
-          {item.needsSetup && (
-            <span className="absolute -top-1.5 -right-1.5 w-2 h-2 rounded-full bg-orange-400 border border-white dark:border-[#111114]" />
-          )}
         </span>
         {/* Custom tooltip — card to the outside of icon (flips for RTL) */}
         {isCollapsedView && (
@@ -704,7 +701,7 @@ const DashboardLayout: React.FC = () => {
                        {([
                          { key: 'aiReceptionist' as const, label: 'AI Receptionist', icon: <Bot className="w-4 h-4" />, enabled: services.aiReceptionist, configLink: '/dashboard/agents' },
                          { key: 'phoneSystem' as const, label: 'Phone System', icon: <Phone className="w-4 h-4" />, enabled: services.phoneSystem, configLink: '/dashboard/phone' },
-                         { key: 'sms' as const, label: 'SMS', icon: <MessageSquare className="w-4 h-4" />, enabled: services.sms, configLink: '/dashboard/messages' },
+                         { key: 'sms' as const, label: 'SMS Agent', icon: <MessageSquare className="w-4 h-4" />, enabled: services.sms, configLink: '/dashboard/messages' },
                          { key: 'websiteBubble' as const, label: 'Website Widget', icon: <Globe className="w-4 h-4" />, enabled: services.websiteBubble, configLink: '/dashboard/chat-widget' },
                          { key: 'whatsapp' as const, label: 'WhatsApp', icon: <MessageSquare className="w-4 h-4" />, enabled: services.whatsapp, configLink: '/dashboard/whatsapp' },
                        ] as const).map((svc) => (
@@ -903,7 +900,7 @@ const DashboardLayout: React.FC = () => {
            <div className="p-3 md:p-6">
              <UsageBanner className="mb-4" />
              <motion.div
-               key={location.pathname}
+               key={location.pathname.startsWith('/dashboard/settings/') ? '/dashboard/settings' : location.pathname}
                initial={{ opacity: 0, y: 12 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.3, ease: 'easeOut' }}

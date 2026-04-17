@@ -1,0 +1,87 @@
+/* ═══════════════════════════════════════════════════
+   Rocker Switch — 3D skew-based toggle
+   ═══════════════════════════════════════════════════ */
+
+.rocker {
+  display: inline-block;
+  position: relative;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  color: #888;
+  width: 7em;
+  height: 4em;
+  overflow: hidden;
+  border-bottom: 0.5em solid #e0e0e0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.rocker-small {
+  font-size: 0.75em;
+  margin: 1em;
+}
+
+.rocker input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.switch-left,
+.switch-right {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  width: 3em;
+  transition: 0.2s;
+  user-select: none;
+}
+
+/* ── Unchecked: YES is pressed down (active), NO is tilted up ── */
+
+.switch-left {
+  background-color: #0084d0;
+  color: #fff;
+  bottom: 0;
+  left: 0.5em;
+  transform: rotate(0deg) skewX(0deg);
+}
+
+.switch-right {
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.4em;
+  right: 0.5em;
+  transform: rotate(-15deg) skewX(-15deg);
+}
+
+/* ── Checked: YES tilts up, NO presses down ── */
+
+.rocker input:checked + .switch-left {
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.4em;
+  left: 0.5em;
+  transform: rotate(15deg) skewX(15deg);
+}
+
+.rocker input:checked + .switch-left + .switch-right {
+  background-color: #0084d0;
+  color: #fff;
+  bottom: 0;
+  right: 0.5em;
+  transform: rotate(0deg) skewX(0deg);
+}
+
+/* ── Focus ring ── */
+.rocker:focus-within {
+  outline: 2px solid #0084d0;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
