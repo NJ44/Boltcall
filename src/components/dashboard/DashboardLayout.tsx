@@ -951,8 +951,10 @@ const DashboardLayout: React.FC = () => {
               <div>
                 <h3 className="text-sm font-medium text-gray-900 mb-4">{t('help.documentation')}</h3>
                 <div className="space-y-3">
-                  <Link
-                    to="/documentation"
+                  <a
+                    href="https://boltcall.mintlify.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                     onClick={() => setShowHelpSidebar(false)}
                   >
