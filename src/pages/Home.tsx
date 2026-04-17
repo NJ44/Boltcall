@@ -53,10 +53,10 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
 
-          {/* HeroScrollDemo — desktop only, near fold; preload with generous rootMargin */}
-          <div className="relative -top-[120px] z-[100] pointer-events-none hidden md:block" style={{ minHeight: '600px', contain: 'layout' }}>
-            <LazySection rootMargin="800px" minHeight="600px">
-              <Suspense fallback={<div className="h-[600px] w-full" style={{ contain: 'layout' }} />}>
+          {/* HeroScrollDemo — product demo visible on all breakpoints */}
+          <div className="relative md:-top-[120px] z-[100] pointer-events-none" style={{ minHeight: '400px' }}>
+            <LazySection rootMargin="800px" minHeight="400px">
+              <Suspense fallback={<div className="h-[400px] w-full" />}>
                 <HeroScrollDemo />
               </Suspense>
             </LazySection>
@@ -71,10 +71,10 @@ const Home: React.FC = () => {
             </LazySection>
           </div>
 
-          {/* StickyScrollSection — desktop only, behind HowItWorks */}
-          <div className="relative -top-[60px] md:-top-[200px] hidden md:block" style={{ minHeight: '400px', contain: 'layout' }}>
+          {/* StickyScrollSection — "Why Businesses Choose BoltCall", visible on all breakpoints */}
+          <div className="relative md:-top-[200px]" style={{ minHeight: '400px' }}>
             <LazySection rootMargin="400px" minHeight="400px">
-              <Suspense fallback={<div className="h-[400px] w-full" style={{ contain: 'layout' }} />}>
+              <Suspense fallback={<div className="h-[400px] w-full" />}>
                 <StickyScrollSection />
               </Suspense>
             </LazySection>

@@ -69,14 +69,14 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
   return (
     <>
     <ContentDepthFooter />
-    <footer className={`${bgClass} ${textClass} pt-12 md:pt-[100px]`}>
+    <footer className={`${bgClass} ${textClass} pt-12 md:pt-16`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Main Footer Content */}
         <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {/* Company Info */}
-            <div className="lg:col-span-1">
+            <div className="col-span-2 lg:col-span-1">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

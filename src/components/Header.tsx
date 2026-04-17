@@ -393,9 +393,7 @@ const Header: React.FC = () => {
       style={{ contain: 'layout style' }}
     >
       {!isSticky && (
-        <div className="hidden md:block">
-          <GiveawayBar />
-        </div>
+        <GiveawayBar />
       )}
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
         <div className="flex items-center justify-between h-14 max-w-7xl mx-auto overflow-visible">
@@ -703,7 +701,7 @@ const Header: React.FC = () => {
 
           {/* Mobile menu button - Fixed to top right */}
           <button
-            className="md:hidden fixed top-2 right-4 z-[9995] p-2.5 bg-white backdrop-blur-sm rounded-full shadow-xl border-2 border-gray-300 hover:bg-gray-50 transition-colors"
+            className="md:hidden fixed top-2 right-4 z-[9995] min-w-[44px] min-h-[44px] flex items-center justify-center bg-white backdrop-blur-sm rounded-full shadow-xl border-2 border-gray-300 hover:bg-gray-50 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >

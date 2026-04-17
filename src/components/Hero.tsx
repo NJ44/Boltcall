@@ -59,6 +59,16 @@ if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @media (prefers-reduced-motion: reduce) {
+      [style*="heroFadeInUp"], [style*="heroFadeInScale"], [style*="heroWordFadeUp"] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      [style*="heroFloat"] {
+        animation: none !important;
+      }
+    }
   `;
   document.head.appendChild(style);
 }
@@ -153,7 +163,7 @@ const Hero: React.FC = () => {
               }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-nowrap pl-8 md:pl-16">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16">
                   <span
                     style={{
                       opacity: 0,
@@ -183,7 +193,7 @@ const Hero: React.FC = () => {
                     {titles.map((title, index) => (
                       <span
                         key={index}
-                        className="absolute left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
+                        className="absolute left-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         style={{
                           transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
                           transform: titleNumber === index
