@@ -354,22 +354,17 @@ const DashboardLayout: React.FC = () => {
   // Helper function to render navigation items
   const renderNavItem = (item: any, isActive: boolean) => {
     const isCollapsedView = sidebarCollapsed;
-    return (
-      <Link
-        key={item.to}
-        to={item.to}
-        data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
-        onClick={closeSidebar}
-        className={`relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
-          isActive
-            ? isDarkMode
-              ? 'bg-[#1a1a1f] text-white'
-              : 'bg-blue-50 text-blue-700'
-            : isDarkMode
-              ? 'text-white hover:bg-[#1a1a1f]'
-              : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-        }`}
-      >
+    const sharedClassName = `relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
+      isActive
+        ? isDarkMode
+          ? 'bg-[#1a1a1f] text-white'
+          : 'bg-blue-50 text-blue-700'
+        : isDarkMode
+          ? 'text-white hover:bg-[#1a1a1f]'
+          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
+    }`;
+    const innerContent = (
+      <>
         <span className={`relative flex items-center ${isCollapsedView ? '' : '-mt-[5px]'}`}>
           {item.icon}
           {item.needsSetup && (
@@ -404,6 +399,32 @@ const DashboardLayout: React.FC = () => {
             {item.badge}
           </span>
         )}
+      </>
+    );
+    if (item.href) {
+      return (
+        <a
+          key={item.to}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+          onClick={closeSidebar}
+          className={sharedClassName}
+        >
+          {innerContent}
+        </a>
+      );
+    }
+    return (
+      <Link
+        key={item.to}
+        to={item.to}
+        data-onboarding={item.onboardingId || `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+        onClick={closeSidebar}
+        className={sharedClassName}
+      >
+        {innerContent}
       </Link>
     );
   };
