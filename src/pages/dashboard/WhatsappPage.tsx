@@ -106,9 +106,14 @@ const callWhatsAppFn = async (
   path: 'whatsapp-settings' | 'whatsapp-send' | 'whatsapp-ai-responder',
   body: Record<string, unknown>
 ): Promise<any> => {
+  const { data: { session } } = await supabase.auth.getSession();
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (session?.access_token) {
+    headers['Authorization'] = `Bearer ${session.access_token}`;
+  }
   const res = await fetch(`/.netlify/functions/${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(body),
   });
   const json = await res.json().catch(() => ({}));
