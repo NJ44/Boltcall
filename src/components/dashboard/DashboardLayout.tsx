@@ -777,30 +777,40 @@ const DashboardLayout: React.FC = () => {
 
 
                         {/* Language Switcher */}
-                        <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800">
-                          <div className="text-xs font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
-                            <Globe className="w-3.5 h-3.5 text-gray-400" />
-                            {t('topbar.language')}
-                          </div>
-                          <div className="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-0.5">
-                            {[
-                              { code: 'en', label: 'EN' },
-                              { code: 'he', label: 'HE' },
-                              { code: 'es', label: 'ES' },
-                            ].map((lang) => (
-                              <button
-                                key={lang.code}
-                                onClick={() => i18n.changeLanguage(lang.code)}
-                                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                                  i18n.language?.startsWith(lang.code)
-                                    ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                                    : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
-                                }`}
-                              >
-                                {lang.label}
-                              </button>
-                            ))}
-                          </div>
+                        <div className="border-t border-gray-100 dark:border-gray-800">
+                          <button
+                            onClick={() => setShowLanguageExpanded(!showLanguageExpanded)}
+                            className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                          >
+                            <span className="flex items-center gap-3">
+                              <Globe className="w-4 h-4 text-gray-400" />
+                              {t('topbar.language')}
+                            </span>
+                            <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-transform duration-200 ${showLanguageExpanded ? 'rotate-0' : '-rotate-90'}`} />
+                          </button>
+                          {showLanguageExpanded && (
+                            <div className="px-4 pb-3">
+                              <div className="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-0.5">
+                                {[
+                                  { code: 'en', label: 'EN' },
+                                  { code: 'he', label: 'HE' },
+                                  { code: 'es', label: 'ES' },
+                                ].map((lang) => (
+                                  <button
+                                    key={lang.code}
+                                    onClick={() => i18n.changeLanguage(lang.code)}
+                                    className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                                      i18n.language?.startsWith(lang.code)
+                                        ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                                        : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                                    }`}
+                                  >
+                                    {lang.label}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
 
                         {/* Theme Switcher */}
