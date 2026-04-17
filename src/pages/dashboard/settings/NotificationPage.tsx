@@ -252,9 +252,7 @@ const NotificationPage: React.FC = () => {
                 <div className="px-6 py-4">
                   <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Notify me for</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {notificationTypes.map((type) => {
-                      const TypeIcon = type.icon;
-                      const checked = (channelSettings as any)[type.key] ?? false;
+                    {notificationTypes.map((type) => {                      const checked = (channelSettings as any)[type.key] ?? false;
                       return (
                         <label
                           key={type.key}
