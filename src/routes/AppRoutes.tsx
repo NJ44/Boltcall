@@ -585,8 +585,8 @@ const AppRoutes: React.FC = () => {
   return (
     // Suspense here: AuthProvider is lazy-loaded so Supabase only downloads
     // after the first render, not during critical-path JS parsing.
-    // PageLoader is the same spinner used everywhere else in the app.
-    <Suspense fallback={<PageLoader />}>
+    // null fallback: Home is eagerly imported so no blank flash on the homepage.
+    <Suspense fallback={null}>
       <AuthProvider>
         <Router>
           <NavigationWrapper />
