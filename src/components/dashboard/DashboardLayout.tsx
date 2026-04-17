@@ -351,9 +351,9 @@ const DashboardLayout: React.FC = () => {
 
 
   // Helper function to render navigation items
-  const renderNavItem = (item: any, isActive: boolean) => {
+  const renderNavItem = (item: any, isActive: boolean, extraClassName = '') => {
     const isCollapsedView = sidebarCollapsed;
-    const sharedClassName = `relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
+    const sharedClassName = `relative flex items-center ${isCollapsedView ? 'justify-center' : 'gap-2 w-full'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${extraClassName} ${
       isActive
         ? isDarkMode
           ? 'bg-[#1a1a1f] text-white'
