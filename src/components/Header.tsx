@@ -393,9 +393,7 @@ const Header: React.FC = () => {
       style={{ contain: 'layout style' }}
     >
       {!isSticky && (
-        <div className="hidden md:block">
-          <GiveawayBar />
-        </div>
+        <GiveawayBar />
       )}
       <div className="w-full px-2 sm:px-4 lg:px-6 overflow-visible">
         <div className="flex items-center justify-between h-14 max-w-7xl mx-auto overflow-visible">
