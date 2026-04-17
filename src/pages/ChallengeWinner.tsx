@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, ArrowRight, CheckCircle, Globe, Phone, MapPin, Briefcase, MessageSquare } from 'lucide-react';
+import { Trophy, ArrowRight, CheckCircle, Globe, Phone, MapPin, Briefcase, MessageSquare, Zap, Bot, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -124,6 +124,20 @@ const ChallengeWinner: React.FC = () => {
                   <div className="mt-6 inline-flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-xl px-5 py-3">
                     <Trophy className="w-4 h-4 text-blue-600 flex-shrink-0" />
                     <span className="text-blue-800 font-semibold text-sm">Prize: Free Smart Website — $2,500 value</span>
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-lg mx-auto">
+                    {[
+                      { icon: Zap, label: 'Fast' },
+                      { icon: BarChart3, label: 'Built for conversions' },
+                      { icon: Phone, label: 'Speed to lead' },
+                      { icon: Bot, label: 'AI chatbot' },
+                    ].map(({ icon: Icon, label }) => (
+                      <div key={label} className="flex flex-col items-center gap-1.5 text-center">
+                        <Icon className="w-4 h-4 text-blue-600" />
+                        <span className="text-xs font-medium text-gray-600">{label}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -288,8 +302,8 @@ const ChallengeWinner: React.FC = () => {
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-8 w-full max-w-sm text-left space-y-3">
                   <p className="text-sm font-semibold text-gray-700">What happens next:</p>
                   {[
-                    'Our team reviews your business details',
-                    'We build your smart website in 24 hours',
+                    'We review your business details',
+                    'We build your smart website: fast, built for conversions, with speed-to-lead and an AI chatbot',
                     'We send you a preview for feedback',
                     'You go live — no cost, no strings',
                   ].map((step, i) => (
