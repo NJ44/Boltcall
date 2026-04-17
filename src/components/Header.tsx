@@ -701,7 +701,7 @@ const Header: React.FC = () => {
 
           {/* Mobile menu button - Fixed to top right */}
           <button
-            className="md:hidden fixed top-2 right-4 z-[9995] p-2.5 bg-white backdrop-blur-sm rounded-full shadow-xl border-2 border-gray-300 hover:bg-gray-50 transition-colors"
+            className="md:hidden fixed top-2 right-4 z-[9995] min-w-[44px] min-h-[44px] flex items-center justify-center bg-white backdrop-blur-sm rounded-full shadow-xl border-2 border-gray-300 hover:bg-gray-50 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
