@@ -231,6 +231,8 @@ const Partners = React.lazy(() => import('../pages/Partners'));
 // ── Lazy loads — Demo / misc pages ───────────────────────────────────────
 const Strike = React.lazy(() => import('../pages/Strike'));
 const Challenge = React.lazy(() => import('../pages/Challenge'));
+const ChallengeCall = React.lazy(() => import('../pages/ChallengeCall'));
+const ChallengeWinner = React.lazy(() => import('../pages/ChallengeWinner'));
 const ButtonDemoPage = React.lazy(() => import('../pages/ButtonDemoPage'));
 const DemoFlowPage = React.lazy(() => import('../pages/DemoFlowPage'));
 const DrHazakLandingPage = React.lazy(() => import('../pages/DrHazakLandingPage'));
@@ -517,8 +519,10 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/features/website-widget" element={<WebsiteChatVoiceWidgetPage />} />
         <Route path="/features/lead-reactivation" element={<LeadReactivationFeaturePage />} />
         <Route path="/features/smart-website" element={<SmartWebsitePage />} />
-        {/* Demo Pages */}
+        {/* Demo / Challenge Pages */}
         <Route path="/challenge" element={<Challenge />} />
+        <Route path="/challenge/call" element={<ChallengeCall />} />
+        <Route path="/challenge/winner" element={<ChallengeWinner />} />
         <Route path="/button-demo" element={<ButtonDemoPage />} />
         <Route path="/demo" element={<DemoFlowPage />} />
         <Route path="/agent-architecture" element={<AgentArchitecturePage />} />
