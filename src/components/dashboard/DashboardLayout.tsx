@@ -192,7 +192,7 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/leads': t('page.leads'),
       '/dashboard/calls': t('page.calls'),
       '/dashboard/messages': t('page.messages'),
-      '/dashboard/sms': 'SMS',
+      '/dashboard/sms': 'SMS Agent',
       '/dashboard/instant-lead-response': t('page.instantLeadResponse'),
       '/dashboard/ai-receptionist': 'AI Receptionist',
       '/dashboard/agents': t('page.aiAgents'),
