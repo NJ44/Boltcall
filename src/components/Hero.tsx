@@ -193,7 +193,7 @@ const Hero: React.FC = () => {
                     {titles.map((title, index) => (
                       <span
                         key={index}
-                        className="absolute left-0 text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
+                        className="absolute left-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
                         style={{
                           transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
                           transform: titleNumber === index
