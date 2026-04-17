@@ -238,6 +238,7 @@ const DemoFlowPage = React.lazy(() => import('../pages/DemoFlowPage'));
 const DrHazakLandingPage = React.lazy(() => import('../pages/DrHazakLandingPage'));
 const AgentArchitecturePage = React.lazy(() => import('../pages/AgentArchitecturePage'));
 const LogoAnimationDemoPage = React.lazy(() => import('../pages/LogoAnimationDemoPage'));
+const RockerSwitchDemoPage = React.lazy(() => import('../pages/RockerSwitchDemoPage'));
 
 const NavigationWrapper: React.FC = () => {
   const location = useLocation();
