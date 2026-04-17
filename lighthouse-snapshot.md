@@ -1,0 +1,451 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - link "PageSpeed Insights logo PageSpeed Insights" [ref=e3] [cursor=pointer]:
+      - /url: ./
+      - img "PageSpeed Insights logo" [ref=e4]
+      - generic [ref=e5]: PageSpeed Insights
+    - generic [ref=e6]:
+      - button "העתקת הקישור" [ref=e8]:
+        - img [ref=e11]
+        - generic [ref=e14]: העתקת הקישור
+      - generic [ref=e16]:
+        - generic [ref=e18]: Docs
+        - link "Docs" [ref=e19] [cursor=pointer]:
+          - /url: https://developers.google.com/speed/docs/insights/v5/about
+  - generic [ref=e26]:
+    - generic [ref=e27]:
+      - generic [ref=e28]: באתר הזה נעשה שימוש בקובצי cookie מ-Google כדי לספק את שירותי האתר ולנתח את תנועת הגולשים.
+      - generic [ref=e29]:
+        - generic [ref=e31]:
+          - generic [ref=e33]: למידע נוסף.
+          - link "למידע נוסף." [ref=e34] [cursor=pointer]:
+            - /url: https://policies.google.com/technologies/cookies
+        - button "הבנתי" [ref=e36]:
+          - generic [ref=e39]: הבנתי
+    - generic [ref=e40]: דיווח מ-16 באפר׳ 2026, 16:52:52
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - textbox [active] [ref=e44]:
+          - /placeholder: כאן מזינים כתובת URL של דף אינטרנט
+          - text: https://boltcall.org/
+        - paragraph [ref=e46]: צריך להזין כתובת URL תקינה
+      - button "ניתוח הדף" [ref=e48]:
+        - generic [ref=e51]: ניתוח הדף
+    - generic [ref=e54]:
+      - tablist [ref=e55]:
+        - generic [ref=e58]:
+          - tab "נייד" [ref=e59] [cursor=pointer]:
+            - generic:
+              - generic: smartphone
+              - generic: נייד
+          - tab "מחשב" [selected] [ref=e61] [cursor=pointer]:
+            - generic:
+              - generic: computer
+              - generic: מחשב
+      - text: — — — — — — — — — —
+      - tabpanel "מחשב" [ref=e63]:
+        - generic [ref=e65]:
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - generic [ref=e69]: רוצה נתונים על החוויה של המשתמשים באתר בפועל?
+              - generic [ref=e71]:
+                - button "button" [ref=e73] [cursor=pointer]:
+                  - img [ref=e75]
+                - generic [ref=e77]: אין נתונים
+            - separator [ref=e78]
+          - generic [ref=e79]:
+            - generic [ref=e82]: מאבחנים בעיות בביצועים
+            - article [ref=e86]:
+              - generic [ref=e87]:
+                - generic [ref=e92]:
+                  - link "55 Performance" [ref=e93] [cursor=pointer]:
+                    - /url: "#performance"
+                    - img [ref=e95]
+                    - generic [ref=e98]: "55"
+                    - generic [ref=e99]: Performance
+                  - link "94 Accessibility" [ref=e100] [cursor=pointer]:
+                    - /url: "#accessibility"
+                    - img [ref=e102]
+                    - generic [ref=e105]: "94"
+                    - generic [ref=e106]: Accessibility
+                  - link "100 Best Practices" [ref=e107] [cursor=pointer]:
+                    - /url: "#best-practices"
+                    - img [ref=e109]
+                    - generic [ref=e112]: "100"
+                    - generic [ref=e113]: Best Practices
+                  - link "100 SEO" [ref=e114] [cursor=pointer]:
+                    - /url: "#seo"
+                    - img [ref=e116]
+                    - generic [ref=e119]: "100"
+                    - generic [ref=e120]: SEO
+                - generic [ref=e122]:
+                  - generic [ref=e124]:
+                    - generic [ref=e125]:
+                      - generic [ref=e126]:
+                        - img [ref=e130]:
+                          - generic [ref=e135]: "55"
+                          - generic [ref=e136]:
+                            - generic:
+                              - generic: FCP
+                              - generic: "+10"
+                            - generic:
+                              - generic: LCP
+                              - generic: "+20"
+                            - generic:
+                              - generic: TBT
+                              - generic: "+2"
+                            - generic:
+                              - generic: CLS
+                              - generic: "+20"
+                            - generic:
+                              - generic: SI
+                              - generic: "+4"
+                          - generic [ref=e138]: Performance
+                        - generic [ref=e140]:
+                          - generic [ref=e141]:
+                            - text: Values are estimated and may vary. The
+                            - link "performance score is calculated" [ref=e142] [cursor=pointer]:
+                              - /url: https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/?utm_source=lighthouse&utm_medium=lr
+                            - text: directly from these metrics.
+                          - link "See calculator." [ref=e143] [cursor=pointer]:
+                            - /url: https://googlechrome.github.io/lighthouse/scorecalc/#FCP=730&LCP=1517&TBT=933&CLS=0.13&SI=2642&TTI=2244&device=desktop&version=13.0.1
+                        - generic [ref=e145]:
+                          - generic [ref=e146]: 0–49
+                          - generic [ref=e147]: 50–89
+                          - generic [ref=e148]: 90–100
+                      - img "Final Screenshot" [ref=e151]
+                    - generic [ref=e152]:
+                      - checkbox "Toggle the display of metric descriptions" [ref=e153]
+                      - generic [ref=e154]:
+                        - generic [ref=e155]: Metrics
+                        - generic [ref=e156] [cursor=pointer]: Expand view
+                      - generic [ref=e157]:
+                        - generic [ref=e159]:
+                          - generic [ref=e161]: First Contentful Paint
+                          - generic [ref=e162]: 0.7 s
+                        - generic [ref=e164]:
+                          - generic [ref=e166]: Largest Contentful Paint
+                          - generic [ref=e167]: 1.5 s
+                        - generic [ref=e169]:
+                          - generic [ref=e171]: Total Blocking Time
+                          - generic [ref=e172]: 930 ms
+                        - generic [ref=e174]:
+                          - generic [ref=e176]: Cumulative Layout Shift
+                          - generic [ref=e177]: "0.134"
+                        - generic [ref=e179]:
+                          - generic [ref=e181]: Speed Index
+                          - generic [ref=e182]: 2.6 s
+                      - list [ref=e183]:
+                        - listitem [ref=e184]: Captured at Apr 16, 2026, 4:52 PM GMT+3
+                        - listitem [ref=e185]: Emulated Desktop with Lighthouse 13.0.1
+                        - listitem [ref=e186]: Single page session
+                        - listitem [ref=e187]: Initial page load
+                        - listitem [ref=e188]: Custom throttling
+                        - listitem [ref=e189]: Using HeadlessChromium 146.0.7680.153 with lr
+                      - button "View Treemap" [ref=e191] [cursor=pointer]
+                    - generic [ref=e193]:
+                      - img "Screenshot" [ref=e195]
+                      - img "Screenshot" [ref=e197]
+                      - img "Screenshot" [ref=e199]
+                      - img "Screenshot" [ref=e201]
+                      - img "Screenshot" [ref=e203]
+                      - img "Screenshot" [ref=e205]
+                      - img "Screenshot" [ref=e207]
+                      - img "Screenshot" [ref=e209]
+                    - generic [ref=e210]:
+                      - generic [ref=e211]:
+                        - generic [ref=e212]: "Show audits relevant to:"
+                        - radio "All" [checked] [ref=e213]
+                        - generic [ref=e214] [cursor=pointer]: All
+                        - radio "FCP" [ref=e215]
+                        - generic "First Contentful Paint" [ref=e216] [cursor=pointer]: FCP
+                        - radio "LCP" [ref=e217]
+                        - generic "Largest Contentful Paint" [ref=e218] [cursor=pointer]: LCP
+                        - radio "TBT" [ref=e219]
+                        - generic "Total Blocking Time" [ref=e220] [cursor=pointer]: TBT
+                        - radio "CLS" [ref=e221]
+                        - generic "Cumulative Layout Shift" [ref=e222] [cursor=pointer]: CLS
+                      - generic [ref=e223]:
+                        - generic [ref=e224]: Insights
+                        - group [ref=e226]:
+                          - generic "Improve image delivery —Est savings of 19 KiB" [ref=e227] [cursor=pointer]:
+                            - generic [ref=e228]:
+                              - generic [ref=e230]:
+                                - generic [ref=e231]: Improve image delivery
+                                - text: —Est savings of 19 KiB
+                              - img [ref=e233]
+                        - group [ref=e238]:
+                          - generic "Layout shift culprits" [ref=e239] [cursor=pointer]:
+                            - generic [ref=e240]:
+                              - generic [ref=e243]: Layout shift culprits
+                              - img [ref=e245]
+                        - group [ref=e250]:
+                          - generic "Forced reflow" [ref=e251] [cursor=pointer]:
+                            - generic [ref=e252]:
+                              - generic [ref=e255]: Forced reflow
+                              - img [ref=e257]
+                        - group [ref=e262]:
+                          - generic "LCP breakdown" [ref=e263] [cursor=pointer]:
+                            - generic [ref=e264]:
+                              - generic [ref=e267]: LCP breakdown
+                              - img [ref=e269]
+                        - group [ref=e274]:
+                          - generic "Network dependency tree" [ref=e275] [cursor=pointer]:
+                            - generic [ref=e276]:
+                              - generic [ref=e279]: Network dependency tree
+                              - img [ref=e281]
+                        - group [ref=e286]:
+                          - generic "Render blocking requests" [ref=e287] [cursor=pointer]:
+                            - generic [ref=e288]:
+                              - generic [ref=e291]: Render blocking requests
+                              - img [ref=e293]
+                        - group [ref=e298]:
+                          - generic "Optimize DOM size" [ref=e299] [cursor=pointer]:
+                            - generic [ref=e300]:
+                              - generic [ref=e303]: Optimize DOM size
+                              - img [ref=e305]
+                        - group [ref=e310]:
+                          - generic "3rd parties" [ref=e311] [cursor=pointer]:
+                            - generic [ref=e312]:
+                              - generic [ref=e315]: 3rd parties
+                              - img [ref=e317]
+                        - generic [ref=e321]:
+                          - text: These insights are also available in the Chrome DevTools Performance Panel -
+                          - link "record a trace" [ref=e322] [cursor=pointer]:
+                            - /url: https://developer.chrome.com/docs/devtools/performance/reference?utm_source=lighthouse&utm_medium=lr
+                          - text: to view more detailed information.
+                      - generic [ref=e323]:
+                        - generic [ref=e324]: Diagnostics
+                        - group [ref=e326]:
+                          - generic "Reduce JavaScript execution time —2.4 s" [ref=e327] [cursor=pointer]:
+                            - generic [ref=e328]:
+                              - generic [ref=e330]:
+                                - generic [ref=e331]: Reduce JavaScript execution time
+                                - text: —2.4 s
+                              - img [ref=e333]
+                        - group [ref=e338]:
+                          - generic "Minimize main-thread work —3.1 s" [ref=e339] [cursor=pointer]:
+                            - generic [ref=e340]:
+                              - generic [ref=e342]:
+                                - generic [ref=e343]: Minimize main-thread work
+                                - text: —3.1 s
+                              - img [ref=e345]
+                        - group [ref=e350]:
+                          - generic "Reduce unused JavaScript —Est savings of 278 KiB" [ref=e351] [cursor=pointer]:
+                            - generic [ref=e352]:
+                              - generic [ref=e354]:
+                                - generic [ref=e355]: Reduce unused JavaScript
+                                - text: —Est savings of 278 KiB
+                              - img [ref=e357]
+                        - group [ref=e362]:
+                          - generic "Reduce unused CSS —Est savings of 34 KiB" [ref=e363] [cursor=pointer]:
+                            - generic [ref=e364]:
+                              - generic [ref=e366]:
+                                - generic [ref=e367]: Reduce unused CSS
+                                - text: —Est savings of 34 KiB
+                              - img [ref=e369]
+                        - group [ref=e374]:
+                          - generic "Avoid long main-thread tasks —6 long tasks found" [ref=e375] [cursor=pointer]:
+                            - generic [ref=e376]:
+                              - generic [ref=e378]:
+                                - generic [ref=e379]: Avoid long main-thread tasks
+                                - text: —6 long tasks found
+                              - img [ref=e381]
+                        - group [ref=e386]:
+                          - generic "User Timing marks and measures —7 user timings" [ref=e387] [cursor=pointer]:
+                            - generic [ref=e388]:
+                              - generic [ref=e390]:
+                                - generic [ref=e391]: User Timing marks and measures
+                                - text: —7 user timings
+                              - img [ref=e393]
+                        - generic [ref=e397]:
+                          - text: More information about the performance of your application. These numbers don't
+                          - link "directly affect" [ref=e398] [cursor=pointer]:
+                            - /url: https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/?utm_source=lighthouse&utm_medium=lr
+                          - text: the Performance score.
+                      - group [ref=e400]:
+                        - generic "Passed audits (13) Show" [ref=e401] [cursor=pointer]:
+                          - generic [ref=e402]:
+                            - generic [ref=e403]: Passed audits (13)
+                            - generic [ref=e404]: Show
+                        - text: —
+                  - generic [ref=e406]:
+                    - generic [ref=e407]:
+                      - heading "94 Accessibility" [level=2] [ref=e408]:
+                        - generic [ref=e409]:
+                          - img [ref=e411]
+                          - generic [ref=e414]: "94"
+                          - generic [ref=e415]: Accessibility
+                      - generic [ref=e417]:
+                        - text: These checks highlight opportunities to
+                        - link "improve the accessibility of your web app" [ref=e418] [cursor=pointer]:
+                          - /url: https://developer.chrome.com/docs/lighthouse/accessibility/?utm_source=lighthouse&utm_medium=lr
+                        - text: . Automatic detection can only detect a subset of issues and does not guarantee the accessibility of your web app, so
+                        - link "manual testing" [ref=e419] [cursor=pointer]:
+                          - /url: https://web.dev/articles/how-to-review?utm_source=lighthouse&utm_medium=lr
+                        - text: is also encouraged.
+                    - generic [ref=e420]:
+                      - generic [ref=e421]:
+                        - generic [ref=e422]: Contrast
+                        - group [ref=e424]:
+                          - generic "Background and foreground colors do not have a sufficient contrast ratio." [ref=e425] [cursor=pointer]:
+                            - generic [ref=e426]:
+                              - generic [ref=e429]: Background and foreground colors do not have a sufficient contrast ratio.
+                              - img [ref=e431]
+                        - generic [ref=e435]: These are opportunities to improve the legibility of your content.
+                      - generic [ref=e436]:
+                        - generic [ref=e437]: Navigation
+                        - group [ref=e439]:
+                          - generic "Heading elements are not in a sequentially-descending order" [ref=e440] [cursor=pointer]:
+                            - generic [ref=e441]:
+                              - generic [ref=e444]: Heading elements are not in a sequentially-descending order
+                              - img [ref=e446]
+                        - generic [ref=e450]: These are opportunities to improve keyboard navigation in your application.
+                    - generic [ref=e451]:
+                      - group [ref=e452]:
+                        - generic "Additional items to manually check (10) Show" [ref=e453] [cursor=pointer]:
+                          - generic [ref=e454]:
+                            - generic [ref=e455]: Additional items to manually check (10)
+                            - generic [ref=e456]: Show
+                      - generic [ref=e457]:
+                        - text: These items address areas which an automated testing tool cannot cover. Learn more in our guide on
+                        - link "conducting an accessibility review" [ref=e458] [cursor=pointer]:
+                          - /url: https://web.dev/articles/how-to-review?utm_source=lighthouse&utm_medium=lr
+                        - text: .
+                    - group [ref=e460]:
+                      - generic "Passed audits (19) Show" [ref=e461] [cursor=pointer]:
+                        - generic [ref=e462]:
+                          - generic [ref=e463]: Passed audits (19)
+                          - generic [ref=e464]: Show
+                    - group [ref=e466]:
+                      - generic "Not applicable (39) Show" [ref=e467] [cursor=pointer]:
+                        - generic [ref=e468]:
+                          - generic [ref=e469]: Not applicable (39)
+                          - generic [ref=e470]: Show
+                  - generic [ref=e472]:
+                    - heading "100 Best Practices" [level=2] [ref=e474]:
+                      - generic [ref=e475]:
+                        - img [ref=e477]
+                        - generic [ref=e480]: "100"
+                        - generic [ref=e481]: Best Practices
+                    - generic [ref=e482]:
+                      - generic [ref=e483]:
+                        - generic [ref=e484]: Trust and Safety
+                        - group [ref=e486]:
+                          - generic "Ensure CSP is effective against XSS attacks" [ref=e487] [cursor=pointer]:
+                            - generic [ref=e488]:
+                              - generic [ref=e491]: Ensure CSP is effective against XSS attacks
+                              - img [ref=e493]
+                        - group [ref=e498]:
+                          - generic "Use a strong HSTS policy" [ref=e499] [cursor=pointer]:
+                            - generic [ref=e500]:
+                              - generic [ref=e503]: Use a strong HSTS policy
+                              - img [ref=e505]
+                        - group [ref=e510]:
+                          - generic "Ensure proper origin isolation with COOP" [ref=e511] [cursor=pointer]:
+                            - generic [ref=e512]:
+                              - generic [ref=e515]: Ensure proper origin isolation with COOP
+                              - img [ref=e517]
+                        - group [ref=e522]:
+                          - generic "Mitigate DOM-based XSS with Trusted Types" [ref=e523] [cursor=pointer]:
+                            - generic [ref=e524]:
+                              - generic [ref=e527]: Mitigate DOM-based XSS with Trusted Types
+                              - img [ref=e529]
+                      - generic [ref=e533]:
+                        - generic [ref=e534]: General
+                        - group [ref=e536]:
+                          - generic "Missing source maps for large first-party JavaScript" [ref=e537] [cursor=pointer]:
+                            - generic [ref=e538]:
+                              - generic [ref=e541]: Missing source maps for large first-party JavaScript
+                              - img [ref=e543]
+                    - group [ref=e548]:
+                      - generic "Passed audits (12) Show" [ref=e549] [cursor=pointer]:
+                        - generic [ref=e550]:
+                          - generic [ref=e551]: Passed audits (12)
+                          - generic [ref=e552]: Show
+                    - group [ref=e554]:
+                      - generic "Not applicable (3) Show" [ref=e555] [cursor=pointer]:
+                        - generic [ref=e556]:
+                          - generic [ref=e557]: Not applicable (3)
+                          - generic [ref=e558]: Show
+                  - generic [ref=e560]:
+                    - generic [ref=e561]:
+                      - heading "100 SEO" [level=2] [ref=e562]:
+                        - generic [ref=e563]:
+                          - img [ref=e565]
+                          - generic [ref=e568]: "100"
+                          - generic [ref=e569]: SEO
+                      - generic [ref=e571]:
+                        - text: These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on
+                        - link "Core Web Vitals" [ref=e572] [cursor=pointer]:
+                          - /url: https://web.dev/explore/vitals?utm_source=lighthouse&utm_medium=lr
+                        - text: .
+                        - link "Learn more about Google Search Essentials" [ref=e573] [cursor=pointer]:
+                          - /url: https://support.google.com/webmasters/answer/35769
+                        - text: .
+                    - generic [ref=e574]:
+                      - group [ref=e575]:
+                        - generic "Additional items to manually check (1) Hide" [ref=e576] [cursor=pointer]:
+                          - generic [ref=e577]:
+                            - generic [ref=e578]: Additional items to manually check (1)
+                            - generic [ref=e580]: Hide
+                        - group [ref=e582]:
+                          - generic "Structured data is valid" [ref=e583] [cursor=pointer]:
+                            - generic [ref=e584]:
+                              - generic [ref=e587]: Structured data is valid
+                              - img [ref=e589]
+                      - generic [ref=e593]: Run these additional validators on your site to check additional SEO best practices.
+                    - group [ref=e595]:
+                      - generic "Passed audits (10) Show" [ref=e596] [cursor=pointer]:
+                        - generic [ref=e597]:
+                          - generic [ref=e598]: Passed audits (10)
+                          - generic [ref=e599]: Show
+  - contentinfo [ref=e600]:
+    - generic [ref=e601]:
+      - generic [ref=e602]:
+        - generic [ref=e603]:
+          - generic [ref=e604]: מידע נוסף על PageSpeed Insights
+          - link "מה חדש" [ref=e606] [cursor=pointer]:
+            - /url: https://developers.google.com/speed/docs/insights/release_notes
+          - link "מסמכי התיעוד" [ref=e608] [cursor=pointer]:
+            - /url: https://developers.google.com/speed/docs/insights/v5/about
+          - link "מידע על ביצועים באינטרנט" [ref=e610] [cursor=pointer]:
+            - /url: https://developers.google.com/speed
+          - link "אפשר לשאול שאלות ב-Stack Overflow" [ref=e612] [cursor=pointer]:
+            - /url: https://stackoverflow.com/questions/tagged/pagespeed-insights
+          - link "רשימת תפוצה" [ref=e614] [cursor=pointer]:
+            - /url: https://groups.google.com/g/pagespeed-insights-discuss
+        - generic [ref=e615]:
+          - generic [ref=e616]: תוכן קשור
+          - link "עדכונים" [ref=e618] [cursor=pointer]:
+            - /url: https://developer.chrome.com/blog
+          - link "Web Fundamentals (היסודות של בניית אתרים)" [ref=e620] [cursor=pointer]:
+            - /url: https://developers.google.com/focus/web-development
+          - link "מקרים לדוגמה" [ref=e622] [cursor=pointer]:
+            - /url: https://web.dev/case-studies
+          - link "פודקאסטים" [ref=e624] [cursor=pointer]:
+            - /url: https://web.dev/shows
+        - generic [ref=e625]:
+          - generic [ref=e626]: אפשרויות ליצירת קשר
+          - link "Twitter" [ref=e628] [cursor=pointer]:
+            - /url: https://twitter.com/ChromiumDev
+          - link "YouTube" [ref=e630] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/ChromeDevelopers
+      - generic [ref=e631]:
+        - link "Google Developers Logo" [ref=e632] [cursor=pointer]:
+          - /url: https://developers.google.com/
+          - img "Google Developers Logo" [ref=e633]
+        - link "Chrome" [ref=e634] [cursor=pointer]:
+          - /url: https://developer.chrome.com/
+        - link "Firebase" [ref=e635] [cursor=pointer]:
+          - /url: https://firebase.google.com/
+        - link "כל המוצרים" [ref=e636] [cursor=pointer]:
+          - /url: https://developers.google.com/products/
+      - generic [ref=e637]:
+        - link "התנאים ומדיניות הפרטיות" [ref=e639] [cursor=pointer]:
+          - /url: https://policies.google.com/
+        - generic [ref=e640]:
+          - text: פרטים נוספים זמינים ב
+          - link "מדיניות של האתר Google Developers" [ref=e641] [cursor=pointer]:
+            - /url: https://developers.google.com/terms/site-policies
+          - text: .
