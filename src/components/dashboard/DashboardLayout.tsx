@@ -576,7 +576,9 @@ const DashboardLayout: React.FC = () => {
                 <div className={sidebarCollapsed ? 'space-y-1' : 'flex gap-1'}>
                   {navItemsFooter.map((item) => {
                     const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
-                    return renderNavItem(item, isActive);
+                    return sidebarCollapsed
+                      ? renderNavItem(item, isActive)
+                      : <div key={item.to} className="flex-1 min-w-0">{renderNavItem(item, isActive)}</div>;
                   })}
                 </div>
 
