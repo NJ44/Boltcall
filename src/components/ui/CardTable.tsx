@@ -166,6 +166,7 @@ const CardTable: React.FC<CardTableProps> = ({
           </div>
         )}
       </div>
+      </div>
     </div>
   );
 };
