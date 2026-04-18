@@ -33,6 +33,27 @@ const DashboardPage: React.FC = () => {
     fetchLiveData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Fetch agent customizations (avatar + color) for workflow canvas
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('agents')
+      .select('direction, avatar, color, name')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .then(({ data }) => {
+        if (data) {
+          const customizations: AgentCustomization[] = data.map((a: any) => ({
+            direction: a.direction === 'outbound' ? 'outbound' : 'inbound',
+            avatar: a.avatar ?? null,
+            color: a.color ?? null,
+            title: a.name,
+          }));
+          setAgentCustomizations(customizations);
+        }
+      });
+  }, [user?.id]);
+
   // Fetch today's most recent completed booking for RecentWinBanner
   useEffect(() => {
     if (!user?.id) return;
