@@ -258,7 +258,7 @@ const GeneralPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.25 }}
         className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
@@ -361,7 +361,7 @@ const GeneralPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.25, delay: 0.05 }}
         className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
@@ -460,7 +460,7 @@ const GeneralPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: 0.25, delay: 0.1 }}
         className="bg-white rounded-lg border border-red-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-4">
