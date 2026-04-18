@@ -124,8 +124,8 @@ const WizardShell: React.FC = () => {
         });
       }
       
-      // Knowledge Base step (step 2 / final step): create agent, launch, and redirect to dashboard
-      if (currentStep === 2) {
+      // Survey step (step 3 / final step): create agent, launch, and redirect to dashboard
+      if (currentStep === 3) {
         // Navigate to branded loading screen IMMEDIATELY (no pencil loader)
         markStepCompleted(currentStep);
         complete();
