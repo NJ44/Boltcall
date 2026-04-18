@@ -103,7 +103,7 @@ async function getAgentOwner(agentId: string): Promise<string | null> {
   const { data, error } = await supabase
     .from('agents')
     .select('user_id')
-    .filter('api_keys->>retell_agent_id', 'eq', agentId)
+    .eq('retell_agent_id', agentId)
     .single();
 
   if (error || !data) {
