@@ -21,6 +21,7 @@ const DashboardPage: React.FC = () => {
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
+  const [agentCustomizations, setAgentCustomizations] = useState<AgentCustomization[]>([]);
 
   const fetchLiveData = useDashboardStore((s) => s.fetchLiveData);
   const hasFetchedLiveData = useRef(false);
