@@ -215,17 +215,6 @@ export default function AuthSwitch({
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 px-4 py-6 sm:p-4 overflow-hidden">
-      {/* Logo */}
-      <div className="absolute top-4 left-5 z-30 hidden lg:block">
-        <Link to="/">
-          <img
-            src="/boltcall_full_logo.png"
-            alt="Boltcall"
-            className="h-10 w-auto brightness-0 invert"
-          />
-        </Link>
-      </div>
-
       {/* Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.92 }}
@@ -233,6 +222,16 @@ export default function AuthSwitch({
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="relative w-full max-w-[700px] min-h-0 lg:h-[460px] rounded-[20px] sm:rounded-[28px] shadow-2xl overflow-hidden bg-white"
       >
+        {/* Logo */}
+        <div className="absolute top-4 left-5 z-30 hidden lg:block">
+          <Link to="/">
+            <img
+              src="/boltcall_full_logo.png"
+              alt="Boltcall"
+              className="h-8 w-auto brightness-0 invert"
+            />
+          </Link>
+        </div>
         {/* ── GRADIENT PANEL with curved clip-path (desktop only) ── */}
         <motion.div
           className="absolute inset-0 z-10 hidden lg:block pointer-events-none"
