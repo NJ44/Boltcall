@@ -314,6 +314,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="voice-library" element={<PlanGate requiredPlan="starter"><VoiceLibraryPage /></PlanGate>} />
           <Route path="knowledge-base" element={<PlanGate requiredPlan="starter"><KnowledgeBasePage /></PlanGate>} />
           <Route path="phone" element={<PlanGate requiredPlan="starter"><PhoneNumbersPage /></PlanGate>} />
+          <Route path="phone-numbers" element={<Navigate to="/dashboard/phone" replace />} />
           <Route path="chat-widget" element={<PlanGate requiredPlan="starter"><WebsiteBubblePage /></PlanGate>} />
 
           {/* Free pages */}

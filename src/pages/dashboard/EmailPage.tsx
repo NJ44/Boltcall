@@ -95,7 +95,7 @@ const EmailPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       {/* Connect Message Banner */}
       {connectMessage && (
         <div className={`px-4 py-2.5 text-sm font-medium flex items-center gap-2 ${
@@ -166,7 +166,7 @@ const EmailPage: React.FC = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div>
         {!hasAccounts && activeTab !== 'settings' ? (
           // No accounts — show connect prompt
           <div className="max-w-lg mx-auto py-16 px-4">

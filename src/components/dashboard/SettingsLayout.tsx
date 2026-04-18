@@ -57,7 +57,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
   ) || categories[0];
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       {/* Page Header */}
       <div className="bg-white border-b border-gray-200 flex-shrink-0 px-4 md:px-6 pt-5 pb-0">
         {/* Top Tabs — category-level navigation */}
@@ -117,9 +117,9 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
       </div>
 
       {/* Body — sidebar + content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex">
         {/* Left Sidebar — desktop only */}
-        <div className="hidden md:block w-56 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
+        <div className="hidden md:block w-56 bg-white border-r border-gray-200 flex-shrink-0">
           <nav className="py-5 px-4 space-y-1">
             {activeCategory.sidebar.map((item) => {
               const isActive =
@@ -144,7 +144,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto bg-gray-50">
+        <div className="flex-1 bg-gray-50">
           <div className="p-4 md:p-12 max-w-5xl">
             <AnimatePresence mode="wait">
               <motion.div

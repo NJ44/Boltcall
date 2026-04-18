@@ -211,6 +211,11 @@ const DashboardLayout: React.FC = () => {
       return t('page.settings');
     }
 
+    // Agent detail pages — show "AI Agents" instead of the raw UUID
+    if (path.startsWith('/dashboard/agents/')) {
+      return t('page.aiAgents');
+    }
+
     // Return mapped name or convert path to title case
     if (pageNames[path]) {
       return pageNames[path];

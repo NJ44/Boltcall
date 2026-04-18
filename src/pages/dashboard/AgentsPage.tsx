@@ -114,9 +114,10 @@ const AgentsPage: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
   const { claimReward } = useTokens();
-  const [activeTab, setActiveTab] = useState<'agents' | 'tests'>(
-    searchParams.get('tab') === 'tests' ? 'tests' : 'agents'
-  );
+  const [activeTab, setActiveTab] = useState<'agents' | 'tests'>(() => {
+    const tab = searchParams.get('tab');
+    return tab === 'tests' || tab === 'agent-tests' ? 'tests' : 'agents';
+  });
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
