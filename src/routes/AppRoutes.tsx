@@ -25,8 +25,6 @@ const BlogNeverMissCallAfterHours = React.lazy(() => import('../pages/BlogNeverM
 const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
 const AuthCallback = React.lazy(() => import('../pages/AuthCallback'));
-// ── Route-level loading fallback ─────────────────────────────────────────
-const PageLoader = () => <PencilPageLoader isLoading={true} />;
 
 // ── Lazy loads — Dashboard shell & pages ─────────────────────────────────
 const Dashboard = React.lazy(() => import('../pages/Dashboard'));
