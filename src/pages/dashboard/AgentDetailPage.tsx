@@ -10,6 +10,9 @@ import { VoicePicker } from '../../components/ui/voice-picker';
 import { PopButton } from '../../components/ui/pop-button';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
 import { updateRetellAgent } from '../../lib/retell';
+import { AgentAvatar } from '../../components/ui/AgentAvatar';
+import { InlineRename } from '../../components/ui/InlineRename';
+import { EmojiColorPicker } from '../../components/ui/EmojiColorPicker';
 
 interface AgentData {
   id: string;
