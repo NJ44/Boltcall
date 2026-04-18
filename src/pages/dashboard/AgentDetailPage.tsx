@@ -209,6 +209,8 @@ const AgentDetailPage: React.FC = () => {
           greeting,
           voice_id: voiceId,
           transfer_phone_number: transferPhone,
+          avatar,
+          color,
           updated_at: new Date().toISOString(),
         })
         .eq('id', agent.id)
