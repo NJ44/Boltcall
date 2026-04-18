@@ -1348,6 +1348,19 @@ const KnowledgeBasePage: React.FC = () => {
               )}
             </div>
           ))}
+          {/* Add New Folder placeholder — fills empty grid slots */}
+          <button
+            onClick={() => setShowNewFolderInline(true)}
+            className="group relative bg-white rounded-xl shadow-sm border border-dashed border-gray-200 p-5 hover:border-blue-300 hover:bg-blue-50/30 transition-all cursor-pointer flex items-center gap-3 text-left"
+          >
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-50 group-hover:bg-blue-100 transition-colors">
+              <Plus className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-medium text-gray-400 group-hover:text-blue-600 transition-colors">New Folder</div>
+              <div className="text-xs text-gray-400">Organize your documents</div>
+            </div>
+          </button>
           {folders.length === 0 && (
             <div className="col-span-full text-center py-12 text-gray-400 text-sm">No folders yet. Create one to organize your knowledge base.</div>
           )}
