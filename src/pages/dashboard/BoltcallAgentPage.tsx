@@ -227,13 +227,13 @@ const BoltcallAgentPage: React.FC = () => {
           <button
             key={action.title}
             onClick={() => sendMessage(action.prompt)}
-            className="flex flex-col items-start gap-2 p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-blue-300 hover:shadow-sm transition-all group"
+            className="flex flex-col items-start gap-2 p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-blue-300 hover:bg-blue-50/40 hover:shadow-md active:scale-[0.98] transition-all duration-150 group cursor-pointer"
           >
-            <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-blue-50 transition-colors">
+            <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-blue-100 transition-colors duration-150">
               {action.icon}
             </div>
             <div>
-              <div className="text-sm font-semibold text-gray-900">{action.title}</div>
+              <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors duration-150">{action.title}</div>
               <div className="text-xs text-gray-500 mt-0.5">{action.desc}</div>
             </div>
           </button>

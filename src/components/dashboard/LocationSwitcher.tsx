@@ -99,7 +99,15 @@ export const LocationSwitcher: React.FC<LocationSwitcherProps> = ({ className })
     }
   };
 
-  if (!businessProfileId) return null;
+  if (!businessProfileId) {
+    return (
+      <div className="inline-flex items-center gap-2 px-3 py-2 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 animate-pulse">
+        <div className="w-4 h-4 rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="w-24 h-3.5 rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="w-4 h-4 rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+    );
+  }
 
   return (
     <>

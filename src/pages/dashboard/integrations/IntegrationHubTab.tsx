@@ -8,6 +8,7 @@ import {
   AlertCircle,
   Unplug,
   ExternalLink,
+  Plus,
 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
@@ -563,6 +564,20 @@ const IntegrationHubTab: React.FC = () => {
               </div>
             );
           })}
+
+          {/* Request Integration — fills last row slot */}
+          <a
+            href="mailto:support@boltcall.org?subject=Integration%20Request"
+            className="bg-white dark:bg-[#111114] rounded-xl border border-dashed border-gray-200 dark:border-[#2a2a30] p-6 flex flex-col items-center justify-center gap-3 text-center hover:border-blue-300 hover:bg-blue-50/30 dark:hover:border-blue-700 dark:hover:bg-blue-900/10 transition-all duration-200 cursor-pointer group"
+          >
+            <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-[#1a1a1f] group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 flex items-center justify-center transition-colors">
+              <Plus className="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Request an integration</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Don't see your tool? Let us know.</p>
+            </div>
+          </a>
         </motion.div>
       )}
 
