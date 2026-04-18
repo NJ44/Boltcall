@@ -207,7 +207,7 @@ const AgentTestsPage: React.FC = () => {
           message: allPassed
             ? `All ${total} scenarios passed!`
             : `Test run complete — ${passed} passed, ${failed} failed, ${unknown} inconclusive`,
-          variant: allPassed ? 'success' : failed > 0 ? 'warning' : 'info',
+          variant: allPassed ? 'success' : failed > 0 ? 'warning' : 'default',
         });
       }
 
