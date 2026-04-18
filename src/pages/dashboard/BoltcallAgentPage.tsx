@@ -177,9 +177,7 @@ const BoltcallAgentPage: React.FC = () => {
         const assistantMsg: Message = {
           id: crypto.randomUUID(),
           role: 'assistant',
-          content: res.ok
-            ? (data.reply || 'Done!')
-            : 'Something went wrong. Please try again.',
+          content: data.reply || (res.ok ? 'Done!' : 'Something went wrong. Please try again.'),
           actions: data.actions,
         };
 

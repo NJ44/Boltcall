@@ -374,6 +374,22 @@ const IntegrationHubTab: React.FC = () => {
 
   const handleConnect = async (integration: Integration) => {
     if (!user) return;
+
+    // Validate all required fields before submitting
+    if (integration.type === 'api_key' && integration.apiLabel && !formApiKey.trim()) {
+      showToast({ message: `${integration.apiLabel} is required`, variant: 'error' });
+      return;
+    }
+    if (integration.type === 'webhook' && !formWebhookUrl.trim()) {
+      showToast({ message: 'Webhook URL is required', variant: 'error' });
+      return;
+    }
+    const missingExtra = integration.extraFields?.find(f => !formExtra[f.key]?.trim());
+    if (missingExtra) {
+      showToast({ message: `${missingExtra.label} is required`, variant: 'error' });
+      return;
+    }
+
     setConnecting(true);
     try {
       const res = await fetch(`${FUNCTIONS_BASE}/integration-sync`, {

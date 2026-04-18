@@ -425,8 +425,9 @@ export const handler: Handler = async (event) => {
         // Step 1: Store KB in Supabase (NOT Retell — saves $64+/mo)
         // Tier 1 (prompt) entries get injected into the LLM prompt
         // Tier 2 (search) entries are searchable via search_knowledge_base tool
+        // Skip if kb_folder_id already provided — KB was created by the primary agent; don't duplicate entries
         let supabaseKbId: string | null = null;
-        if (body.knowledge_base_texts?.length) {
+        if (body.knowledge_base_texts?.length && !body.kb_folder_id) {
           try {
             const kbBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
             const kbRes = await fetch(`${kbBaseUrl}/.netlify/functions/kb-search`, {
