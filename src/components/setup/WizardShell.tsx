@@ -155,6 +155,12 @@ const WizardShell: React.FC = () => {
               services: storeKnowledgeBase.services,
               faqs: storeKnowledgeBase.faqs,
               policies: storeKnowledgeBase.policies,
+              // Call flow + agent config: power the industry template selection and prompt generation
+              callFlow: storeCallFlow,
+              agentType: storeAgentConfig?.agentType,
+              agentName: storeAgentConfig?.agentName,
+              voiceId: storeAgentConfig?.voiceId,
+              transferNumber: storeAgentConfig?.transferNumber,
             });
           } catch (e) {
             console.error('Agent creation failed', e);
