@@ -28,6 +28,7 @@ interface Agent {
   agent_type?: string;
   description?: string;
   created_at?: string;
+  retell_agent_id?: string;
 }
 
 interface CreateAgentForm {
@@ -539,7 +540,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             : new Date().toLocaleDateString(),
           agent_type: agent.agent_type,
           description: agent.description,
-          created_at: agent.created_at
+          created_at: agent.created_at,
+          retell_agent_id: agent.retell_agent_id,
         }));
 
         setAgents(transformedAgents);
@@ -1133,7 +1135,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                     id="phone-input"
                   />
                   <PopButton color="blue"
-                    onClick={() => selectedAgentForTest && initializeRetellWidget(selectedAgentForTest.id)}
+                    onClick={() => selectedAgentForTest && initializeRetellWidget(selectedAgentForTest.retell_agent_id || selectedAgentForTest.id)}
                     className="w-full"
                   >
                     Call Me Now
