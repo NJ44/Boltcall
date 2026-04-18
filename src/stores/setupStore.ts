@@ -213,6 +213,7 @@ interface SetupStore extends SetupData {
   updateCallFlow: (data: Partial<SetupData['callFlow']>) => void;
   updateAgentConfig: (data: Partial<SetupData['agentConfig']>) => void;
   updateReview: (data: Partial<SetupData['review']>) => void;
+  updateSurvey: (data: Partial<SetupData['survey']>) => void;
   reset: () => void;
   complete: () => void;
 }
