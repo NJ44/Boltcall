@@ -43,7 +43,7 @@ interface WorkflowConnection {
   to: string;
 }
 
-const NODE_WIDTH = 170;
+const NODE_WIDTH = 190;
 const NODE_HEIGHT = 56;
 const AGENT_SIZE = 90; // circular agent nodes
 const ROW_GAP = 68;
