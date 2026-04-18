@@ -28,6 +28,8 @@ interface AgentData {
   total_calls: number;
   created_at: string;
   updated_at: string;
+  avatar?: string | null;
+  color?: string | null;
 }
 
 interface CallLog {
