@@ -132,6 +132,8 @@ const AgentDetailPage: React.FC = () => {
         setGreeting(data.greeting || '');
         setVoiceId(data.voice_id || '');
         setTransferPhone(data.transfer_phone_number || '');
+        setAvatar(data.avatar ?? null);
+        setColor(data.color ?? null);
       } catch {
         navigate('/dashboard/agents');
       } finally {
