@@ -85,11 +85,11 @@ function getDefaultAgentConfig(language?: string) {
     ambient_sound: 'coffee-shop',
     response_eagerness: 1,
     interruption_sensitivity: 0.71,
-    end_call_after_silence_ms: 175000,
+    end_call_after_silence_ms: 30000,
     max_call_duration_ms: 481000,
     begin_message_delay_ms: 1000,
     allow_user_dtmf: true,
-    post_call_analysis_model: 'gpt-5-mini',
+    post_call_analysis_model: 'gpt-4o-mini',
   };
 }
 
