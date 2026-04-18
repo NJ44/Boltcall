@@ -27,10 +27,12 @@ const headers = {
 
 // ── Cal.com helpers ──
 
-let cachedEventTypeId: number | null = null;
+// Keyed by calApiKey so different users never share cached event type IDs.
+const eventTypeIdCache = new Map<string, number>();
 
 async function getEventTypeId(calApiKey: string): Promise<number | null> {
-  if (cachedEventTypeId) return cachedEventTypeId;
+  const cached = eventTypeIdCache.get(calApiKey);
+  if (cached != null) return cached;
 
   try {
     const response = await fetch(`${CAL_BASE_URL}/event-types?apiKey=${calApiKey}`);
@@ -48,8 +50,9 @@ async function getEventTypeId(calApiKey: string): Promise<number | null> {
     const consultation = eventTypes.find((e: any) =>
       e.title?.toLowerCase().includes('consultation') || e.slug?.includes('consultation')
     );
-    cachedEventTypeId = consultation?.id || eventTypes[0].id;
-    return cachedEventTypeId;
+    const id: number = consultation?.id || eventTypes[0].id;
+    eventTypeIdCache.set(calApiKey, id);
+    return id;
   } catch (err) {
     console.error('[agent-tools] Error fetching event types:', err);
     return null;
