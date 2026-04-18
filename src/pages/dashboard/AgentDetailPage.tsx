@@ -60,6 +60,8 @@ const AgentDetailPage: React.FC = () => {
   const [greeting, setGreeting] = useState('');
   const [voiceId, setVoiceId] = useState('');
   const [transferPhone, setTransferPhone] = useState('');
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const [color, setColor] = useState<string | null>(null);
 
   // KB Folders state
   const [agentFolders, setAgentFolders] = useState<Array<{ id: string; name: string; is_default: boolean }>>([]);
