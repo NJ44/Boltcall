@@ -259,7 +259,11 @@ export const useSetupStore = create<SetupStore>()(
       updateReview: (data) => set((state) => ({
         review: { ...state.review, ...data }
       })),
-      
+
+      updateSurvey: (data) => set((state) => ({
+        survey: { ...state.survey, ...data }
+      })),
+
       reset: () => set({ ...defaultData, currentStep: 1, isCompleted: false, completedSteps: [] }),
       
       complete: () => set({ isCompleted: true }),
