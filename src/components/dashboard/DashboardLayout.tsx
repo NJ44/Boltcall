@@ -512,6 +512,32 @@ const DashboardLayout: React.FC = () => {
               </div>
             )}
 
+            {/* Ask Boltcall Agent button */}
+            {!sidebarCollapsed && (
+              <div className="mx-2 mb-2">
+                <Link
+                  to="/dashboard/boltcall-agent"
+                  onClick={closeSidebar}
+                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-colors"
+                >
+                  <Zap className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="text-xs font-semibold">Ask Boltcall Agent</span>
+                </Link>
+              </div>
+            )}
+            {sidebarCollapsed && (
+              <div className="mx-2 mb-2 flex justify-center">
+                <Link
+                  to="/dashboard/boltcall-agent"
+                  onClick={closeSidebar}
+                  title="Ask Boltcall Agent"
+                  className="flex items-center justify-center w-9 h-9 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+                >
+                  <Zap className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
+
             {/* User profile moved to top-right bar */}
 
             {/* Mobile menu button */}
