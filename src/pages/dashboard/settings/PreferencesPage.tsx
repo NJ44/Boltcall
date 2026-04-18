@@ -132,6 +132,8 @@ const PreferencesPage: React.FC = () => {
               document.documentElement.classList.remove('dark');
               localStorage.setItem('darkMode', 'false');
             }
+            // Apply saved accent color on load
+            if (prefs.accentColor) applyAccentColor(prefs.accentColor);
           }
         }
       } catch (err) {
