@@ -127,9 +127,13 @@ async function runScenario(chatAgentId: string, scenario: typeof DEFAULT_SCENARI
 
       if (response.messages) {
         for (const msg of response.messages) {
-          if (msg.content) {
-            conversation.push({ role: 'agent', content: msg.content });
-          }
+          if (!msg.content) continue;
+          // Skip tool result messages by role
+          if (msg.role && ['tool', 'tool_result', 'tool_call_result', 'function'].includes(msg.role)) continue;
+          // Skip raw tool call JSON — {"tool_call_id":"...","content":"..."} must never appear as agent speech
+          const raw = typeof msg.content === 'string' ? msg.content.trim() : '';
+          if (raw.startsWith('{') && raw.includes('"tool_call_id"')) continue;
+          conversation.push({ role: 'agent', content: msg.content });
         }
       }
     } catch (err) {
