@@ -533,7 +533,7 @@ const IntegrationHubTab: React.FC = () => {
                     className={`inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-lg transition-colors ${
                       connected
                         ? 'text-green-700 bg-green-50 hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400'
-                        : 'text-gray-700 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 dark:bg-[#1a1a1f] dark:text-gray-300'
+                        : 'text-blue-600 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30'
                     }`}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -541,7 +541,7 @@ const IntegrationHubTab: React.FC = () => {
                     }}
                   >
                     {connected ? 'Manage' : 'Connect'}
-                    <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+                    <ChevronRight className="w-3.5 h-3.5 opacity-70" />
                   </button>
                 </div>
               </div>

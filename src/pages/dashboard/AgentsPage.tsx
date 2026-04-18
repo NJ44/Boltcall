@@ -841,7 +841,9 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           </div>
 
           {/* Agents Card Table */}
+          <div className="overflow-x-auto">
           <CardTable
+            className="min-w-[640px]"
             columns={[
               { key: 'name', label: 'Agent', width: '25%' },
               { key: 'status', label: 'Status', width: '15%' },
@@ -864,11 +866,11 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
 
                 {/* Agent Name + Status (stacked on mobile) */}
                 <div className="flex items-center justify-between md:contents">
-                  <div className="flex items-center gap-3 md:flex-1">
-                    <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-3 md:flex-1 min-w-0">
+                    <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Users className="w-4 h-4 text-zinc-600" />
                     </div>
-                    <div className="font-medium text-gray-900">{agent.name}</div>
+                    <div className="font-medium text-gray-900 truncate" title={agent.name}>{agent.name}</div>
                   </div>
 
                   {/* Status */}
@@ -944,6 +946,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             onAddNew={() => setShowCreateModal(true)}
             addNewText="Add Agent"
           />
+          </div>
         </>
       )}
 

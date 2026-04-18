@@ -258,7 +258,7 @@ const GeneralPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.25 }}
         className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
@@ -361,7 +361,7 @@ const GeneralPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.25, delay: 0.05 }}
         className="bg-white rounded-lg border border-gray-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-6">
@@ -460,7 +460,7 @@ const GeneralPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: 0.25, delay: 0.1 }}
         className="bg-white rounded-lg border border-red-200 p-4 md:p-6"
       >
         <div className="flex items-center gap-3 mb-4">
@@ -473,7 +473,26 @@ const GeneralPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-red-200 pt-6">
+        <div className="border-t border-red-200 pt-6 space-y-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1">Delete Account</h3>
+              <p className="text-sm text-gray-600">
+                Permanently delete your account and all data. This action cannot be undone.
+              </p>
+              <p className="text-xs text-gray-400 mt-1">To delete your account, please contact <a href="mailto:support@boltcall.org" className="text-blue-600 hover:underline">support@boltcall.org</a></p>
+            </div>
+            <Button
+              variant="outline"
+              disabled
+              className="border-red-200 text-red-400 cursor-not-allowed opacity-60"
+              title="Contact support to delete your account"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete Account
+            </Button>
+          </div>
+          <div className="border-t border-red-100" />
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1">Delete Workspace</h3>

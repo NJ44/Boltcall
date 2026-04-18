@@ -169,7 +169,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
                       <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`} />
                       {agent.status === 'active' ? 'active' : 'inactive'}
                     </span>
-                    <ChevronRight className="w-4 h-4 text-gray-300 dark:text-gray-600" />
+                    <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </Link>
               ))}
@@ -201,7 +201,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
                     <p className="text-sm font-medium text-gray-900 dark:text-white">{action.label}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">{action.description}</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500 transition-colors flex-shrink-0" />
+                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors flex-shrink-0" />
                 </Link>
               ))}
             </div>

@@ -17,8 +17,9 @@ const Stat: React.FC<{ color: string; value: number | string; label: string; loa
     {loading ? (
       <span className="h-3 w-16 rounded bg-foreground/10 animate-pulse inline-block" />
     ) : (
-      <span className="text-xs text-foreground/60 uppercase tracking-[0.15em]">
-        <span className="font-semibold text-foreground/80">{value}</span> {label}
+      <span className="flex items-baseline gap-1">
+        <span className="text-sm font-bold text-foreground/90 tabular-nums">{value}</span>
+        <span className="text-[10px] text-foreground/50 uppercase tracking-[0.12em]">{label}</span>
       </span>
     )}
   </div>
@@ -49,7 +50,7 @@ const TodayGlanceCard: React.FC = () => {
           <Stat color="bg-red-400"    value={missed}     label="Missed"      loading={loading} />
           <Stat color="bg-amber-400"  value={pending}    label="Pending"     loading={loading} />
         </div>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/60 font-medium">
           While you were away
         </p>
       </div>
