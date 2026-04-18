@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'After-Hours Leads Are <span className="text-blue-600">Killing</span> Your Home Service Business',
+    slug: '/blog/after-hours-lead-response-home-services',
+    excerpt: '42% of home service leads arrive after hours. The data on why after-hours lead response is the biggest revenue leak for plumbers, HVAC, and contractors.',
+    date: 'April 17, 2026',
+    readTime: '9 min read',
+    category: 'After-Hours|Speed to Lead',
+    image: '/og-image.jpg'
+  },
+  {
     title: 'Never Miss a <span className="text-blue-600">Call After Business Hours</span>',
     slug: '/blog/never-miss-a-call-after-business-hours',
     excerpt: 'Stop losing leads after hours. Learn how smart local businesses handle after-hours calls with AI — no staff, no voicemail, no missed revenue.',

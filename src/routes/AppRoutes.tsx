@@ -198,6 +198,7 @@ const AiAgentSmallBusiness247CallAnswering = React.lazy(() => import('../pages/A
 const RoofingMissedCallsLeadCapture = React.lazy(() => import('../pages/RoofingMissedCallsLeadCapture'));
 const HomeServiceGoogleAdsLeadFollowUp = React.lazy(() => import('../pages/HomeServiceGoogleAdsLeadFollowUp'));
 const BestAIAnsweringServiceDentalMedical = React.lazy(() => import('../pages/BestAIAnsweringServiceDentalMedical'));
+const BlogAfterHoursLeadResponse = React.lazy(() => import('../pages/BlogAfterHoursLeadResponse'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -491,6 +492,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/roofing-company-stop-losing-leads-missed-calls" element={<RoofingMissedCallsLeadCapture />} />
         <Route path="/blog/home-service-google-ads-lead-follow-up" element={<HomeServiceGoogleAdsLeadFollowUp />} />
         <Route path="/blog/best-ai-answering-service-dental-medical-practice" element={<BestAIAnsweringServiceDentalMedical />} />
+        <Route path="/blog/after-hours-lead-response-home-services" element={<BlogAfterHoursLeadResponse />} />
         </Route>
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />

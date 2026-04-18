@@ -108,6 +108,7 @@ const ROUTES = [
   '/blog/best-ai-receptionist-small-business',
   '/blog/ai-phone-answering-plumbers',
   '/blog/ai-phone-answering-dentists',
+  '/blog/after-hours-lead-response-home-services',
   '/blog/best-after-hours-answering-service',
   '/blog/ai-chatbot-vs-live-chat-phone-comparison',
   '/blog/ai-receptionist-for-plumbers',
