@@ -45,6 +45,7 @@ import TrialExpiryPopup from './TrialExpiryPopup';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
 import FeedbackSlider from '../ui/feedback-slider';
 import { useDashboardStore } from '../../stores/dashboardStore';
+import { useAgentMilestoneAlerts } from '../../hooks/useAgentMilestoneAlerts';
 
 const DashboardLayout: React.FC = () => {
   const { t, i18n } = useTranslation('common');
@@ -69,6 +70,8 @@ const DashboardLayout: React.FC = () => {
   // Get current user from auth context
   const { user } = useAuth();
   const { alerts } = useDashboardStore();
+  const milestoneAlerts = useAgentMilestoneAlerts();
+  const allAlerts = [...milestoneAlerts, ...alerts];
   
   // Mock user plan - in real app, this would come from user context/API
   const userPlan: 'free' | 'pro' | 'elite' = 'free';
@@ -710,7 +713,7 @@ const DashboardLayout: React.FC = () => {
                  
                  {/* Alerts Dropdown (hidden on mobile) */}
                  <div className="hidden md:block">
-                   <NotificationsWithActions alerts={alerts} />
+                   <NotificationsWithActions alerts={allAlerts} />
                  </div>
 
                  {/* Services Status Dropdown (hidden on mobile) */}
