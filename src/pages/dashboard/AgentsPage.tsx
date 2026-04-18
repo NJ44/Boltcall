@@ -28,6 +28,7 @@ interface Agent {
   agent_type?: string;
   description?: string;
   created_at?: string;
+  retell_agent_id?: string;
 }
 
 interface CreateAgentForm {
