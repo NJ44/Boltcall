@@ -1,225 +1,350 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Paperclip, ArrowUp, Zap, BarChart2, Users, Eye } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Send, Zap, BarChart2, Bot, Users, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface Message {
+  id: string;
   role: 'user' | 'assistant';
   content: string;
+  actions?: string[];
+  loading?: boolean;
 }
 
-const quickActions = [
-  { icon: <Zap className="w-5 h-5 text-gray-400" />, label: 'Audit my leads pipeline' },
-  { icon: <BarChart2 className="w-5 h-5 text-gray-400" />, label: 'Show my analytics' },
-  { icon: <Users className="w-5 h-5 text-gray-400" />, label: 'Check my agents' },
-  { icon: <Eye className="w-5 h-5 text-gray-400" />, label: 'Quick performance check' },
+// ─── Simple markdown renderer ─────────────────────────────────────────────────
+
+function renderMarkdown(text: string): React.ReactNode[] {
+  const lines = text.split('\n');
+  const nodes: React.ReactNode[] = [];
+  let key = 0;
+
+  const renderInline = (str: string): React.ReactNode[] => {
+    const parts: React.ReactNode[] = [];
+    const re = /(\*\*(.+?)\*\*|`(.+?)`)/g;
+    let last = 0;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(str)) !== null) {
+      if (m.index > last) parts.push(str.slice(last, m.index));
+      if (m[2] !== undefined) parts.push(<strong key={key++}>{m[2]}</strong>);
+      else if (m[3] !== undefined) parts.push(<code key={key++} className="px-1 py-0.5 bg-gray-100 rounded text-xs font-mono">{m[3]}</code>);
+      last = m.index + m[0].length;
+    }
+    if (last < str.length) parts.push(str.slice(last));
+    return parts;
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) {
+      nodes.push(<div key={key++} className="h-2" />);
+    } else if (line.startsWith('• ') || line.startsWith('- ')) {
+      nodes.push(
+        <div key={key++} className="flex gap-1.5 my-0.5">
+          <span className="text-gray-400 mt-0.5 flex-shrink-0">•</span>
+          <span>{renderInline(line.slice(2))}</span>
+        </div>
+      );
+    } else if (/^\d+\.\s/.test(line)) {
+      const num = line.match(/^(\d+)\./)?.[1];
+      nodes.push(
+        <div key={key++} className="flex gap-1.5 my-0.5">
+          <span className="text-gray-500 flex-shrink-0 font-medium">{num}.</span>
+          <span>{renderInline(line.replace(/^\d+\.\s/, ''))}</span>
+        </div>
+      );
+    } else {
+      nodes.push(<p key={key++} className="my-0.5 leading-relaxed">{renderInline(line)}</p>);
+    }
+  }
+
+  return nodes;
+}
+
+// ─── Quick action cards ───────────────────────────────────────────────────────
+
+const QUICK_ACTIONS = [
+  {
+    icon: <Bot className="w-5 h-5 text-blue-600" />,
+    title: 'Review my agent',
+    desc: 'See what your AI agent currently does',
+    prompt: 'Show me my current AI agent configuration and what it does.',
+  },
+  {
+    icon: <Users className="w-5 h-5 text-violet-600" />,
+    title: 'Show my leads',
+    desc: 'See recent leads and their status',
+    prompt: 'Show me my recent leads from the last 7 days.',
+  },
+  {
+    icon: <BarChart2 className="w-5 h-5 text-emerald-600" />,
+    title: 'Dashboard metrics',
+    desc: 'How is my business performing?',
+    prompt: 'Give me my business performance metrics for the last 7 days.',
+  },
+  {
+    icon: <Zap className="w-5 h-5 text-amber-500" />,
+    title: 'Fix my agent',
+    desc: 'Tune agent tone or behavior',
+    prompt: 'Help me improve my AI agent — review what it currently does and suggest improvements.',
+  },
 ];
+
+// ─── Loading dots ─────────────────────────────────────────────────────────────
+
+const LoadingDots: React.FC = () => (
+  <span className="inline-flex items-center gap-1">
+    {[0, 1, 2].map(i => (
+      <span
+        key={i}
+        className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
+        style={{ animationDelay: `${i * 0.15}s`, animationDuration: '0.9s' }}
+      />
+    ))}
+  </span>
+);
+
+// ─── Main page ────────────────────────────────────────────────────────────────
 
 const BoltcallAgentPage: React.FC = () => {
   const { user } = useAuth();
-  const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const hasMsgs = messages.length > 0;
 
-  const firstName = user?.name?.split(' ')[0] || 'there';
-
+  const firstName = (user?.name ?? '').split(' ')[0] || 'there';
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 
+  // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value);
+  // Auto-resize textarea
+  const resizeTextarea = useCallback(() => {
     const el = textareaRef.current;
-    if (el) {
-      el.style.height = 'auto';
-      el.style.height = `${el.scrollHeight}px`;
-    }
-  };
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+  }, []);
 
-  const handleSend = async () => {
-    const trimmed = input.trim();
-    if (!trimmed || isLoading) return;
+  useEffect(() => {
+    resizeTextarea();
+  }, [input, resizeTextarea]);
 
-    const userMessage: Message = { role: 'user', content: trimmed };
-    const updatedMessages = [...messages, userMessage];
+  // Send message to ai-assistant function
+  const sendMessage = useCallback(
+    async (text?: string) => {
+      const trimmed = (text ?? input).trim();
+      if (!trimmed || isLoading) return;
 
-    setMessages(updatedMessages);
-    setInput('');
-    if (textareaRef.current) textareaRef.current.style.height = 'auto';
-    setIsLoading(true);
+      const userMsg: Message = {
+        id: crypto.randomUUID(),
+        role: 'user',
+        content: trimmed,
+      };
+      const loadingMsg: Message = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: '',
+        loading: true,
+      };
 
-    try {
-      const response = await fetch('/.netlify/functions/ai-assistant', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: updatedMessages,
-          userId: user?.id,
-        }),
-      });
+      setMessages(prev => [...prev, userMsg, loadingMsg]);
+      setInput('');
+      setIsLoading(true);
 
-      const data = await response.json();
-      const replyText: string = data.reply || 'Sorry, I could not get a response. Please try again.';
+      try {
+        // Build conversation history (exclude current loading placeholder)
+        const history = [...messages, userMsg].map(m => ({
+          role: m.role,
+          content: m.content,
+        }));
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: replyText }]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: 'Something went wrong. Please try again.' },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        const res = await fetch('/.netlify/functions/ai-assistant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history, userId: user?.id }),
+        });
+
+        const data = await res.json();
+
+        const assistantMsg: Message = {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          content: res.ok
+            ? (data.reply || 'Done!')
+            : 'Something went wrong. Please try again.',
+          actions: data.actions,
+        };
+
+        setMessages(prev => prev.slice(0, -1).concat(assistantMsg));
+      } catch {
+        setMessages(prev =>
+          prev.slice(0, -1).concat({
+            id: crypto.randomUUID(),
+            role: 'assistant',
+            content: 'Connection error. Please check your internet and try again.',
+          })
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [input, isLoading, messages, user?.id]
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      sendMessage();
     }
   };
 
-  const showGreeting = messages.length === 0;
+  // ─── Empty state ───────────────────────────────────────────────────────────
 
-  return (
-    <div className="flex flex-col items-center min-h-[70vh] px-4 pb-6">
-      {/* Greeting — only shown before first message */}
-      {showGreeting && (
-        <div className="text-center mb-10 mt-16">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
-            {greeting} {firstName}.
-          </h1>
-          <p className="text-base text-gray-500 dark:text-gray-400">
-            Want an update or have a question? Just chat below.
-          </p>
+  const EmptyState = (
+    <div className="flex flex-col items-center justify-center flex-1 px-4 pb-8">
+      {/* Greeting */}
+      <div className="mb-8 text-center">
+        <div className="w-12 h-12 mx-auto mb-4 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg">
+          <Zap className="w-6 h-6 text-white" />
         </div>
-      )}
+        <h1 className="text-2xl font-semibold text-gray-900 mb-1">
+          {greeting}, {firstName}.
+        </h1>
+        <p className="text-gray-500 text-sm">
+          Want an update or have a question? Just chat below.
+        </p>
+      </div>
 
-      {/* Message thread */}
-      {messages.length > 0 && (
-        <div className="w-full max-w-2xl flex flex-col gap-4 mt-6 mb-4">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                  msg.role === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-sm'
-                    : 'bg-white dark:bg-[#111114] border border-gray-200 dark:border-[#2a2a30] text-gray-900 dark:text-white rounded-bl-sm'
-                }`}
-              >
-                {msg.content}
-              </div>
+      {/* Quick action cards */}
+      <div className="grid grid-cols-2 gap-3 w-full max-w-lg">
+        {QUICK_ACTIONS.map(action => (
+          <button
+            key={action.title}
+            onClick={() => sendMessage(action.prompt)}
+            className="flex flex-col items-start gap-2 p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-blue-300 hover:shadow-sm transition-all group"
+          >
+            <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-blue-50 transition-colors">
+              {action.icon}
             </div>
-          ))}
+            <div>
+              <div className="text-sm font-semibold text-gray-900">{action.title}</div>
+              <div className="text-xs text-gray-500 mt-0.5">{action.desc}</div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
-          {/* Loading indicator */}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="max-w-[80%] px-4 py-2.5 rounded-2xl rounded-bl-sm bg-white dark:bg-[#111114] border border-gray-200 dark:border-[#2a2a30]">
-                <span className="flex gap-1 items-center h-5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }} />
-                </span>
-              </div>
+  // ─── Message thread ────────────────────────────────────────────────────────
+
+  const MessageThread = (
+    <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+      {messages.map(msg => (
+        <div
+          key={msg.id}
+          className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} items-end gap-3`}
+        >
+          {/* Avatar — only for assistant */}
+          {msg.role === 'assistant' && (
+            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mb-0.5">
+              <Zap className="w-3.5 h-3.5 text-white" />
             </div>
           )}
 
-          <div ref={messagesEndRef} />
-        </div>
-      )}
+          <div className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} max-w-[75%]`}>
+            {/* Bubble */}
+            <div
+              className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                msg.role === 'user'
+                  ? 'bg-blue-600 text-white rounded-br-md'
+                  : 'bg-gray-100 text-gray-900 rounded-bl-md'
+              }`}
+            >
+              {msg.loading ? (
+                <LoadingDots />
+              ) : msg.role === 'user' ? (
+                msg.content
+              ) : (
+                <div className="space-y-0.5">{renderMarkdown(msg.content)}</div>
+              )}
+            </div>
 
-      {/* Chat input */}
-      <div className={`w-full max-w-2xl ${showGreeting ? '' : 'mt-auto'}`}>
-        <div className="rounded-2xl border border-gray-200 dark:border-[#2a2a30] bg-white dark:bg-[#111114] shadow-sm overflow-hidden">
-          {/* Textarea */}
+            {/* Actions taken chips */}
+            {msg.actions && msg.actions.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {msg.actions.map((action, i) => (
+                  <span
+                    key={i}
+                    className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 border border-green-200 text-green-700 text-xs rounded-full font-medium"
+                  >
+                    <CheckCircle2 className="w-3 h-3" />
+                    {action}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Avatar — only for user */}
+          {msg.role === 'user' && (
+            <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 mb-0.5 text-white text-xs font-semibold">
+              {(user?.name ?? 'U').charAt(0).toUpperCase()}
+            </div>
+          )}
+        </div>
+      ))}
+      <div ref={messagesEndRef} />
+    </div>
+  );
+
+  // ─── Input bar ─────────────────────────────────────────────────────────────
+
+  const InputBar = (
+    <div className="flex-shrink-0 border-t border-gray-100 bg-white px-4 py-3">
+      <div className="flex items-end gap-3 max-w-2xl mx-auto">
+        <div className="flex-1 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 focus-within:border-blue-400 focus-within:bg-white transition-colors">
           <textarea
             ref={textareaRef}
             value={input}
-            onChange={handleInput}
+            onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder=""
+            placeholder="Ask anything about your dashboard…"
             rows={1}
+            className="w-full bg-transparent resize-none text-sm text-gray-900 placeholder-gray-400 outline-none leading-relaxed"
+            style={{ maxHeight: '160px' }}
             disabled={isLoading}
-            className="w-full px-5 pt-4 pb-2 text-sm text-gray-900 dark:text-white bg-transparent resize-none outline-none placeholder-gray-400 min-h-[52px] max-h-48 disabled:opacity-60"
           />
-
-          {/* Bottom toolbar */}
-          <div className="flex items-center justify-between px-4 pb-3 pt-1">
-            <div className="flex items-center gap-2">
-              {/* Attach */}
-              <button className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors">
-                <Paperclip className="w-4 h-4" />
-              </button>
-
-              {/* Shortcuts pill */}
-              <button className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-[#2a2a30] text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#1a1a1f] transition-colors">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none">
-                  <rect x="2" y="2" width="5" height="5" rx="1" fill="currentColor" opacity="0.6" />
-                  <rect x="9" y="2" width="5" height="5" rx="1" fill="currentColor" opacity="0.6" />
-                  <rect x="2" y="9" width="5" height="5" rx="1" fill="currentColor" opacity="0.6" />
-                  <rect x="9" y="9" width="5" height="5" rx="1" fill="currentColor" opacity="0.6" />
-                </svg>
-                Shortcuts
-              </button>
-
-              {/* Connectors pill */}
-              <button className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-[#2a2a30] text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#1a1a1f] transition-colors">
-                Connectors
-                <span className="flex items-center gap-0.5 ml-0.5">
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none">
-                    <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M8 5v6M5 8h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none">
-                    <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M5 6h6M5 9h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </button>
-            </div>
-
-            {/* Send button */}
-            <button
-              onClick={handleSend}
-              disabled={!input.trim() || isLoading}
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-                input.trim() && !isLoading
-                  ? 'bg-blue-600 text-white hover:bg-blue-700'
-                  : 'bg-gray-100 dark:bg-[#1a1a1f] text-gray-400'
-              }`}
-            >
-              <ArrowUp className="w-4 h-4" />
-            </button>
-          </div>
         </div>
-
-        {/* Quick action cards — only shown before first message */}
-        {showGreeting && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
-            {quickActions.map((action) => (
-              <button
-                key={action.label}
-                onClick={() => setInput(action.label)}
-                className="flex flex-col gap-2 p-3.5 rounded-xl border border-gray-200 dark:border-[#2a2a30] bg-white dark:bg-[#111114] hover:bg-gray-50 dark:hover:bg-[#1a1a1f] text-left transition-colors"
-              >
-                {action.icon}
-                <span className="text-xs font-medium text-gray-600 dark:text-gray-300 leading-snug">
-                  {action.label}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
+        <button
+          onClick={() => sendMessage()}
+          disabled={!input.trim() || isLoading}
+          className="w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 flex items-center justify-center transition-colors flex-shrink-0"
+          aria-label="Send"
+        >
+          <Send className="w-4 h-4 text-white disabled:text-gray-400" />
+        </button>
       </div>
+      <p className="text-center text-xs text-gray-400 mt-2">
+        Bolt can update your agent, query leads, and change settings.
+      </p>
+    </div>
+  );
+
+  // ─── Layout ────────────────────────────────────────────────────────────────
+
+  return (
+    <div className="flex flex-col h-full -m-3 md:-m-6">
+      {hasMsgs ? MessageThread : EmptyState}
+      {InputBar}
     </div>
   );
 };
