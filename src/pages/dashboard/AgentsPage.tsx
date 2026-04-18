@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
 import { Users, Plus, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MoreHorizontal, Flame, MessageCircle, RefreshCw, Shield, Phone, PhoneIncoming, PhoneOutgoing } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
+import { AgentAvatar } from '../../components/ui/AgentAvatar';
+import { InlineRename } from '../../components/ui/InlineRename';
+import { EmojiColorPicker } from '../../components/ui/EmojiColorPicker';
 
 import { VoicePicker } from '../../components/ui/voice-picker';
 import { useRetellVoices } from '../../hooks/useRetellVoices';
@@ -29,6 +32,8 @@ interface Agent {
   description?: string;
   created_at?: string;
   retell_agent_id?: string;
+  avatar?: string | null;
+  color?: string | null;
 }
 
 interface CreateAgentForm {
@@ -614,6 +619,32 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
     }
   };
 
+  // Inline rename handler
+  const handleRenameAgent = async (agentId: string, newName: string) => {
+    setAgents(prev => prev.map(a => a.id === agentId ? { ...a, name: newName } : a));
+    try {
+      await supabase.from('agents').update({ name: newName }).eq('id', agentId);
+      const agent = agents.find(a => a.id === agentId);
+      if (agent?.retell_agent_id) {
+        try { await updateRetellAgent(agent.retell_agent_id, { agent_name: newName }); } catch (_) {}
+      }
+    } catch (err) {
+      console.error('Failed to rename agent:', err);
+      showToast({ title: 'Error', message: 'Could not rename agent', variant: 'error', duration: 3000 });
+    }
+  };
+
+  // Avatar + color save handler
+  const handleSaveAgentCustomization = async (agentId: string, avatar: string | null, color: string | null) => {
+    setAgents(prev => prev.map(a => a.id === agentId ? { ...a, avatar, color } : a));
+    try {
+      await supabase.from('agents').update({ avatar, color }).eq('id', agentId);
+    } catch (err) {
+      console.error('Failed to save agent customization:', err);
+      showToast({ title: 'Error', message: 'Could not save customization', variant: 'error', duration: 3000 });
+    }
+  };
+
   // Fetch agents from Supabase
   useEffect(() => {
     const fetchAgents = async () => {
@@ -654,6 +685,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           description: agent.description,
           created_at: agent.created_at,
           retell_agent_id: agent.retell_agent_id,
+          avatar: agent.avatar ?? null,
+          color: agent.color ?? null,
         }));
 
         setAgents(transformedAgents);
@@ -867,10 +900,23 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 {/* Agent Name + Status (stacked on mobile) */}
                 <div className="flex items-center justify-between md:contents">
                   <div className="flex items-center gap-3 md:flex-1 min-w-0">
-                    <div className="w-8 h-8 bg-zinc-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Users className="w-4 h-4 text-zinc-600" />
-                    </div>
-                    <div className="font-medium text-gray-900 truncate" title={agent.name}>{agent.name}</div>
+                    <EmojiColorPicker
+                      avatar={agent.avatar}
+                      color={agent.color}
+                      onSave={(avatar, color) => handleSaveAgentCustomization(agent.id, avatar, color)}
+                      align="start"
+                      trigger={
+                        <button type="button" title="Customize avatar & color">
+                          <AgentAvatar size="sm" avatar={agent.avatar} color={agent.color} name={agent.name} />
+                        </button>
+                      }
+                    />
+                    <InlineRename
+                      value={agent.name}
+                      onSave={(newName) => handleRenameAgent(agent.id, newName)}
+                      className="font-medium text-gray-900"
+                      inputClassName="font-medium text-gray-900 text-sm"
+                    />
                   </div>
 
                   {/* Status */}

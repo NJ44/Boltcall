@@ -10,6 +10,9 @@ import { VoicePicker } from '../../components/ui/voice-picker';
 import { PopButton } from '../../components/ui/pop-button';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
 import { updateRetellAgent } from '../../lib/retell';
+import { AgentAvatar } from '../../components/ui/AgentAvatar';
+import { InlineRename } from '../../components/ui/InlineRename';
+import { EmojiColorPicker } from '../../components/ui/EmojiColorPicker';
 
 interface AgentData {
   id: string;
@@ -25,6 +28,8 @@ interface AgentData {
   total_calls: number;
   created_at: string;
   updated_at: string;
+  avatar?: string | null;
+  color?: string | null;
 }
 
 interface CallLog {
@@ -55,6 +60,8 @@ const AgentDetailPage: React.FC = () => {
   const [greeting, setGreeting] = useState('');
   const [voiceId, setVoiceId] = useState('');
   const [transferPhone, setTransferPhone] = useState('');
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const [color, setColor] = useState<string | null>(null);
 
   // KB Folders state
   const [agentFolders, setAgentFolders] = useState<Array<{ id: string; name: string; is_default: boolean }>>([]);
@@ -125,6 +132,8 @@ const AgentDetailPage: React.FC = () => {
         setGreeting(data.greeting || '');
         setVoiceId(data.voice_id || '');
         setTransferPhone(data.transfer_phone_number || '');
+        setAvatar(data.avatar ?? null);
+        setColor(data.color ?? null);
       } catch {
         navigate('/dashboard/agents');
       } finally {
@@ -181,9 +190,11 @@ const AgentDetailPage: React.FC = () => {
       status !== (agent.status || 'active') ||
       greeting !== (agent.greeting || '') ||
       voiceId !== (agent.voice_id || '') ||
-      transferPhone !== (agent.transfer_phone_number || '');
+      transferPhone !== (agent.transfer_phone_number || '') ||
+      avatar !== (agent.avatar ?? null) ||
+      color !== (agent.color ?? null);
     setHasChanges(changed);
-  }, [name, status, greeting, voiceId, transferPhone, agent]);
+  }, [name, status, greeting, voiceId, transferPhone, avatar, color, agent]);
 
   const handleSave = async () => {
     if (!agent || !user?.id) return;
@@ -198,6 +209,8 @@ const AgentDetailPage: React.FC = () => {
           greeting,
           voice_id: voiceId,
           transfer_phone_number: transferPhone,
+          avatar,
+          color,
           updated_at: new Date().toISOString(),
         })
         .eq('id', agent.id)
@@ -254,8 +267,26 @@ const AgentDetailPage: React.FC = () => {
         >
           <ArrowLeft className="w-5 h-5 text-gray-500" />
         </button>
+        <EmojiColorPicker
+          avatar={avatar}
+          color={color}
+          onSave={(a, c) => { setAvatar(a); setColor(c); }}
+          align="start"
+          trigger={
+            <button type="button" title="Customize avatar & color">
+              <AgentAvatar size="md" avatar={avatar} color={color} name={name || agent.name} />
+            </button>
+          }
+        />
         <div className="flex-1 min-w-0">
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white truncate">{agent.name}</h1>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+            <InlineRename
+              value={name}
+              onSave={(newName) => setName(newName)}
+              className="text-gray-900 dark:text-white"
+              inputClassName="text-gray-900 dark:text-white text-xl font-bold"
+            />
+          </h1>
           <p className="text-sm text-gray-500">
             {agent.direction === 'outbound' ? 'Outbound' : 'Inbound'} agent
             {' · '}Created {new Date(agent.created_at).toLocaleDateString()}

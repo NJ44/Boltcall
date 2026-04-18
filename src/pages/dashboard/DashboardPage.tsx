@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import dayjs from 'dayjs';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
-import { AgentWorkflowBlock } from '../../components/ui/agent-workflow-block';
+import { AgentWorkflowBlock, type AgentCustomization } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
@@ -21,6 +21,7 @@ const DashboardPage: React.FC = () => {
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
+  const [agentCustomizations, setAgentCustomizations] = useState<AgentCustomization[]>([]);
 
   const fetchLiveData = useDashboardStore((s) => s.fetchLiveData);
   const hasFetchedLiveData = useRef(false);
@@ -31,6 +32,27 @@ const DashboardPage: React.FC = () => {
     hasFetchedLiveData.current = true;
     fetchLiveData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Fetch agent customizations (avatar + color) for workflow canvas
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('agents')
+      .select('direction, avatar, color, name')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .then(({ data }) => {
+        if (data) {
+          const customizations: AgentCustomization[] = data.map((a: any) => ({
+            direction: a.direction === 'outbound' ? 'outbound' : 'inbound',
+            avatar: a.avatar ?? null,
+            color: a.color ?? null,
+            title: a.name,
+          }));
+          setAgentCustomizations(customizations);
+        }
+      });
+  }, [user?.id]);
 
   // Fetch today's most recent completed booking for RecentWinBanner
   useEffect(() => {
@@ -108,7 +130,7 @@ const DashboardPage: React.FC = () => {
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">How your triggers, agents, and outputs connect</p>
         </div>
         <div className="p-4">
-          <AgentWorkflowBlock />
+          <AgentWorkflowBlock agents={agentCustomizations} />
         </div>
       </div>
 

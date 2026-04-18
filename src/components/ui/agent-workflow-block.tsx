@@ -3,6 +3,7 @@ import type React from "react";
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Link } from "react-router-dom";
+import { AgentAvatar } from "@/components/ui/AgentAvatar";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card-shadcn";
@@ -176,7 +177,14 @@ function NodeTooltip({
   );
 }
 
-export function AgentWorkflowBlock() {
+export interface AgentCustomization {
+  direction: 'inbound' | 'outbound';
+  avatar?: string | null;
+  color?: string | null;
+  title?: string;
+}
+
+export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }) {
   const [nodes, setNodes] = useState<WorkflowNode[]>(initialNodes);
   const [connections] = useState<WorkflowConnection[]>(initialConnections);
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -321,40 +329,58 @@ export function AgentWorkflowBlock() {
               >
                 {isAgent ? (
                   /* Circular agent node */
-                  <div
-                    className={`relative flex flex-col items-center justify-center rounded-full border-2 ${colorClasses[node.color]} bg-background/80 backdrop-blur transition-all ${isDragging ? "shadow-2xl" : "shadow-lg"} ${node.direction === "inbound" ? "ring-2 ring-blue-400/30 ring-offset-2 ring-offset-background" : "ring-2 ring-purple-400/30 ring-offset-2 ring-offset-background"} ${!node.configured ? "opacity-75 border-dashed" : ""}`}
-                    style={{ width: AGENT_SIZE, height: AGENT_SIZE }}
-                    role="article"
-                    aria-label={`agent node: ${node.title}`}
-                  >
-                    {/* Glow backdrop */}
-                    <div
-                      className={`absolute inset-0 rounded-full opacity-20 blur-md ${node.direction === "inbound" ? "bg-blue-400" : "bg-purple-400"}`}
-                      aria-hidden="true"
-                    />
-                    <div
-                      className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full mb-1"
-                      aria-hidden="true"
-                    >
-                      <img
-                        src="/boltcall_small_logo.webp"
-                        alt="Boltcall"
-                        className={`h-7 w-7 object-contain ${node.direction === "outbound" ? "brightness-0 invert" : ""}`}
-                      />
-                    </div>
-                    <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
-                      {node.title}
-                    </span>
-                    <AnimatePresence>
-                      {isHovered && !isDragging && (
-                        <NodeTooltip
-                          description={node.description}
-                          configured={node.configured}
-                          locked={node.locked}
+                  (() => {
+                    const agentData = agents?.find(a => a.direction === node.direction);
+                    const customColor = agentData?.color ?? null;
+                    const customAvatar = agentData?.avatar ?? null;
+                    const displayTitle = agentData?.title ?? node.title;
+                    const glowColor = customColor ?? (node.direction === "inbound" ? "#60a5fa" : "#a78bfa");
+                    return (
+                      <div
+                        className={`relative flex flex-col items-center justify-center rounded-full border-2 bg-background/80 backdrop-blur transition-all ${isDragging ? "shadow-2xl" : "shadow-lg"} ${!node.configured ? "opacity-75 border-dashed" : ""}`}
+                        style={{
+                          width: AGENT_SIZE,
+                          height: AGENT_SIZE,
+                          borderColor: customColor ?? (node.direction === "inbound" ? "rgb(96 165 250 / 0.4)" : "rgb(167 139 250 / 0.4)"),
+                          boxShadow: `0 0 0 2px ${glowColor}33`,
+                        }}
+                        role="article"
+                        aria-label={`agent node: ${displayTitle}`}
+                      >
+                        {/* Glow backdrop */}
+                        <div
+                          className="absolute inset-0 rounded-full opacity-20 blur-md"
+                          style={{ backgroundColor: glowColor }}
+                          aria-hidden="true"
                         />
-                      )}
-                    </AnimatePresence>
-                  </div>
+                        <div className="relative mb-1" aria-hidden="true">
+                          {customAvatar ? (
+                            <AgentAvatar size="sm" avatar={customAvatar} color={customColor} name={displayTitle} />
+                          ) : (
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full">
+                              <img
+                                src="/boltcall_small_logo.webp"
+                                alt="Boltcall"
+                                className={`h-7 w-7 object-contain ${node.direction === "outbound" ? "brightness-0 invert" : ""}`}
+                              />
+                            </div>
+                          )}
+                        </div>
+                        <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
+                          {displayTitle}
+                        </span>
+                        <AnimatePresence>
+                          {isHovered && !isDragging && (
+                            <NodeTooltip
+                              description={node.description}
+                              configured={node.configured}
+                              locked={node.locked}
+                            />
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })()
                 ) : (
                   /* Standard rectangular node */
                   <Card
