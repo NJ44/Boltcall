@@ -369,16 +369,18 @@ export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }
                         <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
                           {displayTitle}
                         </span>
-                    <AnimatePresence>
-                      {isHovered && !isDragging && (
-                        <NodeTooltip
-                          description={node.description}
-                          configured={node.configured}
-                          locked={node.locked}
-                        />
-                      )}
-                    </AnimatePresence>
-                  </div>
+                        <AnimatePresence>
+                          {isHovered && !isDragging && (
+                            <NodeTooltip
+                              description={node.description}
+                              configured={node.configured}
+                              locked={node.locked}
+                            />
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })()
                 ) : (
                   /* Standard rectangular node */
                   <Card
