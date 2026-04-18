@@ -194,6 +194,10 @@ const defaultData: SetupData = {
     isEnabled: false,
     isLaunched: false,
   },
+  survey: {
+    referralSource: '',
+    painPoints: [],
+  },
 };
 
 interface SetupStore extends SetupData {
