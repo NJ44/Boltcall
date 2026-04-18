@@ -619,6 +619,32 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
     }
   };
 
+  // Inline rename handler
+  const handleRenameAgent = async (agentId: string, newName: string) => {
+    setAgents(prev => prev.map(a => a.id === agentId ? { ...a, name: newName } : a));
+    try {
+      await supabase.from('agents').update({ name: newName }).eq('id', agentId);
+      const agent = agents.find(a => a.id === agentId);
+      if (agent?.retell_agent_id) {
+        try { await updateRetellAgent(agent.retell_agent_id, { agent_name: newName }); } catch (_) {}
+      }
+    } catch (err) {
+      console.error('Failed to rename agent:', err);
+      showToast({ title: 'Error', message: 'Could not rename agent', variant: 'error', duration: 3000 });
+    }
+  };
+
+  // Avatar + color save handler
+  const handleSaveAgentCustomization = async (agentId: string, avatar: string | null, color: string | null) => {
+    setAgents(prev => prev.map(a => a.id === agentId ? { ...a, avatar, color } : a));
+    try {
+      await supabase.from('agents').update({ avatar, color }).eq('id', agentId);
+    } catch (err) {
+      console.error('Failed to save agent customization:', err);
+      showToast({ title: 'Error', message: 'Could not save customization', variant: 'error', duration: 3000 });
+    }
+  };
+
   // Fetch agents from Supabase
   useEffect(() => {
     const fetchAgents = async () => {
