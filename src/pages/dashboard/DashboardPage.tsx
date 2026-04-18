@@ -130,7 +130,7 @@ const DashboardPage: React.FC = () => {
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">How your triggers, agents, and outputs connect</p>
         </div>
         <div className="p-4">
-          <AgentWorkflowBlock />
+          <AgentWorkflowBlock agents={agentCustomizations} />
         </div>
       </div>
 
