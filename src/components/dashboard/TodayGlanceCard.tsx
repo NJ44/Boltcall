@@ -17,8 +17,9 @@ const Stat: React.FC<{ color: string; value: number | string; label: string; loa
     {loading ? (
       <span className="h-3 w-16 rounded bg-foreground/10 animate-pulse inline-block" />
     ) : (
-      <span className="text-xs text-foreground/60 uppercase tracking-[0.15em]">
-        <span className="font-semibold text-foreground/80">{value}</span> {label}
+      <span className="flex items-baseline gap-1">
+        <span className="text-sm font-bold text-foreground/90 tabular-nums">{value}</span>
+        <span className="text-[10px] text-foreground/50 uppercase tracking-[0.12em]">{label}</span>
       </span>
     )}
   </div>
