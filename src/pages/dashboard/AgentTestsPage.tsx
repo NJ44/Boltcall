@@ -200,12 +200,16 @@ const AgentTestsPage: React.FC = () => {
         });
       }
 
-      showToast({
-        message: result.summary.failed === 0
-          ? `All ${result.summary.total} scenarios passed!`
-          : `${result.summary.passed}/${result.summary.total} passed, ${result.summary.failed} issues found`,
-        variant: result.summary.failed === 0 ? 'success' : 'warning',
-      });
+      {
+        const { passed, failed, total, unknown } = result.summary;
+        const allPassed = passed === total && failed === 0 && unknown === 0;
+        showToast({
+          message: allPassed
+            ? `All ${total} scenarios passed!`
+            : `Test run complete — ${passed} passed, ${failed} failed, ${unknown} inconclusive`,
+          variant: allPassed ? 'success' : failed > 0 ? 'warning' : 'info',
+        });
+      }
 
       fetchData();
     } catch (err: any) {
@@ -338,6 +342,8 @@ const AgentTestsPage: React.FC = () => {
                       {testResult.results.map((scenario) => {
                         const passed = scenario.analysis?.call_successful === true;
                         const failed = scenario.analysis?.call_successful === false;
+                        const hasTranscript = scenario.conversation.length > 0;
+                        // BUG-U7: three distinct states — no data (gray), inconclusive (yellow), failed (red), passed (green)
                         const isExpanded = expandedScenario === scenario.scenarioId;
 
                         return (
@@ -351,7 +357,11 @@ const AgentTestsPage: React.FC = () => {
                                   <CheckCircle className="w-5 h-5 text-green-500" />
                                 ) : failed ? (
                                   <XCircle className="w-5 h-5 text-red-500" />
+                                ) : !hasTranscript ? (
+                                  // BUG-A5: scenario never ran — grey, not yellow
+                                  <AlertCircle className="w-5 h-5 text-gray-400" />
                                 ) : (
+                                  // Ran but no automated verdict available
                                   <AlertCircle className="w-5 h-5 text-yellow-500" />
                                 )}
                                 <span className="text-sm font-medium text-gray-900">{scenario.scenarioName}</span>
@@ -380,6 +390,14 @@ const AgentTestsPage: React.FC = () => {
                                   className="overflow-hidden"
                                 >
                                   <div className="px-5 pb-4 space-y-3">
+                                    {/* BUG-U8: Per-scenario verdict */}
+                                    <div className={`flex items-center gap-1.5 text-sm font-medium ${
+                                      passed ? 'text-green-700' : failed ? 'text-red-700' : !hasTranscript ? 'text-gray-500' : 'text-yellow-700'
+                                    }`}>
+                                      {passed ? <CheckCircle className="w-4 h-4" /> : failed ? <XCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+                                      {passed ? 'Passed' : failed ? 'Failed' : !hasTranscript ? 'Did not run' : 'Inconclusive — no automated verdict available'}
+                                    </div>
+
                                     {/* Success criteria */}
                                     <div className="text-xs text-gray-500">
                                       <strong>Expected:</strong> {scenario.successCriteria}
@@ -392,28 +410,35 @@ const AgentTestsPage: React.FC = () => {
                                       </div>
                                     )}
 
-                                    {/* Transcript */}
-                                    <div className="bg-gray-50 rounded-lg p-3 max-h-64 overflow-y-auto">
-                                      <h5 className="text-xs font-semibold text-gray-400 uppercase mb-2">Transcript</h5>
-                                      <div className="space-y-2">
-                                        {scenario.conversation.map((msg, i) => (
-                                          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                            <div className={`max-w-[80%] px-3 py-2 rounded-lg text-sm ${
-                                              msg.role === 'user'
-                                                ? 'bg-blue-600 text-white'
-                                                : msg.role === 'agent'
-                                                ? 'bg-white text-gray-900 border'
-                                                : 'bg-red-100 text-red-700'
-                                            }`}>
-                                              <p className="text-xs font-medium opacity-70 mb-0.5">
-                                                {msg.role === 'user' ? 'Caller' : msg.role === 'agent' ? 'AI Agent' : 'System'}
-                                              </p>
-                                              {msg.content}
-                                            </div>
-                                          </div>
-                                        ))}
+                                    {/* BUG-A5: Explicit error when no transcript was captured */}
+                                    {!hasTranscript ? (
+                                      <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-500">
+                                        This scenario failed to generate a transcript. The agent connection may have timed out or the chat session could not be created. Check server logs for details.
                                       </div>
-                                    </div>
+                                    ) : (
+                                      /* Transcript */
+                                      <div className="bg-gray-50 rounded-lg p-3 max-h-64 overflow-y-auto">
+                                        <h5 className="text-xs font-semibold text-gray-400 uppercase mb-2">Transcript</h5>
+                                        <div className="space-y-2">
+                                          {scenario.conversation.map((msg, i) => (
+                                            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                              <div className={`max-w-[80%] px-3 py-2 rounded-lg text-sm ${
+                                                msg.role === 'user'
+                                                  ? 'bg-blue-600 text-white'
+                                                  : msg.role === 'agent'
+                                                  ? 'bg-white text-gray-900 border'
+                                                  : 'bg-red-100 text-red-700'
+                                              }`}>
+                                                <p className="text-xs font-medium opacity-70 mb-0.5">
+                                                  {msg.role === 'user' ? 'Caller' : msg.role === 'agent' ? 'AI Agent' : 'System'}
+                                                </p>
+                                                {msg.content}
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
                                 </motion.div>
                               )}

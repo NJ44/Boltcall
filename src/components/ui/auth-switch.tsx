@@ -233,15 +233,11 @@ export default function AuthSwitch({
           </Link>
         </div>
         {/* ── GRADIENT PANEL with curved clip-path (desktop only) ── */}
-        <motion.div
-          className="absolute inset-0 z-10 hidden lg:block pointer-events-none"
-          animate={{ x: isLogin ? 0 : 0 }}
-        >
+        <div className="absolute inset-0 z-10 hidden lg:block pointer-events-none">
           <motion.div
             className="absolute top-0 bottom-0 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800"
+            initial={false}
             animate={{
-              left: isLogin ? "0%" : "0%",
-              right: isLogin ? "0%" : "0%",
               clipPath: isLogin ? clipLeft : clipRight,
             }}
             transition={{ type: "spring", stiffness: 170, damping: 26 }}
@@ -250,11 +246,12 @@ export default function AuthSwitch({
               height: "100%",
             }}
           />
-        </motion.div>
+        </div>
 
         {/* ── GRADIENT PANEL CONTENT (desktop only) ── */}
         <motion.div
           className="absolute top-0 bottom-0 w-[45%] z-20 hidden lg:flex items-center justify-center pointer-events-auto"
+          initial={false}
           animate={{ left: isLogin ? "0%" : "55%" }}
           transition={{ type: "spring", stiffness: 170, damping: 26 }}
         >
@@ -289,6 +286,7 @@ export default function AuthSwitch({
         {/* ── FORM SIDE ── */}
         <motion.div
           className="relative lg:absolute lg:top-0 lg:bottom-0 w-full lg:w-[50%] z-[5] flex flex-col items-center justify-center px-6 py-8 sm:px-12 sm:py-10 lg:py-0"
+          initial={false}
           animate={isDesktop ? { left: isLogin ? "50%" : "0%" } : { left: "0%" }}
           transition={{ type: "spring", stiffness: 170, damping: 26 }}
         >

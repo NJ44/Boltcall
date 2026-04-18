@@ -928,10 +928,10 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                   >
                     <RefreshCw className={`w-5 h-5 md:w-4 md:h-4 ${regeneratingAgentId === agent.id ? 'animate-spin' : ''}`} />
                   </button>
-                  <button className="text-green-600 hover:text-green-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
+                  <button title="Delete Agent" className="text-green-600 hover:text-green-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
                     <Flame className="w-5 h-5 md:w-4 md:h-4" />
                   </button>
-                  <button className="text-gray-600 hover:text-gray-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
+                  <button title="More Options" className="text-gray-600 hover:text-gray-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
                     <MoreHorizontal className="w-5 h-5 md:w-4 md:h-4" />
                   </button>
                 </div>

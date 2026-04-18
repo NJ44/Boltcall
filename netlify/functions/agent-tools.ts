@@ -251,7 +251,7 @@ async function handleLookupCaller(
 
 async function handleSearchKnowledgeBase(args: any, userId: string | null): Promise<string> {
   const { question } = args;
-  if (!question) return 'Please provide a question to search for.';
+  if (!question) return 'I\'d be happy to look that up for you. Could you repeat your question so I can find the right information?';
   if (!userId) return 'I cannot search the knowledge base without a user context.';
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
@@ -339,7 +339,7 @@ async function getGoogleCalendarForUser(userId: string): Promise<{ accessToken: 
 
 async function handleCheckAvailability(args: any, calApiKey: string, userId: string | null): Promise<string> {
   const { date } = args;
-  if (!date) return 'Please provide a date to check availability.';
+  if (!date) return 'I can check availability for you. What date did you have in mind?';
 
   // Try Google Calendar first
   if (userId) {
