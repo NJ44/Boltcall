@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface AgentAvatarProps {
   avatar: string | null | undefined;
   color: string | null | undefined;
