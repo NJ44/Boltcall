@@ -299,6 +299,7 @@ const NavigationWrapper: React.FC = () => {
         >
           <Route index element={<DashboardPage />} />
           <Route path="getting-started" element={<GettingStartedPage />} />
+          <Route path="boltcall-agent" element={<BoltcallAgentPage />} />
           <Route path="feedback" element={<FeedbackPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
 
