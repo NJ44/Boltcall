@@ -263,9 +263,6 @@ export function PricingTable({
                 >
                   {(plan.isCustom || plan.level === 'all') ? "Contact Us" : "Start 7-Day Free Trial"}
                 </button>
-                <p className={cn("text-[10px] mt-1.5 text-center", (plan.isCustom || plan.level === 'all') ? "text-transparent select-none" : "text-zinc-500")}>
-                  {(plan.isCustom || plan.level === 'all') ? "\u00A0" : "No credit card required for trial"}
-                </p>
               </div>
             </motion.div>
           ))}
