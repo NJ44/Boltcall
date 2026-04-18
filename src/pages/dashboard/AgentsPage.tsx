@@ -840,7 +840,9 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           </div>
 
           {/* Agents Card Table */}
+          <div className="overflow-x-auto">
           <CardTable
+            className="min-w-[640px]"
             columns={[
               { key: 'name', label: 'Agent', width: '25%' },
               { key: 'status', label: 'Status', width: '15%' },
