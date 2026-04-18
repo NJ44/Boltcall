@@ -122,12 +122,10 @@ const CardTable: React.FC<CardTableProps> = ({
             </div>
           ))}
         </div>
-        </div>
       </div>
 
       {/* Table Content - Card-based rows */}
-      <div className="overflow-x-auto">
-      <div className="space-y-3 px-3 md:px-6 pb-4 md:pb-6 min-w-max md:min-w-0">
+      <div className="space-y-3 px-3 md:px-6 pb-4 md:pb-6">
         {filteredData.length > 0 ? (
           filteredData.map((item, index) => (
             <motion.div
