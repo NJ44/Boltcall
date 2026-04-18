@@ -17,10 +17,12 @@ import { FUNCTIONS_BASE } from '../../lib/api';
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepBusinessProfile = React.lazy(() => import('./steps/StepBusinessProfile'));
 const StepKnowledge = React.lazy(() => import('./steps/StepKnowledge'));
+const StepSurvey = React.lazy(() => import('./steps/StepSurvey'));
 
 const stepComponents = {
   1: StepBusinessProfile,
   2: StepKnowledge,
+  3: StepSurvey,
 };
 
 const WizardShell: React.FC = () => {
