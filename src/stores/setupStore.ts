@@ -107,6 +107,12 @@ export interface SetupData {
     isEnabled: boolean;
     isLaunched: boolean;
   };
+
+  // Step 3: Survey
+  survey: {
+    referralSource: string;
+    painPoints: string[];
+  };
 }
 
 const defaultData: SetupData = {
