@@ -540,7 +540,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             : new Date().toLocaleDateString(),
           agent_type: agent.agent_type,
           description: agent.description,
-          created_at: agent.created_at
+          created_at: agent.created_at,
+          retell_agent_id: agent.retell_agent_id,
         }));
 
         setAgents(transformedAgents);
