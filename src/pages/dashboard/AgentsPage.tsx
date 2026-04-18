@@ -129,6 +129,7 @@ const AgentsPage: React.FC = () => {
   const [kbFolders, setKbFolders] = useState<KbFolderOption[]>([]);
   const [userPhoneNumbers, setUserPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [regeneratingAgentId, setRegeneratingAgentId] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
   const [talkToAgent, setTalkToAgent] = useState<Agent | null>(null);
   const { voices: retellVoices } = useRetellVoices();
   const [createForm, setCreateForm] = useState<CreateAgentForm>({
@@ -280,21 +281,131 @@ const AgentsPage: React.FC = () => {
     }));
   };
 
-  const handleCreateAgent = () => {
-    // Here you would typically save the agent to your backend
-    // Reset form and close modal
-    setCreateForm({
-      name: '',
-      voice: '',
-      knowledgeBase: '',
-      kbFolderIds: [],
-      phoneNumber: '',
-      humanTransferPhone: '',
-      direction: 'inbound',
-      language: '',
-      agentType: 'inbound'
-    });
-    setShowCreateModal(false);
+  const handleCreateAgent = async () => {
+    if (!user?.id) return;
+    if (!createForm.name.trim()) {
+      showToast({ title: 'Validation Error', message: 'Agent name is required.', variant: 'error', duration: 3000 });
+      return;
+    }
+
+    setIsCreating(true);
+    try {
+      const FUNC_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
+      const res = await fetch(`${FUNC_BASE}/retell-agents`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'create_agent',
+          agent_name: createForm.name.trim(),
+          user_id: user.id,
+          voice_id: createForm.voice || undefined,
+          language: createForm.language || 'en',
+          agent_type: createForm.agentType,
+          transfer_number: createForm.humanTransferPhone || undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.details || errData.error || `Request failed (${res.status})`);
+      }
+
+      const data = await res.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Agent creation failed');
+      }
+
+      // Save to Supabase agents table so it appears in the list
+      const { error: dbErr } = await supabase.from('agents').insert({
+        user_id: user.id,
+        name: createForm.name.trim(),
+        agent_type: 'ai_receptionist',
+        status: 'active',
+        voice_id: createForm.voice || null,
+        language: createForm.language || 'en',
+        direction: createForm.direction,
+        retell_agent_id: data.agent_id,
+      });
+
+      if (dbErr) {
+        console.error('[AgentsPage] Supabase insert after create_agent failed:', dbErr);
+      }
+
+      // Link selected KB folders to the new agent row (best-effort)
+      if (createForm.kbFolderIds.length > 0 && data.agent_id) {
+        try {
+          const { data: agentRow } = await supabase
+            .from('agents')
+            .select('id')
+            .eq('retell_agent_id', data.agent_id)
+            .eq('user_id', user.id)
+            .single();
+
+          if (agentRow?.id) {
+            const links = createForm.kbFolderIds.map((folderId) => ({
+              agent_id: agentRow.id,
+              kb_folder_id: folderId,
+            }));
+            await supabase.from('agent_kb_folders').insert(links);
+          }
+        } catch (linkErr) {
+          console.warn('[AgentsPage] KB folder link failed (non-blocking):', linkErr);
+        }
+      }
+
+      // Reload the agents list from Supabase
+      const { data: agentsData, error: fetchErr } = await supabase
+        .from('agents')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (!fetchErr && agentsData) {
+        setAgents(agentsData.map((agent: any) => ({
+          id: agent.id,
+          name: agent.name,
+          status: agent.status || 'active',
+          callsToday: agent.total_calls || 0,
+          avgResponseTime: agent.average_call_duration
+            ? `${Math.floor(agent.average_call_duration / 60)}m ${agent.average_call_duration % 60}s`
+            : '0m 0s',
+          successRate: agent.conversion_rate ? `${agent.conversion_rate}%` : '0%',
+          lastActive: agent.updated_at
+            ? new Date(agent.updated_at).toLocaleDateString()
+            : new Date().toLocaleDateString(),
+          agent_type: agent.agent_type,
+          description: agent.description,
+          created_at: agent.created_at,
+          retell_agent_id: agent.retell_agent_id,
+        })));
+      }
+
+      showToast({ title: 'Agent Created', message: `"${createForm.name.trim()}" is ready.`, variant: 'success', duration: 4000 });
+
+      // Reset form and close modal
+      setCreateForm({
+        name: '',
+        voice: '',
+        knowledgeBase: '',
+        kbFolderIds: [],
+        phoneNumber: '',
+        humanTransferPhone: '',
+        direction: 'inbound',
+        language: '',
+        agentType: 'inbound',
+      });
+      setShowCreateModal(false);
+    } catch (err) {
+      console.error('[AgentsPage] handleCreateAgent failed:', err);
+      showToast({
+        title: 'Error',
+        message: err instanceof Error ? err.message : 'Failed to create agent. Please try again.',
+        variant: 'error',
+        duration: 5000,
+      });
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   const handleTemplateSelect = async (template: IndustryTemplate) => {
@@ -850,8 +961,9 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             </PopButton>
             <PopButton color="blue"
               onClick={handleCreateAgent}
+              disabled={isCreating}
             >
-              Create Agent
+              {isCreating ? 'Creating...' : 'Create Agent'}
             </PopButton>
           </>
         }
