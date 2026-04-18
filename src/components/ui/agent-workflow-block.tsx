@@ -177,7 +177,14 @@ function NodeTooltip({
   );
 }
 
-export function AgentWorkflowBlock() {
+export interface AgentCustomization {
+  direction: 'inbound' | 'outbound';
+  avatar?: string | null;
+  color?: string | null;
+  title?: string;
+}
+
+export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }) {
   const [nodes, setNodes] = useState<WorkflowNode[]>(initialNodes);
   const [connections] = useState<WorkflowConnection[]>(initialConnections);
   const canvasRef = useRef<HTMLDivElement>(null);
