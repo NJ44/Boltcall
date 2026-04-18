@@ -95,7 +95,8 @@ const CardTable: React.FC<CardTableProps> = ({
       </div>
 
       {/* Table Headers - Simple Text (hidden on mobile since rows stack) */}
-      <div className="hidden md:block px-6 py-4">
+      <div className="hidden md:block overflow-x-auto">
+        <div className="px-6 py-4 min-w-max">
         <div className="flex items-center gap-6">
           {/* Checkbox for select all */}
           <input
