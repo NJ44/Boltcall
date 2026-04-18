@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import confetti from 'canvas-confetti';
 import dayjs from 'dayjs';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock } from '../../components/ui/agent-workflow-block';
