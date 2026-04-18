@@ -24,7 +24,7 @@ const stepComponents = {
 };
 
 const WizardShell: React.FC = () => {
-  const { currentStep, updateStep, markStepCompleted, businessProfile: storeBusinessProfile, account, updateAccount, knowledgeBase: storeKnowledgeBase, complete, updateReview } = useSetupStore();
+  const { currentStep, updateStep, markStepCompleted, businessProfile: storeBusinessProfile, account, updateAccount, knowledgeBase: storeKnowledgeBase, callFlow: storeCallFlow, agentConfig: storeAgentConfig, complete, updateReview } = useSetupStore();
   const [isLaunching] = useState(false);
   const { user } = useAuth();
   const { showToast } = useToast();
@@ -155,6 +155,12 @@ const WizardShell: React.FC = () => {
               services: storeKnowledgeBase.services,
               faqs: storeKnowledgeBase.faqs,
               policies: storeKnowledgeBase.policies,
+              // Call flow + agent config: power the industry template selection and prompt generation
+              callFlow: storeCallFlow,
+              agentType: storeAgentConfig?.agentType,
+              agentName: storeAgentConfig?.agentName,
+              voiceId: storeAgentConfig?.voiceId,
+              transferNumber: storeAgentConfig?.transferNumber,
             });
           } catch (e) {
             console.error('Agent creation failed', e);
