@@ -32,6 +32,8 @@ interface Agent {
   description?: string;
   created_at?: string;
   retell_agent_id?: string;
+  avatar?: string | null;
+  color?: string | null;
 }
 
 interface CreateAgentForm {
