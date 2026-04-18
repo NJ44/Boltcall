@@ -1135,7 +1135,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                     id="phone-input"
                   />
                   <PopButton color="blue"
-                    onClick={() => selectedAgentForTest && initializeRetellWidget(selectedAgentForTest.id)}
+                    onClick={() => selectedAgentForTest && initializeRetellWidget(selectedAgentForTest.retell_agent_id || selectedAgentForTest.id)}
                     className="w-full"
                   >
                     Call Me Now
