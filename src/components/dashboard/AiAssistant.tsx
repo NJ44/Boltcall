@@ -93,22 +93,35 @@ const AiAssistant: React.FC = () => {
     callAssistant(newMessages);
   };
 
+  if (isDismissed) return null;
+
   return (
     <>
       {/* Floating Button */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
+          <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
+            className="fixed bottom-6 right-6 z-50 group/fab"
           >
-            <MessageCircle className="w-7 h-7 fill-white stroke-none" />
-          </motion.button>
+            <button
+              onClick={() => setIsOpen(true)}
+              className="w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center"
+            >
+              <MessageCircle className="w-7 h-7 fill-white stroke-none" />
+            </button>
+            {/* Dismiss button — appears on hover */}
+            <button
+              onClick={(e) => { e.stopPropagation(); sessionStorage.setItem('aiAssistantDismissed', 'true'); setIsDismissed(true); }}
+              className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-gray-600 hover:bg-gray-700 text-white rounded-full opacity-0 group-hover/fab:opacity-100 transition-opacity flex items-center justify-center shadow-sm"
+              title="Dismiss"
+              aria-label="Dismiss chat assistant"
+            >
+              <X className="w-2.5 h-2.5" />
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 
