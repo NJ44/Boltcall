@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import confetti from 'canvas-confetti';
 import dayjs from 'dayjs';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock, type AgentCustomization } from '../../components/ui/agent-workflow-block';
@@ -19,7 +18,6 @@ const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
   const [agentCustomizations, setAgentCustomizations] = useState<AgentCustomization[]>([]);
 
@@ -72,14 +70,12 @@ const DashboardPage: React.FC = () => {
       });
   }, [user?.id]);
 
-  // Check if setup was just completed
+  // Check if setup was just completed — show the "Almost Done!" agent config modal
   useEffect(() => {
     const setupCompleted = searchParams.get('setupCompleted');
     if (setupCompleted === 'true') {
       setShowCompletionPopup(true);
-      setShowConfetti(true);
       setSearchParams({});
-      setTimeout(() => setShowConfetti(false), 2500);
     }
   }, [searchParams, setSearchParams]);
 
@@ -92,17 +88,6 @@ const DashboardPage: React.FC = () => {
       setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
   }, [searchParams]);
-
-  // Fire confetti effect
-  useEffect(() => {
-    if (!showConfetti) return;
-    confetti({
-      particleCount: 500,
-      spread: 160,
-      gravity: 0.3,
-      origin: { y: 0.4 },
-    });
-  }, [showConfetti]);
 
   return (
     <div className="space-y-4 px-1 md:px-0">
