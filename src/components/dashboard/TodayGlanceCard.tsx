@@ -50,7 +50,7 @@ const TodayGlanceCard: React.FC = () => {
           <Stat color="bg-red-400"    value={missed}     label="Missed"      loading={loading} />
           <Stat color="bg-amber-400"  value={pending}    label="Pending"     loading={loading} />
         </div>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/60 font-medium">
           While you were away
         </p>
       </div>
