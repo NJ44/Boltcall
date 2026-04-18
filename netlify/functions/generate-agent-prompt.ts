@@ -562,7 +562,7 @@ If asked: "That's a great question to ask our technician directly. A common rule
       'How much does it cost to fix my AC?',
       'Do you charge a fee just to come out and look at it?',
       'How soon can you get someone out here?',
-      'My AC is running but it's not cooling — what's wrong?',
+      "My AC is running but it's not cooling — what's wrong?",
       'Is it better to repair my old system or just replace it?',
       'Do you offer any kind of maintenance plan?',
       'My carbon monoxide detector is going off — what do I do?',
