@@ -773,8 +773,8 @@ export const handler: Handler = async (event) => {
     // Look up agent owner for Supabase operations
     const userId = agent_id ? await getAgentOwner(agent_id) : null;
 
-    // Get Cal.com API key — in the future this could be per-user from Supabase
-    const calApiKey = CAL_API_KEY;
+    // Get Cal.com API key per user, falling back to global env var
+    const calApiKey = await getCalApiKey(userId);
 
     let content: string;
 
