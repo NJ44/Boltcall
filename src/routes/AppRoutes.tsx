@@ -269,7 +269,7 @@ const NavigationWrapper: React.FC = () => {
   useLenis();
 
   return (
-    <Suspense fallback={<PageLoader />}>
+    <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
