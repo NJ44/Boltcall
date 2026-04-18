@@ -945,6 +945,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             onAddNew={() => setShowCreateModal(true)}
             addNewText="Add Agent"
           />
+          </div>
         </>
       )}
 
