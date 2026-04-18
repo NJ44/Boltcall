@@ -176,6 +176,9 @@ const PreferencesPage: React.FC = () => {
         localStorage.setItem('darkMode', String(prefersDark));
       }
 
+      // Apply accent color immediately on save
+      applyAccentColor(preferences.accentColor ?? null);
+
       showToast({ title: t('common:save'), message: t('settings:prefsSavedSuccess'), variant: 'success', duration: 3000 });
       setSaveMessage(t('settings:prefsSavedSuccess'));
       setTimeout(() => setSaveMessage(''), 3000);
