@@ -60,6 +60,7 @@ const MessagesPage = React.lazy(() => import('../pages/dashboard/MessagesPage'))
 const LocationDashboardPage = React.lazy(() => import('../pages/dashboard/LocationDashboardPage'));
 const GettingStartedPage = React.lazy(() => import('../pages/dashboard/GettingStartedPage'));
 const FeedbackPage = React.lazy(() => import('../pages/dashboard/FeedbackPage'));
+const BoltcallAgentPage = React.lazy(() => import('../pages/dashboard/BoltcallAgentPage'));
 
 // ── Lazy loads — Dashboard settings ──────────────────────────────────────
 const GeneralPage = React.lazy(() => import('../pages/dashboard/settings/GeneralPage'));
@@ -299,6 +300,7 @@ const NavigationWrapper: React.FC = () => {
         >
           <Route index element={<DashboardPage />} />
           <Route path="getting-started" element={<GettingStartedPage />} />
+          <Route path="boltcall-agent" element={<BoltcallAgentPage />} />
           <Route path="feedback" element={<FeedbackPage />} />
           <Route path="locations/:locationId" element={<LocationDashboardPage />} />
 
