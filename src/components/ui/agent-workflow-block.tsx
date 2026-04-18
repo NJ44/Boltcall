@@ -3,6 +3,7 @@ import type React from "react";
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Link } from "react-router-dom";
+import { AgentAvatar } from "@/components/ui/AgentAvatar";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card-shadcn";
