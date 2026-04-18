@@ -169,7 +169,7 @@ const AIReceptionistDashboardPage: React.FC = () => {
                       <span className={`w-1.5 h-1.5 rounded-full ${agent.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`} />
                       {agent.status === 'active' ? 'active' : 'inactive'}
                     </span>
-                    <ChevronRight className="w-4 h-4 text-gray-300 dark:text-gray-600" />
+                    <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </Link>
               ))}
