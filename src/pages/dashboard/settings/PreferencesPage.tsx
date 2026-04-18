@@ -14,12 +14,32 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+const ACCENT_COLORS = [
+  { hex: '#3B82F6', label: 'Blue (default)' },
+  { hex: '#8B5CF6', label: 'Purple' },
+  { hex: '#10B981', label: 'Emerald' },
+  { hex: '#F59E0B', label: 'Amber' },
+  { hex: '#EF4444', label: 'Red' },
+  { hex: '#EC4899', label: 'Pink' },
+  { hex: '#14B8A6', label: 'Teal' },
+  { hex: '#F97316', label: 'Orange' },
+];
+
+function applyAccentColor(hex: string | null) {
+  if (hex) {
+    document.documentElement.style.setProperty('--accent', hex);
+  } else {
+    document.documentElement.style.removeProperty('--accent');
+  }
+}
+
 const defaultPreferences = {
   theme: 'light',
   language: 'en',
   timezone: 'America/New_York',
   dateFormat: 'MM/DD/YYYY',
   timeFormat: '12h',
+  accentColor: null as string | null,
 };
 
 const PreferencesPage: React.FC = () => {
