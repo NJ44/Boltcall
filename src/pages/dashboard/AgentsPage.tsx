@@ -659,6 +659,8 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           description: agent.description,
           created_at: agent.created_at,
           retell_agent_id: agent.retell_agent_id,
+          avatar: agent.avatar ?? null,
+          color: agent.color ?? null,
         }));
 
         setAgents(transformedAgents);
