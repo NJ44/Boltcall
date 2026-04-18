@@ -286,4 +286,5 @@ export const useSetupStore = create<SetupStore>()(
 export const setupSteps = [
   { id: 1, title: 'Business Profile', description: 'Company information' },
   { id: 2, title: 'Knowledge Base', description: 'Services, FAQs & documents' },
+  { id: 3, title: 'Quick Questions', description: 'Help us personalize your experience' },
 ];
