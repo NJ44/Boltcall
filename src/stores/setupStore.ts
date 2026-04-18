@@ -107,6 +107,12 @@ export interface SetupData {
     isEnabled: boolean;
     isLaunched: boolean;
   };
+
+  // Step 3: Survey
+  survey: {
+    referralSource: string;
+    painPoints: string[];
+  };
 }
 
 const defaultData: SetupData = {
@@ -188,6 +194,10 @@ const defaultData: SetupData = {
     isEnabled: false,
     isLaunched: false,
   },
+  survey: {
+    referralSource: '',
+    painPoints: [],
+  },
 };
 
 interface SetupStore extends SetupData {
@@ -203,6 +213,7 @@ interface SetupStore extends SetupData {
   updateCallFlow: (data: Partial<SetupData['callFlow']>) => void;
   updateAgentConfig: (data: Partial<SetupData['agentConfig']>) => void;
   updateReview: (data: Partial<SetupData['review']>) => void;
+  updateSurvey: (data: Partial<SetupData['survey']>) => void;
   reset: () => void;
   complete: () => void;
 }
@@ -248,7 +259,11 @@ export const useSetupStore = create<SetupStore>()(
       updateReview: (data) => set((state) => ({
         review: { ...state.review, ...data }
       })),
-      
+
+      updateSurvey: (data) => set((state) => ({
+        survey: { ...state.survey, ...data }
+      })),
+
       reset: () => set({ ...defaultData, currentStep: 1, isCompleted: false, completedSteps: [] }),
       
       complete: () => set({ isCompleted: true }),
@@ -271,4 +286,5 @@ export const useSetupStore = create<SetupStore>()(
 export const setupSteps = [
   { id: 1, title: 'Business Profile', description: 'Company information' },
   { id: 2, title: 'Knowledge Base', description: 'Services, FAQs & documents' },
+  { id: 3, title: 'Quick Questions', description: 'Help us personalize your experience' },
 ];
