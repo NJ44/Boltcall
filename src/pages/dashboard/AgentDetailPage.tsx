@@ -190,9 +190,11 @@ const AgentDetailPage: React.FC = () => {
       status !== (agent.status || 'active') ||
       greeting !== (agent.greeting || '') ||
       voiceId !== (agent.voice_id || '') ||
-      transferPhone !== (agent.transfer_phone_number || '');
+      transferPhone !== (agent.transfer_phone_number || '') ||
+      avatar !== (agent.avatar ?? null) ||
+      color !== (agent.color ?? null);
     setHasChanges(changed);
-  }, [name, status, greeting, voiceId, transferPhone, agent]);
+  }, [name, status, greeting, voiceId, transferPhone, avatar, color, agent]);
 
   const handleSave = async () => {
     if (!agent || !user?.id) return;
