@@ -115,6 +115,29 @@ async function getAgentOwner(agentId: string): Promise<string | null> {
   return data.user_id;
 }
 
+// ── Get per-user Cal.com API key ──
+
+async function getCalApiKey(userId: string | null): Promise<string> {
+  if (userId) {
+    try {
+      const supabase = getSupabase();
+      const { data } = await supabase
+        .from('user_integrations')
+        .select('api_key')
+        .eq('user_id', userId)
+        .eq('provider', 'calcom')
+        .eq('is_connected', true)
+        .maybeSingle();
+
+      if (data?.api_key) return data.api_key;
+    } catch (err) {
+      console.error('[agent-tools] Failed to fetch user Cal.com API key, falling back to env:', err);
+    }
+  }
+  // Fall back to global env var so existing setups continue to work
+  return process.env.CAL_API_KEY || '';
+}
+
 // ── Tool: lookup_caller ──
 
 async function handleLookupCaller(
