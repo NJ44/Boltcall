@@ -275,6 +275,39 @@ const PreferencesPage: React.FC = () => {
             );
           })}
         </div>
+
+        {/* Accent Color */}
+        <div className="mt-6 pt-5 border-t border-gray-100 dark:border-[#2a2a30]">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Accent Color</label>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">Applied to primary buttons and interactive elements across the dashboard.</p>
+          <div className="flex flex-wrap items-center gap-3">
+            {ACCENT_COLORS.map(({ hex, label }) => (
+              <button
+                key={hex}
+                type="button"
+                title={label}
+                onClick={() => { setPreferences(prev => ({ ...prev, accentColor: preferences.accentColor === hex ? null : hex })); setIsDirty(true); }}
+                className={`w-8 h-8 rounded-full transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${
+                  preferences.accentColor === hex ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : ''
+                }`}
+                style={{ backgroundColor: hex }}
+              >
+                {preferences.accentColor === hex && (
+                  <Check className="w-4 h-4 text-white mx-auto" />
+                )}
+              </button>
+            ))}
+            {preferences.accentColor && (
+              <button
+                type="button"
+                onClick={() => { setPreferences(prev => ({ ...prev, accentColor: null })); setIsDirty(true); }}
+                className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors ml-1"
+              >
+                Reset
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Language & Region */}
