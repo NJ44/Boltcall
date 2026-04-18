@@ -267,8 +267,26 @@ const AgentDetailPage: React.FC = () => {
         >
           <ArrowLeft className="w-5 h-5 text-gray-500" />
         </button>
+        <EmojiColorPicker
+          avatar={avatar}
+          color={color}
+          onSave={(a, c) => { setAvatar(a); setColor(c); }}
+          align="start"
+          trigger={
+            <button type="button" title="Customize avatar & color">
+              <AgentAvatar size="md" avatar={avatar} color={color} name={name || agent.name} />
+            </button>
+          }
+        />
         <div className="flex-1 min-w-0">
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white truncate">{agent.name}</h1>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+            <InlineRename
+              value={name}
+              onSave={(newName) => setName(newName)}
+              className="text-gray-900 dark:text-white"
+              inputClassName="text-gray-900 dark:text-white text-xl font-bold"
+            />
+          </h1>
           <p className="text-sm text-gray-500">
             {agent.direction === 'outbound' ? 'Outbound' : 'Inbound'} agent
             {' · '}Created {new Date(agent.created_at).toLocaleDateString()}
