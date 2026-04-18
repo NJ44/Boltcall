@@ -1,0 +1,30 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Boltcall" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "Boltcall" [ref=e6]
+    - generic [ref=e7]:
+      - generic [ref=e9]:
+        - heading "New here?" [level=3] [ref=e10]
+        - paragraph [ref=e11]: Join us today and discover a world of possibilities. Create your account in seconds!
+        - button "Sign Up" [ref=e12] [cursor=pointer]
+      - generic [ref=e14]:
+        - heading "Sign in" [level=2] [ref=e15]
+        - generic [ref=e16]:
+          - textbox "Email" [ref=e19]
+          - generic [ref=e21]:
+            - textbox "Password" [ref=e22]
+            - button "Show password" [ref=e23] [cursor=pointer]:
+              - img [ref=e24]
+          - button "Forgot password?" [ref=e34] [cursor=pointer]
+          - button "LOGIN" [ref=e36] [cursor=pointer]
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: Or continue with
+          - generic [ref=e39]:
+            - button "Google" [ref=e40] [cursor=pointer]:
+              - img [ref=e41]
+            - button "Microsoft" [ref=e46] [cursor=pointer]:
+              - img [ref=e47]
+            - button "Facebook" [ref=e52] [cursor=pointer]:
+              - img [ref=e53]
+  - region "Notifications alt+T"
