@@ -261,7 +261,7 @@ const PricingSection: React.FC = () => {
                   Book a Call
                 </Button>
               )}
-              <p className="text-xs text-gray-500 mt-2">No credit card required for trial</p>
+
             </motion.div>
           ))}
         </motion.div>
