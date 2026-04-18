@@ -361,7 +361,7 @@ export const handler: Handler = async (event) => {
           });
 
           const llm = await client.llm.create({
-            model: 'gpt-5-mini',
+            model: 'gpt-4o-mini',
             general_prompt: body.general_prompt || buildAgentPrompt(body.agent_name || 'this business', body.country),
             ...(body.knowledge_base_ids ? { knowledge_base_ids: body.knowledge_base_ids } : {}),
             general_tools: generalTools,
@@ -494,7 +494,7 @@ export const handler: Handler = async (event) => {
 
           // Create LLM WITHOUT Retell KB — KB is in the prompt + search tool
           const llmConfig: any = {
-            model: 'gpt-5-mini',
+            model: 'gpt-4o-mini',
             general_prompt: generalPrompt,
             general_tools: generalTools,
           };
