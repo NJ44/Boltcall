@@ -19,6 +19,7 @@ const QUICK_ACTIONS: { label: string; type: 'question' | 'action' }[] = [
 
 const AiAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(() => sessionStorage.getItem('aiAssistantDismissed') === 'true');
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
