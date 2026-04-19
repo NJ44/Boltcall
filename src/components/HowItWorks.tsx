@@ -9,6 +9,7 @@ const PROCESS_PHASES = [
   {
     id: "process-1",
     title: "AI Receptionist",
+    avatar: "/avatars/Gemini_Generated_Image_2vtge12vtge12vtg-Photoroom.png",
     description:
       "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
     checklist: [
@@ -21,6 +22,7 @@ const PROCESS_PHASES = [
   {
     id: "process-2",
     title: "Instant Ads Replies",
+    avatar: "/avatars/Gemini_Generated_Image_oicfeoicfeoicfeo-Photoroom.png",
     description:
       "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
     checklist: [
@@ -33,6 +35,7 @@ const PROCESS_PHASES = [
   {
     id: "process-3",
     title: "SMS Booking",
+    avatar: "/avatars/Gemini_Generated_Image_oneppkoneppkonep-Photoroom.png",
     description:
       "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
     checklist: [
