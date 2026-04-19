@@ -23,7 +23,6 @@ interface ScrollingAnimationProps {
 
 export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   const [animationProgress, setAnimationProgress] = useState(0)
-  const [hoveredChannel, setHoveredChannel] = useState<Channel | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number>(0)
 
