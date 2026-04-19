@@ -114,11 +114,11 @@ const HowItWorks: React.FC = () => {
                     <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
                       {phase.title}
                     </h2>
-                    <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg font-bold">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
+                    <img
+                      src={phase.avatar}
+                      alt={`${phase.title} agent`}
+                      className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-blue-100"
+                    />
                   </div>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
 
