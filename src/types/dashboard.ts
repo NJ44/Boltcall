@@ -62,6 +62,7 @@ export interface Alert {
   id: string;
   type: "warning" | "error" | "info";
   message: string;
+  title?: string;
   link?: string;
 }
 

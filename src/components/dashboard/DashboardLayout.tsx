@@ -45,6 +45,7 @@ import TrialExpiryPopup from './TrialExpiryPopup';
 import PageInfoTooltip from '../ui/PageInfoTooltip';
 import FeedbackSlider from '../ui/feedback-slider';
 import { useDashboardStore } from '../../stores/dashboardStore';
+import { useAgentMilestoneAlerts } from '../../hooks/useAgentMilestoneAlerts';
 
 const DashboardLayout: React.FC = () => {
   const { t, i18n } = useTranslation('common');
@@ -69,6 +70,8 @@ const DashboardLayout: React.FC = () => {
   // Get current user from auth context
   const { user } = useAuth();
   const { alerts } = useDashboardStore();
+  const milestoneAlerts = useAgentMilestoneAlerts();
+  const allAlerts = [...milestoneAlerts, ...alerts];
   
   // Mock user plan - in real app, this would come from user context/API
   const userPlan: 'free' | 'pro' | 'elite' = 'free';
@@ -601,19 +604,27 @@ const DashboardLayout: React.FC = () => {
 
               {/* Footer Group - Always at very bottom */}
               <div className="mt-2 pt-2 border-t border-gray-200 dark:border-[#1e1e24] px-2">
-                <div className={sidebarCollapsed ? 'space-y-1' : 'flex gap-1'}>
-                  {navItemsFooter.map((item) => {
+                <div className={sidebarCollapsed ? 'space-y-1' : 'flex gap-0 items-center'}>
+                  {navItemsFooter.map((item, idx) => {
                     const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
-                    return sidebarCollapsed
-                      ? renderNavItem(item, isActive)
-                      : <div key={item.to} className="flex-1 min-w-0">{renderNavItem(item, isActive)}</div>;
+                    if (sidebarCollapsed) {
+                      return renderNavItem(item, isActive);
+                    }
+                    return (
+                      <React.Fragment key={item.to}>
+                        {idx > 0 && (
+                          <div className="w-px h-5 flex-shrink-0 bg-gray-200 dark:bg-[#1e1e24] mx-0.5" />
+                        )}
+                        <div className="flex-1 min-w-0">{renderNavItem(item, isActive)}</div>
+                      </React.Fragment>
+                    );
                   })}
                 </div>
 
                 {/* Give Us Feedback */}
                 <button
                   onClick={() => setShowFeedback(true)}
-                  className={`relative flex items-center w-full ${sidebarCollapsed ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
+                  className={`relative flex items-center justify-center w-full ${sidebarCollapsed ? '' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
                     isDarkMode
                       ? 'text-white hover:bg-[#1a1a1f]'
                       : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
@@ -710,7 +721,7 @@ const DashboardLayout: React.FC = () => {
                  
                  {/* Alerts Dropdown (hidden on mobile) */}
                  <div className="hidden md:block">
-                   <NotificationsWithActions alerts={alerts} />
+                   <NotificationsWithActions alerts={allAlerts} />
                  </div>
 
                  {/* Services Status Dropdown (hidden on mobile) */}

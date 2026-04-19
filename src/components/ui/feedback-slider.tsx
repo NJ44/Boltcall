@@ -227,22 +227,22 @@ export default function FeedbackSlider({ isOpen, onClose, onSubmit }: FeedbackSl
 
                       {/* Slider track */}
                       <div className="w-full">
-                        <div className="relative flex w-full items-center justify-between">
-                          {animationStates.map((_, i) => (
-                            <button
-                              key={i}
-                              className="z-[2] h-6 w-6 rounded-full"
-                              onClick={() => setSelectedIndex(i)}
-                              style={{ backgroundColor: currentAnim.trackColor }}
-                            />
-                          ))}
+                        <div className="relative h-10 w-full">
                           <motion.div
                             className="absolute top-1/2 h-1 w-full -translate-y-1/2"
                             animate={{ backgroundColor: currentAnim.trackColor }}
                             transition={transition}
                           />
+                          {animationStates.map((_, i) => (
+                            <button
+                              key={i}
+                              className="absolute top-1/2 z-[2] h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                              style={{ left: `${i * 50}%`, backgroundColor: currentAnim.trackColor }}
+                              onClick={() => setSelectedIndex(i)}
+                            />
+                          ))}
                           <motion.div
-                            className="absolute z-[3] flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full p-2"
+                            className="absolute top-1/2 z-[3] flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-2"
                             animate={{
                               left: currentAnim.indicatorLeft,
                               rotate: currentAnim.indicatorRotate,
