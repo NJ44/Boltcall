@@ -15,14 +15,6 @@ const gradeColors: Record<string, string> = {
   F: 'text-red-600',
 };
 
-const gradeBgSolid: Record<string, string> = {
-  A: 'bg-green-600',
-  B: 'bg-blue-600',
-  C: 'bg-yellow-500',
-  D: 'bg-orange-500',
-  F: 'bg-red-600',
-};
-
 const gradeBg: Record<string, string> = {
   A: 'bg-green-50 border-green-200',
   B: 'bg-blue-50 border-blue-200',
@@ -121,7 +113,7 @@ const LeadResponseScorecardResults: React.FC = () => {
 
   if (!results) return null;
 
-  const { overallGrade, overallScore, answerRateScore, responseScore, recoveryScore, revenueAtRisk, inputs } = results;
+  const { overallGrade, answerRateScore, responseScore, recoveryScore, revenueAtRisk, inputs } = results;
   const gradeInfo = gradeMessages[overallGrade] ?? gradeMessages['C'];
   const isGoodGrade = overallGrade === 'A' || overallGrade === 'B';
 
