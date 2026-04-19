@@ -106,16 +106,6 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
           </div>
         </div>
 
-        {/* Hover description — shown below the circle */}
-        <div className="mt-8 h-16 flex items-center justify-center px-4">
-          <p
-            className={`text-center text-white/80 text-sm md:text-base max-w-sm transition-all duration-300 ${
-              hoveredChannel && animationProgress > 0.5 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-            }`}
-          >
-            {hoveredChannel?.description ?? ""}
-          </p>
-        </div>
       </div>
     </div>
   )
