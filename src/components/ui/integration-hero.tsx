@@ -4,7 +4,7 @@ const ICONS_ROW1 = [
   { src: "/gohighlevel_logo.png", alt: "GoHighLevel" },
   { src: "https://cdn.zapier.com/zapier/images/favicon.ico", alt: "Zapier" },
   { src: "https://www.make.com/favicon.ico", alt: "Make.com" },
-  { src: "https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg", alt: "Google Sheets" },
+  { src: "https://a.slack-edge.com/80588/marketing/img/meta/slack_hash_256.png", alt: "Slack" },
 ];
 
 const ICONS_ROW2 = [
