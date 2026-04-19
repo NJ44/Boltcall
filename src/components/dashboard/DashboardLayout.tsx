@@ -601,12 +601,20 @@ const DashboardLayout: React.FC = () => {
 
               {/* Footer Group - Always at very bottom */}
               <div className="mt-2 pt-2 border-t border-gray-200 dark:border-[#1e1e24] px-2">
-                <div className={sidebarCollapsed ? 'space-y-1' : 'flex gap-1'}>
-                  {navItemsFooter.map((item) => {
+                <div className={sidebarCollapsed ? 'space-y-1' : 'flex gap-0 items-center'}>
+                  {navItemsFooter.map((item, idx) => {
                     const isActive = location.pathname === item.to || location.pathname.startsWith(item.to + '/');
-                    return sidebarCollapsed
-                      ? renderNavItem(item, isActive)
-                      : <div key={item.to} className="flex-1 min-w-0">{renderNavItem(item, isActive)}</div>;
+                    if (sidebarCollapsed) {
+                      return renderNavItem(item, isActive);
+                    }
+                    return (
+                      <React.Fragment key={item.to}>
+                        {idx > 0 && (
+                          <div className="w-px h-5 flex-shrink-0 bg-gray-200 dark:bg-[#1e1e24] mx-0.5" />
+                        )}
+                        <div className="flex-1 min-w-0">{renderNavItem(item, isActive)}</div>
+                      </React.Fragment>
+                    );
                   })}
                 </div>
 
