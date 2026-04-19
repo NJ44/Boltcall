@@ -621,7 +621,7 @@ const DashboardLayout: React.FC = () => {
                 {/* Give Us Feedback */}
                 <button
                   onClick={() => setShowFeedback(true)}
-                  className={`relative flex items-center w-full ${sidebarCollapsed ? 'justify-center' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
+                  className={`relative flex items-center justify-center w-full ${sidebarCollapsed ? '' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
                     isDarkMode
                       ? 'text-white hover:bg-[#1a1a1f]'
                       : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
