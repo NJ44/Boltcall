@@ -41,7 +41,7 @@ const gradeMessages: Record<string, { title: string; message: string }> = {
     message: "You're performing better than most local service businesses, but there are 1–2 specific gaps costing you real deals every month. The good news: plugging them is straightforward. Focus on response speed and follow-up automation.",
   },
   C: {
-    title: 'Average — You're Losing to Faster Competitors',
+    title: "Average — You're Losing to Faster Competitors",
     message: "Your current setup is inconsistent. You may be answering most calls but your response speed or follow-up cadence is leaving leads on the table. Businesses that respond within 5 minutes win 78% of jobs — you're likely not in that group.",
   },
   D: {
