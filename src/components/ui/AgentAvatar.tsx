@@ -23,9 +23,12 @@ function hexToRgba(hex: string, alpha: number): string {
 }
 
 function isEmoji(str: string): boolean {
-  // Simple check: emoji are typically 1-2 code points via spread
   const chars = [...str];
   return chars.length <= 2;
+}
+
+function isImagePath(str: string): boolean {
+  return str.startsWith('/') || str.startsWith('http');
 }
 
 export function AgentAvatar({ avatar, color, name, size = 'md', className = '' }: AgentAvatarProps) {
@@ -34,7 +37,23 @@ export function AgentAvatar({ avatar, color, name, size = 'md', className = '' }
   const bg = hexToRgba(resolvedColor, 0.12);
   const initial = (name || '?')[0].toUpperCase();
 
-  const showEmoji = avatar && isEmoji(avatar);
+  const showImage = avatar && isImagePath(avatar);
+  const showEmoji = !showImage && avatar && isEmoji(avatar);
+
+  if (showImage) {
+    return (
+      <div
+        className={`flex items-center justify-center rounded-full flex-shrink-0 overflow-hidden ${className}`}
+        style={{ width: sz.px, height: sz.px }}
+      >
+        <img
+          src={avatar}
+          alt={name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    );
+  }
 
   return (
     <div
