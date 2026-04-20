@@ -891,12 +891,13 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           <CardTable
             className="min-w-[640px]"
             columns={[
-              { key: 'name', label: 'Agent', width: '25%' },
-              { key: 'status', label: 'Status', width: '15%' },
-              { key: 'callsToday', label: 'Calls Today', width: '15%' },
-              { key: 'avgResponseTime', label: 'Avg Response', width: '15%' },
-              { key: 'successRate', label: 'Success Rate', width: '15%' },
-              { key: 'lastActive', label: 'Last Active', width: '15%' }
+              { key: 'name', label: 'Agent' },
+              { key: 'status', label: 'Status' },
+              { key: 'callsToday', label: 'Calls Today' },
+              { key: 'avgResponseTime', label: 'Avg Response' },
+              { key: 'successRate', label: 'Success Rate' },
+              { key: 'lastActive', label: 'Last Active' },
+              { key: 'actions', label: '', width: '140px' }
             ]}
             data={agents}
             renderRow={(agent) => (
