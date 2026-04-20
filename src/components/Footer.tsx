@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
-import ContentDepthFooter from './seo/ContentDepthFooter';
-
 // X (formerly Twitter) Logo Component - Custom SVG since lucide-react doesn't have X icon
 const XLogo: React.FC<{ className?: string; strokeWidth?: number }> = ({ className = "w-4 h-4", strokeWidth = 2.5 }) => (
   <svg
@@ -68,7 +66,6 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
 
   return (
     <>
-    <ContentDepthFooter />
     <footer className={`${bgClass} ${textClass} pt-12 md:pt-16`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
