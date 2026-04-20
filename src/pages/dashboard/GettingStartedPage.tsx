@@ -1,30 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, Phone } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { ChevronRight, Phone, PhoneMissed, Zap, Moon, Calendar, Inbox, BookOpen, FlaskConical, MessageSquare } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSetupStore } from '../../stores/setupStore';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
 
-const STEPS = [
-  { id: 1, title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents', completed: true },
-  { id: 2, title: 'Connect Cal.com', description: 'Link your calendar', link: '/dashboard/calcom', completed: true },
-  { id: 3, title: 'Setup AI Receptionist', description: 'Configure your receptionist', link: '/dashboard/ai-receptionist', completed: true },
-  { id: 4, title: 'Configure Phone Numbers', description: 'Set up your phone numbers', link: '/dashboard/phone', completed: true },
-  { id: 5, title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', completed: false, timeEstimate: 'About 1 min' },
-  { id: 6, title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents?tab=tests', completed: false, timeEstimate: 'About 1 min' },
-  { id: 7, title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', completed: false, timeEstimate: 'About 1 min' },
-];
+type Step = {
+  id: string;
+  title: string;
+  description: string;
+  link: string;
+  icon: LucideIcon;
+  completed: boolean;
+  timeEstimate?: string;
+};
 
-export const GETTING_STARTED_TOTAL = STEPS.length;
-export const GETTING_STARTED_COMPLETED = STEPS.filter(s => s.completed).length;
+// Personalized tasks driven by survey.painPoints answered during setup
+const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
+  missed_calls: {
+    id: 'missed_calls',
+    title: 'Set up Missed-Call Recovery',
+    description: 'Auto-text every missed call within seconds',
+    link: '/dashboard/missed-calls',
+    icon: PhoneMissed,
+    timeEstimate: 'About 2 min',
+  },
+  ad_followup: {
+    id: 'ad_followup',
+    title: 'Connect Your Ad Lead Sources',
+    description: 'Reply to Facebook & Google ad leads instantly',
+    link: '/dashboard/instant-lead-response',
+    icon: Zap,
+    timeEstimate: 'About 3 min',
+  },
+  after_hours: {
+    id: 'after_hours',
+    title: 'Enable 24/7 AI Receptionist',
+    description: 'Pick up every call after hours and on weekends',
+    link: '/dashboard/ai-receptionist',
+    icon: Moon,
+    timeEstimate: 'About 2 min',
+  },
+  slow_response: {
+    id: 'slow_response',
+    title: 'Configure Speed-to-Lead',
+    description: 'Respond to every new lead in under 60 seconds',
+    link: '/dashboard/leads',
+    icon: Zap,
+    timeEstimate: 'About 2 min',
+  },
+  manual_booking: {
+    id: 'manual_booking',
+    title: 'Connect Your Calendar',
+    description: 'Let leads book themselves via Cal.com',
+    link: '/dashboard/calcom',
+    icon: Calendar,
+    timeEstimate: 'About 2 min',
+  },
+  no_system: {
+    id: 'no_system',
+    title: 'Set Up Lead Tracking',
+    description: 'Track every lead in one centralized inbox',
+    link: '/dashboard/leads',
+    icon: Inbox,
+    timeEstimate: 'About 1 min',
+  },
+};
+
+// Always-shown core tasks (regardless of survey answers)
+const CORE_TASKS: Omit<Step, 'completed'>[] = [
+  { id: 'knowledge_base', title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', icon: BookOpen, timeEstimate: 'About 1 min' },
+  { id: 'test_agent', title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents?tab=tests', icon: FlaskConical, timeEstimate: 'About 1 min' },
+  { id: 'feedback', title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', icon: MessageSquare, timeEstimate: 'About 1 min' },
+];
 
 const GettingStartedPage: React.FC = () => {
   const { user } = useAuth();
+  const painPoints = useSetupStore((s) => s.survey.painPoints);
   const [showTalkModal, setShowTalkModal] = useState(false);
   const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
+  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
+
+  const STEPS = useMemo<Step[]>(() => {
+    // Personalized tasks first, in the order the user picked them
+    const personalized = painPoints
+      .map((p) => PAIN_POINT_TASKS[p])
+      .filter(Boolean)
+      .map((task) => ({ ...task, completed: completedIds.has(task.id) }));
+
+    const core = CORE_TASKS.map((task) => ({ ...task, completed: completedIds.has(task.id) }));
+
+    // Fall back to all features if survey was skipped
+    if (personalized.length === 0) {
+      const allFeatures = Object.values(PAIN_POINT_TASKS).map((task) => ({
+        ...task,
+        completed: completedIds.has(task.id),
+      }));
+      return [...allFeatures, ...core];
+    }
+
+    return [...personalized, ...core];
+  }, [painPoints, completedIds]);
 
   const completedCount = STEPS.filter(s => s.completed).length;
-  const progressPct = Math.round((completedCount / STEPS.length) * 100);
+  const progressPct = STEPS.length > 0 ? Math.round((completedCount / STEPS.length) * 100) : 0;
+
+  const toggleComplete = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    setCompletedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (!user?.id) return;
@@ -46,7 +136,11 @@ const GettingStartedPage: React.FC = () => {
         <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Getting Started</h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Complete these steps to go live</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+              {painPoints.length > 0
+                ? 'Personalized for what you told us matters most'
+                : 'Complete these steps to go live'}
+            </p>
           </div>
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
             {completedCount} of {STEPS.length}
@@ -63,40 +157,54 @@ const GettingStartedPage: React.FC = () => {
 
         <div className="p-4">
           <div className="space-y-2">
-            {STEPS.map((step) => (
-              <Link
-                key={step.id}
-                to={step.link}
-                className="flex items-center gap-3 bg-gray-50 dark:bg-[#0e0e11] rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors border border-gray-200 dark:border-[#1e1e24]"
-              >
-                <div className="flex-shrink-0">
-                  {step.completed ? (
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                  ) : (
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
-                  )}
-                </div>
+            {STEPS.map((step) => {
+              const Icon = step.icon;
+              return (
+                <Link
+                  key={step.id}
+                  to={step.link}
+                  className="flex items-center gap-3 bg-gray-50 dark:bg-[#0e0e11] rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors border border-gray-200 dark:border-[#1e1e24]"
+                >
+                  <button
+                    type="button"
+                    onClick={(e) => toggleComplete(step.id, e)}
+                    className="flex-shrink-0"
+                    aria-label={step.completed ? 'Mark incomplete' : 'Mark complete'}
+                  >
+                    {step.completed ? (
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-[#2a2a32] hover:border-green-500 transition-colors" />
+                    )}
+                  </button>
 
-                <div className="flex-1 min-w-0">
-                  <div className={`font-medium text-sm ${step.completed ? 'text-gray-500 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
-                    {step.title}
+                  <div className="flex-shrink-0 w-8 h-8 rounded-md bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
-                  {!step.completed && step.timeEstimate && (
-                    <div className="text-xs text-gray-500 mt-0.5">{step.timeEstimate}</div>
-                  )}
-                </div>
 
-                {!step.completed && (
-                  <span className="flex-shrink-0 px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 rounded-md whitespace-nowrap">
-                    +10 tokens
-                  </span>
-                )}
-              </Link>
-            ))}
+                  <div className="flex-1 min-w-0">
+                    <div className={`font-medium text-sm ${step.completed ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-gray-100'}`}>
+                      {step.title}
+                    </div>
+                    {!step.completed && (
+                      <div className="text-xs text-gray-500 mt-0.5">{step.description}</div>
+                    )}
+                  </div>
+
+                  {!step.completed && step.timeEstimate && (
+                    <span className="flex-shrink-0 px-2 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                      {step.timeEstimate}
+                    </span>
+                  )}
+
+                  <ChevronRight className="flex-shrink-0 w-4 h-4 text-gray-400" />
+                </Link>
+              );
+            })}
           </div>
 
           {primaryAgent && (
