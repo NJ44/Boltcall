@@ -3,7 +3,7 @@ import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Calendar, Clock, Phone, CheckCircle, TrendingUp, Zap, Users,
+  Calendar, Clock, Phone, CheckCircle, TrendingUp, Zap,
   Thermometer, AlertCircle, DollarSign, Shield, Settings
 } from 'lucide-react';
 import Header from '../components/Header';
