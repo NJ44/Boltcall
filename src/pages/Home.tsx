@@ -52,15 +52,6 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
 
-          {/* HeroScrollDemo — product demo visible on all breakpoints */}
-          <div className="relative md:-top-[120px] z-[100] pointer-events-none" style={{ minHeight: '400px' }}>
-            <LazySection rootMargin="800px" minHeight="400px">
-              <Suspense fallback={<div className="h-[400px] w-full" />}>
-                <HeroScrollDemo />
-              </Suspense>
-            </LazySection>
-          </div>
-
           {/* HowItWorks — first below-fold section, preload aggressively */}
           <div className="relative mt-0 md:mt-0 md:top-[100px]">
             <LazySection rootMargin="500px" minHeight="600px">
