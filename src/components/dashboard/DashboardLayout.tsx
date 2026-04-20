@@ -38,7 +38,6 @@ import { addLogEntry, logUserAction } from '../../lib/logging';
 import { supabase } from '../../lib/supabase';
 import { LocationSwitcher } from './LocationSwitcher';
 import { useDirection } from '../../hooks/useDirection';
-import AiAssistant from './AiAssistant';
 import UsageBanner from './UsageBanner';
 import UsageLimitModal from './UsageLimitModal';
 import TrialExpiryPopup from './TrialExpiryPopup';
@@ -952,9 +951,6 @@ const DashboardLayout: React.FC = () => {
           </div>
           <UsageLimitModal />
           <TrialExpiryPopup />
-
-           {/* AI Assistant - Bottom Right */}
-           <AiAssistant />
 
            {/* Feedback Slider - Bottom sliding panel */}
            <FeedbackSlider isOpen={showFeedback} onClose={() => setShowFeedback(false)} />

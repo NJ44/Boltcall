@@ -921,7 +921,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                       align="start"
                       trigger={
                         <button type="button" title="Customize avatar & color">
-                          <AgentAvatar size="sm" avatar={agent.avatar} color={agent.color} name={agent.name} />
+                          <AgentAvatar size="md" avatar={agent.avatar} color={agent.color} name={agent.name} />
                         </button>
                       }
                     />
