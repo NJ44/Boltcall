@@ -350,36 +350,16 @@ const BoltcallAgentPage: React.FC = () => {
     </div>
   );
 
-  // ─── Input bar ─────────────────────────────────────────────────────────────
+  // ─── Bottom input bar (when messages exist) ────────────────────────────────
 
   const InputBar = (
     <div className="flex-shrink-0 border-t border-gray-100 bg-white px-4 py-3">
-      <div className="flex items-end gap-3 max-w-2xl mx-auto">
-        <div className="flex-1 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 focus-within:border-blue-400 focus-within:bg-white transition-colors">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask anything about your dashboard…"
-            rows={1}
-            className="w-full bg-transparent resize-none text-sm text-gray-900 placeholder-gray-400 outline-none leading-relaxed"
-            style={{ maxHeight: '160px' }}
-            disabled={isLoading}
-          />
-        </div>
-        <button
-          onClick={() => sendMessage()}
-          disabled={!input.trim() || isLoading}
-          className="w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-200 flex items-center justify-center transition-colors flex-shrink-0"
-          aria-label="Send"
-        >
-          <Send className="w-4 h-4 text-white disabled:text-gray-400" />
-        </button>
+      <div className="max-w-2xl mx-auto">
+        {InputToolbar(bottomTextareaRef)}
+        <p className="text-center text-xs text-gray-400 mt-2">
+          Bolt can update your agent, query leads, and change settings.
+        </p>
       </div>
-      <p className="text-center text-xs text-gray-400 mt-2">
-        Bolt can update your agent, query leads, and change settings.
-      </p>
     </div>
   );
 
@@ -387,8 +367,14 @@ const BoltcallAgentPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full -m-3 md:-m-6">
-      {hasMsgs ? MessageThread : EmptyState}
-      {InputBar}
+      {hasMsgs ? (
+        <>
+          {MessageThread}
+          {InputBar}
+        </>
+      ) : (
+        EmptyState
+      )}
     </div>
   );
 };
