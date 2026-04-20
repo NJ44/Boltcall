@@ -1,22 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, Phone } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { ChevronRight, Phone, PhoneMissed, Zap, Moon, Calendar, Inbox, BookOpen, FlaskConical, MessageSquare } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSetupStore } from '../../stores/setupStore';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
 
-const STEPS = [
-  { id: 1, title: 'Create Agent', description: 'Set up your AI agent', link: '/dashboard/agents', completed: true },
-  { id: 2, title: 'Connect Cal.com', description: 'Link your calendar', link: '/dashboard/calcom', completed: true },
-  { id: 3, title: 'Setup AI Receptionist', description: 'Configure your receptionist', link: '/dashboard/ai-receptionist', completed: true },
-  { id: 4, title: 'Configure Phone Numbers', description: 'Set up your phone numbers', link: '/dashboard/phone', completed: true },
-  { id: 5, title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', completed: false, timeEstimate: 'About 1 min' },
-  { id: 6, title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents?tab=tests', completed: false, timeEstimate: 'About 1 min' },
-  { id: 7, title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', completed: false, timeEstimate: 'About 1 min' },
-];
+type Step = {
+  id: string;
+  title: string;
+  description: string;
+  link: string;
+  icon: LucideIcon;
+  completed: boolean;
+  timeEstimate?: string;
+};
 
-export const GETTING_STARTED_TOTAL = STEPS.length;
-export const GETTING_STARTED_COMPLETED = STEPS.filter(s => s.completed).length;
+// Personalized tasks driven by survey.painPoints answered during setup
+const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
+  missed_calls: {
+    id: 'missed_calls',
+    title: 'Set up Missed-Call Recovery',
+    description: 'Auto-text every missed call within seconds',
+    link: '/dashboard/missed-calls',
+    icon: PhoneMissed,
+    timeEstimate: 'About 2 min',
+  },
+  ad_followup: {
+    id: 'ad_followup',
+    title: 'Connect Your Ad Lead Sources',
+    description: 'Reply to Facebook & Google ad leads instantly',
+    link: '/dashboard/instant-lead-response',
+    icon: Zap,
+    timeEstimate: 'About 3 min',
+  },
+  after_hours: {
+    id: 'after_hours',
+    title: 'Enable 24/7 AI Receptionist',
+    description: 'Pick up every call after hours and on weekends',
+    link: '/dashboard/ai-receptionist',
+    icon: Moon,
+    timeEstimate: 'About 2 min',
+  },
+  slow_response: {
+    id: 'slow_response',
+    title: 'Configure Speed-to-Lead',
+    description: 'Respond to every new lead in under 60 seconds',
+    link: '/dashboard/leads',
+    icon: Zap,
+    timeEstimate: 'About 2 min',
+  },
+  manual_booking: {
+    id: 'manual_booking',
+    title: 'Connect Your Calendar',
+    description: 'Let leads book themselves via Cal.com',
+    link: '/dashboard/calcom',
+    icon: Calendar,
+    timeEstimate: 'About 2 min',
+  },
+  no_system: {
+    id: 'no_system',
+    title: 'Set Up Lead Tracking',
+    description: 'Track every lead in one centralized inbox',
+    link: '/dashboard/leads',
+    icon: Inbox,
+    timeEstimate: 'About 1 min',
+  },
+};
+
+// Always-shown core tasks (regardless of survey answers)
+const CORE_TASKS: Omit<Step, 'completed'>[] = [
+  { id: 'knowledge_base', title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', icon: BookOpen, timeEstimate: 'About 1 min' },
+  { id: 'test_agent', title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents?tab=tests', icon: FlaskConical, timeEstimate: 'About 1 min' },
+  { id: 'feedback', title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', icon: MessageSquare, timeEstimate: 'About 1 min' },
+];
 
 const GettingStartedPage: React.FC = () => {
   const { user } = useAuth();
