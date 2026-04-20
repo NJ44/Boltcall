@@ -10,12 +10,12 @@
     <link rel="icon" type="image/webp" href="/boltcall_small_logo.webp" sizes="32x32" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Google Fonts - async load to avoid render-blocking -->
-    <!-- display=optional: if Poppins doesn't arrive before first paint the browser
-         uses the system fallback permanently — no font-swap CLS (was 0.13 CLS). -->
+    <!-- Google Fonts - non-blocking via media="print" trick.
+         display=optional: system fallback used permanently if font misses first paint.
+         No <link rel="preload"> here — preloading an external stylesheet triggers an
+         eager fetch chain (CSS → font files) that audit tools flag as render-blocking. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" rel="stylesheet" /></noscript>
     
