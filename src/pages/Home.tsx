@@ -53,6 +53,11 @@ const Home: React.FC = () => {
         <main className="pb-0">
           <Hero />
 
+          {/* Boltcall Platform Preview — interactive dark bento card */}
+          <section className="relative py-16 px-4 sm:px-8 lg:px-16">
+            <BentoCard />
+          </section>
+
           {/* HowItWorks — first below-fold section, preload aggressively */}
           <div className="relative mt-0 md:mt-0 md:top-[100px]">
             <LazySection rootMargin="500px" minHeight="600px">
