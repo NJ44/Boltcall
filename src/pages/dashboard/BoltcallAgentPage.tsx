@@ -65,28 +65,24 @@ function renderMarkdown(text: string): React.ReactNode[] {
 
 const QUICK_ACTIONS = [
   {
-    icon: <Bot className="w-5 h-5 text-blue-600" />,
+    icon: <Globe className="w-5 h-5" />,
     title: 'Review my agent',
-    desc: 'See what your AI agent currently does',
     prompt: 'Show me my current AI agent configuration and what it does.',
   },
   {
-    icon: <Users className="w-5 h-5 text-violet-600" />,
-    title: 'Show my leads',
-    desc: 'See recent leads and their status',
-    prompt: 'Show me my recent leads from the last 7 days.',
+    icon: <Zap className="w-5 h-5" />,
+    title: 'Optimize my agent',
+    prompt: 'Help me improve my AI agent — review what it currently does and suggest improvements.',
   },
   {
-    icon: <BarChart2 className="w-5 h-5 text-emerald-600" />,
-    title: 'Dashboard metrics',
-    desc: 'How is my business performing?',
+    icon: <BarChart2 className="w-5 h-5" />,
+    title: 'Analyze leads',
     prompt: 'Give me my business performance metrics for the last 7 days.',
   },
   {
-    icon: <Zap className="w-5 h-5 text-amber-500" />,
-    title: 'Fix my agent',
-    desc: 'Tune agent tone or behavior',
-    prompt: 'Help me improve my AI agent — review what it currently does and suggest improvements.',
+    icon: <Activity className="w-5 h-5" />,
+    title: 'Review my setup',
+    prompt: 'Review my full Boltcall setup and tell me what could be improved.',
   },
 ];
 
