@@ -1,15 +1,17 @@
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import type React from "react";
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import { flushSync } from "react-dom";
 import { Link } from "react-router-dom";
 import { AgentAvatar } from "@/components/ui/AgentAvatar";
+import { LocationSwitcher } from "@/components/dashboard/LocationSwitcher";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card-shadcn";
 import {
   Phone,
   MessageSquare,
+  MessageCircle,
   Globe,
   Megaphone,
   CalendarCheck,
@@ -36,6 +38,8 @@ interface WorkflowNode {
   color: string;
   configured: boolean;
   locked?: boolean;
+  /** IDs of tier-locked nodes that should be locked for non-pro plans */
+  tierLocked?: boolean;
   position: { x: number; y: number };
 }
 
@@ -49,7 +53,7 @@ const NODE_HEIGHT = 56;
 const AGENT_SIZE = 90; // circular agent nodes
 const ROW_GAP = 68;
 
-const initialNodes: WorkflowNode[] = [
+const BASE_NODES: WorkflowNode[] = [
   // Inbound use cases (emerald)
   { id: "uc-ai-receptionist", type: "use-case", title: "Call Enters", description: "Answers inbound calls 24/7, qualifies callers, books appointments", icon: Phone, color: "emerald", configured: true, position: { x: 30, y: 30 } },
   { id: "uc-sms-inquiry", type: "use-case", title: "Inbound SMS", description: "Handles inbound text messages — answers questions, books appointments", icon: MessageSquare, color: "emerald", configured: true, position: { x: 30, y: 30 + ROW_GAP } },
@@ -70,13 +74,15 @@ const initialNodes: WorkflowNode[] = [
   { id: "out-crm", type: "output", title: "CRM Update", description: "Lead record created or updated in your CRM automatically", icon: UserPlus, color: "amber", configured: true, position: { x: 550, y: 30 + ROW_GAP * 2 } },
   // Outputs — not configured
   { id: "out-review", type: "output", title: "Review Request", description: "Google review prompt sent to customer after service is complete", icon: Star, color: "amber", configured: false, position: { x: 550, y: 30 + ROW_GAP * 3 } },
-  { id: "out-reactivation", type: "output", title: "Lead Reactivation", description: "Cold leads re-engaged with personalized SMS or call campaign", icon: RotateCcw, color: "amber", configured: false, position: { x: 550, y: 30 + ROW_GAP * 4 } },
-  // Outputs — locked (premium)
-  { id: "out-reminders", type: "output", title: "Reminders", description: "Automated appointment and follow-up reminders sent to contacts before they're due", icon: Bell, color: "slate", configured: false, locked: true, position: { x: 550, y: 30 + ROW_GAP * 5 } },
-  { id: "out-reputation", type: "output", title: "Reputation Manager", description: "Monitor and respond to reviews across Google, Yelp, and more from one place", icon: Shield, color: "slate", configured: false, locked: true, position: { x: 550, y: 30 + ROW_GAP * 6 } },
+  // Tier-locked on Starter (Pro+ only)
+  { id: "out-reactivation", type: "output", title: "Lead Reactivation", description: "Cold leads re-engaged with personalized SMS or call campaign", icon: RotateCcw, color: "amber", configured: false, tierLocked: false, position: { x: 550, y: 30 + ROW_GAP * 4 } },
+  { id: "out-whatsapp", type: "output", title: "WhatsApp Messaging", description: "Engage leads and customers via WhatsApp with automated and human-assisted messages", icon: MessageCircle, color: "emerald", configured: false, tierLocked: false, position: { x: 550, y: 30 + ROW_GAP * 5 } },
+  // Always-locked (premium add-ons, separate from tier)
+  { id: "out-reminders", type: "output", title: "Reminders", description: "Automated appointment and follow-up reminders sent to contacts before they're due", icon: Bell, color: "slate", configured: false, locked: true, position: { x: 550, y: 30 + ROW_GAP * 6 } },
+  { id: "out-reputation", type: "output", title: "Reputation Manager", description: "Monitor and respond to reviews across Google, Yelp, and more from one place", icon: Shield, color: "slate", configured: false, locked: true, position: { x: 550, y: 30 + ROW_GAP * 7 } },
 ];
 
-const initialConnections: WorkflowConnection[] = [
+const BASE_CONNECTIONS: WorkflowConnection[] = [
   // Inbound use cases → inbound agent
   { from: "uc-ai-receptionist", to: "agent-inbound" },
   { from: "uc-sms-inquiry", to: "agent-inbound" },
@@ -88,14 +94,29 @@ const initialConnections: WorkflowConnection[] = [
   { from: "agent-inbound", to: "out-calendar" },
   { from: "agent-inbound", to: "out-sms-followup" },
   { from: "agent-inbound", to: "out-crm" },
+  { from: "agent-inbound", to: "out-whatsapp" },
   // Outbound agent outputs
   { from: "agent-outbound", to: "out-review" },
   { from: "agent-outbound", to: "out-reactivation" },
   { from: "agent-outbound", to: "out-crm" },
-  // Locked outputs (outbound)
+  // Always-locked outputs (outbound)
   { from: "agent-outbound", to: "out-reminders" },
   { from: "agent-outbound", to: "out-reputation" },
 ];
+
+/** IDs of features that require Pro or above */
+const PRO_TIER_NODE_IDS = new Set(["out-reactivation", "out-whatsapp"]);
+
+/** Returns nodes with tier-locking applied based on plan level */
+function buildNodes(planLevel: string | null): WorkflowNode[] {
+  const isStarter = planLevel === "starter";
+  return BASE_NODES.map((n) => {
+    if (isStarter && PRO_TIER_NODE_IDS.has(n.id)) {
+      return { ...n, locked: true, tierLocked: true };
+    }
+    return n;
+  });
+}
 
 const colorClasses: Record<string, string> = {
   emerald: "border-emerald-400/40 bg-emerald-400/10 text-emerald-400",
@@ -147,10 +168,12 @@ function NodeTooltip({
   description,
   configured,
   locked,
+  tierLocked,
 }: {
   description: string;
   configured: boolean;
   locked?: boolean;
+  tierLocked?: boolean;
 }) {
   return (
     <motion.div
@@ -165,7 +188,7 @@ function NodeTooltip({
       {locked ? (
         <div className="flex w-full items-center justify-center gap-1 rounded-md border border-amber-400/30 bg-amber-400/10 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-amber-400/90">
           <Lock className="h-2.5 w-2.5" />
-          Upgrade to Unlock
+          {tierLocked ? "Upgrade to Pro" : "Upgrade to Unlock"}
         </div>
       ) : !configured ? (
         <div className="flex w-full items-center justify-center gap-1 rounded-md border border-foreground/20 bg-foreground/5 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-foreground/60">
@@ -184,9 +207,17 @@ export interface AgentCustomization {
   title?: string;
 }
 
-export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }) {
+export function AgentWorkflowBlock({
+  agents,
+  planLevel,
+}: {
+  agents?: AgentCustomization[];
+  planLevel?: string | null;
+}) {
+  const initialNodes = useMemo(() => buildNodes(planLevel ?? null), [planLevel]);
+
   const [nodes, setNodes] = useState<WorkflowNode[]>(initialNodes);
-  const [connections] = useState<WorkflowConnection[]>(initialConnections);
+  const [connections] = useState<WorkflowConnection[]>(BASE_CONNECTIONS);
   const canvasRef = useRef<HTMLDivElement>(null);
   const dragStartPosition = useRef<{ x: number; y: number } | null>(null);
   const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
@@ -235,6 +266,12 @@ export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }
   const outputCount = nodes.filter((n) => n.type === "output").length;
   const unconfiguredCount = nodes.filter((n) => !n.configured && !n.locked).length;
 
+  const isStarter = planLevel === "starter";
+  const isUltimate = planLevel === "ultimate" || planLevel === "enterprise";
+
+  // Nodes locked by plan tier (not always-locked premium add-ons)
+  const tierLockedNodes = nodes.filter((n) => n.tierLocked);
+
   return (
     <div className="relative w-full overflow-hidden rounded-2xl border border-border/40 bg-background/60 backdrop-blur p-4 sm:p-6">
       {/* Header */}
@@ -248,8 +285,12 @@ export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }
             Agent Channel Map
           </span>
         </div>
-        <div className="flex items-center gap-2">
-        </div>
+        {/* Ultimate: location switcher */}
+        {isUltimate && (
+          <div className="flex items-center gap-2">
+            <LocationSwitcher className="h-8 text-xs" />
+          </div>
+        )}
       </div>
 
       {/* Column Labels */}
@@ -375,6 +416,7 @@ export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }
                               description={node.description}
                               configured={node.configured}
                               locked={node.locked}
+                              tierLocked={node.tierLocked}
                             />
                           )}
                         </AnimatePresence>
@@ -418,6 +460,7 @@ export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }
                           description={node.description}
                           configured={node.configured}
                           locked={node.locked}
+                          tierLocked={node.tierLocked}
                         />
                       )}
                     </AnimatePresence>
@@ -462,6 +505,49 @@ export function AgentWorkflowBlock({ agents }: { agents?: AgentCustomization[] }
           </p>
         )}
       </div>
+
+      {/* Starter tier: locked features upsell banner */}
+      {isStarter && tierLockedNodes.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="mt-4 rounded-xl border border-amber-400/25 bg-amber-400/5 px-4 py-3"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-amber-400/30 bg-amber-400/10">
+                <Lock className="h-3.5 w-3.5 text-amber-400" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-foreground/80">
+                  {tierLockedNodes.length} feature{tierLockedNodes.length !== 1 ? "s" : ""} locked on Starter
+                </p>
+                <div className="mt-1 flex flex-wrap items-center gap-2">
+                  {tierLockedNodes.map((n) => {
+                    const Icon = n.icon;
+                    return (
+                      <span
+                        key={n.id}
+                        className="inline-flex items-center gap-1 rounded-full border border-border/30 bg-background/60 px-2 py-0.5 text-[10px] text-foreground/60"
+                      >
+                        <Icon className="h-2.5 w-2.5" />
+                        {n.title}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <Link
+              to="/dashboard/settings/billing"
+              className="shrink-0 rounded-full border border-amber-400/40 bg-amber-400/10 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400 transition-colors hover:bg-amber-400/20"
+            >
+              Upgrade to Pro →
+            </Link>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }
