@@ -470,6 +470,84 @@ document.getElementById("lead-form")
                           </p>
                         </details>
                       </div>
+                    ) : setupMode === 'wordpress' ? (
+                      <div className="space-y-5">
+                        {/* Step 1: Download */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">1</span>
+                            <h4 className="font-medium text-gray-900 text-sm">Download the plugin</h4>
+                          </div>
+                          <a
+                            href="/wordpress/boltcall-for-wordpress.zip"
+                            download
+                            className="inline-flex items-center gap-2 mt-1 px-4 py-2 bg-[#21759b] text-white rounded-lg hover:bg-[#1a5f7f] transition-colors font-medium text-sm"
+                          >
+                            <Download className="w-4 h-4" />
+                            Download boltcall-for-wordpress.zip
+                          </a>
+                        </div>
+
+                        {/* Step 2: Upload */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">2</span>
+                            <h4 className="font-medium text-gray-900 text-sm">Upload to WordPress</h4>
+                          </div>
+                          <ol className="text-sm text-gray-600 space-y-1 list-decimal list-inside ml-1">
+                            <li>Log into your WordPress admin</li>
+                            <li>Go to <strong>Plugins → Add New → Upload Plugin</strong></li>
+                            <li>Choose the ZIP, click <strong>Install Now</strong>, then <strong>Activate</strong></li>
+                          </ol>
+                        </div>
+
+                        {/* Step 3: User ID */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">3</span>
+                            <h4 className="font-medium text-gray-900 text-sm">Paste your Boltcall User ID</h4>
+                          </div>
+                          <p className="text-sm text-gray-600 mb-2">
+                            In WordPress, go to <strong>Settings → Boltcall</strong> and paste this ID:
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800 font-mono">
+                              {user?.id || 'Loading...'}
+                            </code>
+                            {user?.id && (
+                              <CopyButton
+                                textToCopy={user.id}
+                                label=""
+                                copiedLabel=""
+                                className="p-2 px-2 h-auto flex-shrink-0"
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* What it captures */}
+                        <div className="bg-green-50 border border-green-100 rounded-lg p-4">
+                          <h4 className="font-semibold text-green-900 text-sm mb-2">Captured automatically</h4>
+                          <div className="grid grid-cols-2 gap-y-1 gap-x-3 text-sm text-green-900/80">
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Contact Form 7</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> WPForms</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Gravity Forms</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Elementor Pro</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Ninja Forms</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Fluent Forms</div>
+                          </div>
+                        </div>
+
+                        <a
+                          href="https://boltcall.mintlify.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Full WordPress setup docs
+                        </a>
+                      </div>
                     ) : (
                       <div className="space-y-5">
                         {/* Webhook URL */}
