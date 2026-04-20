@@ -44,6 +44,8 @@ const KnowledgeBasePage = React.lazy(() => import('../pages/dashboard/KnowledgeB
 const PhoneNumbersPage = React.lazy(() => import('../pages/dashboard/PhoneNumbersPage'));
 const IntegrationsPage = React.lazy(() => import('../pages/dashboard/IntegrationsPage'));
 const InstantLeadReplyPage = React.lazy(() => import('../pages/dashboard/InstantLeadReplyPage'));
+const WebsiteInstantResponsePage = React.lazy(() => import('../pages/dashboard/WebsiteInstantResponsePage'));
+const AdInstantResponsePage = React.lazy(() => import('../pages/dashboard/AdInstantResponsePage'));
 const VoiceLibraryPage = React.lazy(() => import('../pages/dashboard/VoiceLibraryPage'));
 const WebsiteBubblePage = React.lazy(() => import('../pages/dashboard/WebsiteBubblePage'));
 const RemindersPage = React.lazy(() => import('../pages/dashboard/RemindersPage'));
@@ -330,6 +332,8 @@ const NavigationWrapper: React.FC = () => {
           <Route path="reminders" element={<PlanGate requiredPlan="pro"><RemindersPage /></PlanGate>} />
           <Route path="reputation" element={<PlanGate requiredPlan="pro"><ReputationPage /></PlanGate>} />
           <Route path="instant-lead-response" element={<PlanGate requiredPlan="pro"><InstantLeadReplyPage /></PlanGate>} />
+          <Route path="website-instant-response" element={<PlanGate requiredPlan="pro"><WebsiteInstantResponsePage /></PlanGate>} />
+          <Route path="ad-instant-response" element={<PlanGate requiredPlan="pro"><AdInstantResponsePage /></PlanGate>} />
           <Route path="calcom" element={<PlanGate requiredPlan="pro"><CalcomPage /></PlanGate>} />
           <Route path="sms" element={<PlanGate requiredPlan="pro"><SmsPage /></PlanGate>} />
           <Route path="whatsapp" element={<PlanGate requiredPlan="pro"><WhatsappPage /></PlanGate>} />

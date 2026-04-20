@@ -202,6 +202,8 @@ const DashboardLayout: React.FC = () => {
       '/dashboard/messages': t('page.messages'),
       '/dashboard/sms': 'SMS Agent',
       '/dashboard/instant-lead-response': t('page.instantLeadResponse'),
+      '/dashboard/website-instant-response': 'Website Instant Response',
+      '/dashboard/ad-instant-response': 'Ad Instant Response',
       '/dashboard/ai-receptionist': 'AI Receptionist',
       '/dashboard/agents': t('page.aiAgents'),
       '/dashboard/knowledge-base': t('page.knowledgeBase'),
@@ -344,7 +346,8 @@ const DashboardLayout: React.FC = () => {
     { to: '/dashboard/calls', label: t('nav.missedCalls'), icon: <PhoneMissed className="w-3.5 h-3.5 scale-[0.95]" />, badge: t('beta') as string, needsSetup: !services.phoneSystem },
     { to: '/dashboard/sms', label: 'SMS Agent', icon: <MessageSquare className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/whatsapp', label: 'WhatsApp', icon: <WhatsAppIcon className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.whatsapp },
-    { to: '/dashboard/instant-lead-response', label: t('nav.instantLeadResponse'), icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.instantLeadResponse },
+    { to: '/dashboard/website-instant-response', label: 'Website Response', icon: <Globe className="w-3.5 h-3.5 scale-[0.95]" />, needsSetup: !services.instantLeadResponse },
+    { to: '/dashboard/ad-instant-response', label: 'Ad Response', icon: <Reply className="w-3.5 h-3.5 scale-[0.95]" /> },
     { to: '/dashboard/email', label: 'AI Email', icon: <Mail className="w-3.5 h-3.5 scale-[0.95]" /> },
   ];
 
