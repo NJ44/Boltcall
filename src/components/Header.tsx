@@ -807,26 +807,29 @@ const Header: React.FC = () => {
               {/* Auth */}
               <div className="space-y-3 pt-4">
                 {isAuthenticated ? (
-                  <button
-                    onClick={() => { handleNavClick('/dashboard'); setIsMenuOpen(false); }}
-                    className="w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors text-center"
                   >
                     Dashboard
-                  </button>
+                  </Link>
                 ) : (
                   <>
-                    <button
-                      onClick={() => { handleNavClick('/login'); setIsMenuOpen(false); }}
-                      className="w-full py-3 text-base font-semibold text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full py-3 text-base font-semibold text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-center"
                     >
                       Login
-                    </button>
-                    <button
-                      onClick={() => { handleNavClick('/signup'); setIsMenuOpen(false); }}
-                      className="w-full py-3 text-base font-bold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                    </Link>
+                    <Link
+                      to="/signup"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full py-3 text-base font-bold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors text-center"
                     >
                       Start now
-                    </button>
+                    </Link>
                   </>
                 )}
               </div>
