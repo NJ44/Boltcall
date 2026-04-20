@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   MessageCircle, Send, Check, X, RefreshCw, Copy,
   Loader2, Phone, ExternalLink, Eye, EyeOff,
