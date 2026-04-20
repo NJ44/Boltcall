@@ -396,74 +396,117 @@ document.getElementById("lead-form")
                 {selectedIntegration === 'web-form' && (
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-900 mb-3">Your Webhook URL</h3>
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">Capture Leads From Your Website</h3>
                       <p className="text-gray-600 mb-4">
-                        Send lead data to this URL from any website form, Zapier, or third-party tool. Leads will appear in your Leads page instantly.
+                        Pick the easiest way to connect. The embed script works with any website — WordPress, Wix, Webflow, Squarespace, raw HTML.
                       </p>
                     </div>
 
-                    {/* Webhook URL */}
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Webhook URL</label>
-                      <div className="flex items-center gap-2">
-                        <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800">
-                          {webhookUrl}
-                        </code>
-                        <CopyButton
-                          textToCopy={webhookUrl}
-                          label=""
-                          copiedLabel=""
-                          className="p-2 px-2 h-auto flex-shrink-0"
-                        />
-                      </div>
+                    {/* Mode tabs */}
+                    <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-lg">
+                      <button
+                        onClick={() => setSetupMode('embed')}
+                        className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                          setupMode === 'embed' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        Embed Script <span className="text-xs text-purple-600 font-semibold">· Easiest</span>
+                      </button>
+                      <button
+                        onClick={() => setSetupMode('advanced')}
+                        className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                          setupMode === 'advanced' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        Advanced (API)
+                      </button>
                     </div>
 
-                    {/* User ID */}
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Your User ID</label>
-                      <div className="flex items-center gap-2">
-                        <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800 font-mono">
-                          {user?.id || 'Loading...'}
-                        </code>
-                        {user?.id && (
-                          <CopyButton
-                            textToCopy={user.id}
-                            label=""
-                            copiedLabel=""
-                            className="p-2 px-2 h-auto flex-shrink-0"
-                          />
-                        )}
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">Include this in every request so leads are linked to your account.</p>
-                    </div>
+                    {setupMode === 'embed' ? (
+                      <div className="space-y-5">
+                        {/* How it works */}
+                        <div className="bg-purple-50 border border-purple-100 rounded-lg p-4">
+                          <h4 className="font-semibold text-purple-900 text-sm mb-2">How it works</h4>
+                          <ol className="text-sm text-purple-900/80 space-y-1.5 list-decimal list-inside">
+                            <li>Paste the tag below into your site's HTML (anywhere before <code className="bg-white px-1 rounded">&lt;/body&gt;</code>)</li>
+                            <li>Add <code className="bg-white px-1 rounded">data-boltcall</code> to any form you want to capture</li>
+                            <li>Submissions flow into your Leads page instantly — no code required</li>
+                          </ol>
+                        </div>
 
-                    {/* Fetch Example */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium text-gray-900 text-sm">JavaScript (fetch)</h4>
-                        <CopyButton
-                          textToCopy={fetchSnippet}
-                          className="py-1 px-3 text-xs h-auto"
-                        />
-                      </div>
-                      <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
-                        {fetchSnippet}
-                      </pre>
-                    </div>
+                        {/* Embed snippet */}
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-medium text-gray-900 text-sm">Install tag</h4>
+                            <CopyButton textToCopy={embedSnippet} className="py-1 px-3 text-xs h-auto" />
+                          </div>
+                          <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+                            {embedSnippet}
+                          </pre>
+                        </div>
 
-                    {/* HTML Form Example */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium text-gray-900 text-sm">HTML Form Example</h4>
-                        <CopyButton
-                          textToCopy={htmlFormSnippet}
-                          className="py-1 px-3 text-xs h-auto"
-                        />
+                        {/* Options */}
+                        <div className="bg-gray-50 rounded-lg p-4 text-sm">
+                          <h4 className="font-medium text-gray-900 mb-2">Optional form attributes</h4>
+                          <ul className="space-y-1.5 text-gray-600">
+                            <li><code className="bg-white px-1.5 py-0.5 rounded border border-gray-200 text-xs">data-success-message="..."</code> — custom thank-you text</li>
+                            <li><code className="bg-white px-1.5 py-0.5 rounded border border-gray-200 text-xs">data-success-url="/thanks"</code> — redirect after submit</li>
+                            <li><code className="bg-white px-1.5 py-0.5 rounded border border-gray-200 text-xs">data-source="homepage-hero"</code> — tag the lead source</li>
+                          </ul>
+                        </div>
+
+                        {/* Auto-capture all forms */}
+                        <details className="bg-gray-50 rounded-lg p-4 text-sm">
+                          <summary className="font-medium text-gray-900 cursor-pointer">Capture every form on the page</summary>
+                          <p className="text-gray-600 mt-2">
+                            If you can't edit your forms to add <code className="bg-white px-1 rounded">data-boltcall</code>, add <code className="bg-white px-1 rounded">data-auto="true"</code> to the script tag. It'll listen to every form on the page.
+                          </p>
+                        </details>
                       </div>
-                      <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
-                        {htmlFormSnippet}
-                      </pre>
-                    </div>
+                    ) : (
+                      <div className="space-y-5">
+                        {/* Webhook URL */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Your webhook URL</label>
+                          <div className="flex items-center gap-2">
+                            <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800">
+                              {prettyWebhookUrl || webhookUrl}
+                            </code>
+                            <CopyButton
+                              textToCopy={prettyWebhookUrl || webhookUrl}
+                              label=""
+                              copiedLabel=""
+                              className="p-2 px-2 h-auto flex-shrink-0"
+                            />
+                          </div>
+                          <p className="text-xs text-gray-500 mt-1.5">
+                            POST any JSON with <code className="bg-white px-1 rounded">email</code> or <code className="bg-white px-1 rounded">phone</code>. Your account is encoded in the URL — no <code className="bg-white px-1 rounded">user_id</code> needed in the body.
+                          </p>
+                        </div>
+
+                        {/* Fetch Example */}
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-medium text-gray-900 text-sm">JavaScript (fetch)</h4>
+                            <CopyButton textToCopy={fetchSnippet} className="py-1 px-3 text-xs h-auto" />
+                          </div>
+                          <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+                            {fetchSnippet}
+                          </pre>
+                        </div>
+
+                        {/* HTML Form Example */}
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-medium text-gray-900 text-sm">HTML form example</h4>
+                            <CopyButton textToCopy={htmlFormSnippet} className="py-1 px-3 text-xs h-auto" />
+                          </div>
+                          <pre className="bg-gray-900 text-green-400 p-3 rounded-lg text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+                            {htmlFormSnippet}
+                          </pre>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Test Button */}
                     <button
