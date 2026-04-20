@@ -118,7 +118,7 @@ export async function fetchBusinessHealth() {
 export async function fetchCallbackStats() {
   const { data, error } = await supabase
     .from('callbacks')
-    .select('status, urgency, outcome, attempt_count');
+    .select('status');
 
   if (error) {
     console.error('Error fetching callback stats:', error);
