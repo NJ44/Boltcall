@@ -136,7 +136,11 @@ const GettingStartedPage: React.FC = () => {
         <div className="bg-gray-50 dark:bg-[#0e0e11] border-b border-gray-200 dark:border-[#1e1e24] px-4 py-3 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Getting Started</h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Complete these steps to go live</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+              {painPoints.length > 0
+                ? 'Personalized for what you told us matters most'
+                : 'Complete these steps to go live'}
+            </p>
           </div>
           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
             {completedCount} of {STEPS.length}
