@@ -581,7 +581,7 @@ const WhatsappPage: React.FC = () => {
   // ─── Pre-connect screen ───────────────────────────────────────────
   if (!isConnected) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 max-w-2xl">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
             <MessageCircle className="w-5 h-5 text-green-600" />
@@ -589,36 +589,133 @@ const WhatsappPage: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">WhatsApp</h1>
         </div>
 
-        <div className="max-w-lg">
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center space-y-5">
-            <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center mx-auto">
-              <MessageCircle className="w-8 h-8 text-green-600" />
-            </div>
+        {/* Credentials form */}
+        <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-5">
+          <div>
+            <h2 className="text-base font-semibold text-gray-900">Connect WhatsApp Business API</h2>
+            <p className="text-sm text-gray-500 mt-1">
+              Enter your Meta WhatsApp Business credentials below.{' '}
+              <a
+                href="https://developers.facebook.com/apps"
+                target="_blank"
+                rel="noreferrer"
+                className="text-green-600 hover:underline inline-flex items-center gap-0.5"
+              >
+                Get them from Meta Developers <ExternalLink className="w-3 h-3" />
+              </a>
+            </p>
+          </div>
+
+          <div className="space-y-4">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Connect WhatsApp Business</h2>
-              <p className="text-sm text-gray-500 mt-1.5">
-                Link your Meta WhatsApp Business number to start responding to leads instantly.
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Phone Number ID <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={connectForm.phoneNumberId}
+                onChange={(e) => setConnectForm((f) => ({ ...f, phoneNumberId: e.target.value }))}
+                placeholder="e.g. 123456789012345"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+              <p className="text-xs text-gray-400 mt-1">Found in Meta App → WhatsApp → API Setup</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Permanent Access Token <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  type={showToken ? 'text' : 'password'}
+                  value={connectForm.accessToken}
+                  onChange={(e) => setConnectForm((f) => ({ ...f, accessToken: e.target.value }))}
+                  placeholder="EAAxxxxxxxxxxxxxxx..."
+                  className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowToken((v) => !v)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
+                >
+                  {showToken ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">Use a system user token, not a temporary one</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                WhatsApp Business Account ID <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <input
+                type="text"
+                value={connectForm.businessAccountId}
+                onChange={(e) => setConnectForm((f) => ({ ...f, businessAccountId: e.target.value }))}
+                placeholder="e.g. 987654321098765"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={handleConnectWhatsApp}
+            disabled={saving || !connectForm.phoneNumberId.trim() || !connectForm.accessToken.trim()}
+            className="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 text-sm font-semibold"
+          >
+            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+            Connect WhatsApp
+          </button>
+        </div>
+
+        {/* Webhook setup info */}
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 space-y-4">
+          <h3 className="text-sm font-semibold text-gray-900">Step 2 — Configure Webhook in Meta</h3>
+          <p className="text-xs text-gray-500">
+            In your Meta App → WhatsApp → Configuration, set the Callback URL and Verify Token below.
+          </p>
+
+          <div className="space-y-3">
+            <div>
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Callback URL</p>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 text-xs bg-white border border-gray-200 rounded px-2 py-1.5 font-mono break-all">
+                  {webhookUrl}
+                </code>
+                <button
+                  onClick={() => copyToClipboard(webhookUrl)}
+                  className="p-1.5 hover:bg-gray-200 rounded flex-shrink-0"
+                  title="Copy"
+                >
+                  <Copy className="w-4 h-4 text-gray-600" />
+                </button>
+              </div>
+            </div>
+
+            {settings?.webhook_verify_token && (
+              <div>
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1">Verify Token</p>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 text-xs bg-white border border-gray-200 rounded px-2 py-1.5 font-mono break-all">
+                    {settings.webhook_verify_token}
+                  </code>
+                  <button
+                    onClick={() => copyToClipboard(settings.webhook_verify_token || '')}
+                    className="p-1.5 hover:bg-gray-200 rounded flex-shrink-0"
+                    title="Copy"
+                  >
+                    <Copy className="w-4 h-4 text-gray-600" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="bg-white border border-gray-200 rounded-lg p-3">
+              <p className="text-xs font-semibold text-gray-700 mb-1.5">Subscribed fields</p>
+              <p className="text-xs text-gray-500">
+                Subscribe to: <span className="font-mono text-gray-700">messages</span>
               </p>
             </div>
-            <div className="grid grid-cols-3 gap-3 text-center">
-              {[
-                { icon: <Zap className="w-4 h-4" />, label: 'Instant replies' },
-                { icon: <MessageSquare className="w-4 h-4" />, label: 'AI drafts' },
-                { icon: <Clock className="w-4 h-4" />, label: '24/7 coverage' },
-              ].map((f) => (
-                <div key={f.label} className="bg-gray-50 rounded-xl p-3 space-y-1">
-                  <div className="flex justify-center text-green-600">{f.icon}</div>
-                  <p className="text-xs text-gray-600 font-medium">{f.label}</p>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => navigate('/dashboard/integrations')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 text-sm font-medium w-full justify-center"
-            >
-              <Link2 className="w-4 h-4" />
-              Connect on Integrations
-            </button>
           </div>
         </div>
 
