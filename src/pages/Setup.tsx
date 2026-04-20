@@ -548,11 +548,13 @@ const Setup: React.FC = () => {
                   <Button
                     type="button"
                     onClick={currentStep === steps.length - 1 ? handleSubmit : nextStep}
-                    disabled={!isStepValid()}
+                    disabled={!isStepValid() || isSubmitting}
                     className="flex items-center gap-1 rounded-2xl"
                   >
                     {currentStep === steps.length - 1 ? (
-                      <><Zap className="h-4 w-4" /> Launch</>
+                      isSubmitting
+                        ? <><Zap className="h-4 w-4 animate-pulse" /> Launching...</>
+                        : <><Zap className="h-4 w-4" /> Launch</>
                     ) : (
                       <>Next <ChevronRight className="h-4 w-4" /></>
                     )}

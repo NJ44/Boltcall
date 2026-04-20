@@ -746,10 +746,23 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
             is_default: f.is_default,
             doc_count: f.doc_count || 0,
           })));
+          return;
         }
-      } catch (err) {
-        console.error('Error fetching KB folders:', err);
+      } catch (_) {
+        // fall through to Supabase fallback
       }
+      // Supabase direct fallback
+      const { data: folders } = await supabase
+        .from('kb_folders')
+        .select('id, name, is_default')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: true });
+      setKbFolders((folders || []).map((f: any) => ({
+        id: f.id,
+        name: f.name,
+        is_default: f.is_default ?? false,
+        doc_count: 0,
+      })));
     };
     fetchKbFolders();
   }, [user?.id]);

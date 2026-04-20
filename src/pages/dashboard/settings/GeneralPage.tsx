@@ -72,7 +72,9 @@ const GeneralPage: React.FC = () => {
             owner: profile.owner_name || user.name || '',
             website: profile.website_url || '',
             description: profile.description || '',
-            industry: profile.main_category || 'Technology'
+            industry: profile.main_category
+              ? profile.main_category.charAt(0).toUpperCase() + profile.main_category.slice(1)
+              : 'Technology'
           });
 
           // Fetch primary location for address
