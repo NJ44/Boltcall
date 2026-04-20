@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, Sparkles } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { VoicePicker } from './ui/voice-picker';
 import { AgentAvatar } from './ui/AgentAvatar';
@@ -8,19 +8,12 @@ import { useRetellVoices } from '../hooks/useRetellVoices';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
-// ─── Config ───────────────────────────────────────────────────────────────────
-
-const EMOJI_OPTIONS = ['🤖', '⚡', '🎯', '🔥', '🦾', '💎', '🚀', '🌟', '🎪', '✨'];
-
-const COLOR_OPTIONS = [
-  { label: 'Blue',    value: '#3B82F6' },
-  { label: 'Violet',  value: '#8B5CF6' },
-  { label: 'Emerald', value: '#10B981' },
-  { label: 'Amber',   value: '#F59E0B' },
-  { label: 'Rose',    value: '#F43F5E' },
+const AVATAR_OPTIONS = [
+  '/avatars/Gemini_Generated_Image_2vtge12vtge12vtg-Photoroom.png',
+  '/avatars/Gemini_Generated_Image_ejwzegejwzegejwz (1)-Photoroom.png',
+  '/avatars/Gemini_Generated_Image_oicfeoicfeoicfeo-Photoroom.png',
+  '/avatars/Gemini_Generated_Image_oneppkoneppkonep-Photoroom.png',
 ];
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface SetupCompletionPopupProps {
   isOpen: boolean;
@@ -29,15 +22,12 @@ interface SetupCompletionPopupProps {
 
 type ModalState = 'form' | 'saving' | 'success';
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onClose }) => {
   const { user } = useAuth();
   const { voices } = useRetellVoices();
 
   const [modalState, setModalState] = useState<ModalState>('form');
-  const [selectedEmoji, setSelectedEmoji] = useState<string>('🤖');
-  const [selectedColor, setSelectedColor] = useState<string>('#3B82F6');
+  const [selectedAvatar, setSelectedAvatar] = useState<string>(AVATAR_OPTIONS[0]);
   const [agentName, setAgentName] = useState('');
   const [voiceId, setVoiceId] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -70,8 +60,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             .from('agents')
             .update({
               name: agentName.trim(),
-              avatar: selectedEmoji,
-              color: selectedColor,
+              avatar: selectedAvatar,
               voice_id: voiceId,
             })
             .eq('id', agents[0].id);
@@ -100,8 +89,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
     onClose();
     setTimeout(() => {
       setModalState('form');
-      setSelectedEmoji('🤖');
-      setSelectedColor('#3B82F6');
+      setSelectedAvatar(AVATAR_OPTIONS[0]);
       setAgentName('');
       setVoiceId('');
       setError(null);
@@ -129,13 +117,13 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
             transition={{ type: 'spring', stiffness: 340, damping: 26 }}
             className="fixed inset-0 z-[10000] flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="relative bg-white dark:bg-[#111114] rounded-2xl shadow-2xl w-full max-w-md pointer-events-auto overflow-hidden">
+            <div className="relative bg-white dark:bg-[#111114] rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto overflow-hidden">
 
               {/* Close button */}
               {modalState !== 'saving' && (
                 <button
                   onClick={handleClose}
-                  className="absolute top-4 right-4 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors z-10"
+                  className="absolute top-3 right-3 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors z-10"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -150,71 +138,40 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0, y: -12 }}
                     transition={{ duration: 0.2 }}
-                    className="p-7"
+                    className="p-6"
                   >
                     {/* Header */}
-                    <div className="mb-6">
+                    <div className="mb-5">
                       <span className="text-xs font-semibold uppercase tracking-widest text-blue-500 dark:text-blue-400">
                         Almost Done!
                       </span>
-                      <h2 className="mt-1 text-[22px] font-bold text-gray-900 dark:text-white leading-tight">
+                      <h2 className="mt-1 text-[20px] font-bold text-gray-900 dark:text-white leading-tight">
                         Complete your first AI Agent
                       </h2>
-                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                      <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
                         Give it a name, a face, and a voice — it goes live the moment you submit.
                       </p>
                     </div>
 
-                    <div className="space-y-5">
-                      {/* Avatar + Color */}
+                    <div className="space-y-4">
+                      {/* Avatar picker */}
                       <div>
                         <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
                           Agent Avatar
                         </label>
-
-                        {/* Preview row */}
-                        <div className="flex items-center gap-4 mb-3">
-                          <AgentAvatar
-                            avatar={selectedEmoji}
-                            color={selectedColor}
-                            name={agentName || 'Agent'}
-                            size="lg"
-                          />
-                          <div className="flex-1">
-                            <p className="text-[11px] text-gray-400 dark:text-gray-500 mb-2 font-medium uppercase tracking-wider">Color</p>
-                            <div className="flex gap-2">
-                              {COLOR_OPTIONS.map((c) => (
-                                <button
-                                  key={c.value}
-                                  onClick={() => setSelectedColor(c.value)}
-                                  title={c.label}
-                                  className="w-6 h-6 rounded-full transition-transform hover:scale-110 focus:outline-none"
-                                  style={{
-                                    background: c.value,
-                                    boxShadow: selectedColor === c.value
-                                      ? `0 0 0 2px white, 0 0 0 4px ${c.value}`
-                                      : 'none',
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Emoji grid */}
-                        <div className="grid grid-cols-10 gap-1">
-                          {EMOJI_OPTIONS.map((emoji) => (
+                        <div className="flex items-center gap-3">
+                          {AVATAR_OPTIONS.map((src) => (
                             <button
-                              key={emoji}
-                              onClick={() => setSelectedEmoji(emoji)}
+                              key={src}
+                              onClick={() => setSelectedAvatar(src)}
                               className={[
-                                'h-9 rounded-lg text-xl flex items-center justify-center transition-all',
-                                selectedEmoji === emoji
-                                  ? 'bg-blue-50 dark:bg-blue-500/15 ring-2 ring-blue-400 scale-105'
-                                  : 'hover:bg-gray-100 dark:hover:bg-white/5',
+                                'w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 transition-all',
+                                selectedAvatar === src
+                                  ? 'ring-2 ring-brand-blue ring-offset-2 scale-105'
+                                  : 'opacity-60 hover:opacity-90 hover:scale-105',
                               ].join(' ')}
                             >
-                              {emoji}
+                              <img src={src} alt="avatar" className="w-full h-full object-cover" />
                             </button>
                           ))}
                         </div>
@@ -257,18 +214,15 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                       <button
                         onClick={handleSubmit}
                         disabled={modalState === 'saving'}
-                        className="w-full h-11 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-md"
+                        className="w-full h-11 rounded-xl bg-brand-blue text-white font-semibold text-sm flex items-center justify-center hover:bg-brand-sky active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-md"
                       >
                         {modalState === 'saving' ? (
                           <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <Loader2 className="w-4 h-4 animate-spin mr-2" />
                             Launching…
                           </>
                         ) : (
-                          <>
-                            <Sparkles className="w-4 h-4" />
-                            Launch My Agent
-                          </>
+                          'Launch My Agent'
                         )}
                       </button>
                     </div>
@@ -292,8 +246,8 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                       className="mb-5"
                     >
                       <AgentAvatar
-                        avatar={selectedEmoji}
-                        color={selectedColor}
+                        avatar={selectedAvatar}
+                        color={null}
                         name={agentName || 'Agent'}
                         size="lg"
                       />
@@ -320,7 +274,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                     >
                       <button
                         onClick={handleClose}
-                        className="w-full h-11 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-md"
+                        className="w-full h-11 rounded-xl bg-brand-blue text-white font-semibold text-sm hover:bg-brand-sky active:scale-[0.98] transition-all shadow-md"
                       >
                         Open Dashboard
                       </button>
