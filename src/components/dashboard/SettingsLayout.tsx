@@ -154,7 +154,9 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15, ease: 'easeInOut' }}
               >
-                {children || <Outlet />}
+                <Suspense fallback={null}>
+                  {children || <Outlet />}
+                </Suspense>
               </motion.div>
             </AnimatePresence>
           </div>
