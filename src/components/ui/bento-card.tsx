@@ -4,18 +4,17 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   DashboardSquare01Icon,
   UserGroupIcon,
-  Message01Icon,
-  Folder02Icon,
   Add01Icon,
   CircleArrowUpRight02Icon,
   Search01Icon,
   BarChartIcon,
   Tick01Icon,
   Settings02Icon,
-  InformationCircleIcon,
   DatabaseIcon,
-  Mail01Icon,
   UserIcon,
+  PhoneCall01Icon,
+  Calendar01Icon,
+  LinkSquare01Icon,
 } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 
@@ -30,34 +29,34 @@ interface TabConfig {
 
 const TABS: TabConfig[] = [
   {
-    id: "dashboard",
-    label: "Dashboard",
+    id: "overview",
+    label: "Overview",
     icon: DashboardSquare01Icon,
-    header: "Project Overview",
-    description: "Daily summary of your team performance.",
+    header: "Lead Dashboard",
+    description: "Real-time snapshot of your lead pipeline.",
   },
   {
-    id: "management",
-    label: "Management",
+    id: "agents",
+    label: "AI Agents",
     icon: UserGroupIcon,
-    header: "Team Management",
-    description: "Manage roles and user permissions.",
-    badge: "10",
+    header: "Active Agents",
+    description: "Your AI team — always on, never misses a call.",
+    badge: "3",
   },
   {
-    id: "threads",
-    label: "Threads",
-    icon: Message01Icon,
-    header: "Communications",
-    description: "High-priority team discussions.",
-    badge: "12",
+    id: "calls",
+    label: "Live Calls",
+    icon: PhoneCall01Icon,
+    header: "Call Activity",
+    description: "Every inbound call answered and tracked.",
+    badge: "5",
   },
   {
-    id: "resources",
-    label: "Resources",
-    icon: Folder02Icon,
-    header: "System Assets",
-    description: "Shared documentation and media logs.",
+    id: "integrations",
+    label: "Integrations",
+    icon: LinkSquare01Icon,
+    header: "Connected Tools",
+    description: "Your calendar, CRM, and pipeline — all in sync.",
   },
 ];
 
@@ -66,14 +65,14 @@ const BentoCard = () => {
 
   const content = useMemo(() => {
     switch (activeTab.id) {
-      case "dashboard":
+      case "overview":
         return <OverviewDashboard />;
-      case "management":
-        return <ManagementDashboard />;
-      case "threads":
-        return <ThreadsDashboard />;
-      case "resources":
-        return <ResourcesDashboard />;
+      case "agents":
+        return <AgentsDashboard />;
+      case "calls":
+        return <CallsDashboard />;
+      case "integrations":
+        return <IntegrationsDashboard />;
       default:
         return null;
     }
@@ -84,10 +83,10 @@ const BentoCard = () => {
       <div className="group relative w-full max-w-6xl overflow-hidden rounded-3xl border border-white/[0.08] bg-[#080b12] shadow-2xl shadow-blue-500/15 transition-all duration-500 hover:shadow-blue-500/25 hover:-translate-y-1 m-0">
         <div className="p-6 sm:p-10 space-y-2 z-10 relative">
           <h2 className="text-xs text-blue-400/70 uppercase tracking-widest font-semibold">
-            Project Dashboard
+            Platform Preview
           </h2>
           <p className="text-2xl sm:text-4xl text-white font-medium leading-snug max-w-[700px]">
-            High-performance analytics and team collaboration tools in one place.
+            Every lead answered. Every booking locked in. Automatically.
           </p>
         </div>
 
@@ -104,9 +103,9 @@ const BentoCard = () => {
                 <div className="w-2 h-2 rounded-full bg-yellow-500/70" />
                 <div className="w-2 h-2 rounded-full bg-green-500/70" />
               </div>
-              <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-                <span className="text-xs text-gray-500 uppercase">
-                  Workspace
+              <div className="absolute left-1/2 -translate-x-1/2">
+                <span className="text-xs text-gray-500 uppercase tracking-wider">
+                  Boltcall
                 </span>
               </div>
             </div>
@@ -210,20 +209,22 @@ const OverviewDashboard = () => (
     <div className="relative p-3.5 rounded-xl border border-white/10 bg-gray-800/40 overflow-hidden">
       <div className="flex flex-col gap-2 relative z-10">
         <div className="flex items-center justify-between">
-          <span className="text-[9px] font-medium text-gray-500">Team Performance</span>
+          <span className="text-[9px] font-medium text-gray-500">Response Rate</span>
           <HugeiconsIcon icon={CircleArrowUpRight02Icon} size={12} className="text-blue-400" />
         </div>
         <div className="flex flex-col gap-0.5">
-          <span className="text-xl font-medium tracking-tight text-white">94.2%</span>
+          <span className="text-xl font-medium tracking-tight text-white">98.7%</span>
           <div className="w-full h-1 bg-gray-700 rounded-full overflow-hidden mt-1">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: "94.2%" }}
+              animate={{ width: "98.7%" }}
               className="h-full bg-blue-500 rounded-full"
             />
           </div>
         </div>
-        <span className="text-[9px] text-gray-500">Score for Search & Delivery campaigns</span>
+        <span className="text-[9px] text-gray-500">
+          Every inbound lead responded to within seconds
+        </span>
       </div>
       <div className="absolute -right-2 -bottom-2 opacity-5 scale-150 rotate-12">
         <HugeiconsIcon icon={BarChartIcon} size={64} />
@@ -233,27 +234,27 @@ const OverviewDashboard = () => (
     <div className="grid grid-cols-2 gap-2">
       <div className="p-3 rounded-xl border border-white/10 bg-gray-800/40 flex items-center justify-between">
         <div className="flex flex-col">
-          <span className="text-[10px] font-medium text-white">1,070</span>
-          <span className="text-[8px] text-gray-500 uppercase font-medium">Keywords</span>
+          <span className="text-[10px] font-medium text-white">24</span>
+          <span className="text-[8px] text-gray-500 uppercase font-medium">Leads Today</span>
         </div>
-        <HugeiconsIcon icon={Search01Icon} size={14} className="text-gray-600" />
+        <HugeiconsIcon icon={UserGroupIcon} size={14} className="text-gray-600" />
       </div>
       <div className="p-3 rounded-xl border border-white/10 bg-gray-800/40 flex items-center justify-between">
         <div className="flex flex-col">
-          <span className="text-[10px] font-medium text-white">2.3M</span>
-          <span className="text-[8px] text-gray-500 uppercase font-medium">Credits</span>
+          <span className="text-[10px] font-medium text-white">11</span>
+          <span className="text-[8px] text-gray-500 uppercase font-medium">Booked</span>
         </div>
-        <HugeiconsIcon icon={InformationCircleIcon} size={14} className="text-gray-600" />
+        <HugeiconsIcon icon={Calendar01Icon} size={14} className="text-gray-600" />
       </div>
     </div>
   </div>
 );
 
-const ManagementDashboard = () => (
+const AgentsDashboard = () => (
   <div className="flex flex-col h-full">
     <div className="rounded-xl border border-white/10 overflow-hidden flex flex-col h-full bg-gray-800/20">
       <div className="bg-gray-800/60 px-3 py-2 border-b border-white/10 flex items-center justify-between">
-        <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider">Active Users</span>
+        <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider">Active AI Agents</span>
         <div className="flex items-center gap-1.5 px-1.5 py-0.5 rounded-md bg-gray-700/60 border border-white/10">
           <HugeiconsIcon icon={Search01Icon} size={10} className="text-gray-500" />
           <span className="text-[8px] text-gray-500 font-medium">Search</span>
@@ -261,18 +262,18 @@ const ManagementDashboard = () => (
       </div>
       <div className="p-1 flex flex-col gap-0.5">
         {[
-          { name: "Anthony Dionne", role: "Pending admin approval", color: "bg-amber-400" },
-          { name: "Nick Yahodin", role: "Dealership group admin", color: "bg-emerald-400" },
-          { name: "Mujeeb Aimaq", role: "Dealership group user", color: "bg-emerald-400" },
-        ].map((user, i) => (
+          { name: "Front Desk Agent", role: "Answers & qualifies every inbound call", color: "bg-emerald-400" },
+          { name: "Follow-Up Agent", role: "Re-engages leads that didn't book", color: "bg-emerald-400" },
+          { name: "After-Hours Agent", role: "Captures leads when you're closed", color: "bg-amber-400" },
+        ].map((agent, i) => (
           <div key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors group">
             <div className="w-6 h-6 rounded-full bg-gray-700 border border-white/10 flex items-center justify-center relative">
               <HugeiconsIcon icon={UserIcon} size={10} className="text-gray-400" />
-              <div className={cn("absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full border border-gray-900", user.color)} />
+              <div className={cn("absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full border border-gray-900", agent.color)} />
             </div>
             <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-[10px] font-medium text-white truncate">{user.name}</span>
-              <span className="text-[8px] text-gray-500 truncate">{user.role}</span>
+              <span className="text-[10px] font-medium text-white truncate">{agent.name}</span>
+              <span className="text-[8px] text-gray-500 truncate">{agent.role}</span>
             </div>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity">
               <HugeiconsIcon icon={Settings02Icon} size={12} className="text-gray-500" />
@@ -284,21 +285,24 @@ const ManagementDashboard = () => (
   </div>
 );
 
-const ThreadsDashboard = () => (
+const CallsDashboard = () => (
   <div className="flex flex-col gap-3 h-full">
     <div className="grid grid-cols-2 gap-3">
       {[
-        { title: "Create a Page", desc: "Build your project base.", icon: Folder02Icon },
-        { title: "Create a Task", desc: "Organize with team.", icon: Tick01Icon },
+        { title: "Book Appointment", desc: "Instantly schedule via call.", icon: Calendar01Icon },
+        { title: "Qualify Lead", desc: "Score and route new leads.", icon: Tick01Icon },
       ].map((card, i) => (
-        <div key={i} className="p-3.5 rounded-xl border border-white/10 bg-gray-800/40 flex flex-col gap-3 relative overflow-hidden group">
+        <div
+          key={i}
+          className="p-3.5 rounded-xl border border-white/10 bg-gray-800/40 flex flex-col gap-3 relative overflow-hidden group"
+        >
           <div className="flex flex-col gap-1 z-10">
             <span className="text-[12px] font-medium text-white leading-tight">{card.title}</span>
             <span className="text-[9px] text-gray-500 leading-tight">{card.desc}</span>
           </div>
           <button className="w-fit flex items-center gap-1.5 px-2 py-1 rounded-md bg-gray-700 text-white text-[8px] font-semibold transition-all active:scale-95 group-hover:bg-blue-600 z-10">
             <HugeiconsIcon icon={Add01Icon} size={8} strokeWidth={3} />
-            Create
+            Trigger
           </button>
         </div>
       ))}
@@ -307,42 +311,43 @@ const ThreadsDashboard = () => (
     <div className="mt-auto p-3 rounded-xl bg-gray-800/40 border border-white/10 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="p-1 px-1.5 rounded-md bg-gray-700 border border-white/10">
-          <HugeiconsIcon icon={InformationCircleIcon} size={10} className="text-gray-400" />
+          <HugeiconsIcon icon={PhoneCall01Icon} size={10} className="text-gray-400" />
         </div>
-        <span className="text-[9px] text-gray-500 font-medium">Pin a new item</span>
+        <span className="text-[9px] text-gray-500 font-medium">5 calls active right now</span>
       </div>
-      <HugeiconsIcon icon={Add01Icon} size={12} className="text-gray-600" />
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
     </div>
   </div>
 );
 
-const ResourcesDashboard = () => (
+const IntegrationsDashboard = () => (
   <div className="flex flex-col gap-3 h-full overflow-hidden">
     <div className="flex-1 rounded-xl border border-white/10 flex flex-col bg-gray-800/20 overflow-hidden">
       <div className="bg-gray-800/60 px-3 py-2 border-b border-white/10 flex items-center justify-between">
-        <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider">Archives & Logs</span>
+        <span className="text-[9px] font-semibold text-gray-500 uppercase tracking-wider">
+          Connected Tools
+        </span>
         <HugeiconsIcon icon={DatabaseIcon} size={12} className="text-gray-600" />
       </div>
       <div className="flex-1 p-1 overflow-y-auto">
         {[
-          { file: "design_spec_v2.pdf", size: "2.4 MB", type: "PDF", icon: Mail01Icon },
-          { file: "q4_performance.xls", size: "1.1 MB", type: "XLS", icon: BarChartIcon },
-          { file: "branding_assets.zip", size: "48 MB", type: "ZIP", icon: Folder02Icon },
-          { file: "system_logs.json", size: "4 KB", type: "JSON", icon: Folder02Icon },
+          { name: "Google Calendar", desc: "Auto-books appointments", icon: Calendar01Icon },
+          { name: "HubSpot CRM", desc: "Syncs every lead & call", icon: DatabaseIcon },
+          { name: "GoHighLevel", desc: "Pipeline + SMS follow-up", icon: BarChartIcon },
+          { name: "Zapier", desc: "1,000+ app automations", icon: LinkSquare01Icon },
         ].map((item, i) => (
-          <div key={i} className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group">
+          <div
+            key={i}
+            className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group"
+          >
             <div className="w-6 h-6 rounded-md bg-gray-700 border border-white/10 flex items-center justify-center text-gray-500 group-hover:text-blue-400 group-hover:bg-blue-900/30 transition-colors">
               <HugeiconsIcon icon={item.icon} size={12} />
             </div>
             <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-[10px] font-medium text-white truncate">{item.file}</span>
-              <span className="text-[8px] text-gray-500 tabular-nums uppercase">{item.size} • {item.type}</span>
+              <span className="text-[10px] font-medium text-white truncate">{item.name}</span>
+              <span className="text-[8px] text-gray-500 uppercase">{item.desc}</span>
             </div>
-            <HugeiconsIcon
-              icon={CircleArrowUpRight02Icon}
-              size={10}
-              className="text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity"
-            />
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           </div>
         ))}
       </div>
