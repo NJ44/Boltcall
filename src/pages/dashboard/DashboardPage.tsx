@@ -5,6 +5,7 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock, type AgentCustomization } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSubscription } from '../../contexts/SubscriptionContext';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
 import RecentWinBanner from '../../components/dashboard/RecentWinBanner';
 import { useDashboardStore } from '../../stores/dashboardStore';
