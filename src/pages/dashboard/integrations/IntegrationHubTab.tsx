@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   Check,
   ChevronRight,
@@ -262,6 +263,24 @@ const integrations: Integration[] = [
     ],
     url: 'https://go.servicetitan.com',
   },
+  {
+    id: 'whatsapp',
+    name: 'WhatsApp Business',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
+    subtitle: 'Messaging & Lead Engagement',
+    description: 'Respond to WhatsApp leads instantly with AI-drafted replies. Qualify, book, and follow up — all from WhatsApp.',
+    fallbackColor: '#25D366',
+    type: 'api_key',
+    category: 'communication',
+    apiLabel: 'Phone Number ID',
+    steps: [
+      'Go to Meta for Developers → Your App → WhatsApp → API Setup',
+      'Copy your Phone Number ID and generate a permanent access token',
+      'Configure the webhook URL and verify token in Meta → WhatsApp → Configuration',
+      'Manage your full WhatsApp setup from the dedicated WhatsApp page',
+    ],
+    url: 'https://developers.facebook.com/apps',
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -271,6 +290,7 @@ const integrations: Integration[] = [
 const IntegrationHubTab: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const navigate = useNavigate();
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [savedIntegrations, setSavedIntegrations] = useState<SavedIntegration[]>([]);
   const [loading, setLoading] = useState(true);
@@ -339,6 +359,10 @@ const IntegrationHubTab: React.FC = () => {
     savedIntegrations.find(i => i.provider === provider);
 
   const openPanel = (id: string) => {
+    if (id === 'whatsapp') {
+      navigate('/dashboard/whatsapp');
+      return;
+    }
     setActivePanel(id);
     setFormApiKey('');
     setFormWebhookUrl('');
