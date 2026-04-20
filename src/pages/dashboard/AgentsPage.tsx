@@ -965,7 +965,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 </div>
 
                 {/* Action Icons */}
-                <div className="flex items-center gap-3 md:gap-2" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-3 md:gap-2 md:w-[140px] md:flex-none md:justify-end" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => setTalkToAgent(agent)}
                     className="text-green-600 hover:text-green-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
