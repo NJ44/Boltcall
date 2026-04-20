@@ -130,19 +130,30 @@ const InstantLeadReplyPage: React.FC = () => {
     }
   };
 
+  const embedSnippet = user?.id
+    ? `<script src="https://boltcall.org/form.js" data-user-id="${user.id}"></script>
+
+<!-- Add data-boltcall to any form you want to capture: -->
+<form data-boltcall>
+  <input name="name" placeholder="Your name" required />
+  <input name="email" type="email" placeholder="Email" required />
+  <input name="phone" placeholder="Phone" />
+  <button type="submit">Get Started</button>
+</form>`
+    : '<!-- Log in to see your install tag -->';
+
   const fetchSnippet = user?.id
-    ? `fetch("${webhookUrl}", {
+    ? `fetch("${prettyWebhookUrl}", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     name: "John Doe",
     email: "john@example.com",
     phone: "+1234567890",
-    source: "website_form",
-    user_id: "${user.id}"
+    source: "website_form"
   })
 })`
-    : '// Log in to see your user_id';
+    : '// Log in to see your endpoint';
 
   const htmlFormSnippet = user?.id
     ? `<form id="lead-form">
@@ -157,21 +168,20 @@ document.getElementById("lead-form")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
-    await fetch("${webhookUrl}", {
+    await fetch("${prettyWebhookUrl}", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: fd.get("name"),
         email: fd.get("email"),
         phone: fd.get("phone"),
-        source: "website_form",
-        user_id: "${user.id}"
+        source: "website_form"
       })
     });
     alert("Thanks! We'll be in touch.");
   });
 </script>`
-    : '<!-- Log in to see your user_id -->';
+    : '<!-- Log in to see your endpoint -->';
 
   // Add effect to update body class when panel is open
   useEffect(() => {
