@@ -10,10 +10,13 @@ import {
   Unplug,
   ExternalLink,
   Plus,
+  MessageCircle,
+  Send,
 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { PageSkeleton } from '../../../components/ui/loading-skeleton';
+import { supabase } from '../../../lib/supabase';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -42,6 +45,54 @@ interface SavedIntegration {
   config: any;
   last_sync_at: string | null;
   sync_count: number;
+}
+
+interface WhatsAppSettings {
+  is_enabled: boolean;
+  wa_phone_number_id: string | null;
+  wa_business_account_id: string | null;
+  auto_reply_enabled: boolean;
+  response_tone: string;
+  qualification_enabled: boolean;
+  booking_enabled: boolean;
+  business_hours_only: boolean;
+  business_hours_start: string;
+  business_hours_end: string;
+  business_timezone: string;
+  max_ai_messages_per_conversation: number;
+  greeting_template: string | null;
+  out_of_hours_message: string | null;
+}
+
+const DEFAULT_WA_SETTINGS: WhatsAppSettings = {
+  is_enabled: false,
+  wa_phone_number_id: null,
+  wa_business_account_id: null,
+  auto_reply_enabled: false,
+  response_tone: 'professional',
+  qualification_enabled: true,
+  booking_enabled: true,
+  business_hours_only: false,
+  business_hours_start: '09:00',
+  business_hours_end: '17:00',
+  business_timezone: 'UTC',
+  max_ai_messages_per_conversation: 10,
+  greeting_template: '',
+  out_of_hours_message: '',
+};
+
+async function callWhatsAppFn(body: Record<string, unknown>) {
+  const { data: { session } } = await supabase.auth.getSession();
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (session?.access_token) headers['Authorization'] = `Bearer ${session.access_token}`;
+  const res = await fetch('/.netlify/functions/whatsapp-settings', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(body),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
+  return json;
 }
 
 // ---------------------------------------------------------------------------
@@ -272,13 +323,7 @@ const integrations: Integration[] = [
     fallbackColor: '#25D366',
     type: 'api_key',
     category: 'communication',
-    apiLabel: 'Phone Number ID',
-    steps: [
-      'Go to Meta for Developers → Your App → WhatsApp → API Setup',
-      'Copy your Phone Number ID and generate a permanent access token',
-      'Configure the webhook URL and verify token in Meta → WhatsApp → Configuration',
-      'Manage your full WhatsApp setup from the dedicated WhatsApp page',
-    ],
+    steps: [],
     url: 'https://developers.facebook.com/apps',
   },
 ];
@@ -302,6 +347,13 @@ const IntegrationHubTab: React.FC = () => {
   const [formApiKey, setFormApiKey] = useState('');
   const [formWebhookUrl, setFormWebhookUrl] = useState('');
   const [formExtra, setFormExtra] = useState<Record<string, string>>({});
+
+  // WhatsApp-specific state
+  const [waSettings, setWaSettings] = useState<WhatsAppSettings | null>(null);
+  const [waLoading, setWaLoading] = useState(false);
+  const [waSaving, setWaSaving] = useState(false);
+  const [waTestPhone, setWaTestPhone] = useState('');
+  const [waTesting, setWaTesting] = useState(false);
 
   // Load saved integrations
   useEffect(() => {
@@ -359,17 +411,75 @@ const IntegrationHubTab: React.FC = () => {
     savedIntegrations.find(i => i.provider === provider);
 
   const openPanel = (id: string) => {
-    if (id === 'whatsapp') {
-      navigate('/dashboard/whatsapp');
-      return;
-    }
     setActivePanel(id);
     setFormApiKey('');
     setFormWebhookUrl('');
     setFormExtra({});
+    if (id === 'whatsapp' && user) {
+      setWaLoading(true);
+      setWaSettings(null);
+      callWhatsAppFn({ action: 'get', userId: user.id })
+        .then((res) => {
+          setWaSettings(res?.settings ? { ...DEFAULT_WA_SETTINGS, ...res.settings } : { ...DEFAULT_WA_SETTINGS });
+        })
+        .catch(() => setWaSettings({ ...DEFAULT_WA_SETTINGS }))
+        .finally(() => setWaLoading(false));
+    }
   };
 
-  const closePanel = () => setActivePanel(null);
+  const closePanel = () => {
+    setActivePanel(null);
+    setWaSettings(null);
+    setWaTestPhone('');
+  };
+
+  const updateWaSetting = <K extends keyof WhatsAppSettings>(key: K, value: WhatsAppSettings[K]) => {
+    setWaSettings((prev) => (prev ? { ...prev, [key]: value } : prev));
+  };
+
+  const handleSaveWhatsApp = async () => {
+    if (!user || !waSettings) return;
+    setWaSaving(true);
+    try {
+      const res = await callWhatsAppFn({ action: 'save', userId: user.id, ...waSettings });
+      setWaSettings({ ...DEFAULT_WA_SETTINGS, ...res.settings });
+      showToast({ message: 'WhatsApp settings saved', variant: 'success' });
+    } catch (e: any) {
+      showToast({ message: e?.message || 'Failed to save', variant: 'error' });
+    } finally {
+      setWaSaving(false);
+    }
+  };
+
+  const handleTestWhatsApp = async () => {
+    if (!user || !waTestPhone) return;
+    setWaTesting(true);
+    try {
+      await callWhatsAppFn({ action: 'test', userId: user.id, testPhone: waTestPhone });
+      showToast({ message: `Test message sent to ${waTestPhone}`, variant: 'success' });
+    } catch (e: any) {
+      showToast({ message: e?.message || 'Test failed', variant: 'error' });
+    } finally {
+      setWaTesting(false);
+    }
+  };
+
+  const handleDisconnectWhatsApp = async () => {
+    if (!user) return;
+    setWaSaving(true);
+    try {
+      await callWhatsAppFn({ action: 'disconnect', userId: user.id });
+      setSavedIntegrations((prev) =>
+        prev.map((i) => (i.provider === 'whatsapp' ? { ...i, is_connected: false } : i))
+      );
+      setWaSettings((prev) => (prev ? { ...prev, wa_phone_number_id: null, is_enabled: false } : prev));
+      showToast({ message: 'WhatsApp disconnected', variant: 'default' });
+    } catch (e: any) {
+      showToast({ message: e?.message || 'Failed to disconnect', variant: 'error' });
+    } finally {
+      setWaSaving(false);
+    }
+  };
 
   const handleTest = async (integration: Integration) => {
     setTesting(true);
@@ -646,6 +756,24 @@ const IntegrationHubTab: React.FC = () => {
                     </button>
                   </div>
 
+                  {/* WhatsApp: dedicated management panel */}
+                  {integration.id === 'whatsapp' ? (
+                    <WhatsAppManagementPanel
+                      connected={!!waSettings?.wa_phone_number_id}
+                      loading={waLoading}
+                      saving={waSaving}
+                      settings={waSettings}
+                      onChange={updateWaSetting}
+                      onSave={handleSaveWhatsApp}
+                      onDisconnect={handleDisconnectWhatsApp}
+                      onOpenFullPage={() => navigate('/dashboard/whatsapp')}
+                      testPhone={waTestPhone}
+                      onTestPhoneChange={setWaTestPhone}
+                      testing={waTesting}
+                      onTest={handleTestWhatsApp}
+                    />
+                  ) : (
+                    <>
                   {/* Connected status */}
                   {connected && (
                     <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-6 flex items-center justify-between">
@@ -815,12 +943,327 @@ const IntegrationHubTab: React.FC = () => {
                       Visit {integration.name}
                     </a>
                   )}
+                    </>
+                  )}
                 </div>
               </motion.div>
             </>
           );
         })()}
       </AnimatePresence>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// WhatsApp Management Panel
+// ---------------------------------------------------------------------------
+
+interface WhatsAppManagementPanelProps {
+  connected: boolean;
+  loading: boolean;
+  saving: boolean;
+  settings: WhatsAppSettings | null;
+  onChange: <K extends keyof WhatsAppSettings>(key: K, value: WhatsAppSettings[K]) => void;
+  onSave: () => void;
+  onDisconnect: () => void;
+  onOpenFullPage: () => void;
+  testPhone: string;
+  onTestPhoneChange: (v: string) => void;
+  testing: boolean;
+  onTest: () => void;
+}
+
+const WaToggle: React.FC<{ value: boolean; onChange: (v: boolean) => void }> = ({ value, onChange }) => (
+  <button
+    type="button"
+    onClick={() => onChange(!value)}
+    className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors ${
+      value ? 'bg-green-600' : 'bg-gray-300 dark:bg-gray-600'
+    }`}
+    aria-pressed={value}
+  >
+    <span
+      className={`inline-block h-5 w-5 rounded-full bg-white shadow transform transition-transform mt-0.5 ${
+        value ? 'translate-x-5' : 'translate-x-0.5'
+      }`}
+    />
+  </button>
+);
+
+const WhatsAppManagementPanel: React.FC<WhatsAppManagementPanelProps> = ({
+  connected,
+  loading,
+  saving,
+  settings,
+  onChange,
+  onSave,
+  onDisconnect,
+  onOpenFullPage,
+  testPhone,
+  onTestPhoneChange,
+  testing,
+  onTest,
+}) => {
+  if (loading || !settings) {
+    return (
+      <div className="py-10 flex justify-center">
+        <Loader2 className="w-6 h-6 text-green-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!connected) {
+    return (
+      <div className="space-y-4">
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+          <p className="text-sm font-medium text-amber-900 dark:text-amber-300">Not connected yet</p>
+          <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+            WhatsApp Business requires Meta credentials. Connect on the full WhatsApp page, then come back here to manage your settings.
+          </p>
+        </div>
+        <button
+          onClick={onOpenFullPage}
+          className="w-full text-white py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium bg-[#25D366]"
+        >
+          Go to WhatsApp setup
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-5">
+      {/* Connected status + inbox link */}
+      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Check className="w-4 h-4 text-green-600" />
+          <div>
+            <p className="text-sm font-medium text-green-800 dark:text-green-400">Connected</p>
+            {settings.wa_phone_number_id && (
+              <p className="text-[11px] text-green-700/80 dark:text-green-400/70 font-mono">
+                Phone ID: {settings.wa_phone_number_id}
+              </p>
+            )}
+          </div>
+        </div>
+        <button
+          onClick={onDisconnect}
+          disabled={saving}
+          className="flex items-center gap-1 text-xs text-red-600 hover:text-red-700 disabled:opacity-50"
+        >
+          <Unplug className="w-3 h-3" />
+          Disconnect
+        </button>
+      </div>
+
+      <button
+        onClick={onOpenFullPage}
+        className="w-full flex items-center justify-center gap-2 border border-gray-200 dark:border-[#2a2a30] text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg hover:bg-gray-50 dark:hover:bg-[#1a1a1f] transition-colors text-sm font-medium"
+      >
+        <MessageCircle className="w-4 h-4" />
+        Open WhatsApp inbox
+      </button>
+
+      {/* Master toggle */}
+      <div className="flex items-center justify-between pt-2">
+        <div>
+          <p className="text-sm font-medium text-gray-900 dark:text-white">Enable WhatsApp</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Turn WhatsApp on or off for your workspace.</p>
+        </div>
+        <WaToggle value={settings.is_enabled} onChange={(v) => onChange('is_enabled', v)} />
+      </div>
+
+      {/* AI Auto-Reply */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-900 dark:text-white">AI Auto-Reply</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            AI replies instantly without human approval. Off = drafts wait for review.
+          </p>
+        </div>
+        <WaToggle value={settings.auto_reply_enabled} onChange={(v) => onChange('auto_reply_enabled', v)} />
+      </div>
+
+      {/* Response tone */}
+      <div>
+        <label className="block text-sm font-medium text-gray-900 dark:text-white mb-1">Response Tone</label>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">How the AI sounds when replying to leads.</p>
+        <div className="grid grid-cols-3 gap-2">
+          {(['professional', 'friendly', 'formal'] as const).map((tone) => (
+            <button
+              key={tone}
+              onClick={() => onChange('response_tone', tone)}
+              className={`py-2 text-sm rounded-lg border transition-colors font-medium capitalize ${
+                settings.response_tone === tone
+                  ? 'bg-green-600 text-white border-green-600'
+                  : 'bg-white dark:bg-[#0a0a0c] text-gray-700 dark:text-gray-300 border-gray-300 dark:border-[#2a2a30] hover:border-gray-400'
+              }`}
+            >
+              {tone}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Qualify + Booking */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-900 dark:text-white">Qualify leads</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Score intent & capture details from each conversation.</p>
+        </div>
+        <WaToggle value={settings.qualification_enabled} onChange={(v) => onChange('qualification_enabled', v)} />
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-900 dark:text-white">Booking enabled</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Let the AI propose and confirm appointment times.</p>
+        </div>
+        <WaToggle value={settings.booking_enabled} onChange={(v) => onChange('booking_enabled', v)} />
+      </div>
+
+      {/* Business hours */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-900 dark:text-white">Business hours only</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Limit AI replies to your working hours.</p>
+          </div>
+          <WaToggle
+            value={settings.business_hours_only}
+            onChange={(v) => onChange('business_hours_only', v)}
+          />
+        </div>
+        {settings.business_hours_only && (
+          <div className="grid grid-cols-3 gap-2">
+            <div>
+              <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Start</label>
+              <input
+                type="time"
+                value={settings.business_hours_start}
+                onChange={(e) => onChange('business_hours_start', e.target.value)}
+                className="w-full px-2 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">End</label>
+              <input
+                type="time"
+                value={settings.business_hours_end}
+                onChange={(e) => onChange('business_hours_end', e.target.value)}
+                className="w-full px-2 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-600 dark:text-gray-400 mb-1">Timezone</label>
+              <select
+                value={settings.business_timezone}
+                onChange={(e) => onChange('business_timezone', e.target.value)}
+                className="w-full px-2 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c]"
+              >
+                <option value="UTC">UTC</option>
+                <option value="America/New_York">Eastern</option>
+                <option value="America/Chicago">Central</option>
+                <option value="America/Denver">Mountain</option>
+                <option value="America/Los_Angeles">Pacific</option>
+                <option value="Europe/London">London</option>
+                <option value="Asia/Jerusalem">Jerusalem</option>
+              </select>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Max AI messages */}
+      <div>
+        <label className="block text-sm font-medium text-gray-900 dark:text-white mb-1">
+          Max AI messages per conversation
+        </label>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+          After this many back-and-forths, the AI stops and hands off to you.
+        </p>
+        <input
+          type="number"
+          min={1}
+          max={20}
+          value={settings.max_ai_messages_per_conversation}
+          onChange={(e) =>
+            onChange(
+              'max_ai_messages_per_conversation',
+              Math.max(1, Math.min(20, Number(e.target.value) || 1))
+            )
+          }
+          className="w-28 px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c]"
+        />
+      </div>
+
+      {/* Default / Greeting message */}
+      <div>
+        <label className="block text-sm font-medium text-gray-900 dark:text-white mb-1">
+          Default message <span className="text-gray-400 font-normal">(greeting)</span>
+        </label>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+          First reply sent to every new lead. Leave blank to let the AI decide.
+        </p>
+        <textarea
+          value={settings.greeting_template || ''}
+          onChange={(e) => onChange('greeting_template', e.target.value)}
+          rows={3}
+          placeholder="Hi! Thanks for reaching out. How can we help you today?"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c] focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+      </div>
+
+      {/* Out-of-hours message */}
+      <div>
+        <label className="block text-sm font-medium text-gray-900 dark:text-white mb-1">
+          Out-of-hours message
+        </label>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+          Sent automatically when a lead messages outside your business hours.
+        </p>
+        <textarea
+          value={settings.out_of_hours_message || ''}
+          onChange={(e) => onChange('out_of_hours_message', e.target.value)}
+          rows={3}
+          placeholder="Thanks — we're offline right now. We'll reply first thing in the morning."
+          className="w-full px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c] focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+      </div>
+
+      {/* Save */}
+      <button
+        onClick={onSave}
+        disabled={saving}
+        className="w-full bg-[#25D366] text-white py-2.5 px-4 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium disabled:opacity-50 flex items-center justify-center gap-2"
+      >
+        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+        Save Settings
+      </button>
+
+      {/* Test send */}
+      <div className="pt-4 border-t border-gray-200 dark:border-[#2a2a30]">
+        <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Send a test message</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Verify sending works end-to-end.</p>
+        <div className="flex gap-2">
+          <input
+            type="tel"
+            value={testPhone}
+            onChange={(e) => onTestPhoneChange(e.target.value)}
+            placeholder="+1 555 123 4567"
+            className="flex-1 px-3 py-2 border border-gray-300 dark:border-[#2a2a30] rounded-lg text-sm bg-white dark:bg-[#0a0a0c]"
+          />
+          <button
+            onClick={onTest}
+            disabled={testing || !testPhone}
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 disabled:opacity-50 text-sm font-medium"
+          >
+            {testing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+            Send
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
