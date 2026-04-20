@@ -107,10 +107,6 @@ const BlogLiveAnsweringServiceCosts: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
           >
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <DollarSign className="w-4 h-4" />
-              <span className="font-semibold">Business Costs</span>
-            </div>
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },

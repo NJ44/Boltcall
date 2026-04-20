@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, Zap, CheckCircle, XCircle, Moon, Users } from 'lucide-react';
+import { Calendar, Clock, Phone, Zap, CheckCircle, XCircle, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -72,10 +72,6 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
       <section className="relative pt-32 pb-8 bg-gradient-to-br from-blue-50 via-white to-blue-50/30">
         <div className="max-w-4xl px-4 sm:px-6 lg:px-8" style={{ marginLeft: 0 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-left mb-4">
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <Moon className="w-4 h-4" />
-              <span className="font-semibold">After-Hours Strategy</span>
-            </div>
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },

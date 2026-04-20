@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Phone, MessageSquare, CheckCircle, TrendingUp, Zap, Users } from 'lucide-react';
+import { Calendar, Clock, Phone, MessageSquare, CheckCircle, Zap, Users } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -196,10 +196,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
           >
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <TrendingUp className="w-4 h-4" />
-              <span className="font-semibold">Tool Comparison</span>
-            </div>
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },

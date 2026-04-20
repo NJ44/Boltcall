@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Zap, Thermometer, Phone } from 'lucide-react';
+import { Calendar, Clock, Thermometer, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -104,10 +104,6 @@ const BlogHVACAILeadResponse: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
           >
-            <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-full mb-6">
-              <Zap className="w-4 h-4" />
-              <span className="font-semibold">HVAC Lead Generation</span>
-            </div>
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
