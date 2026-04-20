@@ -5,6 +5,7 @@ import {
   Settings, ChevronRight, AlertCircle, Zap, Calendar,
   UserCheck, Clock, Filter,
 } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { PopButton } from '../../components/ui/pop-button';
 import ModalShell from '../../components/ui/modal-shell';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
@@ -273,6 +274,19 @@ const SmsPage: React.FC = () => {
   // ─── Render ───────────────────────────────────────────────────────
 
   if (loading) return <PageSkeleton />;
+
+  if (!settings.is_enabled) {
+    return (
+      <ServiceEmptyState
+        icon={<MessageSquare className="w-7 h-7 text-blue-600" />}
+        iconBg="bg-blue-50"
+        title="SMS Agent not set up"
+        description="Automatically reply to inbound texts, qualify leads, and book appointments — all without lifting a finger."
+        setupLabel="Set Up SMS"
+        setupTo="/dashboard/phone"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">

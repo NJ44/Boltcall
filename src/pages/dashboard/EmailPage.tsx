@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, FileEdit, MessageSquare, Settings, RefreshCw, Inbox, Send, AlertCircle } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSearchParams } from 'react-router-dom';
 import {
@@ -80,8 +81,20 @@ const EmailPage: React.FC = () => {
     loadData();
   }, [loadData]);
 
-  // If no accounts connected, show connect page
   const hasAccounts = accounts.length > 0;
+
+  if (!loading && !hasAccounts) {
+    return (
+      <ServiceEmptyState
+        icon={<Mail className="w-7 h-7 text-indigo-600" />}
+        iconBg="bg-indigo-50"
+        title="AI Email not set up"
+        description="Connect your inbox so the AI can draft replies, qualify leads from email, and book appointments automatically."
+        setupLabel="Connect Email Account"
+        setupTo="/dashboard/integrations"
+      />
+    );
+  }
 
   // If viewing a thread detail
   if (selectedThread) {

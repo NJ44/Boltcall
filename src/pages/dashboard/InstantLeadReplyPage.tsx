@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle, Send, Loader2, Download, ExternalLink } from 'lucide-react';
+import { X, CheckCircle, Send, Loader2, Download, ExternalLink, Reply } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { PopButton } from '../../components/ui/pop-button';
 import { CopyButton } from '../../components/ui/copy-button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -196,6 +197,19 @@ document.getElementById("lead-form")
   }, [isSidePanelOpen]);
 
   const isConnected = fbConnections.length > 0;
+
+  if (!fbLoading && !isConnected) {
+    return (
+      <ServiceEmptyState
+        icon={<Reply className="w-7 h-7 text-orange-600" />}
+        iconBg="bg-orange-50"
+        title="Instant Lead Reply not set up"
+        description="Connect your Facebook Lead Ads to reply to every new lead within seconds — before your competitors even pick up the phone."
+        setupLabel="Connect Facebook Ads"
+        onSetup={() => setIsSidePanelOpen(true)}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">

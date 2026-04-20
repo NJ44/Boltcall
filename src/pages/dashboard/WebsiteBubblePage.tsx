@@ -9,6 +9,7 @@ import {
   AlertCircle,
   Globe,
 } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -23,6 +24,7 @@ const WebsiteBubblePage: React.FC = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState(false);
+  const [chatEnabled, setChatEnabled] = useState<boolean | null>(null);
   // Data from Supabase
   const [embedToken, setEmbedToken] = useState<string | null>(null);
 
@@ -58,6 +60,7 @@ const WebsiteBubblePage: React.FC = () => {
         }
 
         if (data) {
+          setChatEnabled(!!data.chatbot_enabled);
           setEmbedToken(data.embed_token || null);
 
           if (data.chatbot_config) {
@@ -125,6 +128,19 @@ const WebsiteBubblePage: React.FC = () => {
 
   if (loading) {
     return <PageSkeleton />;
+  }
+
+  if (chatEnabled === false) {
+    return (
+      <ServiceEmptyState
+        icon={<MessageCircle className="w-7 h-7 text-purple-600" />}
+        iconBg="bg-purple-50"
+        title="Website Chat Widget not set up"
+        description="Embed an AI chat bubble on your website to capture and qualify visitors 24/7 — no code required."
+        setupLabel="Enable Chat Widget"
+        setupTo="/dashboard/integrations"
+      />
+    );
   }
 
   return (
