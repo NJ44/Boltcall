@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle, Send, Loader2 } from 'lucide-react';
+import { X, CheckCircle, Send, Loader2, Download, ExternalLink } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 import { CopyButton } from '../../components/ui/copy-button';
 import { useAuth } from '../../contexts/AuthContext';
