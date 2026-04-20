@@ -699,7 +699,7 @@ const DashboardLayout: React.FC = () => {
                    <div className={`w-1 h-5 md:h-6 rounded-full flex-shrink-0 ${
                      isDarkMode ? 'bg-blue-400' : 'bg-blue-600'
                    }`}></div>
-                   <h1 className={`text-lg md:text-2xl font-semibold truncate ${
+                   <h1 className={`text-lg md:text-2xl font-bold truncate ${
                      isDarkMode ? 'text-white' : 'text-gray-900'
                    }`}>
                      {getPageName()}
