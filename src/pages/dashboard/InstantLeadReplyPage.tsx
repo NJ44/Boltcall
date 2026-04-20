@@ -26,7 +26,7 @@ const InstantLeadReplyPage: React.FC = () => {
   const [fbLoading, setFbLoading] = useState(true);
   const [fbConnecting, setFbConnecting] = useState(false);
   const [testSending, setTestSending] = useState(false);
-  const [setupMode, setSetupMode] = useState<'embed' | 'advanced'>('embed');
+  const [setupMode, setSetupMode] = useState<'embed' | 'wordpress' | 'advanced'>('embed');
   const webhookUrl = 'https://boltcall.org/.netlify/functions/lead-webhook';
   const prettyWebhookUrl = user?.id ? `https://boltcall.org/l/${user.id}` : '';
 
@@ -254,26 +254,25 @@ document.getElementById("lead-form")
           )}
         </div>
 
-        {/* Web Form Integration */}
+        {/* Website Integration */}
         <div
           className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={() => handleContainerClick('web-form')}
+          onClick={() => handleContainerClick('website')}
         >
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Web Form</h3>
-              <p className="text-sm text-gray-500">Website Lead Capture</p>
+              <h3 className="text-lg font-semibold text-gray-900">Website</h3>
+              <p className="text-sm text-gray-500">Capture leads from any site</p>
             </div>
           </div>
 
           <p className="text-gray-600">
-            Connect your website forms to automatically respond to form submissions.
-            Provide instant confirmation and follow-up to website visitors.
+            Add one line of code — or install our WordPress plugin. Works with every form builder: WPForms, Gravity Forms, Elementor, Wix, Webflow, and more.
           </p>
         </div>
 
@@ -334,8 +333,8 @@ document.getElementById("lead-form")
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                       </svg>
                     </div>
-                    <h2 className="text-xl font-semibold text-gray-900 capitalize">
-                      {selectedIntegration.replace('-', ' ')}
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      {selectedIntegration === 'facebook-ads' ? 'Facebook Ads' : 'Website'}
                     </h2>
                   </div>
                   <button
@@ -416,33 +415,41 @@ document.getElementById("lead-form")
                   </div>
                 )}
 
-                {/* Web Form Panel */}
-                {selectedIntegration === 'web-form' && (
+                {/* Website Panel */}
+                {selectedIntegration === 'website' && (
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-lg font-medium text-gray-900 mb-2">Capture Leads From Your Website</h3>
                       <p className="text-gray-600 mb-4">
-                        Pick the easiest way to connect. The embed script works with any website — WordPress, Wix, Webflow, Squarespace, raw HTML.
+                        Pick the easiest way to connect. Works with WordPress, Wix, Webflow, Squarespace, and raw HTML.
                       </p>
                     </div>
 
                     {/* Mode tabs */}
-                    <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-lg">
+                    <div className="grid grid-cols-3 gap-1 p-1 bg-gray-100 rounded-lg">
                       <button
                         onClick={() => setSetupMode('embed')}
-                        className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                        className={`py-2 px-2 rounded-md text-xs font-medium transition-colors ${
                           setupMode === 'embed' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
-                        Embed Script <span className="text-xs text-purple-600 font-semibold">· Easiest</span>
+                        Embed <span className="text-purple-600 font-semibold">· Easiest</span>
+                      </button>
+                      <button
+                        onClick={() => setSetupMode('wordpress')}
+                        className={`py-2 px-2 rounded-md text-xs font-medium transition-colors ${
+                          setupMode === 'wordpress' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        WordPress
                       </button>
                       <button
                         onClick={() => setSetupMode('advanced')}
-                        className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                        className={`py-2 px-2 rounded-md text-xs font-medium transition-colors ${
                           setupMode === 'advanced' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
-                        Advanced (API)
+                        API
                       </button>
                     </div>
 
@@ -486,6 +493,84 @@ document.getElementById("lead-form")
                             If you can't edit your forms to add <code className="bg-white px-1 rounded">data-boltcall</code>, add <code className="bg-white px-1 rounded">data-auto="true"</code> to the script tag. It'll listen to every form on the page.
                           </p>
                         </details>
+                      </div>
+                    ) : setupMode === 'wordpress' ? (
+                      <div className="space-y-5">
+                        {/* Step 1: Download */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">1</span>
+                            <h4 className="font-medium text-gray-900 text-sm">Download the plugin</h4>
+                          </div>
+                          <a
+                            href="/wordpress/boltcall-for-wordpress.zip"
+                            download
+                            className="inline-flex items-center gap-2 mt-1 px-4 py-2 bg-[#21759b] text-white rounded-lg hover:bg-[#1a5f7f] transition-colors font-medium text-sm"
+                          >
+                            <Download className="w-4 h-4" />
+                            Download boltcall-for-wordpress.zip
+                          </a>
+                        </div>
+
+                        {/* Step 2: Upload */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">2</span>
+                            <h4 className="font-medium text-gray-900 text-sm">Upload to WordPress</h4>
+                          </div>
+                          <ol className="text-sm text-gray-600 space-y-1 list-decimal list-inside ml-1">
+                            <li>Log into your WordPress admin</li>
+                            <li>Go to <strong>Plugins → Add New → Upload Plugin</strong></li>
+                            <li>Choose the ZIP, click <strong>Install Now</strong>, then <strong>Activate</strong></li>
+                          </ol>
+                        </div>
+
+                        {/* Step 3: User ID */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">3</span>
+                            <h4 className="font-medium text-gray-900 text-sm">Paste your Boltcall User ID</h4>
+                          </div>
+                          <p className="text-sm text-gray-600 mb-2">
+                            In WordPress, go to <strong>Settings → Boltcall</strong> and paste this ID:
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800 font-mono">
+                              {user?.id || 'Loading...'}
+                            </code>
+                            {user?.id && (
+                              <CopyButton
+                                textToCopy={user.id}
+                                label=""
+                                copiedLabel=""
+                                className="p-2 px-2 h-auto flex-shrink-0"
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* What it captures */}
+                        <div className="bg-green-50 border border-green-100 rounded-lg p-4">
+                          <h4 className="font-semibold text-green-900 text-sm mb-2">Captured automatically</h4>
+                          <div className="grid grid-cols-2 gap-y-1 gap-x-3 text-sm text-green-900/80">
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Contact Form 7</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> WPForms</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Gravity Forms</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Elementor Pro</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Ninja Forms</div>
+                            <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Fluent Forms</div>
+                          </div>
+                        </div>
+
+                        <a
+                          href="https://boltcall.mintlify.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Full WordPress setup docs
+                        </a>
                       </div>
                     ) : (
                       <div className="space-y-5">
