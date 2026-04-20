@@ -263,6 +263,14 @@ export const handler: Handler = async (event) => {
     }
     if (auth.userId) body.user_id = auth.userId;
 
+    // Path-based user_id: /.netlify/functions/lead-webhook/{user_id} or /l/{user_id}
+    if (!body.user_id && event.path) {
+      const uuidMatch = event.path.match(
+        /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i,
+      );
+      if (uuidMatch) body.user_id = uuidMatch[1];
+    }
+
     // Security: if a raw user_id was supplied without an API key, verify it belongs to a real
     // business_profiles row. This prevents anyone who guesses a UUID from injecting fake leads.
     if (!auth.hasKey && body.user_id) {
