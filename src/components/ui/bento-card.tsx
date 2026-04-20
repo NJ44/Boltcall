@@ -80,17 +80,23 @@ const BentoCard = () => {
 
   return (
     <div className="flex items-center justify-center w-full antialiased">
-      <div className="group relative w-full max-w-6xl overflow-hidden rounded-3xl border border-white/[0.08] bg-[#080b12] shadow-2xl shadow-blue-500/15 transition-all duration-500 hover:shadow-blue-500/25 hover:-translate-y-1 m-0">
-        <div className="p-6 sm:p-10 space-y-2 z-10 relative">
-          <h2 className="text-xs text-blue-400/70 uppercase tracking-widest font-semibold">
+      <div
+        className="group relative w-full max-w-3xl overflow-hidden rounded-3xl border border-white/[0.08] bg-[#080b12] transition-all duration-500 hover:-translate-y-1 m-0"
+        style={{
+          boxShadow:
+            "0 40px 80px -20px rgba(0,0,0,0.6), 0 20px 40px -20px rgba(59,130,246,0.25), 0 0 0 1px rgba(255,255,255,0.04)",
+        }}
+      >
+        <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
+          <h2 className="text-[10px] text-blue-400/70 uppercase tracking-widest font-semibold">
             Platform Preview
           </h2>
-          <p className="text-2xl sm:text-4xl text-white font-medium leading-snug max-w-[700px]">
+          <p className="text-lg sm:text-2xl text-white font-medium leading-snug max-w-[520px]">
             Every lead answered. Every booking locked in. Automatically.
           </p>
         </div>
 
-        <div className="relative w-full h-[480px] sm:h-[640px] overflow-hidden rounded-2xl sm:rounded-[2rem]">
+        <div className="relative w-full h-[320px] sm:h-[420px] overflow-hidden rounded-2xl sm:rounded-[2rem]">
           <div className="absolute top-16 left-16 w-full h-full bg-gray-800/40 rounded-3xl border border-white/[0.08] opacity-80" />
 
           <div
