@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ChevronRight, Phone, PhoneMissed, Zap, Moon, Calendar, Inbox, BookOpen, FlaskConical, MessageSquare } from 'lucide-react';
+import { ChevronRight, PhoneMissed, Zap, Moon, Calendar, Inbox, BookOpen, FlaskConical, MessageSquare, CheckCircle2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSetupStore } from '../../stores/setupStore';
-import TalkToAgentModal from '../../components/TalkToAgentModal';
 
 type Step = {
   id: string;
@@ -15,6 +14,7 @@ type Step = {
   icon: LucideIcon;
   completed: boolean;
   timeEstimate?: string;
+  credits: number;
 };
 
 // Personalized tasks driven by survey.painPoints answered during setup
@@ -26,6 +26,7 @@ const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
     link: '/dashboard/missed-calls',
     icon: PhoneMissed,
     timeEstimate: 'About 2 min',
+    credits: 4,
   },
   ad_followup: {
     id: 'ad_followup',
@@ -34,6 +35,7 @@ const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
     link: '/dashboard/instant-lead-response',
     icon: Zap,
     timeEstimate: 'About 3 min',
+    credits: 5,
   },
   after_hours: {
     id: 'after_hours',
@@ -42,6 +44,7 @@ const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
     link: '/dashboard/ai-receptionist',
     icon: Moon,
     timeEstimate: 'About 2 min',
+    credits: 4,
   },
   slow_response: {
     id: 'slow_response',
@@ -50,6 +53,7 @@ const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
     link: '/dashboard/leads',
     icon: Zap,
     timeEstimate: 'About 2 min',
+    credits: 3,
   },
   manual_booking: {
     id: 'manual_booking',
@@ -58,6 +62,7 @@ const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
     link: '/dashboard/calcom',
     icon: Calendar,
     timeEstimate: 'About 2 min',
+    credits: 4,
   },
   no_system: {
     id: 'no_system',
@@ -66,21 +71,20 @@ const PAIN_POINT_TASKS: Record<string, Omit<Step, 'completed'>> = {
     link: '/dashboard/leads',
     icon: Inbox,
     timeEstimate: 'About 1 min',
+    credits: 3,
   },
 };
 
 // Always-shown core tasks (regardless of survey answers)
 const CORE_TASKS: Omit<Step, 'completed'>[] = [
-  { id: 'knowledge_base', title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', icon: BookOpen, timeEstimate: 'About 1 min' },
-  { id: 'test_agent', title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents?tab=tests', icon: FlaskConical, timeEstimate: 'About 1 min' },
-  { id: 'feedback', title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', icon: MessageSquare, timeEstimate: 'About 1 min' },
+  { id: 'knowledge_base', title: 'Setup Knowledge Base', description: 'Add your business information', link: '/dashboard/knowledge-base', icon: BookOpen, timeEstimate: 'About 1 min', credits: 5 },
+  { id: 'test_agent', title: 'Test Your Agent', description: 'Test and verify your setup', link: '/dashboard/agents?tab=tests', icon: FlaskConical, timeEstimate: 'About 1 min', credits: 3 },
+  { id: 'feedback', title: 'Give Feedback', description: 'Share your experience with us', link: '/dashboard/feedback', icon: MessageSquare, timeEstimate: 'About 1 min', credits: 2 },
 ];
 
 const GettingStartedPage: React.FC = () => {
   const { user } = useAuth();
   const painPoints = useSetupStore((s) => s.survey.painPoints);
-  const [showTalkModal, setShowTalkModal] = useState(false);
-  const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
 
   const STEPS = useMemo<Step[]>(() => {
@@ -107,27 +111,29 @@ const GettingStartedPage: React.FC = () => {
   const completedCount = STEPS.filter(s => s.completed).length;
   const progressPct = STEPS.length > 0 ? Math.round((completedCount / STEPS.length) * 100) : 0;
 
-  const toggleComplete = (id: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    setCompletedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      return next;
-    });
-  };
-
   useEffect(() => {
     if (!user?.id) return;
-    supabase
-      .from('agents')
-      .select('id, name, retell_agent_id')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .then(({ data }) => {
-        if (data?.[0]) setPrimaryAgent(data[0]);
-      });
+
+    const detect = async () => {
+      const done = new Set<string>();
+
+      const { data: kb } = await supabase
+        .from('knowledge_base')
+        .select('user_id')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (kb) done.add('knowledge_base');
+
+      const { count: leadCount } = await supabase
+        .from('leads')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+      if ((leadCount ?? 0) > 0) done.add('test_agent');
+
+      setCompletedIds(done);
+    };
+
+    detect();
   }, [user?.id]);
 
   return (
@@ -165,30 +171,26 @@ const GettingStartedPage: React.FC = () => {
                   to={step.link}
                   className="flex items-center gap-3 bg-gray-50 dark:bg-[#0e0e11] rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors border border-gray-200 dark:border-[#1e1e24]"
                 >
-                  <button
-                    type="button"
-                    onClick={(e) => toggleComplete(step.id, e)}
-                    className="flex-shrink-0"
-                    aria-label={step.completed ? 'Mark incomplete' : 'Mark complete'}
-                  >
+                  <div className="flex-shrink-0">
                     {step.completed ? (
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
+                      <CheckCircle2 className="w-6 h-6 text-green-500" />
                     ) : (
-                      <div className="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-[#2a2a32] hover:border-green-500 transition-colors" />
+                      <div className="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-[#2a2a32]" />
                     )}
-                  </button>
+                  </div>
 
                   <div className="flex-shrink-0 w-8 h-8 rounded-md bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center">
                     <Icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <div className={`font-medium text-sm ${step.completed ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-gray-100'}`}>
-                      {step.title}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className={`font-medium text-sm ${step.completed ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-gray-100'}`}>
+                        {step.title}
+                      </span>
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                        {step.credits} credits
+                      </span>
                     </div>
                     {!step.completed && (
                       <div className="text-xs text-gray-500 mt-0.5">{step.description}</div>
@@ -206,32 +208,8 @@ const GettingStartedPage: React.FC = () => {
               );
             })}
           </div>
-
-          {primaryAgent && (
-            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#1e1e24]">
-              <button
-                onClick={() => setShowTalkModal(true)}
-                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
-              >
-                <Phone className="w-5 h-5" />
-                Talk to Your Agent
-              </button>
-              <p className="text-xs text-gray-500 text-center mt-2">
-                Your AI agent will call your phone so you can test it live
-              </p>
-            </div>
-          )}
         </div>
       </div>
-
-      {primaryAgent && (
-        <TalkToAgentModal
-          open={showTalkModal}
-          onClose={() => setShowTalkModal(false)}
-          agentId={primaryAgent.retell_agent_id || primaryAgent.id}
-          agentName={primaryAgent.name}
-        />
-      )}
     </div>
   );
 };
