@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, AlertTriangle, PhoneOff, Clock3, Users, TrendingDown, CheckCircle, Phone } from 'lucide-react';
+import { Calendar, Clock, PhoneOff, Clock3, Users, TrendingDown, CheckCircle, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
@@ -139,7 +139,7 @@ const Blog5SignsAIReceptionist: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
