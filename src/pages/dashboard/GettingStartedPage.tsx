@@ -157,40 +157,54 @@ const GettingStartedPage: React.FC = () => {
 
         <div className="p-4">
           <div className="space-y-2">
-            {STEPS.map((step) => (
-              <Link
-                key={step.id}
-                to={step.link}
-                className="flex items-center gap-3 bg-gray-50 dark:bg-[#0e0e11] rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors border border-gray-200 dark:border-[#1e1e24]"
-              >
-                <div className="flex-shrink-0">
-                  {step.completed ? (
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                  ) : (
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
-                  )}
-                </div>
+            {STEPS.map((step) => {
+              const Icon = step.icon;
+              return (
+                <Link
+                  key={step.id}
+                  to={step.link}
+                  className="flex items-center gap-3 bg-gray-50 dark:bg-[#0e0e11] rounded-lg p-3 hover:bg-gray-100 dark:hover:bg-[#1a1a1f] transition-colors border border-gray-200 dark:border-[#1e1e24]"
+                >
+                  <button
+                    type="button"
+                    onClick={(e) => toggleComplete(step.id, e)}
+                    className="flex-shrink-0"
+                    aria-label={step.completed ? 'Mark incomplete' : 'Mark complete'}
+                  >
+                    {step.completed ? (
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-[#2a2a32] hover:border-green-500 transition-colors" />
+                    )}
+                  </button>
 
-                <div className="flex-1 min-w-0">
-                  <div className={`font-medium text-sm ${step.completed ? 'text-gray-500 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
-                    {step.title}
+                  <div className="flex-shrink-0 w-8 h-8 rounded-md bg-blue-50 dark:bg-blue-950/30 flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   </div>
-                  {!step.completed && step.timeEstimate && (
-                    <div className="text-xs text-gray-500 mt-0.5">{step.timeEstimate}</div>
-                  )}
-                </div>
 
-                {!step.completed && (
-                  <span className="flex-shrink-0 px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 rounded-md whitespace-nowrap">
-                    +10 tokens
-                  </span>
-                )}
-              </Link>
-            ))}
+                  <div className="flex-1 min-w-0">
+                    <div className={`font-medium text-sm ${step.completed ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-gray-100'}`}>
+                      {step.title}
+                    </div>
+                    {!step.completed && (
+                      <div className="text-xs text-gray-500 mt-0.5">{step.description}</div>
+                    )}
+                  </div>
+
+                  {!step.completed && step.timeEstimate && (
+                    <span className="flex-shrink-0 px-2 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                      {step.timeEstimate}
+                    </span>
+                  )}
+
+                  <ChevronRight className="flex-shrink-0 w-4 h-4 text-gray-400" />
+                </Link>
+              );
+            })}
           </div>
 
           {primaryAgent && (
