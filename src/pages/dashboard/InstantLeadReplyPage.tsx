@@ -26,7 +26,7 @@ const InstantLeadReplyPage: React.FC = () => {
   const [fbLoading, setFbLoading] = useState(true);
   const [fbConnecting, setFbConnecting] = useState(false);
   const [testSending, setTestSending] = useState(false);
-  const [setupMode, setSetupMode] = useState<'embed' | 'advanced'>('embed');
+  const [setupMode, setSetupMode] = useState<'embed' | 'wordpress' | 'advanced'>('embed');
   const webhookUrl = 'https://boltcall.org/.netlify/functions/lead-webhook';
   const prettyWebhookUrl = user?.id ? `https://boltcall.org/l/${user.id}` : '';
 
