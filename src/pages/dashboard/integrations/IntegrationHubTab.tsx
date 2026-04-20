@@ -290,6 +290,7 @@ const integrations: Integration[] = [
 const IntegrationHubTab: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const navigate = useNavigate();
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [savedIntegrations, setSavedIntegrations] = useState<SavedIntegration[]>([]);
   const [loading, setLoading] = useState(true);
