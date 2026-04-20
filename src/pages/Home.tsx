@@ -3,6 +3,7 @@ import { updateMetaDescription } from '../lib/utils';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LazySection from '../components/LazySection';
+import BentoCard from '../components/ui/bento-card';
 
 // Lazy load below-the-fold components to reduce initial bundle
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
