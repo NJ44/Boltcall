@@ -478,25 +478,25 @@ const Header: React.FC = () => {
               </div>
 
               {/* About Link */}
-              <button
-                onClick={() => handleNavClick('/about')}
+              <Link
+                to="/about"
                 className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                   }`}
               >
                 About
                 <NavUnderline isBlue={isOverBlueBackground} />
-              </button>
+              </Link>
 
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.label}
-                  onClick={() => handleNavClick(item.href)}
+                  to={item.href}
                   className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                     }`}
                 >
                   {item.label}
                   <NavUnderline isBlue={isOverBlueBackground} />
-                </button>
+                </Link>
               ))}
 
               {/* Resources Dropdown */}
