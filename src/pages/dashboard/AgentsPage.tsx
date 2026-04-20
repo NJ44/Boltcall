@@ -891,12 +891,13 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           <CardTable
             className="min-w-[640px]"
             columns={[
-              { key: 'name', label: 'Agent', width: '25%' },
-              { key: 'status', label: 'Status', width: '15%' },
-              { key: 'callsToday', label: 'Calls Today', width: '15%' },
-              { key: 'avgResponseTime', label: 'Avg Response', width: '15%' },
-              { key: 'successRate', label: 'Success Rate', width: '15%' },
-              { key: 'lastActive', label: 'Last Active', width: '15%' }
+              { key: 'name', label: 'Agent' },
+              { key: 'status', label: 'Status' },
+              { key: 'callsToday', label: 'Calls Today' },
+              { key: 'avgResponseTime', label: 'Avg Response' },
+              { key: 'successRate', label: 'Success Rate' },
+              { key: 'lastActive', label: 'Last Active' },
+              { key: 'actions', label: '', width: '140px' }
             ]}
             data={agents}
             renderRow={(agent) => (
@@ -964,7 +965,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
                 </div>
 
                 {/* Action Icons */}
-                <div className="flex items-center gap-3 md:gap-2" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-3 md:gap-2 md:w-[140px] md:flex-none md:justify-end" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => setTalkToAgent(agent)}
                     className="text-green-600 hover:text-green-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
