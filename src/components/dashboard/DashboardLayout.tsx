@@ -952,9 +952,6 @@ const DashboardLayout: React.FC = () => {
           <UsageLimitModal />
           <TrialExpiryPopup />
 
-           {/* AI Assistant - Bottom Right */}
-           <AiAssistant />
-
            {/* Feedback Slider - Bottom sliding panel */}
            <FeedbackSlider isOpen={showFeedback} onClose={() => setShowFeedback(false)} />
          </main>
