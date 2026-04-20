@@ -661,12 +661,12 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <button
-                  onClick={() => handleNavClick('/dashboard')}
+                <Link
+                  to="/dashboard"
                   className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${isOverBlueBackground ? 'bg-white text-brand-blue hover:bg-white/90' : 'bg-brand-blue text-white hover:bg-brand-blueDark'}`}
                 >
                   Dashboard
-                </button>
+                </Link>
               </>
             ) : (
               <>
