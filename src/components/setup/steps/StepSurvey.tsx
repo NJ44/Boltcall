@@ -67,7 +67,7 @@ const StepSurvey: React.FC = () => {
       {/* Question 2 */}
       <div>
         <h3 className="text-lg font-semibold text-black mb-1">
-          What's your biggest pain point right now?
+          What's driving you to try Boltcall?
         </h3>
         <p className="text-sm text-black/50 mb-4">Select all that apply</p>
         <div className="flex flex-col gap-3">
