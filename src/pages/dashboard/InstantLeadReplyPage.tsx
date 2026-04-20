@@ -254,26 +254,25 @@ document.getElementById("lead-form")
           )}
         </div>
 
-        {/* Web Form Integration */}
+        {/* Website Integration */}
         <div
           className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
-          onClick={() => handleContainerClick('web-form')}
+          onClick={() => handleContainerClick('website')}
         >
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Web Form</h3>
-              <p className="text-sm text-gray-500">Website Lead Capture</p>
+              <h3 className="text-lg font-semibold text-gray-900">Website</h3>
+              <p className="text-sm text-gray-500">Capture leads from any site</p>
             </div>
           </div>
 
           <p className="text-gray-600">
-            Connect your website forms to automatically respond to form submissions.
-            Provide instant confirmation and follow-up to website visitors.
+            Add one line of code — or install our WordPress plugin. Works with every form builder: WPForms, Gravity Forms, Elementor, Wix, Webflow, and more.
           </p>
         </div>
       </motion.div>
