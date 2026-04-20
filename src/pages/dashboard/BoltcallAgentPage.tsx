@@ -109,6 +109,7 @@ const BoltcallAgentPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const bottomTextareaRef = useRef<HTMLTextAreaElement>(null);
   const hasMsgs = messages.length > 0;
 
   const firstName = (user?.name ?? '').split(' ')[0] || 'there';
