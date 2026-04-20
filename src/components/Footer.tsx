@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Facebook, Linkedin } from 'lucide-react';
-import ContentDepthFooter from './seo/ContentDepthFooter';
-
 // X (formerly Twitter) Logo Component - Custom SVG since lucide-react doesn't have X icon
 const XLogo: React.FC<{ className?: string; strokeWidth?: number }> = ({ className = "w-4 h-4", strokeWidth = 2.5 }) => (
   <svg
