@@ -12,7 +12,7 @@ import {
   Settings02Icon,
   DatabaseIcon,
   UserIcon,
-  PhoneCall01Icon,
+  CallIcon,
   Calendar01Icon,
   LinkSquare01Icon,
 } from "@hugeicons/core-free-icons";
@@ -46,7 +46,7 @@ const TABS: TabConfig[] = [
   {
     id: "calls",
     label: "Live Calls",
-    icon: PhoneCall01Icon,
+    icon: CallIcon,
     header: "Call Activity",
     description: "Every inbound call answered and tracked.",
     badge: "5",
@@ -311,7 +311,7 @@ const CallsDashboard = () => (
     <div className="mt-auto p-3 rounded-xl bg-gray-800/40 border border-white/10 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="p-1 px-1.5 rounded-md bg-gray-700 border border-white/10">
-          <HugeiconsIcon icon={PhoneCall01Icon} size={10} className="text-gray-400" />
+          <HugeiconsIcon icon={CallIcon} size={10} className="text-gray-400" />
         </div>
         <span className="text-[9px] text-gray-500 font-medium">5 calls active right now</span>
       </div>
