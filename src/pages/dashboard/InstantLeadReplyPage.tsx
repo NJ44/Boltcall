@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle, Send, Loader2 } from 'lucide-react';
+import { X, CheckCircle, Send, Loader2, Download, ExternalLink } from 'lucide-react';
 import { PopButton } from '../../components/ui/pop-button';
 import { CopyButton } from '../../components/ui/copy-button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -276,6 +276,28 @@ document.getElementById("lead-form")
             Provide instant confirmation and follow-up to website visitors.
           </p>
         </div>
+
+        {/* WordPress Integration */}
+        <div
+          className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+          onClick={() => handleContainerClick('wordpress')}
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-[#21759b] rounded-lg flex items-center justify-center">
+              <svg className="w-8 h-8 text-white" viewBox="0 0 122.52 122.523" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <path d="M8.708 61.26c0 20.802 12.089 38.779 29.619 47.298L13.258 39.872a52.354 52.354 0 0 0-4.55 21.388zM96.74 58.608c0-6.495-2.332-10.993-4.334-14.494-2.664-4.329-5.161-7.995-5.161-12.324 0-4.831 3.664-9.328 8.825-9.328.233 0 .454.029.682.042-9.35-8.566-21.807-13.796-35.489-13.796-18.36 0-34.513 9.42-43.91 23.688 1.233.037 2.395.063 3.382.063 5.497 0 14.006-.667 14.006-.667 2.833-.167 3.167 3.994.337 4.329 0 0-2.847.335-6.015.501l19.138 56.925 11.501-34.493-8.188-22.434c-2.83-.166-5.511-.501-5.511-.501-2.833-.166-2.5-4.496.332-4.329 0 0 8.679.667 13.843.667 5.496 0 14.006-.667 14.006-.667 2.836-.167 3.168 3.994.337 4.329 0 0-2.853.335-6.015.501l18.992 56.494 5.242-17.518c2.272-7.269 4-12.49 4-16.988zm-34.917 7.25l-15.768 45.819a52.495 52.495 0 0 0 14.832 2.143c5.385 0 10.548-.93 15.356-2.619a4.655 4.655 0 0 1-.372-.723L62.823 65.858zm45.72-30.155c.226 1.674.354 3.471.354 5.404 0 5.333-.996 11.328-3.996 18.824l-16.053 46.413c15.624-9.111 26.133-26.038 26.133-45.426.002-9.137-2.333-17.729-6.438-25.215zM61.262 0C27.483 0 0 27.481 0 61.26c0 33.783 27.483 61.263 61.262 61.263 33.778 0 61.265-27.48 61.265-61.263C122.526 27.481 95.04 0 61.262 0zm0 119.715c-32.23 0-58.453-26.223-58.453-58.455 0-32.23 26.222-58.451 58.453-58.451 32.229 0 58.45 26.221 58.45 58.451 0 32.232-26.224 58.455-58.45 58.455z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">WordPress</h3>
+              <p className="text-sm text-gray-500">One-click plugin install</p>
+            </div>
+          </div>
+
+          <p className="text-gray-600">
+            Install our plugin to instantly capture submissions from Contact Form 7, WPForms, Gravity Forms, Elementor, and more — no code edits required.
+          </p>
+        </div>
       </motion.div>
 
       {/* Side Panel */}
@@ -304,7 +326,9 @@ document.getElementById("lead-form")
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                      selectedIntegration === 'facebook-ads' ? 'bg-blue-500' : 'bg-purple-500'
+                      selectedIntegration === 'facebook-ads' ? 'bg-blue-500'
+                        : selectedIntegration === 'wordpress' ? 'bg-[#21759b]'
+                        : 'bg-purple-500'
                     }`}>
                       <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -513,6 +537,115 @@ document.getElementById("lead-form")
                       onClick={handleSendTestLead}
                       disabled={testSending || !user?.id}
                       className="w-full bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {testSending ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Sending test lead...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          Send Test Lead
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+
+                {/* WordPress Panel */}
+                {selectedIntegration === 'wordpress' && (
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">Install the Boltcall WordPress Plugin</h3>
+                      <p className="text-gray-600 mb-4">
+                        Works with Contact Form 7, WPForms, Gravity Forms, Elementor, Ninja Forms, Fluent Forms — and any custom form on your site. Submissions flow straight into your Leads page.
+                      </p>
+                    </div>
+
+                    {/* Step 1: Download */}
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">1</span>
+                        <h4 className="font-medium text-gray-900 text-sm">Download the plugin</h4>
+                      </div>
+                      <a
+                        href="/wordpress/boltcall-for-wordpress.zip"
+                        download
+                        className="inline-flex items-center gap-2 mt-1 px-4 py-2 bg-[#21759b] text-white rounded-lg hover:bg-[#1a5f7f] transition-colors font-medium text-sm"
+                      >
+                        <Download className="w-4 h-4" />
+                        Download boltcall-for-wordpress.zip
+                      </a>
+                    </div>
+
+                    {/* Step 2: Upload */}
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">2</span>
+                        <h4 className="font-medium text-gray-900 text-sm">Upload to WordPress</h4>
+                      </div>
+                      <ol className="text-sm text-gray-600 space-y-1 list-decimal list-inside ml-1">
+                        <li>Log into your WordPress admin</li>
+                        <li>Go to <strong>Plugins → Add New → Upload Plugin</strong></li>
+                        <li>Choose the ZIP, click <strong>Install Now</strong>, then <strong>Activate</strong></li>
+                      </ol>
+                    </div>
+
+                    {/* Step 3: User ID */}
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="flex items-center justify-center w-6 h-6 bg-[#21759b] text-white text-xs font-bold rounded-full">3</span>
+                        <h4 className="font-medium text-gray-900 text-sm">Paste your Boltcall User ID</h4>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-2">
+                        In WordPress, go to <strong>Settings → Boltcall</strong> and paste this ID:
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <code className="flex-1 text-sm bg-white px-3 py-2 rounded border border-gray-200 break-all text-gray-800 font-mono">
+                          {user?.id || 'Loading...'}
+                        </code>
+                        {user?.id && (
+                          <CopyButton
+                            textToCopy={user.id}
+                            label=""
+                            copiedLabel=""
+                            className="p-2 px-2 h-auto flex-shrink-0"
+                          />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* What it captures */}
+                    <div className="bg-green-50 border border-green-100 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-900 text-sm mb-2">What gets captured automatically</h4>
+                      <div className="grid grid-cols-2 gap-y-1 gap-x-3 text-sm text-green-900/80">
+                        <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Contact Form 7</div>
+                        <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> WPForms</div>
+                        <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Gravity Forms</div>
+                        <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Elementor Pro</div>
+                        <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Ninja Forms</div>
+                        <div className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Fluent Forms</div>
+                        <div className="flex items-center gap-1.5 col-span-2"><CheckCircle className="w-3.5 h-3.5 flex-shrink-0" /> Any custom form (via <code className="bg-white px-1 rounded text-xs">data-boltcall</code>)</div>
+                      </div>
+                    </div>
+
+                    {/* Docs link */}
+                    <a
+                      href="https://boltcall.mintlify.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Full WordPress setup docs
+                    </a>
+
+                    {/* Test Button */}
+                    <button
+                      onClick={handleSendTestLead}
+                      disabled={testSending || !user?.id}
+                      className="w-full bg-[#21759b] text-white py-3 px-4 rounded-lg hover:bg-[#1a5f7f] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {testSending ? (
                         <>
