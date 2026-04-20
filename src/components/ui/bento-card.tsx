@@ -81,17 +81,17 @@ const BentoCard = () => {
 
   return (
     <div className="flex items-center justify-center w-full antialiased">
-      <div className="group relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-gray-950 shadow-2xl shadow-blue-500/10 transition-all duration-500 hover:shadow-blue-500/20 hover:-translate-y-1 m-0">
-        <div className="p-5 sm:p-8 space-y-1.5 z-10 relative">
-          <h2 className="text-xs text-gray-500 uppercase tracking-wider">
+      <div className="group relative w-full max-w-6xl overflow-hidden rounded-3xl border border-white/[0.08] bg-[#080b12] shadow-2xl shadow-blue-500/15 transition-all duration-500 hover:shadow-blue-500/25 hover:-translate-y-1 m-0">
+        <div className="p-6 sm:p-10 space-y-2 z-10 relative">
+          <h2 className="text-xs text-blue-400/70 uppercase tracking-widest font-semibold">
             Project Dashboard
           </h2>
-          <p className="text-xl sm:text-3xl text-white font-medium leading-snug max-w-[600px]">
+          <p className="text-2xl sm:text-4xl text-white font-medium leading-snug max-w-[700px]">
             High-performance analytics and team collaboration tools in one place.
           </p>
         </div>
 
-        <div className="relative w-full h-[380px] sm:h-[500px] overflow-hidden rounded-2xl sm:rounded-[2rem]">
+        <div className="relative w-full h-[480px] sm:h-[640px] overflow-hidden rounded-2xl sm:rounded-[2rem]">
           <div className="absolute top-16 left-16 w-full h-full bg-gray-800/40 rounded-3xl border border-white/[0.08] opacity-80" />
 
           <div
