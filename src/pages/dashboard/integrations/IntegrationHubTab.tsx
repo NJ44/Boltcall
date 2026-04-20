@@ -359,6 +359,10 @@ const IntegrationHubTab: React.FC = () => {
     savedIntegrations.find(i => i.provider === provider);
 
   const openPanel = (id: string) => {
+    if (id === 'whatsapp') {
+      navigate('/dashboard/whatsapp');
+      return;
+    }
     setActivePanel(id);
     setFormApiKey('');
     setFormWebhookUrl('');
