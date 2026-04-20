@@ -558,6 +558,12 @@
 
   <!-- Industry FAQ Blog Posts -->
   <url>
+    <loc>https://boltcall.org/blog/ai-appointment-scheduling-hvac</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://boltcall.org/blog/ai-receptionist-hvac-faq</loc>
     <lastmod>2026-04-06</lastmod>
     <changefreq>monthly</changefreq>
