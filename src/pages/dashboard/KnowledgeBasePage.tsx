@@ -1237,7 +1237,6 @@ const KnowledgeBasePage: React.FC = () => {
           {/* New KB Dropdown — always visible */}
           <div className="relative" ref={dropdownRef}>
             <PopButton color="blue" onClick={handleAddDocument} className="gap-2">
-              <Plus className="h-4 w-4" />
               <span className="font-bold hidden md:inline">New Knowledge Base</span>
               <span className="font-bold md:hidden">New KB</span>
               <ChevronDown className={`h-4 w-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
