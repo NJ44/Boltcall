@@ -197,6 +197,8 @@ const KnowledgeBasePage: React.FC = () => {
     items: Array<{ label: string; hint: string; done: boolean }>;
   }>({ score: 0, items: [] });
 
+  const [progressExpanded, setProgressExpanded] = useState(false);
+
   // Fill the Gaps quiz state
   const [showGapsQuiz, setShowGapsQuiz] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
