@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
   const tickingRef = useRef(false);
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Pricing', href: '/pricing' },
