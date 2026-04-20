@@ -107,18 +107,13 @@ const HowItWorks: React.FC = () => {
                 index={index + 8}
                 incrementY={10}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '600px' }}
+                style={{ maxWidth: '460px', minHeight: '320px' }}
               >
-                <div className="p-5 md:p-7 h-full">
-                  <div className="flex items-center justify-between mb-3">
+                <div className="p-5 md:p-8 h-full">
+                  <div className="flex items-center mb-3">
                     <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
                       {phase.title}
                     </h2>
-                    <img
-                      src={phase.avatar}
-                      alt={`${phase.title} agent`}
-                      className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-blue-100"
-                    />
                   </div>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
 
