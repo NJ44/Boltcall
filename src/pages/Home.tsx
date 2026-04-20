@@ -12,7 +12,6 @@ const IntegrationHero = lazy(() => import('../components/ui/integration-hero'));
 const FAQ = lazy(() => import('../components/FAQ'));
 const FinalCTA = lazy(() => import('../components/FinalCTA'));
 const Footer = lazy(() => import('../components/Footer'));
-const HeroScrollDemo = lazy(() => import('../components/HeroScrollDemo').then(module => ({ default: module.HeroScrollDemo })));
 const StickyScrollSection = lazy(() => import('../components/StickyScrollSection').then(module => ({ default: module.StickyScrollSection })));
 
 const Home: React.FC = () => {
