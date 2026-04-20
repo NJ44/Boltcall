@@ -2,21 +2,23 @@ import React from 'react';
 import { useSetupStore } from '../../../stores/setupStore';
 
 const REFERRAL_SOURCES = [
-  { value: 'youtube', label: 'YouTube' },
   { value: 'linkedin', label: 'LinkedIn' },
+  { value: 'youtube', label: 'YouTube' },
   { value: 'google', label: 'Google Search' },
   { value: 'ai', label: 'AI / ChatGPT' },
+  { value: 'instagram', label: 'Instagram' },
   { value: 'friend', label: 'Friend or Colleague' },
   { value: 'podcast', label: 'Podcast' },
   { value: 'other', label: 'Other' },
 ];
 
 const PAIN_POINTS = [
-  { value: 'missing_calls', label: 'Missing calls while on the job' },
-  { value: 'slow_response', label: 'Responding to leads too slowly' },
+  { value: 'missed_calls', label: 'Missing calls from potential customers' },
+  { value: 'ad_followup', label: 'Hard to follow up on ad leads fast enough' },
   { value: 'after_hours', label: 'No coverage after hours or on weekends' },
-  { value: 'manual_booking', label: 'Spending too much time on manual booking' },
-  { value: 'losing_leads', label: 'Losing leads to faster competitors' },
+  { value: 'slow_response', label: 'Losing jobs to competitors who respond faster' },
+  { value: 'manual_booking', label: 'Too much time on manual booking and scheduling' },
+  { value: 'no_system', label: 'No system to track and manage leads' },
 ];
 
 const StepSurvey: React.FC = () => {
@@ -65,7 +67,7 @@ const StepSurvey: React.FC = () => {
       {/* Question 2 */}
       <div>
         <h3 className="text-lg font-semibold text-black mb-1">
-          What's your biggest pain point right now?
+          What's driving you to try Boltcall?
         </h3>
         <p className="text-sm text-black/50 mb-4">Select all that apply</p>
         <div className="flex flex-col gap-3">
