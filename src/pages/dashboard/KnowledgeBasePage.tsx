@@ -197,6 +197,8 @@ const KnowledgeBasePage: React.FC = () => {
     items: Array<{ label: string; hint: string; done: boolean }>;
   }>({ score: 0, items: [] });
 
+  const [progressExpanded, setProgressExpanded] = useState(false);
+
   // Fill the Gaps quiz state
   const [showGapsQuiz, setShowGapsQuiz] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
@@ -1271,16 +1273,6 @@ const KnowledgeBasePage: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* New Folder button — only on folder view */}
-          {!selectedFolderId && (
-            <button
-              onClick={() => setShowCreateFolderModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <FolderOpen className="w-4 h-4" />
-              <span className="hidden md:inline">New Folder</span>
-            </button>
-          )}
         </div>
       </div>
 
@@ -1289,34 +1281,53 @@ const KnowledgeBasePage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6"
+          className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
         >
-          <div className="flex items-start gap-3 md:gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg md:text-xl font-bold text-gray-900">Setup Progress</h3>
-                <span className="text-base font-bold text-blue-600">{kbCompleteness.score}%</span>
-              </div>
-              <div className="w-full h-2.5 bg-gray-100 rounded-full mb-4 overflow-hidden">
+          {/* Collapsed row — always visible */}
+          <button
+            onClick={() => setProgressExpanded(p => !p)}
+            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex-1 min-w-0 flex items-center gap-3">
+              <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">Setup Progress</span>
+              <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <motion.div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600" initial={{ width: 0 }} animate={{ width: `${kbCompleteness.score}%` }} transition={{ duration: 0.8, ease: 'easeOut' }} />
               </div>
-              <p className="text-sm text-gray-500 mb-3">Your AI agent works better with more info:</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                {kbCompleteness.items.map((item) => (
-                  <div key={item.label} className="flex items-center gap-2">
-                    {item.done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
-                    <span className={`text-xs ${item.done ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>{item.label}</span>
-                    {item.hint && !item.done && <span className="text-xs text-gray-400">— {item.hint}</span>}
-                  </div>
-                ))}
-              </div>
-              {kbCompleteness.items.some(i => !i.done && i.label !== 'Documents uploaded') && (
-                <button onClick={() => { setQuizStep(0); setQuizAnswers({}); setShowGapsQuiz(true); }} className="mt-4 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                  <Sparkles className="w-4 h-4" /> Fill the Gaps <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              )}
+              <span className="text-sm font-bold text-blue-600 whitespace-nowrap">{kbCompleteness.score}%</span>
             </div>
-          </div>
+            <ChevronDown className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform duration-200 ${progressExpanded ? 'rotate-180' : ''}`} />
+          </button>
+
+          {/* Expanded detail */}
+          <AnimatePresence>
+            {progressExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="px-4 pb-4 border-t border-gray-100 pt-3">
+                  <p className="text-xs text-gray-500 mb-3">Your AI agent works better with more info:</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    {kbCompleteness.items.map((item) => (
+                      <div key={item.label} className="flex items-center gap-2">
+                        {item.done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
+                        <span className={`text-xs ${item.done ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>{item.label}</span>
+                        {item.hint && !item.done && <span className="text-xs text-gray-400">— {item.hint}</span>}
+                      </div>
+                    ))}
+                  </div>
+                  {kbCompleteness.items.some(i => !i.done && i.label !== 'Documents uploaded') && (
+                    <button onClick={() => { setQuizStep(0); setQuizAnswers({}); setShowGapsQuiz(true); }} className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                      <Sparkles className="w-4 h-4" /> Fill the Gaps <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
 
