@@ -9,6 +9,7 @@ const PROCESS_PHASES = [
   {
     id: "process-1",
     title: "AI Receptionist",
+    avatar: "/avatars/Gemini_Generated_Image_2vtge12vtge12vtg-Photoroom.png",
     description:
       "Your AI receptionist answers calls 24/7, qualifies leads, and schedules appointments automatically.",
     checklist: [
@@ -21,6 +22,7 @@ const PROCESS_PHASES = [
   {
     id: "process-2",
     title: "Instant Ads Replies",
+    avatar: "/avatars/Gemini_Generated_Image_oicfeoicfeoicfeo-Photoroom.png",
     description:
       "Respond to ads instantly with personalized messages that convert visitors into qualified leads.",
     checklist: [
@@ -33,6 +35,7 @@ const PROCESS_PHASES = [
   {
     id: "process-3",
     title: "SMS Booking",
+    avatar: "/avatars/Gemini_Generated_Image_oneppkoneppkonep-Photoroom.png",
     description:
       "Convert SMS inquiries into booked appointments with automated scheduling and reminders.",
     checklist: [
@@ -111,11 +114,11 @@ const HowItWorks: React.FC = () => {
                     <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900">
                       {phase.title}
                     </h2>
-                    <div className="bg-blue-600 text-white rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0">
-                      <span className="text-lg font-bold">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
+                    <img
+                      src={phase.avatar}
+                      alt={`${phase.title} agent`}
+                      className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-blue-100"
+                    />
                   </div>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{phase.description}</p>
 

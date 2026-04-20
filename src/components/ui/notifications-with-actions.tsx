@@ -112,10 +112,20 @@ export default function NotificationsWithActions({
                     >
                       <Icon className={`h-4 w-4 flex-shrink-0 mt-0.5 ${iconColor}`} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium leading-snug text-gray-900 truncate">
-                          {alert.message}
-                        </p>
-                        {/* "View details" link removed — filter params had no effect in DashboardPage */}
+                        {alert.title ? (
+                          <>
+                            <p className="text-sm font-semibold leading-snug text-gray-900 truncate">
+                              {alert.title}
+                            </p>
+                            <p className="text-xs text-gray-500 truncate mt-0.5">
+                              {alert.message}
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-sm font-medium leading-snug text-gray-900 truncate">
+                            {alert.message}
+                          </p>
+                        )}
                       </div>
                     </motion.div>
 

@@ -174,7 +174,6 @@ const Setup: React.FC = () => {
 
     setError('');
     setIsSubmitting(true);
-    navigate('/setup/loading');
 
     updateAccount({
       fullName,
@@ -195,95 +194,104 @@ const Setup: React.FC = () => {
     complete();
     updateReview({ isLaunched: true });
 
+    let workspace: Awaited<ReturnType<typeof createUserWorkspaceAndProfile>>['workspace'];
+    let businessProfile: Awaited<ReturnType<typeof createUserWorkspaceAndProfile>>['businessProfile'];
+
     try {
-      const { workspace, businessProfile } =
-        await createUserWorkspaceAndProfile(user.id, {
-          business_name: businessName,
-          owner_name: fullName || undefined,
-          website_url: undefined,
-          main_category: industry.toLowerCase(),
-          country,
-          service_areas: [],
-          opening_hours: {},
-          languages: ['en'],
-        });
-
-      let locationId: string | undefined;
-      try {
-        const location = await LocationService.create({
-          business_profile_id: businessProfile.id,
-          user_id: user.id,
-          name: businessName,
-          slug: null,
-          phone: null,
-          email: null,
-          address_line1: null,
-          address_line2: null,
-          city: null,
-          state: null,
-          postal_code: null,
-          country: country || null,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          is_primary: true,
-          is_active: true,
-        } as any);
-        locationId = location.id;
-      } catch (e) {
-        console.warn('Could not create primary location:', e);
-      }
-
-      updateAccount({
-        workspaceId: workspace.id,
-        businessProfileId: businessProfile.id,
-        locationId,
-      });
-
-      const agentBaseData = {
-        businessName,
-        websiteUrl: '',
-        mainCategory: industry.toLowerCase(),
+      ({ workspace, businessProfile } = await createUserWorkspaceAndProfile(user.id, {
+        business_name: businessName,
+        owner_name: fullName || undefined,
+        website_url: undefined,
+        main_category: industry.toLowerCase(),
         country,
-        serviceAreas: [],
-        openingHours: {},
+        service_areas: [],
+        opening_hours: {},
         languages: ['en'],
-        clientId: user.id,
-        businessProfileId: businessProfile.id,
-        locationId,
-        services: knowledgeBase.services,
-        faqs: knowledgeBase.faqs,
-        policies: knowledgeBase.policies,
-      };
-
-      // Create the primary agent — this also creates the "Business Profile" KB folder
-      // and links the agent to it
-      const primaryResult = await createAgentAndKnowledgeBase({
-        ...agentBaseData,
-        agentType: 'inbound',
-        agentName: `${businessName} AI Receptionist`,
-        voiceId: undefined,
-        transferNumber: '',
-      }).catch((e) => { console.error('Agent creation failed:', e); return null; });
-
-      // Create secondary follow-up agent — reuse the same KB folder
-      createAgentAndKnowledgeBase({
-        ...agentBaseData,
-        agentType: 'speed_to_lead',
-        agentName: `${businessName} Follow-Up Agent`,
-        kbFolderId: primaryResult?.kb_folder_id || undefined,
-      }).catch((e) => console.error('Follow-up agent creation failed:', e));
-
-      fetch(`${FUNCTIONS_BASE}/setup-launch`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          workspaceId: workspace.id,
-          isEnabled: true,
-          userId: user.id,
-        }),
-      }).catch((e) => console.error('Setup launch failed:', e));
-    } catch (err) {
-      console.error('Setup error (background):', err);
+      }));
+    } catch (err: any) {
+      console.error('Setup error — workspace/profile creation failed:', err);
+      setError(err?.message || 'Setup failed. Please try again.');
+      setIsSubmitting(false);
+      return;
     }
+
+    // Workspace + profile created successfully — navigate to loading screen
+    navigate('/setup/loading');
+
+    let locationId: string | undefined;
+    try {
+      const location = await LocationService.create({
+        business_profile_id: businessProfile.id,
+        user_id: user.id,
+        name: businessName,
+        slug: null,
+        phone: null,
+        email: null,
+        address_line1: null,
+        address_line2: null,
+        city: null,
+        state: null,
+        postal_code: null,
+        country: country || null,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        is_primary: true,
+        is_active: true,
+      } as any);
+      locationId = location.id;
+    } catch (e) {
+      console.warn('Could not create primary location:', e);
+    }
+
+    updateAccount({
+      workspaceId: workspace.id,
+      businessProfileId: businessProfile.id,
+      locationId,
+    });
+
+    const agentBaseData = {
+      businessName,
+      websiteUrl: '',
+      mainCategory: industry.toLowerCase(),
+      country,
+      serviceAreas: [],
+      openingHours: {},
+      languages: ['en'],
+      clientId: user.id,
+      businessProfileId: businessProfile.id,
+      locationId,
+      services: knowledgeBase.services,
+      faqs: knowledgeBase.faqs,
+      policies: knowledgeBase.policies,
+    };
+
+    // Create the primary agent — this also creates the "Business Profile" KB folder
+    // and links the agent to it
+    const primaryResult = await createAgentAndKnowledgeBase({
+      ...agentBaseData,
+      agentType: 'inbound',
+      agentName: `${businessName} AI Receptionist`,
+      voiceId: undefined,
+      transferNumber: '',
+    }).catch((e) => { console.error('Agent creation failed:', e); return null; });
+
+    // Create secondary follow-up agent — reuse the same KB folder (fire-and-forget)
+    createAgentAndKnowledgeBase({
+      ...agentBaseData,
+      agentType: 'speed_to_lead',
+      agentName: `${businessName} Follow-Up Agent`,
+      kbFolderId: primaryResult?.kb_folder_id || undefined,
+    }).catch((e) => console.error('Follow-up agent creation failed:', e));
+
+    // Notify setup-launch function (fire-and-forget)
+    fetch(`${FUNCTIONS_BASE}/setup-launch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        workspaceId: workspace.id,
+        isEnabled: true,
+        userId: user.id,
+      }),
+    }).catch((e) => console.error('Setup launch failed:', e));
   };
 
   return (
@@ -540,11 +548,13 @@ const Setup: React.FC = () => {
                   <Button
                     type="button"
                     onClick={currentStep === steps.length - 1 ? handleSubmit : nextStep}
-                    disabled={!isStepValid()}
+                    disabled={!isStepValid() || isSubmitting}
                     className="flex items-center gap-1 rounded-2xl"
                   >
                     {currentStep === steps.length - 1 ? (
-                      <><Zap className="h-4 w-4" /> Launch</>
+                      isSubmitting
+                        ? <><Zap className="h-4 w-4 animate-pulse" /> Launching...</>
+                        : <><Zap className="h-4 w-4" /> Launch</>
                     ) : (
                       <>Next <ChevronRight className="h-4 w-4" /></>
                     )}

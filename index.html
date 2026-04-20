@@ -10,12 +10,12 @@
     <link rel="icon" type="image/webp" href="/boltcall_small_logo.webp" sizes="32x32" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Google Fonts - async load to avoid render-blocking -->
-    <!-- display=optional: if Poppins doesn't arrive before first paint the browser
-         uses the system fallback permanently — no font-swap CLS (was 0.13 CLS). -->
+    <!-- Google Fonts - non-blocking via media="print" trick.
+         display=optional: system fallback used permanently if font misses first paint.
+         No <link rel="preload"> here — preloading an external stylesheet triggers an
+         eager fetch chain (CSS → font files) that audit tools flag as render-blocking. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=optional" rel="stylesheet" /></noscript>
     
@@ -49,7 +49,6 @@
     <meta name="apple-mobile-web-app-title" content="Boltcall" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
     <link rel="canonical" href="https://boltcall.org/" />
-    <script>var p=window.location.pathname||'/';var u='https://boltcall.org'+(p==='/'?'/':p.replace(/\/?$/,'/'));document.querySelector('link[rel="canonical"]').href=u;document.querySelector('meta[property="og:url"]').content=u;</script>
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -156,23 +155,28 @@
       #root{min-height:100vh}
     </style>
 
-    <!-- OpenAI ChatKit — loaded lazily after page interaction -->
-    <script>
-      // Defer ChatKit until user interacts or after 5s idle
-      var _ckLoaded=false;
-      function _loadChatKit(){if(_ckLoaded)return;_ckLoaded=true;var s=document.createElement('script');s.src='https://cdn.platform.openai.com/deployments/chatkit/chatkit.js';s.async=true;document.head.appendChild(s);}
-      ['scroll','click','touchstart','mousemove'].forEach(function(e){document.addEventListener(e,_loadChatKit,{once:true,passive:true});});
-      setTimeout(_loadChatKit,5000);
-    </script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LWRPT5N"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Canonical URL updater — runs after body so it never blocks HTML parsing.
+         Prerender (Puppeteer) executes this before capturing, so static HTML is correct. -->
+    <script>var p=window.location.pathname||'/';var u='https://boltcall.org'+(p==='/'?'/':p.replace(/\/?$/,'/'));document.querySelector('link[rel="canonical"]').href=u;document.querySelector('meta[property="og:url"]').content=u;</script>
+
+    <!-- OpenAI ChatKit — deferred until user interacts or after 5s idle.
+         Moved out of <head> so the event-listener setup never parser-blocks. -->
+    <script>
+      var _ckLoaded=false;
+      function _loadChatKit(){if(_ckLoaded)return;_ckLoaded=true;var s=document.createElement('script');s.src='https://cdn.platform.openai.com/deployments/chatkit/chatkit.js';s.async=true;document.head.appendChild(s);}
+      ['scroll','click','touchstart','mousemove'].forEach(function(e){document.addEventListener(e,_loadChatKit,{once:true,passive:true});});
+      setTimeout(_loadChatKit,5000);
+    </script>
 
     <!-- Deferred analytics: load well after page is interactive to not block FCP/LCP/TBT -->
     <script>

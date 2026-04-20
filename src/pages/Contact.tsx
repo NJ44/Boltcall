@@ -161,7 +161,6 @@ const Contact: React.FC = () => {
                 style={{ width: '100%', height: '100%' }}
               />
             </div>
-            <p className="text-2xl font-bold text-gray-900">Get in Touch</p>
           </div>
 
           <motion.div
@@ -170,7 +169,7 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.3, delay: 0.15 }}
             className="w-full max-w-[380px]"
           >
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5 hidden lg:block">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-5">
               Contact Us
             </h1>
 

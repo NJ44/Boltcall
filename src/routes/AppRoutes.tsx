@@ -99,6 +99,8 @@ const LeadMagnetClaudeCodeOvernightKitPage = React.lazy(() => import('../pages/L
 const LeadMagnetAIReceptionistBuyersGuide = React.lazy(() => import('../pages/LeadMagnetAIReceptionistBuyersGuide'));
 const AIRevenueAudit = React.lazy(() => import('../pages/AIRevenueAudit'));
 const AIRevenueResults = React.lazy(() => import('../pages/AIRevenueResults'));
+const LeadResponseScorecard = React.lazy(() => import('../pages/LeadResponseScorecard'));
+const LeadResponseScorecardResults = React.lazy(() => import('../pages/LeadResponseScorecardResults'));
 const SEOAnalyzer = React.lazy(() => import('../pages/SEOAnalyzer'));
 const ConversionRateOptimizer = React.lazy(() => import('../pages/ConversionRateOptimizer'));
 const AIVisibilityCheck = React.lazy(() => import('../pages/AIVisibilityCheck'));
@@ -166,6 +168,7 @@ const BlogHowToMakeAIReceptionist = React.lazy(() => import('../pages/BlogHowToM
 const BlogWillReceptionistsBeReplacedByAI = React.lazy(() => import('../pages/BlogWillReceptionistsBeReplacedByAI'));
 const BlogWhatDoesInstantLeadReplyMean = React.lazy(() => import('../pages/BlogWhatDoesInstantLeadReplyMean'));
 const BlogHVACAILeadResponse = React.lazy(() => import('../pages/BlogHVACAILeadResponse'));
+const BlogAIAppointmentSchedulingHVAC = React.lazy(() => import('../pages/BlogAIAppointmentSchedulingHVAC'));
 const BlogHowToSetUpInstantLeadReply = React.lazy(() => import('../pages/BlogHowToSetUpInstantLeadReply'));
 const BlogHowDoesInstantLeadReplyWork = React.lazy(() => import('../pages/BlogHowDoesInstantLeadReplyWork'));
 const BlogHowToScheduleText = React.lazy(() => import('../pages/BlogHowToScheduleText'));
@@ -455,6 +458,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/will-receptionists-be-replaced-by-ai" element={<BlogWillReceptionistsBeReplacedByAI />} />
         <Route path="/blog/instant-lead-reply-guide" element={<BlogWhatDoesInstantLeadReplyMean />} />
         <Route path="/blog/hvac-ai-lead-response" element={<BlogHVACAILeadResponse />} />
+        <Route path="/blog/ai-appointment-scheduling-hvac" element={<BlogAIAppointmentSchedulingHVAC />} />
         <Route path="/blog/setup-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
         <Route path="/blog/how-instant-lead-reply-works" element={<BlogHowDoesInstantLeadReplyWork />} />
         <Route path="/blog/how-to-schedule-text" element={<BlogHowToScheduleText />} />
@@ -504,6 +508,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/ai-revenue-calculator" element={<Navigate to="/ai-revenue-audit" replace />} />
         <Route path="/ai-revenue-calculator/results" element={<AIRevenueResults />} />
+        <Route path="/lead-response-scorecard" element={<LeadResponseScorecard />} />
+        <Route path="/lead-response-scorecard/results" element={<LeadResponseScorecardResults />} />
         <Route path="/seo-audit" element={<SEOAnalyzer />} />
         <Route path="/business-audit" element={<BusinessAuditPage />} />
         <Route path="/ai-audit" element={<AIAuditPage />} />

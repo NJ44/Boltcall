@@ -5,6 +5,7 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import { AgentWorkflowBlock, type AgentCustomization } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSubscription } from '../../contexts/SubscriptionContext';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
 import RecentWinBanner from '../../components/dashboard/RecentWinBanner';
 import { useDashboardStore } from '../../stores/dashboardStore';
@@ -16,6 +17,7 @@ interface LatestBooking {
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
+  const { planLevel } = useSubscription();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
@@ -115,7 +117,7 @@ const DashboardPage: React.FC = () => {
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">How your triggers, agents, and outputs connect</p>
         </div>
         <div className="p-4">
-          <AgentWorkflowBlock agents={agentCustomizations} />
+          <AgentWorkflowBlock agents={agentCustomizations} planLevel={planLevel} />
         </div>
       </div>
 

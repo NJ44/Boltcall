@@ -23,7 +23,6 @@ interface ScrollingAnimationProps {
 
 export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
   const [animationProgress, setAnimationProgress] = useState(0)
-  const [hoveredChannel, setHoveredChannel] = useState<Channel | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number>(0)
 
@@ -75,8 +74,6 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
                       <button
                         key={channel.title}
                         onClick={() => onNavigate?.(channel.href)}
-                        onMouseEnter={() => setHoveredChannel(channel)}
-                        onMouseLeave={() => setHoveredChannel(null)}
                         className="absolute w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50 flex flex-col items-center justify-center cursor-pointer z-0 gap-1"
                         style={{
                           transform: `translate(${expandRadius * Math.cos(angle)}px, ${expandRadius * Math.sin(angle)}px)`,
@@ -109,16 +106,6 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
           </div>
         </div>
 
-        {/* Hover description — shown below the circle */}
-        <div className="mt-8 h-16 flex items-center justify-center px-4">
-          <p
-            className={`text-center text-white/80 text-sm md:text-base max-w-sm transition-all duration-300 ${
-              hoveredChannel && animationProgress > 0.5 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-            }`}
-          >
-            {hoveredChannel?.description ?? ""}
-          </p>
-        </div>
       </div>
     </div>
   )

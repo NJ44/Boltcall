@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase, FileText } from 'lucide-react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import GiveawayBar from './GiveawayBar';
 
@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
   const tickingRef = useRef(false);
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Pricing', href: '/pricing' },
@@ -51,21 +50,6 @@ const Header: React.FC = () => {
     { label: 'SEO & AEO Report', href: '/seo-aeo-audit', icon: FileText },
   ];
 
-
-  const handleNavClick = (href: string) => {
-    if (href.startsWith('#')) {
-      // Handle hash links (scroll to section)
-      const elementId = href.replace('#', '');
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // Handle page routes - use React Router navigation
-      navigate(href);
-    }
-    setIsMenuOpen(false);
-  };
 
   useEffect(() => {
     // Force white text on AI guide page and Strike page
@@ -478,25 +462,23 @@ const Header: React.FC = () => {
               </div>
 
               {/* About Link */}
-              <button
-                onClick={() => handleNavClick('/about')}
-                className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
-                  }`}
+              <Link
+                to="/about"
+                className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'}`}
               >
                 About
                 <NavUnderline isBlue={isOverBlueBackground} />
-              </button>
+              </Link>
 
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.label}
-                  onClick={() => handleNavClick(item.href)}
-                  className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
-                    }`}
+                  to={item.href}
+                  className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'}`}
                 >
                   {item.label}
                   <NavUnderline isBlue={isOverBlueBackground} />
-                </button>
+                </Link>
               ))}
 
               {/* Resources Dropdown */}
@@ -661,12 +643,12 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <button
-                  onClick={() => handleNavClick('/dashboard')}
+                <Link
+                  to="/dashboard"
                   className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${isOverBlueBackground ? 'bg-white text-brand-blue hover:bg-white/90' : 'bg-brand-blue text-white hover:bg-brand-blueDark'}`}
                 >
                   Dashboard
-                </button>
+                </Link>
               </>
             ) : (
               <>
@@ -685,8 +667,8 @@ const Header: React.FC = () => {
                     />
                   </Link>
                 </div>
-                <button
-                  onClick={() => handleNavClick('/signup')}
+                <Link
+                  to="/signup"
                   className={`px-5 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                     isOverBlueBackground
                       ? 'bg-white text-brand-blue hover:bg-blue-50'
@@ -694,7 +676,7 @@ const Header: React.FC = () => {
                   }`}
                 >
                   Get Started
-                </button>
+                </Link>
               </>
             )}
           </div>
@@ -738,13 +720,14 @@ const Header: React.FC = () => {
                 { label: 'About', href: '/about' },
                 ...navItems,
               ].map((item) => (
-                <button
+                <Link
                   key={item.label}
-                  onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
+                  to={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
 
               {/* Features dropdown */}
@@ -756,23 +739,22 @@ const Header: React.FC = () => {
                   Features
                   <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileFeatures ? 'rotate-180' : ''}`} />
                 </button>
-                {mobileFeatures && (
-                  <div className="pl-2 space-y-0.5 mt-1">
+                <div className={`pl-2 space-y-0.5 mt-1 overflow-hidden transition-all duration-200 ${mobileFeatures ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                     {featuresItems.map((item) => {
                       const Icon = item.icon;
                       return (
-                        <button
+                        <Link
                           key={item.href}
-                          onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                          to={item.href}
+                          onClick={() => setIsMenuOpen(false)}
                           className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
                         >
                           <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
                           <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                        </button>
+                        </Link>
                       );
                     })}
                   </div>
-                )}
               </div>
 
               {/* Resources dropdown */}
@@ -784,23 +766,22 @@ const Header: React.FC = () => {
                   Resources
                   <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileResources ? 'rotate-180' : ''}`} />
                 </button>
-                {mobileResources && (
-                  <div className="pl-2 space-y-0.5 mt-1">
+                <div className={`pl-2 space-y-0.5 mt-1 overflow-hidden transition-all duration-200 ${mobileResources ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                     {resourcesItems.map((item) => {
                       const Icon = item.icon;
                       return (
-                        <button
+                        <Link
                           key={item.href}
-                          onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                          to={item.href}
+                          onClick={() => setIsMenuOpen(false)}
                           className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
                         >
                           <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
                           <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                        </button>
+                        </Link>
                       );
                     })}
                   </div>
-                )}
               </div>
 
               <div className="h-px bg-gray-200 mt-4" />
@@ -808,26 +789,29 @@ const Header: React.FC = () => {
               {/* Auth */}
               <div className="space-y-3 pt-4">
                 {isAuthenticated ? (
-                  <button
-                    onClick={() => { handleNavClick('/dashboard'); setIsMenuOpen(false); }}
-                    className="w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors text-center"
                   >
                     Dashboard
-                  </button>
+                  </Link>
                 ) : (
                   <>
-                    <button
-                      onClick={() => { handleNavClick('/login'); setIsMenuOpen(false); }}
-                      className="w-full py-3 text-base font-semibold text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full py-3 text-base font-semibold text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-center"
                     >
                       Login
-                    </button>
-                    <button
-                      onClick={() => { handleNavClick('/signup'); setIsMenuOpen(false); }}
-                      className="w-full py-3 text-base font-bold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors"
+                    </Link>
+                    <Link
+                      to="/signup"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full py-3 text-base font-bold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors text-center"
                     >
                       Start now
-                    </button>
+                    </Link>
                   </>
                 )}
               </div>

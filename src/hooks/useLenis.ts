@@ -15,11 +15,12 @@ export const useLenis = () => {
 
   useEffect(() => {
     // Only initialize Lenis on homepage and marketing pages
-    // Disable on dashboard, login, signup, and other app pages
+    // Disable on dashboard, login, signup, blog (breaks sticky TOC), and other app pages
     const isDashboardPage = location.pathname.startsWith('/dashboard');
+    const isBlogPage = location.pathname.startsWith('/blog');
     const isAppPage = ['/login', '/signup', '/setup'].includes(location.pathname);
 
-    if (isDashboardPage || isAppPage) {
+    if (isDashboardPage || isAppPage || isBlogPage) {
       return;
     }
 
