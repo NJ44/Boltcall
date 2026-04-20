@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Search, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Briefcase, FileText } from 'lucide-react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import GiveawayBar from './GiveawayBar';
 
@@ -18,7 +18,6 @@ const Header: React.FC = () => {
   const featuresRef = useRef<HTMLDivElement>(null);
   const tickingRef = useRef(false);
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Pricing', href: '/pricing' },
@@ -51,21 +50,6 @@ const Header: React.FC = () => {
     { label: 'SEO & AEO Report', href: '/seo-aeo-audit', icon: FileText },
   ];
 
-
-  const handleNavClick = (href: string) => {
-    if (href.startsWith('#')) {
-      // Handle hash links (scroll to section)
-      const elementId = href.replace('#', '');
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // Handle page routes - use React Router navigation
-      navigate(href);
-    }
-    setIsMenuOpen(false);
-  };
 
   useEffect(() => {
     // Force white text on AI guide page and Strike page
@@ -480,8 +464,7 @@ const Header: React.FC = () => {
               {/* About Link */}
               <Link
                 to="/about"
-                className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
-                  }`}
+                className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'}`}
               >
                 About
                 <NavUnderline isBlue={isOverBlueBackground} />
@@ -491,8 +474,7 @@ const Header: React.FC = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
-                    }`}
+                  className={`group relative font-medium py-2 transition-colors duration-300 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'}`}
                 >
                   {item.label}
                   <NavUnderline isBlue={isOverBlueBackground} />
@@ -772,7 +754,7 @@ const Header: React.FC = () => {
                         </Link>
                       );
                     })}
-                </div>
+                  </div>
               </div>
 
               {/* Resources dropdown */}
@@ -799,7 +781,7 @@ const Header: React.FC = () => {
                         </Link>
                       );
                     })}
-                </div>
+                  </div>
               </div>
 
               <div className="h-px bg-gray-200 mt-4" />
