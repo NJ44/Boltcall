@@ -391,33 +391,41 @@ document.getElementById("lead-form")
                   </div>
                 )}
 
-                {/* Web Form Panel */}
-                {selectedIntegration === 'web-form' && (
+                {/* Website Panel */}
+                {selectedIntegration === 'website' && (
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-lg font-medium text-gray-900 mb-2">Capture Leads From Your Website</h3>
                       <p className="text-gray-600 mb-4">
-                        Pick the easiest way to connect. The embed script works with any website — WordPress, Wix, Webflow, Squarespace, raw HTML.
+                        Pick the easiest way to connect. Works with WordPress, Wix, Webflow, Squarespace, and raw HTML.
                       </p>
                     </div>
 
                     {/* Mode tabs */}
-                    <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-lg">
+                    <div className="grid grid-cols-3 gap-1 p-1 bg-gray-100 rounded-lg">
                       <button
                         onClick={() => setSetupMode('embed')}
-                        className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                        className={`py-2 px-2 rounded-md text-xs font-medium transition-colors ${
                           setupMode === 'embed' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
-                        Embed Script <span className="text-xs text-purple-600 font-semibold">· Easiest</span>
+                        Embed <span className="text-purple-600 font-semibold">· Easiest</span>
+                      </button>
+                      <button
+                        onClick={() => setSetupMode('wordpress')}
+                        className={`py-2 px-2 rounded-md text-xs font-medium transition-colors ${
+                          setupMode === 'wordpress' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        WordPress
                       </button>
                       <button
                         onClick={() => setSetupMode('advanced')}
-                        className={`py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                        className={`py-2 px-2 rounded-md text-xs font-medium transition-colors ${
                           setupMode === 'advanced' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
-                        Advanced (API)
+                        API
                       </button>
                     </div>
 
