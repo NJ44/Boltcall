@@ -127,7 +127,6 @@ const setupDoneKey = (userId: string) => `wa_setup_done_${userId}`;
 
 const WhatsappPage: React.FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabKey>('conversations');
   const [settings, setSettings] = useState<WhatsAppSettings | null>(null);
   const [settingsLoading, setSettingsLoading] = useState(true);
