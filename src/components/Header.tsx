@@ -766,23 +766,22 @@ const Header: React.FC = () => {
                   Resources
                   <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileResources ? 'rotate-180' : ''}`} />
                 </button>
-                {mobileResources && (
-                  <div className="pl-2 space-y-0.5 mt-1">
+                <div className={`pl-2 space-y-0.5 mt-1 overflow-hidden transition-all duration-200 ${mobileResources ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                     {resourcesItems.map((item) => {
                       const Icon = item.icon;
                       return (
-                        <button
+                        <Link
                           key={item.href}
-                          onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
+                          to={item.href}
+                          onClick={() => setIsMenuOpen(false)}
                           className="w-full text-left px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-3"
                         >
                           <Icon className="w-4 h-4 text-blue-500 flex-shrink-0" />
                           <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                        </button>
+                        </Link>
                       );
                     })}
                   </div>
-                )}
               </div>
 
               <div className="h-px bg-gray-200 mt-4" />
