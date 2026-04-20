@@ -17,6 +17,7 @@ interface LatestBooking {
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
+  const { planLevel } = useSubscription();
   const [searchParams, setSearchParams] = useSearchParams();
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [latestBooking, setLatestBooking] = useState<LatestBooking | null>(null);
