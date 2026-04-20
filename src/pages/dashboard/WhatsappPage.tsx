@@ -166,6 +166,14 @@ const WhatsappPage: React.FC = () => {
   const [testPhone, setTestPhone] = useState('');
   const [testing, setTesting] = useState(false);
 
+  // Pre-connect form state
+  const [connectForm, setConnectForm] = useState({
+    phoneNumberId: '',
+    accessToken: '',
+    businessAccountId: '',
+  });
+  const [showToken, setShowToken] = useState(false);
+
   const isConnected = !!settings?.wa_phone_number_id;
 
   // ─── Load settings ────────────────────────────────────────────────
