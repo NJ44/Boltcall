@@ -263,6 +263,24 @@ const integrations: Integration[] = [
     ],
     url: 'https://go.servicetitan.com',
   },
+  {
+    id: 'whatsapp',
+    name: 'WhatsApp Business',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
+    subtitle: 'Messaging & Lead Engagement',
+    description: 'Respond to WhatsApp leads instantly with AI-drafted replies. Qualify, book, and follow up — all from WhatsApp.',
+    fallbackColor: '#25D366',
+    type: 'api_key',
+    category: 'communication',
+    apiLabel: 'Phone Number ID',
+    steps: [
+      'Go to Meta for Developers → Your App → WhatsApp → API Setup',
+      'Copy your Phone Number ID and generate a permanent access token',
+      'Configure the webhook URL and verify token in Meta → WhatsApp → Configuration',
+      'Manage your full WhatsApp setup from the dedicated WhatsApp page',
+    ],
+    url: 'https://developers.facebook.com/apps',
+  },
 ];
 
 // ---------------------------------------------------------------------------
