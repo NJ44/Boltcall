@@ -12,7 +12,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import FinalCTA, { BLOG_CTA } from '../components/FinalCTA';
 
 const BlogAfterHoursLeadResponse: React.FC = () => {
-  const headings = useTableOfContents();
+  useTableOfContents();
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'After-Hours Lead Response for Home Services (2026 Data) | Boltcall';

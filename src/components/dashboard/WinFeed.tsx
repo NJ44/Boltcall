@@ -76,7 +76,7 @@ const WinFeed: React.FC = () => {
       className="rounded-lg border border-border/30 bg-background/40 px-5 py-4 backdrop-blur-sm"
     >
       <ul className="space-y-3" aria-label="Recent AI activity">
-        {events.map((event, i) => (
+        {events.map((event) => (
           <li key={event.id} className="flex items-center gap-3">
             <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${statusDot(event.status)}`} aria-hidden="true" />
             <span className="text-sm text-foreground/75 truncate">{describeEvent(event)}</span>
