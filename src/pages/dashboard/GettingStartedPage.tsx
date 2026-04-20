@@ -78,11 +78,43 @@ const CORE_TASKS: Omit<Step, 'completed'>[] = [
 
 const GettingStartedPage: React.FC = () => {
   const { user } = useAuth();
+  const painPoints = useSetupStore((s) => s.survey.painPoints);
   const [showTalkModal, setShowTalkModal] = useState(false);
   const [primaryAgent, setPrimaryAgent] = useState<{ id: string; name: string; retell_agent_id?: string } | null>(null);
+  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
+
+  const STEPS = useMemo<Step[]>(() => {
+    // Personalized tasks first, in the order the user picked them
+    const personalized = painPoints
+      .map((p) => PAIN_POINT_TASKS[p])
+      .filter(Boolean)
+      .map((task) => ({ ...task, completed: completedIds.has(task.id) }));
+
+    const core = CORE_TASKS.map((task) => ({ ...task, completed: completedIds.has(task.id) }));
+
+    // Fall back to all features if survey was skipped
+    if (personalized.length === 0) {
+      const allFeatures = Object.values(PAIN_POINT_TASKS).map((task) => ({
+        ...task,
+        completed: completedIds.has(task.id),
+      }));
+      return [...allFeatures, ...core];
+    }
+
+    return [...personalized, ...core];
+  }, [painPoints, completedIds]);
 
   const completedCount = STEPS.filter(s => s.completed).length;
-  const progressPct = Math.round((completedCount / STEPS.length) * 100);
+  const progressPct = STEPS.length > 0 ? Math.round((completedCount / STEPS.length) * 100) : 0;
+
+  const toggleComplete = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    setCompletedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (!user?.id) return;
