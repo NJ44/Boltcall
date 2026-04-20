@@ -51,21 +51,6 @@ const Header: React.FC = () => {
   ];
 
 
-  const handleNavClick = (href: string) => {
-    if (href.startsWith('#')) {
-      // Handle hash links (scroll to section)
-      const elementId = href.replace('#', '');
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // Handle page routes - use React Router navigation
-      navigate(href);
-    }
-    setIsMenuOpen(false);
-  };
-
   useEffect(() => {
     // Force white text on AI guide page and Strike page
     if (location.pathname === '/ai-guide-for-businesses' || location.pathname.startsWith('/ai-guide-for-businesses') || location.pathname === '/strike-ai' || location.pathname === '/free-website-package') {
