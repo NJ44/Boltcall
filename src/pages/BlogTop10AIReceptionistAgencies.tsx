@@ -377,7 +377,7 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
