@@ -465,6 +465,31 @@ const WhatsappPage: React.FC = () => {
     }
   };
 
+  const handleConnectWhatsApp = async () => {
+    if (!user?.id) return;
+    if (!connectForm.phoneNumberId.trim() || !connectForm.accessToken.trim()) {
+      showToast('error', 'Phone Number ID and Access Token are required');
+      return;
+    }
+    setSaving(true);
+    try {
+      await callWhatsAppFn('whatsapp-settings', {
+        action: 'save',
+        userId: user.id,
+        wa_phone_number_id: connectForm.phoneNumberId.trim(),
+        wa_access_token: connectForm.accessToken.trim(),
+        wa_business_account_id: connectForm.businessAccountId.trim() || null,
+        is_enabled: true,
+      });
+      showToast('success', 'WhatsApp connected');
+      await loadSettings();
+    } catch (e: any) {
+      showToast('error', e?.message || 'Failed to connect');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handleTestConnection = async () => {
     if (!user?.id || !testPhone) return;
     setTesting(true);
