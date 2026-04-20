@@ -75,11 +75,13 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
 
   return (
     <aside className="hidden lg:block w-64 flex-shrink-0">
-      <div 
-        className="sticky top-28"
+      <div
+        className="sticky"
         style={{
           position: 'sticky',
-          top: '7rem',
+          top: '96px',
+          maxHeight: 'calc(100vh - 112px)',
+          overflowY: 'auto',
           zIndex: 10
         }}
       >
