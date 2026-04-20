@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  MessageCircle, Send, Check, X, RefreshCw, Copy, Link2,
-  Loader2, Phone, Zap, Clock, MessageSquare,
+  MessageCircle, Send, Check, X, RefreshCw, Copy,
+  Loader2, Phone, ExternalLink, Eye, EyeOff,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
