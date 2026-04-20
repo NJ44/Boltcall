@@ -738,13 +738,14 @@ const Header: React.FC = () => {
                 { label: 'About', href: '/about' },
                 ...navItems,
               ].map((item) => (
-                <button
+                <Link
                   key={item.label}
-                  onClick={() => { handleNavClick(item.href); setIsMenuOpen(false); }}
-                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
+                  to={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
 
               {/* Features dropdown */}
