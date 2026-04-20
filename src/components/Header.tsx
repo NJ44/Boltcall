@@ -667,8 +667,8 @@ const Header: React.FC = () => {
                     />
                   </Link>
                 </div>
-                <button
-                  onClick={() => handleNavClick('/signup')}
+                <Link
+                  to="/signup"
                   className={`px-5 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                     isOverBlueBackground
                       ? 'bg-white text-brand-blue hover:bg-blue-50'
@@ -676,7 +676,7 @@ const Header: React.FC = () => {
                   }`}
                 >
                   Get Started
-                </button>
+                </Link>
               </>
             )}
           </div>
