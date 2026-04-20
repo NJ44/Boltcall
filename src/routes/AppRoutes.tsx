@@ -346,70 +346,24 @@ const NavigationWrapper: React.FC = () => {
           <Route path="follow-ups" element={<Navigate to="/dashboard/messages" replace />} />
           <Route path="website-bubble" element={<Navigate to="/dashboard/chat-widget" replace />} />
           <Route path="instant-lead-reply" element={<Navigate to="/dashboard/leads" replace />} />
-          <Route path="settings" element={
-            <SettingsLayout>
-              <SettingsPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/general" element={
-            <SettingsLayout>
-              <GeneralPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/preferences" element={
-            <SettingsLayout>
-              <PreferencesPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/members" element={
-            <SettingsLayout>
-              <MembersPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/plan-billing" element={
-            <SettingsLayout>
-              <PlanBillingPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/usage" element={
-            <SettingsLayout>
-              <UsagePage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/notifications" element={
-            <SettingsLayout>
-              <NotificationPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/roles" element={
-            <SettingsLayout>
-              <RolesPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/activity-log" element={
-            <SettingsLayout>
-              <ActivityLogPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/api-keys" element={
-            <SettingsLayout>
-              <ApiKeysPage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/workspace" element={
-            <SettingsLayout>
-              <WorkspacePage />
-            </SettingsLayout>
-          } />
-          <Route path="settings/packages" element={
-            <SettingsLayout>
-              <PackagesPage />
-            </SettingsLayout>
-          } />
-          {/* Redirects for removed settings pages */}
-          <Route path="settings/billing" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
-          <Route path="settings/notification-preferences" element={<Navigate to="/dashboard/settings/notifications" replace />} />
-          <Route path="settings/services" element={<Navigate to="/dashboard/settings/general" replace />} />
+          <Route path="settings" element={<SettingsLayout />}>
+            <Route index element={<SettingsPage />} />
+            <Route path="general" element={<GeneralPage />} />
+            <Route path="preferences" element={<PreferencesPage />} />
+            <Route path="members" element={<MembersPage />} />
+            <Route path="plan-billing" element={<PlanBillingPage />} />
+            <Route path="usage" element={<UsagePage />} />
+            <Route path="notifications" element={<NotificationPage />} />
+            <Route path="roles" element={<RolesPage />} />
+            <Route path="activity-log" element={<ActivityLogPage />} />
+            <Route path="api-keys" element={<ApiKeysPage />} />
+            <Route path="workspace" element={<WorkspacePage />} />
+            <Route path="packages" element={<PackagesPage />} />
+            {/* Redirects for removed settings pages */}
+            <Route path="billing" element={<Navigate to="/dashboard/settings/plan-billing" replace />} />
+            <Route path="notification-preferences" element={<Navigate to="/dashboard/settings/notifications" replace />} />
+            <Route path="services" element={<Navigate to="/dashboard/settings/general" replace />} />
+          </Route>
         </Route>
         <Route path="/setup" element={<ProtectedRoute><Setup /></ProtectedRoute>} />
         <Route path="/setup/loading" element={<ProtectedRoute><SetupLoading /></ProtectedRoute>} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -154,7 +154,9 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15, ease: 'easeInOut' }}
               >
-                {children || <Outlet />}
+                <Suspense fallback={null}>
+                  {children || <Outlet />}
+                </Suspense>
               </motion.div>
             </AnimatePresence>
           </div>
