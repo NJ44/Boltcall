@@ -673,6 +673,13 @@ const BlogCenter: React.FC = () => {
                 title: "AI Receptionist Platform for Local Businesses — boltcall.org",
               },
             ].map((item, i) => (
+              <div key={i} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <p className="text-gray-700 text-base leading-relaxed mb-4">"{item.quote}"</p>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">{item.expert}</p>
+                  <p className="text-gray-500 text-xs">{item.title}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
