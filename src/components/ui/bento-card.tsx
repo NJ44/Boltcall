@@ -92,7 +92,7 @@ const TABS: TabConfig[] = [
   {
     id: "sms",
     label: "SMS Agent",
-    icon: MessageSquare01Icon,
+    icon: BubbleChatNotificationIcon,
     header: "SMS Automation",
     description: "Respond to every text instantly, 24/7.",
     section: "services",
