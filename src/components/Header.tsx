@@ -644,7 +644,7 @@ const Header: React.FC = () => {
             {isAuthenticated ? (
               <>
                 <Link
-                  to="/dashboard"
+                  to="/dashboard/getting-started"
                   className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${isOverBlueBackground ? 'bg-white text-brand-blue hover:bg-white/90' : 'bg-brand-blue text-white hover:bg-brand-blueDark'}`}
                 >
                   Dashboard
@@ -790,7 +790,7 @@ const Header: React.FC = () => {
               <div className="space-y-3 pt-4">
                 {isAuthenticated ? (
                   <Link
-                    to="/dashboard"
+                    to="/dashboard/getting-started"
                     onClick={() => setIsMenuOpen(false)}
                     className="block w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors text-center"
                   >

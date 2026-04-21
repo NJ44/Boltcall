@@ -285,9 +285,7 @@ const NavigationWrapper: React.FC = () => {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <DashboardProviders>
-                <Dashboard />
-              </DashboardProviders>
+              <Navigate to="/dashboard/getting-started" replace />
             </ProtectedRoute>
           }
         />
