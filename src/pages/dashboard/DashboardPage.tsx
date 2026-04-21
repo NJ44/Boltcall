@@ -75,6 +75,9 @@ const DashboardPage: React.FC = () => {
       {/* Today's Status — Trigger + Action */}
       <TodayGlanceCard />
 
+      {/* Agent Architecture — workflow diagram */}
+      <AgentWorkflowBlock agents={agentCustomizations} planLevel={planLevel} />
+
       {/* Recent Activity — Variable Reward */}
       <WinFeed />
     </div>
