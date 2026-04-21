@@ -21,6 +21,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'WhatsApp Appointment Booking for Plumbers: The Complete 2026 Guide',
+    slug: '/blog/whatsapp-appointment-booking-plumbers',
+    excerpt: 'How to automatically book emergency plumbing calls and service jobs via WhatsApp, reduce no-shows, and never miss a lead again.',
+    date: 'April 21, 2026',
+    readTime: '11 min read',
+    category: 'Plumbing|WhatsApp|How-to',
+    image: '/og-image.jpg'
+  },
+  {
     title: 'After-Hours Leads Are <span className="text-blue-600">Killing</span> Your Home Service Business',
     slug: '/blog/after-hours-lead-response-home-services',
     excerpt: '42% of home service leads arrive after hours. The data on why after-hours lead response is the biggest revenue leak for plumbers, HVAC, and contractors.',
