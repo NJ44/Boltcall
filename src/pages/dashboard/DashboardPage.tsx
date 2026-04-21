@@ -4,6 +4,10 @@ import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
 import WinFeed from '../../components/dashboard/WinFeed';
 import { useDashboardStore } from '../../stores/dashboardStore';
+import { AgentWorkflowBlock, type AgentCustomization } from '../../components/ui/agent-workflow-block';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+import { useSubscription } from '../../contexts/SubscriptionContext';
 
 const DashboardPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
