@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2, AlertCircle, MessageSquare, Plus, Save } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { Link } from 'react-router-dom';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { motion } from 'framer-motion';
@@ -140,6 +141,19 @@ const RemindersPage: React.FC = () => {
 
   if (loading) {
     return <PageSkeleton />;
+  }
+
+  if (!calConnected) {
+    return (
+      <ServiceEmptyState
+        icon={<MessageSquare className="w-7 h-7 text-blue-600" />}
+        iconBg="bg-blue-50"
+        title="Reminders Not Set Up"
+        description="Connect your Cal.com account in Integrations to automatically send appointment reminders via SMS or email before every booking."
+        setupLabel="Go to Integrations"
+        setupTo="/dashboard/integrations"
+      />
+    );
   }
 
   return (

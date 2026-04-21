@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PhoneNumbersSkeleton } from '../../components/ui/loading-skeleton';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { PhoneCall, MoreHorizontal, ChevronDown, Phone, Settings } from 'lucide-react';
 
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
@@ -368,7 +369,16 @@ const PhoneNumbersPage: React.FC = () => {
   return (
     <div className="space-y-6">
 
-      {/* Phone Numbers Card Table */}
+      {phoneNumbers.length === 0 ? (
+        <ServiceEmptyState
+          icon={<Phone className="w-7 h-7 text-blue-600" />}
+          iconBg="bg-blue-50"
+          title="No Phone Numbers Yet"
+          description="Get a local or toll-free number so your AI receptionist can answer calls, or forward your existing line via SIP."
+          setupLabel="Get a Phone Number"
+          onSetup={() => setShowTwilioModal(true)}
+        />
+      ) : (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -519,6 +529,7 @@ const PhoneNumbersPage: React.FC = () => {
         />
         </div>
       </motion.div>
+      )}
 
       {/* Twilio Numbers Modal */}
       <ModalShell
