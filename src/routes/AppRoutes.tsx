@@ -18,6 +18,9 @@ import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
 import BlogSchemaWrapper from '../components/BlogSchemaWrapper';
+// Setup is eagerly loaded — lazy+Suspense(fallback=null) caused blank screen on first visit
+import Setup from '../pages/Setup';
+import SetupLoading from '../pages/SetupLoading';
 // Lazy — imports framer-motion; keeping it eager pulled that library into the
 // initial bundle, inflating TBT by ~200 KiB of parse work on every page load.
 const BlogNeverMissCallAfterHours = React.lazy(() => import('../pages/BlogNeverMissCallAfterHours'));
