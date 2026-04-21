@@ -9,13 +9,11 @@ import {
   Globe02Icon,
   Megaphone01Icon,
   Mail01Icon,
-  Calendar01Icon,
   Search01Icon,
-  ArrowUpRight01Icon,
   Tick01Icon,
   CheckmarkCircle01Icon,
   Cancel01Icon,
-  ArrowRefresh01Icon,
+  Refresh01Icon,
 } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
 
