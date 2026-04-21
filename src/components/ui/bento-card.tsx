@@ -100,7 +100,7 @@ const BentoCard = () => {
       <div
         className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.2] transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(255,255,255,0.04) 55%)",
+          background: "linear-gradient(to bottom, rgba(15,15,18,0.88) 0%, rgba(20,20,28,0.6) 40%, rgba(255,255,255,0.04) 75%)",
           backdropFilter: "blur(48px) saturate(200%)",
           WebkitBackdropFilter: "blur(48px) saturate(200%)",
           boxShadow:
