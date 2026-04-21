@@ -97,7 +97,7 @@ export function ScrollingAnimation({ onNavigate }: ScrollingAnimationProps) {
                       All <span className="text-blue-400">Channels.</span>
                     </h2>
                     <p className="text-white/70 text-center max-w-[240px] text-sm md:text-base">
-                      Get your helper ready in just a few minutes. Free to set up — no credit card needed.
+                      Get your agent ready in just a few minutes. Free to set up — no credit card needed.
                     </p>
                   </div>
                 </div>
