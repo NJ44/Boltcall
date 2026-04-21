@@ -30,7 +30,6 @@ const Signup = React.lazy(() => import('../pages/Signup'));
 const AuthCallback = React.lazy(() => import('../pages/AuthCallback'));
 
 // ── Lazy loads — Dashboard shell & pages ─────────────────────────────────
-const Dashboard = React.lazy(() => import('../pages/Dashboard'));
 const DashboardLayout = React.lazy(() => import('../components/dashboard/DashboardLayout'));
 const SettingsLayout = React.lazy(() => import('../components/dashboard/SettingsLayout'));
 const DashboardPage = React.lazy(() => import('../pages/dashboard/DashboardPage'));
