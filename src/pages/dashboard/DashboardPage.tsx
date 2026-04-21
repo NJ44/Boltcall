@@ -26,6 +26,26 @@ const DashboardPage: React.FC = () => {
     fetchLiveData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase
+      .from('agents')
+      .select('direction, avatar, color, name')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .then(({ data }) => {
+        if (data) {
+          const customizations: AgentCustomization[] = data.map((a: any) => ({
+            direction: a.direction === 'outbound' ? 'outbound' : 'inbound',
+            avatar: a.avatar ?? null,
+            color: a.color ?? null,
+            title: a.name,
+          }));
+          setAgentCustomizations(customizations);
+        }
+      });
+  }, [user?.id]);
+
   // Check if setup was just completed — show the "Almost Done!" agent config modal
   useEffect(() => {
     const setupCompleted = searchParams.get('setupCompleted');
