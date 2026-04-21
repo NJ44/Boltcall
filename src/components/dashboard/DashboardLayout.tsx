@@ -103,6 +103,19 @@ const DashboardLayout: React.FC = () => {
     }
   }, [user?.id]);
 
+  // Show feedback popup randomly — 25% chance, no more than once per 7 days
+  useEffect(() => {
+    const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+    const lastShown = Number(localStorage.getItem('feedbackPopupLastShown') || 0);
+    const cooldownPassed = Date.now() - lastShown > SEVEN_DAYS;
+    if (!cooldownPassed || Math.random() > 0.25) return;
+    const timer = setTimeout(() => {
+      setShowFeedback(true);
+      localStorage.setItem('feedbackPopupLastShown', String(Date.now()));
+    }, 45_000);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Load real service statuses from Supabase
   useEffect(() => {
     if (!user?.id) return;
@@ -629,30 +642,6 @@ const DashboardLayout: React.FC = () => {
                   })}
                 </div>
 
-                {/* Give Us Feedback */}
-                <button
-                  onClick={() => setShowFeedback(true)}
-                  className={`relative flex items-center justify-center w-full ${sidebarCollapsed ? '' : 'gap-2'} px-2 py-2 rounded-lg text-xs font-medium transition-all duration-700 group ${
-                    isDarkMode
-                      ? 'text-white hover:bg-[#1a1a1f]'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300/30'
-                  }`}
-                >
-                  <span className={`relative flex items-center ${sidebarCollapsed ? '' : '-mt-[5px]'}`}>
-                    <MessageSquare className="w-5 h-5 scale-[0.95] text-blue-500" />
-                  </span>
-                  {sidebarCollapsed && (
-                    <span className="absolute left-full ml-2 px-2.5 py-1.5 text-xs font-medium text-gray-900 dark:text-white bg-white dark:bg-[#1a1a1f] rounded-lg shadow-lg border border-gray-200 dark:border-[#2a2a30] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-none z-50">
-                      Give Us Feedback
-                    </span>
-                  )}
-                  {!sidebarCollapsed && (
-                    <span className="relative pb-1">
-                      Give Us Feedback
-                      <div className="absolute -bottom-1 left-0 h-0.5 bg-blue-600 w-0 group-hover:w-full" style={{ transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }} />
-                    </span>
-                  )}
-                </button>
               </div>
 
             </nav>
