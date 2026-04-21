@@ -514,8 +514,37 @@ const WhatsappPage: React.FC = () => {
 
   if (settingsLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 text-green-600 animate-spin" />
+      <div className="space-y-6 animate-pulse">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gray-100" />
+          <div className="space-y-1.5">
+            <div className="h-6 w-28 bg-gray-100 rounded" />
+            <div className="h-3.5 w-52 bg-gray-100 rounded" />
+          </div>
+        </div>
+        <div className="flex gap-6 border-b border-gray-200">
+          {[80, 96, 88].map((w, i) => (
+            <div key={i} className="pb-2">
+              <div className="h-3.5 bg-gray-100 rounded" style={{ width: w }} />
+            </div>
+          ))}
+        </div>
+        <div className="space-y-4 max-w-2xl">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="bg-gray-50 border border-gray-200 rounded-xl p-5 flex items-center justify-between">
+              <div className="space-y-1.5">
+                <div className="h-3.5 w-36 bg-gray-100 rounded" />
+                <div className="h-3 w-52 bg-gray-100 rounded" />
+              </div>
+              <div className="h-5 w-9 bg-gray-100 rounded-full" />
+            </div>
+          ))}
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-3">
+            <div className="h-3.5 w-32 bg-gray-100 rounded" />
+            <div className="h-3 w-64 bg-gray-100 rounded" />
+            <div className="h-9 w-full bg-gray-100 rounded-lg" />
+          </div>
+        </div>
       </div>
     );
   }
