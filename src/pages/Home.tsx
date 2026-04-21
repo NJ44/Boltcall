@@ -54,12 +54,12 @@ const Home: React.FC = () => {
           <Hero />
 
           {/* Boltcall Platform Preview — interactive dark bento card */}
-          <section className="relative py-8 px-4 sm:px-8 lg:px-16 -mt-[200px]">
+          <section className="relative z-[2] py-8 px-4 sm:px-8 lg:px-16 -mt-[320px]">
             <BentoCard />
           </section>
 
           {/* HowItWorks — first below-fold section, preload aggressively */}
-          <div className="relative mt-0 md:mt-0 md:top-[100px]">
+          <div className="relative mt-0 md:mt-0 md:top-[220px]">
             <LazySection rootMargin="500px" minHeight="600px">
               <Suspense fallback={<div className="min-h-[600px]" />}>
                 <HowItWorks />
