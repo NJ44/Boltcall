@@ -108,7 +108,7 @@ const TABS: TabConfig[] = [
   {
     id: "website",
     label: "Website",
-    icon: Globe01Icon,
+    icon: Globe02Icon,
     header: "Website Response",
     description: "Capture and reply to website form submissions.",
     section: "services",
