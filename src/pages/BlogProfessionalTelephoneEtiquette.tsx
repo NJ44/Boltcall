@@ -106,7 +106,8 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
+
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
@@ -174,7 +175,6 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
                   <li key="conclusion-mastering-professional-phone"><a href="#conclusion-mastering-professional-phone" className="text-blue-600 hover:underline text-sm">Conclusion: Mastering Professional Phone Etiquette</a></li>
             </ol>
           </div>
-
 
           <h2 id="answering-the-phone-promptly" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
@@ -274,11 +274,6 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           </div>
         </motion.section>
 
-
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"The phone is still the most human channel businesses have. How you answer it — tone, speed, attentiveness — telegraphs your entire service culture to the customer in the first 15 seconds. There is no second chance to undo a cold or distracted opening."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Shep Hyken, Customer Experience Expert & New York Times Bestselling Author, Shepard Presentations</footer>
-        </blockquote>
         {/* Section 4: Navigating Challenging Situations */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -379,11 +374,6 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
           </div>
         </motion.section>
 
-
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"Companies that train front-line staff specifically in telephone etiquette report a measurable lift in customer satisfaction scores — typically 15 to 20 percentage points above industry benchmarks. The phone is still the primary complaint escalation channel, and handling it well prevents churn."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Harvard Business Review, "Why Customer Service Reps Lose Customers," 2023</footer>
-        </blockquote>
         {/* Section 6: Best Practices for Cell Phone Etiquette */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -554,7 +544,6 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
         </div>
       </div>
 
-
       {/* Telephone Etiquette Comparison Table */}
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -591,26 +580,6 @@ const BlogProfessionalTelephoneEtiquette: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

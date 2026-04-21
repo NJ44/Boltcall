@@ -327,11 +327,6 @@ const BlogAIGuideStep3: React.FC = () => {
           </div>
         </motion.section>
 
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"The companies that get the most out of AI deployment are the ones that start narrow and expand deliberately. Pick the one workflow that costs you the most in missed revenue — usually inbound call handling — solve that completely before adding complexity."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Reid Hoffman, Co-founder, LinkedIn &amp; Partner, Greylock Ventures</footer>
-        </blockquote>
-
         {/* Best Practices */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -486,11 +481,6 @@ const BlogAIGuideStep3: React.FC = () => {
           </div>
         </motion.section>
 
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"We tracked first-month outcomes for over 300 service businesses that deployed AI phone receptionists. The median business saw a 38% increase in booked appointments in month one — without increasing advertising spend. The AI simply captured revenue that was already walking in the door."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— David Cancel, Founder &amp; CEO, Drift (Conversational Marketing Platform)</footer>
-        </blockquote>
-
         {/* Success Stories */}
         <motion.section
           id="success-stories"
@@ -626,7 +616,6 @@ const BlogAIGuideStep3: React.FC = () => {
         </div>
       </div>
 
-
       {/* AI Implementation Checklist Table */}
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -666,26 +655,6 @@ const BlogAIGuideStep3: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

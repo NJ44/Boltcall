@@ -64,7 +64,6 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
-
     const bcScript = document.createElement('script');
     bcScript.type = 'application/ld+json';
     bcScript.id = 'breadcrumb-jsonld';
@@ -86,7 +85,6 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
     faqScript.id = 'faq-schema';
     faqScript.text = JSON.stringify(faqSchema);
     document.head.appendChild(faqScript);
-
 
     return () => {
       document.getElementById('breadcrumb-jsonld')?.remove();
@@ -377,7 +375,8 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
+
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
@@ -479,10 +478,6 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
               resources. That's why this comprehensive comparison is essential.
             </p>
             
-            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;AI receptionists are not about replacing the human element in customer service &mdash; they are about ensuring that humans are engaged only where they add the most value, while AI handles the high-volume, repeatable interactions at scale.&rdquo;</p>
-              <footer className="mt-3 text-sm font-semibold text-gray-600">— Aaron Levie, CEO, Box</footer>
-            </blockquote>
             <div className="bg-blue-50 border-l-4 border-blue-600 p-6 my-6">
               <h3 className="text-xl font-bold text-gray-900 mb-3">Key Benefits of AI Receptionists</h3>
               <ul className="space-y-2 text-gray-700">
@@ -510,7 +505,6 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
             </div>
           </div>
         </motion.section>
-
 
         {/* Section: Speed to Lead */}
         <motion.section
@@ -914,10 +908,7 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
               Remember that implementing an AI receptionist is an investment in your business's 
               future.
 
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The ROI case for AI-powered phone answering is straightforward: businesses that answer every call capture more revenue, period. The question is not whether to adopt AI reception, but which solution fits your specific workflows.&rdquo;</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Jordan Husney, Co-Founder, Parabol &amp; AI Workflow Advisor</footer>
-        </blockquote> The right solution can increase lead capture, reduce costs, improve customer 
+ The right solution can increase lead capture, reduce costs, improve customer 
               satisfaction, and give you a competitive advantage. Take the time to choose wisely, 
               and you'll reap the benefits for years to come.
             </p>
@@ -1030,27 +1021,6 @@ const BlogTop10AIReceptionistAgencies: React.FC = () => {
         </div>
       </div>
 
-
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

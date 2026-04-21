@@ -173,7 +173,8 @@ const BlogAIAppointmentSchedulingHVAC: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
+
             <Breadcrumbs
               items={[
                 { label: 'Home', href: '/' },
@@ -239,10 +240,6 @@ const BlogAIAppointmentSchedulingHVAC: React.FC = () => {
                   For HVAC companies specifically, this solves the three most expensive scheduling problems: missed after-hours calls, peak-season call overflow, and the dispatcher bottleneck that makes homeowners wait on hold while a tech is free.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-600 pl-4 my-6 text-gray-600 italic">
-                  "The first HVAC company to respond to a service call wins the job 78% of the time — regardless of price."
-                  <span className="block mt-1 text-sm font-semibold not-italic text-gray-700">— ServiceTitan HVAC Industry Benchmarks, 2025</span>
-                </blockquote>
               </div>
             </motion.section>
 

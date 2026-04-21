@@ -307,11 +307,6 @@ const BlogAIGuideStep2: React.FC = () => {
           </div>
         </motion.section>
 
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"Most small business owners make the mistake of choosing the most feature-rich AI tool instead of the most integrated one. The right question isn't 'what can it do?' — it's 'how well does it fit into my existing workflow without adding friction?'"</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Rand Fishkin, Founder, Moz &amp; SparkToro</footer>
-        </blockquote>
-
         {/* What to Look For */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -369,11 +364,6 @@ const BlogAIGuideStep2: React.FC = () => {
             </div>
           </div>
         </motion.section>
-
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"For service-based SMBs, the single highest-ROI technology investment we track consistently is AI-assisted phone answering. It closes the gap between marketing spend and revenue capture faster than any other automation category."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Brian Halligan, Co-founder, HubSpot &amp; Senior Lecturer, MIT Sloan</footer>
-        </blockquote>
 
         {/* Pricing Considerations */}
         <motion.section
@@ -611,7 +601,6 @@ const BlogAIGuideStep2: React.FC = () => {
         </div>
       </div>
 
-
       {/* AI Tools Comparison Table for Local Businesses */}
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -650,26 +639,6 @@ const BlogAIGuideStep2: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

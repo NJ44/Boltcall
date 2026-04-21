@@ -133,7 +133,6 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
-
     const bcScript = document.createElement('script');
     bcScript.type = 'application/ld+json';
     bcScript.id = 'breadcrumb-jsonld';
@@ -163,7 +162,8 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
+
             <Breadcrumbs
               items={[
                 { label: 'Home', href: '/' },
@@ -229,10 +229,6 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
                   For a plumber, dentist, HVAC company, or any local service business, the math is simple: every unanswered call is a competitor's new customer. An AI answering service makes sure that never happens again.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-600 pl-4 my-6 text-gray-600 italic">
-                  "Businesses that respond to leads within one minute are 7x more likely to qualify them than those that wait even five minutes."
-                  <span className="block mt-1 text-sm font-semibold not-italic text-gray-700">— Dr. James Oldroyd, Lead Response Management Study, MIT</span>
-                </blockquote>
               </div>
             </motion.section>
 
@@ -276,10 +272,6 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
                   Add in the cost of a full-time receptionist — $35,000–$50,000 salary plus benefits — and the ROI of an AI answering service at $49–$149/month becomes immediate. You recoup the entire year's cost with one job that would otherwise have gone to voicemail.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-600 pl-4 my-6 text-gray-600 italic">
-                  "Speed-to-lead is the single most controllable variable in your conversion rate. Most businesses focus on getting more leads when they should fix their response time first."
-                  <span className="block mt-1 text-sm font-semibold not-italic text-gray-700">— Ryan Deiss, CEO at DigitalMarketer</span>
-                </blockquote>
               </div>
             </motion.section>
 
@@ -792,27 +784,6 @@ const BlogAIAnsweringServiceSmallBusiness: React.FC = () => {
         </div>
       </div>
 
-
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

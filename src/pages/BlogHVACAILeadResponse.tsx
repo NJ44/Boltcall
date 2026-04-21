@@ -202,16 +202,6 @@ const BlogHVACAILeadResponse: React.FC = () => {
                   credit in HVAC lead response.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-                  <p className="text-lg text-gray-700 italic leading-relaxed">
-                    &ldquo;In service industries driven by urgency — HVAC, plumbing, roofing — the
-                    first business to respond does not just win more often. It wins almost every time.
-                    Speed is not a differentiator in these categories; it is the deciding factor.&rdquo;
-                  </p>
-                  <footer className="mt-3 text-sm font-semibold text-gray-600">
-                    &mdash; Lead Response Management Study, InsideSales.com
-                  </footer>
-                </blockquote>
               </div>
             </motion.section>
 
@@ -582,16 +572,6 @@ const BlogHVACAILeadResponse: React.FC = () => {
                   AI-powered booking with automated follow-up sequences.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-                  <p className="text-lg text-gray-700 italic leading-relaxed">
-                    &ldquo;We were losing jobs we didn't even know we were losing. The AI started
-                    booking appointments from calls we would have missed overnight. First month it
-                    recovered 11 jobs we would have never seen. It paid for itself in the first week.&rdquo;
-                  </p>
-                  <footer className="mt-3 text-sm font-semibold text-gray-600">
-                    &mdash; HVAC company owner, Southeast US
-                  </footer>
-                </blockquote>
               </div>
             </motion.section>
 

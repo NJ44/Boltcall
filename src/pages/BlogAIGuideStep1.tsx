@@ -62,7 +62,6 @@ const BlogAIGuideStep1: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
-
     const bcScript = document.createElement('script');
     bcScript.type = 'application/ld+json';
     bcScript.id = 'breadcrumb-jsonld';
@@ -254,11 +253,6 @@ const BlogAIGuideStep1: React.FC = () => {
           </div>
         </motion.section>
 
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"AI-powered voice agents are no longer a novelty for enterprise companies. They are the most practical ROI-positive technology a small service business can deploy today — answering every call, qualifying every lead, and booking every appointment without a salary."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Andrew Ng, AI Researcher &amp; Founder, DeepLearning.AI</footer>
-        </blockquote>
-
         {/* Benefits Explained Simply */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
@@ -306,11 +300,6 @@ const BlogAIGuideStep1: React.FC = () => {
             </div>
           </div>
         </motion.section>
-
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">"When we examined missed-call data across thousands of local service businesses, the pattern was unmistakable: businesses with AI phone coverage captured 40–60% more bookings from the same advertising spend. The leads were already there — they just weren't being answered."</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">— Dharmesh Shah, Co-founder &amp; CTO, HubSpot</footer>
-        </blockquote>
 
         {/* Case Study Style Mini-Stories */}
         <motion.section
@@ -480,7 +469,6 @@ const BlogAIGuideStep1: React.FC = () => {
         </div>
       </div>
 
-
       {/* AI Capabilities for Local Businesses Table */}
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -519,26 +507,6 @@ const BlogAIGuideStep1: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );
