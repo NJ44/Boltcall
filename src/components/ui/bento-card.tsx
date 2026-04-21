@@ -98,10 +98,13 @@ const BentoCard = () => {
   return (
     <div className="flex items-center justify-center w-full antialiased">
       <div
-        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.08] bg-[#080b12] transition-all duration-500 hover:-translate-y-1 m-0"
+        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.12] transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
+          background: "linear-gradient(135deg, rgba(10,18,40,0.92) 0%, rgba(8,15,35,0.88) 100%)",
+          backdropFilter: "blur(32px) saturate(160%)",
+          WebkitBackdropFilter: "blur(32px) saturate(160%)",
           boxShadow:
-            "0 40px 80px -20px rgba(0,0,0,0.6), 0 20px 40px -20px rgba(59,130,246,0.25), 0 0 0 1px rgba(255,255,255,0.04)",
+            "0 40px 80px -20px rgba(0,0,0,0.7), 0 20px 40px -20px rgba(59,130,246,0.4), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.1)",
         }}
       >
         <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
