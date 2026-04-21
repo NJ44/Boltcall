@@ -24,6 +24,7 @@ import SetupLoading from '../pages/SetupLoading';
 // Lazy — imports framer-motion; keeping it eager pulled that library into the
 // initial bundle, inflating TBT by ~200 KiB of parse work on every page load.
 const BlogNeverMissCallAfterHours = React.lazy(() => import('../pages/BlogNeverMissCallAfterHours'));
+const BlogWhatsAppAppointmentBookingPlumbers = React.lazy(() => import('../pages/BlogWhatsAppAppointmentBookingPlumbers'));
 // ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
 const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
@@ -523,6 +524,7 @@ const NavigationWrapper: React.FC = () => {
           <Route path="/blog/ai-receptionist-vet-faq" element={<FAQAIReceptionistVet />} />
           <Route path="/blog/how-to-set-up-ai-phone-answering-vet-clinic" element={<HowToAIPhoneAnsweringVetClinic />} />
                 <Route path="/blog/never-miss-a-call-after-business-hours" element={<BlogNeverMissCallAfterHours />} />
+                <Route path="/blog/whatsapp-appointment-booking-plumbers" element={<BlogWhatsAppAppointmentBookingPlumbers />} />
         </Route>
         {/* Industry-specific calculators */}
         <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
