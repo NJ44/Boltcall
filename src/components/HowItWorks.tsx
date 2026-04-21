@@ -66,7 +66,7 @@ const HowItWorks: React.FC = () => {
             >
               How It Works
             </motion.h5>
-            <h2 className="font-bold mb-5 ml-5" style={{ fontSize: '54px' }}>
+            <h2 className="font-bold mb-5 ml-5 leading-none" style={{ fontSize: '54px' }}>
               <WhisperText
                 text="Close leads in "
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white inline-block"
@@ -107,7 +107,7 @@ const HowItWorks: React.FC = () => {
                 index={index}
                 incrementY={40}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '460px', minHeight: '320px' }}
+                style={{ maxWidth: '460px', minHeight: '320px', top: `${280 + index * 40}px` }}
               >
                 <div className="p-5 md:p-8 h-full">
                   <div className="flex items-center mb-3">

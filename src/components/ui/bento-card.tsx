@@ -98,17 +98,17 @@ const BentoCard = () => {
   return (
     <div className="flex items-center justify-center w-full antialiased">
       <div
-        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.12] transition-all duration-500 hover:-translate-y-1 m-0"
+        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.2] transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "linear-gradient(135deg, rgba(10,18,40,0.92) 0%, rgba(8,15,35,0.88) 100%)",
-          backdropFilter: "blur(32px) saturate(160%)",
-          WebkitBackdropFilter: "blur(32px) saturate(160%)",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(255,255,255,0.04) 55%)",
+          backdropFilter: "blur(48px) saturate(200%)",
+          WebkitBackdropFilter: "blur(48px) saturate(200%)",
           boxShadow:
-            "0 40px 80px -20px rgba(0,0,0,0.7), 0 20px 40px -20px rgba(59,130,246,0.4), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.1)",
+            "0 40px 80px -20px rgba(0,0,0,0.4), 0 20px 40px -20px rgba(59,130,246,0.3), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.18)",
         }}
       >
         <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
-          <h2 className="text-[10px] text-blue-400/70 uppercase tracking-widest font-semibold">
+          <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
             Platform Preview
           </h2>
           <p className="text-lg sm:text-2xl text-white font-medium leading-snug max-w-[520px]">
