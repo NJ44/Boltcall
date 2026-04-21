@@ -75,7 +75,7 @@ const TABS: TabConfig[] = [
   {
     id: "leads",
     label: "Leads",
-    icon: Zap01Icon,
+    icon: ZapIcon,
     header: "Lead Inbox",
     description: "Every inbound lead captured and tracked.",
     badge: "24",
