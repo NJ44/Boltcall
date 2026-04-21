@@ -454,7 +454,7 @@ const SmsDashboard = () => {
                 <HugeiconsIcon icon={Cancel01Icon} size={8} /> Reject
               </button>
               <button className="flex items-center gap-0.5 px-2 py-1 rounded-md bg-gray-700 text-gray-400 text-[7px] font-semibold border border-white/10">
-                <HugeiconsIcon icon={ArrowRefresh01Icon} size={8} /> Regen
+                <HugeiconsIcon icon={Refresh01Icon} size={8} /> Regen
               </button>
             </div>
           </div>
