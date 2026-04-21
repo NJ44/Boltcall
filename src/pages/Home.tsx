@@ -59,7 +59,7 @@ const Home: React.FC = () => {
           </section>
 
           {/* HowItWorks — first below-fold section, preload aggressively */}
-          <div className="relative mt-0 md:mt-0 md:top-[100px]">
+          <div className="relative mt-0 md:mt-0 md:top-[220px]">
             <LazySection rootMargin="500px" minHeight="600px">
               <Suspense fallback={<div className="min-h-[600px]" />}>
                 <HowItWorks />
