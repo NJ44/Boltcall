@@ -54,7 +54,7 @@ const Home: React.FC = () => {
           <Hero />
 
           {/* Boltcall Platform Preview — interactive dark bento card */}
-          <section className="relative py-8 px-4 sm:px-8 lg:px-16 -mt-[200px]">
+          <section className="relative z-[2] py-8 px-4 sm:px-8 lg:px-16 -mt-[320px]">
             <BentoCard />
           </section>
 
