@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Calendar, CheckCircle, XCircle, Link2 } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { PopButton } from '../../components/ui/pop-button';
 import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { supabase } from '../../lib/supabase';
@@ -38,6 +39,19 @@ const CalcomPage: React.FC = () => {
 
   if (loading) {
     return <PageSkeleton />;
+  }
+
+  if (!calConnected) {
+    return (
+      <ServiceEmptyState
+        icon={<Calendar className="w-7 h-7 text-purple-600" />}
+        iconBg="bg-purple-50"
+        title="Cal.com Not Connected"
+        description="Connect your Cal.com account to enable appointment reminders and automatic review requests after every booking."
+        setupLabel="Connect Cal.com"
+        setupTo="/dashboard/reminders"
+      />
+    );
   }
 
   return (
@@ -180,21 +194,6 @@ const CalcomPage: React.FC = () => {
         </ul>
       </motion.div>
 
-      {/* Setup CTA if not connected */}
-      {!calConnected && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="bg-white rounded-xl border-2 border-dashed border-gray-300 p-8 text-center"
-        >
-          <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Connect Cal.com to Get Started</h3>
-          <p className="text-gray-600 mb-4 max-w-md mx-auto">
-            Go to the Reminders page and enter your Cal.com API key to connect your calendar and start receiving booking events.
-          </p>
-        </motion.div>
-      )}
     </div>
   );
 };
