@@ -19,7 +19,7 @@ const ContainerScroll = React.forwardRef<
     <div
       ref={ref}
       className={cn("relative w-full", className)}
-      style={{ perspective: "1000px", ...props.style }}
+      style={{ ...props.style }}
       {...props}
     >
       {children}
