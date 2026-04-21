@@ -160,7 +160,7 @@ const SetupLoading: React.FC = () => {
 
           // Navigate after fade-out transition completes
           setTimeout(() => {
-            navigate('/dashboard?setupCompleted=true', { replace: true });
+            navigate('/dashboard/getting-started?setupCompleted=true', { replace: true });
           }, 800);
         }, 600);
       }
