@@ -17,7 +17,7 @@ import {
   LinkSquare01Icon,
   ZapIcon,
   PhoneOff01Icon,
-  BubbleChatIcon,
+  BubbleChatNotificationIcon,
   MessageCircleReplyIcon,
   Globe02Icon,
   Megaphone01Icon,
