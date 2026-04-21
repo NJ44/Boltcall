@@ -790,7 +790,7 @@ const Header: React.FC = () => {
               <div className="space-y-3 pt-4">
                 {isAuthenticated ? (
                   <Link
-                    to="/dashboard"
+                    to="/dashboard/getting-started"
                     onClick={() => setIsMenuOpen(false)}
                     className="block w-full py-3 text-base font-semibold rounded-lg bg-brand-blue text-white hover:bg-brand-blueDark transition-colors text-center"
                   >
