@@ -80,8 +80,9 @@ const Terms = React.lazy(() => import('../pages/Terms'));
 const Contact = React.lazy(() => import('../pages/Contact'));
 const BookCall = React.lazy(() => import('../pages/BookCall'));
 const About = React.lazy(() => import('../pages/About'));
-const Setup = React.lazy(() => import('../pages/Setup'));
-const SetupLoading = React.lazy(() => import('../pages/SetupLoading'));
+// Setup is eagerly loaded — lazy + Suspense(fallback=null) caused a blank screen on first visit
+import Setup from '../pages/Setup';
+import SetupLoading from '../pages/SetupLoading';
 const PricingPage = React.lazy(() => import('../pages/PricingPage'));
 const Documentation = React.lazy(() => import('../pages/Documentation'));
 const ApiDocsPage = React.lazy(() => import('../pages/ApiDocsPage'));
