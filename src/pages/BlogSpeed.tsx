@@ -134,7 +134,6 @@ const BlogSpeed: React.FC = () => {
           </p>
         </motion.div>
 
-
         {/* Table of Contents */}
         <div className="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-12">
           <h2 className="text-base font-bold text-gray-900 mb-4">In This Article</h2>
@@ -200,11 +199,6 @@ const BlogSpeed: React.FC = () => {
                 </li>
               </ul>
             </div>
-
-          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-            <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Responding to a web-generated lead within one minute increases the odds of qualifying that lead by nearly 400 percent compared to waiting even five minutes. Speed is not a courtesy — it is the single most important variable in lead conversion.&rdquo;</p>
-            <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Dr. James Oldroyd, MIT Sloan School of Management, <em>Speed-to-Lead Research</em></footer>
-          </blockquote>
 
           </div>
         </motion.section>
@@ -345,10 +339,6 @@ const BlogSpeed: React.FC = () => {
               60 seconds, you're leaving money on the table. A lot of money.
             </p>
             
-            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;The businesses that will win the next decade are not those with the most resources — they are those that move fastest. Response time is the new competitive moat, and AI is the only way to defend it around the clock.&rdquo;</p>
-              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Salesforce Research, <em>State of the Connected Customer Report</em> (2024)</footer>
-            </blockquote>
             <p>
               The 391% advantage is real. The data is clear. And the solution is here. 
               The question is: will you be fast enough to capture it?
@@ -621,28 +611,6 @@ const BlogSpeed: React.FC = () => {
           <TableOfContents headings={headings} />
         </div>
       </div>
-
-
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Speed to Lead Data Table */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

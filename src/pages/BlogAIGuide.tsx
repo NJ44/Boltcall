@@ -44,8 +44,6 @@ const BlogAIGuide: React.FC = () => {
 
     };
 
-
-
     const articleSchema = {
 
       "@context": "https://schema.org",
@@ -88,8 +86,6 @@ const BlogAIGuide: React.FC = () => {
 
     };
 
-
-
     const existingScript = document.getElementById('collection-schema');
 
     if (existingScript) existingScript.remove();
@@ -97,8 +93,6 @@ const BlogAIGuide: React.FC = () => {
     const existingArticle = document.getElementById('ai-guide-article-schema');
 
     if (existingArticle) existingArticle.remove();
-
-
 
     const script = document.createElement('script');
 
@@ -110,8 +104,6 @@ const BlogAIGuide: React.FC = () => {
 
     document.head.appendChild(script);
 
-
-
     const articleScript = document.createElement('script');
 
     articleScript.id = 'ai-guide-article-schema';
@@ -121,9 +113,6 @@ const BlogAIGuide: React.FC = () => {
     articleScript.text = JSON.stringify(articleSchema);
 
     document.head.appendChild(articleScript);
-
-
-
 
     // FAQ schema
     const existingFaqScript = document.getElementById('schema-faq-guide');
@@ -174,8 +163,6 @@ const BlogAIGuide: React.FC = () => {
     };
 
   }, []);
-
-
 
   const levels = [
 
@@ -265,9 +252,6 @@ const BlogAIGuide: React.FC = () => {
 
   ];
 
-
-
-
   const faqs = [
     {
       q: 'How can AI improve customer service for my business?',
@@ -335,8 +319,6 @@ const BlogAIGuide: React.FC = () => {
 
             </h1>
 
-
-
             {/* Author byline */}
 
             <p className="text-sm text-gray-400 mb-6">
@@ -344,8 +326,6 @@ const BlogAIGuide: React.FC = () => {
               Written by the Boltcall Team &middot; Updated April 2026
 
             </p>
-
-
 
             {/* Intro paragraph */}
 
@@ -360,8 +340,6 @@ const BlogAIGuide: React.FC = () => {
               to fully set up.
 
             </p>
-
-
 
             {/* TL;DR box */}
 
@@ -381,29 +359,15 @@ const BlogAIGuide: React.FC = () => {
 
             </div>
 
-
-
           </motion.div>
 
         </div>
 
       </section>
 
-
-
-
-
       {/* Expert Quote 1 */}
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-
-          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;AI will deliver more value to small businesses in the next five years than any other technology in the past two decades. The ability to automate routine customer interactions — calls, bookings, follow-ups — gives small operators enterprise-level capabilities at a fraction of the cost.&rdquo;</p>
-
-          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; McKinsey Global Institute, <em>The Age of AI: Automation and the Future of Work</em> (2024)</footer>
-
-        </blockquote>
 
       </section>
 
@@ -447,10 +411,6 @@ const BlogAIGuide: React.FC = () => {
 
       </section>
 
-
-
-
-
       {/* Real-World Use Cases */}
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -486,8 +446,6 @@ const BlogAIGuide: React.FC = () => {
         </div>
 
       </section>
-
-
 
       {/* Pros & Cons */}
 
@@ -543,9 +501,6 @@ const BlogAIGuide: React.FC = () => {
 
       </section>
 
-
-
-
       {/* Boltcall Plans at a Glance */}
       <section className="my-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Boltcall Plans at a Glance</h2>
@@ -582,16 +537,6 @@ const BlogAIGuide: React.FC = () => {
       <section id="sources" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
         <div className="bg-gray-800 border border-gray-700 rounded-xl p-8">
-
-
-
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-
-          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Small businesses that adopt AI tools for customer communication see an average 30% reduction in operational costs within the first year, while simultaneously improving response rates and customer satisfaction scores.&rdquo;</p>
-
-          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Harvard Business Review, <em>How Small Businesses Are Winning With AI</em> (2024)</footer>
-
-        </blockquote>
 
           <h2 className="text-2xl font-bold text-white mb-6">Sources &amp; Further Reading</h2>
 
@@ -683,8 +628,6 @@ const BlogAIGuide: React.FC = () => {
 
       </section>
 
-
-
       {/* Why Boltcall Section */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <section className="my-10 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
@@ -705,7 +648,6 @@ const BlogAIGuide: React.FC = () => {
         </section>
       </section>
 
-
       {/* FAQ Section */}
       <section id="faq" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Frequently Asked Questions</h2>
@@ -720,27 +662,6 @@ const BlogAIGuide: React.FC = () => {
         </div>
       </section>
 
-
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
 
     </div>
@@ -748,8 +669,6 @@ const BlogAIGuide: React.FC = () => {
   );
 
 };
-
-
 
 export default BlogAIGuide;
 

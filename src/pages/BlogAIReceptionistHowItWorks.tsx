@@ -76,7 +76,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
-
     const bcScript = document.createElement('script');
     bcScript.type = 'application/ld+json';
     bcScript.id = 'breadcrumb-jsonld';
@@ -105,7 +104,8 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-left mb-4"
-          >
+          >
+
             <Breadcrumbs items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
@@ -146,10 +146,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
           </p>
         </motion.div>
 
-        <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-          <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;Large language models have fundamentally changed what is possible in voice automation. Today's AI can maintain context across a multi-turn phone conversation, extract intent, and trigger real-world actions — all in under 500 milliseconds. This is not a chatbot; it's a cognitive agent.&rdquo;</p>
-          <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Andrew Ng, Co-Founder of Coursera &amp; DeepLearning.AI, <em>AI for Everyone</em> (2024)</footer>
-        </blockquote>
         {/* Key Points Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -170,7 +166,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
                   <li key="real-world-use-cases"><a href="#real-world-use-cases" className="text-blue-600 hover:underline text-sm">Real-World Use Cases</a></li>
             </ol>
           </div>
-
 
           <h2 id="how-ai-receptionists-work-at-a-glance" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
@@ -359,12 +354,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
               Understanding how AI receptionists work reveals their real business value:
             </p>
 
-            <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-              <p className="text-lg text-gray-700 italic leading-relaxed">&ldquo;By 2026, AI-powered customer service agents will handle 20% of all customer service interactions, saving businesses more than $80 billion annually. Voice AI is the fastest-growing segment of this shift.&rdquo;</p>
-              <footer className="mt-3 text-sm font-semibold text-gray-600">&mdash; Gartner Research, <em>AI Adoption in SMBs</em> (2024)</footer>
-            </blockquote>
-
-
             <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-2 flex items-center gap-2">
               <TrendingUp className="w-6 h-6 text-blue-600" />
               Speed = Revenue
@@ -403,7 +392,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
             </p>
           </div>
         </motion.section>
-
 
         {/* Mini Case Studies */}
         <motion.section
@@ -522,7 +510,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
         </div>
       </div>
 
-
       {/* How AI Receptionist Works Step-by-Step Table */}
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -562,26 +549,6 @@ const BlogAIReceptionistHowItWorks: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

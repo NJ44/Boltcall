@@ -73,7 +73,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
     personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
     document.head.appendChild(personScript);
 
-
     const bcScript = document.createElement('script');
     bcScript.type = 'application/ld+json';
     bcScript.id = 'breadcrumb-jsonld';
@@ -368,7 +367,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
             </ol>
           </div>
 
-
           <h2 id="why-boltcall-stands-out-for-local-busine" className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 flex items-start gap-3">
             <div className="w-1 self-stretch bg-blue-600 rounded-full"></div>
             Why Boltcall Stands Out for Local Businesses
@@ -502,7 +500,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
           </div>
         </motion.section>
 
-
         {/* Pros & Cons */}
         <section className="my-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Pros &amp; Cons of Using an AI Receptionist Tool</h2>
@@ -532,7 +529,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
             </div>
           </div>
         </section>
-
 
         {/* AI Receptionist Tools Feature Comparison Table */}
         <section className="my-10">
@@ -572,7 +568,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
           <p className="text-xs text-gray-500 mt-3">Data current as of April 2026. Pricing and features may change — verify directly with each provider.</p>
         </section>
 
-
         {/* Competitor Comparison Table */}
         <section className="my-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Boltcall vs Ruby vs Smith.ai vs AnswerForce</h2>
@@ -604,17 +599,8 @@ const BlogAIReceptionistComparison: React.FC = () => {
           <p className="text-xs text-gray-500 mt-3">Data current as of April 2026. Verify directly with each provider for the latest pricing.</p>
         </section>
 
-
         <section className="my-10">
-          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-            <p className="text-lg text-gray-700 italic leading-relaxed">"The AI receptionist tools that win in 2026 aren't just answering calls — they're completing the booking on the first interaction. Any system that hands the lead back to a human before confirmation has already lost the race."</p>
-            <footer className="mt-3 text-sm font-semibold text-gray-600">— Stephanie Nguyen, AI & Automation Analyst, G2 Market Research</footer>
-          </blockquote>
 
-          <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-            <p className="text-lg text-gray-700 italic leading-relaxed">"For small and medium local businesses, the key evaluation criterion for an AI receptionist isn't accuracy — it's conversion. How many callers walk away with a confirmed appointment? That single metric separates the top-performing platforms from the rest."</p>
-            <footer className="mt-3 text-sm font-semibold text-gray-600">— Tom Castillo, Head of Product Research, Capterra Business Software Reviews</footer>
-          </blockquote>
         </section>
 
         {/* Editor's Note */}
@@ -658,27 +644,6 @@ const BlogAIReceptionistComparison: React.FC = () => {
         </motion.div>
       </article>
 
-
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

@@ -192,16 +192,6 @@ const BlogAfterHoursLeadResponse: React.FC = () => {
                   that budget is producing leads that hit voicemail.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-                  <p className="text-lg text-gray-700 italic leading-relaxed">
-                    &ldquo;About 42% of inbound leads arrived after hours or on weekends, highlighting a critical
-                    operational challenge for service businesses that rely on phone-based intake.&rdquo;
-                  </p>
-                  <footer className="mt-3 text-sm font-semibold text-gray-600">
-                    &mdash; Blazeo, <em>2026 Speed-to-Lead Benchmark Report</em>
-                  </footer>
-                </blockquote>
-
                 <p>
                   The reason is simple: homeowners search for services when they're home. That means evenings,
                   weekends, and early mornings. A pipe bursts at 9 PM. An AC unit dies on Saturday afternoon. A
@@ -446,15 +436,6 @@ const BlogAfterHoursLeadResponse: React.FC = () => {
                   They're going to call the next company on the list until someone picks up.
                 </p>
 
-                <blockquote className="border-l-4 border-blue-500 pl-6 my-8 bg-blue-50 rounded-r-xl py-4 pr-4">
-                  <p className="text-lg text-gray-700 italic leading-relaxed">
-                    &ldquo;Responding within 60 seconds can increase conversions by 391%. Waiting five minutes
-                    slashes chances of qualifying a lead by 80%.&rdquo;
-                  </p>
-                  <footer className="mt-3 text-sm font-semibold text-gray-600">
-                    &mdash; Dr. James Oldroyd, MIT Sloan School of Management
-                  </footer>
-                </blockquote>
               </div>
             </motion.section>
 
