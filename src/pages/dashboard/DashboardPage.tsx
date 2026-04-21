@@ -12,9 +12,12 @@ import { useSubscription } from '../../contexts/SubscriptionContext';
 const DashboardPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
+  const [agentCustomizations, setAgentCustomizations] = useState<AgentCustomization[]>([]);
 
   const fetchLiveData = useDashboardStore((s) => s.fetchLiveData);
   const hasFetchedLiveData = useRef(false);
+  const { user } = useAuth();
+  const { planLevel } = useSubscription();
 
   // Fetch live stats for TodayGlanceCard — guarded by ref to prevent duplicate fires
   useEffect(() => {
