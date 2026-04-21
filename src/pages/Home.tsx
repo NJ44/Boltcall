@@ -100,7 +100,7 @@ const Home: React.FC = () => {
             </LazySection>
           </div>
 
-          <div className="relative md:-top-[255px] md:mt-24 bg-white -mb-16 md:-mb-16">
+          <div className="relative md:-top-[255px] bg-white -mb-16 md:-mb-16">
             <LazySection rootMargin="400px" minHeight="400px">
               <Suspense fallback={<div className="min-h-[400px]" />}>
                 <FAQ />
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
             </LazySection>
           </div>
 
-          <div className="relative md:-top-[255px] md:mt-24 bg-white">
+          <div className="relative md:-top-[255px] bg-white">
             <LazySection rootMargin="400px" minHeight="300px">
               <Suspense fallback={<div className="min-h-[300px]" />}>
                 <FinalCTA />
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
             </LazySection>
           </div>
 
-          <div className="relative md:-top-[255px] md:mt-24">
+          <div className="relative md:-top-[255px]">
             <LazySection rootMargin="400px" minHeight="400px">
               <Suspense fallback={<div className="min-h-[400px]" />}>
                 <Footer />
