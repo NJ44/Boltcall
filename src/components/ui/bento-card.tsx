@@ -100,7 +100,7 @@ const TABS: TabConfig[] = [
   {
     id: "whatsapp",
     label: "WhatsApp",
-    icon: MessageCircle01Icon,
+    icon: MessageCircleReplyIcon,
     header: "WhatsApp Messaging",
     description: "Auto-reply to WhatsApp leads.",
     section: "services",
