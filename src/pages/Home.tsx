@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LazySection from '../components/LazySection';
 import BentoCard from '../components/ui/bento-card';
-import GlassStats from '../components/GlassStats';
 
 // Lazy load below-the-fold components to reduce initial bundle
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
@@ -59,9 +58,6 @@ const Home: React.FC = () => {
             <BentoCard />
           </section>
 
-          {/* Glass stats: 22s / 248 leads / 91% booked + feature cards */}
-          <GlassStats />
-
           {/* HowItWorks — first below-fold section, preload aggressively */}
           <div className="relative mt-0 md:mt-0 md:top-[220px]">
             <LazySection rootMargin="500px" minHeight="600px">
@@ -72,7 +68,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* StickyScrollSection — "Why Businesses Choose BoltCall", visible on all breakpoints */}
-          <div className="relative md:-top-[200px]" style={{ minHeight: '400px' }}>
+          <div className="relative md:top-[100px]" style={{ minHeight: '400px' }}>
             <LazySection rootMargin="400px" minHeight="400px">
               <Suspense fallback={<div className="h-[400px] w-full" />}>
                 <StickyScrollSection />

@@ -107,7 +107,7 @@ const HowItWorks: React.FC = () => {
                 index={index}
                 incrementY={40}
                 className="rounded-2xl border-2 border-gray-200 bg-white shadow-2xl overflow-hidden"
-                style={{ maxWidth: '460px', minHeight: '320px', top: `${230 + index * 40}px` }}
+                style={{ maxWidth: '460px', minHeight: '320px', top: `${180 + index * 40}px` }}
               >
                 <div className="p-5 md:p-8 h-full">
                   <div className="flex items-center mb-3">

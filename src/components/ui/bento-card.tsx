@@ -103,18 +103,16 @@ const BentoCard = () => {
         className="w-full max-w-5xl transition-all duration-500 hover:-translate-y-1 m-0 relative"
         style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
-        {/* Colorful glow behind the glass — bleeds through backdrop-filter blur */}
+      <GlassBox variant="thick" clip="lg" rounded="rounded-3xl" className="w-full">
+        {/* Colorful gradient ON TOP of the glass surface, behind content */}
         <div
           className="absolute inset-x-0 top-0 pointer-events-none"
           style={{
-            height: "55%",
-            zIndex: 0,
-            filter: "blur(32px)",
-            background: "radial-gradient(ellipse 65% 80% at 12% 0%, rgba(99,102,241,0.80) 0%, transparent 60%), radial-gradient(ellipse 55% 70% at 82% 0%, rgba(236,72,153,0.65) 0%, transparent 55%), radial-gradient(ellipse 45% 55% at 50% 0%, rgba(34,211,238,0.50) 0%, transparent 52%)",
+            height: "50%",
+            background: "linear-gradient(135deg, rgba(99,102,241,0.32) 0%, rgba(139,92,246,0.24) 28%, rgba(34,211,238,0.18) 60%, rgba(236,72,153,0.22) 100%)",
+            borderRadius: "1.5rem 1.5rem 0 0",
           }}
         />
-        <div className="relative" style={{ zIndex: 1 }}>
-      <GlassBox variant="thick" clip="lg" rounded="rounded-3xl" className="w-full">
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
             Platform Preview
@@ -190,7 +188,6 @@ const BentoCard = () => {
           </div>
         </div>
       </GlassBox>
-        </div>
       </div>
     </div>
   );
