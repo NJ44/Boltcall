@@ -85,3 +85,18 @@ dist/            # Build output (do not edit)
 **BEFORE writing any blog page** (any file matching `Blog*.tsx` in `src/pages/` or any new `/blog/*` route), you MUST first invoke the Skill tool with `skill: "boltcall-blog-writer"`. This loads the full Searchable 10-section framework, title patterns, visual components, and boilerplate requirements.
 
 No blog page may be written without this skill active. This applies to every new blog post — no exceptions.
+
+## Skill routing
+
+When the user's request matches an available gstack skill, ALWAYS invoke it using the Skill
+tool as your FIRST action. Do NOT answer directly, do NOT use other tools first.
+
+- Bugs, errors, "why is this broken", unexpected behavior → invoke gstack:debug
+- "Does this work?", "test this page", verify a deploy → invoke gstack:qa-only
+- Ship, deploy, push, create PR → invoke gstack:ship
+- Code review, check my diff → invoke gstack:review
+- Security questions, auth review, API exposure → invoke gstack:cso
+- Architecture or refactor decisions → invoke gstack:plan-eng-review
+- Design polish, visual audit → invoke gstack:design-review
+- Save progress, checkpoint session → invoke gstack:context-save
+- Post-deploy verification → invoke gstack:post-deploy
