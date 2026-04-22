@@ -102,21 +102,21 @@ const BentoCard = () => {
         style={{
           boxShadow: "0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08), inset 0 1.5px 0 rgba(255,255,255,0.9)",
           transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
-          border: "1.5px solid rgba(255,255,255,0.80)",
+          border: "1.5px solid rgba(255,255,255,0.90)",
         }}
       >
         {/* Layer 1: Frosted backdrop */}
         <div
           className="absolute inset-0 z-0 rounded-3xl"
           style={{
-            backdropFilter: "blur(16px) saturate(200%) brightness(1.05)",
-            WebkitBackdropFilter: "blur(16px) saturate(200%) brightness(1.05)",
+            backdropFilter: "blur(48px) saturate(220%) brightness(1.08)",
+            WebkitBackdropFilter: "blur(48px) saturate(220%) brightness(1.08)",
           }}
         />
         {/* Layer 2: Cool white tint */}
         <div
           className="absolute inset-0 z-10 rounded-3xl"
-          style={{ background: "rgba(220, 235, 255, 0.35)" }}
+          style={{ background: "rgba(255, 255, 255, 0.65)" }}
         />
         {/* Layer 3: SVG glass surface — grain + specular lighting, renders visibly on any background */}
         <svg className="absolute inset-0 w-full h-full z-20 pointer-events-none" style={{ borderRadius: "1.5rem" }}>
@@ -138,9 +138,9 @@ const BentoCard = () => {
             </clipPath>
           </defs>
           {/* Specular glints on glass surface */}
-          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" />
+          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" opacity="0.7" />
           {/* Fine grain for glass texture */}
-          <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" />
+          <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" opacity="0.45" />
         </svg>
         {/* Layer 4: Rim shadows + edge catches */}
         <div
@@ -154,7 +154,7 @@ const BentoCard = () => {
           className="absolute inset-x-0 top-0 z-20 pointer-events-none"
           style={{
             height: "42%",
-            background: "linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.20) 35%, transparent 100%)",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0.28) 35%, transparent 100%)",
             borderRadius: "1.5rem 1.5rem 0 0",
           }}
         />
