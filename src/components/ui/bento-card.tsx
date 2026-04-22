@@ -100,13 +100,29 @@ const BentoCard = () => {
       <div
         className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.2] transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "linear-gradient(to bottom, rgba(15,15,18,0.88) 0%, rgba(20,20,28,0.6) 40%, rgba(255,255,255,0.04) 75%)",
-          backdropFilter: "blur(48px) saturate(200%)",
-          WebkitBackdropFilter: "blur(48px) saturate(200%)",
-          boxShadow:
-            "0 40px 80px -20px rgba(0,0,0,0.4), 0 20px 40px -20px rgba(59,130,246,0.3), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.18)",
+          background: [
+            "radial-gradient(ellipse at 18% 35%, rgba(59,130,246,0.42) 0%, transparent 52%)",
+            "radial-gradient(ellipse at 82% 8%, rgba(139,92,246,0.32) 0%, transparent 48%)",
+            "radial-gradient(ellipse at 55% 90%, rgba(6,182,212,0.22) 0%, transparent 55%)",
+            "linear-gradient(155deg, rgba(10,16,40,0.94) 0%, rgba(16,10,42,0.88) 45%, rgba(8,18,38,0.92) 100%)",
+          ].join(", "),
+          backdropFilter: "blur(48px) saturate(220%) brightness(1.05)",
+          WebkitBackdropFilter: "blur(48px) saturate(220%) brightness(1.05)",
+          boxShadow: [
+            "0 40px 80px -20px rgba(0,0,0,0.55)",
+            "0 20px 40px -20px rgba(59,130,246,0.4)",
+            "0 0 0 1px rgba(255,255,255,0.12)",
+            "inset 0 1px 0 rgba(255,255,255,0.22)",
+            "inset 0 -1px 0 rgba(59,130,246,0.18)",
+            "inset 1px 0 0 rgba(255,255,255,0.06)",
+          ].join(", "),
         }}
       >
+        {/* Liquid glass specular highlight */}
+        <div className="absolute inset-x-0 top-0 h-[160px] pointer-events-none z-0" style={{
+          background: "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 60%, transparent 100%)",
+          borderRadius: "1.5rem 1.5rem 0 0",
+        }} />
         <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
             Platform Preview
