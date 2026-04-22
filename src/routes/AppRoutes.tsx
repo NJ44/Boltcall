@@ -17,6 +17,7 @@ const PlanGate = React.lazy(() => import('../components/PlanGate'));
 import AeoGlobalIntro from '../components/seo/AeoGlobalIntro';
 // ── Eager loads (critical path — homepage only) ─────────────────────────
 import Home from '../pages/Home';
+import GlassDemo from '../pages/GlassDemo';
 import BlogSchemaWrapper from '../components/BlogSchemaWrapper';
 // Setup is eagerly loaded — lazy+Suspense(fallback=null) caused blank screen on first visit
 import Setup from '../pages/Setup';
@@ -279,6 +280,7 @@ const NavigationWrapper: React.FC = () => {
     <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/glass-demo" element={<GlassDemo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
