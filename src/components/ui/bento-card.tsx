@@ -98,13 +98,13 @@ const BentoCard = () => {
   return (
     <div className="flex items-center justify-center w-full antialiased">
       <div
-        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.1] transition-all duration-500 hover:-translate-y-1 m-0"
+        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.5] transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "rgba(8,11,18,0.82)",
-          backdropFilter: "blur(48px) saturate(180%)",
-          WebkitBackdropFilter: "blur(48px) saturate(180%)",
+          background: "rgba(255,255,255,0.18)",
+          backdropFilter: "blur(48px) saturate(200%)",
+          WebkitBackdropFilter: "blur(48px) saturate(200%)",
           boxShadow:
-            "0 40px 80px -20px rgba(0,0,0,0.5), 0 20px 40px -20px rgba(59,130,246,0.3), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.1)",
+            "0 32px 64px -16px rgba(0,0,0,0.1), 0 16px 40px -12px rgba(59,130,246,0.2), 0 0 0 1px rgba(255,255,255,0.6), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.04)",
         }}
       >
         {/* Liquid glass specular highlight */}
@@ -116,7 +116,7 @@ const BentoCard = () => {
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
             Platform Preview
           </h2>
-          <p className="text-lg sm:text-2xl text-white font-medium leading-snug max-w-[520px]">
+          <p className="text-lg sm:text-2xl text-slate-900 font-semibold leading-snug max-w-[520px]">
             Every lead answered. Every booking locked in. Automatically.
           </p>
         </div>
