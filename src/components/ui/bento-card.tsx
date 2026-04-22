@@ -130,7 +130,7 @@ const BentoCard = () => {
               <feComposite in="specular" operator="arithmetic" k1="0" k2="0.3" k3="0" k4="0" />
             </filter>
             <filter id="glass-grain" x="0%" y="0%" width="100%" height="100%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.8 0.9" numOctaves="4" stitchTiles="stitch" result="grain" />
+              <feTurbulence type="fractalNoise" baseFrequency="1.2 1.4" numOctaves="4" stitchTiles="stitch" result="grain" />
               <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.055 0" in="grain" />
             </filter>
             <clipPath id="glass-clip">
@@ -138,9 +138,9 @@ const BentoCard = () => {
             </clipPath>
           </defs>
           {/* Specular glints on glass surface */}
-          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" opacity="0.7" />
+          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" opacity="0.45" />
           {/* Fine grain for glass texture */}
-          <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" opacity="0.45" />
+          <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" opacity="0.25" />
         </svg>
         {/* Layer 4: Rim shadows + edge catches */}
         <div
