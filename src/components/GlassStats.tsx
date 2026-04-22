@@ -21,26 +21,6 @@ const InfoCard = ({variant,title,desc,badge,dark=false}:{variant:GlassVariant;ti
     <p className={"text-sm leading-relaxed " + dtcs(dark)}>{desc}</p>
   </GlassBox>
 );
-const Pill = ({variant,label,dark=false}:{variant:GlassVariant;label:string;dark?:boolean}) => (
-  <GlassBox variant={variant} rounded="rounded-full" clip="pill" className="cursor-pointer hover:scale-105 transition-transform duration-300">
-    <div className={"px-5 py-2.5 text-sm font-semibold " + dtc(dark)}>{label}</div>
-  </GlassBox>
-);
-const WidePanel = ({variant,dark=false}:{variant:GlassVariant;dark?:boolean}) => (
-  <GlassBox variant={variant} className="p-6" clip="lg">
-    <div className="flex items-center justify-between gap-4">
-      <div className="flex-1">
-        <p className={"text-[10px] uppercase tracking-widest font-semibold mb-1 " + dtcx(dark)}>Boltcall Platform</p>
-        <h3 className={"text-xl font-bold " + dtc(dark)}>Speed-to-Lead, Automated</h3>
-        <p className={"text-sm mt-1.5 max-w-xs " + dtcs(dark)}>Every inbound lead answered instantly. Every appointment booked automatically.</p>
-      </div>
-      <div className="flex flex-col gap-2 items-end shrink-0">
-        <Pill variant={dark ? "clear" : "dark"} label="Get Started" dark={dark} />
-        <Pill variant={variant} label={"variant: " + variant} dark={dark} />
-      </div>
-    </div>
-  </GlassBox>
-);
 
 const GlassStats: React.FC = () => (
   <section
