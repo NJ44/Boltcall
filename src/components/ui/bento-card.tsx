@@ -116,9 +116,9 @@ const BentoCard = () => {
         {/* Layer 2: Cool white tint */}
         <div
           className="absolute inset-0 z-10 rounded-3xl"
-          style={{ background: "rgba(255, 255, 255, 0.65)" }}
+          style={{ background: "rgba(232, 241, 255, 0.70)" }}
         />
-        {/* Layer 3: SVG glass surface — grain + specular lighting, renders visibly on any background */}
+        {/* Layer 3: SVG glass surface ï¿½ grain + specular lighting, renders visibly on any background */}
         <svg className="absolute inset-0 w-full h-full z-20 pointer-events-none" style={{ borderRadius: "1.5rem" }}>
           <defs>
             <filter id="glass-specular" x="0%" y="0%" width="100%" height="100%">
@@ -131,14 +131,14 @@ const BentoCard = () => {
             </filter>
             <filter id="glass-grain" x="0%" y="0%" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="1.2 1.4" numOctaves="4" stitchTiles="stitch" result="grain" />
-              <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.055 0" in="grain" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.04  0 0 0 0 0.06  0 0 0 0 0.14  0 0 0 0.11 0" in="grain" />
             </filter>
             <clipPath id="glass-clip">
               <rect width="100%" height="100%" rx="24" ry="24" />
             </clipPath>
           </defs>
           {/* Specular glints on glass surface */}
-          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" opacity="0.45" />
+          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" opacity="0.55" />
           {/* Fine grain for glass texture */}
           <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" opacity="0.25" />
         </svg>
