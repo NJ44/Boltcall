@@ -97,46 +97,71 @@ const BentoCard = () => {
 
   return (
     <div className="flex items-center justify-center w-full antialiased">
+      {/* SVG glass distortion filter */}
+      <svg style={{ display: "none" }}>
+        <filter
+          id="bento-glass-distortion"
+          x="0%" y="0%" width="100%" height="100%"
+          filterUnits="objectBoundingBox"
+        >
+          <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence" />
+          <feComponentTransfer in="turbulence" result="mapped">
+            <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+          </feComponentTransfer>
+          <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+          <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lightingColor="white" result="specLight">
+            <fePointLight x="-200" y="-200" z="300" />
+          </feSpecularLighting>
+          <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
+          <feDisplacementMap in="SourceGraphic" in2="softMap" scale="180" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
+
       <div
         className="group relative w-full max-w-5xl overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "rgba(195, 218, 255, 0.52)",
-          backdropFilter: "blur(80px) saturate(260%) brightness(1.08) contrast(0.95)",
-          WebkitBackdropFilter: "blur(80px) saturate(260%) brightness(1.08) contrast(0.95)",
+          boxShadow: "0 8px 8px rgba(0,0,0,0.18), 0 0 32px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9)",
+          transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
           border: "1.5px solid rgba(255,255,255,0.75)",
-          boxShadow: [
-            "0 32px 80px -16px rgba(0,0,0,0.14)",
-            "0 8px 32px -4px rgba(59,130,246,0.18)",
-            "inset 0 2px 0 rgba(255,255,255,0.95)",
-            "inset 0 -1px 0 rgba(150,180,255,0.25)",
-            "inset 1.5px 0 0 rgba(255,255,255,0.65)",
-            "inset -1px 0 0 rgba(200,220,255,0.3)",
-          ].join(", "),
         }}
       >
-        {/* Top specular highlight — main glass shine */}
-        <div className="absolute inset-x-0 top-0 pointer-events-none z-0" style={{
-          height: "50%",
-          background: "linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.28) 30%, rgba(255,255,255,0.0) 100%)",
-          borderRadius: "1.5rem 1.5rem 0 0",
-        }} />
-        {/* Iridescent shimmer — diagonal color refraction */}
-        <div className="absolute inset-0 pointer-events-none z-0" style={{
-          background: "linear-gradient(135deg, rgba(190,210,255,0.22) 0%, rgba(220,200,255,0.12) 40%, rgba(180,240,230,0.10) 70%, rgba(210,225,255,0.18) 100%)",
-          borderRadius: "1.5rem",
-        }} />
-        {/* Left edge bright refraction line */}
-        <div className="absolute inset-y-0 left-0 w-[2px] pointer-events-none z-0" style={{
-          background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.5) 40%, rgba(200,220,255,0.2) 100%)",
-          borderRadius: "1.5rem 0 0 1.5rem",
-        }} />
-        {/* Bottom edge blue shimmer */}
-        <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0" style={{
-          height: "30%",
-          background: "linear-gradient(0deg, rgba(160,190,255,0.18) 0%, rgba(160,190,255,0.0) 100%)",
-          borderRadius: "0 0 1.5rem 1.5rem",
-        }} />
-        <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
+        {/* Layer 1: Distorted frosted glass backdrop */}
+        <div
+          className="absolute inset-0 z-0 overflow-hidden rounded-3xl"
+          style={{
+            backdropFilter: "blur(12px) saturate(180%)",
+            WebkitBackdropFilter: "blur(12px) saturate(180%)",
+            filter: "url(#bento-glass-distortion)",
+            isolation: "isolate",
+          }}
+        />
+        {/* Layer 2: White glass tint */}
+        <div
+          className="absolute inset-0 z-10 rounded-3xl"
+          style={{ background: "rgba(255, 255, 255, 0.28)" }}
+        />
+        {/* Layer 3: Rim lighting — top specular + edge catches */}
+        <div
+          className="absolute inset-0 z-20 rounded-3xl overflow-hidden pointer-events-none"
+          style={{
+            boxShadow: [
+              "inset 2px 2px 1px 0 rgba(255,255,255,0.65)",
+              "inset -1px -1px 1px 1px rgba(255,255,255,0.45)",
+            ].join(", "),
+          }}
+        />
+        {/* Top specular gradient — the bright catch at the glass edge */}
+        <div
+          className="absolute inset-x-0 top-0 z-20 pointer-events-none"
+          style={{
+            height: "45%",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.18) 35%, rgba(255,255,255,0.0) 100%)",
+            borderRadius: "1.5rem 1.5rem 0 0",
+          }}
+        />
+        <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
             Platform Preview
           </h2>
@@ -145,7 +170,7 @@ const BentoCard = () => {
           </p>
         </div>
 
-        <div className="relative w-full h-[360px] sm:h-[480px] overflow-hidden rounded-2xl sm:rounded-[2rem]">
+        <div className="relative z-30 w-full h-[360px] sm:h-[480px] overflow-hidden rounded-2xl sm:rounded-[2rem]">
           <div className="absolute top-16 left-16 w-full h-full bg-gray-800/40 rounded-3xl border border-white/[0.08] opacity-80" />
 
           <div
