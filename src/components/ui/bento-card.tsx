@@ -104,13 +104,18 @@ const BentoCard = () => {
         style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
       <GlassBox variant="thick" clip="lg" rounded="rounded-3xl" className="w-full">
-        {/* Colorful gradient ON TOP of the glass surface, behind content */}
+        {/* Blue gradient overlay across full card surface */}
         <div
-          className="absolute inset-x-0 top-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            height: "50%",
-            background: "linear-gradient(135deg, rgba(99,102,241,0.32) 0%, rgba(139,92,246,0.24) 28%, rgba(34,211,238,0.18) 60%, rgba(236,72,153,0.22) 100%)",
-            borderRadius: "1.5rem 1.5rem 0 0",
+            background: [
+              "radial-gradient(ellipse 75% 55% at 0% 0%,   rgba(37,99,235,0.42)  0%, transparent 62%)",
+              "radial-gradient(ellipse 60% 50% at 100% 0%,  rgba(99,102,241,0.38) 0%, transparent 58%)",
+              "radial-gradient(ellipse 55% 45% at 50%  0%,  rgba(14,165,233,0.30) 0%, transparent 54%)",
+              "radial-gradient(ellipse 50% 40% at 0%  100%, rgba(6,182,212,0.28)  0%, transparent 52%)",
+              "radial-gradient(ellipse 45% 38% at 100% 100%,rgba(59,130,246,0.25) 0%, transparent 50%)",
+            ].join(","),
+            borderRadius: "inherit",
           }}
         />
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
