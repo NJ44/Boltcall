@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import {
   Phone,
   PhoneCall,
@@ -8,11 +9,6 @@ import {
   Eye,
   Play,
   MessageSquare,
-  ChevronDown,
-  ChevronUp,
-  Smartphone,
-  Monitor,
-  ArrowRight,
 } from 'lucide-react';
 import { CallHistorySkeleton } from '../../components/ui/loading-skeleton';
 import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
@@ -21,7 +17,6 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
-import { useNavigate } from 'react-router-dom';
 import { PopButton } from '../../components/ui/pop-button';
 import { UnsavedChanges } from '../../components/ui/unsaved-changes';
 
@@ -56,8 +51,6 @@ const MissedCallsPage: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
   const { claimReward } = useTokens();
-  const navigate = useNavigate();
-
   // Config state
   const [configLoading, setConfigLoading] = useState(true);
   const [config, setConfig] = useState<MissedCallConfig>({
@@ -70,9 +63,6 @@ const MissedCallsPage: React.FC = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
 
-  // Setup banner state
-  const [showForwardingGuide, setShowForwardingGuide] = useState(false);
-  const [boltcallPhone, setBoltcallPhone] = useState<string | null>(null);
   const [hasPhoneNumber, setHasPhoneNumber] = useState(false);
 
   // Missed calls state
@@ -180,7 +170,6 @@ const MissedCallsPage: React.FC = () => {
           .limit(1);
 
         if (phones && phones.length > 0) {
-          setBoltcallPhone(phones[0].phone_number);
           setHasPhoneNumber(true);
         }
 
@@ -330,138 +319,21 @@ const MissedCallsPage: React.FC = () => {
     );
   }
 
+  if (!hasPhoneNumber) {
+    return (
+      <ServiceEmptyState
+        icon={<Phone className="w-7 h-7 text-blue-600" />}
+        iconBg="bg-blue-50"
+        title="No Phone Number Yet"
+        description="Get a Boltcall number (or forward your existing line) so missed calls trigger an automatic text-back to every caller."
+        setupLabel="Set Up Phone Number"
+        setupTo="/dashboard/phone-numbers"
+      />
+    );
+  }
+
   return (
     <div className="space-y-6">
-      {/* Section A: Setup Banner — show if no phone number configured */}
-      {!hasPhoneNumber && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 p-6"
-        >
-          <h2 className="text-lg font-bold text-gray-900 mb-1">Set up Missed Call Text-Back</h2>
-          <p className="text-sm text-gray-600 mb-5">
-            Choose how callers reach your AI receptionist. When calls are missed, we'll automatically text them back.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Option 1: Use a Boltcall Number */}
-            <div className="bg-white rounded-lg border border-blue-200 p-5 relative">
-              <span className="absolute -top-2.5 left-4 bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                Recommended
-              </span>
-              <div className="flex items-start gap-3 mb-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Phone className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">Use a Boltcall Number</h3>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Get a dedicated AI phone number. All calls go through your AI receptionist.
-                  </p>
-                </div>
-              </div>
-              <PopButton
-                color="blue"
-                onClick={() => navigate('/dashboard/phone-numbers')}
-                className="w-full gap-2"
-              >
-                Get a Phone Number
-                <ArrowRight className="w-4 h-4" />
-              </PopButton>
-            </div>
-
-            {/* Option 2: Forward from Your Number */}
-            <div className="bg-white rounded-lg border border-gray-200 p-5">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="p-2 bg-gray-100 rounded-lg">
-                  <Smartphone className="w-5 h-5 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">Forward from Your Number</h3>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Keep your existing number and forward unanswered calls to Boltcall.
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setShowForwardingGuide(!showForwardingGuide)}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                {showForwardingGuide ? 'Hide' : 'Show'} Setup Guide
-                {showForwardingGuide ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Forwarding Guide - expandable */}
-          {showForwardingGuide && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mt-4 bg-white rounded-lg border border-gray-200 p-5 space-y-4"
-            >
-              {boltcallPhone && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <p className="text-xs text-blue-600 font-medium mb-1">Your Boltcall Number</p>
-                  <p className="text-lg font-bold text-blue-900">{boltcallPhone}</p>
-                  <p className="text-xs text-blue-600 mt-1">Forward your calls to this number</p>
-                </div>
-              )}
-
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <Smartphone className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900">iPhone</p>
-                    <p className="text-xs text-gray-600">
-                      Settings &rarr; Phone &rarr; Call Forwarding &rarr; Enable &rarr; Enter your Boltcall number.
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Or dial <code className="bg-gray-100 px-1 rounded">*61*{boltcallPhone || '[Boltcall number]'}#</code> for no-answer forwarding only.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Smartphone className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900">Android</p>
-                    <p className="text-xs text-gray-600">
-                      Phone app &rarr; Settings &rarr; Call Forwarding &rarr; Forward when unanswered &rarr; Enter Boltcall number.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Monitor className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900">Carrier Codes</p>
-                    <div className="text-xs text-gray-600 space-y-1 mt-1">
-                      <p><strong>AT&T:</strong> <code className="bg-gray-100 px-1 rounded">*61*{boltcallPhone || '[number]'}#</code></p>
-                      <p><strong>T-Mobile:</strong> <code className="bg-gray-100 px-1 rounded">**61*{boltcallPhone || '[number]'}#</code></p>
-                      <p><strong>Verizon:</strong> <code className="bg-gray-100 px-1 rounded">*71{boltcallPhone || '[number]'}</code></p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900">Landline / VoIP</p>
-                    <p className="text-xs text-gray-600">
-                      Contact your provider to set up "no-answer forwarding" to your Boltcall number.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </motion.div>
-      )}
-
       {/* Section B: Text-Back Configuration */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
