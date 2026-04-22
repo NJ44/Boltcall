@@ -54,7 +54,7 @@ const Home: React.FC = () => {
           <Hero />
 
           {/* Boltcall Platform Preview — interactive dark bento card */}
-          <section className="relative z-[2] py-8 px-4 sm:px-8 lg:px-16 -mt-[20px]">
+          <section className="relative z-[2] py-8 px-4 sm:px-8 lg:px-16 -mt-[320px]">
             <BentoCard />
           </section>
 
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* StickyScrollSection — "Why Businesses Choose BoltCall", visible on all breakpoints */}
-          <div className="relative md:top-[100px]" style={{ minHeight: '400px' }}>
+          <div className="relative md:top-[400px]" style={{ minHeight: '400px' }}>
             <LazySection rootMargin="400px" minHeight="400px">
               <Suspense fallback={<div className="h-[400px] w-full" />}>
                 <StickyScrollSection />
