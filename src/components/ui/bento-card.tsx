@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { GlassDefs, GlassBox } from "./glass-box";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -97,67 +98,12 @@ const BentoCard = () => {
 
   return (
     <div className="flex items-center justify-center w-full antialiased">
+      <GlassDefs />
       <div
-        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 m-0"
-        style={{
-          boxShadow: "0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08), inset 0 1.5px 0 rgba(255,255,255,0.9)",
-          transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
-          border: "1.5px solid rgba(255,255,255,0.90)",
-        }}
+        className="w-full max-w-5xl transition-all duration-500 hover:-translate-y-1 m-0"
+        style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
-        {/* Layer 1: Frosted backdrop */}
-        <div
-          className="absolute inset-0 z-0 rounded-3xl"
-          style={{
-            backdropFilter: "blur(48px) saturate(220%) brightness(1.08)",
-            WebkitBackdropFilter: "blur(48px) saturate(220%) brightness(1.08)",
-          }}
-        />
-        {/* Layer 2: Cool white tint */}
-        <div
-          className="absolute inset-0 z-10 rounded-3xl"
-          style={{ background: "rgba(232, 241, 255, 0.70)" }}
-        />
-        {/* Layer 3: SVG glass surface � grain + specular lighting, renders visibly on any background */}
-        <svg className="absolute inset-0 w-full h-full z-20 pointer-events-none" style={{ borderRadius: "1.5rem" }}>
-          <defs>
-            <filter id="glass-specular" x="0%" y="0%" width="100%" height="100%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.45 0.55" numOctaves="4" seed="8" result="noise" />
-              <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
-              <feSpecularLighting in="grayNoise" surfaceScale="10" specularConstant="1.4" specularExponent="90" lightingColor="white" result="specular">
-                <fePointLight x="-80" y="-120" z="350" />
-              </feSpecularLighting>
-              <feComposite in="specular" operator="arithmetic" k1="0" k2="0.3" k3="0" k4="0" />
-            </filter>
-            <filter id="glass-grain" x="0%" y="0%" width="100%" height="100%">
-              <feTurbulence type="fractalNoise" baseFrequency="1.2 1.4" numOctaves="4" stitchTiles="stitch" result="grain" />
-              <feColorMatrix type="matrix" values="0 0 0 0 0.04  0 0 0 0 0.06  0 0 0 0 0.14  0 0 0 0.11 0" in="grain" />
-            </filter>
-            <clipPath id="glass-clip">
-              <rect width="100%" height="100%" rx="24" ry="24" />
-            </clipPath>
-          </defs>
-          {/* Specular glints on glass surface */}
-          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" opacity="0.55" />
-          {/* Fine grain for glass texture */}
-          <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" opacity="0.25" />
-        </svg>
-        {/* Layer 4: Rim shadows + edge catches */}
-        <div
-          className="absolute inset-0 z-20 rounded-3xl pointer-events-none"
-          style={{
-            boxShadow: "inset 2px 2px 1px 0 rgba(255,255,255,0.7), inset -1px -1px 1px 1px rgba(255,255,255,0.4)",
-          }}
-        />
-        {/* Layer 5: Top specular gradient */}
-        <div
-          className="absolute inset-x-0 top-0 z-20 pointer-events-none"
-          style={{
-            height: "42%",
-            background: "linear-gradient(180deg, rgba(255,255,255,0.80) 0%, rgba(255,255,255,0.28) 35%, transparent 100%)",
-            borderRadius: "1.5rem 1.5rem 0 0",
-          }}
-        />
+      <GlassBox variant="thick" clip="lg" rounded="rounded-3xl" className="w-full">
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
             Platform Preview
@@ -232,6 +178,7 @@ const BentoCard = () => {
             </div>
           </div>
         </div>
+      </GlassBox>
       </div>
     </div>
   );
