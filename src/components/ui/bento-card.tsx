@@ -97,67 +97,64 @@ const BentoCard = () => {
 
   return (
     <div className="flex items-center justify-center w-full antialiased">
-      {/* SVG glass distortion filter */}
-      <svg style={{ display: "none" }}>
-        <filter
-          id="bento-glass-distortion"
-          x="0%" y="0%" width="100%" height="100%"
-          filterUnits="objectBoundingBox"
-        >
-          <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence" />
-          <feComponentTransfer in="turbulence" result="mapped">
-            <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
-            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-          </feComponentTransfer>
-          <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
-          <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lightingColor="white" result="specLight">
-            <fePointLight x="-200" y="-200" z="300" />
-          </feSpecularLighting>
-          <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
-          <feDisplacementMap in="SourceGraphic" in2="softMap" scale="180" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-
       <div
         className="group relative w-full max-w-5xl overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          boxShadow: "0 8px 8px rgba(0,0,0,0.18), 0 0 32px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08), inset 0 1.5px 0 rgba(255,255,255,0.9)",
           transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
-          border: "1.5px solid rgba(255,255,255,0.75)",
+          border: "1.5px solid rgba(255,255,255,0.80)",
         }}
       >
-        {/* Layer 1: Distorted frosted glass backdrop */}
+        {/* Layer 1: Frosted backdrop */}
         <div
-          className="absolute inset-0 z-0 overflow-hidden rounded-3xl"
+          className="absolute inset-0 z-0 rounded-3xl"
           style={{
-            backdropFilter: "blur(12px) saturate(180%)",
-            WebkitBackdropFilter: "blur(12px) saturate(180%)",
-            filter: "url(#bento-glass-distortion)",
-            isolation: "isolate",
+            backdropFilter: "blur(16px) saturate(200%) brightness(1.05)",
+            WebkitBackdropFilter: "blur(16px) saturate(200%) brightness(1.05)",
           }}
         />
-        {/* Layer 2: White glass tint */}
+        {/* Layer 2: Cool white tint */}
         <div
           className="absolute inset-0 z-10 rounded-3xl"
-          style={{ background: "rgba(255, 255, 255, 0.28)" }}
+          style={{ background: "rgba(220, 235, 255, 0.35)" }}
         />
-        {/* Layer 3: Rim lighting — top specular + edge catches */}
+        {/* Layer 3: SVG glass surface — grain + specular lighting, renders visibly on any background */}
+        <svg className="absolute inset-0 w-full h-full z-20 pointer-events-none" style={{ borderRadius: "1.5rem" }}>
+          <defs>
+            <filter id="glass-specular" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.45 0.55" numOctaves="4" seed="8" result="noise" />
+              <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
+              <feSpecularLighting in="grayNoise" surfaceScale="10" specularConstant="1.4" specularExponent="90" lightingColor="white" result="specular">
+                <fePointLight x="-80" y="-120" z="350" />
+              </feSpecularLighting>
+              <feComposite in="specular" operator="arithmetic" k1="0" k2="0.3" k3="0" k4="0" />
+            </filter>
+            <filter id="glass-grain" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.8 0.9" numOctaves="4" stitchTiles="stitch" result="grain" />
+              <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.055 0" in="grain" />
+            </filter>
+            <clipPath id="glass-clip">
+              <rect width="100%" height="100%" rx="24" ry="24" />
+            </clipPath>
+          </defs>
+          {/* Specular glints on glass surface */}
+          <rect width="100%" height="100%" filter="url(#glass-specular)" clipPath="url(#glass-clip)" />
+          {/* Fine grain for glass texture */}
+          <rect width="100%" height="100%" filter="url(#glass-grain)" clipPath="url(#glass-clip)" />
+        </svg>
+        {/* Layer 4: Rim shadows + edge catches */}
         <div
-          className="absolute inset-0 z-20 rounded-3xl overflow-hidden pointer-events-none"
+          className="absolute inset-0 z-20 rounded-3xl pointer-events-none"
           style={{
-            boxShadow: [
-              "inset 2px 2px 1px 0 rgba(255,255,255,0.65)",
-              "inset -1px -1px 1px 1px rgba(255,255,255,0.45)",
-            ].join(", "),
+            boxShadow: "inset 2px 2px 1px 0 rgba(255,255,255,0.7), inset -1px -1px 1px 1px rgba(255,255,255,0.4)",
           }}
         />
-        {/* Top specular gradient — the bright catch at the glass edge */}
+        {/* Layer 5: Top specular gradient */}
         <div
           className="absolute inset-x-0 top-0 z-20 pointer-events-none"
           style={{
-            height: "45%",
-            background: "linear-gradient(180deg, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.18) 35%, rgba(255,255,255,0.0) 100%)",
+            height: "42%",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.20) 35%, transparent 100%)",
             borderRadius: "1.5rem 1.5rem 0 0",
           }}
         />
