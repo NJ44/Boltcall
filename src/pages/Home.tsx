@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LazySection from '../components/LazySection';
 import BentoCard from '../components/ui/bento-card';
+import GlassStats from '../components/GlassStats';
 
 // Lazy load below-the-fold components to reduce initial bundle
 const HowItWorks = lazy(() => import('../components/HowItWorks'));
@@ -57,6 +58,9 @@ const Home: React.FC = () => {
           <section className="relative z-[2] py-8 px-4 sm:px-8 lg:px-16 -mt-[320px]">
             <BentoCard />
           </section>
+
+          {/* Glass stats: 22s / 248 leads / 91% booked + feature cards */}
+          <GlassStats />
 
           {/* HowItWorks — first below-fold section, preload aggressively */}
           <div className="relative mt-0 md:mt-0 md:top-[220px]">
