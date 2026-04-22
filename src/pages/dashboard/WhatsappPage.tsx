@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import {
   MessageCircle, Send, Check, X, RefreshCw, Copy,
   Loader2, Phone, ExternalLink, Eye, EyeOff,
@@ -128,6 +129,7 @@ const WhatsappPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('connection');
   const [settings, setSettings] = useState<WhatsAppSettings | null>(null);
   const [settingsLoading, setSettingsLoading] = useState(true);
+  const [showSetupFlow, setShowSetupFlow] = useState(false);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; msg: string } | null>(null);
 
@@ -546,6 +548,19 @@ const WhatsappPage: React.FC = () => {
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (!isConnected && !showSetupFlow) {
+    return (
+      <ServiceEmptyState
+        icon={<MessageCircle className="w-7 h-7 text-green-600" />}
+        iconBg="bg-green-50"
+        title="WhatsApp Not Connected"
+        description="Connect your WhatsApp Business API to start capturing leads and sending instant AI replies via WhatsApp."
+        setupLabel="Connect WhatsApp"
+        onSetup={() => setShowSetupFlow(true)}
+      />
     );
   }
 
