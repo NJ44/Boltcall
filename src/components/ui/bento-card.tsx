@@ -100,30 +100,41 @@ const BentoCard = () => {
       <div
         className="group relative w-full max-w-5xl overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "rgba(230, 240, 255, 0.22)",
-          backdropFilter: "blur(60px) saturate(220%) brightness(1.06)",
-          WebkitBackdropFilter: "blur(60px) saturate(220%) brightness(1.06)",
-          border: "1px solid rgba(255,255,255,0.55)",
+          background: "rgba(195, 218, 255, 0.52)",
+          backdropFilter: "blur(80px) saturate(260%) brightness(1.08) contrast(0.95)",
+          WebkitBackdropFilter: "blur(80px) saturate(260%) brightness(1.08) contrast(0.95)",
+          border: "1.5px solid rgba(255,255,255,0.75)",
           boxShadow: [
-            "0 24px 64px -12px rgba(0,0,0,0.12)",
-            "0 12px 32px -8px rgba(59,130,246,0.15)",
-            "inset 0 1.5px 0 rgba(255,255,255,0.9)",
-            "inset 0 -1px 0 rgba(180,200,255,0.15)",
-            "inset 1px 0 0 rgba(255,255,255,0.5)",
-            "inset -1px 0 0 rgba(255,255,255,0.2)",
+            "0 32px 80px -16px rgba(0,0,0,0.14)",
+            "0 8px 32px -4px rgba(59,130,246,0.18)",
+            "inset 0 2px 0 rgba(255,255,255,0.95)",
+            "inset 0 -1px 0 rgba(150,180,255,0.25)",
+            "inset 1.5px 0 0 rgba(255,255,255,0.65)",
+            "inset -1px 0 0 rgba(200,220,255,0.3)",
           ].join(", "),
         }}
       >
-        {/* Glass top specular shine */}
+        {/* Top specular highlight — main glass shine */}
         <div className="absolute inset-x-0 top-0 pointer-events-none z-0" style={{
-          height: "55%",
-          background: "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 35%, rgba(255,255,255,0.0) 100%)",
+          height: "50%",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.28) 30%, rgba(255,255,255,0.0) 100%)",
           borderRadius: "1.5rem 1.5rem 0 0",
         }} />
-        {/* Glass left edge refraction */}
+        {/* Iridescent shimmer — diagonal color refraction */}
+        <div className="absolute inset-0 pointer-events-none z-0" style={{
+          background: "linear-gradient(135deg, rgba(190,210,255,0.22) 0%, rgba(220,200,255,0.12) 40%, rgba(180,240,230,0.10) 70%, rgba(210,225,255,0.18) 100%)",
+          borderRadius: "1.5rem",
+        }} />
+        {/* Left edge bright refraction line */}
         <div className="absolute inset-y-0 left-0 w-[2px] pointer-events-none z-0" style={{
-          background: "linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%)",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.5) 40%, rgba(200,220,255,0.2) 100%)",
           borderRadius: "1.5rem 0 0 1.5rem",
+        }} />
+        {/* Bottom edge blue shimmer */}
+        <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0" style={{
+          height: "30%",
+          background: "linear-gradient(0deg, rgba(160,190,255,0.18) 0%, rgba(160,190,255,0.0) 100%)",
+          borderRadius: "0 0 1.5rem 1.5rem",
         }} />
         <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
