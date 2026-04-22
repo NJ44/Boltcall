@@ -98,19 +98,32 @@ const BentoCard = () => {
   return (
     <div className="flex items-center justify-center w-full antialiased">
       <div
-        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl border border-white/[0.5] transition-all duration-500 hover:-translate-y-1 m-0"
+        className="group relative w-full max-w-5xl overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 m-0"
         style={{
-          background: "rgba(255,255,255,0.18)",
-          backdropFilter: "blur(48px) saturate(200%)",
-          WebkitBackdropFilter: "blur(48px) saturate(200%)",
-          boxShadow:
-            "0 32px 64px -16px rgba(0,0,0,0.1), 0 16px 40px -12px rgba(59,130,246,0.2), 0 0 0 1px rgba(255,255,255,0.6), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.04)",
+          background: "rgba(230, 240, 255, 0.22)",
+          backdropFilter: "blur(60px) saturate(220%) brightness(1.06)",
+          WebkitBackdropFilter: "blur(60px) saturate(220%) brightness(1.06)",
+          border: "1px solid rgba(255,255,255,0.55)",
+          boxShadow: [
+            "0 24px 64px -12px rgba(0,0,0,0.12)",
+            "0 12px 32px -8px rgba(59,130,246,0.15)",
+            "inset 0 1.5px 0 rgba(255,255,255,0.9)",
+            "inset 0 -1px 0 rgba(180,200,255,0.15)",
+            "inset 1px 0 0 rgba(255,255,255,0.5)",
+            "inset -1px 0 0 rgba(255,255,255,0.2)",
+          ].join(", "),
         }}
       >
-        {/* Liquid glass specular highlight */}
-        <div className="absolute inset-x-0 top-0 h-[160px] pointer-events-none z-0" style={{
-          background: "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 60%, transparent 100%)",
+        {/* Glass top specular shine */}
+        <div className="absolute inset-x-0 top-0 pointer-events-none z-0" style={{
+          height: "55%",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 35%, rgba(255,255,255,0.0) 100%)",
           borderRadius: "1.5rem 1.5rem 0 0",
+        }} />
+        {/* Glass left edge refraction */}
+        <div className="absolute inset-y-0 left-0 w-[2px] pointer-events-none z-0" style={{
+          background: "linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%)",
+          borderRadius: "1.5rem 0 0 1.5rem",
         }} />
         <div className="p-4 sm:p-6 space-y-1.5 z-10 relative">
           <h2 className="text-[10px] text-blue-400/80 uppercase tracking-widest font-semibold">
