@@ -73,6 +73,9 @@ const DashboardPage: React.FC = () => {
         onClose={() => setShowCompletionPopup(false)}
       />
 
+      {/* While You Were Gone — shows if user was away 30+ min */}
+      <WhileYouWereGone />
+
       {/* Today's Status — Trigger + Action */}
       <TodayGlanceCard />
 
