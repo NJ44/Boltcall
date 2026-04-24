@@ -58,7 +58,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
     ],
     support: [
       { label: 'Help Center', href: '/help-center' },
-      { label: 'Documentation', href: '/documentation' },
+      { label: 'Documentation', href: 'https://boltcall.mintlify.app/', external: true },
       { label: 'Email: support@boltcall.org', href: 'mailto:support@boltcall.org' }
     ]
   };
