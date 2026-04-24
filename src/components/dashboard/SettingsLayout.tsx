@@ -8,19 +8,19 @@ interface SettingsLayoutProps {
 
 const categories = [
   {
-    id: 'billing',
-    label: 'Billing & Usage',
-    sidebar: [
-      { id: 'plan-billing', label: 'Billing', route: '/dashboard/settings/plan-billing' },
-      { id: 'usage', label: 'Usage', route: '/dashboard/settings/usage' },
-    ],
-  },
-  {
     id: 'account',
     label: 'Account & Settings',
     sidebar: [
       { id: 'general', label: 'General', route: '/dashboard/settings/general' },
       { id: 'workspace', label: 'Workspace', route: '/dashboard/settings/workspace' },
+    ],
+  },
+  {
+    id: 'billing',
+    label: 'Billing & Usage',
+    sidebar: [
+      { id: 'plan-billing', label: 'Billing', route: '/dashboard/settings/plan-billing' },
+      { id: 'usage', label: 'Usage', route: '/dashboard/settings/usage' },
     ],
   },
   {
