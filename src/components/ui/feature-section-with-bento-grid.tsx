@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   AnimatedCard,
@@ -9,6 +9,7 @@ import {
   CardVisual,
   Visual3,
 } from './animated-card-chart';
+import { Tilt } from './tilt';
 import LazyLottie from './LazyLottie';
 import { Clock } from 'lucide-react';
 import {
@@ -19,8 +20,9 @@ import {
 import CountUp from "react-countup";
 
 function Feature() {
-  const chartRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [isChartVisible, setIsChartVisible] = useState(false);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const chartData = [
     { month: "Jan", value: 50 },
@@ -31,26 +33,59 @@ function Feature() {
     { month: "Jun", value: 300 },
   ];
 
+  // Reset chart animation when component mounts
   useEffect(() => {
     setIsChartVisible(false);
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Greatly reduce tilt for cards 0 (Instant Response) and 2 (Real-time Analytics)
+    const tiltDivisor = (index === 0 || index === 2) ? 50 : 10;
+    const rotateX = (y - centerY) / tiltDivisor;
+    const rotateY = (centerX - x) / tiltDivisor;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+  };
+
+  const handleMouseLeave = (index: number) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+    
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl ml-0 sm:ml-8">
             {/* Wide Card - Text on Left */}
-            <motion.div
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-64 w-full"
+            <motion.div 
+              ref={(el) => { cardRefs.current[0] = el; }}
+              onMouseMove={(e) => handleMouseMove(e, 0)}
+              onMouseLeave={() => handleMouseLeave(0)}
+              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-64 transition-transform duration-300 ease-out cursor-pointer w-full"
+              style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
               onAnimationStart={() => {
+                // Start chart animation when card starts fading in
                 setTimeout(() => {
                   setIsChartVisible(true);
                 }, 100);
               }}
             >
+              {/* Left side - Text content */}
               <div className="flex flex-col text-left max-w-xs">
                 <h3 className="text-2xl font-semibold tracking-tight mb-2 text-black">Increased closing rates</h3>
                 <p className="text-muted-foreground text-base mb-4">
@@ -58,8 +93,10 @@ function Feature() {
                 </p>
               </div>
 
+              {/* Right side - Chart */}
               <div className="flex-1 flex items-center justify-center ml-6">
                 <div ref={chartRef} className="relative w-full h-48 bg-muted rounded-xl overflow-hidden">
+                  {/* Chart */}
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={isChartVisible ? chartData : []}>
                       <defs>
@@ -81,6 +118,7 @@ function Feature() {
                     </AreaChart>
                   </ResponsiveContainer>
 
+                  {/* Overlay Hero Number */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
                     <div className="px-4 py-2 rounded-lg">
                       <h3 className="text-4xl font-extrabold text-gray-900 drop-shadow-md">
@@ -92,40 +130,57 @@ function Feature() {
                 </div>
               </div>
             </motion.div>
-
+            
             {/* Animated Card Chart */}
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
               className="flex justify-center w-full"
             >
-              <AnimatedCard className="shadow-xl w-full rounded-xl">
-                <CardVisual>
-                  <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
-                </CardVisual>
-                <CardBody>
-                  <CardTitle>Increased Revenue</CardTitle>
-                  <CardDescription>
-                    When you answer fast, you get more customers. This makes you more money.
-                  </CardDescription>
-                </CardBody>
-              </AnimatedCard>
+              <Tilt
+                rotationFactor={15}
+                isRevese
+                springOptions={{
+                  stiffness: 26.7,
+                  damping: 4.1,
+                  mass: 0.2,
+                }}
+                className="rounded-xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300 w-full"
+              >
+                <AnimatedCard className="shadow-xl w-full">
+                  <CardVisual>
+                    <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
+                  </CardVisual>
+                  <CardBody>
+                    <CardTitle>Increased Revenue</CardTitle>
+                    <CardDescription>
+                      When you answer fast, you get more customers. This makes you more money.
+                    </CardDescription>
+                  </CardBody>
+                </AnimatedCard>
+              </Tilt>
             </motion.div>
 
-            {/* Box Card */}
-            <motion.div
-              className="bg-muted rounded-xl pt-[19px] px-6 pb-6 flex flex-col shadow-2xl h-[215px] -mt-[22px] relative w-full"
+            {/* Box Card - Text on Top */}
+            <motion.div 
+              ref={(el) => { cardRefs.current[1] = el; }}
+              onMouseMove={(e) => handleMouseMove(e, 1)}
+              onMouseLeave={() => handleMouseLeave(1)}
+              className="bg-muted rounded-xl pt-[19px] px-6 pb-6 flex flex-col shadow-2xl h-[215px] transition-transform duration-300 ease-out cursor-pointer -mt-[22px] relative w-full"
+              style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
             >
+              {/* Background Clock Icon */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <Clock className="w-52 h-52 text-gray-300 opacity-40" />
               </div>
-
+              
+              {/* Centered Content */}
               <div className="flex flex-col text-center items-center justify-center flex-1 relative z-10">
                 <h3 className="text-3xl font-semibold tracking-tight mb-3 text-black">Save time</h3>
                 <p className="text-muted-foreground text-base max-w-xs">
@@ -133,10 +188,14 @@ function Feature() {
                 </p>
               </div>
             </motion.div>
-
+            
             {/* Wide Card - Text on Left */}
-            <motion.div
-              className="bg-muted rounded-xl lg:col-span-2 p-4 md:p-6 flex items-center shadow-2xl h-48 w-full overflow-hidden"
+            <motion.div 
+              ref={(el) => { cardRefs.current[2] = el; }}
+              onMouseMove={(e) => handleMouseMove(e, 2)}
+              onMouseLeave={() => handleMouseLeave(2)}
+              className="bg-muted rounded-xl lg:col-span-2 p-4 md:p-6 flex items-center shadow-2xl h-48 transition-transform duration-300 ease-out cursor-pointer w-full overflow-hidden"
+              style={{ transformStyle: 'preserve-3d' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -165,3 +224,4 @@ function Feature() {
 }
 
 export { Feature };
+
