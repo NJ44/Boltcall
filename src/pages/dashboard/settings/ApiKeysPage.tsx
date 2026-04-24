@@ -9,21 +9,15 @@ import ModalShell from '../../../components/ui/modal-shell';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../contexts/ToastContext';
 import { useTeamStore } from '../../../stores/teamStore';
-import type { ApiKeyResourcePermission, ApiKeyResource, ApiKeyPermission, ApiKey } from '../../../types/team';
+import type { ApiKey } from '../../../types/team';
 
-// ─── Constants ───────────────────────────────────────────────────────────
-
-const RESOURCES: { key: ApiKeyResource; label: string }[] = [
-  { key: 'calls', label: 'Calls' },
-  { key: 'leads', label: 'Leads' },
-  { key: 'agents', label: 'Agents' },
-  { key: 'analytics', label: 'Analytics' },
-  { key: 'contacts', label: 'Contacts' },
-  { key: 'knowledge_base', label: 'Knowledge Base' },
-  { key: 'integrations', label: 'Integrations' },
+const EXPIRY_OPTIONS = [
+  { label: 'Never', value: '' },
+  { label: '10 days', value: '10' },
+  { label: '30 days', value: '30' },
+  { label: '60 days', value: '60' },
+  { label: '90 days', value: '90' },
 ];
-
-const PERMISSIONS: ApiKeyPermission[] = ['read', 'write'];
 
 // ─── Component ───────────────────────────────────────────────────────────
 
@@ -42,44 +36,23 @@ const ApiKeysPage: React.FC = () => {
 
   // Create form
   const [keyName, setKeyName] = useState('');
-  const [keyPermissions, setKeyPermissions] = useState<Map<string, Set<ApiKeyPermission>>>(new Map());
-  const [keyExpiry, setKeyExpiry] = useState('');
+  const [keyExpiryDays, setKeyExpiryDays] = useState('');
 
   useEffect(() => {
     if (user?.id) fetchApiKeys(user.id);
   }, [user?.id, fetchApiKeys]);
 
   // ─── Helpers ───────────────────────────────────────────────────
-  const toggleResourcePerm = (resource: ApiKeyResource, perm: ApiKeyPermission) => {
-    setKeyPermissions((prev) => {
-      const next = new Map(prev);
-      const perms = new Set(next.get(resource) || []);
-      if (perms.has(perm)) perms.delete(perm);
-      else perms.add(perm);
-      if (perms.size === 0) next.delete(resource);
-      else next.set(resource, perms);
-      return next;
-    });
-  };
-
-  const hasResourcePerm = (resource: ApiKeyResource, perm: ApiKeyPermission) => {
-    return keyPermissions.get(resource)?.has(perm) || false;
-  };
-
-  const buildPermissionsArray = (): ApiKeyResourcePermission[] => {
-    const result: ApiKeyResourcePermission[] = [];
-    keyPermissions.forEach((perms, resource) => {
-      perms.forEach((perm) => {
-        result.push({ resource: resource as ApiKeyResource, permission: perm });
-      });
-    });
-    return result;
-  };
-
   const resetForm = () => {
     setKeyName('');
-    setKeyPermissions(new Map());
-    setKeyExpiry('');
+    setKeyExpiryDays('');
+  };
+
+  const expiryToDateString = (days: string): string | undefined => {
+    if (!days) return undefined;
+    const d = new Date();
+    d.setDate(d.getDate() + parseInt(days, 10));
+    return d.toISOString().slice(0, 10);
   };
 
   const copyToClipboard = async (text: string, id?: string) => {
@@ -121,13 +94,8 @@ const ApiKeysPage: React.FC = () => {
     if (!keyName.trim()) return;
     setCreating(true);
     try {
-      const perms = buildPermissionsArray();
-      if (perms.length === 0) {
-        showToast({ message: 'Select at least one permission', variant: 'warning' });
-        setCreating(false);
-        return;
-      }
-      const fullKey = await createApiKey(keyName, perms, keyExpiry || undefined);
+      const expiryDate = expiryToDateString(keyExpiryDays);
+      const fullKey = await createApiKey(keyName, [], expiryDate);
       if (fullKey) {
         setNewKey(fullKey);
         setShowCreateModal(false);
@@ -255,18 +223,20 @@ const ApiKeysPage: React.FC = () => {
                       <span className="text-xs text-gray-400">Rate limit: {key.rate_limit || 60} req/min</span>
                     </div>
                     {/* Permissions */}
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {(key.permissions || []).map((p, idx) => (
-                        <span
-                          key={idx}
-                          className={`px-2 py-0.5 rounded text-xs font-medium ${
-                            p.permission === 'write' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'
-                          }`}
-                        >
-                          {p.resource}:{p.permission}
-                        </span>
-                      ))}
-                    </div>
+                    {(key.permissions || []).length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {(key.permissions || []).map((p, idx) => (
+                          <span
+                            key={idx}
+                            className={`px-2 py-0.5 rounded text-xs font-medium ${
+                              p.permission === 'write' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'
+                            }`}
+                          >
+                            {p.resource}:{p.permission}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <button
                     onClick={() => { setSelectedKey(key); setShowRevokeModal(true); }}
@@ -314,8 +284,8 @@ const ApiKeysPage: React.FC = () => {
         open={showCreateModal}
         onClose={() => { setShowCreateModal(false); resetForm(); }}
         title="Create API Key"
-        description="Set a name and choose what this key can access"
-        maxWidth="max-w-lg"
+        description="Set a name and choose when this key expires"
+        maxWidth="max-w-md"
         footer={
           <>
             <PopButton type="button" onClick={() => { setShowCreateModal(false); resetForm(); }}>Cancel</PopButton>
@@ -337,50 +307,16 @@ const ApiKeysPage: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date (optional)</label>
-            <input
-              type="date"
-              value={keyExpiry}
-              onChange={(e) => setKeyExpiry(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-              min={new Date().toISOString().slice(0, 10)}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Permissions</label>
-            <div className="border border-gray-200 rounded-lg overflow-hidden">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Resource</th>
-                    {PERMISSIONS.map((p) => (
-                      <th key={p} className="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase w-20">
-                        {p}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {RESOURCES.map((res) => (
-                    <tr key={res.key} className="hover:bg-gray-50">
-                      <td className="px-4 py-2.5 text-sm text-gray-700">{res.label}</td>
-                      {PERMISSIONS.map((perm) => (
-                        <td key={perm} className="px-4 py-2.5 text-center">
-                          <label className="inline-flex cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={hasResourcePerm(res.key, perm)}
-                              onChange={() => toggleResourcePerm(res.key, perm)}
-                              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                          </label>
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Expiration</label>
+            <select
+              value={keyExpiryDays}
+              onChange={(e) => setKeyExpiryDays(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+            >
+              {EXPIRY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
           </div>
         </div>
       </ModalShell>
