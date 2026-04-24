@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Clock, Star, MessageSquare, Loader2, AlertCircle, Zap } from 'lucide-react';
+import { Check, Clock, Star, MessageSquare, Loader2, AlertCircle, Zap, ArrowRight, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../../../lib/supabase';
 import { useAuth } from '../../../contexts/AuthContext';
 import { PremiumToggle } from '../../../components/ui/bouncy-toggle';
@@ -11,14 +12,18 @@ interface PackageDef {
   key: FeatureKey;
   name: string;
   tagline: string;
+  description: string;
   price: string;
   priceNote: string;
   icon: React.ComponentType<{ className?: string }>;
   accentColor: string;
-  bgGradient: string;
+  iconBg: string;
+  borderActive: string;
+  shadowActive: string;
+  badgeText?: string;
+  badgeBg: string;
   features: string[];
   configLink: string;
-  badge?: string;
 }
 
 const PACKAGES: PackageDef[] = [
@@ -26,12 +31,16 @@ const PACKAGES: PackageDef[] = [
     key: 'reminders',
     name: 'Appointment Reminders',
     tagline: 'Reduce no-shows automatically',
+    description: 'Send timely SMS and email reminders so clients show up — without you lifting a finger.',
     price: '$29',
-    priceNote: '/mo add-on',
+    priceNote: '/ month',
     icon: Clock,
-    accentColor: 'text-green-600',
-    bgGradient: 'from-green-50 to-emerald-50',
-    badge: 'Popular',
+    accentColor: 'text-emerald-600',
+    iconBg: 'bg-emerald-50',
+    borderActive: 'border-emerald-400',
+    shadowActive: 'shadow-emerald-100',
+    badgeText: 'Popular',
+    badgeBg: 'bg-emerald-100 text-emerald-700',
     features: [
       'Automated SMS reminders before appointments',
       'Email reminders with custom timing',
@@ -45,11 +54,15 @@ const PACKAGES: PackageDef[] = [
     key: 'reputation_manager',
     name: 'Reputation Manager',
     tagline: 'Grow your 5-star reviews on autopilot',
+    description: 'Automatically request Google reviews at the right moment — when your clients are happiest.',
     price: '$29',
-    priceNote: '/mo add-on',
+    priceNote: '/ month',
     icon: Star,
-    accentColor: 'text-yellow-600',
-    bgGradient: 'from-yellow-50 to-amber-50',
+    accentColor: 'text-amber-600',
+    iconBg: 'bg-amber-50',
+    borderActive: 'border-amber-400',
+    shadowActive: 'shadow-amber-100',
+    badgeBg: '',
     features: [
       'Auto-request Google reviews after service',
       'Smart timing — send when satisfaction is highest',
@@ -63,12 +76,16 @@ const PACKAGES: PackageDef[] = [
     key: 'chatbot',
     name: 'Website Chatbot',
     tagline: 'Turn website visitors into booked clients',
+    description: 'An AI chat bubble on your site that answers questions and books appointments 24/7.',
     price: '$39',
-    priceNote: '/mo add-on',
+    priceNote: '/ month',
     icon: MessageSquare,
-    accentColor: 'text-purple-600',
-    bgGradient: 'from-purple-50 to-violet-50',
-    badge: 'New',
+    accentColor: 'text-violet-600',
+    iconBg: 'bg-violet-50',
+    borderActive: 'border-violet-400',
+    shadowActive: 'shadow-violet-100',
+    badgeText: 'New',
+    badgeBg: 'bg-violet-100 text-violet-700',
     features: [
       'AI chat bubble on your website',
       'Answers FAQs and books appointments',
@@ -79,6 +96,15 @@ const PACKAGES: PackageDef[] = [
     configLink: '/dashboard/chat-widget',
   },
 ];
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
 const PackagesPage: React.FC = () => {
   const { user } = useAuth();
@@ -136,120 +162,166 @@ const PackagesPage: React.FC = () => {
     setToggling(null);
   };
 
+  const activeCount = Object.values(features).filter(Boolean).length;
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
+      <div className="flex items-center justify-center py-24">
         <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-lg font-semibold text-gray-900">Packages</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          Add-on packages to extend your Boltcall workspace. Enable only what you need.
-        </p>
+    <div className="space-y-8 max-w-5xl">
+      {/* Page header */}
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-xl font-semibold text-gray-900 tracking-tight">Add-on Packages</h1>
+          <p className="text-sm text-gray-500 mt-1 max-w-lg">
+            Extend your Boltcall workspace with powerful add-ons. Each package integrates seamlessly — enable what fits your business, skip what doesn't.
+          </p>
+        </div>
+        {activeCount > 0 && (
+          <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-full px-3 py-1.5 text-xs font-medium text-blue-700 flex-shrink-0">
+            <Sparkles className="w-3.5 h-3.5" />
+            {activeCount} package{activeCount > 1 ? 's' : ''} active
+          </div>
+        )}
       </div>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-          <p className="text-sm text-red-700">{error}</p>
-          <button onClick={() => setError(null)} className="ml-auto text-red-400 hover:text-red-600 text-sm">Dismiss</button>
-        </div>
-      )}
+      {/* Error banner */}
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3"
+          >
+            <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
+            <p className="text-sm text-red-700 flex-1">{error}</p>
+            <button
+              onClick={() => setError(null)}
+              className="text-red-400 hover:text-red-600 text-sm transition-colors"
+            >
+              Dismiss
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
+      {/* Package cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {PACKAGES.map((pkg) => {
+        {PACKAGES.map((pkg, i) => {
           const Icon = pkg.icon;
           const enabled = features[pkg.key] ?? false;
           const isToggling = toggling === pkg.key;
 
           return (
-            <div
+            <motion.div
               key={pkg.key}
-              className={`relative bg-white rounded-2xl border-2 transition-all duration-200 overflow-hidden flex flex-col ${
-                enabled
-                  ? 'border-blue-300 shadow-md shadow-blue-100'
-                  : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
-              }`}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              className={`
+                relative flex flex-col bg-white rounded-2xl border transition-all duration-200 overflow-hidden
+                ${enabled
+                  ? `border-2 ${pkg.borderActive} shadow-lg ${pkg.shadowActive}`
+                  : 'border border-gray-200 hover:border-gray-300 hover:shadow-md shadow-sm'
+                }
+              `}
             >
-              {/* Top accent gradient */}
-              <div className={`bg-gradient-to-br ${pkg.bgGradient} px-5 pt-5 pb-4`}>
+              {/* Active ribbon */}
+              {enabled && (
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-400" />
+              )}
+
+              {/* Card body */}
+              <div className="p-6 flex-1 flex flex-col gap-5">
+
+                {/* Icon + badge row */}
                 <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm`}>
-                      <Icon className={`w-5 h-5 ${pkg.accentColor}`} />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-gray-900">{pkg.name}</h3>
-                        {pkg.badge && (
-                          <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">
-                            {pkg.badge}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-gray-500 mt-0.5">{pkg.tagline}</p>
-                    </div>
+                  <div className={`w-11 h-11 rounded-xl ${pkg.iconBg} flex items-center justify-center flex-shrink-0`}>
+                    <Icon className={`w-5 h-5 ${pkg.accentColor}`} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {pkg.badgeText && (
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${pkg.badgeBg}`}>
+                        {pkg.badgeText}
+                      </span>
+                    )}
+                    {enabled && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                        Active
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                {/* Price */}
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-2xl font-bold text-gray-900">{pkg.price}</span>
-                  <span className="text-xs text-gray-500">{pkg.priceNote}</span>
+                {/* Name + tagline */}
+                <div>
+                  <h3 className="text-[15px] font-semibold text-gray-900 leading-snug">{pkg.name}</h3>
+                  <p className="text-xs text-gray-500 mt-1 leading-relaxed">{pkg.description}</p>
                 </div>
-              </div>
 
-              {/* Features */}
-              <div className="px-5 py-4 flex-1">
-                <ul className="space-y-2">
+                {/* Price */}
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-gray-900 tracking-tight">{pkg.price}</span>
+                  <span className="text-sm text-gray-400 font-medium">{pkg.priceNote}</span>
+                </div>
+
+                {/* Feature list */}
+                <ul className="space-y-2.5 flex-1">
                   {pkg.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2">
+                    <li key={feature} className="flex items-start gap-2.5">
                       <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="w-2.5 h-2.5 text-green-600" />
+                        <Check className="w-2.5 h-2.5 text-green-600" strokeWidth={3} />
                       </div>
-                      <span className="text-xs text-gray-600">{feature}</span>
+                      <span className="text-[13px] text-gray-600 leading-snug">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Footer */}
-              <div className="px-5 py-4 border-t border-gray-100 flex items-center justify-between">
+              {/* Card footer */}
+              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/60 flex items-center justify-between gap-3">
                 <Link
                   to={pkg.configLink}
-                  className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1"
+                  className={`
+                    inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-150 group
+                    ${enabled ? 'text-blue-600 hover:text-blue-700' : 'text-gray-500 hover:text-gray-700'}
+                  `}
                 >
                   <Zap className="w-3.5 h-3.5" />
                   Configure
+                  <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-150" />
                 </Link>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500">{enabled ? 'Active' : 'Inactive'}</span>
+
+                <div className="flex items-center gap-2.5">
+                  <span className={`text-xs font-medium ${enabled ? 'text-green-600' : 'text-gray-400'}`}>
+                    {enabled ? 'Enabled' : 'Disabled'}
+                  </span>
                   {isToggling ? (
-                    <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                    <div className="w-12 flex items-center justify-center">
+                      <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                    </div>
                   ) : (
                     <PremiumToggle checked={enabled} onChange={() => toggleFeature(pkg.key)} />
                   )}
                 </div>
               </div>
-
-              {/* Active indicator */}
-              {enabled && (
-                <div className="absolute top-3 right-3">
-                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                    Active
-                  </span>
-                </div>
-              )}
-            </div>
+            </motion.div>
           );
         })}
       </div>
+
+      {/* Footer note */}
+      <p className="text-xs text-gray-400 pt-2">
+        Add-ons are billed separately on top of your base plan. Changes take effect immediately.
+      </p>
     </div>
   );
 };
