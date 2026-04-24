@@ -78,16 +78,15 @@ const CardTable: React.FC<CardTableProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Add New Button */}
             {onAddNew && (
               <button
                 onClick={onAddNew}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                className="font-pop font-bold inline-flex select-none transition-all items-center justify-center whitespace-nowrap rounded-xl focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 active:border-b-2 active:scale-y-95 border-x-2 border-t-2 border-b-4 origin-bottom bg-blue-500 hover:bg-blue-600 border-blue-800 text-white h-10 px-4 py-2 gap-2"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                <span className="font-bold">{addNewText}</span>
+                {addNewText}
               </button>
             )}
           </div>
