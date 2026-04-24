@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AgentsSkeleton } from '../../components/ui/loading-skeleton';
-import { Users, Plus, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MessageCircle, RefreshCw, Shield, Phone, PhoneIncoming, PhoneOutgoing } from 'lucide-react';
+import { Users, Sparkles, FileText, Wrench, Stethoscope, Home, Briefcase, ShoppingCart, Heart, Scissors, MessageCircle, RefreshCw, Shield, Phone, PhoneIncoming, PhoneOutgoing } from 'lucide-react';
 import ModalShell from '../../components/ui/modal-shell';
 import { AgentAvatar } from '../../components/ui/AgentAvatar';
 import { InlineRename } from '../../components/ui/InlineRename';
