@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import SetupCompletionPopup from '../../components/SetupCompletionPopup';
 import TodayGlanceCard from '../../components/dashboard/TodayGlanceCard';
 import WinFeed from '../../components/dashboard/WinFeed';
+import WhileYouWereGone from '../../components/dashboard/WhileYouWereGone';
 import { useDashboardStore } from '../../stores/dashboardStore';
 import { AgentWorkflowBlock, type AgentCustomization } from '../../components/ui/agent-workflow-block';
 import { supabase } from '../../lib/supabase';
