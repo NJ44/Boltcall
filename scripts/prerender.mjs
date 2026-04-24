@@ -81,6 +81,7 @@ const ROUTES = [
   // Blog posts
   '/blog/the-new-reality-for-local-businesses',
   '/blog/why-speed-matters',
+  '/blog/speed-to-lead-statistics-home-service-business',
   '/blog/why-website-speed-is-everything',
   '/blog/complete-guide-to-seo',
   '/blog/best-ai-receptionist-tools',
