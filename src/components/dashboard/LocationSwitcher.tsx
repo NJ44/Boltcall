@@ -43,9 +43,12 @@ export const LocationSwitcher: React.FC<LocationSwitcherProps> = ({ className })
       setBusinessProfileId(bp.id);
       const list = await LocationService.listByBusinessProfile(bp.id);
       setLocations(list);
-      if (!currentLocationId && list.length) {
-        setSelectedId(list[0].id);
-        localStorage.setItem('currentLocationId', list[0].id);
+      // list[0] is always the primary location (ordered by is_primary DESC)
+      const primary = list.find(l => l.is_primary) ?? list[0];
+      const savedExists = currentLocationId && list.some(l => l.id === currentLocationId);
+      if (!savedExists && primary) {
+        setSelectedId(primary.id);
+        localStorage.setItem('currentLocationId', primary.id);
       }
     };
     init();
