@@ -93,22 +93,14 @@ const CardTable: React.FC<CardTableProps> = ({
         </div>
       </div>
 
-      {/* Table Headers - Simple Text (hidden on mobile since rows stack) */}
-      {/* px-12 at md matches the card rows' inner content inset (wrapper px-6 + card p-6) */}
-      <div className="hidden md:block md:px-12 py-4">
-        <div className="flex items-center gap-6">
-          {/* Checkbox for select all */}
-          <input
-            type="checkbox"
-            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-          />
-          
-          {/* Column headers - Simple text without background */}
+      {/* Table Headers */}
+      <div className="hidden md:block md:px-9 py-3">
+        <div className="flex items-center gap-4">
           {columns.map((column) => (
             <div
               key={column.key}
-              className={`flex items-center gap-2 text-sm font-medium text-gray-700 ${
-                column.sortable ? 'cursor-pointer hover:text-gray-900' : ''
+              className={`flex items-center gap-2 text-xs font-medium text-gray-500 uppercase tracking-wide ${
+                column.sortable ? 'cursor-pointer hover:text-gray-700' : ''
               }`}
               style={column.width ? { width: column.width, flex: 'none' } : { flex: '1' }}
               onClick={() => column.sortable && handleSort(column.key)}
