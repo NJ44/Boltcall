@@ -873,141 +873,97 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
           </div>
         </div>
       ) : (
-        /* Has agents - Show table and add button */
-        <>
-          {/* Add Agent Button */}
-          <div className="flex justify-end">
-            <PopButton color="blue"
-              onClick={() => setShowCreateModal(true)}
-              className="gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Add Agent
-            </PopButton>
-          </div>
-
-          {/* Agents Card Table */}
-          <div className="overflow-x-auto">
+        /* Has agents - Show table */
+        <div className="overflow-x-auto">
           <CardTable
-            className="min-w-[640px]"
+            className="min-w-[580px]"
             columns={[
               { key: 'name', label: 'Agent' },
               { key: 'status', label: 'Status' },
-              { key: 'callsToday', label: 'Calls Today' },
-              { key: 'avgResponseTime', label: 'Avg Response' },
               { key: 'successRate', label: 'Success Rate' },
               { key: 'lastActive', label: 'Last Active' },
-              { key: 'actions', label: '', width: '140px' }
+              { key: 'actions', label: '', width: '100px' }
             ]}
             data={agents}
             renderRow={(agent) => (
               <div
-                className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6 cursor-pointer"
+                className="flex items-center gap-4 cursor-pointer"
                 onClick={() => navigate(`/dashboard/agents/${agent.id}`)}
               >
-                {/* Checkbox */}
-                <input
-                  type="checkbox"
-                  className="hidden md:block h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-
-                {/* Agent Name + Status (stacked on mobile) */}
-                <div className="flex items-center justify-between md:contents">
-                  <div className="flex items-center gap-3 md:flex-1 min-w-0">
-                    <EmojiColorPicker
-                      avatar={agent.avatar}
-                      color={agent.color}
-                      onSave={(avatar, color) => handleSaveAgentCustomization(agent.id, avatar, color)}
-                      align="start"
-                      trigger={
-                        <button type="button" title="Customize avatar & color">
-                          <AgentAvatar size="md" avatar={agent.avatar} color={agent.color} name={agent.name} />
-                        </button>
-                      }
-                    />
-                    <InlineRename
-                      value={agent.name}
-                      onSave={(newName) => handleRenameAgent(agent.id, newName)}
-                      className="font-medium text-gray-900"
-                      inputClassName="font-medium text-gray-900 text-sm"
-                    />
-                  </div>
-
-                  {/* Status */}
-                  <div className="md:flex-1">
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                      agent.status === 'active'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                        agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
-                      }`}></div>
-                      {agent.status}
-                    </span>
-                  </div>
+                {/* Agent */}
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <EmojiColorPicker
+                    avatar={agent.avatar}
+                    color={agent.color}
+                    onSave={(avatar, color) => handleSaveAgentCustomization(agent.id, avatar, color)}
+                    align="start"
+                    trigger={
+                      <button type="button" title="Customize avatar & color">
+                        <AgentAvatar size="md" avatar={agent.avatar} color={agent.color} name={agent.name} />
+                      </button>
+                    }
+                  />
+                  <InlineRename
+                    value={agent.name}
+                    onSave={(newName) => handleRenameAgent(agent.id, newName)}
+                    className="font-medium text-gray-900"
+                    inputClassName="font-medium text-gray-900 text-sm"
+                  />
                 </div>
 
-                {/* Stats row - horizontal on mobile, inline on desktop */}
-                <div className="flex items-center gap-4 text-sm md:contents">
-                  <div className="text-gray-900 md:flex-1">
-                    <span className="text-xs text-gray-500 md:hidden">Calls: </span>{agent.callsToday}
-                  </div>
-                  <div className="text-gray-900 md:flex-1">
-                    <span className="text-xs text-gray-500 md:hidden">Avg: </span>{agent.avgResponseTime}
-                  </div>
-                  <div className="text-gray-900 md:flex-1">
-                    <span className="text-xs text-gray-500 md:hidden">Rate: </span>{agent.successRate}
-                  </div>
-                  <div className="text-gray-500 md:flex-1">
-                    <span className="text-xs text-gray-500 md:hidden">Last: </span>{agent.lastActive}
-                  </div>
+                {/* Status */}
+                <div className="flex-1">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                    agent.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    <div className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
+                      agent.status === 'active' ? 'bg-green-400' : 'bg-yellow-400'
+                    }`} />
+                    {agent.status}
+                  </span>
                 </div>
 
-                {/* Action Icons */}
-                <div className="flex items-center gap-3 md:gap-2 md:w-[140px] md:flex-none md:justify-end" onClick={(e) => e.stopPropagation()}>
+                {/* Success Rate */}
+                <div className="flex-1 text-sm text-gray-900">{agent.successRate}</div>
+
+                {/* Last Active */}
+                <div className="flex-1 text-sm text-gray-500">{agent.lastActive}</div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-2 w-[100px] flex-none justify-end" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => setTalkToAgent(agent)}
-                    className="text-green-600 hover:text-green-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
+                    className="text-green-600 hover:text-green-800 transition-colors"
                     title="Talk to Agent"
                   >
-                    <Phone className="w-5 h-5 md:w-4 md:h-4" />
+                    <Phone className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleTestChat(agent)}
-                    className="text-blue-600 hover:text-blue-800 transition-colors p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
+                    className="text-blue-600 hover:text-blue-800 transition-colors"
                     title="Test Chat"
                   >
-                    <MessageCircle className="w-5 h-5 md:w-4 md:h-4" />
+                    <MessageCircle className="w-4 h-4" />
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); handleRegeneratePrompt(agent); }}
                     disabled={regeneratingAgentId === agent.id}
-                    className="text-purple-600 hover:text-purple-800 transition-colors disabled:opacity-50 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center"
+                    className="text-purple-600 hover:text-purple-800 transition-colors disabled:opacity-50"
                     title="Regenerate Prompt"
                   >
-                    <RefreshCw className={`w-5 h-5 md:w-4 md:h-4 ${regeneratingAgentId === agent.id ? 'animate-spin' : ''}`} />
-                  </button>
-                  <button title="Delete Agent" className="text-green-600 hover:text-green-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
-                    <Flame className="w-5 h-5 md:w-4 md:h-4" />
-                  </button>
-                  <button title="More Options" className="text-gray-600 hover:text-gray-800 p-1 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 md:p-0 flex items-center justify-center">
-                    <MoreHorizontal className="w-5 h-5 md:w-4 md:h-4" />
+                    <RefreshCw className={`w-4 h-4 ${regeneratingAgentId === agent.id ? 'animate-spin' : ''}`} />
                   </button>
                 </div>
               </div>
             )}
             emptyStateText="No agents found. Create your first AI agent to get started."
             searchPlaceholder="Search agents..."
-            filterOptions={[
-              { label: 'Active', value: 'active' },
-              { label: 'Inactive', value: 'inactive' }
-            ]}
             onAddNew={() => setShowCreateModal(true)}
             addNewText="Add Agent"
           />
-          </div>
-        </>
+        </div>
       )}
 
       {/* Create Agent Modal */}
