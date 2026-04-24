@@ -103,18 +103,18 @@ const DashboardLayout: React.FC = () => {
     }
   }, [user?.id]);
 
-  // Feedback popup disabled — only the trial expiry notification should auto-appear
-  // useEffect(() => {
-  //   const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
-  //   const lastShown = Number(localStorage.getItem('feedbackPopupLastShown') || 0);
-  //   const cooldownPassed = Date.now() - lastShown > SEVEN_DAYS;
-  //   if (!cooldownPassed || Math.random() > 0.25) return;
-  //   const timer = setTimeout(() => {
-  //     setShowFeedback(true);
-  //     localStorage.setItem('feedbackPopupLastShown', String(Date.now()));
-  //   }, 45_000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+  // Show feedback popup randomly — 25% chance, no more than once per 7 days
+  useEffect(() => {
+    const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+    const lastShown = Number(localStorage.getItem('feedbackPopupLastShown') || 0);
+    const cooldownPassed = Date.now() - lastShown > SEVEN_DAYS;
+    if (!cooldownPassed || Math.random() > 0.25) return;
+    const timer = setTimeout(() => {
+      setShowFeedback(true);
+      localStorage.setItem('feedbackPopupLastShown', String(Date.now()));
+    }, 45_000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Load real service statuses from Supabase
   useEffect(() => {
@@ -937,8 +937,7 @@ const DashboardLayout: React.FC = () => {
 
            {/* Page Content */}
            <div className="p-3 md:p-6">
-             {/* UsageBanner disabled — only trial expiry notification should auto-appear */}
-             {/* <UsageBanner className="mb-4" /> */}
+             <UsageBanner className="mb-4" />
              <motion.div
                key={location.pathname.startsWith('/dashboard/settings/') ? '/dashboard/settings' : location.pathname}
                initial={{ opacity: 0, y: 12 }}

@@ -21,15 +21,6 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
-    title: '17 Speed to Lead Statistics Every Home Service Business Needs to See (2026)',
-    slug: '/blog/speed-to-lead-statistics-home-service-business',
-    excerpt: 'The definitive speed-to-lead data for contractors. How response time affects revenue for HVAC, plumbing, roofing, and solar businesses — with industry benchmarks.',
-    date: 'April 22, 2026',
-    readTime: '10 min read',
-    category: 'Speed to Lead|Statistics|Home Services',
-    image: '/og-image.jpg'
-  },
-  {
     title: 'WhatsApp Appointment Booking for Plumbers: The Complete 2026 Guide',
     slug: '/blog/whatsapp-appointment-booking-plumbers',
     excerpt: 'How to automatically book emergency plumbing calls and service jobs via WhatsApp, reduce no-shows, and never miss a lead again.',
