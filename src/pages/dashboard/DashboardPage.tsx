@@ -46,14 +46,14 @@ const DashboardPage: React.FC = () => {
       });
   }, [user?.id]);
 
-  // Check if setup was just completed — show the "Almost Done!" agent config modal
-  useEffect(() => {
-    const setupCompleted = searchParams.get('setupCompleted');
-    if (setupCompleted === 'true') {
-      setShowCompletionPopup(true);
-      setSearchParams({});
-    }
-  }, [searchParams, setSearchParams]);
+  // SetupCompletionPopup disabled — only trial expiry notification should auto-appear
+  // useEffect(() => {
+  //   const setupCompleted = searchParams.get('setupCompleted');
+  //   if (setupCompleted === 'true') {
+  //     setShowCompletionPopup(true);
+  //     setSearchParams({});
+  //   }
+  // }, [searchParams, setSearchParams]);
 
   // Scroll to relevant section when filter param is present
   useEffect(() => {
@@ -67,10 +67,11 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-4 px-1 md:px-0">
-      <SetupCompletionPopup
+      {/* SetupCompletionPopup disabled — only trial expiry notification should auto-appear */}
+      {/* <SetupCompletionPopup
         isOpen={showCompletionPopup}
         onClose={() => setShowCompletionPopup(false)}
-      />
+      /> */}
 
       {/* Today's Status — Trigger + Action */}
       <TodayGlanceCard />
