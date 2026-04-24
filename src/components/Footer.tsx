@@ -180,12 +180,23 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
                 <ul className="space-y-2">
                   {footerLinks.support.map((link, index) => (
                     <li key={index}>
-                      <Link
-                        to={link.href}
-                        className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
-                      >
-                        {link.label}
-                      </Link>
+                      {(link as any).external ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          to={link.href}
+                          className={`${mutedTextClass} ${hoverTextClass} transition-colors duration-200`}
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
