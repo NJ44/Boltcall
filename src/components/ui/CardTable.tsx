@@ -117,7 +117,7 @@ const CardTable: React.FC<CardTableProps> = ({
       </div>
 
       {/* Table Content - Card-based rows */}
-      <div className="space-y-3 px-3 md:px-6 pb-4 md:pb-6">
+      <div className="space-y-2 px-3 md:px-6 pb-4 md:pb-6">
         {filteredData.length > 0 ? (
           filteredData.map((item, index) => (
             <motion.div
@@ -125,7 +125,7 @@ const CardTable: React.FC<CardTableProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="bg-white rounded-lg border border-gray-200 p-3 md:p-6 shadow-sm hover:shadow-lg hover:border-gray-300 transition-all duration-500 ease-in-out"
+              className="bg-white rounded-lg border border-gray-200 px-3 py-3 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200"
             >
               {renderRow(item, index)}
             </motion.div>
