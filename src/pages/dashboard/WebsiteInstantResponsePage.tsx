@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Send, Loader2, Download, ExternalLink } from 'lucide-react';
+import { CheckCircle, Send, Loader2, Download, ExternalLink, Globe } from 'lucide-react';
+import ServiceEmptyState from '../../components/dashboard/ServiceEmptyState';
 import { CopyButton } from '../../components/ui/copy-button';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
@@ -11,6 +12,7 @@ const WebsiteInstantResponsePage: React.FC = () => {
 
   const [setupMode, setSetupMode] = useState<'embed' | 'wordpress' | 'advanced'>('embed');
   const [testSending, setTestSending] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   const webhookUrl = 'https://boltcall.org/.netlify/functions/lead-webhook';
   const prettyWebhookUrl = user?.id ? `https://boltcall.org/l/${user.id}` : '';
@@ -98,6 +100,19 @@ document.getElementById("lead-form")
       setTestSending(false);
     }
   };
+
+  if (!showInstructions) {
+    return (
+      <ServiceEmptyState
+        icon={<Globe className="w-7 h-7 text-purple-600" />}
+        iconBg="bg-purple-50"
+        title="Website Instant Response"
+        description="Capture every form submission on your site and trigger an instant AI follow-up. Works with any platform — one line of code or a WordPress plugin."
+        setupLabel="Get Setup Instructions"
+        onSetup={() => setShowInstructions(true)}
+      />
+    );
+  }
 
   return (
     <div className="max-w-2xl space-y-6">
