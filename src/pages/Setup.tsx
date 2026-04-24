@@ -5,13 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
   ChevronRight,
-
   Zap,
   User,
   Building2,
+  MapPin,
 } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
 import { useAuth } from '../contexts/AuthContext';
+import { useSubscription } from '../contexts/SubscriptionContext';
 import { createUserWorkspaceAndProfile } from '../lib/database';
 import { createAgentAndKnowledgeBase } from '../lib/webhooks';
 import { LocationService } from '../lib/locations';
@@ -36,12 +37,6 @@ import {
 } from '../components/ui/select-shadcn';
 
 import { FUNCTIONS_BASE } from '../lib/api';
-
-const steps = [
-  { id: 'personal', title: 'Personal Profile' },
-  { id: 'business', title: 'Business Profile' },
-  { id: 'launch', title: 'Review & Launch' },
-];
 
 const INDUSTRY_OPTIONS = [
   { value: 'dentist', label: 'Dentist' },
@@ -98,6 +93,7 @@ const contentVariants = {
 const Setup: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { planLevel, isTrialing } = useSubscription();
   const {
     isCompleted,
     updateBusinessProfile,
@@ -109,21 +105,45 @@ const Setup: React.FC = () => {
     reset,
   } = useSetupStore();
 
+  // Pro and Ultimate users (including trialing) get the Location step
+  const isProPlus = isTrialing || planLevel === 'pro' || planLevel === 'ultimate' || planLevel === 'enterprise';
+
+  const steps = isProPlus
+    ? [
+        { id: 'personal', title: 'Personal Profile' },
+        { id: 'business', title: 'Business Profile' },
+        { id: 'location', title: 'Location' },
+        { id: 'launch', title: 'Review & Launch' },
+      ]
+    : [
+        { id: 'personal', title: 'Personal Profile' },
+        { id: 'business', title: 'Business Profile' },
+        { id: 'launch', title: 'Review & Launch' },
+      ];
+
+  const locationStepIndex = isProPlus ? 2 : -1;
+  const reviewStepIndex = isProPlus ? 3 : 2;
+
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Form state — Step 1: Personal Profile
+  // Step 0: Personal Profile
   const [fullName, setFullName] = useState('');
   const [workEmail, setWorkEmail] = useState('');
   const [country, setCountry] = useState('');
 
-  // Form state — Step 2: Business Profile
+  // Step 1: Business Profile
   const [businessName, setBusinessName] = useState('');
   const [industry, setIndustry] = useState('');
 
-  // If the user lands on /setup, clear any stale "completed" flag from a
-  // previous session so we don't immediately redirect back to /dashboard.
+  // Step 2: Location (Pro+ only)
+  const [addressLine1, setAddressLine1] = useState('');
+  const [city, setCity] = useState('');
+  const [stateRegion, setStateRegion] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [businessPhone, setBusinessPhone] = useState('');
+
   useEffect(() => {
     if (isCompleted && !isSubmitting) {
       reset();
@@ -138,14 +158,16 @@ const Setup: React.FC = () => {
     );
   }, []);
 
-
   const isStepValid = () => {
     switch (currentStep) {
-      case 0: // Personal Profile
+      case 0:
         return fullName.trim().length >= 2 && workEmail.trim().length > 3 && country.length > 0;
-      case 1: // Business Profile
+      case 1:
         return businessName.trim().length >= 2 && industry.length > 0;
-      case 2: // Review & Launch
+      case locationStepIndex:
+        // Location is optional — any input is fine, even empty
+        return true;
+      case reviewStepIndex:
         return true;
       default:
         return true;
@@ -175,11 +197,7 @@ const Setup: React.FC = () => {
     setError('');
     setIsSubmitting(true);
 
-    updateAccount({
-      fullName,
-      workEmail,
-    });
-
+    updateAccount({ fullName, workEmail });
     updateBusinessProfile({
       businessName,
       mainCategory: industry.toLowerCase(),
@@ -215,7 +233,6 @@ const Setup: React.FC = () => {
       return;
     }
 
-    // Workspace + profile created successfully — navigate to loading screen
     navigate('/setup/loading');
 
     let locationId: string | undefined;
@@ -225,19 +242,21 @@ const Setup: React.FC = () => {
         user_id: user.id,
         name: businessName,
         slug: null,
-        phone: null,
+        phone: businessPhone.trim() || null,
         email: null,
-        address_line1: null,
+        address_line1: addressLine1.trim() || null,
         address_line2: null,
-        city: null,
-        state: null,
-        postal_code: null,
+        city: city.trim() || null,
+        state: stateRegion.trim() || null,
+        postal_code: postalCode.trim() || null,
         country: country || null,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         is_primary: true,
         is_active: true,
       } as any);
       locationId = location.id;
+      // Default the location switcher to this primary location
+      localStorage.setItem('currentLocationId', locationId);
     } catch (e) {
       console.warn('Could not create primary location:', e);
     }
@@ -264,8 +283,6 @@ const Setup: React.FC = () => {
       policies: knowledgeBase.policies,
     };
 
-    // Create the primary agent — this also creates the "Business Profile" KB folder
-    // and links the agent to it
     const primaryResult = await createAgentAndKnowledgeBase({
       ...agentBaseData,
       agentType: 'inbound',
@@ -274,7 +291,6 @@ const Setup: React.FC = () => {
       transferNumber: '',
     }).catch((e) => { console.error('Agent creation failed:', e); return null; });
 
-    // Create secondary follow-up agent — reuse the same KB folder (fire-and-forget)
     createAgentAndKnowledgeBase({
       ...agentBaseData,
       agentType: 'speed_to_lead',
@@ -282,7 +298,6 @@ const Setup: React.FC = () => {
       kbFolderId: primaryResult?.kb_folder_id || undefined,
     }).catch((e) => console.error('Follow-up agent creation failed:', e));
 
-    // Notify setup-launch function (fire-and-forget)
     fetch(`${FUNCTIONS_BASE}/setup-launch`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -296,7 +311,6 @@ const Setup: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-white">
-      {/* Logo */}
       <header className="w-full py-6">
         <div className="max-w-2xl mx-auto px-4 flex justify-center">
           <motion.div
@@ -390,9 +404,7 @@ const Setup: React.FC = () => {
                     <>
                       <CardHeader>
                         <CardTitle>Personal Profile</CardTitle>
-                        <CardDescription>
-                          Tell us about yourself
-                        </CardDescription>
+                        <CardDescription>Tell us about yourself</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-6">
                         <motion.div variants={fadeInUp} className="space-y-1.5">
@@ -405,7 +417,6 @@ const Setup: React.FC = () => {
                             autoFocus
                           />
                         </motion.div>
-
                         <motion.div variants={fadeInUp} className="space-y-1.5">
                           <Label htmlFor="workEmail">Work Email *</Label>
                           <Input
@@ -416,7 +427,6 @@ const Setup: React.FC = () => {
                             onChange={(e) => setWorkEmail(e.target.value)}
                           />
                         </motion.div>
-
                         <motion.div variants={fadeInUp} className="space-y-1.5">
                           <Label htmlFor="country">Country *</Label>
                           <Select value={country} onValueChange={setCountry}>
@@ -437,9 +447,7 @@ const Setup: React.FC = () => {
                     <>
                       <CardHeader>
                         <CardTitle>Business Profile</CardTitle>
-                        <CardDescription>
-                          Tell us about your business
-                        </CardDescription>
+                        <CardDescription>Tell us about your business</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-6">
                         <motion.div variants={fadeInUp} className="space-y-1.5">
@@ -452,7 +460,6 @@ const Setup: React.FC = () => {
                             autoFocus
                           />
                         </motion.div>
-
                         <motion.div variants={fadeInUp} className="space-y-1.5">
                           <Label htmlFor="industry">Industry *</Label>
                           <Select value={industry} onValueChange={setIndustry}>
@@ -468,21 +475,86 @@ const Setup: React.FC = () => {
                     </>
                   )}
 
-                  {/* ─── STEP 2: REVIEW & LAUNCH ─── */}
-                  {currentStep === 2 && (
+                  {/* ─── STEP 2: LOCATION (Pro+ only) ─── */}
+                  {currentStep === locationStepIndex && locationStepIndex !== -1 && (
+                    <>
+                      <CardHeader>
+                        <div className="flex items-center gap-2 mb-1">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          <CardTitle>Your Location</CardTitle>
+                        </div>
+                        <CardDescription>
+                          Help your AI agent know where you're based. This powers local call handling and routing.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-5">
+                        <motion.div variants={fadeInUp} className="space-y-1.5">
+                          <Label htmlFor="addressLine1">Street Address</Label>
+                          <Input
+                            id="addressLine1"
+                            placeholder="e.g. 123 Main St"
+                            value={addressLine1}
+                            onChange={(e) => setAddressLine1(e.target.value)}
+                            autoFocus
+                          />
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-3">
+                          <div className="space-y-1.5">
+                            <Label htmlFor="city">City</Label>
+                            <Input
+                              id="city"
+                              placeholder="e.g. New York"
+                              value={city}
+                              onChange={(e) => setCity(e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label htmlFor="stateRegion">State / Region</Label>
+                            <Input
+                              id="stateRegion"
+                              placeholder="e.g. NY"
+                              value={stateRegion}
+                              onChange={(e) => setStateRegion(e.target.value)}
+                            />
+                          </div>
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-3">
+                          <div className="space-y-1.5">
+                            <Label htmlFor="postalCode">Postal Code</Label>
+                            <Input
+                              id="postalCode"
+                              placeholder="e.g. 10001"
+                              value={postalCode}
+                              onChange={(e) => setPostalCode(e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <Label htmlFor="businessPhone">Business Phone</Label>
+                            <Input
+                              id="businessPhone"
+                              type="tel"
+                              placeholder="e.g. +1 555 000 0000"
+                              value={businessPhone}
+                              onChange={(e) => setBusinessPhone(e.target.value)}
+                            />
+                          </div>
+                        </motion.div>
+                        <motion.p variants={fadeInUp} className="text-xs text-muted-foreground leading-relaxed">
+                          All fields optional — you can update this anytime from Settings.
+                        </motion.p>
+                      </CardContent>
+                    </>
+                  )}
+
+                  {/* ─── REVIEW & LAUNCH ─── */}
+                  {currentStep === reviewStepIndex && (
                     <>
                       <CardHeader>
                         <CardTitle>Ready to launch</CardTitle>
-                        <CardDescription>
-                          Review your info and go live
-                        </CardDescription>
+                        <CardDescription>Review your info and go live</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        {/* Personal Profile summary */}
-                        <motion.div
-                          variants={fadeInUp}
-                          className="rounded-xl border p-4 space-y-3"
-                        >
+                        <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
                           <div className="flex items-center gap-3">
                             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
                               <User className="h-3.5 w-3.5 text-primary" />
@@ -496,11 +568,7 @@ const Setup: React.FC = () => {
                           </div>
                         </motion.div>
 
-                        {/* Business Profile summary */}
-                        <motion.div
-                          variants={fadeInUp}
-                          className="rounded-xl border p-4 space-y-3"
-                        >
+                        <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
                           <div className="flex items-center gap-3">
                             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
                               <Building2 className="h-3.5 w-3.5 text-primary" />
@@ -513,6 +581,24 @@ const Setup: React.FC = () => {
                             </div>
                           </div>
                         </motion.div>
+
+                        {isProPlus && (city || addressLine1 || businessPhone) && (
+                          <motion.div variants={fadeInUp} className="rounded-xl border p-4 space-y-3">
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                                <MapPin className="h-3.5 w-3.5 text-primary" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium">
+                                  {[addressLine1, city, stateRegion].filter(Boolean).join(', ') || 'Location added'}
+                                </p>
+                                {businessPhone && (
+                                  <p className="text-xs text-muted-foreground">{businessPhone}</p>
+                                )}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
 
                         <motion.p variants={fadeInUp} className="text-xs text-muted-foreground leading-relaxed">
                           Your AI receptionist will go live immediately. You can configure voice, knowledge base, and call flow anytime from the dashboard.
