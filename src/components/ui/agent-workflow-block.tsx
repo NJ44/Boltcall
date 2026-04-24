@@ -394,20 +394,23 @@ export function AgentWorkflowBlock({
                           style={{ backgroundColor: glowColor }}
                           aria-hidden="true"
                         />
-                        <div className="relative mb-1" aria-hidden="true">
-                          {customAvatar ? (
+                        {/* Big background logo — watermark fills the circle */}
+                        <img
+                          src="/boltcall_small_logo.webp"
+                          alt=""
+                          aria-hidden="true"
+                          className={`absolute pointer-events-none object-contain opacity-[0.13] ${node.direction === "outbound" ? "brightness-0 invert" : ""}`}
+                          style={{ width: 60, height: 60, top: '50%', left: '50%', transform: 'translate(-50%, -55%)' }}
+                        />
+                        {customAvatar && (
+                          <div className="relative mb-1" aria-hidden="true">
                             <AgentAvatar size="sm" avatar={customAvatar} color={customColor} name={displayTitle} />
-                          ) : (
-                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full">
-                              <img
-                                src="/boltcall_small_logo.webp"
-                                alt="Boltcall"
-                                className={`h-7 w-7 object-contain ${node.direction === "outbound" ? "brightness-0 invert" : ""}`}
-                              />
-                            </div>
-                          )}
-                        </div>
-                        <span className="relative text-[9px] font-bold tracking-tight text-foreground text-center leading-tight px-1 max-w-full truncate">
+                          </div>
+                        )}
+                        <span
+                          className="relative text-[11px] font-bold tracking-tight text-foreground text-center leading-tight px-2 max-w-full truncate"
+                          style={{ marginTop: customAvatar ? 0 : 34 }}
+                        >
                           {displayTitle}
                         </span>
                         <AnimatePresence>
