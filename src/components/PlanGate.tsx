@@ -10,7 +10,7 @@ interface PlanGateProps {
 }
 
 const PlanGate: React.FC<PlanGateProps> = ({ requiredPlan, children }) => {
-  const { hasAccess, isLoading, isTrialing, trialDaysRemaining } = useSubscription();
+  const { hasAccess, isLoading } = useSubscription();
 
   if (isLoading) {
     return (
@@ -21,24 +21,8 @@ const PlanGate: React.FC<PlanGateProps> = ({ requiredPlan, children }) => {
   }
 
   if (hasAccess(requiredPlan)) {
-    return (
-      <>
-        {isTrialing && trialDaysRemaining <= 3 && (
-          <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-4 flex items-center justify-between">
-            <p className="text-sm text-amber-800">
-              Your free trial ends in <strong>{trialDaysRemaining} day{trialDaysRemaining !== 1 ? 's' : ''}</strong>. Subscribe to keep access to all features.
-            </p>
-            <Link
-              to="/dashboard/settings/plan-billing"
-              className="text-sm font-medium text-brand-blue hover:underline whitespace-nowrap ml-4"
-            >
-              Choose a plan
-            </Link>
-          </div>
-        )}
-        {children}
-      </>
-    );
+    // Trial expiry messaging is handled exclusively by TrialExpiryPopup in DashboardLayout — no inline banner here.
+    return <>{children}</>;
   }
 
   const planName = PLAN_INFO[requiredPlan].name;
