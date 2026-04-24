@@ -9,7 +9,12 @@ const TodayGlanceCard: React.FC = () => {
   const handled = liveStats?.retell?.successful_calls_today ?? 0;
   const missed = liveStats?.retell?.missed_calls_today ?? 0;
   const pending = (callbackStats as any)?.pending ?? 0;
+  const totalToday = (callbackStats as any)?.total ?? 0;
   const needsAction = missed + pending;
+
+  const total = handled + missed;
+  const winRate = total > 0 ? Math.round((handled / total) * 100) : 100;
+  const leadsToday = totalToday || handled;
 
   return (
     <motion.div
@@ -36,7 +41,7 @@ const TodayGlanceCard: React.FC = () => {
 
         <div className="h-8 w-px bg-border/40 hidden sm:block" aria-hidden="true" />
 
-        {/* Handled — relief */}
+        {/* Handled by AI */}
         <div className="flex flex-col gap-0.5">
           {loading ? (
             <span className="h-7 w-10 rounded bg-foreground/10 animate-pulse" />
@@ -48,7 +53,35 @@ const TodayGlanceCard: React.FC = () => {
           <span className="text-[10px] uppercase tracking-[0.14em] text-foreground/50 font-medium">Handled by AI</span>
         </div>
 
-        {/* Contextual CTA — only when there's something to act on */}
+        <div className="h-8 w-px bg-border/40 hidden sm:block" aria-hidden="true" />
+
+        {/* Leads captured today */}
+        <div className="flex flex-col gap-0.5">
+          {loading ? (
+            <span className="h-7 w-10 rounded bg-foreground/10 animate-pulse" />
+          ) : (
+            <span className="text-2xl font-bold tabular-nums leading-none text-blue-500">
+              {leadsToday}
+            </span>
+          )}
+          <span className="text-[10px] uppercase tracking-[0.14em] text-foreground/50 font-medium">Leads today</span>
+        </div>
+
+        <div className="h-8 w-px bg-border/40 hidden sm:block" aria-hidden="true" />
+
+        {/* AI win rate */}
+        <div className="flex flex-col gap-0.5">
+          {loading ? (
+            <span className="h-7 w-12 rounded bg-foreground/10 animate-pulse" />
+          ) : (
+            <span className={`text-2xl font-bold tabular-nums leading-none ${winRate >= 80 ? 'text-emerald-500' : winRate >= 50 ? 'text-amber-500' : 'text-red-500'}`}>
+              {winRate}%
+            </span>
+          )}
+          <span className="text-[10px] uppercase tracking-[0.14em] text-foreground/50 font-medium">AI win rate</span>
+        </div>
+
+        {/* Contextual CTA */}
         {!loading && needsAction > 0 && (
           <Link
             to="/dashboard/leads"
