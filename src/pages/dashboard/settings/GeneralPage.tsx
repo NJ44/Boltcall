@@ -123,6 +123,11 @@ const GeneralPage: React.FC = () => {
         description: businessInfo.description,
       };
 
+      // Track the resolved profile ID locally so the location upsert
+      // can use it immediately — React state updates are async and
+      // setBusinessProfileId won't reflect in the same render cycle.
+      let resolvedProfileId = businessProfileId;
+
       if (businessProfileId) {
         const { error } = await supabase
           .from('business_profiles')
@@ -136,11 +141,14 @@ const GeneralPage: React.FC = () => {
           .select()
           .single();
         if (error) throw error;
-        if (newProfile) setBusinessProfileId(newProfile.id);
+        if (newProfile) {
+          resolvedProfileId = newProfile.id;
+          setBusinessProfileId(newProfile.id);
+        }
       }
 
-      // Upsert location (address)
-      if (businessProfileId) {
+      // Upsert location (address) — use resolvedProfileId, not the stale state value
+      if (resolvedProfileId) {
         const locationPayload = {
           address_line1: addressInfo.line1,
           address_line2: addressInfo.line2,
@@ -161,7 +169,7 @@ const GeneralPage: React.FC = () => {
             .from('locations')
             .insert([{
               ...locationPayload,
-              business_profile_id: businessProfileId,
+              business_profile_id: resolvedProfileId,
               user_id: user.id,
               name: addressInfo.line1 || businessInfo.businessName || 'Primary Location',
               is_primary: true,
@@ -180,10 +188,16 @@ const GeneralPage: React.FC = () => {
       if (businessInfo.businessName) setBusinessName(businessInfo.businessName);
       setTimeout(() => { setSaveSuccess(false); setIsDirty(false); }, 2000);
 
-      // Claim bonus token reward for completing business profile
-      const rewardResult = await claimReward('complete_business_profile');
-      if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
-        showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for completing your business profile', variant: 'success', duration: 4000 });
+      // Claim bonus token reward — run outside the main try/catch so a
+      // failure here doesn't show a "Failed to save" error to the user.
+      try {
+        const rewardResult = await claimReward('complete_business_profile');
+        if (rewardResult?.success && !rewardResult?.alreadyClaimed) {
+          showToast({ title: 'Bonus Tokens!', message: '+50 tokens earned for completing your business profile', variant: 'success', duration: 4000 });
+        }
+      } catch (rewardErr) {
+        // Non-fatal: reward claim errors should not surface as a save failure
+        console.warn('Token reward claim failed (non-fatal):', rewardErr);
       }
     } catch (err) {
       console.error('Error saving general settings:', err);

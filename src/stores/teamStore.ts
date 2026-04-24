@@ -415,7 +415,26 @@ export const useTeamStore = create<TeamState>((set, get) => ({
 
   updateWorkspace: async (updates: Partial<WorkspaceSettings>) => {
     const ws = get().workspace;
-    if (!ws) return;
+
+    if (!ws) {
+      // No workspace record yet — create one on first save
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+
+      const { data: newWs, error } = await supabase
+        .from('workspaces')
+        .insert({
+          owner_id: session.user.id,
+          ...updates,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .select()
+        .single();
+      if (error) throw error;
+      set({ workspace: newWs as WorkspaceSettings });
+      return;
+    }
 
     const { error } = await supabase
       .from('workspaces')
