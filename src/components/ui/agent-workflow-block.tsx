@@ -475,26 +475,8 @@ export function AgentWorkflowBlock({
         </div>
       </div>
 
-      {/* Footer Stats */}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border/30 bg-background/40 px-4 py-2.5 backdrop-blur-sm" role="status" aria-live="polite">
-        <div className="flex flex-wrap items-center gap-4 text-xs text-foreground/60">
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
-            <span className="uppercase tracking-[0.15em]">{useCaseCount} Triggers</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-400" aria-hidden="true" />
-            <span className="uppercase tracking-[0.15em]">{agentCount} Agents</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden="true" />
-            <span className="uppercase tracking-[0.15em]">{outputCount} Outputs</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
-            <span className="uppercase tracking-[0.15em]">{connections.length} Connections</span>
-          </div>
-        </div>
+      {/* Footer */}
+      <div className="mt-4 flex items-center justify-end rounded-lg border border-border/30 bg-background/40 px-4 py-2.5 backdrop-blur-sm" role="status" aria-live="polite">
         {unconfiguredCount > 0 ? (
           <Link
             to="/dashboard/agents"
