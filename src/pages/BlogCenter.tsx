@@ -16,7 +16,6 @@ interface BlogPost {
   date: string;
   readTime: string;
   category: string;
-  image: string;
 }
 
 const blogPosts: BlogPost[] = [
@@ -27,7 +26,6 @@ const blogPosts: BlogPost[] = [
     date: 'April 21, 2026',
     readTime: '11 min read',
     category: 'Plumbing|WhatsApp|How-to',
-    image: '/og-image.jpg'
   },
   {
     title: 'After-Hours Leads Are <span className="text-blue-600">Killing</span> Your Home Service Business',
@@ -36,7 +34,6 @@ const blogPosts: BlogPost[] = [
     date: 'April 17, 2026',
     readTime: '9 min read',
     category: 'After-Hours|Speed to Lead',
-    image: '/og-image.jpg'
   },
   {
     title: 'Never Miss a <span className="text-blue-600">Call After Business Hours</span>',
@@ -45,7 +42,6 @@ const blogPosts: BlogPost[] = [
     date: 'April 12, 2026',
     readTime: '11 min read',
     category: 'After-Hours|AI Receptionist',
-    image: '/og-image.jpg'
   },
 
   {
@@ -55,7 +51,6 @@ const blogPosts: BlogPost[] = [
     date: 'April 9, 2026',
     readTime: '10 min read',
     category: 'Home Services|Industry Guide',
-    image: '/og-image.jpg'
   },
   {
     title: 'How to Set Up 24/7 Call Answering for a Small Business (No Staff)',
@@ -64,7 +59,6 @@ const blogPosts: BlogPost[] = [
     date: 'April 9, 2026',
     readTime: '9 min read',
     category: 'AI Agent|Small Business|How-to',
-    image: '/og-image.jpg'
   },
   {
     title: 'Is an AI Receptionist Worth It? ROI & Cost-Benefit Analysis for Local Businesses',
@@ -73,7 +67,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 24, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/ai-receptionist-worth-it-roi.png'
   },
   {
     title: 'AI Receptionist for Contractors: Never Miss a Job Lead Again',
@@ -82,7 +75,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 23, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist|Local Business|Industry Guide',
-    image: '/images/blog/ai-receptionist-contractors.png'
   },
   {
     title: 'Boltcall vs Podium: Honest Comparison for Local Businesses (2026)',
@@ -91,7 +83,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 21, 2026',
     readTime: '10 min read',
     category: 'Comparison',
-    image: '/og-image.jpg'
   },
   {
     title: 'Boltcall vs GoHighLevel: Simple AI vs Complex CRM (2026)',
@@ -100,7 +91,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 21, 2026',
     readTime: '10 min read',
     category: 'Comparison',
-    image: '/og-image.jpg'
   },
   {
     title: 'Boltcall vs Birdeye: AI Receptionist vs Reputation Management (2026)',
@@ -109,7 +99,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 21, 2026',
     readTime: '10 min read',
     category: 'Comparison',
-    image: '/og-image.jpg'
   },
   {
     title: 'Boltcall vs Emitrr: Full AI Suite vs SMS-First Platform (2026)',
@@ -118,7 +107,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 21, 2026',
     readTime: '10 min read',
     category: 'Comparison',
-    image: '/og-image.jpg'
   },
   {
     title: 'Boltcall vs Calomation: AI Receptionist Platforms Compared (2026)',
@@ -127,7 +115,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 21, 2026',
     readTime: '10 min read',
     category: 'Comparison',
-    image: '/og-image.jpg'
   },
   {
     title: 'Boltcall vs Smith.ai: AI Receptionist Compared for Small Business (2026)',
@@ -136,7 +123,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 23, 2026',
     readTime: '10 min read',
     category: 'Comparison',
-    image: '/og-image.jpg'
   },
   {
     title: 'AI Receptionist for Plumbers: Answer Every Call 24/7 (2026 Guide)',
@@ -145,7 +131,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 23, 2026',
     readTime: '12 min read',
     category: 'Industry Guide',
-    image: '/og-image.jpg'
   },
   {
     title: 'AI Chatbot vs Live Chat vs Phone Answering: Which Works Best for Local Businesses',
@@ -154,7 +139,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 21, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist|Local Business',
-    image: '/images/blog/ai-chatbot-vs-live-chat-phone-comparison.png'
   },
   {
     title: 'Best After Hours Answering Service for Local Businesses: AI vs Traditional',
@@ -163,7 +147,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 20, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist|Local Business',
-    image: '/images/blog/best-after-hours-answering-service.png'
   },
   {
     title: 'AI Phone Answering for Dentists: Never Miss Another Patient Call',
@@ -172,7 +155,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 19, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/ai-phone-answering-dentists.png'
   },
   {
     title: 'What Is an AI Receptionist? Complete Guide for Local Businesses',
@@ -181,7 +163,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 18, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/what-is-ai-receptionist-guide.png'
   },
   {
     title: 'Google Reviews Automation for Local Businesses: AI Tools That Actually Work',
@@ -190,7 +171,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 17, 2026',
     readTime: '8 min read',
     category: 'Local Business',
-    image: '/images/blog/google-reviews-automation-local-business.png'
   },
   {
     title: 'Is an AI Receptionist Worth It? ROI & Cost-Benefit Analysis for Local Businesses',
@@ -199,7 +179,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 16, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/is-ai-receptionist-worth-it.png'
   },
   {
     title: 'AI Phone Answering for Plumbers: Never Miss a Job Lead Again',
@@ -208,7 +187,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 15, 2026',
     readTime: '8 min read',
     category: 'Industry Guide',
-    image: '/images/blog/ai-phone-answering-plumbers.png'
   },
   {
     title: 'Best AI Receptionist for Small Business: Features, Pricing & Comparison',
@@ -217,7 +195,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 14, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/best-ai-receptionist-small-business.png'
   },
   {
     title: 'AI Chatbot vs Live Chat vs Phone Answering: Which Converts More Leads for Local Businesses',
@@ -226,7 +203,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 13, 2026',
     readTime: '9 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/ai-chatbot-vs-live-chat-phone-answering.png'
   },
   {
     title: 'AI Answering Service for Small Business: The 2026 Complete Guide',
@@ -235,7 +211,6 @@ const blogPosts: BlogPost[] = [
     date: 'April 9, 2026',
     readTime: '9 min read',
     category: 'AI Phone Answering',
-    image: '/images/blog/ai-answering-service-small-business.png'
   },
   {
     title: 'How AI Receptionists Work: A Complete Technical Guide for Local Businesses',
@@ -244,7 +219,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 12, 2026',
     readTime: '9 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/how-ai-receptionist-works.png'
   },
   {
     title: 'AI vs Human Receptionist: Which is Right for Your Local Business?',
@@ -253,7 +227,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 11, 2026',
     readTime: '8 min read',
     category: 'Industry Guide',
-    image: '/images/blog/ai-vs-human-receptionist.png'
   },
   {
     title: 'How Much Does an AI Receptionist Cost? 2024 Pricing Guide for Local Businesses',
@@ -262,7 +235,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 10, 2026',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/images/blog/ai-receptionist-cost-pricing.png'
   },
   {
     title: 'Speed to Lead for Local Businesses: Why Response Time Beats Every Marketing Tactic',
@@ -271,7 +243,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 09, 2026',
     readTime: '8 min read',
     category: 'Local Business',
-    image: '/images/blog/speed-to-lead-local-business.png'
   },
   {
     title: '5 Signs Your Business Needs an <span class="text-blue-600">AI Receptionist</span>',
@@ -280,7 +251,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 5, 2026',
     readTime: '7 min read',
     category: 'Business Growth',
-    image: '/images/blog/ai-receptionist.webp'
   },
   {
     title: 'Why <span class="text-blue-600">AI Services</span> Are No Longer Optional',
@@ -289,7 +259,6 @@ const blogPosts: BlogPost[] = [
     date: 'January 15, 2025',
     readTime: '8 min read',
     category: 'Business Strategy',
-    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'The <span class="text-blue-600">391%</span> Advantage: Responding in 60 Seconds',
@@ -298,7 +267,6 @@ const blogPosts: BlogPost[] = [
     date: 'January 20, 2025',
     readTime: '6 min read',
     category: 'Lead Generation',
-    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'Why <span class="text-blue-600">Website Speed</span> Is Everything',
@@ -307,7 +275,6 @@ const blogPosts: BlogPost[] = [
     date: 'January 25, 2025',
     readTime: '7 min read',
     category: 'Website Performance',
-    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'Why <span class="text-blue-600">SEO</span> Can\'t Be Ignored',
@@ -316,7 +283,6 @@ const blogPosts: BlogPost[] = [
     date: 'January 30, 2025',
     readTime: '9 min read',
     category: 'SEO Strategy',
-    image: '/images/blog/seo.webp'
   },
   {
     title: 'The Complete Guide to <span class="text-blue-600">AI for Local Businesses</span>',
@@ -325,7 +291,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 1, 2025',
     readTime: '12 min read',
     category: 'Complete Guide',
-    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'Best <span class="text-blue-600">AI Receptionist Tools</span> for Small Businesses (Top 5 Compared)',
@@ -334,7 +299,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 5, 2025',
     readTime: '10 min read',
     category: 'Tool Comparison',
-    image: '/images/blog/ai-receptionist.webp'
   },
   {
     title: 'How to Make an <span class="text-blue-600">AI Receptionist</span>: A Complete Step-by-Step Guide',
@@ -343,7 +307,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 20, 2025',
     readTime: '10 min read',
     category: 'Technical Guide',
-    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'Will <span class="text-blue-600">Receptionists</span> Be Replaced by AI? The Future of Front Desk Work',
@@ -352,7 +315,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 25, 2025',
     readTime: '9 min read',
     category: 'Industry Analysis',
-    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'What Does <span class="text-blue-600">Instant Lead Reply</span> Mean? A Complete Guide',
@@ -361,7 +323,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 1, 2025',
     readTime: '6 min read',
     category: 'Lead Generation',
-    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'How to Set Up <span class="text-blue-600">Instant Lead Reply</span> in Your Website/Ads with Boltcall',
@@ -370,7 +331,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 1, 2025',
     readTime: '8 min read',
     category: 'Setup Guide',
-    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'How Does <span class="text-blue-600">Instant Lead Reply</span> Work? The Technology Behind the Magic',
@@ -379,7 +339,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 2, 2025',
     readTime: '7 min read',
     category: 'Technology',
-    image: '/images/blog/speed-pro.webp'
   },
   {
     title: 'Top 10 <span class="text-blue-600">AI Receptionist Agencies</span>: Complete Comparison Guide',
@@ -388,7 +347,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 15, 2025',
     readTime: '15 min read',
     category: 'Tool Comparison',
-    image: '/images/blog/ai-receptionist.webp'
   },
   {
     title: 'How to Create a <span class="text-blue-600">Gemini Gem</span> Business Assistant (Marketing, Social Media & More)',
@@ -397,7 +355,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 15, 2025',
     readTime: '12 min read',
     category: 'AI Tools Guide',
-    image: '/images/blog/ai-services-pro.webp'
   },
   {
     title: 'State of Missed Calls in Local Business 2026: Statistics & Data',
@@ -406,7 +363,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 31, 2026',
     readTime: '10 min read',
     category: 'Industry Research',
-    image: '/og-image.jpg'
   },
   {
     title: 'How to Set Up AI Phone Answering for Your Vet Clinic',
@@ -415,7 +371,6 @@ const blogPosts: BlogPost[] = [
     date: 'March 31, 2026',
     readTime: '10 min read',
     category: 'Industry Guide',
-    image: '/og-image.jpg'
   },
   {
     title: 'Answering Service Benefits for Appointment Scheduling',
@@ -424,7 +379,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 10, 2025',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/og-image.jpg'
   },
   {
     title: 'Benefits of Outsourced Reception Services',
@@ -433,7 +387,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 10, 2025',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/og-image.jpg'
   },
   {
     title: 'How to Schedule a Text: Complete SMS Scheduling Guide',
@@ -442,7 +395,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 15, 2025',
     readTime: '8 min read',
     category: 'Setup Guide',
-    image: '/og-image.jpg'
   },
   {
     title: 'Effective Phone Call Scripts for Receptionists Guide',
@@ -451,7 +403,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 10, 2025',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/og-image.jpg'
   },
   {
     title: 'Professional Telephone Etiquette Tips & Best Practices',
@@ -460,7 +411,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 10, 2025',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/og-image.jpg'
   },
   {
     title: 'Understanding Live Answering Service Costs & Pricing',
@@ -469,7 +419,6 @@ const blogPosts: BlogPost[] = [
     date: 'February 10, 2025',
     readTime: '8 min read',
     category: 'AI Receptionist',
-    image: '/og-image.jpg'
   },
   // Add more blog posts here as they are created
 ];
@@ -572,20 +521,6 @@ const BlogCenter: React.FC = () => {
                 className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden group h-full flex flex-col"
               >
                 <Link to={post.slug} className="block flex-grow flex flex-col">
-                  {/* Blog Image */}
-                  <div className="relative h-48 overflow-hidden bg-gray-100">
-                    <img
-                      src={post.image}
-                      alt={post.title.replace(/<[^>]*>/g, '')}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                      width="400"
-                      height="192"
-                      loading="lazy"
-                      decoding="async"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                    />
-                  </div>
-
                   <div className="p-6 flex flex-col flex-grow">
                     {/* Category Badge */}
                     <div className="inline-flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-4 w-fit">
