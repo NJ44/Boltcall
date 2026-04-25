@@ -51,7 +51,6 @@ const WhileYouWereGone: React.FC = () => {
 
   if (!summary || dismissed) return null;
 
-  const goneLabel = dayjs.duration ? undefined : dayjs().subtract(summary.goneMs, 'ms').fromNow(true);
   const hoursGone = Math.round(summary.goneMs / 3600000);
   const timeLabel = hoursGone >= 1 ? `${hoursGone}h` : `${Math.round(summary.goneMs / 60000)}m`;
 

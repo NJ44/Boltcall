@@ -261,9 +261,6 @@ export function AgentWorkflowBlock({
     dragStartPosition.current = null;
   };
 
-  const useCaseCount = nodes.filter((n) => n.type === "use-case").length;
-  const agentCount = nodes.filter((n) => n.type === "agent").length;
-  const outputCount = nodes.filter((n) => n.type === "output").length;
   const unconfiguredCount = nodes.filter((n) => !n.configured && !n.locked).length;
 
   const isStarter = planLevel === "starter";
