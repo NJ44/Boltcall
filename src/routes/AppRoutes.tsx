@@ -85,6 +85,7 @@ const Contact = React.lazy(() => import('../pages/Contact'));
 const BookCall = React.lazy(() => import('../pages/BookCall'));
 const About = React.lazy(() => import('../pages/About'));
 const PricingPage = React.lazy(() => import('../pages/PricingPage'));
+const AiCoursePage = React.lazy(() => import('../pages/AiCoursePage'));
 const Documentation = React.lazy(() => import('../pages/Documentation'));
 const ApiDocsPage = React.lazy(() => import('../pages/ApiDocsPage'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
