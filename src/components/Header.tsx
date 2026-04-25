@@ -414,6 +414,7 @@ const Header: React.FC = () => {
                 onMouseLeave={() => setIsFeaturesOpen(false)}
               >
                 <button
+                  onClick={() => setIsFeaturesOpen(prev => !prev)}
                   className={`group relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                     }`}
                 >
@@ -490,6 +491,7 @@ const Header: React.FC = () => {
                 onMouseLeave={() => setIsResourcesOpen(false)}
               >
                 <button
+                  onClick={() => setIsResourcesOpen(prev => !prev)}
                   className={`group relative font-medium py-2 transition-colors duration-300 flex items-center gap-1 ${isOverBlueBackground ? 'text-white' : 'text-text-muted'
                     }`}
                 >
@@ -725,7 +727,7 @@ const Header: React.FC = () => {
                   key={item.label}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
+                  className="block w-full text-left px-4 py-4 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -735,7 +737,7 @@ const Header: React.FC = () => {
               <div>
                 <button
                   onClick={() => setMobileFeatures(!mobileFeatures)}
-                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
+                  className="w-full text-left px-4 py-4 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
                 >
                   Features
                   <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileFeatures ? 'rotate-180' : ''}`} />
@@ -762,7 +764,7 @@ const Header: React.FC = () => {
               <div>
                 <button
                   onClick={() => setMobileResources(!mobileResources)}
-                  className="w-full text-left px-4 py-3 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
+                  className="w-full text-left px-4 py-4 text-lg font-semibold text-gray-900 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-between"
                 >
                   Resources
                   <ChevronDown size={18} className={`text-gray-400 transition-transform ${mobileResources ? 'rotate-180' : ''}`} />

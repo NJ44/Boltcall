@@ -229,7 +229,7 @@ const About: React.FC = () => {
           <section className="my-10">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Boltcall Plans at a Glance</h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border-collapse">
+              <table className="w-full min-w-[480px] text-sm border-collapse">
                 <thead>
                   <tr className="bg-blue-600 text-white">
                     <th className="py-3 px-4 text-left rounded-tl-xl">Feature</th>
@@ -254,6 +254,7 @@ const About: React.FC = () => {
                 </tbody>
               </table>
             </div>
+            <p className="text-xs text-gray-500 mt-2 md:hidden">← Scroll to see full comparison</p>
           </section>
         </div>
       </section>

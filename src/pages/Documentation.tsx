@@ -425,7 +425,7 @@ const Documentation: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-8">
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="font-semibold text-gray-900 mb-4">Quick Links</h3>
@@ -449,8 +449,39 @@ const Documentation: React.FC = () => {
           {/* Main Content */}
           <div className="lg:col-span-3">
 
-            {/* Table of Contents */}
-            <div id="toc" className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+            {/* Mobile collapsible TOC */}
+            <details className="block lg:hidden bg-white rounded-xl shadow-sm border border-gray-200 mb-6 group">
+              <summary className="flex items-center justify-between p-4 cursor-pointer font-semibold text-gray-900 list-none">
+                Table of Contents
+                <ChevronDown className="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="px-4 pb-4 flex flex-col gap-2">
+                {[
+                  { label: 'Getting Started', href: '#getting-started' },
+                  { label: 'Integrations', href: '#integrations' },
+                  { label: 'AI Features', href: '#ai-features' },
+                  { label: 'Instant Response', href: '#instant-response' },
+                  { label: 'Dashboard & Analytics', href: '#dashboard' },
+                  { label: 'Notifications & Alerts', href: '#notifications' },
+                  { label: 'Troubleshooting', href: '#troubleshooting' },
+                  { label: 'Expert Insights', href: '#expert-insights' },
+                  { label: 'API Pros & Cons', href: '#pros-cons' },
+                  { label: 'Pricing', href: '#pricing' },
+                  { label: 'References', href: '#sources' },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="text-sm text-blue-700 hover:underline py-0.5"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </details>
+
+            {/* Table of Contents — desktop */}
+            <div id="toc" className="hidden lg:block bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
               <h2 className="text-lg font-bold text-gray-900 mb-4">Table of Contents</h2>
               <div className="flex flex-wrap gap-2">
                 {[
