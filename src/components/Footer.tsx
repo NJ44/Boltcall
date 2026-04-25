@@ -44,6 +44,7 @@ const Footer: React.FC<FooterProps> = ({ theme = 'light', showLogo = true }) => 
     resources: [
       { label: 'Comparisons', href: '/comparisons' },
       { label: 'Blog', href: '/blog' },
+      { label: 'Free AI Course', href: '/ai-course' },
       { label: 'SEO Audit', href: '/seo-audit' },
       { label: 'Website Health Check', href: '/speed-test' },
       { label: 'AI Revenue Audit', href: '/ai-revenue-calculator' },
