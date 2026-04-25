@@ -40,6 +40,7 @@ const Header: React.FC = () => {
     { label: 'Blog', href: '/blog', icon: BookOpen },
     { label: 'AI Guide', href: '/ai-guide-for-businesses', icon: Book },
     { label: 'Newsletter', href: '/newsletter', icon: Mail },
+    { label: 'Free AI Course', href: '/ai-course', icon: BookOpen },
   ];
 
   const freeToolsItems = [
