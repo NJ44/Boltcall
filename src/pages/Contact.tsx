@@ -26,7 +26,7 @@ const PillInput = ({
     <input
       {...props}
       className={cn(
-        "w-full px-5 py-3 bg-gray-100/80 rounded-full text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200"
+        "w-full px-5 py-3 bg-gray-100/80 rounded-full text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200 min-h-[48px] text-[16px] sm:text-sm"
       )}
     />
     {fieldError && (
@@ -207,7 +207,7 @@ const Contact: React.FC = () => {
                   {...register('message')}
                   placeholder="Your message..."
                   rows={3}
-                  className="w-full px-5 py-3 bg-gray-100/80 rounded-2xl text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200 resize-none"
+                  className="w-full px-5 py-3 bg-gray-100/80 rounded-2xl text-sm text-gray-800 placeholder-gray-400 border-none outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition-all duration-200 resize-none text-[16px] sm:text-sm"
                 />
                 {errors.message && (
                   <p className="mt-1 ml-4 text-xs text-red-500">{errors.message.message}</p>
@@ -217,7 +217,7 @@ const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-52 mx-auto block py-3 rounded-full bg-blue-600 text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full sm:w-52 mx-auto block py-3 min-h-[48px] rounded-full bg-blue-600 text-white font-bold text-sm tracking-widest uppercase shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center gap-2">

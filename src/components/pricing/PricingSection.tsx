@@ -268,11 +268,12 @@ const PricingSection: React.FC = () => {
 
         {/* Comparison Table */}
         <motion.div
-          className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200"
+          className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-x-auto"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
+          <div className="min-w-[640px]">
           {/* Table Header */}
           <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-8 py-6">
             <div className="grid grid-cols-4 gap-4">
@@ -347,6 +348,7 @@ const PricingSection: React.FC = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
           </div>
         </motion.div>
 

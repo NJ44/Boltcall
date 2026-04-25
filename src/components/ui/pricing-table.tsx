@@ -65,14 +65,14 @@ export function PricingTable({
         {...props}
       >
         <div className="flex justify-center mb-4 sm:mb-8">
-          <div className="inline-flex items-center bg-gray-100 rounded-lg p-1">
+          <div className="inline-flex items-center bg-gray-100 rounded-lg p-1 min-h-[44px]">
             <button
               type="button"
               onClick={() => setIsYearly(false)}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
-                !isYearly 
-                  ? "bg-white text-gray-900 shadow-sm" 
+                "px-4 py-2.5 rounded-md text-sm font-medium transition-all duration-200",
+                !isYearly
+                  ? "bg-white text-gray-900 shadow-sm"
                   : "text-gray-600 hover:text-gray-900"
               )}
             >
@@ -82,9 +82,9 @@ export function PricingTable({
               type="button"
               onClick={() => setIsYearly(true)}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2",
-                isYearly 
-                  ? "bg-white text-gray-900 shadow-sm" 
+                "px-4 py-2.5 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2",
+                isYearly
+                  ? "bg-white text-gray-900 shadow-sm"
                   : "text-gray-600 hover:text-gray-900"
               )}
             >

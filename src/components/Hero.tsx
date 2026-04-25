@@ -163,7 +163,7 @@ const Hero: React.FC = () => {
               }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16">
+                <h1 className="max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16" style={{ fontSize: 'clamp(28px, 6vw, 72px)' }}>
                   <span
                     style={{
                       opacity: 0,
@@ -192,9 +192,10 @@ const Hero: React.FC = () => {
                   <span className="relative inline-flex items-center justify-start overflow-hidden h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint', width: '4.5em' }}>
                     {titles.map((title, index) => (
                       <span
-                        key={index}
-                        className="absolute left-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-blue-600 whitespace-nowrap"
+                        key={title}
+                        className="absolute left-0 font-bold text-blue-600 whitespace-nowrap"
                         style={{
+                          fontSize: 'clamp(28px, 6vw, 72px)',
                           transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
                           transform: titleNumber === index
                             ? 'translateY(0)'
@@ -207,6 +208,7 @@ const Hero: React.FC = () => {
                         {title}
                       </span>
                     ))}
+                    <noscript><span className="font-bold text-blue-600">CALL</span></noscript>
                   </span>
                 </h1>
               </div>
