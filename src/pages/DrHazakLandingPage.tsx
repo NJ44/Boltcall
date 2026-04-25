@@ -112,6 +112,10 @@ const DrHazakLandingPage = () => {
                                 src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2000&auto=format&fit=crop"
                                 alt="Dental Team"
                                 className="rounded-[2.5rem] shadow-2xl w-full object-cover h-[500px] md:h-[600px]"
+                                width={800}
+                                height={600}
+                                loading="lazy"
+                                decoding="async"
                             />
 
                             {/* Floating Badge */}
@@ -218,6 +222,10 @@ const DrHazakLandingPage = () => {
                                         src={member.image}
                                         alt={member.name}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        width={600}
+                                        height={550}
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                     <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
                                         <div className="flex gap-4 mb-4">

@@ -79,7 +79,7 @@ const FreeWebsitePage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 flex justify-center">
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
             <Link to="/" className="block">
-              <img src="/boltcall_full_logo.png" alt="Boltcall" className="h-16 w-auto" />
+              <img src="/boltcall_full_logo.png" alt="Boltcall" className="h-16 w-auto" width={160} height={64} loading="eager" decoding="async" />
             </Link>
           </motion.div>
         </div>

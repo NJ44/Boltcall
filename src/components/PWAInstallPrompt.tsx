@@ -67,7 +67,7 @@ function PWAInstallPrompt() {
   return (
     <div className="fixed bottom-4 left-4 right-4 md:right-auto z-[9999] bg-white border border-blue-200 rounded-xl shadow-2xl p-4 max-w-sm animate-in slide-in-from-bottom-4">
       <div className="flex items-start gap-3">
-        <img src="/boltcall_icon.png" alt="Boltcall" className="w-12 h-12 rounded-xl" loading="lazy" />
+        <img src="/boltcall_icon.png" alt="Boltcall" className="w-12 h-12 rounded-xl" width={48} height={48} loading="lazy" decoding="async" />
         <div className="flex-1">
           <p className="font-semibold text-gray-900 text-sm">Install Boltcall</p>
           {isIOSDevice ? (

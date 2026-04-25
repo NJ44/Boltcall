@@ -124,7 +124,10 @@ export function OTPVerification({
                 src="/boltcall_icon.png"
                 alt="Boltcall icon"
                 className="w-8 h-8 object-contain"
+                width={32}
+                height={32}
                 loading="lazy"
+                decoding="async"
               />
             </div>
             <h1 className="text-xl font-semibold text-gray-900 mb-2">

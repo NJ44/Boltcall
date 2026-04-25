@@ -147,10 +147,14 @@ const OfferPage: React.FC = () => {
         <div className="max-w-7xl mx-auto flex items-center gap-4 flex-wrap">
           {/* Boltcall Logo */}
           <Link to="/">
-            <img 
-              src="/boltcall_full_logo.png" 
-              alt="Boltcall Logo" 
+            <img
+              src="/boltcall_full_logo.png"
+              alt="Boltcall Logo"
               className="h-12 md:h-16"
+              width={160}
+              height={64}
+              loading="eager"
+              decoding="async"
             />
           </Link>
           

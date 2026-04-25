@@ -457,7 +457,7 @@ const MembersPage: React.FC = () => {
                           member.avatar_url ? '' : 'bg-gray-200'
                         }`}>
                           {member.avatar_url ? (
-                            <img src={member.avatar_url} alt="" className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover" />
+                            <img src={member.avatar_url} alt="" className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover" width={40} height={40} loading="lazy" decoding="async" />
                           ) : (
                             <User className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
                           )}
@@ -597,7 +597,7 @@ const MembersPage: React.FC = () => {
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
                     {selectedMember.avatar_url ? (
-                      <img src={selectedMember.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover" />
+                      <img src={selectedMember.avatar_url} alt="" className="w-16 h-16 rounded-full object-cover" width={64} height={64} loading="lazy" decoding="async" />
                     ) : (
                       <User className="w-8 h-8 text-gray-500" />
                     )}

@@ -366,6 +366,10 @@ const CrmSyncTab: React.FC = () => {
                       alt={crm.name}
                       className="w-10 h-10 rounded-lg object-contain"
                       onError={() => setImgErrors(prev => new Set(prev).add(crm.id))}
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      decoding="async"
                     />
                   )}
                   <div>

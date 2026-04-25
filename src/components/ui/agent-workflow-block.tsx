@@ -401,6 +401,10 @@ export function AgentWorkflowBlock({
                           aria-hidden="true"
                           className={`absolute pointer-events-none object-contain opacity-[0.13] ${node.direction === "outbound" ? "brightness-0 invert" : ""}`}
                           style={{ width: 60, height: 60, top: '50%', left: '50%', transform: 'translate(-50%, -55%)' }}
+                          width={60}
+                          height={60}
+                          loading="lazy"
+                          decoding="async"
                         />
                         {customAvatar && (
                           <div className="relative mb-1" aria-hidden="true">

@@ -393,6 +393,10 @@ const Documentation: React.FC = () => {
                 src="/boltcall_full_logo.png"
                 alt="Boltcall logo"
                 className="h-10 w-auto sm:h-12"
+                width={140}
+                height={48}
+                loading="eager"
+                decoding="async"
               />
               <div>
               <h1 className="text-3xl font-bold text-gray-900">Documentation</h1>

@@ -393,7 +393,7 @@ const PreferencesPage: React.FC = () => {
 
         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-[#161619] border border-gray-200 dark:border-[#2a2a30] rounded-xl">
           <div className="flex items-center gap-4">
-            <img src="/boltcall_icon.png" alt="Boltcall" className="w-12 h-12 rounded-xl" loading="lazy" />
+            <img src="/boltcall_icon.png" alt="Boltcall" className="w-12 h-12 rounded-xl" width={48} height={48} loading="lazy" decoding="async" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">Install Boltcall</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">

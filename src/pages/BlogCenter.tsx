@@ -581,6 +581,8 @@ const BlogCenter: React.FC = () => {
                       width="400"
                       height="192"
                       loading="lazy"
+                      decoding="async"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                     />
                   </div>
 

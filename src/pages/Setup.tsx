@@ -323,6 +323,10 @@ const Setup: React.FC = () => {
                 src="/boltcall_full_logo.png"
                 alt="Boltcall"
                 className="h-12 md:h-14 w-auto"
+                width={160}
+                height={56}
+                loading="eager"
+                decoding="async"
               />
             </Link>
           </motion.div>

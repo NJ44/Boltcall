@@ -267,6 +267,10 @@ const WizardShell: React.FC = () => {
                   src="/boltcall_full_logo.png"
                   alt="Boltcall"
                   className="h-16 w-auto"
+                  width={160}
+                  height={64}
+                  loading="lazy"
+                  decoding="async"
                 />
               </Link>
             </div>

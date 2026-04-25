@@ -50,6 +50,10 @@ export function AgentAvatar({ avatar, color, name, size = 'md', className = '' }
           src={avatar}
           alt={name}
           className="w-full h-full object-cover"
+          width={sz.px}
+          height={sz.px}
+          loading="lazy"
+          decoding="async"
         />
       </div>
     );

@@ -493,12 +493,20 @@ const DashboardLayout: React.FC = () => {
                   src="/boltcall_small_logo.png"
                   alt="Boltcall"
                   className="h-10 w-10 mx-auto"
+                  width={40}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <img
                   src="/boltcall_full_logo.png"
                   alt="Boltcall"
                   className="h-14 w-auto"
+                  width={160}
+                  height={56}
+                  loading="lazy"
+                  decoding="async"
                 />
               )}
             </Link>

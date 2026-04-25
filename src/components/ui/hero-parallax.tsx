@@ -225,6 +225,10 @@ export const ProductCard = ({
                     className="object-cover object-left-top absolute h-full w-full inset-0"
                     alt={product.title}
                     onError={() => setImgSrc("https://images.unsplash.com/photo-1531297422935-40280f35a96e?auto=format&fit=crop&q=80&w=240&h=192")}
+                    width={240}
+                    height={192}
+                    loading="lazy"
+                    decoding="async"
                 />
             </Link>
 

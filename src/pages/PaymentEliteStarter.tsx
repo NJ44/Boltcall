@@ -50,10 +50,14 @@ const PaymentEliteStarter: React.FC = () => {
       {/* Logo - Absolute Top Left */}
       <div className="absolute top-4 left-4 z-50">
         <Link to="/">
-          <img 
-            src="/boltcall_full_logo.png" 
-            alt="Boltcall" 
+          <img
+            src="/boltcall_full_logo.png"
+            alt="Boltcall"
             className="h-16 w-auto"
+            width={160}
+            height={64}
+            loading="eager"
+            decoding="async"
           />
         </Link>
       </div>

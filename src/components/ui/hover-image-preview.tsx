@@ -105,6 +105,10 @@ const PreviewCard = ({
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
           className="preview-card-image"
+          width={320}
+          height={200}
+          loading="lazy"
+          decoding="async"
         />
         <div className="preview-card-title">{data.title}</div>
         <div className="preview-card-subtitle">{data.subtitle}</div>

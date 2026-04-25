@@ -118,7 +118,7 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                   <p className="text-gray-700">of calls to the average small business go unanswered — with after-hours being the single largest source of missed calls.</p>
                 </div>
               </div>
-              <img src="/images/blog/after-hours-01.jpg" alt="Missed call on a business owner's phone late at night — the cost of not having after-hours coverage" width={1200} height={675} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
+              <img src="/images/blog/after-hours-01.jpg" alt="Missed call on a business owner's phone late at night — the cost of not having after-hours coverage" width={1200} height={675} loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 2 */}
@@ -211,7 +211,7 @@ const BlogNeverMissCallAfterHours: React.FC = () => {
                 <p className="text-gray-700 leading-relaxed mb-6">This doesn't require a 24/7 live receptionist — those cost $1,500–$3,000/month and still have gaps. What it requires is a system that runs on its own: intelligent enough to handle routine after-hours calls, and smart enough to know when to alert you for something genuinely urgent.</p>
                 <p className="text-gray-700 leading-relaxed">The key distinction is automation with intelligence — not a voicemail box, not a call center that reads a script, but a system that understands the context of why someone is calling and responds accordingly.</p>
               </div>
-              <img src="/images/blog/after-hours-02.jpg" alt="AI phone receptionist dashboard automatically handling after-hours calls and booking appointments" width={1200} height={675} loading="lazy" className="rounded-xl my-6 mx-auto block max-w-2xl" />
+              <img src="/images/blog/after-hours-02.jpg" alt="AI phone receptionist dashboard automatically handling after-hours calls and booking appointments" width={1200} height={675} loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px" className="rounded-xl my-6 mx-auto block max-w-2xl" />
             </motion.section>
 
             {/* Section 5 */}

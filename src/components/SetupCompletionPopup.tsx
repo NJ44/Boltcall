@@ -171,7 +171,7 @@ const SetupCompletionPopup: React.FC<SetupCompletionPopupProps> = ({ isOpen, onC
                                   : 'opacity-60 hover:opacity-90 hover:scale-105',
                               ].join(' ')}
                             >
-                              <img src={src} alt="avatar" className="w-full h-full object-cover" />
+                              <img src={src} alt="avatar" className="w-full h-full object-cover" width={64} height={64} loading="lazy" decoding="async" />
                             </button>
                           ))}
                         </div>

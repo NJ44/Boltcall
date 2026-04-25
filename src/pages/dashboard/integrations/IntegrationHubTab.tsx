@@ -539,6 +539,10 @@ const IntegrationHubTab: React.FC = () => {
                         alt={integration.name}
                         className="w-10 h-10 rounded-lg object-contain"
                         onError={() => setImgErrors(prev => new Set(prev).add(integration.id))}
+                        width={40}
+                        height={40}
+                        loading="lazy"
+                        decoding="async"
                       />
                     )}
                   </div>
@@ -633,7 +637,7 @@ const IntegrationHubTab: React.FC = () => {
                           <span className="text-white font-bold text-sm">{integration.name[0]}</span>
                         </div>
                       ) : (
-                        <img src={integration.logo} alt={integration.name} className="w-8 h-8 rounded-lg object-contain" onError={() => setImgErrors(prev => new Set(prev).add(integration.id))} />
+                        <img src={integration.logo} alt={integration.name} className="w-8 h-8 rounded-lg object-contain" onError={() => setImgErrors(prev => new Set(prev).add(integration.id))} width={32} height={32} loading="lazy" decoding="async" />
                       )}
                       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{integration.name}</h2>
                     </div>

@@ -68,6 +68,10 @@ const CalcomPage: React.FC = () => {
             src="/cal.com_logo.png"
             alt="Cal.com"
             className="w-10 h-10"
+            width={40}
+            height={40}
+            loading="lazy"
+            decoding="async"
           />
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Cal.com Integration</h1>

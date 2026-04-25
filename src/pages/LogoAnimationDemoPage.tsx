@@ -39,7 +39,9 @@ const LogoLayer: React.FC<{
     >
       <img src="/boltcall_small_logo.webp" alt="" draggable={false}
         style={{ width: cfg.size, height: cfg.size, objectFit: 'contain',
-                 opacity: cfg.opacity, filter: imgFilter, userSelect: 'none' }} />
+                 opacity: cfg.opacity, filter: imgFilter, userSelect: 'none' }}
+        loading="lazy"
+        decoding="async" />
     </motion.div>
   );
 };
@@ -93,7 +95,7 @@ const LogoAnimationDemoPage: React.FC = () => (
       className="font-dm relative z-10 flex items-center justify-between px-8 py-6 border-b"
       style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
       <div className="flex items-center gap-3">
-        <img src="/boltcall_small_logo.webp" alt="Boltcall" className="h-6 w-auto" />
+        <img src="/boltcall_small_logo.webp" alt="Boltcall" className="h-6 w-auto" width={24} height={24} loading="eager" decoding="async" />
         <span className="text-xs tracking-widest text-white/30">/ parallax-depth demo</span>
       </div>
       <a href="/" className="text-[11px] text-white/25 hover:text-white/60 transition-colors tracking-[0.2em] uppercase">

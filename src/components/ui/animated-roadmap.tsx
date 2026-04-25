@@ -77,6 +77,10 @@ const AnimatedRoadmap = React.forwardRef<HTMLDivElement, AnimatedRoadmapProps>(
                         src={mapImageSrc}
                         alt="Product roadmap map"
                         className="h-full w-full object-contain"
+                        width={1200}
+                        height={675}
+                        loading="lazy"
+                        decoding="async"
                     />
                 </motion.div>
 

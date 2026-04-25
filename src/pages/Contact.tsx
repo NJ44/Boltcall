@@ -103,6 +103,10 @@ const Contact: React.FC = () => {
             src="/boltcall_full_logo.png"
             alt="Boltcall"
             className="h-10 w-auto brightness-0 invert"
+            width={120}
+            height={40}
+            loading="eager"
+            decoding="async"
           />
         </Link>
       </div>

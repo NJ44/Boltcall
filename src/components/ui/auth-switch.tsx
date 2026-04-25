@@ -229,6 +229,10 @@ export default function AuthSwitch({
               src="/boltcall_full_logo.png"
               alt="Boltcall"
               className="h-8 w-auto brightness-0 invert"
+              width={120}
+              height={32}
+              loading="eager"
+              decoding="async"
             />
           </Link>
         </div>
