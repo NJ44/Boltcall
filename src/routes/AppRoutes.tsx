@@ -398,6 +398,7 @@ const NavigationWrapper: React.FC = () => {
         {/* /gift-cards removed — not needed pre-revenue */}
         {/* /smart-website removed — duplicate of free-website concept */}
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/ai-course" element={<AiCoursePage />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/api-documentation" element={<ApiDocsPage />} />
         <Route element={<BlogSchemaWrapper />}>
