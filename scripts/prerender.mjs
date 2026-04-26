@@ -128,6 +128,7 @@ const ROUTES = [
   '/tools/vet-clinic-revenue-calculator',
   '/tools/chiropractor-patient-recovery-calculator',
   '/tools/auto-repair-missed-call-calculator',
+  '/tools/roofing-missed-lead-calculator',
   '/tools/dentist-chair-calculator',
   '/tools/hvac-overflow-calculator',
   '/tools/lawyer-intake-calculator',

@@ -130,6 +130,7 @@ const ChiropractorPatientRecoveryCalculator = React.lazy(() => import('../pages/
 const DentistChairCalculator = React.lazy(() => import('../pages/DentistChairCalculator'));
 const HVACOverflowCalculator = React.lazy(() => import('../pages/HVACOverflowCalculator'));
 const AutoRepairMissedCallCalculator = React.lazy(() => import('../pages/AutoRepairMissedCallCalculator'));
+const RoofingMissedLeadCalculator = React.lazy(() => import('../pages/RoofingMissedLeadCalculator'));
 const LawyerIntakeCalculator = React.lazy(() => import('../pages/LawyerIntakeCalculator'));
 const MedSpaRebookingCalculator = React.lazy(() => import('../pages/MedSpaRebookingCalculator'));
 const PlumberRevenueCalculator = React.lazy(() => import('../pages/PlumberRevenueCalculator'));
@@ -517,6 +518,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/chiropractor-patient-recovery-calculator" element={<ChiropractorPatientRecoveryCalculator />} />
         {/* Auto Repair Missed Call Calculator */}
         <Route path="/tools/auto-repair-missed-call-calculator" element={<AutoRepairMissedCallCalculator />} />
+        <Route path="/tools/roofing-missed-lead-calculator" element={<RoofingMissedLeadCalculator />} />
         {/* Industry FAQ AEO pages + Vet Clinic How-To */}
         <Route element={<BlogSchemaWrapper />}>
           <Route path="/blog/ai-receptionist-hvac-faq" element={<FAQAIReceptionistHVAC />} />
