@@ -171,8 +171,10 @@ const HelpCenter: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.15 }}
           className="mb-12"
         >
-          <Link
-            to="/documentation"
+          <a
+            href="https://boltcall.mintlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group block rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white shadow-xl shadow-blue-600/10 transition hover:brightness-[1.03]"
           >
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -192,7 +194,7 @@ const HelpCenter: React.FC = () => {
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </div>
             </div>
-          </Link>
+          </a>
         </motion.div>
 
         {/* Help Categories */}
