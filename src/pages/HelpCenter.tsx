@@ -305,20 +305,33 @@ const HelpCenter: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore Boltcall Features, Pricing, and Documentation</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {[
-              { label: 'Documentation', to: '/documentation' },
-              { label: 'About Boltcall', to: '/about' },
-              { label: 'Pricing', to: '/pricing' },
-              { label: 'Contact Us', to: '/contact' },
-              { label: 'AI Receptionist', to: '/features/ai-receptionist' },
-            ].map(({ label, to }) => (
-              <Link
-                key={to}
-                to={to}
-                className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
-              >
-                <ArrowRight className="h-4 w-4 shrink-0" />
-                {label}
-              </Link>
+              { label: 'Documentation', href: 'https://boltcall.mintlify.app/', external: true },
+              { label: 'About Boltcall', href: '/about' },
+              { label: 'Pricing', href: '/pricing' },
+              { label: 'Contact Us', href: '/contact' },
+              { label: 'AI Receptionist', href: '/features/ai-receptionist' },
+            ].map(({ label, href, external }) => (
+              external ? (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
+                >
+                  <ArrowRight className="h-4 w-4 shrink-0" />
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  key={href}
+                  to={href}
+                  className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
+                >
+                  <ArrowRight className="h-4 w-4 shrink-0" />
+                  {label}
+                </Link>
+              )
             ))}
           </div>
         </motion.div>
