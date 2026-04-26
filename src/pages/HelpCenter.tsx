@@ -171,8 +171,10 @@ const HelpCenter: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.15 }}
           className="mb-12"
         >
-          <Link
-            to="/documentation"
+          <a
+            href="https://boltcall.mintlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group block rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white shadow-xl shadow-blue-600/10 transition hover:brightness-[1.03]"
           >
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -192,7 +194,7 @@ const HelpCenter: React.FC = () => {
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </div>
             </div>
-          </Link>
+          </a>
         </motion.div>
 
         {/* Help Categories */}
@@ -303,20 +305,33 @@ const HelpCenter: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Explore Boltcall Features, Pricing, and Documentation</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {[
-              { label: 'Documentation', to: '/documentation' },
-              { label: 'About Boltcall', to: '/about' },
-              { label: 'Pricing', to: '/pricing' },
-              { label: 'Contact Us', to: '/contact' },
-              { label: 'AI Receptionist', to: '/features/ai-receptionist' },
-            ].map(({ label, to }) => (
-              <Link
-                key={to}
-                to={to}
-                className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
-              >
-                <ArrowRight className="h-4 w-4 shrink-0" />
-                {label}
-              </Link>
+              { label: 'Documentation', href: 'https://boltcall.mintlify.app/', external: true },
+              { label: 'About Boltcall', href: '/about' },
+              { label: 'Pricing', href: '/pricing' },
+              { label: 'Contact Us', href: '/contact' },
+              { label: 'AI Receptionist', href: '/features/ai-receptionist' },
+            ].map(({ label, href, external }) => (
+              external ? (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
+                >
+                  <ArrowRight className="h-4 w-4 shrink-0" />
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  key={href}
+                  to={href}
+                  className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
+                >
+                  <ArrowRight className="h-4 w-4 shrink-0" />
+                  {label}
+                </Link>
+              )
             ))}
           </div>
         </motion.div>
