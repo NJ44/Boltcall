@@ -1,14 +1,16 @@
+import { useEffect } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
 function PWAUpdatePrompt() {
-  // Auto-update: service worker updates silently in the background
-  useRegisterSW({
+  const {
+    needRefresh: [needRefresh],
+    updateServiceWorker,
+  } = useRegisterSW({
     onRegisteredSW(_swUrl, registration) {
       if (registration) {
-        // Check for updates every 30 minutes
         setInterval(() => {
           registration.update();
-        }, 30 * 60 * 1000);
+        }, 5 * 60 * 1000);
       }
     },
     onRegisterError(error) {
@@ -16,7 +18,14 @@ function PWAUpdatePrompt() {
     },
   });
 
-  // No UI — updates happen automatically
+  useEffect(() => {
+    if (needRefresh) {
+      updateServiceWorker(true).then(() => {
+        window.location.reload();
+      });
+    }
+  }, [needRefresh, updateServiceWorker]);
+
   return null;
 }
 
