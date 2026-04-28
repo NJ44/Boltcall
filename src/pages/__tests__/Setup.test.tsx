@@ -11,18 +11,18 @@ vi.mock('react-router-dom', () => ({
   ),
 }))
 
-// Mock SubscriptionContext
+// Mock SubscriptionContext — non-trialing user so Setup renders 3-step wizard
 vi.mock('../../contexts/SubscriptionContext', () => ({
   useSubscription: () => ({
     subscription: null,
-    planLevel: 'pro',
-    isActive: true,
-    isPro: true,
+    planLevel: null,
+    isActive: false,
+    isPro: false,
     isUltimate: false,
-    isTrialing: true,
-    trialDaysRemaining: 5,
+    isTrialing: false,
+    trialDaysRemaining: 0,
     isLoading: false,
-    hasAccess: () => true,
+    hasAccess: () => false,
     refetch: vi.fn(),
   }),
   SubscriptionProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
