@@ -139,9 +139,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.planLevel).toBe('pro');
       });
 
-      expect(result.current.planLevel).toBe('pro');
       expect(result.current.isActive).toBe(true);
       expect(result.current.isPro).toBe(true);
       expect(result.current.isUltimate).toBe(false);
