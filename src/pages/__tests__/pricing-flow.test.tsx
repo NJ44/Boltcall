@@ -79,8 +79,8 @@ describe('Pricing page flow', () => {
     render(<MemoryRouter><PricingPage /></MemoryRouter>);
     // Check for pricing content (prices appear somewhere on the page)
     const text = document.body.textContent || '';
-    expect(text).toContain('99');
-    expect(text).toContain('179');
+    expect(text).toContain('549');
+    expect(text).toContain('897');
   });
 });
 

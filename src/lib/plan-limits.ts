@@ -49,7 +49,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   starter: {
     name: 'Starter',
-    monthlyPrice: 99,
+    monthlyPrice: 549,
     yearlyPrice: 948,
     monthlyTokens: 1000,
     limits: {
@@ -63,7 +63,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   pro: {
     name: 'Pro',
-    monthlyPrice: 179,
+    monthlyPrice: 897,
     yearlyPrice: 1716,
     monthlyTokens: 3000,
     limits: {
@@ -77,7 +77,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   ultimate: {
     name: 'Ultimate',
-    monthlyPrice: 249,
+    monthlyPrice: 4997,
     yearlyPrice: 2388,
     monthlyTokens: 10000,
     limits: {
@@ -91,7 +91,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   enterprise: {
     name: 'Enterprise',
-    monthlyPrice: 997,
+    monthlyPrice: 9997,
     yearlyPrice: 11964,
     monthlyTokens: 50000,
     limits: {

@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import React from 'react';
 import { SubscriptionProvider, useSubscription } from '../SubscriptionContext';
-import { AuthProvider } from '../AuthContext';
+import { AuthProvider } from '../AuthProvider';
 import * as authLib from '../../lib/auth';
 import * as stripeLib from '../../lib/stripe';
 
@@ -86,10 +86,10 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.planLevel).toBeNull();
       });
 
       expect(result.current.subscription).toBeNull();
-      expect(result.current.planLevel).toBeNull();
       expect(result.current.isActive).toBe(false);
       expect(result.current.isPro).toBe(false);
       expect(result.current.isUltimate).toBe(false);
@@ -114,9 +114,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.planLevel).toBe('starter');
       });
 
-      expect(result.current.planLevel).toBe('starter');
       expect(result.current.isActive).toBe(true);
       expect(result.current.isPro).toBe(false);
       expect(result.current.isUltimate).toBe(false);
@@ -139,9 +139,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.planLevel).toBe('pro');
       });
 
-      expect(result.current.planLevel).toBe('pro');
       expect(result.current.isActive).toBe(true);
       expect(result.current.isPro).toBe(true);
       expect(result.current.isUltimate).toBe(false);
@@ -164,9 +164,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.planLevel).toBe('ultimate');
       });
 
-      expect(result.current.planLevel).toBe('ultimate');
       expect(result.current.isActive).toBe(true);
       expect(result.current.isPro).toBe(true);
       expect(result.current.isUltimate).toBe(true);
@@ -189,9 +189,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.planLevel).toBe('enterprise');
       });
 
-      expect(result.current.planLevel).toBe('enterprise');
       expect(result.current.isActive).toBe(true);
       expect(result.current.isPro).toBe(true);
       expect(result.current.isUltimate).toBe(true);
@@ -213,9 +213,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.isTrialing).toBe(true);
       });
 
-      expect(result.current.isTrialing).toBe(true);
       expect(result.current.trialDaysRemaining).toBeGreaterThan(0);
       expect(result.current.trialDaysRemaining).toBeLessThanOrEqual(7);
       // During trial, effective plan is 'pro'
@@ -240,9 +240,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.isTrialing).toBe(false);
       });
 
-      expect(result.current.isTrialing).toBe(false);
       expect(result.current.trialDaysRemaining).toBe(0);
       expect(result.current.planLevel).toBeNull();
       expect(result.current.isActive).toBe(false);
@@ -268,11 +268,11 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.isTrialing).toBe(false);
+        expect(result.current.planLevel).toBe('pro');
       });
 
       // Has subscription, so not trialing even though within trial window
-      expect(result.current.isTrialing).toBe(false);
-      expect(result.current.planLevel).toBe('pro');
       expect(result.current.isActive).toBe(true);
     });
   });
@@ -295,11 +295,11 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.hasAccess('ultimate')).toBe(true);
       });
 
       expect(result.current.hasAccess('starter')).toBe(true);
       expect(result.current.hasAccess('pro')).toBe(true);
-      expect(result.current.hasAccess('ultimate')).toBe(true);
       expect(result.current.hasAccess('enterprise')).toBe(false);
     });
 
@@ -319,9 +319,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.hasAccess('starter')).toBe(false);
       });
 
-      expect(result.current.hasAccess('starter')).toBe(false);
       expect(result.current.hasAccess('pro')).toBe(false);
     });
   });

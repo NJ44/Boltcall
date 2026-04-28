@@ -11,6 +11,23 @@ vi.mock('react-router-dom', () => ({
   ),
 }))
 
+// Mock SubscriptionContext — non-trialing user so Setup renders 3-step wizard
+vi.mock('../../contexts/SubscriptionContext', () => ({
+  useSubscription: () => ({
+    subscription: null,
+    planLevel: null,
+    isActive: false,
+    isPro: false,
+    isUltimate: false,
+    isTrialing: false,
+    trialDaysRemaining: 0,
+    isLoading: false,
+    hasAccess: () => false,
+    refetch: vi.fn(),
+  }),
+  SubscriptionProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}))
+
 // Mock AuthContext
 vi.mock('../../contexts/AuthContext', () => ({
   useAuth: () => ({
@@ -81,12 +98,11 @@ describe('Setup page', () => {
     vi.clearAllMocks()
   })
 
-  it('renders step 1 - Your Business', () => {
+  it('renders step 0 - Personal Profile', () => {
     render(<Setup />)
-    expect(screen.getByText('Tell us about your business')).toBeInTheDocument()
-    expect(screen.getByLabelText('Business Name')).toBeInTheDocument()
-    expect(screen.getByLabelText('Your Name')).toBeInTheDocument()
-    expect(screen.getByText('Step 1 of 3: Your Business')).toBeInTheDocument()
+    expect(screen.getByText('Tell us about yourself')).toBeInTheDocument()
+    expect(screen.getByLabelText('Full Name *')).toBeInTheDocument()
+    expect(screen.getByText('Step 1 of 3: Personal Profile')).toBeInTheDocument()
   })
 
   it('has the Next button disabled when required fields are empty', () => {
@@ -95,16 +111,14 @@ describe('Setup page', () => {
     expect(nextButton).toBeDisabled()
   })
 
-  it('enables Next button when business name and industry are filled', async () => {
+  it('Next button stays disabled until all step 0 required fields are filled', async () => {
     const user = userEvent.setup()
     render(<Setup />)
 
-    // Fill in business name (minimum 2 chars)
-    const businessNameInput = screen.getByLabelText('Business Name')
-    await user.type(businessNameInput, 'Test Business')
+    // Fill in name only — Country (a Select) is also required so button stays disabled
+    const fullNameInput = screen.getByLabelText('Full Name *')
+    await user.type(fullNameInput, 'Test User')
 
-    // Industry is a Radix Select which is hard to interact with in tests.
-    // The Next button should still be disabled without industry.
     const nextButton = screen.getByRole('button', { name: /next/i })
     expect(nextButton).toBeDisabled()
   })

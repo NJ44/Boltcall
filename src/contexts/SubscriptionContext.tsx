@@ -67,7 +67,8 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Calculate trial status
   const getTrialDaysRemaining = (): number => {
-    const createdStr = user?.createdAt || (user as any)?.created_at;
+    if (!user) return 0;
+    const createdStr = user.createdAt || (user as any).created_at;
     if (!createdStr) return TRIAL_DAYS; // Default to full trial for new users
     const createdAt = new Date(createdStr);
     const now = new Date();

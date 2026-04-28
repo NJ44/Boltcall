@@ -1,6 +1,7 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import React from 'react';
-import { AuthProvider, useAuth } from '../AuthContext';
+import { AuthProvider } from '../AuthProvider';
+import { useAuth } from '../AuthContext';
 import * as authLib from '../../lib/auth';
 
 // Mock the auth lib module
@@ -227,15 +228,11 @@ describe('AuthContext', () => {
   });
 
   describe('useAuth hook', () => {
-    it('throws when used outside AuthProvider', () => {
-      // Suppress console.error for the expected error
-      const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
-      expect(() => {
-        renderHook(() => useAuth());
-      }).toThrow('useAuth must be used within an AuthProvider');
-
-      spy.mockRestore();
+    it('returns safe default context when used outside AuthProvider', () => {
+      const { result } = renderHook(() => useAuth());
+      expect(result.current.user).toBeNull();
+      expect(result.current.isAuthenticated).toBe(false);
+      expect(result.current.isLoading).toBe(true);
     });
   });
 
