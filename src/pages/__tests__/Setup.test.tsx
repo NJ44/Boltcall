@@ -11,6 +11,23 @@ vi.mock('react-router-dom', () => ({
   ),
 }))
 
+// Mock SubscriptionContext
+vi.mock('../../contexts/SubscriptionContext', () => ({
+  useSubscription: () => ({
+    subscription: null,
+    planLevel: 'pro',
+    isActive: true,
+    isPro: true,
+    isUltimate: false,
+    isTrialing: true,
+    trialDaysRemaining: 5,
+    isLoading: false,
+    hasAccess: () => true,
+    refetch: vi.fn(),
+  }),
+  SubscriptionProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}))
+
 // Mock AuthContext
 vi.mock('../../contexts/AuthContext', () => ({
   useAuth: () => ({
