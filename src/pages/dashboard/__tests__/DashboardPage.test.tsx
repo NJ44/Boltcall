@@ -38,25 +38,30 @@ vi.mock('../../../contexts/AuthContext', () => ({
   }),
 }));
 
-// Mock Supabase
+// Mock Supabase — chain proxy supports arbitrary method sequences
+function makeChain(): any {
+  const resolved = Promise.resolve({ data: [], error: null, count: 0 });
+  return new Proxy({}, {
+    get(_t, prop) {
+      if (prop === 'then') return resolved.then.bind(resolved);
+      if (prop === 'catch') return resolved.catch.bind(resolved);
+      if (prop === 'finally') return resolved.finally.bind(resolved);
+      if (prop === 'single' || prop === 'maybeSingle')
+        return () => Promise.resolve({ data: null, error: null });
+      return (..._a: any[]) => makeChain();
+    },
+  });
+}
+
 vi.mock('../../../lib/supabase', () => ({
   supabase: {
-    from: () => ({
-      select: () => ({
-        eq: () => ({
-          eq: () => ({
-            order: () => ({
-              limit: () => ({
-                then: (cb: any) => Promise.resolve({ data: [] }).then(cb),
-              }),
-            }),
-          }),
-        }),
-      }),
-    }),
+    from: () => ({ select: (..._a: any[]) => makeChain(), insert: (..._a: any[]) => makeChain(), update: (..._a: any[]) => makeChain() }),
     auth: {
       getUser: () => Promise.resolve({ data: { user: { id: 'test-user' } }, error: null }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: vi.fn() } } }),
     },
+    channel: () => ({ on: () => ({ subscribe: vi.fn() }) }),
+    removeChannel: vi.fn(),
   },
 }));
 
