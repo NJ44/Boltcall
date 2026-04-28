@@ -111,16 +111,14 @@ describe('Setup page', () => {
     expect(nextButton).toBeDisabled()
   })
 
-  it('enables Next button when business name and industry are filled', async () => {
+  it('Next button stays disabled until all step 0 required fields are filled', async () => {
     const user = userEvent.setup()
     render(<Setup />)
 
-    // Fill in business name (minimum 2 chars)
-    const businessNameInput = screen.getByLabelText('Business Name')
-    await user.type(businessNameInput, 'Test Business')
+    // Fill in name only — Country (a Select) is also required so button stays disabled
+    const fullNameInput = screen.getByLabelText('Full Name *')
+    await user.type(fullNameInput, 'Test User')
 
-    // Industry is a Radix Select which is hard to interact with in tests.
-    // The Next button should still be disabled without industry.
     const nextButton = screen.getByRole('button', { name: /next/i })
     expect(nextButton).toBeDisabled()
   })
