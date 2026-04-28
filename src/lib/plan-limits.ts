@@ -63,7 +63,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   pro: {
     name: 'Pro',
-    monthlyPrice: 179,
+    monthlyPrice: 897,
     yearlyPrice: 1716,
     monthlyTokens: 3000,
     limits: {
