@@ -77,7 +77,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   ultimate: {
     name: 'Ultimate',
-    monthlyPrice: 249,
+    monthlyPrice: 4997,
     yearlyPrice: 2388,
     monthlyTokens: 10000,
     limits: {
