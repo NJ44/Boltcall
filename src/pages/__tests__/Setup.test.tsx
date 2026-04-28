@@ -98,12 +98,11 @@ describe('Setup page', () => {
     vi.clearAllMocks()
   })
 
-  it('renders step 1 - Your Business', () => {
+  it('renders step 0 - Personal Profile', () => {
     render(<Setup />)
-    expect(screen.getByText('Tell us about your business')).toBeInTheDocument()
-    expect(screen.getByLabelText('Business Name')).toBeInTheDocument()
-    expect(screen.getByLabelText('Your Name')).toBeInTheDocument()
-    expect(screen.getByText('Step 1 of 3: Your Business')).toBeInTheDocument()
+    expect(screen.getByText('Tell us about yourself')).toBeInTheDocument()
+    expect(screen.getByLabelText('Full Name *')).toBeInTheDocument()
+    expect(screen.getByText('Step 1 of 3: Personal Profile')).toBeInTheDocument()
   })
 
   it('has the Next button disabled when required fields are empty', () => {
