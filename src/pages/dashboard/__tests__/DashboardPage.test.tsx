@@ -12,6 +12,23 @@ vi.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }));
 
+// Mock SubscriptionContext
+vi.mock('../../../contexts/SubscriptionContext', () => ({
+  useSubscription: () => ({
+    subscription: null,
+    planLevel: 'pro',
+    isActive: true,
+    isPro: true,
+    isUltimate: false,
+    isTrialing: true,
+    trialDaysRemaining: 5,
+    isLoading: false,
+    hasAccess: () => true,
+    refetch: vi.fn(),
+  }),
+  SubscriptionProvider: ({ children }: any) => <>{children}</>,
+}));
+
 // Mock Auth
 vi.mock('../../../contexts/AuthContext', () => ({
   useAuth: () => ({
