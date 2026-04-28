@@ -5,6 +5,7 @@
  * is NOT in the critical-path bundle for marketing pages.
  */
 import React, { useReducer, useEffect } from 'react';
+import posthog from 'posthog-js';
 import type { User, AuthState, LoginCredentials, SignupCredentials } from '../lib/auth';
 import {
   login as supabaseLogin,
