@@ -91,7 +91,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   enterprise: {
     name: 'Enterprise',
-    monthlyPrice: 997,
+    monthlyPrice: 9997,
     yearlyPrice: 11964,
     monthlyTokens: 50000,
     limits: {
