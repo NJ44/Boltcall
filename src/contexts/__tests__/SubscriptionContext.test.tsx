@@ -268,11 +268,11 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.isTrialing).toBe(false);
+        expect(result.current.planLevel).toBe('pro');
       });
 
       // Has subscription, so not trialing even though within trial window
-      expect(result.current.isTrialing).toBe(false);
-      expect(result.current.planLevel).toBe('pro');
       expect(result.current.isActive).toBe(true);
     });
   });
