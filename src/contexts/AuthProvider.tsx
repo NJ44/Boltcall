@@ -68,8 +68,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: { subscription } } = onAuthStateChange((user) => {
       if (user) {
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        posthog.identify(user.id, { email: user.email, name: user.name, company: user.company });
       } else {
         dispatch({ type: 'LOGOUT' });
+        posthog.reset();
       }
     });
 
