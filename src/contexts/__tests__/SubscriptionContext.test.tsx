@@ -295,11 +295,11 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.hasAccess('ultimate')).toBe(true);
       });
 
       expect(result.current.hasAccess('starter')).toBe(true);
       expect(result.current.hasAccess('pro')).toBe(true);
-      expect(result.current.hasAccess('ultimate')).toBe(true);
       expect(result.current.hasAccess('enterprise')).toBe(false);
     });
 
