@@ -240,9 +240,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.isTrialing).toBe(false);
       });
 
-      expect(result.current.isTrialing).toBe(false);
       expect(result.current.trialDaysRemaining).toBe(0);
       expect(result.current.planLevel).toBeNull();
       expect(result.current.isActive).toBe(false);
