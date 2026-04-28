@@ -76,7 +76,7 @@ const Home: React.FC = () => {
             </LazySection>
           </div>
 
-          <div className="relative md:-top-[255px] md:mt-24">
+          <div className="relative md:-top-[80px] md:mt-24">
             <LazySection rootMargin="400px" minHeight="500px">
               <Suspense fallback={<div className="min-h-[500px]" />}>
                 <FreeSetup />

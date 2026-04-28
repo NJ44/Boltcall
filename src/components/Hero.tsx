@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, MessageSquare, Users, Target, Clock } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, Users, Target } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 // Lazy-load ModalVideo since it's only shown on user interaction
@@ -9,11 +9,9 @@ const ModalVideo = React.lazy(() => import('./ModalVideo'));
 // Business-related icon components using lucide-react
 const IconPhone = (props: React.SVGProps<SVGSVGElement>) => <Phone {...props} strokeWidth={2.5} />;
 const IconCalendar = (props: React.SVGProps<SVGSVGElement>) => <Calendar {...props} strokeWidth={2.5} />;
-const IconSMS = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
 const IconUsers = (props: React.SVGProps<SVGSVGElement>) => <Users {...props} strokeWidth={2.5} />;
 const IconTarget = (props: React.SVGProps<SVGSVGElement>) => <Target {...props} strokeWidth={2.5} />;
 const IconSMS2 = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
-const IconClock = (props: React.SVGProps<SVGSVGElement>) => <Clock {...props} strokeWidth={2.5} />;
 
 interface IconData {
   id: number;
@@ -25,11 +23,9 @@ interface IconData {
 const heroIcons: IconData[] = [
   { id: 1, icon: IconPhone, className: 'top-[55%] md:top-[15%] left-[2%] md:left-[3%]' },
   { id: 2, icon: IconCalendar, className: 'top-[60%] md:top-[20%] right-[2%] md:right-[3%]' },
-  { id: 3, icon: IconSMS, className: 'top-[75%] md:top-[70%] left-[5%]' },
   { id: 6, icon: IconUsers, className: 'top-[68%] md:top-[45%] left-[3%] md:left-[5%]' },
   { id: 7, icon: IconTarget, className: 'top-[80%] md:top-[65%] right-[15%] md:right-[20%]' },
   { id: 8, icon: IconSMS2, className: 'top-[72%] md:top-[50%] right-[1%] md:right-[2%]' },
-  { id: 9, icon: IconClock, className: 'top-[82%] md:top-[70%] right-[5%] md:right-[4%]' },
 ];
 
 // Stable float durations per icon
