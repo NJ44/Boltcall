@@ -49,7 +49,7 @@ export const PLAN_LIMITS: Record<PlanTier, PlanConfig> = {
   },
   starter: {
     name: 'Starter',
-    monthlyPrice: 99,
+    monthlyPrice: 549,
     yearlyPrice: 948,
     monthlyTokens: 1000,
     limits: {
