@@ -319,9 +319,9 @@ describe('SubscriptionContext', () => {
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
+        expect(result.current.hasAccess('starter')).toBe(false);
       });
 
-      expect(result.current.hasAccess('starter')).toBe(false);
       expect(result.current.hasAccess('pro')).toBe(false);
     });
   });
