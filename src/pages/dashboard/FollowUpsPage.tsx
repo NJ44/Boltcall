@@ -35,7 +35,7 @@ interface Sequence {
   user_id: string;
   workspace_id: string | null;
   name: string;
-  trigger_event: 'missed_call' | 'appointment_completed' | 'lead_created' | 'manual';
+  trigger_event: 'missed_call' | 'website_no_answer' | 'ad_no_answer' | 'appointment_completed' | 'lead_created' | 'manual';
   is_active: boolean;
   created_at: string;
   updated_at: string;
