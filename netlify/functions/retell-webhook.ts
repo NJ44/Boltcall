@@ -307,26 +307,41 @@ export const handler: Handler = async (event) => {
 
     const config = (featureRow?.missed_call_config || {}) as Record<string, any>;
 
-    // Step 3: Always create a lead for missed calls (even if text-back is disabled)
-    const { data: lead, error: leadError } = await supabase
-      .from('leads')
-      .insert({
-        first_name: null,
-        last_name: null,
-        phone: callerPhone,
-        source: 'missed_call',
-        status: 'pending',
-        user_id: userId,
-        raw_data: call,
-      })
-      .select('id')
-      .single();
-
-    if (leadError) {
-      console.error('[retell-webhook] Failed to create lead:', leadError);
-      await notifyError('retell-webhook: Lead creation failed', leadError, {
-        callerPhone, userId, callId: call.call_id, callStatus: call.call_status,
-      });
+    // Step 3: Create a lead for inbound missed calls. Outbound leads already exist from lead-webhook.
+    let lead: { id: string } | null = null;
+    if (!isOutbound) {
+      const { data: newLead, error: leadError } = await supabase
+        .from('leads')
+        .insert({
+          first_name: null,
+          last_name: null,
+          phone: callerPhone,
+          source: 'missed_call',
+          status: 'pending',
+          user_id: userId,
+          raw_data: call,
+        })
+        .select('id')
+        .single();
+      if (leadError) {
+        console.error('[retell-webhook] Failed to create lead:', leadError);
+        await notifyError('retell-webhook: Lead creation failed', leadError, {
+          callerPhone, userId, callId: call.call_id, callStatus: call.call_status,
+        });
+      } else {
+        lead = newLead;
+      }
+    } else {
+      // For outbound no-answers, look up the existing lead by phone
+      const { data: existingLead } = await supabase
+        .from('leads')
+        .select('id')
+        .eq('phone', callerPhone)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+      lead = existingLead ?? null;
     }
 
     // Fire missed_call webhook
