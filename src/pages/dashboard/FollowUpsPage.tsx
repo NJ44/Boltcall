@@ -47,7 +47,7 @@ interface SequenceStep {
   id?: string;
   sequence_id?: string;
   step_order: number;
-  channel: 'sms' | 'email';
+  channel: 'sms' | 'email' | 'call';
   delay_minutes: number;
   template: string;
   subject: string;
