@@ -116,6 +116,34 @@ export const handler: Handler = async () => {
       } else if (step.channel === 'email' && enrollment.contact_email) {
         messageInsert.recipient_email = enrollment.contact_email;
         messageInsert.subject = subject || 'Follow up';
+      } else if (step.channel === 'call' && enrollment.contact_phone) {
+        // Look up user's Retell agent + active phone number for call retry
+        const [{ data: agentRow }, { data: phoneRow }] = await Promise.all([
+          supabase
+            .from('agents')
+            .select('api_keys')
+            .eq('user_id', enrollment.user_id)
+            .limit(1)
+            .single(),
+          supabase
+            .from('phone_numbers')
+            .select('phone_number')
+            .eq('user_id', enrollment.user_id)
+            .eq('status', 'active')
+            .limit(1)
+            .single(),
+        ]);
+        const agentId = (agentRow?.api_keys as any)?.retell_agent_id;
+        const fromNumber = phoneRow?.phone_number;
+        if (agentId && fromNumber) {
+          messageInsert.recipient_phone = enrollment.contact_phone;
+          messageInsert.metadata = {
+            agent_id: agentId,
+            from_number: fromNumber,
+          };
+        } else {
+          console.warn(`[sequence-processor] No agent/phone for call retry, user=${enrollment.user_id}`);
+        }
       } else {
         // No valid recipient for this channel — skip step but advance
         console.warn(`[sequence-processor] No ${step.channel} recipient for enrollment ${enrollment.id}`);
