@@ -391,18 +391,33 @@ const FollowUpsContent: React.FC = () => {
             </p>
           </div>
         </div>
-        <PopButton
-          color="blue"
-          size="sm"
-          onClick={() => {
-            setEditingSequence(null);
-            setModalOpen(true);
-          }}
-          className="gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          New Sequence
-        </PopButton>
+        <div className="flex items-center gap-2">
+          <PopButton
+            size="sm"
+            onClick={() => {
+              setEditingSequence(null);
+              setModalOpen(true);
+              setUseTemplate(true);
+            }}
+            className="gap-2"
+          >
+            <Wand2 className="w-4 h-4" />
+            No-Answer Template
+          </PopButton>
+          <PopButton
+            color="blue"
+            size="sm"
+            onClick={() => {
+              setEditingSequence(null);
+              setUseTemplate(false);
+              setModalOpen(true);
+            }}
+            className="gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            New Sequence
+          </PopButton>
+        </div>
       </div>
 
       {/* Loading */}
