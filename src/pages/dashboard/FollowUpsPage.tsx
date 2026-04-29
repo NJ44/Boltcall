@@ -940,6 +940,17 @@ const StepEditor: React.FC<StepEditorProps> = ({
               <Mail className="w-3.5 h-3.5" />
               Email
             </button>
+            <button
+              onClick={() => onChange({ channel: 'call', template: '' })}
+              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border transition-colors ${
+                step.channel === 'call'
+                  ? 'bg-green-50 border-green-300 text-green-700'
+                  : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+              }`}
+            >
+              <Phone className="w-3.5 h-3.5" />
+              AI Call
+            </button>
           </div>
         </div>
 
