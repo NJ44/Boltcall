@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import Retell from 'retell-sdk';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { fireWebhooks } from './_shared/fire-webhooks';
