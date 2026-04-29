@@ -48,6 +48,8 @@ const ROUTES = [
   '/solar-benchmark',
   '/ai-readiness-scorecard',
   '/ai-receptionist-roi',
+  '/speed-to-lead',
+  '/speed-to-lead/statistics',
   '/ai-agent-comparison',
   // AI Guide
   '/ai-guide-for-businesses',

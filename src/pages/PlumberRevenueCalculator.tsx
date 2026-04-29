@@ -353,7 +353,35 @@ const PlumberRevenueCalculator: React.FC = () => {
           {...fadeUp}
           className="bg-slate-900/80 border border-blue-500/20 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 leading-relaxed"
         >
-          <h2 className="text-xl font-bold text-white">About This Calculator</h2>
+          <div className="bg-blue-950/60 border border-blue-500/30 rounded-xl p-5 mb-2">
+            <h2 className="text-lg font-bold text-blue-300 mb-2">How Much Revenue Are Plumbers Losing to Slow Lead Response?</h2>
+            <p className="text-blue-200 text-sm leading-relaxed">
+              72% of emergency plumbing callers hire the first plumber who answers. The average plumbing business takes
+              24–48 hours to respond to web leads — by which time the caller has already booked a competitor who picked
+              up. This calculator quantifies the exact monthly revenue loss from missed emergency calls and slow response.
+            </p>
+          </div>
+          <ul className="space-y-1.5 mb-2">
+            {[
+              '72% of emergency callers hire the first plumber who answers (plumbing industry surveys)',
+              'Average plumbing business response time for web leads: 24–48 hours',
+              'Emergency call value: $500–$3,000 depending on job type and market',
+              'Callers who reach voicemail move on within 2 minutes on average',
+            ].map((item) => (
+              <li key={item} className="flex gap-2 text-slate-400 text-sm">
+                <span className="text-blue-400 flex-shrink-0">•</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="text-slate-500 text-xs">
+            See full data:{' '}
+            <a href="/speed-to-lead" className="text-blue-400 hover:underline">
+              Speed to lead benchmarks for plumbing businesses →
+            </a>
+          </p>
+          <hr className="border-slate-700" />
+          <h3 className="text-base font-bold text-white">About This Calculator</h3>
           <p>
             The Plumber Revenue Calculator quantifies the dollar cost of missed emergency calls for plumbing businesses. It accounts for three compounding losses: the direct revenue from the job that went to a competitor, the repeat customer lifetime value that evaporates when a caller books elsewhere and never returns, and the marketing spend wasted generating a lead that was then lost to voicemail. Most plumbing companies dramatically underestimate the third category.
           </p>

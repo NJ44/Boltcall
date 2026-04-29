@@ -195,6 +195,8 @@ const ChatbotVsLiveChatVsPhoneAnswering = React.lazy(() => import('../pages/Chat
 const AIVsHumanReceptionistBlog = React.lazy(() => import('../pages/AIVsHumanReceptionistBlog'));
 const AiReceptionistCostPricingGuide = React.lazy(() => import('../pages/AiReceptionistCostPricingGuide'));
 const SpeedToLeadGuide = React.lazy(() => import('../pages/SpeedToLeadGuide'));
+const SpeedToLeadPillar = React.lazy(() => import('../pages/SpeedToLeadPillar'));
+const SpeedToLeadStatistics = React.lazy(() => import('../pages/SpeedToLeadStatistics'));
 const ChatbotVsLivePhoneComparison = React.lazy(() => import('../pages/ChatbotVsLivePhoneComparison'));
 const AiReceptionistForPlumbers = React.lazy(() => import('../pages/AiReceptionistForPlumbers'));
 const AIReceptionistWorthItROI = React.lazy(() => import('../pages/AIReceptionistWorthItROI'));
@@ -435,6 +437,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/top-10-ai-receptionist-agencies" element={<BlogTop10AIReceptionistAgencies />} />
         <Route path="/blog/create-gemini-gem-business-assistant" element={<BlogGeminiGemBusinessAssistant />} />
         <Route path="/blog/5-signs-you-need-ai-receptionist" element={<Blog5SignsAIReceptionist />} />
+            <Route path="/speed-to-lead" element={<SpeedToLeadPillar />} />
+            <Route path="/speed-to-lead/statistics" element={<SpeedToLeadStatistics />} />
             <Route path="/blog/speed-to-lead-local-business" element={<SpeedToLeadGuide />} />
             <Route path="/blog/ai-receptionist-cost-pricing" element={<AiReceptionistCostPricingGuide />} />
             <Route path="/blog/ai-vs-human-receptionist" element={<AIVsHumanReceptionistBlog />} />

@@ -275,6 +275,43 @@ const HVACOverflowCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* ─── AEO STATIC TEXT — extractable by AI search ─── */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-6 mb-6">
+            <h2 className="text-lg font-bold text-orange-900 mb-2">How Many HVAC Leads Are You Losing to Missed Calls?</h2>
+            <p className="text-orange-800 text-sm leading-relaxed">
+              HVAC companies miss an average of 38% of inbound calls during peak season when technicians are on job sites.
+              Each missed call costs between $285 (service call) and $5,800 (new install). This calculator shows your
+              exact annual revenue leak and what AI-assisted call answering recovers.
+            </p>
+          </div>
+          <p className="text-slate-400 text-sm leading-relaxed mb-4">
+            Peak season is when HVAC businesses earn 60–70% of annual revenue — and it is also when call volume triples
+            and staff are the least available to answer. The structural problem: the people who could answer calls are on
+            the roof or in a crawlspace. Without automation, every ring that goes unanswered during a heat wave is a
+            lead that immediately calls the next HVAC company on Google.
+          </p>
+          <ul className="space-y-2 mb-4">
+            {[
+              '38% of HVAC calls go unanswered during peak season (Boltcall research)',
+              '72% of callers hire the first HVAC company that answers',
+              'Average install job value: $5,000–$8,000 in most US markets',
+              'Each missed peak-season call costs an average of $1,900 in lost revenue when lifetime value is included',
+            ].map((item) => (
+              <li key={item} className="flex gap-2 text-slate-400 text-sm">
+                <span className="text-orange-400 flex-shrink-0">•</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="text-slate-500 text-xs">
+            See full data:{' '}
+            <a href="/speed-to-lead" className="text-orange-400 hover:underline">
+              Speed to Lead benchmarks for HVAC businesses →
+            </a>
+          </p>
+        </section>
+
         {/* ─── CALCULATOR ─── */}
         <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-8">

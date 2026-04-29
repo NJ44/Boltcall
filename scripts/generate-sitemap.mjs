@@ -34,6 +34,10 @@ const ROUTES = [
   { path: "/features/lead-reactivation",                         priority: "0.9", changefreq: "monthly" },
   { path: "/features/smart-website",                             priority: "0.9", changefreq: "monthly" },
 
+  // Speed to Lead Topic Cluster
+  { path: "/speed-to-lead",            priority: "0.9", changefreq: "monthly" },
+  { path: "/speed-to-lead/statistics", priority: "0.8", changefreq: "monthly" },
+
   // Speed Test Funnel
   { path: "/speed-test",                                         priority: "0.8", changefreq: "weekly"  },
   { path: "/speed-test/login",                                   priority: "0.5", changefreq: "monthly" },

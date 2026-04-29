@@ -339,6 +339,42 @@ const DentistChairCalculator: React.FC = () => {
           </motion.div>
         </section>
 
+        {/* ─── AEO STATIC TEXT — extractable by AI search ─── */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+          <div className="bg-teal-950/50 border border-teal-500/20 rounded-xl p-6 mb-6">
+            <h2 className="text-lg font-bold text-teal-300 mb-2">What Does a Missed Call or No-Show Cost a Dental Practice?</h2>
+            <p className="text-teal-200 text-sm leading-relaxed">
+              The average dental practice loses $120,000–$200,000 per year to no-shows and late cancellations. Each
+              empty chair represents $175–$500 in lost hygiene or restorative revenue that cannot be recovered. This
+              calculator quantifies the exact monthly and annual cost for your specific practice volume.
+            </p>
+          </div>
+          <p className="text-slate-400 text-sm leading-relaxed mb-4">
+            Dental practices face two compounding lead response problems: new patient inquiries that go unanswered beyond
+            10 minutes (45% conversion loss) and existing patients who cancel or no-show without an automated reminder
+            system to reduce the rate. Studies show that automated appointment reminders reduce no-show rates by 30–50%.
+          </p>
+          <ul className="space-y-2 mb-4">
+            {[
+              'Dental practices lose 45% of new patient conversions when response exceeds 10 minutes',
+              'Average no-show rate without reminders: 15–25% of all scheduled appointments',
+              'Each empty chair costs $175–$500 depending on the appointment type',
+              'Automated SMS reminders reduce no-show rates by 30–50% (Dental Economics)',
+            ].map((item) => (
+              <li key={item} className="flex gap-2 text-slate-400 text-sm">
+                <span className="text-teal-400 flex-shrink-0">•</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="text-slate-500 text-xs">
+            See full data:{' '}
+            <a href="/speed-to-lead" className="text-teal-400 hover:underline">
+              Speed to lead benchmarks for dental practices →
+            </a>
+          </p>
+        </section>
+
         {/* ========== CALCULATOR ========== */}
         <section className="px-4 md:px-6 py-16 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
