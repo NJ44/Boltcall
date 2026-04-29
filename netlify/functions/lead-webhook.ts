@@ -207,6 +207,43 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
   return { results, errors };
 }
 
+// Trigger an instant outbound Retell call for a new lead (fire-and-forget)
+async function triggerInstantResponseCall(
+  userId: string,
+  toNumber: string,
+  source: string,
+  supabase: ReturnType<typeof createClient>
+): Promise<void> {
+  const retellApiKey = process.env.RETELL_API_KEY;
+  if (!retellApiKey) return;
+
+  const [{ data: agentRow }, { data: phoneRow }] = await Promise.all([
+    supabase.from('agents').select('api_keys').eq('user_id', userId).limit(1).single(),
+    supabase.from('phone_numbers').select('phone_number').eq('user_id', userId).eq('status', 'active').limit(1).single(),
+  ]);
+
+  const agentId = (agentRow?.api_keys as any)?.retell_agent_id;
+  const fromNumber = phoneRow?.phone_number;
+
+  if (!agentId || !fromNumber) {
+    console.warn(`[lead-webhook] No agent/phone for instant response, user=${userId}`);
+    return;
+  }
+
+  try {
+    const retell = new Retell({ apiKey: retellApiKey });
+    await retell.call.createPhoneCall({
+      from_number: fromNumber,
+      to_number: toNumber,
+      agent_id: agentId,
+      metadata: { source, user_id: userId },
+    });
+    console.log(`[lead-webhook] Instant response call triggered to ${toNumber} (source=${source})`);
+  } catch (err: any) {
+    console.error('[lead-webhook] Instant response call failed (non-blocking):', err?.message || err);
+  }
+}
+
 export const handler: Handler = async (event) => {
   // CORS preflight
   if (event.httpMethod === 'OPTIONS') {
