@@ -160,8 +160,20 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    // Only process inbound calls for missed call text-back
-    const callerPhone = call.from_number;
+    // Detect direction — Retell sets call_type to 'outbound_api' for API-initiated calls
+    const isOutbound = call.call_type === 'outbound_api' || call.call_type === 'outbound_phone_call';
+    // Lead's phone: to_number for outbound (we called them), from_number for inbound (they called us)
+    const contactPhone = isOutbound ? (call.to_number || null) : (call.from_number || null);
+    // Legacy alias used in the rest of this file
+    const callerPhone = contactPhone;
+    const callSource = (call.metadata?.source ?? '') as string;
+    // Trigger type for enrollment — null means skip enrollment (follow-up retries, campaigns, etc.)
+    const triggerType: 'missed_call' | 'website_no_answer' | 'ad_no_answer' | null = (() => {
+      if (!isOutbound) return 'missed_call';
+      if (!callSource || callSource === 'followup_sequence' || callSource === 'reactivation') return null;
+      if (callSource === 'facebook_ads') return 'ad_no_answer';
+      return 'website_no_answer';
+    })();
     const agentId = call.agent_id;
 
     if (!agentId) {
@@ -187,16 +199,17 @@ export const handler: Handler = async (event) => {
           .single();
         if (agentOwner?.user_id) {
           // Lead answered — cancel any active no-answer follow-up enrollments for this number
-          if (call.from_number && (call.duration_ms || 0) >= MISSED_CALL_THRESHOLD_MS) {
+          const answeredPhone = isOutbound ? call.to_number : call.from_number;
+          if (answeredPhone && (call.duration_ms || 0) >= MISSED_CALL_THRESHOLD_MS) {
             supabaseForWebhook
               .from('followup_enrollments')
               .update({ status: 'completed', completed_at: new Date().toISOString() })
-              .eq('contact_phone', call.from_number)
+              .eq('contact_phone', answeredPhone)
               .eq('user_id', agentOwner.user_id)
               .eq('status', 'active')
               .then(({ error }) => {
                 if (error) console.error('[retell-webhook] Failed to cancel enrollments on answer:', error);
-                else console.log(`[retell-webhook] Cancelled follow-up enrollments for answered call: ${call.from_number}`);
+                else console.log(`[retell-webhook] Cancelled follow-up enrollments for answered call: ${answeredPhone}`);
               });
           }
 
@@ -294,26 +307,41 @@ export const handler: Handler = async (event) => {
 
     const config = (featureRow?.missed_call_config || {}) as Record<string, any>;
 
-    // Step 3: Always create a lead for missed calls (even if text-back is disabled)
-    const { data: lead, error: leadError } = await supabase
-      .from('leads')
-      .insert({
-        first_name: null,
-        last_name: null,
-        phone: callerPhone,
-        source: 'missed_call',
-        status: 'pending',
-        user_id: userId,
-        raw_data: call,
-      })
-      .select('id')
-      .single();
-
-    if (leadError) {
-      console.error('[retell-webhook] Failed to create lead:', leadError);
-      await notifyError('retell-webhook: Lead creation failed', leadError, {
-        callerPhone, userId, callId: call.call_id, callStatus: call.call_status,
-      });
+    // Step 3: Create a lead for inbound missed calls. Outbound leads already exist from lead-webhook.
+    let lead: { id: string } | null = null;
+    if (!isOutbound) {
+      const { data: newLead, error: leadError } = await supabase
+        .from('leads')
+        .insert({
+          first_name: null,
+          last_name: null,
+          phone: callerPhone,
+          source: 'missed_call',
+          status: 'pending',
+          user_id: userId,
+          raw_data: call,
+        })
+        .select('id')
+        .single();
+      if (leadError) {
+        console.error('[retell-webhook] Failed to create lead:', leadError);
+        await notifyError('retell-webhook: Lead creation failed', leadError, {
+          callerPhone, userId, callId: call.call_id, callStatus: call.call_status,
+        });
+      } else {
+        lead = newLead;
+      }
+    } else {
+      // For outbound no-answers, look up the existing lead by phone
+      const { data: existingLead } = await supabase
+        .from('leads')
+        .select('id')
+        .eq('phone', callerPhone)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+      lead = existingLead ?? null;
     }
 
     // Fire missed_call webhook
@@ -352,14 +380,14 @@ export const handler: Handler = async (event) => {
       });
     }
 
-    // Auto-enroll in missed_call follow-up sequences
-    if (lead?.id) {
+    // Auto-enroll in the matching follow-up sequence (skip for follow-up retries and campaigns)
+    if (lead?.id && triggerType) {
       try {
         const { data: sequences } = await supabase
           .from('followup_sequences')
           .select('id')
           .eq('user_id', userId)
-          .eq('trigger_event', 'missed_call')
+          .eq('trigger_event', triggerType)
           .eq('is_active', true);
 
         if (sequences && sequences.length > 0) {
@@ -387,7 +415,7 @@ export const handler: Handler = async (event) => {
               next_step_at: new Date(Date.now() + delayMs).toISOString(),
             });
           }
-          console.log(`[retell-webhook] Auto-enrolled ${callerPhone} in ${sequences.length} missed_call sequence(s)`);
+          console.log(`[retell-webhook] Auto-enrolled ${callerPhone} in ${sequences.length} ${triggerType} sequence(s)`);
         }
       } catch (enrollErr) {
         console.error('[retell-webhook] Auto-enrollment failed (non-blocking):', enrollErr);

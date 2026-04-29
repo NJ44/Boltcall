@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import Retell from 'retell-sdk';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { fireWebhooks } from './_shared/fire-webhooks';
@@ -198,12 +199,53 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
             status: data.status,
             created_at: data.created_at,
           });
+          // Instant response call — fire-and-forget, non-blocking
+          if (data.phone) {
+            triggerInstantResponseCall(userId, data.phone, 'facebook_ads', supabase).catch(() => {});
+          }
         }
       }
     }
   }
 
   return { results, errors };
+}
+
+// Trigger an instant outbound Retell call for a new lead (fire-and-forget)
+async function triggerInstantResponseCall(
+  userId: string,
+  toNumber: string,
+  source: string,
+  supabase: ReturnType<typeof createClient>
+): Promise<void> {
+  const retellApiKey = process.env.RETELL_API_KEY;
+  if (!retellApiKey) return;
+
+  const [{ data: agentRow }, { data: phoneRow }] = await Promise.all([
+    supabase.from('agents').select('api_keys').eq('user_id', userId).limit(1).single(),
+    supabase.from('phone_numbers').select('phone_number').eq('user_id', userId).eq('status', 'active').limit(1).single(),
+  ]);
+
+  const agentId = (agentRow?.api_keys as any)?.retell_agent_id;
+  const fromNumber = phoneRow?.phone_number;
+
+  if (!agentId || !fromNumber) {
+    console.warn(`[lead-webhook] No agent/phone for instant response, user=${userId}`);
+    return;
+  }
+
+  try {
+    const retell = new Retell({ apiKey: retellApiKey });
+    await retell.call.createPhoneCall({
+      from_number: fromNumber,
+      to_number: toNumber,
+      agent_id: agentId,
+      metadata: { source, user_id: userId },
+    });
+    console.log(`[lead-webhook] Instant response call triggered to ${toNumber} (source=${source})`);
+  } catch (err: any) {
+    console.error('[lead-webhook] Instant response call failed (non-blocking):', err?.message || err);
+  }
 }
 
 export const handler: Handler = async (event) => {
@@ -334,6 +376,10 @@ export const handler: Handler = async (event) => {
           status: data.status,
           created_at: data.created_at,
         });
+        // Instant response call — fire-and-forget, non-blocking
+        if (data.phone) {
+          triggerInstantResponseCall(lead.user_id, data.phone, lead.source || 'website_form', supabase).catch(() => {});
+        }
       }
 
       // Sync lead to connected CRMs (fire-and-forget)

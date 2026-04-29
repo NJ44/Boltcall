@@ -35,7 +35,7 @@ interface Sequence {
   user_id: string;
   workspace_id: string | null;
   name: string;
-  trigger_event: 'missed_call' | 'appointment_completed' | 'lead_created' | 'manual';
+  trigger_event: 'missed_call' | 'website_no_answer' | 'ad_no_answer' | 'appointment_completed' | 'lead_created' | 'manual';
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -75,6 +75,8 @@ interface Enrollment {
 
 const TRIGGER_OPTIONS: { value: Sequence['trigger_event']; label: string }[] = [
   { value: 'missed_call', label: 'Missed Call' },
+  { value: 'website_no_answer', label: 'Website No Answer' },
+  { value: 'ad_no_answer', label: 'Ad No Answer' },
   { value: 'appointment_completed', label: 'Appointment Completed' },
   { value: 'lead_created', label: 'Lead Created' },
   { value: 'manual', label: 'Manual' },
@@ -82,6 +84,8 @@ const TRIGGER_OPTIONS: { value: Sequence['trigger_event']; label: string }[] = [
 
 const TRIGGER_BADGE_COLORS: Record<Sequence['trigger_event'], string> = {
   missed_call: 'bg-amber-100 text-amber-700',
+  website_no_answer: 'bg-purple-100 text-purple-700',
+  ad_no_answer: 'bg-blue-100 text-blue-700',
   appointment_completed: 'bg-green-100 text-green-700',
   lead_created: 'bg-blue-100 text-blue-700',
   manual: 'bg-gray-100 text-gray-600',
@@ -100,15 +104,28 @@ const DELAY_UNITS = [
   { label: 'days', multiplier: 1440 },
 ];
 
-// Research-backed no-answer follow-up sequence (MIT lead response study)
+// Missed call: lead called you, you missed it — call back fast, then SMS, then one final SMS
 const NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
-  { step_order: 1, channel: 'call',  delay_minutes: 5,    template: '', subject: '', is_active: true },
-  { step_order: 2, channel: 'sms',   delay_minutes: 60,   template: "Hi {{client_name}}, we tried reaching you earlier. Still here when you're ready — just reply or we'll try you again soon!", subject: '', is_active: true },
-  { step_order: 3, channel: 'call',  delay_minutes: 60,   template: '', subject: '', is_active: true },
-  { step_order: 4, channel: 'call',  delay_minutes: 1440, template: '', subject: '', is_active: true },
-  { step_order: 5, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe noticed we missed you recently. We'd love to help — just reply to this email or call us back at your convenience.\n\nBest,\nThe Team", subject: 'Following up on your inquiry', is_active: true },
-  { step_order: 6, channel: 'call',  delay_minutes: 2880, template: '', subject: '', is_active: true },
-  { step_order: 7, channel: 'email', delay_minutes: 10080, template: "Hi {{client_name}},\n\nThis is our final follow-up. If you're still looking for help, we're here anytime. Just reply or give us a call.\n\nTake care!", subject: 'Last check-in from us', is_active: true },
+  { step_order: 1, channel: 'call', delay_minutes: 5,    template: '', subject: '', is_active: true },
+  { step_order: 2, channel: 'sms',  delay_minutes: 20,   template: "Hi {{client_name}}, we tried reaching you. We're still here when you're ready — just reply to this text!", subject: '', is_active: true },
+  { step_order: 3, channel: 'call', delay_minutes: 90,   template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'sms',  delay_minutes: 1440, template: "Hi {{client_name}}, still here if you need us! Feel free to reply anytime.", subject: '', is_active: true },
+];
+
+// Website form: they submitted a form — warm up with SMS first, then call
+const WEBSITE_NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
+  { step_order: 1, channel: 'sms',   delay_minutes: 5,   template: "Hi {{client_name}}, thanks for reaching out! We'll give you a call shortly.", subject: '', is_active: true },
+  { step_order: 2, channel: 'call',  delay_minutes: 30,  template: '', subject: '', is_active: true },
+  { step_order: 3, channel: 'call',  delay_minutes: 120, template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe received your inquiry and tried to reach you — we'd love to help!\n\nReply here or call us back at your convenience.\n\nBest,\nThe Team", subject: 'Re: Your inquiry', is_active: true },
+];
+
+// Ad lead: similar to website but copy reflects ad context
+const AD_NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
+  { step_order: 1, channel: 'sms',   delay_minutes: 5,   template: "Hi {{client_name}}, we saw your interest and wanted to reach out! We'll give you a call shortly.", subject: '', is_active: true },
+  { step_order: 2, channel: 'call',  delay_minutes: 30,  template: '', subject: '', is_active: true },
+  { step_order: 3, channel: 'call',  delay_minutes: 120, template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe saw your interest and tried to reach you — we'd love to help!\n\nReply here or call us back at your convenience.\n\nBest,\nThe Team", subject: 'We tried to reach you', is_active: true },
 ];
 
 function parseDelay(totalMinutes: number): { value: number; unit: string } {
@@ -169,7 +186,8 @@ const FollowUpsContent: React.FC = () => {
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [editingSequence, setEditingSequence] = useState<Sequence | null>(null);
-  const [useTemplate, setUseTemplate] = useState(false);
+  const [templateType, setTemplateType] = useState<'missed_call' | 'website_no_answer' | 'ad_no_answer' | null>(null);
+  const [templateDropdownOpen, setTemplateDropdownOpen] = useState(false);
 
   // Enrollments panel state
   const [selectedSequence, setSelectedSequence] = useState<Sequence | null>(null);
@@ -393,24 +411,47 @@ const FollowUpsContent: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <PopButton
-            size="sm"
-            onClick={() => {
-              setEditingSequence(null);
-              setModalOpen(true);
-              setUseTemplate(true);
-            }}
-            className="gap-2"
-          >
-            <Wand2 className="w-4 h-4" />
-            No-Answer Template
-          </PopButton>
+          {/* Template dropdown */}
+          <div className="relative">
+            <PopButton
+              size="sm"
+              onClick={() => setTemplateDropdownOpen((v) => !v)}
+              className="gap-2"
+            >
+              <Wand2 className="w-4 h-4" />
+              Use Template
+              <ChevronDown className="w-3 h-3" />
+            </PopButton>
+            {templateDropdownOpen && (
+              <div className="absolute right-0 mt-1 w-52 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1">
+                {[
+                  { type: 'missed_call' as const, label: 'Missed Call', icon: '📞' },
+                  { type: 'website_no_answer' as const, label: 'Website Form', icon: '🌐' },
+                  { type: 'ad_no_answer' as const, label: 'Ad Lead', icon: '📣' },
+                ].map(({ type, label, icon }) => (
+                  <button
+                    key={type}
+                    onClick={() => {
+                      setEditingSequence(null);
+                      setTemplateType(type);
+                      setModalOpen(true);
+                      setTemplateDropdownOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                  >
+                    <span>{icon}</span>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <PopButton
             color="blue"
             size="sm"
             onClick={() => {
               setEditingSequence(null);
-              setUseTemplate(false);
+              setTemplateType(null);
               setModalOpen(true);
             }}
             className="gap-2"
@@ -521,7 +562,7 @@ const FollowUpsContent: React.FC = () => {
                   <button
                     onClick={() => {
                       setEditingSequence(seq);
-                      setUseTemplate(false);
+                      setTemplateType(null);
                       setModalOpen(true);
                     }}
                     className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -560,7 +601,7 @@ const FollowUpsContent: React.FC = () => {
           <SequenceModal
             sequence={editingSequence}
             userId={user?.id ?? ''}
-            useTemplate={useTemplate}
+            templateType={templateType}
             onClose={() => setModalOpen(false)}
             onSaved={() => {
               setModalOpen(false);
@@ -582,25 +623,35 @@ const FollowUpsContent: React.FC = () => {
 interface SequenceModalProps {
   sequence: Sequence | null;
   userId: string;
-  useTemplate?: boolean;
+  templateType?: 'missed_call' | 'website_no_answer' | 'ad_no_answer' | null;
   onClose: () => void;
   onSaved: () => void;
   showToast: (p: { variant: 'success' | 'error'; message: string }) => void;
 }
 
+const TEMPLATE_DEFAULTS: Record<
+  'missed_call' | 'website_no_answer' | 'ad_no_answer',
+  { name: string; steps: Omit<SequenceStep, 'id' | 'sequence_id'>[] }
+> = {
+  missed_call:      { name: 'Missed Call Follow-Up',   steps: NO_ANSWER_TEMPLATE_STEPS },
+  website_no_answer: { name: 'Website No-Answer Follow-Up', steps: WEBSITE_NO_ANSWER_TEMPLATE_STEPS },
+  ad_no_answer:     { name: 'Ad Lead Follow-Up',        steps: AD_NO_ANSWER_TEMPLATE_STEPS },
+};
+
 const SequenceModal: React.FC<SequenceModalProps> = ({
   sequence,
   userId,
-  useTemplate = false,
+  templateType = null,
   onClose,
   onSaved,
   showToast,
 }) => {
   const isEdit = !!sequence;
+  const tpl = templateType ? TEMPLATE_DEFAULTS[templateType] : null;
 
-  const [name, setName] = useState(useTemplate ? 'No-Answer Follow-Up' : (sequence?.name ?? ''));
+  const [name, setName] = useState(tpl ? tpl.name : (sequence?.name ?? ''));
   const [trigger, setTrigger] = useState<Sequence['trigger_event']>(
-    useTemplate ? 'missed_call' : (sequence?.trigger_event ?? 'missed_call')
+    templateType ?? (sequence?.trigger_event ?? 'missed_call')
   );
   const [steps, setSteps] = useState<SequenceStep[]>([]);
   const [saving, setSaving] = useState(false);
@@ -609,7 +660,7 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
   // Load steps when editing
   useEffect(() => {
     if (!sequence) {
-      setSteps(useTemplate ? NO_ANSWER_TEMPLATE_STEPS : [defaultStep(1)]);
+      setSteps(tpl ? tpl.steps : [defaultStep(1)]);
       return;
     }
     (async () => {
