@@ -601,7 +601,7 @@ const FollowUpsContent: React.FC = () => {
           <SequenceModal
             sequence={editingSequence}
             userId={user?.id ?? ''}
-            useTemplate={useTemplate}
+            templateType={templateType}
             onClose={() => setModalOpen(false)}
             onSaved={() => {
               setModalOpen(false);
