@@ -1000,26 +1000,35 @@ const StepEditor: React.FC<StepEditorProps> = ({
         </div>
       )}
 
-      {/* Template */}
-      <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">
-          Message Template
-        </label>
-        <textarea
-          value={step.template}
-          onChange={(e) => onChange({ template: e.target.value })}
-          rows={3}
-          placeholder={
-            step.channel === 'sms'
-              ? 'Hi {{client_name}}, we noticed we missed your call. Would you like to reschedule? — {{business_name}}'
-              : 'Hi {{client_name}},\n\nThank you for contacting {{business_name}}. We wanted to follow up...'
-          }
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-        />
-        <p className="mt-1 text-xs text-gray-400">
-          Placeholders: {'{{client_name}}'}, {'{{business_name}}'}, {'{{appointment_date}}'}
-        </p>
-      </div>
+      {/* Template — hidden for call steps */}
+      {step.channel === 'call' ? (
+        <div className="flex items-start gap-2.5 bg-green-50 border border-green-200 rounded-lg px-3 py-2.5">
+          <Phone className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-green-700">
+            Your AI agent will call this contact automatically. The agent's configured script and knowledge base handle the conversation — no template needed here.
+          </p>
+        </div>
+      ) : (
+        <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">
+            Message Template
+          </label>
+          <textarea
+            value={step.template}
+            onChange={(e) => onChange({ template: e.target.value })}
+            rows={3}
+            placeholder={
+              step.channel === 'sms'
+                ? 'Hi {{client_name}}, we noticed we missed your call. Would you like to reschedule? — {{business_name}}'
+                : 'Hi {{client_name}},\n\nThank you for contacting {{business_name}}. We wanted to follow up...'
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+          />
+          <p className="mt-1 text-xs text-gray-400">
+            Placeholders: {'{{client_name}}'}, {'{{business_name}}'}, {'{{appointment_date}}'}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
