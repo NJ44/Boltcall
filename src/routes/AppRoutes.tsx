@@ -102,6 +102,7 @@ const LeadMagnetPage = React.lazy(() => import('../pages/LeadMagnetPage'));
 const LeadMagnetThankYouPage = React.lazy(() => import('../pages/LeadMagnetThankYouPage'));
 const LeadMagnetClaudeCodeOvernightKitPage = React.lazy(() => import('../pages/LeadMagnetClaudeCodeOvernightKitPage'));
 const LeadMagnetAIReceptionistBuyersGuide = React.lazy(() => import('../pages/LeadMagnetAIReceptionistBuyersGuide'));
+const LeadMagnetSpeedToLeadStackPage = React.lazy(() => import('../pages/LeadMagnetSpeedToLeadStackPage'));
 const AIRevenueAudit = React.lazy(() => import('../pages/AIRevenueAudit'));
 const AIRevenueResults = React.lazy(() => import('../pages/AIRevenueResults'));
 const LeadResponseScorecard = React.lazy(() => import('../pages/LeadResponseScorecard'));
@@ -395,6 +396,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/lead-magnet/thank-you" element={<LeadMagnetThankYouPage />} />
         <Route path="/lead-magnet/claude-code-overnight-kit" element={<LeadMagnetClaudeCodeOvernightKitPage />} />
         <Route path="/lead-magnet/ai-receptionist-buyers-guide" element={<LeadMagnetAIReceptionistBuyersGuide />} />
+        <Route path="/lead-magnet/speed-to-lead-stack" element={<LeadMagnetSpeedToLeadStackPage />} />
         <Route path="/free-website" element={<FreeWebsitePage />} />
         <Route path="/free-website-package" element={<Navigate to="/free-website" replace />} />
         <Route path="/free-website-package/pricing" element={<Navigate to="/pricing" replace />} />
