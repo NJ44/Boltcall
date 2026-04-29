@@ -623,25 +623,35 @@ const FollowUpsContent: React.FC = () => {
 interface SequenceModalProps {
   sequence: Sequence | null;
   userId: string;
-  useTemplate?: boolean;
+  templateType?: 'missed_call' | 'website_no_answer' | 'ad_no_answer' | null;
   onClose: () => void;
   onSaved: () => void;
   showToast: (p: { variant: 'success' | 'error'; message: string }) => void;
 }
 
+const TEMPLATE_DEFAULTS: Record<
+  'missed_call' | 'website_no_answer' | 'ad_no_answer',
+  { name: string; steps: Omit<SequenceStep, 'id' | 'sequence_id'>[] }
+> = {
+  missed_call:      { name: 'Missed Call Follow-Up',   steps: NO_ANSWER_TEMPLATE_STEPS },
+  website_no_answer: { name: 'Website No-Answer Follow-Up', steps: WEBSITE_NO_ANSWER_TEMPLATE_STEPS },
+  ad_no_answer:     { name: 'Ad Lead Follow-Up',        steps: AD_NO_ANSWER_TEMPLATE_STEPS },
+};
+
 const SequenceModal: React.FC<SequenceModalProps> = ({
   sequence,
   userId,
-  useTemplate = false,
+  templateType = null,
   onClose,
   onSaved,
   showToast,
 }) => {
   const isEdit = !!sequence;
+  const tpl = templateType ? TEMPLATE_DEFAULTS[templateType] : null;
 
-  const [name, setName] = useState(useTemplate ? 'No-Answer Follow-Up' : (sequence?.name ?? ''));
+  const [name, setName] = useState(tpl ? tpl.name : (sequence?.name ?? ''));
   const [trigger, setTrigger] = useState<Sequence['trigger_event']>(
-    useTemplate ? 'missed_call' : (sequence?.trigger_event ?? 'missed_call')
+    templateType ?? (sequence?.trigger_event ?? 'missed_call')
   );
   const [steps, setSteps] = useState<SequenceStep[]>([]);
   const [saving, setSaving] = useState(false);
@@ -650,7 +660,7 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
   // Load steps when editing
   useEffect(() => {
     if (!sequence) {
-      setSteps(useTemplate ? NO_ANSWER_TEMPLATE_STEPS : [defaultStep(1)]);
+      setSteps(tpl ? tpl.steps : [defaultStep(1)]);
       return;
     }
     (async () => {
