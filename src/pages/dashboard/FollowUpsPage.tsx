@@ -411,18 +411,41 @@ const FollowUpsContent: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <PopButton
-            size="sm"
-            onClick={() => {
-              setEditingSequence(null);
-              setModalOpen(true);
-              setUseTemplate(true);
-            }}
-            className="gap-2"
-          >
-            <Wand2 className="w-4 h-4" />
-            No-Answer Template
-          </PopButton>
+          {/* Template dropdown */}
+          <div className="relative">
+            <PopButton
+              size="sm"
+              onClick={() => setTemplateDropdownOpen((v) => !v)}
+              className="gap-2"
+            >
+              <Wand2 className="w-4 h-4" />
+              Use Template
+              <ChevronDown className="w-3 h-3" />
+            </PopButton>
+            {templateDropdownOpen && (
+              <div className="absolute right-0 mt-1 w-52 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1">
+                {[
+                  { type: 'missed_call' as const, label: 'Missed Call', icon: '📞' },
+                  { type: 'website_no_answer' as const, label: 'Website Form', icon: '🌐' },
+                  { type: 'ad_no_answer' as const, label: 'Ad Lead', icon: '📣' },
+                ].map(({ type, label, icon }) => (
+                  <button
+                    key={type}
+                    onClick={() => {
+                      setEditingSequence(null);
+                      setTemplateType(type);
+                      setModalOpen(true);
+                      setTemplateDropdownOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                  >
+                    <span>{icon}</span>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <PopButton
             color="blue"
             size="sm"
