@@ -233,6 +233,7 @@ const Setup: React.FC = () => {
       return;
     }
 
+    localStorage.setItem('boltcall_setup_complete', user.id);
     navigate('/setup/loading');
 
     let locationId: string | undefined;
