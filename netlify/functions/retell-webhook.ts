@@ -186,6 +186,20 @@ export const handler: Handler = async (event) => {
           .filter('api_keys->>retell_agent_id', 'eq', agentId)
           .single();
         if (agentOwner?.user_id) {
+          // Lead answered — cancel any active no-answer follow-up enrollments for this number
+          if (call.from_number && (call.duration_ms || 0) >= MISSED_CALL_THRESHOLD_MS) {
+            supabaseForWebhook
+              .from('followup_enrollments')
+              .update({ status: 'completed', completed_at: new Date().toISOString() })
+              .eq('contact_phone', call.from_number)
+              .eq('user_id', agentOwner.user_id)
+              .eq('status', 'active')
+              .then(({ error }) => {
+                if (error) console.error('[retell-webhook] Failed to cancel enrollments on answer:', error);
+                else console.log(`[retell-webhook] Cancelled follow-up enrollments for answered call: ${call.from_number}`);
+              });
+          }
+
           fireWebhooks(agentOwner.user_id, 'call_completed', {
             id: call.call_id,
             caller_number: call.from_number || null,
