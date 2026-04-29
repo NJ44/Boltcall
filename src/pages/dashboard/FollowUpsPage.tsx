@@ -12,6 +12,8 @@ import {
   GripVertical,
   Mail,
   MessageSquare,
+  Phone,
+  Wand2,
   Users,
   UserPlus,
   XCircle,
