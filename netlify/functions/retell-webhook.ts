@@ -199,16 +199,17 @@ export const handler: Handler = async (event) => {
           .single();
         if (agentOwner?.user_id) {
           // Lead answered — cancel any active no-answer follow-up enrollments for this number
-          if (call.from_number && (call.duration_ms || 0) >= MISSED_CALL_THRESHOLD_MS) {
+          const answeredPhone = isOutbound ? call.to_number : call.from_number;
+          if (answeredPhone && (call.duration_ms || 0) >= MISSED_CALL_THRESHOLD_MS) {
             supabaseForWebhook
               .from('followup_enrollments')
               .update({ status: 'completed', completed_at: new Date().toISOString() })
-              .eq('contact_phone', call.from_number)
+              .eq('contact_phone', answeredPhone)
               .eq('user_id', agentOwner.user_id)
               .eq('status', 'active')
               .then(({ error }) => {
                 if (error) console.error('[retell-webhook] Failed to cancel enrollments on answer:', error);
-                else console.log(`[retell-webhook] Cancelled follow-up enrollments for answered call: ${call.from_number}`);
+                else console.log(`[retell-webhook] Cancelled follow-up enrollments for answered call: ${answeredPhone}`);
               });
           }
 
