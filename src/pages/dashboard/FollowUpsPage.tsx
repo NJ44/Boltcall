@@ -562,7 +562,7 @@ const FollowUpsContent: React.FC = () => {
                   <button
                     onClick={() => {
                       setEditingSequence(seq);
-                      setUseTemplate(false);
+                      setTemplateType(null);
                       setModalOpen(true);
                     }}
                     className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
