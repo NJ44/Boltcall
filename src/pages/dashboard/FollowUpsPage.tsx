@@ -75,6 +75,8 @@ interface Enrollment {
 
 const TRIGGER_OPTIONS: { value: Sequence['trigger_event']; label: string }[] = [
   { value: 'missed_call', label: 'Missed Call' },
+  { value: 'website_no_answer', label: 'Website No Answer' },
+  { value: 'ad_no_answer', label: 'Ad No Answer' },
   { value: 'appointment_completed', label: 'Appointment Completed' },
   { value: 'lead_created', label: 'Lead Created' },
   { value: 'manual', label: 'Manual' },
@@ -82,6 +84,8 @@ const TRIGGER_OPTIONS: { value: Sequence['trigger_event']; label: string }[] = [
 
 const TRIGGER_BADGE_COLORS: Record<Sequence['trigger_event'], string> = {
   missed_call: 'bg-amber-100 text-amber-700',
+  website_no_answer: 'bg-purple-100 text-purple-700',
+  ad_no_answer: 'bg-blue-100 text-blue-700',
   appointment_completed: 'bg-green-100 text-green-700',
   lead_created: 'bg-blue-100 text-blue-700',
   manual: 'bg-gray-100 text-gray-600',
