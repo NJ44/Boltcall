@@ -380,14 +380,14 @@ export const handler: Handler = async (event) => {
       });
     }
 
-    // Auto-enroll in missed_call follow-up sequences
-    if (lead?.id) {
+    // Auto-enroll in the matching follow-up sequence (skip for follow-up retries and campaigns)
+    if (lead?.id && triggerType) {
       try {
         const { data: sequences } = await supabase
           .from('followup_sequences')
           .select('id')
           .eq('user_id', userId)
-          .eq('trigger_event', 'missed_call')
+          .eq('trigger_event', triggerType)
           .eq('is_active', true);
 
         if (sequences && sequences.length > 0) {
@@ -415,7 +415,7 @@ export const handler: Handler = async (event) => {
               next_step_at: new Date(Date.now() + delayMs).toISOString(),
             });
           }
-          console.log(`[retell-webhook] Auto-enrolled ${callerPhone} in ${sequences.length} missed_call sequence(s)`);
+          console.log(`[retell-webhook] Auto-enrolled ${callerPhone} in ${sequences.length} ${triggerType} sequence(s)`);
         }
       } catch (enrollErr) {
         console.error('[retell-webhook] Auto-enrollment failed (non-blocking):', enrollErr);
