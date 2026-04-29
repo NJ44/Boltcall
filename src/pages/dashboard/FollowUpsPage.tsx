@@ -582,6 +582,7 @@ const FollowUpsContent: React.FC = () => {
 interface SequenceModalProps {
   sequence: Sequence | null;
   userId: string;
+  useTemplate?: boolean;
   onClose: () => void;
   onSaved: () => void;
   showToast: (p: { variant: 'success' | 'error'; message: string }) => void;
@@ -590,15 +591,16 @@ interface SequenceModalProps {
 const SequenceModal: React.FC<SequenceModalProps> = ({
   sequence,
   userId,
+  useTemplate = false,
   onClose,
   onSaved,
   showToast,
 }) => {
   const isEdit = !!sequence;
 
-  const [name, setName] = useState(sequence?.name ?? '');
+  const [name, setName] = useState(useTemplate ? 'No-Answer Follow-Up' : (sequence?.name ?? ''));
   const [trigger, setTrigger] = useState<Sequence['trigger_event']>(
-    sequence?.trigger_event ?? 'missed_call'
+    useTemplate ? 'missed_call' : (sequence?.trigger_event ?? 'missed_call')
   );
   const [steps, setSteps] = useState<SequenceStep[]>([]);
   const [saving, setSaving] = useState(false);
@@ -607,7 +609,7 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
   // Load steps when editing
   useEffect(() => {
     if (!sequence) {
-      setSteps([defaultStep(1)]);
+      setSteps(useTemplate ? NO_ANSWER_TEMPLATE_STEPS : [defaultStep(1)]);
       return;
     }
     (async () => {
