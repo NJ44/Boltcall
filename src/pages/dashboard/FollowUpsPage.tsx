@@ -169,6 +169,7 @@ const FollowUpsContent: React.FC = () => {
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [editingSequence, setEditingSequence] = useState<Sequence | null>(null);
+  const [useTemplate, setUseTemplate] = useState(false);
 
   // Enrollments panel state
   const [selectedSequence, setSelectedSequence] = useState<Sequence | null>(null);
