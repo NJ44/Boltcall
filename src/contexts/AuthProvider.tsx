@@ -100,7 +100,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     try {
       await supabaseLogout();
-      localStorage.removeItem('boltcall_setup_complete');
       dispatch({ type: 'LOGOUT' });
     } catch (error) {
       console.error('Logout error:', error);
