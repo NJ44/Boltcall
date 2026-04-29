@@ -100,6 +100,17 @@ const DELAY_UNITS = [
   { label: 'days', multiplier: 1440 },
 ];
 
+// Research-backed no-answer follow-up sequence (MIT lead response study)
+const NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
+  { step_order: 1, channel: 'call',  delay_minutes: 5,    template: '', subject: '', is_active: true },
+  { step_order: 2, channel: 'sms',   delay_minutes: 60,   template: "Hi {{client_name}}, we tried reaching you earlier. Still here when you're ready — just reply or we'll try you again soon!", subject: '', is_active: true },
+  { step_order: 3, channel: 'call',  delay_minutes: 60,   template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'call',  delay_minutes: 1440, template: '', subject: '', is_active: true },
+  { step_order: 5, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe noticed we missed you recently. We'd love to help — just reply to this email or call us back at your convenience.\n\nBest,\nThe Team", subject: 'Following up on your inquiry', is_active: true },
+  { step_order: 6, channel: 'call',  delay_minutes: 2880, template: '', subject: '', is_active: true },
+  { step_order: 7, channel: 'email', delay_minutes: 10080, template: "Hi {{client_name}},\n\nThis is our final follow-up. If you're still looking for help, we're here anytime. Just reply or give us a call.\n\nTake care!", subject: 'Last check-in from us', is_active: true },
+];
+
 function parseDelay(totalMinutes: number): { value: number; unit: string } {
   if (totalMinutes >= 1440 && totalMinutes % 1440 === 0) {
     return { value: totalMinutes / 1440, unit: 'days' };
