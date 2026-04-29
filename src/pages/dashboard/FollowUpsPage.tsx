@@ -12,6 +12,8 @@ import {
   GripVertical,
   Mail,
   MessageSquare,
+  Phone,
+  Wand2,
   Users,
   UserPlus,
   XCircle,
@@ -45,7 +47,7 @@ interface SequenceStep {
   id?: string;
   sequence_id?: string;
   step_order: number;
-  channel: 'sms' | 'email';
+  channel: 'sms' | 'email' | 'call';
   delay_minutes: number;
   template: string;
   subject: string;
@@ -96,6 +98,17 @@ const DELAY_UNITS = [
   { label: 'minutes', multiplier: 1 },
   { label: 'hours', multiplier: 60 },
   { label: 'days', multiplier: 1440 },
+];
+
+// Research-backed no-answer follow-up sequence (MIT lead response study)
+const NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
+  { step_order: 1, channel: 'call',  delay_minutes: 5,    template: '', subject: '', is_active: true },
+  { step_order: 2, channel: 'sms',   delay_minutes: 60,   template: "Hi {{client_name}}, we tried reaching you earlier. Still here when you're ready — just reply or we'll try you again soon!", subject: '', is_active: true },
+  { step_order: 3, channel: 'call',  delay_minutes: 60,   template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'call',  delay_minutes: 1440, template: '', subject: '', is_active: true },
+  { step_order: 5, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe noticed we missed you recently. We'd love to help — just reply to this email or call us back at your convenience.\n\nBest,\nThe Team", subject: 'Following up on your inquiry', is_active: true },
+  { step_order: 6, channel: 'call',  delay_minutes: 2880, template: '', subject: '', is_active: true },
+  { step_order: 7, channel: 'email', delay_minutes: 10080, template: "Hi {{client_name}},\n\nThis is our final follow-up. If you're still looking for help, we're here anytime. Just reply or give us a call.\n\nTake care!", subject: 'Last check-in from us', is_active: true },
 ];
 
 function parseDelay(totalMinutes: number): { value: number; unit: string } {
@@ -156,6 +169,7 @@ const FollowUpsContent: React.FC = () => {
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [editingSequence, setEditingSequence] = useState<Sequence | null>(null);
+  const [useTemplate, setUseTemplate] = useState(false);
 
   // Enrollments panel state
   const [selectedSequence, setSelectedSequence] = useState<Sequence | null>(null);
@@ -378,18 +392,33 @@ const FollowUpsContent: React.FC = () => {
             </p>
           </div>
         </div>
-        <PopButton
-          color="blue"
-          size="sm"
-          onClick={() => {
-            setEditingSequence(null);
-            setModalOpen(true);
-          }}
-          className="gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          New Sequence
-        </PopButton>
+        <div className="flex items-center gap-2">
+          <PopButton
+            size="sm"
+            onClick={() => {
+              setEditingSequence(null);
+              setModalOpen(true);
+              setUseTemplate(true);
+            }}
+            className="gap-2"
+          >
+            <Wand2 className="w-4 h-4" />
+            No-Answer Template
+          </PopButton>
+          <PopButton
+            color="blue"
+            size="sm"
+            onClick={() => {
+              setEditingSequence(null);
+              setUseTemplate(false);
+              setModalOpen(true);
+            }}
+            className="gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            New Sequence
+          </PopButton>
+        </div>
       </div>
 
       {/* Loading */}
@@ -492,6 +521,7 @@ const FollowUpsContent: React.FC = () => {
                   <button
                     onClick={() => {
                       setEditingSequence(seq);
+                      setUseTemplate(false);
                       setModalOpen(true);
                     }}
                     className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -530,6 +560,7 @@ const FollowUpsContent: React.FC = () => {
           <SequenceModal
             sequence={editingSequence}
             userId={user?.id ?? ''}
+            useTemplate={useTemplate}
             onClose={() => setModalOpen(false)}
             onSaved={() => {
               setModalOpen(false);
@@ -551,6 +582,7 @@ const FollowUpsContent: React.FC = () => {
 interface SequenceModalProps {
   sequence: Sequence | null;
   userId: string;
+  useTemplate?: boolean;
   onClose: () => void;
   onSaved: () => void;
   showToast: (p: { variant: 'success' | 'error'; message: string }) => void;
@@ -559,15 +591,16 @@ interface SequenceModalProps {
 const SequenceModal: React.FC<SequenceModalProps> = ({
   sequence,
   userId,
+  useTemplate = false,
   onClose,
   onSaved,
   showToast,
 }) => {
   const isEdit = !!sequence;
 
-  const [name, setName] = useState(sequence?.name ?? '');
+  const [name, setName] = useState(useTemplate ? 'No-Answer Follow-Up' : (sequence?.name ?? ''));
   const [trigger, setTrigger] = useState<Sequence['trigger_event']>(
-    sequence?.trigger_event ?? 'missed_call'
+    useTemplate ? 'missed_call' : (sequence?.trigger_event ?? 'missed_call')
   );
   const [steps, setSteps] = useState<SequenceStep[]>([]);
   const [saving, setSaving] = useState(false);
@@ -576,7 +609,7 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
   // Load steps when editing
   useEffect(() => {
     if (!sequence) {
-      setSteps([defaultStep(1)]);
+      setSteps(useTemplate ? NO_ANSWER_TEMPLATE_STEPS : [defaultStep(1)]);
       return;
     }
     (async () => {
@@ -621,7 +654,8 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
       return;
     }
     for (let i = 0; i < steps.length; i++) {
-      if (!steps[i].template.trim()) {
+      // Call steps don't need a template — the AI agent script handles the conversation
+      if (steps[i].channel !== 'call' && !steps[i].template.trim()) {
         showToast({ variant: 'error', message: `Step ${i + 1} template is empty.` });
         return;
       }
@@ -906,6 +940,17 @@ const StepEditor: React.FC<StepEditorProps> = ({
               <Mail className="w-3.5 h-3.5" />
               Email
             </button>
+            <button
+              onClick={() => onChange({ channel: 'call', template: '' })}
+              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border transition-colors ${
+                step.channel === 'call'
+                  ? 'bg-green-50 border-green-300 text-green-700'
+                  : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+              }`}
+            >
+              <Phone className="w-3.5 h-3.5" />
+              AI Call
+            </button>
           </div>
         </div>
 
@@ -955,26 +1000,35 @@ const StepEditor: React.FC<StepEditorProps> = ({
         </div>
       )}
 
-      {/* Template */}
-      <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">
-          Message Template
-        </label>
-        <textarea
-          value={step.template}
-          onChange={(e) => onChange({ template: e.target.value })}
-          rows={3}
-          placeholder={
-            step.channel === 'sms'
-              ? 'Hi {{client_name}}, we noticed we missed your call. Would you like to reschedule? — {{business_name}}'
-              : 'Hi {{client_name}},\n\nThank you for contacting {{business_name}}. We wanted to follow up...'
-          }
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-        />
-        <p className="mt-1 text-xs text-gray-400">
-          Placeholders: {'{{client_name}}'}, {'{{business_name}}'}, {'{{appointment_date}}'}
-        </p>
-      </div>
+      {/* Template — hidden for call steps */}
+      {step.channel === 'call' ? (
+        <div className="flex items-start gap-2.5 bg-green-50 border border-green-200 rounded-lg px-3 py-2.5">
+          <Phone className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-green-700">
+            Your AI agent will call this contact automatically. The agent's configured script and knowledge base handle the conversation — no template needed here.
+          </p>
+        </div>
+      ) : (
+        <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">
+            Message Template
+          </label>
+          <textarea
+            value={step.template}
+            onChange={(e) => onChange({ template: e.target.value })}
+            rows={3}
+            placeholder={
+              step.channel === 'sms'
+                ? 'Hi {{client_name}}, we noticed we missed your call. Would you like to reschedule? — {{business_name}}'
+                : 'Hi {{client_name}},\n\nThank you for contacting {{business_name}}. We wanted to follow up...'
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
+          />
+          <p className="mt-1 text-xs text-gray-400">
+            Placeholders: {'{{client_name}}'}, {'{{business_name}}'}, {'{{appointment_date}}'}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

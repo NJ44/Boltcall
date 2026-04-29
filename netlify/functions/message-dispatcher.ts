@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import Retell from 'retell-sdk';
 import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 
@@ -207,6 +208,76 @@ export const handler: Handler = async (event) => {
             messageType: msg.type,
           });
 
+          failed++;
+        }
+      } else if (msg.channel === 'call' && msg.recipient_phone) {
+        // Trigger a Retell AI call retry
+        const retellApiKey = process.env.RETELL_API_KEY;
+        const agentId = msg.metadata?.agent_id;
+        const fromNumber = msg.metadata?.from_number;
+
+        if (!retellApiKey || !agentId || !fromNumber) {
+          const missingField = !retellApiKey ? 'RETELL_API_KEY' : !agentId ? 'agent_id' : 'from_number';
+          await supabase
+            .from('scheduled_messages')
+            .update({ status: 'failed', error: `Call retry missing config: ${missingField}` })
+            .eq('id', msg.id);
+          await notifyError('message-dispatcher: Call retry config missing', missingField, {
+            messageId: msg.id,
+            userId: msg.user_id,
+          });
+          failed++;
+          continue;
+        }
+
+        try {
+          const retell = new Retell({ apiKey: retellApiKey });
+          const callResp = await retell.call.createPhoneCall({
+            from_number: fromNumber,
+            to_number: msg.recipient_phone,
+            agent_id: agentId,
+            metadata: {
+              source: 'followup_sequence',
+              scheduled_message_id: msg.id,
+              user_id: msg.user_id,
+            },
+          });
+
+          await supabase
+            .from('scheduled_messages')
+            .update({
+              status: 'sent',
+              sent_at: new Date().toISOString(),
+              metadata: { ...msg.metadata, retell_call_id: callResp.call_id },
+              tokens_deducted: TOKEN_COSTS.outbound_call,
+            })
+            .eq('id', msg.id);
+
+          try {
+            await deductTokens(
+              msg.user_id,
+              TOKEN_COSTS.outbound_call,
+              'call_retry',
+              `Follow-up call retry to ${msg.recipient_phone}`,
+              { scheduled_message_id: msg.id, retell_call_id: callResp.call_id },
+              supabase
+            );
+          } catch (tokenErr) {
+            console.error('[message-dispatcher] Token deduction failed (non-blocking):', tokenErr);
+          }
+
+          sent++;
+        } catch (callErr: any) {
+          const errMsg = callErr?.message || 'Retell call creation failed';
+          await supabase
+            .from('scheduled_messages')
+            .update({ status: 'failed', error: errMsg })
+            .eq('id', msg.id);
+          await notifyError('message-dispatcher: Call retry failed', errMsg, {
+            messageId: msg.id,
+            recipient: msg.recipient_phone,
+            userId: msg.user_id,
+          });
           failed++;
         }
       } else {
