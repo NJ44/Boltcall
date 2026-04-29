@@ -376,6 +376,10 @@ export const handler: Handler = async (event) => {
           status: data.status,
           created_at: data.created_at,
         });
+        // Instant response call — fire-and-forget, non-blocking
+        if (data.phone) {
+          triggerInstantResponseCall(lead.user_id, data.phone, lead.source || 'website_form', supabase).catch(() => {});
+        }
       }
 
       // Sync lead to connected CRMs (fire-and-forget)
