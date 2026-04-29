@@ -160,8 +160,20 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    // Only process inbound calls for missed call text-back
-    const callerPhone = call.from_number;
+    // Detect direction — Retell sets call_type to 'outbound_api' for API-initiated calls
+    const isOutbound = call.call_type === 'outbound_api' || call.call_type === 'outbound_phone_call';
+    // Lead's phone: to_number for outbound (we called them), from_number for inbound (they called us)
+    const contactPhone = isOutbound ? (call.to_number || null) : (call.from_number || null);
+    // Legacy alias used in the rest of this file
+    const callerPhone = contactPhone;
+    const callSource = (call.metadata?.source ?? '') as string;
+    // Trigger type for enrollment — null means skip enrollment (follow-up retries, campaigns, etc.)
+    const triggerType: 'missed_call' | 'website_no_answer' | 'ad_no_answer' | null = (() => {
+      if (!isOutbound) return 'missed_call';
+      if (!callSource || callSource === 'followup_sequence' || callSource === 'reactivation') return null;
+      if (callSource === 'facebook_ads') return 'ad_no_answer';
+      return 'website_no_answer';
+    })();
     const agentId = call.agent_id;
 
     if (!agentId) {
