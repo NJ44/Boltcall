@@ -199,6 +199,10 @@ async function handleFacebookLeadgen(body: any, supabase: ReturnType<typeof crea
             status: data.status,
             created_at: data.created_at,
           });
+          // Instant response call — fire-and-forget, non-blocking
+          if (data.phone) {
+            triggerInstantResponseCall(userId, data.phone, 'facebook_ads', supabase).catch(() => {});
+          }
         }
       }
     }
