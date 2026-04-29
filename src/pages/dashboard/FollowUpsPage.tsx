@@ -104,15 +104,28 @@ const DELAY_UNITS = [
   { label: 'days', multiplier: 1440 },
 ];
 
-// Research-backed no-answer follow-up sequence (MIT lead response study)
+// Missed call: lead called you, you missed it — call back fast, then SMS, then one final SMS
 const NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
-  { step_order: 1, channel: 'call',  delay_minutes: 5,    template: '', subject: '', is_active: true },
-  { step_order: 2, channel: 'sms',   delay_minutes: 60,   template: "Hi {{client_name}}, we tried reaching you earlier. Still here when you're ready — just reply or we'll try you again soon!", subject: '', is_active: true },
-  { step_order: 3, channel: 'call',  delay_minutes: 60,   template: '', subject: '', is_active: true },
-  { step_order: 4, channel: 'call',  delay_minutes: 1440, template: '', subject: '', is_active: true },
-  { step_order: 5, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe noticed we missed you recently. We'd love to help — just reply to this email or call us back at your convenience.\n\nBest,\nThe Team", subject: 'Following up on your inquiry', is_active: true },
-  { step_order: 6, channel: 'call',  delay_minutes: 2880, template: '', subject: '', is_active: true },
-  { step_order: 7, channel: 'email', delay_minutes: 10080, template: "Hi {{client_name}},\n\nThis is our final follow-up. If you're still looking for help, we're here anytime. Just reply or give us a call.\n\nTake care!", subject: 'Last check-in from us', is_active: true },
+  { step_order: 1, channel: 'call', delay_minutes: 5,    template: '', subject: '', is_active: true },
+  { step_order: 2, channel: 'sms',  delay_minutes: 20,   template: "Hi {{client_name}}, we tried reaching you. We're still here when you're ready — just reply to this text!", subject: '', is_active: true },
+  { step_order: 3, channel: 'call', delay_minutes: 90,   template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'sms',  delay_minutes: 1440, template: "Hi {{client_name}}, still here if you need us! Feel free to reply anytime.", subject: '', is_active: true },
+];
+
+// Website form: they submitted a form — warm up with SMS first, then call
+const WEBSITE_NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
+  { step_order: 1, channel: 'sms',   delay_minutes: 5,   template: "Hi {{client_name}}, thanks for reaching out! We'll give you a call shortly.", subject: '', is_active: true },
+  { step_order: 2, channel: 'call',  delay_minutes: 30,  template: '', subject: '', is_active: true },
+  { step_order: 3, channel: 'call',  delay_minutes: 120, template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe received your inquiry and tried to reach you — we'd love to help!\n\nReply here or call us back at your convenience.\n\nBest,\nThe Team", subject: 'Re: Your inquiry', is_active: true },
+];
+
+// Ad lead: similar to website but copy reflects ad context
+const AD_NO_ANSWER_TEMPLATE_STEPS: Omit<SequenceStep, 'id' | 'sequence_id'>[] = [
+  { step_order: 1, channel: 'sms',   delay_minutes: 5,   template: "Hi {{client_name}}, we saw your interest and wanted to reach out! We'll give you a call shortly.", subject: '', is_active: true },
+  { step_order: 2, channel: 'call',  delay_minutes: 30,  template: '', subject: '', is_active: true },
+  { step_order: 3, channel: 'call',  delay_minutes: 120, template: '', subject: '', is_active: true },
+  { step_order: 4, channel: 'email', delay_minutes: 1440, template: "Hi {{client_name}},\n\nWe saw your interest and tried to reach you — we'd love to help!\n\nReply here or call us back at your convenience.\n\nBest,\nThe Team", subject: 'We tried to reach you', is_active: true },
 ];
 
 function parseDelay(totalMinutes: number): { value: number; unit: string } {
