@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
+import Retell from 'retell-sdk';
 import { deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 
