@@ -451,7 +451,7 @@ const FollowUpsContent: React.FC = () => {
             size="sm"
             onClick={() => {
               setEditingSequence(null);
-              setUseTemplate(false);
+              setTemplateType(null);
               setModalOpen(true);
             }}
             className="gap-2"
