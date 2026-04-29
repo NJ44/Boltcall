@@ -654,7 +654,8 @@ const SequenceModal: React.FC<SequenceModalProps> = ({
       return;
     }
     for (let i = 0; i < steps.length; i++) {
-      if (!steps[i].template.trim()) {
+      // Call steps don't need a template — the AI agent script handles the conversation
+      if (steps[i].channel !== 'call' && !steps[i].template.trim()) {
         showToast({ variant: 'error', message: `Step ${i + 1} template is empty.` });
         return;
       }
