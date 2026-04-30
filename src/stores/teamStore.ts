@@ -205,23 +205,37 @@ export const useTeamStore = create<TeamState>((set, get) => ({
   },
 
   removeMember: async (memberId: string) => {
-    const { error } = await supabase
-      .from('workspace_members')
-      .delete()
-      .eq('id', memberId);
-    if (error) throw error;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Not authenticated');
 
+    // Soft-delete via the Netlify function so the role-check + activity log
+    // run server-side and stay consistent with how invite/accept work.
+    const headers = await authedHeaders();
+    const res = await fetch(`${FUNCTIONS_BASE}/invite-member`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        action: 'remove',
+        memberId,
+        workspaceId: session.user.id,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Remove failed (${res.status})`);
+    }
     set((s) => ({
       members: s.members.filter((m) => m.id !== memberId),
     }));
   },
 
   resendInvite: async (memberId: string) => {
-    const { error } = await supabase
-      .from('workspace_members')
-      .update({ invited_at: new Date().toISOString() })
-      .eq('id', memberId);
-    if (error) throw error;
+    // Look up the row, then re-trigger the invite (which generates a new
+    // token and sends a fresh Brevo email). Touching `invited_at` alone never
+    // sent an email — that was the silent-failure mode this fix addresses.
+    const member = get().members.find((m) => m.id === memberId);
+    if (!member) throw new Error('Member not found');
+    await get().inviteMember(member.email, member.role, member.name || undefined);
   },
 
   // ─── Roles State ───────────────────────────────────────────────────────
