@@ -41,17 +41,45 @@ export const handler: Handler = async (event) => {
     return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid or expired token' }) };
   }
 
+  // Confirm the authenticated user has owner|admin authority on a given workspace.
+  // Either via workspaces.user_id (solo owner) or via workspace_members.role.
+  async function isOwnerOrAdmin(workspaceId: string): Promise<boolean> {
+    const { data: ws } = await supabase
+      .from('workspaces')
+      .select('user_id')
+      .eq('id', workspaceId)
+      .maybeSingle();
+    if (ws && ws.user_id === authUser.id) return true;
+
+    const { data: membership } = await supabase
+      .from('workspace_members')
+      .select('role, status')
+      .eq('workspace_id', workspaceId)
+      .eq('user_id', authUser.id)
+      .eq('status', 'active')
+      .maybeSingle();
+    return !!membership && (membership.role === 'owner' || membership.role === 'admin');
+  }
+
   try {
     const body = JSON.parse(event.body || '{}');
     const action = body.action || 'invite';
 
     // ─── INVITE MEMBER ───────────────────────────────────────────
     if (action === 'invite') {
-      const { email, role, workspaceId, invitedBy, businessName } = body;
+      const { email, role, workspaceId, businessName } = body;
 
-      if (!email || !workspaceId || !invitedBy) {
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'email, workspaceId, invitedBy are required' }) };
+      if (!email || !workspaceId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'email and workspaceId are required' }) };
       }
+
+      // Authorization: caller must be owner|admin of the target workspace.
+      if (!(await isOwnerOrAdmin(workspaceId))) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Only owners and admins can invite members' }) };
+      }
+
+      // invitedBy is always the authenticated user — never trust a body-supplied id.
+      const invitedBy = authUser.id;
 
       // Check if already invited
       const { data: existing } = await supabase
