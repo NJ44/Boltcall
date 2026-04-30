@@ -34,6 +34,18 @@ Plan: `C:\Users\Asus\.claude\plans\i-ahev-so-many-glimmering-honey.md`
 
 ## P1 — Partial / Stubbed (works but has gaps)
 
+### [P1] `dashboard-stats` returns global stats unscoped to caller — cross-tenant data leak
+- **Files**: `netlify/functions/dashboard-stats.ts:115-152, 180-209`
+- **Repro**: function verifies the user's JWT, but `getSupabaseStats` then runs `count`-style queries against `callbacks`, `chats`, `leads`, `workspaces`, `daily_metrics` with NO `eq('user_id', authUser.id)` filter. It also reads Boltcall's org-wide Retell + Twilio API keys (`process.env.RETELL_API_KEY`, `TWILIO_ACCOUNT_SID`) and returns global call/SMS counts. Any authenticated user (including a free signup) can hit this endpoint and learn Boltcall's total leads, total workspaces, total daily call volume, and a list of all phone numbers.
+- **Recommended fix**: scope every query to `authUser.id`. If the endpoint is meant to be admin-only, gate by an `is_admin` flag or email allowlist.
+- **Owner**: Claude
+
+### [P1] `create-checkout-session` accepts caller-supplied `userId`, `email`, `successUrl`, `cancelUrl` without auth
+- **Files**: `netlify/functions/create-checkout-session.ts:36-77`
+- **Repro**: no JWT check. `userId` comes from body and ends up in Stripe `metadata.userId`, which `stripe-webhook` then trusts to attribute the subscription. Spam vector: any IP can mint Stripe checkout sessions with arbitrary metadata. `successUrl` is also user-supplied — Stripe will redirect there post-payment, enabling open-redirect or phishing flows where the victim lands on attacker.com with their `session_id` after paying. Empty `userId` (line 66, 72) silently falls through and stripe-webhook then drops the subscription creation (`No userId in checkout session metadata` log only).
+- **Recommended fix**: require + verify JWT; pull `userId` and `email` from `authUser`; validate `successUrl` / `cancelUrl` against an allowlist of `boltcall.org` paths or hard-code them server-side.
+- **Owner**: Claude
+
 ### [P1] `retell-webhook` does not verify Retell signature
 - **Files**: `netlify/functions/retell-webhook.ts:135-165`
 - **Repro**: handler accepts any POST body and processes it. Retell sends `x-retell-signature` for HMAC verification but the handler never reads or checks it. An attacker who knows a `retell_agent_id` (visible to anyone who has called the user's Retell number) can POST a synthetic `call_ended` payload to this endpoint and trigger: missed-call SMS textbacks, fake leads inserted into `leads`, customer Zapier webhooks fired with synthetic data, lead enrollment in follow-up sequences.
