@@ -170,13 +170,16 @@ const WizardShell: React.FC = () => {
           }
 
           try {
+            const { data: { session } } = await supabase.auth.getSession();
             await fetch(`${FUNCTIONS_BASE}/setup-launch`, {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: {
+                'Content-Type': 'application/json',
+                ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+              },
               body: JSON.stringify({
                 workspaceId: account.workspaceId,
                 isEnabled: true,
-                userId: user?.id,
               }),
             });
           } catch (e) {
