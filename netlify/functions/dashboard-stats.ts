@@ -173,6 +173,17 @@ export const handler: Handler = async (event) => {
     if (authError || !authUser) {
       return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid or expired token' }) };
     }
+
+    // This endpoint exposes Boltcall-wide stats (global Retell call counts,
+    // global Twilio numbers, total leads/workspaces across all tenants), so
+    // gate it behind the admin email. Any non-admin caller would otherwise
+    // see cross-tenant aggregate data.
+    const adminEmails = (process.env.ADMIN_EMAILS || 'noamyakoby6@gmail.com')
+      .split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+    if (!authUser.email || !adminEmails.includes(authUser.email.toLowerCase())) {
+      return { statusCode: 403, headers, body: JSON.stringify({ error: 'Admin only' }) };
+    }
+
     const retellApiKey = process.env.RETELL_API_KEY || '';
     const twilioSid = process.env.TWILIO_ACCOUNT_SID || '';
     const twilioToken = process.env.TWILIO_AUTH_TOKEN || '';
