@@ -8,15 +8,69 @@ Plan: `C:\Users\Asus\.claude\plans\i-ahev-so-many-glimmering-honey.md`
 
 ## P0 — Broken (user-blocking, money-blocking, or security)
 
-_None confirmed yet._
+### [P0] `setup-launch` accepts arbitrary `userId`/`workspaceId` from request body — broken authorization
+- **Files**: `netlify/functions/setup-launch.ts:34-69`
+- **Repro**: function reads `{ workspaceId, userId }` from body and writes to `workspaces.setup_completed=true` and `business_profiles.updated_at` for any caller. There is no `Authorization` header check, no `supabase.auth.getUser(token)`, no membership check that the calling user actually owns this workspace. Any authenticated (or unauthenticated, with CORS `*`) request can mark anyone's setup as complete.
+- **Recommended fix**: verify the bearer JWT, resolve `user.id`, then verify the user owns `workspaceId` (`workspaces.user_id === user.id` or membership in `workspace_members`). Reject otherwise.
+- **Owner**: Claude (this audit)
+
+### [P0] `setup-launch` returns `success: true` on DB failure — silent setup loss
+- **Files**: `netlify/functions/setup-launch.ts:55-78`
+- **Repro**: when `wsError` (line 55) or `bpError` (line 66) occurs the function logs and falls through to `200 / success: true`. The user sees "setup complete" even though `setup_completed` was never set. Next login they'll be sent back to `/setup` with no explanation, or worse, allowed into the dashboard with a half-broken state.
+- **Recommended fix**: return 500 on either error; surface the error message to the client; don't double-update if the first write failed.
+- **Owner**: Claude
 
 ## P1 — Partial / Stubbed (works but has gaps)
 
-_None confirmed yet._
+### [P1] `retell-webhook` does not verify Retell signature
+- **Files**: `netlify/functions/retell-webhook.ts:135-165`
+- **Repro**: handler accepts any POST body and processes it. Retell sends `x-retell-signature` for HMAC verification but the handler never reads or checks it. An attacker who knows a `retell_agent_id` (visible to anyone who has called the user's Retell number) can POST a synthetic `call_ended` payload to this endpoint and trigger: missed-call SMS textbacks, fake leads inserted into `leads`, customer Zapier webhooks fired with synthetic data, lead enrollment in follow-up sequences.
+- **Recommended fix**: read `RETELL_WEBHOOK_SECRET` env var, verify HMAC of `event.body` against `x-retell-signature`. Per Retell docs: `Retell.verifyWebhook(body, secret, signature)`.
+- **Owner**: Claude
+
+### [P1] `lead-webhook` Facebook branch does not verify `X-Hub-Signature-256`
+- **Files**: `netlify/functions/lead-webhook.ts:273-298`
+- **Repro**: when `body.object === 'page' && body.entry`, the handler processes a Facebook leadgen webhook payload. Facebook signs every webhook with `X-Hub-Signature-256: sha256=<hmac>` using the App Secret, but this branch never verifies it. An attacker who learned a real `page_id` (from `facebook_page_connections`, or by guessing) could submit synthetic leadgen payloads.
+- **Recommended fix**: HMAC-SHA256 of raw `event.body` with `FB_APP_SECRET`, compare against `event.headers['x-hub-signature-256']`. Reject mismatches with 403.
+- **Owner**: Claude
+
+### [P1] `_shared/token-utils.getSupabase()` falls back to anon key — server functions degrade silently
+- **Files**: `netlify/functions/_shared/token-utils.ts:3-7`
+- **Repro**: shared helper used by `lead-webhook`, `retell-webhook`, and others. If `SUPABASE_SERVICE_KEY` is unset, falls back to `VITE_SUPABASE_ANON_KEY`. Anon-key writes are subject to RLS, so server-side code paths that should bypass RLS will silently fail (returning 0 rows updated) or, depending on policy laxness, succeed with weaker authorization than expected.
+- **Recommended fix**: throw on missing service key in production. Make the fallback explicit (e.g., a `getAnonSupabase` helper) so it's never the default for write paths.
+- **Owner**: Claude
+
+### [P1] Token-deduction race condition in `_shared/token-utils.deductTokens`
+- **Files**: `netlify/functions/_shared/token-utils.ts:54-115`
+- **Repro**: read-modify-write on `token_balances` with no row lock. Two concurrent function invocations (e.g., a burst of 5 SMS sends) both read the same starting balance, both compute `new = old - cost`, both write — the second overwrites the first, so the second deduction is effectively free. Same pattern in `deductTokensBatch` (line 147).
+- **Recommended fix**: use a Postgres function (`rpc('deduct_tokens', { ... })`) that does the read-modify-write inside a single transaction with `SELECT ... FOR UPDATE`, or use `update(...).select()` with optimistic concurrency (`gte('balance', cost)` returning 0 rows means another transaction won the race).
+- **Owner**: Claude
+
+### [P1] Stripe `handleInvoicePaid` reads `userId` from `invoice.subscription_details.metadata` which is stale post-2024-Stripe-API
+- **Files**: `netlify/functions/stripe-webhook.ts:153-156`
+- **Repro**: `invoice.subscription_details?.metadata?.userId` is read but Stripe API ≥ 2024-09 returns `subscription_details` only on certain Invoice types (recurring, paid). For one-off Checkout invoices or upgrade/proration invoices, this field can be absent — function returns silently (line 155), no invoice row created, customer doesn't see receipt.
+- **Recommended fix**: fall back to looking up the subscription via `invoice.subscription` and reading `metadata.userId` from there; or store `userId` on the `subscriptions` row at creation time and look it up by `subscription_id`.
+- **Owner**: Claude
 
 ## P2 — Polish (warnings, dead code, inconsistencies)
 
-_None confirmed yet._
+### [P2] ESLint: 967 errors / 33 warnings
+- **Files**: scattered — dominated by `@typescript-eslint/no-explicit-any` (~700+) and `no-unused-vars` (~50)
+- **Repro**: `npm run lint` exits with 967 errors. None block the build (TypeScript compiles cleanly).
+- **Recommended fix**: triage to known-safe `any`s (Supabase generic `Json`, `metadata` blobs) → suppress at config level; fix the rest in a stand-alone PR.
+- **Owner**: Claude (later)
+
+### [P2] Test suite: 44 / 634 failing
+- **Files**: at minimum `src/pages/dashboard/__tests__/LeadsPage.test.tsx:91` (UI changed, expectations stale), `src/pages/dashboard/__tests__/smoke.test.tsx` re: `WhatsappPage` (Supabase mock missing `removeChannel`)
+- **Repro**: `npm run test:run` reports `Test Files 10 failed | 43 passed (53)` and `Tests 44 failed | 590 passed (634)`.
+- **Recommended fix**: investigate per-file; most look like stale assertions vs. real regressions. Detailed list pending second test-run grep.
+- **Owner**: Claude
+
+### [P2] `lead-webhook` and `retell-webhook` use CORS `*` while accepting authenticated requests
+- **Files**: `netlify/functions/lead-webhook.ts:33-37`, `netlify/functions/retell-webhook.ts:24-29`
+- **Repro**: `Access-Control-Allow-Origin: *` is fine for genuine webhooks (server-to-server, no browser), but `lead-webhook` also accepts authenticated `Authorization: Bearer bc_…` API keys. A `*` CORS origin combined with a bearer API key in the request can leak the key in a browser context if a customer accidentally embeds the API call in a page. Low-likelihood but worth tightening.
+- **Recommended fix**: split webhook (`*`) and authenticated (`Origin allowlist`) paths, or document that API keys must never be used from a browser.
+- **Owner**: Claude (later)
 
 ---
 
