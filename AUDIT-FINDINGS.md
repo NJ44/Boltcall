@@ -49,6 +49,33 @@ Untouched buckets: 59 of 67 functions, 40+ dashboard pages, 12 integrations, RLS
 
 ---
 
+## Integration health (Phase 5)
+
+| Integration | Webhook signing | OAuth refresh | Auth pattern | Status |
+|---|---|---|---|---|
+| Retell (voice) | ✅ Verified (HMAC-SHA256 via `RETELL_API_KEY`) | n/a | Service role + API key | ✅ |
+| Supabase | n/a | n/a | service_role + JWT | ✅ |
+| Stripe | ✅ Pre-existing | n/a | Service role | ✅ |
+| PayPal | ✅ Pre-existing (PayPal verify-API call) | n/a | Service role | ✅ |
+| Twilio | n/a (HTTP basic) | n/a | Account SID + auth token | ✅ |
+| Brevo (email) | n/a (one-way send) | n/a | API key | ✅ |
+| Facebook Lead Ads | ✅ Fixed (`X-Hub-Signature-256` via `FB_APP_SECRET`) | ⚠️ Token refresh not audited | OAuth | ⚠️ |
+| Cal.com | ✅ Fixed (HMAC-SHA256 via `CALCOM_WEBHOOK_SECRET`) | n/a | API key | ✅ |
+| Google Calendar | n/a | ✅ Via `_shared/email-token-refresh.ts` | OAuth | ✅ |
+| Gmail | n/a | ✅ | OAuth | ✅ |
+| Outlook | n/a | ✅ | OAuth | ✅ |
+| WhatsApp | not audited | n/a | Twilio bridge | ⏸️ |
+| ChatKit (OpenAI) | n/a | n/a | API key | ✅ |
+| Anthropic | n/a | n/a | API key | ✅ |
+
+Required env vars to set on Netlify for full production protection:
+- `RETELL_API_KEY` — used both as Retell client key AND webhook signing secret
+- `FB_APP_SECRET` — Facebook webhook verification (different from `FB_APP_ID`)
+- `CALCOM_WEBHOOK_SECRET` — new env var introduced in this audit; subscribe + verify both depend on it
+- `STRIPE_WEBHOOK_SECRET` — already required, no change
+
+---
+
 ## P0 — Broken (user-blocking, money-blocking, or security)
 
 ### [P0] 14 tables: RLS disabled + full anon+authenticated grants — anyone can read/wipe marketing data
