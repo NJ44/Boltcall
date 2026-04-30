@@ -3,6 +3,19 @@
 Scope: full 9-phase audit of dashboard / frontend / backend / integrations.
 Findings flow: P0s fixed inline; P1/P2 collected here for fix-pass at end.
 Plan: `C:\Users\Asus\.claude\plans\i-ahev-so-many-glimmering-honey.md`
+Branch: `worktree-audit-deep-saas` (auto-committed)
+
+---
+
+## TL;DR
+
+Ten classes of P0/P1 issues found and fixed. Most severe: **14 marketing tables had RLS off + full anon grants** (anyone on the internet could read or `TRUNCATE` cold-email replies, LinkedIn targets, solar leads — names/emails/phones included). Plus **26 service-role policies were misconfigured to target `{public}`** instead of `{service_role}`, exposing OAuth tokens, business config, and per-tenant data to anon. All locked down.
+
+5 missing tables created (team audit log, AI challenge tables, notifications). Schema drift fixed in 3 functions. Frontend dashboard team-invite flow rewired so invitees actually receive Brevo emails (was a silent failure). 5 webhooks now signed (Retell, FB, PayPal, Stripe, Cal.com — last 2 already had it). Two env-var name inconsistencies eliminated.
+
+**Codebase state**: TypeScript clean, production build passes, 44/634 tests still failing (stale UI assertions, not regressions), 967 lint errors (mostly `any`).
+
+**Deploy checklist** at the bottom.
 
 ---
 
