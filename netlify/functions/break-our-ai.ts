@@ -9,10 +9,11 @@ const headers = {
 };
 
 function getSupabase() {
+  // challenge_winners is service-role-only by design (no anon/authenticated grants).
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const key = process.env.SUPABASE_SERVICE_KEY;
   if (!url || !key) return null;
-  return createClient(url, key);
+  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 }
 
 const handler: Handler = async (event) => {
