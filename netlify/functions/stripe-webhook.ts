@@ -151,14 +151,34 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 }
 
 async function handleInvoicePaid(invoice: Stripe.Invoice) {
-  const userId = invoice.subscription_details?.metadata?.userId;
-  if (!userId) return;
+  // Stripe API ≥ 2024-09 sometimes omits invoice.subscription_details, so fall
+  // back to looking up the subscription row we keep on file, then to retrieving
+  // the subscription directly from Stripe.
+  let userId: string | undefined = invoice.subscription_details?.metadata?.userId;
 
   const { data: sub } = await supabase
     .from('subscriptions')
-    .select('id')
+    .select('id, user_id')
     .eq('stripe_subscription_id', invoice.subscription as string)
     .single();
+
+  if (!userId && sub?.user_id) {
+    userId = sub.user_id;
+  }
+
+  if (!userId && invoice.subscription) {
+    try {
+      const sObj = await stripe.subscriptions.retrieve(invoice.subscription as string);
+      userId = sObj.metadata?.userId;
+    } catch (e) {
+      console.error('Failed to retrieve subscription for invoice', invoice.id, e);
+    }
+  }
+
+  if (!userId) {
+    console.error('handleInvoicePaid: could not resolve userId for invoice', invoice.id);
+    return;
+  }
 
   const { error } = await supabase
     .from('invoices')
