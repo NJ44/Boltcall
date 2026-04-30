@@ -23,6 +23,8 @@ All edits land on branch `worktree-audit-deep-saas` (auto-committed per Boltcall
 | P1 | `_shared/token-utils.getSupabase()` silent anon-key fallback | ✅ Mitigated (warning + new strict `getServiceSupabase`) |
 | P1 | Stripe `handleInvoicePaid` brittle `subscription_details.metadata.userId` | ✅ Fixed (3-tier fallback) |
 | P1 | Token deduction race (read-modify-write) | ⏭️ Deferred — needs Postgres function |
+| **P0** | **14 tables: RLS off + full anon grants → anyone can read/truncate** | ⏸️ **Awaiting user confirm — destructive DB change** |
+| P1 | 11 code-referenced tables missing from DB (schema drift) | ⏸️ Pending fix |
 | P2 | 967 ESLint errors (mostly `any`) | ⏭️ Deferred |
 | P2 | 44 of 634 failing tests | ⏭️ Deferred — most look like stale UI assertions |
 
