@@ -66,7 +66,7 @@ const ChallengeCall: React.FC = () => {
     setStep('connecting');
 
     try {
-      const res = await fetch('/.netlify/functions/challenge-web-call', {
+      const res = await fetch('/api/challenge-web-call', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email }),
@@ -121,7 +121,7 @@ const ChallengeCall: React.FC = () => {
     setStep('submitting');
 
     try {
-      const res = await fetch('/.netlify/functions/challenge-submit', {
+      const res = await fetch('/api/challenge-submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ word: word.trim(), name, email }),

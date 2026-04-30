@@ -94,7 +94,7 @@ const SmsBookingPage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/.netlify/functions/twilio-sms', {
+      const response = await fetch('/api/twilio-sms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'list', limit: 50 }),

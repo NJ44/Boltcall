@@ -163,7 +163,7 @@ const BoltcallAgentPage: React.FC = () => {
           content: m.content,
         }));
 
-        const res = await fetch('/.netlify/functions/ai-assistant', {
+        const res = await fetch('/api/ai-assistant', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: history, userId: user?.id }),

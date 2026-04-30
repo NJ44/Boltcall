@@ -2,7 +2,7 @@
 
 export async function getVoices() {
   try {
-    const response = await fetch('/.netlify/functions/retell-voices');
+    const response = await fetch('/api/retell-voices');
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

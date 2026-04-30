@@ -8,7 +8,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
  * Triggered by whatsapp-webhook after storing the message, OR
  * called directly from the dashboard to generate/regenerate drafts.
  *
- * POST /.netlify/functions/whatsapp-ai-responder
+ * POST /api/whatsapp-ai-responder
  * {
  *   messageId: string,
  *   userId: string,
@@ -48,7 +48,7 @@ function isWithinBusinessHours(settings: any): boolean {
 
 async function callWhatsappSend(userId: string, to: string, body: string): Promise<{ success: boolean; wa_message_id?: string; error?: string }> {
   try {
-    const sendUrl = (process.env.URL || '') + '/.netlify/functions/whatsapp-send';
+    const sendUrl = (process.env.URL || '') + '/api/whatsapp-send';
     const res = await fetch(sendUrl, {
       method: 'POST',
       headers: {

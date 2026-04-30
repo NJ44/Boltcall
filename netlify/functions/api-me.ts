@@ -3,7 +3,7 @@ import { extractApiKey, validateApiKey } from './_shared/validate-api-key';
 import { getSupabase } from './_shared/token-utils';
 
 /**
- * GET /.netlify/functions/api-me
+ * GET /api/api-me
  *
  * Zapier authentication test endpoint.
  * Validates the user's API key and returns account info.

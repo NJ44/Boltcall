@@ -92,7 +92,7 @@ const handler: Handler = async (event) => {
     };
   }
 
-  const path = event.path.replace('/.netlify/functions/break-my-ai', '').replace(/^\//, '');
+  const path = event.path.replace('/api/break-my-ai', '').replace(/^\//, '');
 
   // ── POST /submit — Verify a code submission ─────────────────────────────
   if (event.httpMethod === 'POST' && (path === 'submit' || path === '' || path === '/')) {

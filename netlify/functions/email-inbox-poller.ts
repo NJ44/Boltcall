@@ -386,7 +386,7 @@ async function storeMessage(supabase: any, account: EmailAccount, msg: ParsedMes
   // Trigger AI draft generation (fire-and-forget via internal function call)
   try {
     const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-    await fetch(`${baseUrl}/.netlify/functions/email-ai-responder`, {
+    await fetch(`${baseUrl}/api/email-ai-responder`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -6,7 +6,7 @@ import { getValidAccessToken, type EmailAccount } from './_shared/email-token-re
 /**
  * Email AI Responder — Generates AI draft responses for inbound email threads.
  *
- * POST /.netlify/functions/email-ai-responder
+ * POST /api/email-ai-responder
  * {
  *   threadId: string,     // email_threads.id
  *   userId: string,       // Supabase user ID

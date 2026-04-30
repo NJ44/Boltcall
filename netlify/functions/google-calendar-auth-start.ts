@@ -48,7 +48,7 @@ export const handler: Handler = async (event) => {
 
   const userId = event.queryStringParameters?.user_id || '';
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  const redirectUri = `${baseUrl}/.netlify/functions/google-calendar-auth-callback`;
+  const redirectUri = `${baseUrl}/api/google-calendar-auth-callback`;
 
   // Encode user_id + nonce in state for CSRF protection and user association
   const nonce = crypto.randomBytes(16).toString('hex');

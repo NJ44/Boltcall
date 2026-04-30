@@ -65,7 +65,7 @@ export const handler: Handler = async (event) => {
   }
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  const redirectUri = `${baseUrl}/.netlify/functions/google-calendar-auth-callback`;
+  const redirectUri = `${baseUrl}/api/google-calendar-auth-callback`;
 
   try {
     // Step 1: Exchange code for tokens

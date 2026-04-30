@@ -328,7 +328,7 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
         knowledgeBase: ctx.knowledgeBase || undefined,
       };
 
-      const response = await fetch(`${baseUrl}/.netlify/functions/generate-agent-prompt`, {
+      const response = await fetch(`${baseUrl}/api/generate-agent-prompt`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(promptConfig),
@@ -473,7 +473,7 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
       if (!agent?.retell_agent_id) return { result: 'No agent found. Please complete setup first.' };
       const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
       try {
-        const webCallResponse = await fetch(`${baseUrl}/.netlify/functions/retell-agents`, {
+        const webCallResponse = await fetch(`${baseUrl}/api/retell-agents`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'create_web_call', agent_id: agent.retell_agent_id }),

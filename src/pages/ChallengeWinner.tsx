@@ -57,7 +57,7 @@ const ChallengeWinner: React.FC = () => {
 
     try {
       // Send winner details — uses the existing break-our-ai function or a simple email webhook
-      await fetch('/.netlify/functions/break-our-ai/winner', {
+      await fetch('/api/break-our-ai/winner', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -115,7 +115,7 @@ async function checkAndTriggerSelfHeal(call: any, agentId: string): Promise<bool
 
   // Fire-and-forget: trigger self-healing pipeline asynchronously
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  fetch(`${baseUrl}/.netlify/functions/agent-self-heal`, {
+  fetch(`${baseUrl}/api/agent-self-heal`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -250,7 +250,7 @@ export const handler: Handler = async (event) => {
               });
 
             const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-            fetch(`${baseUrl}/.netlify/functions/integration-sync`, {
+            fetch(`${baseUrl}/api/integration-sync`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -373,7 +373,7 @@ export const handler: Handler = async (event) => {
     // Sync lead to connected CRMs (fire-and-forget)
     if (lead?.id && userId) {
       const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-      fetch(`${baseUrl}/.netlify/functions/integration-sync`, {
+      fetch(`${baseUrl}/api/integration-sync`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
