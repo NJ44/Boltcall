@@ -13,6 +13,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { calculateKBCompleteness } from './kbCompleteness';
 import { FUNCTIONS_BASE } from '../../lib/api';
+import { supabase } from '../../lib/supabase';
 
 // Step Components - Dynamic imports to avoid circular dependencies
 const StepBusinessProfile = React.lazy(() => import('./steps/StepBusinessProfile'));
