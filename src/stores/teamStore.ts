@@ -98,16 +98,44 @@ export const useTeamStore = create<TeamState>((set, get) => ({
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) throw new Error('Not authenticated');
 
-    const { error } = await supabase.from('workspace_members').insert({
-      invited_by: session.user.id,
-      email: email.toLowerCase().trim(),
-      name: name?.trim() || null,
-      role,
-      status: 'invited' as MemberStatus,
-      invited_at: new Date().toISOString(),
-    });
+    const trimmedEmail = email.toLowerCase().trim();
 
-    if (error) throw error;
+    // Owner self-seed: when the workspace owner adds themselves on first load,
+    // skip the invite-email round-trip and write directly with status='active'.
+    if (trimmedEmail === session.user.email?.toLowerCase()) {
+      const { error } = await supabase.from('workspace_members').insert({
+        workspace_id: session.user.id,
+        user_id: session.user.id,
+        invited_by: session.user.id,
+        email: trimmedEmail,
+        name: name?.trim() || null,
+        role,
+        status: 'active' as MemberStatus,
+        invited_at: new Date().toISOString(),
+        accepted_at: new Date().toISOString(),
+      });
+      if (error) throw error;
+      await get().fetchMembers(session.user.id);
+      return;
+    }
+
+    // Real invite: go through the Netlify function so a Brevo email is sent
+    // and authorization is verified server-side.
+    const headers = await authedHeaders();
+    const res = await fetch(`${FUNCTIONS_BASE}/invite-member`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        action: 'invite',
+        email: trimmedEmail,
+        role,
+        workspaceId: session.user.id,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Invite failed (${res.status})`);
+    }
     await get().fetchMembers(session.user.id);
   },
 
@@ -115,6 +143,7 @@ export const useTeamStore = create<TeamState>((set, get) => ({
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) throw new Error('Not authenticated');
 
+    const headers = await authedHeaders();
     const existingEmails = get().members.map((m) => m.email.toLowerCase());
     const success: string[] = [];
     const failed: string[] = [];
@@ -125,14 +154,17 @@ export const useTeamStore = create<TeamState>((set, get) => ({
       if (existingEmails.includes(email)) { failed.push(email); continue; }
 
       try {
-        const { error } = await supabase.from('workspace_members').insert({
-          invited_by: session.user.id,
-          email,
-          role,
-          status: 'invited' as MemberStatus,
-          invited_at: new Date().toISOString(),
+        const res = await fetch(`${FUNCTIONS_BASE}/invite-member`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            action: 'invite',
+            email,
+            role,
+            workspaceId: session.user.id,
+          }),
         });
-        if (error) { failed.push(email); } else { success.push(email); }
+        if (!res.ok) { failed.push(email); } else { success.push(email); }
       } catch {
         failed.push(email);
       }
