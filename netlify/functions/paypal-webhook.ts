@@ -13,6 +13,24 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY || ''
 );
 
+// ── User lookup helper (auth.users) ──────────────────────────────────────────
+
+async function findUserByEmail(email: string | undefined): Promise<{ id: string; email: string | undefined } | null> {
+  if (!email) return null;
+  try {
+    // listUsers paginates; the typical Boltcall org is well under 1000 users so
+    // a single page is sufficient for now. If the user count grows, switch to
+    // a dedicated email-indexed view or add filter support.
+    const { data, error } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
+    if (error || !data?.users) return null;
+    const match = data.users.find(u => u.email?.toLowerCase() === email.toLowerCase());
+    return match ? { id: match.id, email: match.email } : null;
+  } catch (e) {
+    console.error('findUserByEmail failed:', e);
+    return null;
+  }
+}
+
 // ── PayPal Auth ──────────────────────────────────────────────────────────────
 
 async function getPayPalAccessToken(): Promise<string> {
