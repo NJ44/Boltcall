@@ -37,6 +37,7 @@ import {
 } from '../components/ui/select-shadcn';
 
 import { FUNCTIONS_BASE } from '../lib/api';
+import { supabase } from '../lib/supabase';
 
 const INDUSTRY_OPTIONS = [
   { value: 'dentist', label: 'Dentist' },
