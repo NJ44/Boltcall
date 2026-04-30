@@ -14,6 +14,18 @@ Plan: `C:\Users\Asus\.claude\plans\i-ahev-so-many-glimmering-honey.md`
 - **Recommended fix**: verify the bearer JWT, resolve `user.id`, then verify the user owns `workspaceId` (`workspaces.user_id === user.id` or membership in `workspace_members`). Reject otherwise.
 - **Owner**: Claude (this audit)
 
+### [P0] `invite-member` "remove" action trusts `requestedBy` from request body, not JWT — auth bypass
+- **Files**: `netlify/functions/invite-member.ts:155-176`
+- **Repro**: function verifies the bearer JWT at line 32-42, but the `remove` branch then reads `requestedBy` from the body (line 156) and uses *that* user_id to look up the role, ignoring the authenticated `authUser.id`. An authenticated user A can pass `requestedBy=<some admin's user_id>` and the role-check at line 166 will pass — A can then remove any member of any workspace. Same concern lurks in `accept` (line 122) which trusts `userId` from body without comparing to `authUser.id`.
+- **Recommended fix**: in every branch, use `authUser.id` from the verified JWT, not `requestedBy`/`userId` from body. Validate workspace membership of `authUser.id` before any mutation.
+- **Owner**: Claude
+
+### [P0] `invite-member` "invite" action does not check the inviter belongs to the target workspace
+- **Files**: `netlify/functions/invite-member.ts:49-91`
+- **Repro**: JWT is verified, but the `workspaceId` and `invitedBy` come straight from the request body. Any authenticated Boltcall user can invite arbitrary email addresses to any workspaceId they can guess. The invitee receives a real Boltcall-branded invite email (line 97-116) — phishing-grade.
+- **Recommended fix**: before insert/update, confirm `authUser.id` is a member with `owner|admin` role on `workspaceId`.
+- **Owner**: Claude
+
 ### [P0] `setup-launch` returns `success: true` on DB failure — silent setup loss
 - **Files**: `netlify/functions/setup-launch.ts:55-78`
 - **Repro**: when `wsError` (line 55) or `bpError` (line 66) occurs the function logs and falls through to `200 / success: true`. The user sees "setup complete" even though `setup_completed` was never set. Next login they'll be sent back to `/setup` with no explanation, or worse, allowed into the dashboard with a half-broken state.
