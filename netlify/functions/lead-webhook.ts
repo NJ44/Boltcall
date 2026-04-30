@@ -5,6 +5,7 @@ import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { fireWebhooks } from './_shared/fire-webhooks';
 import { authenticateApiKey } from './_shared/validate-api-key';
+import { verifyFacebookSignature } from './_shared/verify-signatures';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
