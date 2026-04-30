@@ -40,7 +40,7 @@ export function usePricingVisitorTrack() {
 
       const sessionDuration = Math.round((Date.now() - startTime) / 1000);
       try {
-        await fetch('/.netlify/functions/track-pricing-visit', {
+        await fetch('/api/track-pricing-visit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

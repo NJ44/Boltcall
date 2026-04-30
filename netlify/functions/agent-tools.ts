@@ -257,7 +257,7 @@ async function handleSearchKnowledgeBase(args: any, userId: string | null): Prom
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
   try {
-    const res = await fetch(`${baseUrl}/.netlify/functions/kb-search`, {
+    const res = await fetch(`${baseUrl}/api/kb-search`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'search', userId, query: question, limit: 3 }),

@@ -664,7 +664,7 @@ const KnowledgeBasePage: React.FC = () => {
 
         if (doc.type === 'url' && doc.url) {
           try {
-            const res = await fetch('/.netlify/functions/scrape-url', {
+            const res = await fetch('/api/scrape-url', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ url: doc.url }),
@@ -842,7 +842,7 @@ const KnowledgeBasePage: React.FC = () => {
     showToast({ title: 'Scraping...', message: `Fetching content from ${urlInput}`, variant: 'default', duration: 5000 });
 
     try {
-      const res = await fetch('/.netlify/functions/scrape-url', {
+      const res = await fetch('/api/scrape-url', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: urlInput }),

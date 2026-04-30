@@ -40,7 +40,7 @@ const AiAssistant: React.FC = () => {
   const callAssistant = useCallback(async (msgList: Message[]) => {
     setIsLoading(true);
     try {
-      const res = await fetch('/.netlify/functions/ai-assistant', {
+      const res = await fetch('/api/ai-assistant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

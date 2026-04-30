@@ -6,7 +6,7 @@ import { notifyError } from './_shared/notify';
 /**
  * WhatsApp Settings — manage WhatsApp integration config.
  *
- * POST /.netlify/functions/whatsapp-settings
+ * POST /api/whatsapp-settings
  * Body: { userId, action, ...params }
  * Actions: get | save | test | disconnect
  */
@@ -190,7 +190,7 @@ export const handler: Handler = async (event) => {
         return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'testPhone required' }) };
       }
 
-      const sendUrl = (process.env.URL || '') + '/.netlify/functions/whatsapp-send';
+      const sendUrl = (process.env.URL || '') + '/api/whatsapp-send';
       const res = await fetch(sendUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

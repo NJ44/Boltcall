@@ -7,7 +7,7 @@ import { PageSkeleton } from '../../components/ui/loading-skeleton';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 
-const WEBHOOK_URL = 'https://boltcall.org/.netlify/functions/appointment-handler';
+const WEBHOOK_URL = 'https://boltcall.org/api/appointment-handler';
 
 const CalcomPage: React.FC = () => {
   const { user } = useAuth();

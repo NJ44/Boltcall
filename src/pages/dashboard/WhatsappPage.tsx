@@ -112,7 +112,7 @@ const callWhatsAppFn = async (
   if (session?.access_token) {
     headers['Authorization'] = `Bearer ${session.access_token}`;
   }
-  const res = await fetch(`/.netlify/functions/${path}`, {
+  const res = await fetch(`/api/${path}`, {
     method: 'POST',
     headers,
     body: JSON.stringify(body),
@@ -511,8 +511,8 @@ const WhatsappPage: React.FC = () => {
 
   const webhookUrl =
     typeof window !== 'undefined'
-      ? `${window.location.origin}/.netlify/functions/whatsapp-webhook`
-      : '/.netlify/functions/whatsapp-webhook';
+      ? `${window.location.origin}/api/whatsapp-webhook`
+      : '/api/whatsapp-webhook';
 
   if (settingsLoading) {
     return (

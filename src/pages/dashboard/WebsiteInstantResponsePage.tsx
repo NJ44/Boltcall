@@ -14,7 +14,7 @@ const WebsiteInstantResponsePage: React.FC = () => {
   const [testSending, setTestSending] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
 
-  const webhookUrl = 'https://boltcall.org/.netlify/functions/lead-webhook';
+  const webhookUrl = 'https://boltcall.org/api/lead-webhook';
   const prettyWebhookUrl = user?.id ? `https://boltcall.org/l/${user.id}` : '';
 
   const embedSnippet = user?.id

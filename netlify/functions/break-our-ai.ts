@@ -20,7 +20,7 @@ const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers, body: '' };
 
   const path = event.path
-    .replace('/.netlify/functions/break-our-ai', '')
+    .replace('/api/break-our-ai', '')
     .replace(/^\//, '');
 
   // ── POST /winner — Save winner prize claim details ────────────────────────
