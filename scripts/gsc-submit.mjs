@@ -72,8 +72,25 @@ async function submitSitemap(token) {
   }
 }
 
+// Fix Git Bash POSIX-to-Windows path mangling (e.g. /blog/test → C:/Program Files/Git/blog/test)
+// Users can also prefix with // to bypass conversion: NEW_URLS="//blog/test"
+function normalizePath(urlPath) {
+  if (urlPath.startsWith('//')) return urlPath.slice(1);
+  if (/^[A-Za-z]:/.test(urlPath)) {
+    const parts = urlPath.replace(/\\/g, '/').split('/').filter(Boolean);
+    const systemDirs = new Set([
+      'program files', 'program files (x86)', 'git', 'usr', 'bin',
+      'mingw64', 'msys64', 'mingw32', 'windows', 'system32', 'users', 'home', 'opt',
+    ]);
+    const startIdx = parts.findIndex(p => !p.endsWith(':') && !systemDirs.has(p.toLowerCase()));
+    if (startIdx !== -1) return '/' + parts.slice(startIdx).join('/');
+  }
+  return urlPath;
+}
+
 async function requestIndexing(token, urlPath) {
-  const fullUrl = urlPath.startsWith('http') ? urlPath : `${BASE_URL}${urlPath}`;
+  const cleaned = normalizePath(urlPath);
+  const fullUrl = cleaned.startsWith('http') ? cleaned : `${BASE_URL}${cleaned}`;
 
   const res = await fetch('https://indexing.googleapis.com/v3/urlNotifications:publish', {
     method: 'POST',
