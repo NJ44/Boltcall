@@ -20,6 +20,14 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Receptionist for <span className="text-blue-600">Real Estate Agents</span>: Convert Inbound Leads in Under 60 Seconds',
+    slug: '/blog/ai-receptionist-real-estate-agents',
+    excerpt: 'How real estate agents and brokerages use AI receptionists to qualify, route, and book inbound leads in under 60 seconds without losing the personal touch that closes deals.',
+    date: 'April 30, 2026',
+    readTime: '9 min read',
+    category: 'Real Estate|AI Receptionist|Speed to Lead',
+  },
+  {
     title: 'WhatsApp Appointment Booking for Plumbers: The Complete 2026 Guide',
     slug: '/blog/whatsapp-appointment-booking-plumbers',
     excerpt: 'How to automatically book emergency plumbing calls and service jobs via WhatsApp, reduce no-shows, and never miss a lead again.',
