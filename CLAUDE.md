@@ -80,6 +80,19 @@ dist/            # Build output (do not edit)
 - Dashboard pages live in `src/pages/dashboard/`, their sub-components in `src/components/dashboard/`
 - Netlify functions handle server-side logic (webhooks, proxied API calls)
 
+## MANDATORY: Page Creation & Deploy Protocol
+
+After creating ANY new page (blog post, landing page, tool, comparison, etc.) and deploying:
+
+1. **Add to sitemap** — add the route to `scripts/generate-sitemap.mjs` ROUTES array
+2. **Commit** — `git add -A && git commit -m "feat: add [page-name]"`
+3. **Merge to main** — push branch and merge PR (or push directly if on main)
+4. **Deploy** — `npm run build:prerender && netlify deploy --prod --dir=dist --no-build`
+5. **GSC submit** — `NEW_URLS="/blog/your-slug" npm run gsc-submit`
+
+Run step 5 with all new page paths comma-separated: `NEW_URLS="/blog/slug-1,/tools/calculator" npm run gsc-submit`
+Never skip steps 4–5. Run them immediately after merge, not later.
+
 ## MANDATORY: Blog Page Creation Rule
 
 **BEFORE writing any blog page** (any file matching `Blog*.tsx` in `src/pages/` or any new `/blog/*` route), you MUST first invoke the Skill tool with `skill: "boltcall-blog-writer"`. This loads the full Searchable 10-section framework, title patterns, visual components, and boilerplate requirements.
