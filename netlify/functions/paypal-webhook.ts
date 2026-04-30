@@ -130,12 +130,8 @@ async function handleSubscriptionActivated(resource: any) {
   // Map PayPal plan ID to our plan levels
   const planLevel = mapPayPalPlanToLevel(planId);
 
-  // Find user by email
-  const { data: user } = await supabase
-    .from('profiles')
-    .select('id, email')
-    .eq('email', payerEmail)
-    .single();
+  // Find user by email — auth.users via admin API (service role required).
+  const user = await findUserByEmail(payerEmail);
 
   if (user) {
     const { error } = await supabase
