@@ -36,6 +36,12 @@ All edits land on branch `worktree-audit-deep-saas` (auto-committed per Boltcall
 | P1 | `teamStore.removeMember` did hard-delete instead of soft-delete (inconsistent with invite-member) | ✅ Fixed (routes through function which sets `status='removed'`) |
 | P2 | `src/pages/dashboard/LeadReactivationPage.tsx` is dead code — fake CRM "OAuth" with `setTimeout` stubs | ⏭️ Not user-reachable — `/dashboard/lead-reactivation` redirects to `/dashboard/leads`. Recommend deleting the file. |
 | P2 | `FeedbackPage.tsx` uses `mailto:` only — feedback lost on mobile / no-mail-client scenarios | ⏭️ Deferred — minor UX, post-revenue cleanup |
+| P1 | Cal.com webhook (`appointment-handler.ts`) had no signature verification | ✅ Fixed (added `verifyCalcomSignature` helper; registration now passes `secret` to Cal.com if `CALCOM_WEBHOOK_SECRET` env var is set) |
+| P1 | `SUPABASE_SERVICE_KEY` vs `SUPABASE_SERVICE_ROLE_KEY` — 4 team functions used the wrong name; if Netlify env had only one, those functions silently failed | ✅ Fixed (all 4 now read both with fallback) |
+| P1 | `CAL_API_KEY` vs `CALCOM_API_KEY` — 2 functions used different names; one of the two flows would silently fail | ✅ Fixed (`agent-tools.ts` now reads both with fallback) |
+| P2 | `/admin` route — uses email-check via `useEffect` rather than ProtectedRoute wrapper; page renders briefly before redirect | ⏭️ Deferred — RLS blocks data access regardless |
+| ✅ | Service-role key never appears in `src/` (verified via grep) | ✅ Confirmed clean |
+| ✅ | Stripe + PayPal webhooks already had signature verification | ✅ |
 | P2 | 967 ESLint errors (mostly `any`) | ⏭️ Deferred |
 | P2 | 44 of 634 failing tests | ⏭️ Deferred — most look like stale UI assertions |
 
