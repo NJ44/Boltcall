@@ -6,9 +6,33 @@ Plan: `C:\Users\Asus\.claude\plans\i-ahev-so-many-glimmering-honey.md`
 
 ---
 
+## Summary — fixed in this session
+
+All edits land on branch `worktree-audit-deep-saas` (auto-committed per Boltcall hook).
+
+| Severity | Issue | Status |
+|---|---|---|
+| P0 | `setup-launch` no auth, silent DB-failure success | ✅ Fixed |
+| P0 | `invite-member` `remove` action: auth bypass via body-supplied `requestedBy` | ✅ Fixed |
+| P0 | `invite-member` `invite` action: no workspace-membership check on inviter | ✅ Fixed |
+| P0 | `invite-member` `accept` action: trusts body `userId`, not JWT | ✅ Fixed |
+| P1 | `retell-webhook` no signature verification | ✅ Fixed |
+| P1 | `lead-webhook` Facebook branch no `X-Hub-Signature-256` verification | ✅ Fixed |
+| P1 | `dashboard-stats` cross-tenant data leak (global stats to any auth'd user) | ✅ Fixed (admin-gated) |
+| P1 | `create-checkout-session` no auth + caller-supplied `successUrl` open redirect | ✅ Fixed |
+| P1 | `_shared/token-utils.getSupabase()` silent anon-key fallback | ✅ Mitigated (warning + new strict `getServiceSupabase`) |
+| P1 | Stripe `handleInvoicePaid` brittle `subscription_details.metadata.userId` | ✅ Fixed (3-tier fallback) |
+| P1 | Token deduction race (read-modify-write) | ⏭️ Deferred — needs Postgres function |
+| P2 | 967 ESLint errors (mostly `any`) | ⏭️ Deferred |
+| P2 | 44 of 634 failing tests | ⏭️ Deferred — most look like stale UI assertions |
+
+Untouched buckets: 59 of 67 functions, 40+ dashboard pages, 12 integrations, RLS audit, scheduled-job health, bundle/Lighthouse, /admin frontend gate.
+
+---
+
 ## P0 — Broken (user-blocking, money-blocking, or security)
 
-### [P0] `setup-launch` accepts arbitrary `userId`/`workspaceId` from request body — broken authorization
+### [P0] [FIXED] `setup-launch` accepts arbitrary `userId`/`workspaceId` from request body — broken authorization
 - **Files**: `netlify/functions/setup-launch.ts:34-69`
 - **Repro**: function reads `{ workspaceId, userId }` from body and writes to `workspaces.setup_completed=true` and `business_profiles.updated_at` for any caller. There is no `Authorization` header check, no `supabase.auth.getUser(token)`, no membership check that the calling user actually owns this workspace. Any authenticated (or unauthenticated, with CORS `*`) request can mark anyone's setup as complete.
 - **Recommended fix**: verify the bearer JWT, resolve `user.id`, then verify the user owns `workspaceId` (`workspaces.user_id === user.id` or membership in `workspace_members`). Reject otherwise.
