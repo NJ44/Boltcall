@@ -146,6 +146,20 @@ export const handler: Handler = async (event) => {
     };
   }
 
+  // Verify Retell signature when configured. In dev (no RETELL_API_KEY) or
+  // when Retell sends no signature header, log and continue — don't break local
+  // testing. In production both will be set, so any missing/invalid signature
+  // gets rejected.
+  const sigResult = verifyRetellSignature(event.body || '', event.headers as Record<string, string | undefined>);
+  if (sigResult === 'invalid') {
+    console.warn('[retell-webhook] Invalid signature — rejecting request');
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid webhook signature' }) };
+  }
+  if (sigResult === 'missing' && process.env.NODE_ENV === 'production') {
+    console.warn('[retell-webhook] Missing signature in production — rejecting');
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Webhook signature required' }) };
+  }
+
   try {
     const payload = JSON.parse(event.body || '{}');
 
