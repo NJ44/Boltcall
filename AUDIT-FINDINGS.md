@@ -23,7 +23,11 @@ All edits land on branch `worktree-audit-deep-saas` (auto-committed per Boltcall
 | P1 | `_shared/token-utils.getSupabase()` silent anon-key fallback | ✅ Mitigated (warning + new strict `getServiceSupabase`) |
 | P1 | Stripe `handleInvoicePaid` brittle `subscription_details.metadata.userId` | ✅ Fixed (3-tier fallback) |
 | P1 | Token deduction race (read-modify-write) | ⏭️ Deferred — needs Postgres function |
-| **P0** | **14 tables: RLS off + full anon grants → anyone can read/truncate** | ⏸️ **Awaiting user confirm — destructive DB change** |
+| P0 | 14 tables: RLS off + full anon grants → anyone can read/truncate | ✅ Fixed (REVOKE + ENABLE RLS) |
+| P0 | 26 service-role policies mistargeted to `{public}` w/ qual=true (incl. user_integrations: anon read OAuth tokens) | ✅ Fixed (ALTER POLICY → service_role) |
+| P0 | `expert_conversations` and `vault_notes`: anon ALL with qual=true | ✅ Fixed (re-targeted to service_role) |
+| P1 | `ai_audit_leads`: anon SELECT/UPDATE qual=true (audit-form submissions readable+tamperable) | ✅ Fixed (dropped anon SELECT/UPDATE; INSERT preserved) |
+| P1 | `business_features`: anon SELECT qual=true via misconfigured `anon_read_by_embed_token` | ✅ Fixed (policy dropped — widget should hit Netlify function) |
 | P1 | 11 code-referenced tables missing from DB (schema drift) | ⏸️ Pending fix |
 | P2 | 967 ESLint errors (mostly `any`) | ⏭️ Deferred |
 | P2 | 44 of 634 failing tests | ⏭️ Deferred — most look like stale UI assertions |
