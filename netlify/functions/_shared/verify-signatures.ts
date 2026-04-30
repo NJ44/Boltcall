@@ -53,6 +53,34 @@ export function verifyRetellSignature(
 }
 
 /**
+ * Verify a Cal.com webhook signature.
+ *
+ * Cal.com sends `X-Cal-Signature-256: <hex>` (or sometimes `sha256=<hex>`).
+ * The signature is HMAC-SHA256 of the raw event body using the webhook secret
+ * configured when the subscription was created.
+ */
+export function verifyCalcomSignature(
+  rawBody: string,
+  headers: Record<string, string | undefined>,
+): SigResult {
+  const secret = process.env.CALCOM_WEBHOOK_SECRET;
+  if (!secret) return 'missing';
+
+  const provided =
+    headers['x-cal-signature-256'] ||
+    headers['X-Cal-Signature-256'] ||
+    headers['x-cal-signature'] ||
+    headers['X-Cal-Signature'] ||
+    '';
+
+  if (!provided) return 'missing';
+
+  const expected = crypto.createHmac('sha256', secret).update(rawBody).digest('hex');
+  const cleaned = provided.startsWith('sha256=') ? provided.slice(7) : provided;
+  return timingSafeHexEqual(expected, cleaned) ? 'valid' : 'invalid';
+}
+
+/**
  * Verify a Facebook webhook signature.
  *
  * Facebook sends `X-Hub-Signature-256: sha256=<hex>` where the value is the
