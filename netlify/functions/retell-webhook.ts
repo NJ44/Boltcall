@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { fireWebhooks } from './_shared/fire-webhooks';
+import { verifyRetellSignature } from './_shared/verify-signatures';
 
 /**
  * Retell Post-Call Webhook
