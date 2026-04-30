@@ -82,12 +82,9 @@ async function handlePaymentCompleted(resource: any) {
 
   console.log(`Payment completed: ${orderId} — ${amount} ${currency} from ${payerEmail}`);
 
-  // Try to find user by email
-  const { data: user } = await supabase
-    .from('profiles')
-    .select('id, email')
-    .eq('email', payerEmail)
-    .single();
+  // Try to find user by email — `profiles` table doesn't exist in this project;
+  // canonical source is auth.users via the admin API (service role required).
+  const user = await findUserByEmail(payerEmail);
 
   // Log the payment
   const { error } = await supabase
