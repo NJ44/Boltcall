@@ -28,7 +28,10 @@ All edits land on branch `worktree-audit-deep-saas` (auto-committed per Boltcall
 | P0 | `expert_conversations` and `vault_notes`: anon ALL with qual=true | ✅ Fixed (re-targeted to service_role) |
 | P1 | `ai_audit_leads`: anon SELECT/UPDATE qual=true (audit-form submissions readable+tamperable) | ✅ Fixed (dropped anon SELECT/UPDATE; INSERT preserved) |
 | P1 | `business_features`: anon SELECT qual=true via misconfigured `anon_read_by_embed_token` | ✅ Fixed (policy dropped — widget should hit Netlify function) |
-| P1 | 11 code-referenced tables missing from DB (schema drift) | ⏸️ Pending fix |
+| P1 | 5 code-referenced tables missing from DB (schema drift; partial) | ✅ Fixed (created `activity_logs`, `challenge_attempts`, `challenge_winners`, `notification_preferences`, `notification_logs`; all per-user RLS where applicable) |
+| P1 | `team_members` rename drift in `usage-summary.ts` | ✅ Fixed (now reads `workspace_members`) |
+| P1 | `profiles` table referenced in paypal-webhook (Supabase template leftover) | ✅ Fixed (lookups now use `auth.admin.listUsers`) |
+| P2 | `call_logs`, `usage_summary`, `usage_daily_summary`, `lead_magnet_performance` still missing — analytics paths return empty | ⏭️ Deferred — needs analytics rewrite |
 | P2 | 967 ESLint errors (mostly `any`) | ⏭️ Deferred |
 | P2 | 44 of 634 failing tests | ⏭️ Deferred — most look like stale UI assertions |
 
