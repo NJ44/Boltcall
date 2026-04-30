@@ -32,6 +32,10 @@ All edits land on branch `worktree-audit-deep-saas` (auto-committed per Boltcall
 | P1 | `team_members` rename drift in `usage-summary.ts` | ✅ Fixed (now reads `workspace_members`) |
 | P1 | `profiles` table referenced in paypal-webhook (Supabase template leftover) | ✅ Fixed (lookups now use `auth.admin.listUsers`) |
 | P2 | `call_logs`, `usage_summary`, `usage_daily_summary`, `lead_magnet_performance` still missing — analytics paths return empty | ⏭️ Deferred — needs analytics rewrite |
+| P1 | `teamStore.inviteMember` / `inviteBulk` / `resendInvite` did direct DB writes — invitees never received Brevo email | ✅ Fixed (now route through `/invite-member` Netlify function; preserved owner self-seed direct path) |
+| P1 | `teamStore.removeMember` did hard-delete instead of soft-delete (inconsistent with invite-member) | ✅ Fixed (routes through function which sets `status='removed'`) |
+| P2 | `src/pages/dashboard/LeadReactivationPage.tsx` is dead code — fake CRM "OAuth" with `setTimeout` stubs | ⏭️ Not user-reachable — `/dashboard/lead-reactivation` redirects to `/dashboard/leads`. Recommend deleting the file. |
+| P2 | `FeedbackPage.tsx` uses `mailto:` only — feedback lost on mobile / no-mail-client scenarios | ⏭️ Deferred — minor UX, post-revenue cleanup |
 | P2 | 967 ESLint errors (mostly `any`) | ⏭️ Deferred |
 | P2 | 44 of 634 failing tests | ⏭️ Deferred — most look like stale UI assertions |
 
