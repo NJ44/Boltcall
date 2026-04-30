@@ -3,14 +3,12 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Edit, Globe } from 'lucide-react';
 import { useSetupStore } from '../../../stores/setupStore';
-import { useAuth } from '../../../contexts/AuthContext';
 import { supabase } from '../../../lib/supabase';
 import PageLoader from '../../PageLoader';
 import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const StepReview: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const {
     account,
     businessProfile,
