@@ -4,8 +4,8 @@ import { getCorsHeaders } from './_shared/cors';
 import { randomUUID, createHash } from 'crypto';
 
 const supabase = createClient(
-  process.env.VITE_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+  process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 );
 
 function hashKey(key: string): string {
