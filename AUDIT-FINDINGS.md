@@ -32,6 +32,22 @@ Untouched buckets: 59 of 67 functions, 40+ dashboard pages, 12 integrations, RLS
 
 ## P0 — Broken (user-blocking, money-blocking, or security)
 
+### [P0] 14 tables: RLS disabled + full anon+authenticated grants — anyone can read/wipe marketing data
+- **Tables**: `aeo_content_pages`, `blog_posts_log`, `cold_dm_targets`, `cold_email_replies`, `content_autopilot`, `facebook_groups`, `gsc_keywords`, `linkedin_engagers`, `linkedin_targets`, `outreach_daily_log`, `outreach_generated_items`, `reddit_subreddits`, `scheduled_posts`, `solar_installer_leads`
+- **Repro**: queried `pg_tables` and `information_schema.role_table_grants`. All 14 have `rowsecurity=false` and grants of SELECT/INSERT/UPDATE/DELETE/TRUNCATE/REFERENCES/TRIGGER to BOTH `anon` and `authenticated`. The Boltcall public bundle includes `VITE_SUPABASE_ANON_KEY` (visible in browser devtools), so anyone on the internet can:
+  - Dump the contents of `cold_email_replies` / `linkedin_engagers` / `solar_installer_leads` (personal data → GDPR / CCPA disclosure violation)
+  - `TRUNCATE` any of these tables in one request (data loss)
+  - Insert spam rows that the cold-email / marketing-orchestrator workers then act on (poisons campaigns)
+- **Recommended fix**: `REVOKE ALL ON public.<table> FROM anon, authenticated;` for all 14, then `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;`. Marketing tools that use these tables should connect via the service-role key (which bypasses both grants and RLS), which is the standard pattern. Verify the cold-email / marketing-orchestrator plugins use `SUPABASE_SERVICE_ROLE_KEY` before applying — they almost certainly do.
+- **Owner**: Claude (pending user confirmation — destructive DB change)
+
+### [P1] 11 tables referenced in code don't exist in DB — runtime errors waiting to happen
+- **Missing tables**: `activity_logs`, `call_logs`, `challenge_attempts`, `challenge_winners`, `lead_magnet_performance`, `notification_logs`, `notification_preferences`, `profiles`, `team_members`, `usage_daily_summary`, `usage_summary`
+- **Repro**: extracted unique `.from('table')` references from `src/` and `netlify/functions/`, joined against `pg_tables` — these 11 are missing.
+- **Notable**: `team-invite.ts:81` writes to `activity_logs` — that table doesn't exist; every successful invite silently fails to log. `team_members` is referenced where `workspace_members` should be used (rename drift).
+- **Recommended fix**: per table, decide: (a) create the table (if a feature was planned but never landed), (b) rename the code reference (e.g., `team_members` → `workspace_members`), or (c) remove the dead code path.
+- **Owner**: Claude
+
 ### [P0] [FIXED] `setup-launch` accepts arbitrary `userId`/`workspaceId` from request body — broken authorization
 - **Files**: `netlify/functions/setup-launch.ts:34-69`
 - **Repro**: function reads `{ workspaceId, userId }` from body and writes to `workspaces.setup_completed=true` and `business_profiles.updated_at` for any caller. There is no `Authorization` header check, no `supabase.auth.getUser(token)`, no membership check that the calling user actually owns this workspace. Any authenticated (or unauthenticated, with CORS `*`) request can mark anyone's setup as complete.
