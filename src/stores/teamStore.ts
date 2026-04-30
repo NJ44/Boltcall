@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
+import { FUNCTIONS_BASE } from '../lib/api';
 import type {
   TeamMember,
   Role,
@@ -10,6 +11,19 @@ import type {
   MemberStatus,
   ApiKeyResourcePermission,
 } from '../types/team';
+
+/**
+ * Resolve the current Supabase access token; throw if no session is active.
+ * Used by every Netlify-function call so the server can verify the caller.
+ */
+async function authedHeaders(): Promise<Record<string, string>> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.access_token) throw new Error('Not authenticated');
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${session.access_token}`,
+  };
+}
 
 interface TeamState {
   // ─── Members ───
