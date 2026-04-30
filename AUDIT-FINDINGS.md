@@ -199,15 +199,83 @@ Required env vars to set on Netlify for full production protection:
 
 ## Phase progress
 
-- [ ] Phase 1 — Baseline health
-- [ ] Phase 2 — Critical funnel E2E
-- [ ] Phase 3 — Backend functions (67)
-- [ ] Phase 4 — Frontend dashboard (40+)
-- [ ] Phase 5 — Integrations (12)
-- [ ] Phase 6 — Data layer
-- [ ] Phase 7 — Operational
-- [ ] Phase 8 — Security
-- [ ] Phase 9 — Triage
+- [x] Phase 1 — Baseline health (TS clean, build clean, 44 tests fail, 967 lint errors)
+- [x] Phase 2 — Critical funnel E2E
+- [x] Phase 3 — Backend functions (security-critical bucket cleared)
+- [x] Phase 4 — Frontend dashboard (team-invite flow fixed)
+- [x] Phase 5 — Integrations (10 of 12 healthy; Cal.com webhook now signed)
+- [x] Phase 6 — Data layer (RLS sweep + 14 tables locked down + 26 mistargeted policies fixed + 5 missing tables created)
+- [ ] Phase 7 — Operational (deferred — needs live deploy + PostHog access)
+- [x] Phase 8 — Security (final consolidation done)
+- [x] Phase 9 — Triage (this section)
+
+---
+
+## Deploy checklist
+
+Run before merging `worktree-audit-deep-saas` to main and deploying.
+
+### 1. Netlify env vars to verify/add
+
+| Env var | Purpose | Required? |
+|---|---|---|
+| `SUPABASE_SERVICE_KEY` | Service-role DB access | ✅ Required |
+| `SUPABASE_URL` (or `VITE_SUPABASE_URL`) | DB URL | ✅ Required |
+| `RETELL_API_KEY` | Retell client + webhook signing secret | ✅ Required |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Stripe | ✅ Required (already set) |
+| `BREVO_API_KEY`, `BREVO_FROM_EMAIL` | Email sending (invites, notifications) | ✅ Required |
+| `FB_APP_SECRET` | Facebook webhook signature verification | 🆕 **Add** if FB lead ingestion is live |
+| `CALCOM_WEBHOOK_SECRET` | Cal.com webhook signing — new in this audit | 🆕 **Add** before next Cal.com user connects |
+| `ADMIN_EMAILS` | Comma-separated allowlist for admin endpoints | Optional (defaults to `noamyakoby6@gmail.com`) |
+| `NODE_ENV=production` | Enables strict signature checks | ✅ Recommended |
+| `WEBHOOK_SECRET` | Optional shared secret for `/l/:userId` lead form | Optional |
+
+### 2. Smoke tests (manual, post-deploy)
+
+After deploy, walk the funnel and confirm each step works:
+
+1. **Sign up** a fresh test account → `/setup` wizard loads
+2. Complete the wizard → `setup-launch` succeeds, redirected to `/dashboard/getting-started`
+3. **POST a lead**: `curl -X POST https://boltcall.org/l/<test_user_id> -d '{"name":"Smoke","phone":"+972...","email":"smoke@example.com"}'` → row appears in `/dashboard/leads`
+4. **Make a Retell call** → call shows up in `/dashboard/calls`; check `retell-webhook` logs for "Valid signature"
+5. **Trigger a Stripe checkout** from `/dashboard/settings/plan-billing` → subscription appears
+6. **Invite a teammate** from `/dashboard/settings/members` → they receive Brevo email (this was broken before today; smoke-test it)
+7. **Cal.com booking** → appointment-handler logs "Valid Cal.com signature"
+8. Daily summary email arrives next day at 07:00 UTC
+
+### 3. Things that may break (and the fix)
+
+- If a marketing plugin (`cold-email`, `linkedin-assistant`, `marketing-orchestrator`, `obsidian-master`) suddenly fails with `permission denied for table cold_email_leads/linkedin_targets/vault_notes/etc.`: the plugin is connecting with the **anon key**. Switch it to `SUPABASE_SERVICE_ROLE_KEY` (or `SUPABASE_SERVICE_KEY`).
+- If the AI challenge funnel (`break-my-ai`, `break-our-ai`) starts erroring: those functions now require `SUPABASE_SERVICE_KEY` to be set; the anon-key fallback was removed.
+- If team invites stop working: confirm `BREVO_API_KEY` is set and the `invite-member` function URL is reachable.
+
+### 4. Deferred / out-of-scope work
+
+| Item | Why deferred | Recommended next step |
+|---|---|---|
+| 44 failing tests | Mostly stale UI assertions; not regressions | One-off PR to update test expectations |
+| 967 ESLint errors | Code quality, not correctness; mostly `any` | Suppress safe `any`s at config level, then chip away |
+| Token deduction race in `_shared/token-utils.ts` | Needs Postgres function | Migration: `CREATE FUNCTION deduct_tokens(uuid, int, ...) ... FOR UPDATE` |
+| 4 missing analytics tables (`call_logs`, `usage_summary`, `usage_daily_summary`, `lead_magnet_performance`) | Needs aggregation strategy, not just empty tables | Decide between materialized views vs. on-the-fly aggregation |
+| `/admin` page renders briefly before email-check redirects | Defense-in-depth; RLS protects the data | Wrap in `<ProtectedRoute>` + add an `is_admin` flag to a new `admins` table or `auth.users.app_metadata` |
+| 59 of 67 Netlify functions not individually audited | Security-critical bucket cleared first; remainder are mostly read-only or AI workers | Spot-check before going to GA: `agent-tools`, `email-ai-responder`, `sms-ai-responder`, `whatsapp-ai-responder`, `agent-self-heal` |
+| Phase 7 operational health (cron, PostHog, bundle) | Needs live access | Run `/canary` after deploy |
+| `LeadReactivationPage.tsx` (dashboard variant) — dead code with fake CRM stubs | Not user-reachable | Delete the file in a cleanup PR |
+| `Sidebar.tsx` — dead code, `DashboardLayout` has its own nav | Not rendered | Delete in cleanup PR |
+| `FeedbackPage` uses `mailto:` only | Minor UX, no PII risk | Wire to `/feedback` Netlify function + Brevo email |
+
+---
+
+## How to roll back any single change
+
+Every change in this audit is a separate auto-commit on `worktree-audit-deep-saas`. To revert one fix without losing the others:
+
+```bash
+git log --oneline main..worktree-audit-deep-saas
+git revert <commit-sha>
+```
+
+DB migrations (the RLS lockdown + 5 new tables) are *not* in git. To roll those back, the inverse SQL is in this file under each finding, or restore from a Supabase point-in-time backup.
 
 ---
 
