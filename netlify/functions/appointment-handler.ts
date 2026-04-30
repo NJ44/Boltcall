@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import { createClient } from '@supabase/supabase-js';
 import { notifyError } from './_shared/notify';
 import { fireWebhooks } from './_shared/fire-webhooks';
+import { verifyCalcomSignature } from './_shared/verify-signatures';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
 
@@ -43,6 +44,19 @@ export const handler: Handler = async (event) => {
   // Only accept POST from Cal.com webhooks
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
+
+  // Verify Cal.com signature when configured. In dev (no secret) or when
+  // Cal.com sends no signature header, log and continue. In production with
+  // CALCOM_WEBHOOK_SECRET set, any missing/invalid signature is rejected.
+  const sigResult = verifyCalcomSignature(event.body || '', event.headers as Record<string, string | undefined>);
+  if (sigResult === 'invalid') {
+    console.warn('[appointment-handler] Invalid Cal.com signature — rejecting');
+    return { statusCode: 401, body: JSON.stringify({ error: 'Invalid webhook signature' }) };
+  }
+  if (sigResult === 'missing' && process.env.NODE_ENV === 'production' && process.env.CALCOM_WEBHOOK_SECRET) {
+    console.warn('[appointment-handler] Missing Cal.com signature in production — rejecting');
+    return { statusCode: 401, body: JSON.stringify({ error: 'Webhook signature required' }) };
   }
 
   const supabase = getServiceClient();

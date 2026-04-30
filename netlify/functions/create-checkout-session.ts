@@ -1,5 +1,6 @@
 import type { Handler } from '@netlify/functions';
 import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2025-04-30.basil',
@@ -17,8 +18,27 @@ const PRICE_MAP: Record<string, string | undefined> = {
   'enterprise_yearly': process.env.STRIPE_PRICE_ENTERPRISE_YEARLY,
 };
 
+// Allowlist of origins/hosts for caller-supplied success_url / cancel_url.
+// Any URL that doesn't match one of these is rejected — prevents post-payment
+// open redirects to attacker-controlled domains.
+const ALLOWED_REDIRECT_HOSTS = new Set([
+  'boltcall.org',
+  'www.boltcall.org',
+  'boltcall.netlify.app',
+  'localhost',
+]);
+
+function isAllowedRedirect(url: string | undefined): boolean {
+  if (!url) return true; // empty/undefined is fine — server falls back to a default
+  try {
+    const parsed = new URL(url);
+    return ALLOWED_REDIRECT_HOSTS.has(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
 const handler: Handler = async (event) => {
-  // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -33,14 +53,41 @@ const handler: Handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
+  // Verify caller's JWT — never trust userId from request body.
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Authentication required' }) };
+  }
+
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  if (!supabaseUrl || !supabaseKey) {
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'Supabase not configured' }) };
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey, { auth: { autoRefreshToken: false, persistSession: false } });
+  const token = authHeader.substring(7);
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !authUser) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+  }
+
   try {
-    const { plan, interval, userId, email, successUrl, cancelUrl } = JSON.parse(event.body || '{}');
+    const { plan, interval, successUrl, cancelUrl } = JSON.parse(event.body || '{}');
 
     if (!plan || !interval) {
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({ error: 'Missing plan or interval' }),
+      };
+    }
+
+    if (!isAllowedRedirect(successUrl) || !isAllowedRedirect(cancelUrl)) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'successUrl/cancelUrl must point to an allowed Boltcall host' }),
       };
     }
 
@@ -55,7 +102,10 @@ const handler: Handler = async (event) => {
       };
     }
 
-    // Create Stripe Checkout Session
+    // userId and email come from the authenticated session, never from the body.
+    const userId = authUser.id;
+    const email = authUser.email || undefined;
+
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode: 'subscription',
       payment_method_types: ['card'],
@@ -63,20 +113,19 @@ const handler: Handler = async (event) => {
       success_url: successUrl || `${event.headers.origin || 'https://boltcall.org'}/dashboard/settings/plan-billing?session_id={CHECKOUT_SESSION_ID}&success=true`,
       cancel_url: cancelUrl || `${event.headers.origin || 'https://boltcall.org'}/pricing?canceled=true`,
       metadata: {
-        userId: userId || '',
+        userId,
         plan,
         interval,
       },
       subscription_data: {
         metadata: {
-          userId: userId || '',
+          userId,
           plan,
           interval,
         },
       },
     };
 
-    // Pre-fill email if provided
     if (email) {
       sessionParams.customer_email = email;
     }

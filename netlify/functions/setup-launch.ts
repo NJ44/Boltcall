@@ -18,21 +18,35 @@ export const handler: Handler = async (event) => {
   }
 
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
-  if (!supabaseUrl || !supabaseKey) {
+  if (!supabaseUrl || !supabaseServiceKey) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Supabase not configured' }),
+      body: JSON.stringify({ error: 'Supabase service credentials not configured' }),
     };
   }
 
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  // Verify the caller's JWT — never trust user_id from the request body.
+  const authHeader = event.headers.authorization || event.headers.Authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Authentication required' }) };
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+
+  const token = authHeader.substring(7);
+  const { data: { user: authUser }, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !authUser) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid or expired token' }) };
+  }
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const { workspaceId, isEnabled, userId } = body;
+    const { workspaceId } = body;
 
     if (!workspaceId) {
       return {
@@ -42,7 +56,34 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    // Mark workspace setup as complete
+    // Confirm the authenticated user owns or is an active owner/admin of this workspace.
+    const { data: workspace, error: wsLookupError } = await supabase
+      .from('workspaces')
+      .select('id, user_id')
+      .eq('id', workspaceId)
+      .maybeSingle();
+
+    if (wsLookupError || !workspace) {
+      return { statusCode: 404, headers, body: JSON.stringify({ error: 'Workspace not found' }) };
+    }
+
+    let authorized = workspace.user_id === authUser.id;
+    if (!authorized) {
+      const { data: membership } = await supabase
+        .from('workspace_members')
+        .select('role, status')
+        .eq('workspace_id', workspaceId)
+        .eq('user_id', authUser.id)
+        .eq('status', 'active')
+        .maybeSingle();
+      authorized = !!membership && (membership.role === 'owner' || membership.role === 'admin');
+    }
+
+    if (!authorized) {
+      return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not authorized for this workspace' }) };
+    }
+
+    // Mark workspace setup as complete.
     const { error: wsError } = await supabase
       .from('workspaces')
       .update({
@@ -54,18 +95,22 @@ export const handler: Handler = async (event) => {
 
     if (wsError) {
       console.error('Workspace update error:', wsError);
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Failed to mark workspace setup complete', details: wsError.message }),
+      };
     }
 
-    // Update business profile if userId provided
-    if (userId) {
-      const { error: bpError } = await supabase
-        .from('business_profiles')
-        .update({ updated_at: new Date().toISOString() })
-        .eq('user_id', userId);
+    // Touch business_profiles for the authenticated user. Non-fatal if it fails —
+    // workspace.setup_completed is the canonical signal the dashboard reads.
+    const { error: bpError } = await supabase
+      .from('business_profiles')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('user_id', authUser.id);
 
-      if (bpError) {
-        console.error('Business profile update error:', bpError);
-      }
+    if (bpError) {
+      console.error('Business profile update error:', bpError);
     }
 
     return {

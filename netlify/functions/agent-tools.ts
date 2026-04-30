@@ -134,8 +134,9 @@ async function getCalApiKey(userId: string | null): Promise<string> {
       console.error('[agent-tools] Failed to fetch user Cal.com API key, falling back to env:', err);
     }
   }
-  // Fall back to global env var so existing setups continue to work
-  return process.env.CAL_API_KEY || '';
+  // Fall back to global env var so existing setups continue to work.
+  // Accept both CALCOM_API_KEY (canonical) and CAL_API_KEY (legacy alias).
+  return process.env.CALCOM_API_KEY || process.env.CAL_API_KEY || '';
 }
 
 // ── Tool: lookup_caller ──

@@ -69,7 +69,9 @@ export const handler: Handler = async (event) => {
         };
       }
 
-      // Register webhook on Cal.com
+      // Register webhook on Cal.com — include the shared secret so Cal.com
+      // signs each delivery and appointment-handler can verify it.
+      const calcomSecret = process.env.CALCOM_WEBHOOK_SECRET;
       const calResponse = await fetch(
         `https://api.cal.com/v1/webhooks?apiKey=${encodeURIComponent(cal_api_key.trim())}`,
         {
@@ -79,6 +81,7 @@ export const handler: Handler = async (event) => {
             subscriberUrl: APPOINTMENT_HANDLER_URL,
             eventTriggers: CALCOM_EVENT_TRIGGERS,
             active: true,
+            ...(calcomSecret ? { secret: calcomSecret } : {}),
           }),
         }
       );

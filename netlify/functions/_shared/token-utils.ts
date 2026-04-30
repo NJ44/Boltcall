@@ -1,9 +1,38 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
+/**
+ * Lenient Supabase client factory — falls back to the anon key when no service
+ * key is configured. Kept for backwards compatibility with read-only/utility
+ * paths. Logs a loud warning when degraded.
+ *
+ * Server-side write paths and JWT verification should use {@link getServiceSupabase}
+ * instead, which throws if SUPABASE_SERVICE_KEY is missing.
+ */
 export function getSupabase(): SupabaseClient {
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const key = process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+  const serviceKey = process.env.SUPABASE_SERVICE_KEY || '';
+  const anonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
+  const key = serviceKey || anonKey;
+  if (!serviceKey && anonKey) {
+    console.warn(
+      '[token-utils.getSupabase] SUPABASE_SERVICE_KEY missing — falling back to anon key. ' +
+      'Server-side writes will be subject to RLS and may silently fail.',
+    );
+  }
   return createClient(url, key);
+}
+
+/**
+ * Strict service-role client. Throws if SUPABASE_SERVICE_KEY is unset, so a
+ * misconfigured environment fails loud instead of silently degrading to anon.
+ */
+export function getServiceSupabase(): SupabaseClient {
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+  const key = process.env.SUPABASE_SERVICE_KEY || '';
+  if (!url || !key) {
+    throw new Error('SUPABASE_SERVICE_KEY is required for this operation');
+  }
+  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 }
 
 export type TokenCategory =

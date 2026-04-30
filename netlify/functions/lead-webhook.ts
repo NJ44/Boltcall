@@ -5,6 +5,7 @@ import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { fireWebhooks } from './_shared/fire-webhooks';
 import { authenticateApiKey } from './_shared/validate-api-key';
+import { verifyFacebookSignature } from './_shared/verify-signatures';
 
 /**
  * Lead Webhook — receives leads from external sources and inserts into Supabase `leads` table.
@@ -272,6 +273,16 @@ export const handler: Handler = async (event) => {
 
     // Detect Facebook leadgen webhook format
     if (body.object === 'page' && body.entry) {
+      // Verify Facebook signature when configured. Same dev-friendly fallback as retell-webhook.
+      const fbSig = verifyFacebookSignature(event.body || '', event.headers as Record<string, string | undefined>);
+      if (fbSig === 'invalid') {
+        console.warn('[lead-webhook] Invalid Facebook signature — rejecting');
+        return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid X-Hub-Signature-256' }) };
+      }
+      if (fbSig === 'missing' && process.env.NODE_ENV === 'production') {
+        console.warn('[lead-webhook] Missing FB signature in production — rejecting');
+        return { statusCode: 401, headers, body: JSON.stringify({ error: 'Webhook signature required' }) };
+      }
       try {
         const { results, errors } = await handleFacebookLeadgen(body, supabase);
         return {

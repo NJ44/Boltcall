@@ -26,18 +26,19 @@ interface CheckoutParams {
  * Redirect user to Stripe Checkout for subscription
  */
 export async function redirectToCheckout({ plan, interval }: CheckoutParams) {
-  // Get current user
-  const { data: { user } } = await supabase.auth.getUser();
+  // Send the user's access token; the function reads userId/email from the JWT.
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.access_token) {
+    throw new Error('You must be signed in to start checkout');
+  }
 
   const response = await fetch('/.netlify/functions/create-checkout-session', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      plan,
-      interval,
-      userId: user?.id || '',
-      email: user?.email || '',
-    }),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session.access_token}`,
+    },
+    body: JSON.stringify({ plan, interval }),
   });
 
   const data = await response.json();

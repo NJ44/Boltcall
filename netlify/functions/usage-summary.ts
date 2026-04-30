@@ -71,9 +71,10 @@ export const handler: Handler = async (event) => {
       .eq('user_id', userId);
 
     const { count: memberCount } = await supabase
-      .from('team_members')
+      .from('workspace_members')
       .select('id', { count: 'exact', head: true })
-      .eq('organization_id', userId);
+      .eq('workspace_id', userId)
+      .eq('status', 'active');
 
     // Build aggregated response
     const usageMap: Record<string, number> = {};

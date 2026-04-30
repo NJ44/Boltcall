@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
+import { FUNCTIONS_BASE } from '../lib/api';
 import type {
   TeamMember,
   Role,
@@ -10,6 +11,19 @@ import type {
   MemberStatus,
   ApiKeyResourcePermission,
 } from '../types/team';
+
+/**
+ * Resolve the current Supabase access token; throw if no session is active.
+ * Used by every Netlify-function call so the server can verify the caller.
+ */
+async function authedHeaders(): Promise<Record<string, string>> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.access_token) throw new Error('Not authenticated');
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${session.access_token}`,
+  };
+}
 
 interface TeamState {
   // ─── Members ───
@@ -84,16 +98,44 @@ export const useTeamStore = create<TeamState>((set, get) => ({
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) throw new Error('Not authenticated');
 
-    const { error } = await supabase.from('workspace_members').insert({
-      invited_by: session.user.id,
-      email: email.toLowerCase().trim(),
-      name: name?.trim() || null,
-      role,
-      status: 'invited' as MemberStatus,
-      invited_at: new Date().toISOString(),
-    });
+    const trimmedEmail = email.toLowerCase().trim();
 
-    if (error) throw error;
+    // Owner self-seed: when the workspace owner adds themselves on first load,
+    // skip the invite-email round-trip and write directly with status='active'.
+    if (trimmedEmail === session.user.email?.toLowerCase()) {
+      const { error } = await supabase.from('workspace_members').insert({
+        workspace_id: session.user.id,
+        user_id: session.user.id,
+        invited_by: session.user.id,
+        email: trimmedEmail,
+        name: name?.trim() || null,
+        role,
+        status: 'active' as MemberStatus,
+        invited_at: new Date().toISOString(),
+        accepted_at: new Date().toISOString(),
+      });
+      if (error) throw error;
+      await get().fetchMembers(session.user.id);
+      return;
+    }
+
+    // Real invite: go through the Netlify function so a Brevo email is sent
+    // and authorization is verified server-side.
+    const headers = await authedHeaders();
+    const res = await fetch(`${FUNCTIONS_BASE}/invite-member`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        action: 'invite',
+        email: trimmedEmail,
+        role,
+        workspaceId: session.user.id,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Invite failed (${res.status})`);
+    }
     await get().fetchMembers(session.user.id);
   },
 
@@ -101,6 +143,7 @@ export const useTeamStore = create<TeamState>((set, get) => ({
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) throw new Error('Not authenticated');
 
+    const headers = await authedHeaders();
     const existingEmails = get().members.map((m) => m.email.toLowerCase());
     const success: string[] = [];
     const failed: string[] = [];
@@ -111,14 +154,17 @@ export const useTeamStore = create<TeamState>((set, get) => ({
       if (existingEmails.includes(email)) { failed.push(email); continue; }
 
       try {
-        const { error } = await supabase.from('workspace_members').insert({
-          invited_by: session.user.id,
-          email,
-          role,
-          status: 'invited' as MemberStatus,
-          invited_at: new Date().toISOString(),
+        const res = await fetch(`${FUNCTIONS_BASE}/invite-member`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            action: 'invite',
+            email,
+            role,
+            workspaceId: session.user.id,
+          }),
         });
-        if (error) { failed.push(email); } else { success.push(email); }
+        if (!res.ok) { failed.push(email); } else { success.push(email); }
       } catch {
         failed.push(email);
       }
@@ -159,23 +205,37 @@ export const useTeamStore = create<TeamState>((set, get) => ({
   },
 
   removeMember: async (memberId: string) => {
-    const { error } = await supabase
-      .from('workspace_members')
-      .delete()
-      .eq('id', memberId);
-    if (error) throw error;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Not authenticated');
 
+    // Soft-delete via the Netlify function so the role-check + activity log
+    // run server-side and stay consistent with how invite/accept work.
+    const headers = await authedHeaders();
+    const res = await fetch(`${FUNCTIONS_BASE}/invite-member`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        action: 'remove',
+        memberId,
+        workspaceId: session.user.id,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Remove failed (${res.status})`);
+    }
     set((s) => ({
       members: s.members.filter((m) => m.id !== memberId),
     }));
   },
 
   resendInvite: async (memberId: string) => {
-    const { error } = await supabase
-      .from('workspace_members')
-      .update({ invited_at: new Date().toISOString() })
-      .eq('id', memberId);
-    if (error) throw error;
+    // Look up the row, then re-trigger the invite (which generates a new
+    // token and sends a fresh Brevo email). Touching `invited_at` alone never
+    // sent an email — that was the silent-failure mode this fix addresses.
+    const member = get().members.find((m) => m.id === memberId);
+    if (!member) throw new Error('Member not found');
+    await get().inviteMember(member.email, member.role, member.name || undefined);
   },
 
   // ─── Roles State ───────────────────────────────────────────────────────

@@ -37,6 +37,7 @@ import {
 } from '../components/ui/select-shadcn';
 
 import { FUNCTIONS_BASE } from '../lib/api';
+import { supabase } from '../lib/supabase';
 
 const INDUSTRY_OPTIONS = [
   { value: 'dentist', label: 'Dentist' },
@@ -299,14 +300,18 @@ const Setup: React.FC = () => {
       kbFolderId: primaryResult?.kb_folder_id || undefined,
     }).catch((e) => console.error('Follow-up agent creation failed:', e));
 
-    fetch(`${FUNCTIONS_BASE}/setup-launch`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        workspaceId: workspace.id,
-        isEnabled: true,
-        userId: user.id,
-      }),
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      return fetch(`${FUNCTIONS_BASE}/setup-launch`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
+        body: JSON.stringify({
+          workspaceId: workspace.id,
+          isEnabled: true,
+        }),
+      });
     }).catch((e) => console.error('Setup launch failed:', e));
   };
 

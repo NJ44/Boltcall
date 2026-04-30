@@ -41,17 +41,45 @@ export const handler: Handler = async (event) => {
     return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid or expired token' }) };
   }
 
+  // Confirm the authenticated user has owner|admin authority on a given workspace.
+  // Either via workspaces.user_id (solo owner) or via workspace_members.role.
+  async function isOwnerOrAdmin(workspaceId: string): Promise<boolean> {
+    const { data: ws } = await supabase
+      .from('workspaces')
+      .select('user_id')
+      .eq('id', workspaceId)
+      .maybeSingle();
+    if (ws && ws.user_id === authUser.id) return true;
+
+    const { data: membership } = await supabase
+      .from('workspace_members')
+      .select('role, status')
+      .eq('workspace_id', workspaceId)
+      .eq('user_id', authUser.id)
+      .eq('status', 'active')
+      .maybeSingle();
+    return !!membership && (membership.role === 'owner' || membership.role === 'admin');
+  }
+
   try {
     const body = JSON.parse(event.body || '{}');
     const action = body.action || 'invite';
 
     // ─── INVITE MEMBER ───────────────────────────────────────────
     if (action === 'invite') {
-      const { email, role, workspaceId, invitedBy, businessName } = body;
+      const { email, role, workspaceId, businessName } = body;
 
-      if (!email || !workspaceId || !invitedBy) {
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'email, workspaceId, invitedBy are required' }) };
+      if (!email || !workspaceId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'email and workspaceId are required' }) };
       }
+
+      // Authorization: caller must be owner|admin of the target workspace.
+      if (!(await isOwnerOrAdmin(workspaceId))) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Only owners and admins can invite members' }) };
+      }
+
+      // invitedBy is always the authenticated user — never trust a body-supplied id.
+      const invitedBy = authUser.id;
 
       // Check if already invited
       const { data: existing } = await supabase
@@ -121,10 +149,10 @@ export const handler: Handler = async (event) => {
 
     // ─── ACCEPT INVITE ───────────────────────────────────────────
     if (action === 'accept') {
-      const { inviteToken, userId } = body;
+      const { inviteToken } = body;
 
-      if (!inviteToken || !userId) {
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'inviteToken and userId are required' }) };
+      if (!inviteToken) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'inviteToken is required' }) };
       }
 
       const { data: member, error: findError } = await supabase
@@ -138,10 +166,16 @@ export const handler: Handler = async (event) => {
         return { statusCode: 404, headers, body: JSON.stringify({ error: 'Invalid or expired invitation' }) };
       }
 
+      // Bind the invite to the authenticated user — body-supplied userId is ignored.
+      // Optionally also verify the invite was for this user's email.
+      if (member.email && authUser.email && member.email.toLowerCase() !== authUser.email.toLowerCase()) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'This invitation was sent to a different email' }) };
+      }
+
       await supabase
         .from('workspace_members')
         .update({
-          user_id: userId,
+          user_id: authUser.id,
           status: 'active',
           accepted_at: new Date().toISOString(),
           invite_token: null,
@@ -153,17 +187,14 @@ export const handler: Handler = async (event) => {
 
     // ─── REMOVE MEMBER ───────────────────────────────────────────
     if (action === 'remove') {
-      const { memberId, workspaceId, requestedBy } = body;
+      const { memberId, workspaceId } = body;
 
-      // Verify requester is owner/admin
-      const { data: requester } = await supabase
-        .from('workspace_members')
-        .select('role')
-        .eq('workspace_id', workspaceId)
-        .eq('user_id', requestedBy)
-        .single();
+      if (!memberId || !workspaceId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'memberId and workspaceId are required' }) };
+      }
 
-      if (!requester || (requester.role !== 'owner' && requester.role !== 'admin')) {
+      // Authorization derives from the authenticated JWT, not from a body field.
+      if (!(await isOwnerOrAdmin(workspaceId))) {
         return { statusCode: 403, headers, body: JSON.stringify({ error: 'Only owners and admins can remove members' }) };
       }
 
@@ -179,6 +210,32 @@ export const handler: Handler = async (event) => {
     // ─── LIST MEMBERS ────────────────────────────────────────────
     if (action === 'list') {
       const { workspaceId } = body;
+
+      if (!workspaceId) {
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'workspaceId is required' }) };
+      }
+
+      // Caller must at least be a member of the workspace to see its roster.
+      const { data: ws } = await supabase
+        .from('workspaces')
+        .select('user_id')
+        .eq('id', workspaceId)
+        .maybeSingle();
+      const isOwner = ws?.user_id === authUser.id;
+      let allowed = isOwner;
+      if (!allowed) {
+        const { data: membership } = await supabase
+          .from('workspace_members')
+          .select('id')
+          .eq('workspace_id', workspaceId)
+          .eq('user_id', authUser.id)
+          .eq('status', 'active')
+          .maybeSingle();
+        allowed = !!membership;
+      }
+      if (!allowed) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not a member of this workspace' }) };
+      }
 
       const { data: members } = await supabase
         .from('workspace_members')
