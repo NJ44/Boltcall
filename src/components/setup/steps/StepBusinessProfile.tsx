@@ -4,7 +4,6 @@ import { useSetupStore } from '../../../stores/setupStore';
 import { validatePhoneNumber, type PhoneValidationResult } from '../../../lib/cekura';
 import StyledInput from '../../ui/StyledInput';
 import Button from '../../ui/Button';
-import { useToast } from '../../../contexts/ToastContext';
 import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const StepBusinessProfile: React.FC = () => {
