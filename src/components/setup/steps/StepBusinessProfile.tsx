@@ -9,7 +9,6 @@ import { FUNCTIONS_BASE } from '../../../lib/api';
 
 const StepBusinessProfile: React.FC = () => {
   const { businessProfile, updateBusinessProfile, knowledgeBase, updateKnowledgeBase } = useSetupStore();
-  const { showToast } = useToast();
   const [errors] = useState<Record<string, string>>({});
   const [isValidatingPhone, setIsValidatingPhone] = useState(false);
   const [phoneValidation, setPhoneValidation] = useState<PhoneValidationResult | null>(null);
