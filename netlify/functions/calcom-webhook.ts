@@ -9,7 +9,7 @@ const headers = {
 };
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://hbwogktdajorojljkjwg.supabase.co';
-const APPOINTMENT_HANDLER_URL = 'https://boltcall.org/api/appointment-handler';
+const APPOINTMENT_HANDLER_URL = 'https://boltcall.org/.netlify/functions/appointment-handler';
 
 const CALCOM_EVENT_TRIGGERS = [
   'BOOKING_CREATED',

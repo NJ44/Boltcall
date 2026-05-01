@@ -4,20 +4,22 @@
  * Submits sitemap to Google Search Console and requests URL indexing.
  *
  * Usage:
- *   node scripts/gsc-submit.mjs
- *   NEW_URLS="/blog/post-1,/blog/post-2" node scripts/gsc-submit.mjs
+ *   node scripts/gsc-submit.mjs                                        — auto-detect new URLs
+ *   NEW_URLS="/blog/post-1,/blog/post-2" node scripts/gsc-submit.mjs  — manual override
  *
- * Env:
- *   NEW_URLS  — comma-separated URL paths to request indexing for (optional)
+ * Auto-detection: diffs public/sitemap.xml against scripts/.gsc-url-cache.json.
+ * First run creates the cache with no indexing requests; subsequent runs submit only new URLs.
  */
 
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createSign } from 'crypto';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SA_PATH = resolve(__dirname, '../../gsc-service-account.json');
+const SITEMAP_PATH = resolve(__dirname, '../public/sitemap.xml');
+const CACHE_PATH = resolve(__dirname, '.gsc-url-cache.json');
 const SITE_URL = 'sc-domain:boltcall.org';
 const SITEMAP_URL = 'https://boltcall.org/sitemap.xml';
 const BASE_URL = 'https://boltcall.org';
@@ -113,22 +115,47 @@ async function requestIndexing(token, urlPath) {
   }
 }
 
+function detectNewUrls() {
+  if (!existsSync(SITEMAP_PATH)) {
+    console.log('⚠ sitemap.xml not found — skipping auto-detect');
+    return [];
+  }
+
+  const xml = readFileSync(SITEMAP_PATH, 'utf8');
+  const current = new Set([...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]));
+
+  if (!existsSync(CACHE_PATH)) {
+    writeFileSync(CACHE_PATH, JSON.stringify([...current], null, 2));
+    console.log(`✓ GSC URL cache initialized (${current.size} URLs) — no indexing on first run`);
+    return [];
+  }
+
+  const cached = new Set(JSON.parse(readFileSync(CACHE_PATH, 'utf8')));
+  const newUrls = [...current].filter(u => !cached.has(u));
+  writeFileSync(CACHE_PATH, JSON.stringify([...current], null, 2));
+  return newUrls;
+}
+
 async function main() {
-  const newUrls = (process.env.NEW_URLS || '')
+  const manualUrls = (process.env.NEW_URLS || '')
     .split(',')
     .map(u => u.trim())
     .filter(Boolean);
 
+  const urlsToIndex = manualUrls.length > 0 ? manualUrls : detectNewUrls();
+
   const gscToken = await getAccessToken(['https://www.googleapis.com/auth/webmasters']);
   await submitSitemap(gscToken);
 
-  if (newUrls.length > 0) {
+  if (urlsToIndex.length > 0) {
     const indexToken = await getAccessToken(['https://www.googleapis.com/auth/indexing']);
-    console.log(`\nRequesting indexing for ${newUrls.length} URL(s)...`);
-    for (const urlPath of newUrls) {
+    console.log(`\nRequesting indexing for ${urlsToIndex.length} URL(s)...`);
+    for (const urlPath of urlsToIndex) {
       await requestIndexing(indexToken, urlPath);
       await new Promise(r => setTimeout(r, 300));
     }
+  } else {
+    console.log('\nNo new URLs detected.');
   }
 
   console.log('\n✓ GSC submit complete');

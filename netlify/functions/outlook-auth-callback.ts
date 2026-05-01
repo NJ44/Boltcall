@@ -69,7 +69,7 @@ export const handler: Handler = async (event) => {
   }
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  const redirectUri = `${baseUrl}/api/outlook-auth-callback`;
+  const redirectUri = `${baseUrl}/.netlify/functions/outlook-auth-callback`;
   const tenant = process.env.MICROSOFT_TENANT_ID || 'common';
 
   try {

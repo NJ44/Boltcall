@@ -316,7 +316,7 @@ export const handler: Handler = async (event) => {
     }
     if (auth.userId) body.user_id = auth.userId;
 
-    // Path-based user_id: /api/lead-webhook/{user_id} or /l/{user_id}
+    // Path-based user_id: /.netlify/functions/lead-webhook/{user_id} or /l/{user_id}
     if (!body.user_id && event.path) {
       const uuidMatch = event.path.match(
         /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i,
@@ -396,7 +396,7 @@ export const handler: Handler = async (event) => {
       // Sync lead to connected CRMs (fire-and-forget)
       if (lead.user_id) {
         const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-        fetch(`${baseUrl}/api/integration-sync`, {
+        fetch(`${baseUrl}/.netlify/functions/integration-sync`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -71,7 +71,7 @@ export const handler: Handler = async (event) => {
   }
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  const redirectUri = encodeURIComponent(`${baseUrl}/api/facebook-auth-callback`);
+  const redirectUri = encodeURIComponent(`${baseUrl}/.netlify/functions/facebook-auth-callback`);
 
   try {
     // Step 1: Exchange code for user access token

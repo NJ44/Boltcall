@@ -16,8 +16,8 @@ import { notifyError, notifyInfo } from './_shared/notify';
  *   5. Advance enrollment to next step or mark complete
  *   6. Deduct tokens
  *
- * GET /api/sms-sequence-processor  (scheduled trigger)
- * POST /api/sms-sequence-processor  (manual trigger)
+ * GET /.netlify/functions/sms-sequence-processor  (scheduled trigger)
+ * POST /.netlify/functions/sms-sequence-processor  (manual trigger)
  * { action: 'process' | 'enroll', sequenceId?, contactPhone?, contactName?, contactEmail?, userId? }
  */
 

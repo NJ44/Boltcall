@@ -5,7 +5,7 @@ import { notifyError } from './_shared/notify';
 /**
  * WhatsApp Send — Sends an outbound WhatsApp message via Meta Cloud API.
  *
- * POST /api/whatsapp-send
+ * POST /.netlify/functions/whatsapp-send
  * Body: { userId, to, body, messageId? }
  */
 

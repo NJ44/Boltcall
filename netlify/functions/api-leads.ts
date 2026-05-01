@@ -3,7 +3,7 @@ import { extractApiKey, validateApiKey } from './_shared/validate-api-key';
 import { getSupabase } from './_shared/token-utils';
 
 /**
- * GET /api/api-leads
+ * GET /.netlify/functions/api-leads
  *
  * Zapier polling trigger endpoint.
  * Returns an array of leads for the authenticated user, sorted newest-first.

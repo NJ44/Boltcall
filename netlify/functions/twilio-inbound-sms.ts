@@ -23,7 +23,7 @@ function buildThreadId(phone1: string, phone2: string): string {
  * Twilio Inbound SMS Webhook
  * Receives incoming SMS messages from Twilio, stores them in sms_conversations,
  * handles appointment confirmations/cancellations, and triggers AI auto-reply.
- * URL: /api/twilio-inbound-sms
+ * URL: /.netlify/functions/twilio-inbound-sms
  */
 export const handler: Handler = async (event) => {
   // Twilio sends POST with application/x-www-form-urlencoded
@@ -147,7 +147,7 @@ export const handler: Handler = async (event) => {
         const siteUrl = process.env.URL || process.env.DEPLOY_URL || '';
         if (siteUrl) {
           // Fire-and-forget — don't await, don't block TwiML response
-          fetch(`${siteUrl}/api/sms-ai-responder`, {
+          fetch(`${siteUrl}/.netlify/functions/sms-ai-responder`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

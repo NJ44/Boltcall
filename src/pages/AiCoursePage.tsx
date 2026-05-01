@@ -41,7 +41,7 @@ function CourseOptInForm({ id }: { id: string }) {
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/brevo-subscribe', {
+      const res = await fetch('/.netlify/functions/brevo-subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, firstName: firstName.trim() || undefined }),

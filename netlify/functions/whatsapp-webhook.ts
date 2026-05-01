@@ -24,7 +24,7 @@ function validatePhone(phone: string): boolean {
  * WhatsApp Webhook — Meta Cloud API
  * GET:  verification challenge
  * POST: inbound messages with HMAC-SHA256 signature verification
- * URL: /api/whatsapp-webhook
+ * URL: /.netlify/functions/whatsapp-webhook
  */
 export const handler: Handler = async (event) => {
   const supabase = getServiceClient();
@@ -162,7 +162,7 @@ export const handler: Handler = async (event) => {
 
           // Fire-and-forget AI responder
           if (userId && insertedMsg?.id) {
-            const responderUrl = (process.env.URL || '') + '/api/whatsapp-ai-responder';
+            const responderUrl = (process.env.URL || '') + '/.netlify/functions/whatsapp-ai-responder';
             fetch(responderUrl, {
               method: 'POST',
               headers: {

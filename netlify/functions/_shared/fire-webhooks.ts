@@ -14,7 +14,7 @@ export function fireWebhooks(
   triggerEvent: string,
   payload: Record<string, any>
 ): void {
-  fetch(`${BASE_URL}/api/webhook-manager`, {
+  fetch(`${BASE_URL}/.netlify/functions/webhook-manager`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: 'fire', userId, triggerEvent, payload }),

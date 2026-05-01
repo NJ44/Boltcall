@@ -4,7 +4,7 @@
 
 export async function getChatKitSessionToken(deviceId: string): Promise<string> {
   try {
-    const response = await fetch("/api/chatkit-session", {
+    const response = await fetch("/.netlify/functions/chatkit-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

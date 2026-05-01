@@ -30,7 +30,7 @@ function buildAgentPrompt(businessName: string, country?: string): string {
 async function generateProfessionalPrompt(promptConfig: any): Promise<{ prompt: string; beginMessage: string }> {
   // Use the co-located Netlify function via internal URL
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  const response = await fetch(`${baseUrl}/api/generate-agent-prompt`, {
+  const response = await fetch(`${baseUrl}/.netlify/functions/generate-agent-prompt`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(promptConfig),
@@ -120,7 +120,7 @@ function buildGeneralTools(options: {
   baseUrl: string;
 }): any[] {
   const { transferNumber, baseUrl } = options;
-  const toolsWebhookUrl = `${baseUrl}/api/agent-tools`;
+  const toolsWebhookUrl = `${baseUrl}/.netlify/functions/agent-tools`;
 
   const tools: any[] = [
     // Custom: lookup caller — MUST be first, called at the start of every inbound call
@@ -376,7 +376,7 @@ export const handler: Handler = async (event) => {
           agent_name: body.agent_name,
           voice_id: body.voice_id || getDefaultVoiceForCountry(body.country, body.voice_gender),
           response_engine: responseEngine,
-          webhook_url: `${webhookBaseUrl}/api/retell-webhook`,
+          webhook_url: `${webhookBaseUrl}/.netlify/functions/retell-webhook`,
           ...getDefaultAgentConfig(body.language),
         } as any);
 
@@ -397,7 +397,7 @@ export const handler: Handler = async (event) => {
         if (body.website_url) {
           try {
             const scrapeBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-            const scrapeRes = await fetch(`${scrapeBaseUrl}/api/firecrawl-scrape`, {
+            const scrapeRes = await fetch(`${scrapeBaseUrl}/.netlify/functions/firecrawl-scrape`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ url: body.website_url }),
@@ -430,7 +430,7 @@ export const handler: Handler = async (event) => {
         if (body.knowledge_base_texts?.length && !body.kb_folder_id) {
           try {
             const kbBaseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-            const kbRes = await fetch(`${kbBaseUrl}/api/kb-search`, {
+            const kbRes = await fetch(`${kbBaseUrl}/.netlify/functions/kb-search`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -507,7 +507,7 @@ export const handler: Handler = async (event) => {
         }
 
         // Step 4: Create agent with the response engine + default config
-        const webhookUrl = `${(process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org')}/api/retell-webhook`;
+        const webhookUrl = `${(process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org')}/.netlify/functions/retell-webhook`;
         const agent = await client.agent.create({
           agent_name: `${body.business_name} AI Receptionist`,
           voice_id: body.voice_id || getDefaultVoiceForCountry(body.country, body.voice_gender),
@@ -523,7 +523,7 @@ export const handler: Handler = async (event) => {
           const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
 
           // Step 5a: Register agent in Cekura
-          const registerRes = await fetch(`${baseUrl}/api/cekura-test`, {
+          const registerRes = await fetch(`${baseUrl}/.netlify/functions/cekura-test`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -540,7 +540,7 @@ export const handler: Handler = async (event) => {
             const cekuraAgentId = registerData.cekura_agent_id;
 
             // Step 5b: Create test evaluators (prepared, not run)
-            const evalRes = await fetch(`${baseUrl}/api/cekura-test`, {
+            const evalRes = await fetch(`${baseUrl}/.netlify/functions/cekura-test`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
