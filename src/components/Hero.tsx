@@ -157,7 +157,7 @@ const Hero: React.FC = () => {
               }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16" style={{ fontSize: 'clamp(28px, 6vw, 72px)' }}>
+                <h1 className="max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16" style={{ fontSize: 'clamp(22px, 4.5vw, 56px)' }}>
                   <span
                     style={{
                       opacity: 0,
