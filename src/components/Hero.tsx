@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, MessageSquare, Users, Target } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, Users } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 // Lazy-load ModalVideo since it's only shown on user interaction
@@ -10,7 +10,6 @@ const ModalVideo = React.lazy(() => import('./ModalVideo'));
 const IconPhone = (props: React.SVGProps<SVGSVGElement>) => <Phone {...props} strokeWidth={2.5} />;
 const IconCalendar = (props: React.SVGProps<SVGSVGElement>) => <Calendar {...props} strokeWidth={2.5} />;
 const IconUsers = (props: React.SVGProps<SVGSVGElement>) => <Users {...props} strokeWidth={2.5} />;
-const IconTarget = (props: React.SVGProps<SVGSVGElement>) => <Target {...props} strokeWidth={2.5} />;
 const IconSMS2 = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
 
 interface IconData {
@@ -24,7 +23,6 @@ const heroIcons: IconData[] = [
   { id: 1, icon: IconPhone, className: 'top-[55%] md:top-[15%] left-[2%] md:left-[3%]' },
   { id: 2, icon: IconCalendar, className: 'top-[60%] md:top-[20%] right-[2%] md:right-[3%]' },
   { id: 6, icon: IconUsers, className: 'top-[68%] md:top-[45%] left-[3%] md:left-[5%]' },
-  { id: 7, icon: IconTarget, className: 'top-[80%] md:top-[65%] right-[15%] md:right-[20%]' },
   { id: 8, icon: IconSMS2, className: 'top-[72%] md:top-[50%] right-[1%] md:right-[2%]' },
 ];
 
@@ -149,7 +147,7 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center pt-8 md:pt-12 lg:pt-16">
+          <div className="relative z-10 text-center pt-20 md:pt-28 lg:pt-36">
             {/* Animated Headline */}
             <div
               className="flex justify-center mb-6 relative z-10"
@@ -159,7 +157,7 @@ const Hero: React.FC = () => {
               }}
             >
               <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16" style={{ fontSize: 'clamp(28px, 6vw, 72px)' }}>
+                <h1 className="max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16" style={{ fontSize: 'clamp(22px, 4.5vw, 56px)' }}>
                   <span
                     style={{
                       opacity: 0,
@@ -191,7 +189,7 @@ const Hero: React.FC = () => {
                         key={title}
                         className="absolute left-0 font-bold text-blue-600 whitespace-nowrap"
                         style={{
-                          fontSize: 'clamp(28px, 6vw, 72px)',
+                          fontSize: 'clamp(22px, 4.5vw, 56px)',
                           transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
                           transform: titleNumber === index
                             ? 'translateY(0)'
