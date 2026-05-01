@@ -42,14 +42,14 @@ export const handler: Handler = async (event) => {
   }
 
   // Confirm the authenticated user has owner|admin authority on a given workspace.
-  // Either via workspaces.user_id (solo owner) or via workspace_members.role.
+  // Either via workspaces.owner_id (solo owner) or via workspace_members.role.
   async function isOwnerOrAdmin(workspaceId: string): Promise<boolean> {
     const { data: ws } = await supabase
       .from('workspaces')
-      .select('user_id')
+      .select('owner_id')
       .eq('id', workspaceId)
       .maybeSingle();
-    if (ws && ws.user_id === authUser.id) return true;
+    if (ws && ws.owner_id === authUser.id) return true;
 
     const { data: membership } = await supabase
       .from('workspace_members')
