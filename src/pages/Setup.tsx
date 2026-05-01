@@ -152,6 +152,12 @@ const Setup: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Record that setup was started in Supabase so incomplete signups are visible
+  useEffect(() => {
+    if (!user?.id) return;
+    supabase.auth.updateUser({ data: { setup_started_at: new Date().toISOString() } });
+  }, [user?.id]);
+
   useEffect(() => {
     document.title = 'Set Up Your AI Receptionist — Boltcall';
     updateMetaDescription(
