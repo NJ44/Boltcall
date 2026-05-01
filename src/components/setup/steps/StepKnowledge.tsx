@@ -295,6 +295,20 @@ const StepKnowledge: React.FC = () => {
         )}
       </div>
 
+      {/* Already-scanned banner */}
+      {businessProfile.websiteUrl && (knowledgeBase.services.length > 0 || knowledgeBase.faqs.length > 0) && (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm text-green-800">
+          <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-green-600" />
+          <span>
+            Website already analyzed from Business Profile —{' '}
+            {knowledgeBase.services.length > 0 && `${knowledgeBase.services.length} services`}
+            {knowledgeBase.services.length > 0 && knowledgeBase.faqs.length > 0 && ', '}
+            {knowledgeBase.faqs.length > 0 && `${knowledgeBase.faqs.length} FAQs`}
+            {' '}pre-filled. You can re-scan or edit below.
+          </span>
+        </div>
+      )}
+
       {/* Website input + Scan button */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
