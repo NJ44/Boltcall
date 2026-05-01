@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, MessageSquare, Users, Target } from 'lucide-react';
+import { Phone, Calendar, MessageSquare, Users } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 // Lazy-load ModalVideo since it's only shown on user interaction
