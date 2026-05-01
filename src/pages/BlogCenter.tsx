@@ -20,6 +20,14 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    title: 'AI Receptionist for Dentists: Stop Losing Patients to Missed Calls',
+    slug: '/blog/ai-receptionist-for-dentists',
+    excerpt: 'One in 3 dental calls goes unanswered. Learn how AI receptionists answer every call, book appointments 24/7, and stop new patients from choosing your competitor.',
+    date: 'May 1, 2026',
+    readTime: '9 min read',
+    category: 'Dental|AI Receptionist|Industry Guide',
+  },
+  {
     title: 'WhatsApp Appointment Booking for Plumbers: The Complete 2026 Guide',
     slug: '/blog/whatsapp-appointment-booking-plumbers',
     excerpt: 'How to automatically book emergency plumbing calls and service jobs via WhatsApp, reduce no-shows, and never miss a lead again.',
