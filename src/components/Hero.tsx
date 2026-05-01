@@ -23,7 +23,6 @@ const heroIcons: IconData[] = [
   { id: 1, icon: IconPhone, className: 'top-[55%] md:top-[15%] left-[2%] md:left-[3%]' },
   { id: 2, icon: IconCalendar, className: 'top-[60%] md:top-[20%] right-[2%] md:right-[3%]' },
   { id: 6, icon: IconUsers, className: 'top-[68%] md:top-[45%] left-[3%] md:left-[5%]' },
-  { id: 7, icon: IconTarget, className: 'top-[80%] md:top-[65%] right-[15%] md:right-[20%]' },
   { id: 8, icon: IconSMS2, className: 'top-[72%] md:top-[50%] right-[1%] md:right-[2%]' },
 ];
 
