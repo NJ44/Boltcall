@@ -20,12 +20,12 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
-    title: 'AI Receptionist for Med Spas: Never Miss a Booking Again',
-    slug: '/blog/ai-receptionist-med-spas',
-    excerpt: 'How med spas use AI receptionists to answer every call, book appointments automatically, and stop losing high-value clients to missed calls and voicemail.',
-    date: 'April 29, 2026',
-    readTime: '8 min read',
-    category: 'Med Spa|AI Receptionist|Booking',
+    title: 'AI Receptionist for Dentists: Stop Losing Patients to Missed Calls',
+    slug: '/blog/ai-receptionist-for-dentists',
+    excerpt: 'One in 3 dental calls goes unanswered. Learn how AI receptionists answer every call, book appointments 24/7, and stop new patients from choosing your competitor.',
+    date: 'May 1, 2026',
+    readTime: '9 min read',
+    category: 'Dental|AI Receptionist|Industry Guide',
   },
   {
     title: 'WhatsApp Appointment Booking for Plumbers: The Complete 2026 Guide',
