@@ -189,7 +189,7 @@ const Hero: React.FC = () => {
                         key={title}
                         className="absolute left-0 font-bold text-blue-600 whitespace-nowrap"
                         style={{
-                          fontSize: 'clamp(28px, 6vw, 72px)',
+                          fontSize: 'clamp(22px, 4.5vw, 56px)',
                           transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
                           transform: titleNumber === index
                             ? 'translateY(0)'
