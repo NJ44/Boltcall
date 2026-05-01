@@ -1,5 +1,5 @@
 // Speed test utility using Google PageSpeed Insights API
-// API key is kept server-side — calls go through /api/pagespeed
+// API key is kept server-side — calls go through /.netlify/functions/pagespeed
 
 interface SpeedTestResults {
   loadingTime: number;
@@ -21,7 +21,7 @@ function fetchWithTimeout(url: string, options?: RequestInit, timeoutMs: number 
 
 async function callPageSpeed(targetUrl: string, strategy: 'mobile' | 'desktop'): Promise<any> {
   const response = await fetchWithTimeout(
-    '/api/pagespeed',
+    '/.netlify/functions/pagespeed',
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

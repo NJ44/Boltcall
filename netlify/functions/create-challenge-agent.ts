@@ -150,7 +150,7 @@ const handler: Handler = async (event) => {
             },
             required: ['caller_name', 'preferred_time'],
           },
-          url: `${process.env.URL}/api/book-demo`,
+          url: `${process.env.URL}/.netlify/functions/book-demo`,
         },
       ],
     });

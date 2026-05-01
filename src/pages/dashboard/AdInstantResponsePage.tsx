@@ -58,7 +58,7 @@ const AdInstantResponsePage: React.FC = () => {
   const handleConnectFacebook = async () => {
     setFbConnecting(true);
     try {
-      const response = await fetch('/api/facebook-auth-start');
+      const response = await fetch('/.netlify/functions/facebook-auth-start');
       const data = await response.json();
       if (data.url) {
         window.location.href = data.url;

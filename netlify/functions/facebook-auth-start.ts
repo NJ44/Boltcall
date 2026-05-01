@@ -46,7 +46,7 @@ export const handler: Handler = async (event) => {
   }
 
   const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'https://boltcall.org';
-  const redirectUri = encodeURIComponent(`${baseUrl}/api/facebook-auth-callback`);
+  const redirectUri = encodeURIComponent(`${baseUrl}/.netlify/functions/facebook-auth-callback`);
 
   // Embed user_id in the state param so the callback can associate the connection
   const userId = event.queryStringParameters?.user_id || '';

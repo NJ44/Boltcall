@@ -18,7 +18,7 @@ import { notifyError, notifyInfo } from './_shared/notify';
  *   7. If auto_reply enabled → send via Twilio immediately
  *   8. Deduct tokens
  *
- * POST /api/sms-ai-responder
+ * POST /.netlify/functions/sms-ai-responder
  * {
  *   messageId: string,       // sms_conversations.id of the inbound message
  *   userId: string,          // owner user ID

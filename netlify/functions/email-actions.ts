@@ -5,7 +5,7 @@ import { getValidAccessToken, type EmailAccount } from './_shared/email-token-re
 /**
  * Email Actions — CRUD endpoint for the email service dashboard.
  *
- * POST /api/email-actions
+ * POST /.netlify/functions/email-actions
  * { action: string, ...params }
  *
  * Actions:
