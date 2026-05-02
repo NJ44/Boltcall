@@ -28,6 +28,14 @@ const blogPosts: BlogPost[] = [
     category: 'Dental|AI Receptionist|Industry Guide',
   },
   {
+    title: 'AI Receptionist for Med Spas: Never Miss a Booking Again',
+    slug: '/blog/ai-receptionist-med-spas',
+    excerpt: 'Med spas lose thousands monthly to missed booking calls. See how AI receptionists answer every inquiry, book treatments 24/7, and recover after-hours revenue.',
+    date: 'April 29, 2026',
+    readTime: '10 min read',
+    category: 'Med Spa|AI Receptionist|Industry Guide',
+  },
+  {
     title: 'WhatsApp Appointment Booking for Plumbers: The Complete 2026 Guide',
     slug: '/blog/whatsapp-appointment-booking-plumbers',
     excerpt: 'How to automatically book emergency plumbing calls and service jobs via WhatsApp, reduce no-shows, and never miss a lead again.',
