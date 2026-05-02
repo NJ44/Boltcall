@@ -211,6 +211,7 @@ const HomeServiceGoogleAdsLeadFollowUp = React.lazy(() => import('../pages/HomeS
 const BestAIAnsweringServiceDentalMedical = React.lazy(() => import('../pages/BestAIAnsweringServiceDentalMedical'));
 const BlogAfterHoursLeadResponse = React.lazy(() => import('../pages/BlogAfterHoursLeadResponse'));
 const BlogAIReceptionistMedSpa = React.lazy(() => import('../pages/BlogAIReceptionistMedSpa'));
+const BlogSolarAILeadResponse = React.lazy(() => import('../pages/BlogSolarAILeadResponse'));
 
 // ── Lazy loads — Comparisons ─────────────────────────────────────────────
 const Comparisons = React.lazy(() => import('../pages/Comparisons'));
@@ -466,6 +467,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/best-ai-answering-service-dental-medical-practice" element={<BestAIAnsweringServiceDentalMedical />} />
         <Route path="/blog/after-hours-lead-response-home-services" element={<BlogAfterHoursLeadResponse />} />
         <Route path="/blog/ai-receptionist-med-spas" element={<BlogAIReceptionistMedSpa />} />
+        <Route path="/blog/solar-ai-lead-response" element={<BlogSolarAILeadResponse />} />
         </Route>
         <Route path="/comparisons" element={<Comparisons />} />
         <Route path="/comparisons/call-centers-vs-boltcall" element={<TraditionalCallCentersVsBoltcall />} />
