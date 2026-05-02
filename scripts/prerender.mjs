@@ -44,6 +44,7 @@ const ROUTES = [
   '/funnel-optimizer',
   '/strike-ai',
   '/rank-on-google-offer',
+  '/solar',
   '/solar-speed-playbook',
   '/solar-benchmark',
   '/ai-readiness-scorecard',
