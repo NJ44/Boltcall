@@ -66,6 +66,7 @@ const ROUTES = [
   { path: "/ai-readiness-scorecard",                             priority: "0.8", changefreq: "monthly" },
   { path: "/ai-receptionist-roi",                                priority: "0.8", changefreq: "monthly" },
   { path: "/voice-agent-setup",                                  priority: "0.7", changefreq: "monthly" },
+  { path: "/solar",                                               priority: "0.9", changefreq: "monthly" },
   { path: "/solar-speed-playbook",                               priority: "0.8", changefreq: "monthly" },
   { path: "/solar-speed-playbook/thank-you",                     priority: "0.4", changefreq: "monthly" },
   { path: "/solar-benchmark",                                    priority: "0.8", changefreq: "monthly" },
