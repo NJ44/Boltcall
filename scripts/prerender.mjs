@@ -220,6 +220,7 @@ async function prerender() {
 
   let success = 0;
   let failed = 0;
+  const retryRoutes = [];
 
   for (const route of ROUTES) {
     try {
@@ -279,11 +280,57 @@ async function prerender() {
       await page.close();
     } catch (err) {
       failed++;
-      console.error(`  FAIL: ${route} — ${err.message}`);
+      process.stdout.write(`  FAIL: ${route} — ${err.message}\n`);
+      retryRoutes.push(route);
     }
   }
 
   await browser.close();
+
+  // Retry any failed routes with a fresh browser instance
+  if (retryRoutes.length > 0) {
+    process.stdout.write(`\nRetrying ${retryRoutes.length} failed routes with fresh browser...\n`);
+    const retryBrowser = await puppeteer.launch(launchOptions);
+    for (const route of retryRoutes) {
+      try {
+        const page = await retryBrowser.newPage();
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+          const type = req.resourceType();
+          if (['image', 'media', 'font'].includes(type)) req.abort();
+          else req.continue();
+        });
+        await page.evaluateOnNewDocument(() => {
+          Object.defineProperty(navigator, 'language', { get: () => 'en' });
+          Object.defineProperty(navigator, 'languages', { get: () => ['en'] });
+          localStorage.setItem('i18nextLng', 'en');
+        });
+        await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle0', timeout: 20000 });
+        await page.waitForSelector('#root > *', { timeout: 15000 });
+        await page.evaluate((r) => {
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+          const canonUrl = 'https://boltcall.org' + (r === '/' ? '/' : r.replace(/\/?$/, '/'));
+          const canonical = document.querySelector('link[rel="canonical"]');
+          if (canonical) canonical.href = canonUrl;
+          const ogUrl = document.querySelector('meta[property="og:url"]');
+          if (ogUrl) ogUrl.setAttribute('content', canonUrl);
+        }, route);
+        const html = await page.content();
+        const outDir = route === '/' ? DIST : join(DIST, ...route.split('/').filter(Boolean));
+        await mkdir(outDir, { recursive: true });
+        await writeFile(join(outDir, 'index.html'), html);
+        failed--;
+        success++;
+        process.stdout.write(`  RETRY OK: ${route}\n`);
+        await page.close();
+      } catch (err) {
+        process.stdout.write(`  RETRY FAIL: ${route} — ${err.message}\n`);
+      }
+    }
+    await retryBrowser.close();
+  }
+
   server.close();
 
   console.log(`\nPrerender complete: ${success} success, ${failed} failed out of ${ROUTES.length} routes.`);
