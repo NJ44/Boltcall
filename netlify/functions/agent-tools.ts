@@ -579,7 +579,7 @@ async function handleBookAppointment(
 
 // ── Tool: cancel_appointment ──
 
-async function handleCancelAppointment(args: any, userId: string | null, callId: string): Promise<string> {
+async function handleCancelAppointment(args: any, userId: string | null, callId: string, locale = 'en-US'): Promise<string> {
   const { name, phone, email, reason } = args;
   if (!name && !phone && !email) return 'I need your name, phone number, or email to find your appointment.';
 
