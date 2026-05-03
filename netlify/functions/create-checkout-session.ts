@@ -6,8 +6,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2025-04-30.basil',
 });
 
-// Map plan levels + intervals to Stripe Price IDs
-const PRICE_MAP: Record<string, string | undefined> = {
+// Map plan levels + intervals to Stripe Price IDs (USD)
+const PRICE_MAP_USD: Record<string, string | undefined> = {
   'starter_monthly': process.env.STRIPE_PRICE_STARTER_MONTHLY,
   'starter_yearly': process.env.STRIPE_PRICE_STARTER_YEARLY,
   'pro_monthly': process.env.STRIPE_PRICE_PRO_MONTHLY,
@@ -16,6 +16,16 @@ const PRICE_MAP: Record<string, string | undefined> = {
   'ultimate_yearly': process.env.STRIPE_PRICE_ULTIMATE_YEARLY,
   'enterprise_monthly': process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY,
   'enterprise_yearly': process.env.STRIPE_PRICE_ENTERPRISE_YEARLY,
+};
+
+// ILS (Israeli Shekel) Price IDs — separate Stripe Prices for ₪ billing
+const PRICE_MAP_ILS: Record<string, string | undefined> = {
+  'starter_monthly': process.env.STRIPE_PRICE_ILS_STARTER_MONTHLY,
+  'starter_yearly': process.env.STRIPE_PRICE_ILS_STARTER_YEARLY,
+  'pro_monthly': process.env.STRIPE_PRICE_ILS_PRO_MONTHLY,
+  'pro_yearly': process.env.STRIPE_PRICE_ILS_PRO_YEARLY,
+  'ultimate_monthly': process.env.STRIPE_PRICE_ILS_ULTIMATE_MONTHLY,
+  'ultimate_yearly': process.env.STRIPE_PRICE_ILS_ULTIMATE_YEARLY,
 };
 
 // Allowlist of origins/hosts for caller-supplied success_url / cancel_url.
