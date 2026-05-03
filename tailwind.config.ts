@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        hebrew: ['Heebo', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         brand: {
