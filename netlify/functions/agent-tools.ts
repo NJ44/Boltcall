@@ -440,8 +440,8 @@ async function handleBookAppointment(
 
   try {
     const startISO = `${date}T${time}:00Z`;
-    const formattedDate = formatDateReadable(date);
-    const formattedTime = formatTimeSlot(`${date}T${time}:00Z`);
+    const formattedDate = formatDateReadable(date, locale);
+    const formattedTime = formatTimeSlot(`${date}T${time}:00Z`, locale);
     let bookingId = 'N/A';
     let bookedVia = 'cal.com';
 
