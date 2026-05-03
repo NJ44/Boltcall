@@ -308,7 +308,7 @@ const SolarSpeedScoreQuiz: React.FC = () => {
 
                     {/* Breakdown */}
                     <div className="space-y-2">
-                      {QUESTIONS.map((q, i) => {
+                      {QUESTIONS.map((_q, i) => {
                         const score = answers[i] ?? 0;
                         const pct = (score / 10) * 100;
                         return (
