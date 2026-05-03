@@ -128,12 +128,14 @@ const handler: Handler = async (event) => {
         userId,
         plan,
         interval,
+        currency: useILS ? 'ILS' : 'USD',
       },
       subscription_data: {
         metadata: {
           userId,
           plan,
           interval,
+          currency: useILS ? 'ILS' : 'USD',
         },
       },
     };
