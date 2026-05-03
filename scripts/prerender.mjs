@@ -47,6 +47,7 @@ const ROUTES = [
   '/solar',
   '/solar-speed-playbook',
   '/solar-benchmark',
+  '/solar-benchmark-2026',
   '/solar-roi-calculator',
   '/solar-speed-score',
   '/ai-readiness-scorecard',
