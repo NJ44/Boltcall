@@ -83,7 +83,7 @@ const handler: Handler = async (event) => {
   }
 
   try {
-    const { plan, interval, successUrl, cancelUrl } = JSON.parse(event.body || '{}');
+    const { plan, interval, currency, successUrl, cancelUrl } = JSON.parse(event.body || '{}');
 
     if (!plan || !interval) {
       return {
@@ -102,7 +102,9 @@ const handler: Handler = async (event) => {
     }
 
     const priceKey = `${plan}_${interval}`;
-    const priceId = PRICE_MAP[priceKey];
+    const useILS = currency === 'ILS';
+    const priceMap = useILS ? PRICE_MAP_ILS : PRICE_MAP_USD;
+    const priceId = priceMap[priceKey] ?? PRICE_MAP_USD[priceKey];
 
     if (!priceId) {
       return {
