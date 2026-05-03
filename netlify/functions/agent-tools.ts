@@ -778,8 +778,8 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    // Look up agent owner for Supabase operations
-    const userId = agent_id ? await getAgentOwner(agent_id) : null;
+    // Look up agent owner and locale for Supabase operations
+    const { userId, locale } = agent_id ? await getAgentOwner(agent_id) : { userId: null, locale: 'en-US' };
 
     // Get Cal.com API key per user, falling back to global env var
     const calApiKey = await getCalApiKey(userId);
@@ -788,23 +788,23 @@ export const handler: Handler = async (event) => {
 
     switch (name) {
       case 'lookup_caller':
-        content = await handleLookupCaller(toolArgs || {}, userId);
+        content = await handleLookupCaller(toolArgs || {}, userId, locale);
         break;
 
       case 'check_availability':
-        content = await handleCheckAvailability(toolArgs || {}, calApiKey, userId);
+        content = await handleCheckAvailability(toolArgs || {}, calApiKey, userId, locale);
         break;
 
       case 'book_appointment':
-        content = await handleBookAppointment(toolArgs || {}, calApiKey, userId, call_id || '');
+        content = await handleBookAppointment(toolArgs || {}, calApiKey, userId, call_id || '', locale);
         break;
 
       case 'cancel_appointment':
-        content = await handleCancelAppointment(toolArgs || {}, userId, call_id || '');
+        content = await handleCancelAppointment(toolArgs || {}, userId, call_id || '', locale);
         break;
 
       case 'reschedule_appointment':
-        content = await handleRescheduleAppointment(toolArgs || {}, userId, call_id || '');
+        content = await handleRescheduleAppointment(toolArgs || {}, userId, call_id || '', locale);
         break;
 
       case 'send_sms':
