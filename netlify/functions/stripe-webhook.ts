@@ -200,6 +200,26 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
   if (error) {
     console.error('Error saving invoice:', error);
   }
+
+  // Greeninvoice: issue Israeli tax invoice (חשבונית מס) for ILS payments
+  if (invoice.currency === 'ils') {
+    try {
+      const baseUrl = process.env.URL || 'https://boltcall.org';
+      await fetch(`${baseUrl}/.netlify/functions/greeninvoice-issue`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stripeInvoiceId: invoice.id,
+          userId,
+          amountILS: invoice.amount_paid,
+          customerEmail: invoice.customer_email,
+          customerName: (invoice as any).customer_name,
+        }),
+      });
+    } catch (e) {
+      console.error('Greeninvoice issue failed (non-blocking):', e);
+    }
+  }
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
