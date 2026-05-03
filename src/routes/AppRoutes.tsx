@@ -144,6 +144,8 @@ const LandscapingSeasonalRevenueCalculator = React.lazy(() => import('../pages/L
 const SolarProfitCalculator = React.lazy(() => import('../pages/SolarProfitCalculator'));
 const SolarQuoteGenerator = React.lazy(() => import('../pages/SolarQuoteGenerator'));
 const SolarSalesCloser = React.lazy(() => import('../pages/SolarSalesCloser'));
+const SolarROICalculator = React.lazy(() => import('../pages/SolarROICalculator'));
+const SolarSpeedScoreQuiz = React.lazy(() => import('../pages/SolarSpeedScoreQuiz'));
 const HowToAIPhoneAnsweringVetClinic = React.lazy(() => import('../pages/HowToAIPhoneAnsweringVetClinic'));
 const FAQAIReceptionistHVAC = React.lazy(() => import('../pages/FAQAIReceptionistHVAC'));
 const FAQAIReceptionistDentist = React.lazy(() => import('../pages/FAQAIReceptionistDentist'));
@@ -561,6 +563,8 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/tools/solar-profit-calculator" element={<SolarProfitCalculator />} />
         <Route path="/tools/solar-quote-generator" element={<SolarQuoteGenerator />} />
         <Route path="/tools/solar-sales-closer" element={<SolarSalesCloser />} />
+        <Route path="/solar-roi-calculator" element={<SolarROICalculator />} />
+        <Route path="/solar-speed-score" element={<SolarSpeedScoreQuiz />} />
         {/* Landscaping Seasonal Revenue Calculator */}
         <Route path="/tools/landscaping-seasonal-revenue-calculator" element={<LandscapingSeasonalRevenueCalculator />} />
         {/* All niche tools now served by dynamic route from Supabase */}
