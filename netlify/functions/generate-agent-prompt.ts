@@ -56,7 +56,7 @@ interface KnowledgeBase {
 interface PromptRequest {
   agentType: 'inbound' | 'outbound_speed_to_lead' | 'outbound_reactivation' | 'outbound_reminder' | 'outbound_review';
   agentName?: string;
-  language?: 'en' | 'es'; // defaults to 'en'
+  language?: 'en' | 'es' | 'he'; // defaults to 'en'
   businessProfile: BusinessProfile;
   callFlow?: CallFlowConfig;
   knowledgeBase?: KnowledgeBase;
