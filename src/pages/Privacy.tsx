@@ -15,7 +15,7 @@ const Privacy: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Header */}
+      {/* Header */}
       <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-16">
           <motion.div
@@ -29,11 +29,14 @@ const Privacy: React.FC = () => {
             </div>
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
-              <p className="text-gray-600 text-lg">
-                Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-              </p>
+              <p className="text-gray-600 text-lg">Last updated: {LAST_UPDATED}</p>
             </div>
           </motion.div>
+          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-900">
+            <strong>Applicable laws:</strong> Israeli Privacy Protection Law 5741-1981 (PPL) &amp; Amendment 13
+            (in force August 2025) · EU GDPR (supervisory practice) · Israeli Communications Law Amendment 40
+            (anti-spam) · Israeli Wiretapping Law 5739-1979
+          </div>
         </div>
       </div>
 
