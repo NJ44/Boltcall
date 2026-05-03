@@ -639,7 +639,7 @@ async function handleCancelAppointment(args: any, userId: string | null, callId:
 
 // ── Tool: reschedule_appointment ──
 
-async function handleRescheduleAppointment(args: any, userId: string | null, callId: string): Promise<string> {
+async function handleRescheduleAppointment(args: any, userId: string | null, callId: string, locale = 'en-US'): Promise<string> {
   const { name, phone, email, new_date, new_time } = args;
   if (!name && !phone && !email) return 'I need your name, phone number, or email to find your appointment.';
   if (!new_date || !new_time) return 'I need the new date and time you would like to reschedule to.';
