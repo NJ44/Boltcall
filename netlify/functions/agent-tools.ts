@@ -106,19 +106,20 @@ async function sendTwilioSms(to: string, from: string, body: string) {
 
 // ── Look up agent owner ──
 
-async function getAgentOwner(agentId: string): Promise<string | null> {
+async function getAgentOwner(agentId: string): Promise<{ userId: string | null; locale: string }> {
   const supabase = getSupabase();
   const { data, error } = await supabase
     .from('agents')
-    .select('user_id')
+    .select('user_id, language')
     .eq('retell_agent_id', agentId)
     .single();
 
   if (error || !data) {
     console.error('[agent-tools] Could not find agent owner for', agentId, error);
-    return null;
+    return { userId: null, locale: 'en-US' };
   }
-  return data.user_id;
+  const locale = LANG_TO_LOCALE[data.language] || 'en-US';
+  return { userId: data.user_id, locale };
 }
 
 // ── Get per-user Cal.com API key ──
