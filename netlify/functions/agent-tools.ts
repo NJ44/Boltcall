@@ -234,8 +234,8 @@ async function handleLookupCaller(
         result += '\nUpcoming appointments:\n';
         for (const appt of upcoming.slice(0, 3)) {
           const apptDate = new Date(appt.starts_at);
-          const dateStr = apptDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-          const timeStr = apptDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+          const dateStr = apptDate.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
+          const timeStr = apptDate.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hour12: locale !== 'he-IL' });
           result += `  - ${appt.service_name || 'Appointment'} on ${dateStr} at ${timeStr} (${appt.status})\n`;
         }
       }
