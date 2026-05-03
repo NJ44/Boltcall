@@ -1,12 +1,16 @@
 import React from 'react';
 import { updateMetaDescription } from '../lib/utils';
-import { Shield, Lock, Eye, FileText, Globe, Mail, Phone, MapPin } from 'lucide-react';
+import { Shield, Lock, Eye, FileText, Globe, Mail, AlertTriangle, Phone as PhoneIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const LAST_UPDATED = 'May 2026';
 
 const Privacy: React.FC = () => {
   React.useEffect(() => {
     document.title = 'Privacy Policy - Boltcall Data Protection & Privacy';
-    updateMetaDescription('Boltcall privacy policy explains how we collect, use, and protect your data. Read our complete privacy terms and practices here.');
+    updateMetaDescription(
+      'Boltcall privacy policy. How we collect, use, and protect your data under Israeli Privacy Protection Law (PPL), GDPR, and global standards.'
+    );
   }, []);
 
   return (
