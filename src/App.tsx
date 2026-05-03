@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import AppRoutes from './routes/AppRoutes';
 import { ToastProvider } from './contexts/ToastContext';
 import EnsureImageTitles from './components/seo/EnsureImageTitles';
+import CookieBanner from './components/CookieBanner';
 
 const PWAUpdatePrompt = lazy(() => import('./components/PWAUpdatePrompt'));
 const OfflineBanner = lazy(() => import('./components/OfflineBanner'));
@@ -17,6 +18,7 @@ function App() {
       <Suspense fallback={null}>
         <PWAUpdatePrompt />
       </Suspense>
+      <CookieBanner />
     </ToastProvider>
   );
 }
