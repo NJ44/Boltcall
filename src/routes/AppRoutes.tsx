@@ -82,6 +82,7 @@ const PackagesPage = React.lazy(() => import('../pages/dashboard/settings/Packag
 const HelpCenter = React.lazy(() => import('../pages/HelpCenter'));
 const Privacy = React.lazy(() => import('../pages/Privacy'));
 const Terms = React.lazy(() => import('../pages/Terms'));
+const DPA = React.lazy(() => import('../pages/DPA'));
 const Contact = React.lazy(() => import('../pages/Contact'));
 const BookCall = React.lazy(() => import('../pages/BookCall'));
 const About = React.lazy(() => import('../pages/About'));
