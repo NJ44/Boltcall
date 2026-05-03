@@ -208,7 +208,7 @@ async function handleLookupCaller(
       const fullName = [lead.first_name, lead.last_name].filter(Boolean).join(' ') || 'Unknown';
       const callCount = leads.length;
       const lastContact = lead.created_at
-        ? new Date(lead.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+        ? new Date(lead.created_at).toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' })
         : 'Unknown';
 
       result += `RETURNING CALLER: ${fullName}`;
