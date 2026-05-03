@@ -136,6 +136,24 @@ const TONE_DESCRIPTORS: Record<string, Record<string, { personality: string; sty
       style: 'Habla a un ritmo pausado. Usa lenguaje calmado. Ten paciencia extra con personas confundidas o ansiosas. Nunca apresures.',
     },
   },
+  he: {
+    friendly_concise: {
+      personality: 'חם/ה, נגיש/ה ומועיל/ה באמת',
+      style: 'שמור/י על טון שיחי וידידותי. השתמש/י בשפה טבעית — כמו שדי/שדנית קבלה מעולה/ת היה/ה מדבר/ת, לא רובוט. היה/י תמציתי/ת אבל לא קצר/ה מדי.',
+    },
+    formal: {
+      personality: 'מקצועי/ת, מלוטש/ת ומכבד/ת',
+      style: 'שמור/י על טון עסקי מסוים. השתמש/י בעברית תקנית. היה/י מנומס/ת ויעיל/ה.',
+    },
+    playful: {
+      personality: 'אנרגטי/ת, סוחף/ת ואישי/ת',
+      style: 'היה/י חי/ה ומרתק/ת בלי להגזים. מגע קל של הומור בסדר כשהוא טבעי. גרמ/י למי שמתקשר/ת להרגיש שמדברים עם בן/בת אדם עוזר/ת.',
+    },
+    calm: {
+      personality: 'עדין/ה, סבלני/ת ומרגיע/ה',
+      style: 'דבר/י בקצב מדוד. השתמש/י בשפה מרגיעה. היה/י סבלני/ת במיוחד עם מתקשרים מבולבלים או חרדים. לא למהר.',
+    },
+  },
 };
 
 // ─── Localization Strings ────────────────────────────────────────────────────
