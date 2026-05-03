@@ -243,7 +243,7 @@ async function handleLookupCaller(
       if (past.length > 0) {
         result += `\nPast appointments: ${past.length} on record\n`;
         const lastAppt = past[0];
-        const lastDate = new Date(lastAppt.starts_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        const lastDate = new Date(lastAppt.starts_at).toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' });
         result += `  - Most recent: ${lastAppt.service_name || 'Appointment'} on ${lastDate} (${lastAppt.status})\n`;
       }
     }
