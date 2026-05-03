@@ -346,7 +346,7 @@ async function getGoogleCalendarForUser(userId: string): Promise<{ accessToken: 
 
 // ── Tool: check_availability (Google Calendar first, Cal.com fallback) ──
 
-async function handleCheckAvailability(args: any, calApiKey: string, userId: string | null): Promise<string> {
+async function handleCheckAvailability(args: any, calApiKey: string, userId: string | null, locale = 'en-US'): Promise<string> {
   const { date } = args;
   if (!date) return 'I can check availability for you. What date did you have in mind?';
 
