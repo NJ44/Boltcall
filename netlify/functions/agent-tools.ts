@@ -678,8 +678,8 @@ async function handleRescheduleAppointment(args: any, userId: string | null, cal
         });
 
         if (patchRes.ok) {
-          const newFormattedDate = formatDateReadable(new_date);
-          const newFormattedTime = formatTimeSlot(`${new_date}T${new_time}:00Z`);
+          const newFormattedDate = formatDateReadable(new_date, locale);
+          const newFormattedTime = formatTimeSlot(`${new_date}T${new_time}:00Z`, locale);
 
           await notifyInfo(`🔄 *Appointment Rescheduled via AI*\n\n👤 ${query}\n📅 New: ${newFormattedDate} at ${newFormattedTime}\n📞 Call: ${callId}`);
 
