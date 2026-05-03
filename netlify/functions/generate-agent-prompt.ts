@@ -66,10 +66,11 @@ interface PromptRequest {
 
 // ─── Language Detection ──────────────────────────────────────────────────────
 
-function detectLanguage(req: PromptRequest): 'en' | 'es' {
+function detectLanguage(req: PromptRequest): 'en' | 'es' | 'he' {
   if (req.language) return req.language;
   // Auto-detect from country
   const country = req.businessProfile.country?.toLowerCase();
+  if (country === 'il') return 'he';
   const spanishCountries = new Set([
     'es', 'mx', 'ar', 'co', 'cl', 'pe', 'ec', 'gt', 'cu', 'bo', 'do',
     'hn', 'py', 'sv', 'ni', 'cr', 'pa', 'uy', 've',
@@ -77,6 +78,7 @@ function detectLanguage(req: PromptRequest): 'en' | 'es' {
   if (spanishCountries.has(country)) return 'es';
   // Check languages field
   const langs = req.businessProfile.languages?.toLowerCase() || '';
+  if (langs.includes('he') || langs.includes('hebrew') || langs.includes('ivrit')) return 'he';
   if (langs.includes('es') || langs.includes('spanish') || langs.includes('espanol')) return 'es';
   return 'en';
 }
