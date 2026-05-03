@@ -571,6 +571,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/ai-receptionist-roi" element={<AiReceptionistRoi />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/terms-of-service" element={<Terms />} />
+        <Route path="/dpa" element={<DPA />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
