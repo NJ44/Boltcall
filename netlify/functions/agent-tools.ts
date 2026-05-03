@@ -613,8 +613,8 @@ async function handleCancelAppointment(args: any, userId: string | null, callId:
         const deleteRes = await fetch(deleteUrl, { method: 'DELETE', headers: { Authorization: `Bearer ${gcal.accessToken}` } });
 
         if (deleteRes.ok || deleteRes.status === 204) {
-          const eventDate = formatDateReadable(event.start?.dateTime || event.start?.date);
-          const eventTime = formatTimeSlot(event.start?.dateTime || event.start?.date);
+          const eventDate = formatDateReadable(event.start?.dateTime || event.start?.date, locale);
+          const eventTime = formatTimeSlot(event.start?.dateTime || event.start?.date, locale);
 
           // Update Supabase appointment status
           try {
