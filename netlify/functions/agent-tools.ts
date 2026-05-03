@@ -429,7 +429,8 @@ async function handleBookAppointment(
   args: any,
   calApiKey: string,
   userId: string | null,
-  callId: string
+  callId: string,
+  locale = 'en-US'
 ): Promise<string> {
   const { name, email, phone, date, time, service, notes } = args;
 
