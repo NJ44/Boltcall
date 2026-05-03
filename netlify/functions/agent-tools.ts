@@ -59,14 +59,20 @@ async function getEventTypeId(calApiKey: string): Promise<number | null> {
   }
 }
 
-function formatTimeSlot(isoString: string): string {
+const LANG_TO_LOCALE: Record<string, string> = {
+  en: 'en-US',
+  he: 'he-IL',
+  es: 'es-ES',
+};
+
+function formatTimeSlot(isoString: string, locale = 'en-US'): string {
   const d = new Date(isoString);
-  return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  return d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hour12: locale !== 'he-IL' });
 }
 
-function formatDateReadable(dateStr: string): string {
+function formatDateReadable(dateStr: string, locale = 'en-US'): string {
   const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  return d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 }
 
 // ── Twilio helper ──
