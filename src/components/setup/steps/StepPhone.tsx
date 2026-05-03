@@ -78,6 +78,28 @@ const StepPhone: React.FC = () => {
         </p>
       </div>
 
+      {/* Israeli regulatory notice */}
+      {(businessProfile.country || '').toLowerCase() === 'il' && (
+        <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-5 text-sm text-gray-800 space-y-2">
+          <p className="font-semibold text-yellow-900">🇮🇱 Israeli numbers — Twilio regulatory requirement</p>
+          <p>
+            To activate a <strong>+972</strong> phone number, Twilio requires regulatory documents from the Israeli Ministry of Communications (משרד התקשורת):
+          </p>
+          <ul className="list-disc list-inside space-y-1 ml-2">
+            <li>Individual: Israeli ID (תעודת זהות)</li>
+            <li>Business: Company registration (ח.פ. / ע.מ.) + proof of address</li>
+          </ul>
+          <p className="text-yellow-800">
+            After selecting a number below, contact us at{' '}
+            <a href="mailto:support@boltcall.org" className="underline font-medium">support@boltcall.org</a>{' '}
+            and we will guide you through submitting your bundle to Twilio.
+          </p>
+          <p className="text-gray-600">
+            <strong>Alternative:</strong> Forward your existing Cellcom/Partner/Bezeq number to your Boltcall number using call forwarding — no regulatory documents needed.
+          </p>
+        </div>
+      )}
+
       {/* Available Phone Numbers */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
