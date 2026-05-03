@@ -150,7 +150,8 @@ async function getCalApiKey(userId: string | null): Promise<string> {
 
 async function handleLookupCaller(
   args: any,
-  userId: string | null
+  userId: string | null,
+  locale = 'en-US'
 ): Promise<string> {
   const { phone_number } = args;
   if (!phone_number) return 'NEW CALLER: No phone number provided.\nProceed with standard greeting and qualification.';
