@@ -409,23 +409,27 @@ const StepBusinessProfile: React.FC = () => {
                 name="city"
               />
             </div>
+            {businessProfile.country !== 'il' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">State/Province</label>
+                <StyledInput
+                  type="text"
+                  value={businessProfile.state || ''}
+                  onChange={(e) => updateBusinessProfile({ state: e.target.value })}
+                  placeholder="State or province"
+                  name="state"
+                />
+              </div>
+            )}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">State/Province</label>
-              <StyledInput
-                type="text"
-                value={businessProfile.state || ''}
-                onChange={(e) => updateBusinessProfile({ state: e.target.value })}
-                placeholder="State or province"
-                name="state"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {businessProfile.country === 'il' ? 'מיקוד (Postal Code)' : 'Postal Code'}
+              </label>
               <StyledInput
                 type="text"
                 value={businessProfile.postalCode || ''}
                 onChange={(e) => updateBusinessProfile({ postalCode: e.target.value })}
-                placeholder="ZIP / Postal code"
+                placeholder={businessProfile.country === 'il' ? '1234567' : 'ZIP / Postal code'}
                 name="postalCode"
               />
             </div>
