@@ -263,16 +263,16 @@ const StepBusinessProfile: React.FC = () => {
           <div className="space-y-4">
             <div>
               <div className="relative">
-                <StyledInput
-                  type="tel"
+                <PhoneInput
+                  defaultCountry={(businessProfile.country?.toUpperCase() as CountryCode) || 'US'}
                   value={businessProfile.businessPhone || ''}
-                  onChange={(e) => {
-                    updateBusinessProfile({ businessPhone: e.target.value });
+                  onChange={(value) => {
+                    updateBusinessProfile({ businessPhone: value || '' });
                     setPhoneValidation(null);
                   }}
                   onBlur={handlePhoneBlur}
-                  placeholder="Enter your business phone number (e.g. +1234567890)"
-                  name="businessPhone"
+                  className="phone-input-wrapper"
+                  international
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
                   {isValidatingPhone && (
