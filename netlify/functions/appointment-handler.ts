@@ -218,8 +218,8 @@ export const handler: Handler = async (event) => {
           const messageBody = substituteVars(template, {
             client_name: attendeeName,
             service: eventTitle,
-            appointment_date: formatDate(startTime),
-            appointment_time: formatTime(startTime),
+            appointment_date: formatDate(startTime, locale),
+            appointment_time: formatTime(startTime, locale),
           });
 
           messagesToInsert.push({
@@ -249,8 +249,8 @@ export const handler: Handler = async (event) => {
           const vars = {
             client_name: attendeeName,
             service: eventTitle,
-            appointment_date: formatDate(startTime),
-            appointment_time: formatTime(startTime),
+            appointment_date: formatDate(startTime, locale),
+            appointment_time: formatTime(startTime, locale),
             business_name: businessName,
           };
 
