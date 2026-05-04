@@ -27,6 +27,7 @@ import SetupLoading from '../pages/SetupLoading';
 const BlogNeverMissCallAfterHours = React.lazy(() => import('../pages/BlogNeverMissCallAfterHours'));
 const BlogWhatsAppAppointmentBookingPlumbers = React.lazy(() => import('../pages/BlogWhatsAppAppointmentBookingPlumbers'));
 const BlogAIReceptionistDentists = React.lazy(() => import('../pages/BlogAIReceptionistDentists'));
+const BlogAIReceptionistLawFirms = React.lazy(() => import('../pages/BlogAIReceptionistLawFirms'));
 // ── Auth pages — lazy-loaded (not on typical landing path) ──────────────
 const Login = React.lazy(() => import('../pages/Login'));
 const Signup = React.lazy(() => import('../pages/Signup'));
@@ -552,6 +553,7 @@ const NavigationWrapper: React.FC = () => {
                 <Route path="/blog/never-miss-a-call-after-business-hours" element={<BlogNeverMissCallAfterHours />} />
                 <Route path="/blog/whatsapp-appointment-booking-plumbers" element={<BlogWhatsAppAppointmentBookingPlumbers />} />
                 <Route path="/blog/ai-receptionist-for-dentists" element={<BlogAIReceptionistDentists />} />
+                <Route path="/blog/ai-receptionist-for-law-firms" element={<BlogAIReceptionistLawFirms />} />
         </Route>
         {/* Industry-specific calculators */}
         <Route path="/tools/dentist-chair-calculator" element={<DentistChairCalculator />} />
