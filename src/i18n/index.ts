@@ -100,6 +100,7 @@ i18n
         integrations: enIntegrations,
         leads: enLeads,
         settings: enSettings,
+        setup: enSetup,
       },
     },
     ns: [...NAMESPACES],
