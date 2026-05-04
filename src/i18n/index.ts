@@ -36,7 +36,7 @@ const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<s
   const code = lang.split('-')[0];
   switch (code) {
     case 'he': {
-      const [common, dashboard, agents, analytics, auth, integrations, leads, settings] = await Promise.all([
+      const [common, dashboard, agents, analytics, auth, integrations, leads, settings, setup] = await Promise.all([
         import('./locales/he/common.json'),
         import('./locales/he/dashboard.json'),
         import('./locales/he/agents.json'),
@@ -45,6 +45,7 @@ const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<s
         import('./locales/he/integrations.json'),
         import('./locales/he/leads.json'),
         import('./locales/he/settings.json'),
+        import('./locales/he/setup.json'),
       ]);
       return {
         common: common.default,
@@ -55,6 +56,7 @@ const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<s
         integrations: integrations.default,
         leads: leads.default,
         settings: settings.default,
+        setup: setup.default,
       };
     }
     case 'es': {
