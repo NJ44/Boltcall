@@ -222,6 +222,29 @@ button:active,
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* ====== Luxury page scrollbar ====== */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.35) transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 5px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.30);
+  border-radius: 100px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.60);
+}
+
 /* Custom scrollbar styles for dashboard sidebar */
 .dashboard-sidebar {
   scrollbar-width: thin;
