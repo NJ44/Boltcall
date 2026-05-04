@@ -1,5 +1,8 @@
 import React from 'react';
 import { Bot, Phone, Mic, Loader2 } from 'lucide-react';
+import PhoneInput from 'react-phone-number-input';
+import type { CountryCode } from 'libphonenumber-js';
+import 'react-phone-number-input/style.css';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
 import { VoicePicker } from '../../ui/voice-picker';
