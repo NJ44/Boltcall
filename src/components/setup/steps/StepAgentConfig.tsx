@@ -1,5 +1,8 @@
 import React from 'react';
 import { Bot, Phone, Mic, Loader2 } from 'lucide-react';
+import PhoneInput from 'react-phone-number-input';
+import type { CountryCode } from 'libphonenumber-js';
+import 'react-phone-number-input/style.css';
 import { useSetupStore } from '../../../stores/setupStore';
 import StyledInput from '../../ui/StyledInput';
 import { VoicePicker } from '../../ui/voice-picker';
@@ -100,13 +103,14 @@ const StepAgentConfig: React.FC = () => {
             Human Transfer Number
           </div>
         </h3>
-        <StyledInput
-          type="tel"
-          value={agentConfig.transferNumber}
-          onChange={(e) => updateAgentConfig({ transferNumber: e.target.value })}
-          placeholder="+1 (555) 987-6543"
-          name="transferNumber"
-        />
+        <div className="phone-input-wrapper">
+          <PhoneInput
+            defaultCountry={(businessProfile.country?.toUpperCase() as CountryCode) || 'US'}
+            value={agentConfig.transferNumber}
+            onChange={(value) => updateAgentConfig({ transferNumber: value || '' })}
+            international
+          />
+        </div>
         <p className="mt-1 text-sm text-gray-500">
           When the AI can't help, calls transfer here. Leave blank to take a message instead.
         </p>

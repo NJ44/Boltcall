@@ -30,14 +30,30 @@ function substituteVars(template: string, vars: Record<string, string>): string 
   return result;
 }
 
-function formatDate(isoString: string): string {
-  const d = new Date(isoString);
-  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+const LANG_TO_LOCALE: Record<string, string> = {
+  en: 'en-US',
+  he: 'he-IL',
+  es: 'es-ES',
+};
+
+async function getUserLocale(supabase: ReturnType<typeof createClient>, userId: string): Promise<string> {
+  const { data } = await supabase
+    .from('agents')
+    .select('language')
+    .eq('user_id', userId)
+    .limit(1)
+    .single();
+  return LANG_TO_LOCALE[data?.language] || 'en-US';
 }
 
-function formatTime(isoString: string): string {
+function formatDate(isoString: string, locale = 'en-US'): string {
   const d = new Date(isoString);
-  return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  return d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+function formatTime(isoString: string, locale = 'en-US'): string {
+  const d = new Date(isoString);
+  return d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hour12: locale !== 'he-IL' });
 }
 
 export const handler: Handler = async (event) => {
@@ -122,6 +138,8 @@ export const handler: Handler = async (event) => {
       return { statusCode: 404, body: JSON.stringify({ error: 'No workspace found for user' }) };
     }
 
+    const locale = await getUserLocale(supabase, userId);
+
     const attendee = payload.attendees?.[0] || {};
     const attendeeName = attendee.name || 'Customer';
     const attendeeEmail = attendee.email || '';
@@ -200,8 +218,8 @@ export const handler: Handler = async (event) => {
           const messageBody = substituteVars(template, {
             client_name: attendeeName,
             service: eventTitle,
-            appointment_date: formatDate(startTime),
-            appointment_time: formatTime(startTime),
+            appointment_date: formatDate(startTime, locale),
+            appointment_time: formatTime(startTime, locale),
           });
 
           messagesToInsert.push({
@@ -231,8 +249,8 @@ export const handler: Handler = async (event) => {
           const vars = {
             client_name: attendeeName,
             service: eventTitle,
-            appointment_date: formatDate(startTime),
-            appointment_time: formatTime(startTime),
+            appointment_date: formatDate(startTime, locale),
+            appointment_time: formatTime(startTime, locale),
             business_name: businessName,
           };
 

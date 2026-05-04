@@ -11,6 +11,7 @@ import enAuth from './locales/en/auth.json';
 import enIntegrations from './locales/en/integrations.json';
 import enLeads from './locales/en/leads.json';
 import enSettings from './locales/en/settings.json';
+import enSetup from './locales/en/setup.json';
 
 export const SUPPORTED_LANGUAGES = [
   { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧', dir: 'ltr' as const },
@@ -21,7 +22,7 @@ export const SUPPORTED_LANGUAGES = [
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]['code'];
 export type TextDirection = 'ltr' | 'rtl';
 
-export const NAMESPACES = ['common', 'dashboard', 'agents', 'analytics', 'auth', 'integrations', 'leads', 'settings'] as const;
+export const NAMESPACES = ['common', 'dashboard', 'agents', 'analytics', 'auth', 'integrations', 'leads', 'settings', 'setup'] as const;
 export type Namespace = (typeof NAMESPACES)[number];
 
 /** Get text direction for a language code */
@@ -31,11 +32,11 @@ export function getDirection(lang: string): TextDirection {
 }
 
 // Lazy loader for non-English namespaces
-const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<string, string>>> => {
+const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<string, unknown>>> => {
   const code = lang.split('-')[0];
   switch (code) {
     case 'he': {
-      const [common, dashboard, agents, analytics, auth, integrations, leads, settings] = await Promise.all([
+      const [common, dashboard, agents, analytics, auth, integrations, leads, settings, setup] = await Promise.all([
         import('./locales/he/common.json'),
         import('./locales/he/dashboard.json'),
         import('./locales/he/agents.json'),
@@ -44,6 +45,7 @@ const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<s
         import('./locales/he/integrations.json'),
         import('./locales/he/leads.json'),
         import('./locales/he/settings.json'),
+        import('./locales/he/setup.json'),
       ]);
       return {
         common: common.default,
@@ -54,6 +56,7 @@ const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<s
         integrations: integrations.default,
         leads: leads.default,
         settings: settings.default,
+        setup: setup.default,
       };
     }
     case 'es': {
@@ -97,6 +100,7 @@ i18n
         integrations: enIntegrations,
         leads: enLeads,
         settings: enSettings,
+        setup: enSetup,
       },
     },
     ns: [...NAMESPACES],
