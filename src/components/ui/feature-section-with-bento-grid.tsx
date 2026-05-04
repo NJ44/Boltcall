@@ -20,7 +20,6 @@ import CountUp from "react-countup";
 
 function Feature() {
   const [isChartVisible, setIsChartVisible] = useState(false);
-  const chartRef = useRef<HTMLDivElement>(null);
 
   const chartData = [
     { month: "Jan", value: 50 },
