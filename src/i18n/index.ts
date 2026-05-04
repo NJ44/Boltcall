@@ -32,7 +32,7 @@ export function getDirection(lang: string): TextDirection {
 }
 
 // Lazy loader for non-English namespaces
-const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<string, string>>> => {
+const lazyLoadNamespaces = async (lang: string): Promise<Record<string, Record<string, unknown>>> => {
   const code = lang.split('-')[0];
   switch (code) {
     case 'he': {
