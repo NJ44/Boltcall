@@ -109,6 +109,7 @@ export default function AuthSwitch({
   useEffect(() => {
     if ((isLogin && loginHasValidationErrors) || (!isLogin && signupHasValidationErrors)) {
       setError("");
+      setLoginFailed(false);
     }
   }, [loginHasValidationErrors, signupHasValidationErrors, isLogin]);
 
