@@ -11,6 +11,7 @@ import enAuth from './locales/en/auth.json';
 import enIntegrations from './locales/en/integrations.json';
 import enLeads from './locales/en/leads.json';
 import enSettings from './locales/en/settings.json';
+import enSetup from './locales/en/setup.json';
 
 export const SUPPORTED_LANGUAGES = [
   { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧', dir: 'ltr' as const },
