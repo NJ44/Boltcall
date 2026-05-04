@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* react-phone-number-input styling */
+.phone-input-wrapper .PhoneInput {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #fff;
+  padding: 0 0.75rem;
+  min-height: 48px;
+  gap: 0.5rem;
+  transition: border-color 0.15s;
+}
+.phone-input-wrapper .PhoneInput:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+.phone-input-wrapper .PhoneInputInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9375rem;
+  color: #111827;
+  padding: 0.5rem 0;
+}
+.phone-input-wrapper .PhoneInputCountrySelect {
+  border: none;
+  background: transparent;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+/* RTL global adjustments */
+html[dir="rtl"] {
+  font-family: 'Heebo', ui-sans-serif, system-ui, sans-serif;
+}
+html[dir="rtl"] .phone-input-wrapper .PhoneInput {
+  flex-direction: row-reverse;
+}
+
 :root {
   color-scheme: light only;
 }
