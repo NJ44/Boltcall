@@ -2,10 +2,10 @@ import type { Handler } from '@netlify/functions';
 
 // Firecrawl API keys — waterfall: use key 1 first, if exhausted try key 2, then key 3
 const FIRECRAWL_KEYS = [
-  process.env.FIRECRAWL_API_KEY_1 || 'fc-36d59dda1eb14a94955d9d26737f99db',
-  process.env.FIRECRAWL_API_KEY_2 || 'fc-9aabf45ddf9241ec9d2a61bb2c754d6f',
-  process.env.FIRECRAWL_API_KEY_3 || 'fc-c9156afd69464cf6a6bb3b705eff80bd',
-];
+  process.env.FIRECRAWL_API_KEY_1,
+  process.env.FIRECRAWL_API_KEY_2,
+  process.env.FIRECRAWL_API_KEY_3,
+].filter(Boolean) as string[];
 
 const N8N_FALLBACK_WEBHOOK = process.env.N8N_SCRAPER_WEBHOOK || 'https://n8n.srv974118.hstgr.cloud/webhook/scrape-website';
 
@@ -127,6 +127,15 @@ const handler: Handler = async (event) => {
   }
 
   try {
+    // Require internal secret — prevents external callers from burning Firecrawl credits
+    const internalSecret = process.env.INTERNAL_API_SECRET;
+    if (internalSecret) {
+      const callerSecret = event.headers['x-internal-secret'];
+      if (callerSecret !== internalSecret) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Forbidden' }) };
+      }
+    }
+
     const { url, user_id } = JSON.parse(event.body || '{}');
 
     if (!url) {
