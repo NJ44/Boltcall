@@ -112,12 +112,16 @@ export default function AuthSwitch({
     }
   }, [loginHasValidationErrors, signupHasValidationErrors, isLogin]);
 
-  const switchMode = (newMode: "login" | "signup") => {
-    if (newMode === mode) return;
+  const switchMode = (newMode: "login" | "signup", prefillEmail?: string) => {
+    if (newMode === mode && !prefillEmail) return;
     setError("");
     setResetSent(false);
+    setLoginFailed(false);
     loginForm.reset();
     signupForm.reset();
+    if (prefillEmail) {
+      signupForm.setValue("email", prefillEmail);
+    }
     setMode(newMode);
   };
 
