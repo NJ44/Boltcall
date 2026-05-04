@@ -22,7 +22,7 @@ export const SUPPORTED_LANGUAGES = [
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]['code'];
 export type TextDirection = 'ltr' | 'rtl';
 
-export const NAMESPACES = ['common', 'dashboard', 'agents', 'analytics', 'auth', 'integrations', 'leads', 'settings'] as const;
+export const NAMESPACES = ['common', 'dashboard', 'agents', 'analytics', 'auth', 'integrations', 'leads', 'settings', 'setup'] as const;
 export type Namespace = (typeof NAMESPACES)[number];
 
 /** Get text direction for a language code */
