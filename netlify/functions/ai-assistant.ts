@@ -559,9 +559,10 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
         .eq('user_id', ctx.userId)
         .gte('created_at', since);
 
+      const locale = ctx.locale || 'en-US';
       const lines = leads.map((l: any) => {
         const name = [l.first_name, l.last_name].filter(Boolean).join(' ') || 'Unknown';
-        const date = new Date(l.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const date = new Date(l.created_at).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
         return `• ${name} | ${l.phone || l.email || 'no contact'} | ${l.source} | ${l.status} | ${date}`;
       });
 
