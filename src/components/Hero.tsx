@@ -1,231 +1,168 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Calendar, MessageSquare, Users } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { motion, LayoutGroup } from 'framer-motion';
+import { TextRotate } from './ui/text-rotate';
+import Floating, { FloatingElement } from './ui/parallax-floating';
 
-// Lazy-load ModalVideo since it's only shown on user interaction
 const ModalVideo = React.lazy(() => import('./ModalVideo'));
 
-// Business-related icon components using lucide-react
-const IconPhone = (props: React.SVGProps<SVGSVGElement>) => <Phone {...props} strokeWidth={2.5} />;
-const IconCalendar = (props: React.SVGProps<SVGSVGElement>) => <Calendar {...props} strokeWidth={2.5} />;
-const IconUsers = (props: React.SVGProps<SVGSVGElement>) => <Users {...props} strokeWidth={2.5} />;
-const IconSMS2 = (props: React.SVGProps<SVGSVGElement>) => <MessageSquare {...props} strokeWidth={2.5} />;
-
-interface IconData {
-  id: number;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  className: string;
-}
-
-// Define the icons with their unique positions
-const heroIcons: IconData[] = [
-  { id: 1, icon: IconPhone, className: 'top-[55%] md:top-[15%] left-[2%] md:left-[3%]' },
-  { id: 2, icon: IconCalendar, className: 'top-[60%] md:top-[20%] right-[2%] md:right-[3%]' },
-  { id: 6, icon: IconUsers, className: 'top-[68%] md:top-[45%] left-[3%] md:left-[5%]' },
-  { id: 8, icon: IconSMS2, className: 'top-[72%] md:top-[50%] right-[1%] md:right-[2%]' },
+const floatingImages = [
+  {
+    url: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2340&auto=format&fit=crop",
+    alt: "Customer service representative",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2340&auto=format&fit=crop",
+    alt: "Business office meeting",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=2340&auto=format&fit=crop",
+    alt: "Business handshake",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2340&auto=format&fit=crop",
+    alt: "Phone conversation",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2340&auto=format&fit=crop",
+    alt: "Happy business professional",
+  },
 ];
-
-// Stable float durations per icon
-const floatDurations = heroIcons.map((_, i) => 5 + ((i * 3.7) % 5));
-
-// CSS keyframes injected once
-const styleId = 'hero-float-keyframes';
-if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
-  const style = document.createElement('style');
-  style.id = styleId;
-  style.textContent = `
-    @keyframes heroFadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes heroFadeInScale {
-      from { opacity: 0; transform: scale(0.5); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes heroFloat {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(6px, -8px) rotate(5deg); }
-      50% { transform: translate(0, 0) rotate(0deg); }
-      75% { transform: translate(-6px, 8px) rotate(-5deg); }
-    }
-    @keyframes heroWordFadeUp {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      [style*="heroFadeInUp"], [style*="heroFadeInScale"], [style*="heroWordFadeUp"] {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-      }
-      [style*="heroFloat"] {
-        animation: none !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-// A single floating icon — pure CSS animation
-const FloatingIcon = React.memo(({
-  iconData,
-  index,
-}: {
-  iconData: IconData;
-  index: number;
-}) => {
-  return (
-    <div
-      className={cn('absolute', iconData.className)}
-      style={{
-        opacity: 0,
-        animation: `heroFadeInScale 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) ${1.2 + index * 0.1}s forwards`,
-        willChange: 'transform, opacity',
-      }}
-    >
-      <div
-        className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 p-3 rounded-3xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200/50"
-        style={{
-          animation: `heroFloat ${floatDurations[index]}s ease-in-out infinite alternate`,
-          willChange: 'transform',
-        }}
-      >
-        <iconData.icon className="w-8 h-8 md:w-10 md:h-10 text-blue-600" />
-      </div>
-    </div>
-  );
-});
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [titleNumber, setTitleNumber] = useState(1);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile on mount and resize
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const titles = useMemo(
-    () => ["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"],
-    []
-  );
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (titleNumber === titles.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
-    }, 1750);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
 
   return (
     <>
       <section
         id="hero"
-        className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-visible z-[1] bg-white py-12 md:py-16 lg:py-24"
+        className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-hidden z-[1] bg-white"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
       >
-        {/* Container for the background floating icons */}
+        {/* Parallax floating images */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
-          {heroIcons.slice(0, isMobile ? 3 : heroIcons.length).map((iconData, index) => (
-            <FloatingIcon
-              key={iconData.id}
-              iconData={iconData}
-              index={index}
-            />
-          ))}
+          <Floating sensitivity={-0.5} className="h-full">
+            {/* Top-left small */}
+            <FloatingElement
+              depth={0.5}
+              className="top-[18%] left-[2%] md:top-[22%] md:left-[4%]"
+            >
+              <motion.img
+                src={floatingImages[0].url}
+                alt={floatingImages[0].alt}
+                className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-cover rounded-2xl shadow-2xl -rotate-[3deg] hover:scale-105 transition-transform duration-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              />
+            </FloatingElement>
+
+            {/* Top-left large */}
+            <FloatingElement
+              depth={1}
+              className="top-[3%] left-[6%] md:top-[8%] md:left-[9%]"
+            >
+              <motion.img
+                src={floatingImages[1].url}
+                alt={floatingImages[1].alt}
+                className="w-36 h-24 sm:w-44 sm:h-32 md:w-52 md:h-40 lg:w-56 lg:h-44 object-cover rounded-2xl shadow-2xl -rotate-12 hover:scale-105 transition-transform duration-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              />
+            </FloatingElement>
+
+            {/* Bottom-left */}
+            <FloatingElement
+              depth={4}
+              className="top-[72%] left-[4%] md:top-[65%] md:left-[6%]"
+            >
+              <motion.img
+                src={floatingImages[2].url}
+                alt={floatingImages[2].alt}
+                className="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-60 lg:h-60 object-cover rounded-2xl shadow-2xl -rotate-[4deg] hover:scale-105 transition-transform duration-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9 }}
+              />
+            </FloatingElement>
+
+            {/* Top-right */}
+            <FloatingElement
+              depth={2}
+              className="top-[2%] left-[84%] md:top-[4%] md:left-[80%]"
+            >
+              <motion.img
+                src={floatingImages[3].url}
+                alt={floatingImages[3].alt}
+                className="w-36 h-32 sm:w-44 sm:h-40 md:w-56 md:h-48 lg:w-60 lg:h-52 object-cover rounded-2xl shadow-2xl rotate-[6deg] hover:scale-105 transition-transform duration-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.1 }}
+              />
+            </FloatingElement>
+
+            {/* Bottom-right */}
+            <FloatingElement
+              depth={1}
+              className="top-[68%] left-[80%] md:top-[60%] md:left-[80%]"
+            >
+              <motion.img
+                src={floatingImages[4].url}
+                alt={floatingImages[4].alt}
+                className="w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover rounded-2xl shadow-2xl rotate-[14deg] hover:scale-105 transition-transform duration-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.3 }}
+              />
+            </FloatingElement>
+          </Floating>
         </div>
 
+        {/* Center content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10 text-center pt-20 md:pt-28 lg:pt-36">
+          <div className="relative z-10 text-center pt-32 md:pt-44 lg:pt-52 pb-12">
+
             {/* Animated Headline */}
-            <div
-              className="flex justify-center mb-6 relative z-10"
-              style={{
-                opacity: 0,
-                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s forwards',
-              }}
+            <motion.h1
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-text-main flex flex-col items-center justify-center leading-tight space-y-1 md:space-y-2 mb-6"
+              style={{ fontFamily: "'Sora', sans-serif" }}
+              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
             >
-              <div className="flex gap-4 flex-col items-center w-full max-w-4xl mx-auto">
-                <h1 className="max-w-4xl tracking-tighter font-bold text-text-main flex items-center justify-center gap-1 md:gap-2 flex-wrap md:flex-nowrap px-2 md:pl-16" style={{ fontSize: 'clamp(22px, 4.5vw, 56px)' }}>
-                  <span
-                    style={{
-                      opacity: 0,
-                      animation: 'heroWordFadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s forwards',
-                    }}
-                  >
-                    NEVER
-                  </span>
-                  <span
-                    style={{
-                      opacity: 0,
-                      animation: 'heroWordFadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.35s forwards',
-                    }}
-                  >
-                    MISS
-                  </span>
-                  <span
-                    style={{
-                      opacity: 0,
-                      animation: 'heroWordFadeUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.5s forwards',
-                    }}
-                  >
-                    A
-                  </span>
+              <span className="speakable-intro">NEVER MISS A</span>
 
-                  <span className="relative inline-flex items-center justify-start overflow-hidden h-[1.2em] min-h-[1.2em]" style={{ contain: 'layout style paint', width: '4.5em' }}>
-                    {titles.map((title, index) => (
-                      <span
-                        key={title}
-                        className="absolute left-0 font-bold text-blue-600 whitespace-nowrap"
-                        style={{
-                          fontSize: 'clamp(22px, 4.5vw, 56px)',
-                          transition: 'transform 0.8s cubic-bezier(0.22, 0.68, 0, 1)',
-                          transform: titleNumber === index
-                            ? 'translateY(0)'
-                            : titleNumber > index
-                              ? 'translateY(-150px)'
-                              : 'translateY(150px)',
-                          willChange: 'transform',
-                        }}
-                      >
-                        {title}
-                      </span>
-                    ))}
-                    <noscript><span className="font-bold text-blue-600">CALL</span></noscript>
-                  </span>
-                </h1>
-              </div>
-            </div>
+              <LayoutGroup>
+                <motion.span layout className="flex items-center whitespace-pre">
+                  <TextRotate
+                    texts={["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"]}
+                    mainClassName="overflow-hidden text-blue-600 py-0 pb-1 md:pb-2 rounded-xl"
+                    staggerDuration={0.04}
+                    staggerFrom="last"
+                    rotationInterval={1750}
+                    transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                  />
+                </motion.span>
+              </LayoutGroup>
+            </motion.h1>
 
-            {/* Subheadline — "What is this?" */}
-            <p
-              className="text-base md:text-xl text-text-muted mb-3 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed relative z-10"
-              style={{
-                opacity: 0,
-                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.7s forwards',
-              }}
+            {/* Subheadline */}
+            <motion.p
+              className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed"
+              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 0.5 }}
             >
               Every lead responded to instantly. Every opportunity booked on your calendar. 24/7, on autopilot.
-            </p>
+            </motion.p>
 
             {/* CTA Buttons — primary action first */}
-            <div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4 relative z-10"
-              style={{
-                opacity: 0,
-                animation: 'heroFadeInUp 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.95s forwards',
-              }}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4"
+              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 0.7 }}
             >
               <Link
                 to="/signup"
@@ -239,20 +176,19 @@ const Hero: React.FC = () => {
               >
                 See How It Works
               </button>
-            </div>
-
+            </motion.div>
 
           </div>
         </div>
 
         {/* Video Modal — lazy loaded */}
         {isVideoOpen && (
-          <React.Suspense fallback={null}>
+          <Suspense fallback={null}>
             <ModalVideo
               isOpen={isVideoOpen}
               onClose={() => setIsVideoOpen(false)}
             />
-          </React.Suspense>
+          </Suspense>
         )}
       </section>
     </>
