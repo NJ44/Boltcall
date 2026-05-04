@@ -70,6 +70,9 @@ const ROUTES = [
   { path: "/solar-speed-playbook",                               priority: "0.8", changefreq: "monthly" },
   { path: "/solar-speed-playbook/thank-you",                     priority: "0.4", changefreq: "monthly" },
   { path: "/solar-benchmark",                                    priority: "0.8", changefreq: "monthly" },
+  { path: "/solar-benchmark-2026",                              priority: "0.9", changefreq: "monthly" },
+  { path: "/solar-roi-calculator",                              priority: "0.8", changefreq: "monthly" },
+  { path: "/solar-speed-score",                                 priority: "0.8", changefreq: "monthly" },
   { path: "/funnel-optimizer",                                   priority: "0.7", changefreq: "monthly" },
   { path: "/rank-on-google-offer",                               priority: "0.7", changefreq: "monthly" },
 
