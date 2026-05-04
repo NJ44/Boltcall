@@ -1,5 +1,5 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   AnimatedCard,
@@ -9,7 +9,6 @@ import {
   CardVisual,
   Visual3,
 } from './animated-card-chart';
-import { Tilt } from './tilt';
 import LazyLottie from './LazyLottie';
 import { Clock } from 'lucide-react';
 import {
