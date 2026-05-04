@@ -138,6 +138,8 @@ export const handler: Handler = async (event) => {
       return { statusCode: 404, body: JSON.stringify({ error: 'No workspace found for user' }) };
     }
 
+    const locale = await getUserLocale(supabase, userId);
+
     const attendee = payload.attendees?.[0] || {};
     const attendeeName = attendee.name || 'Customer';
     const attendeeEmail = attendee.email || '';
