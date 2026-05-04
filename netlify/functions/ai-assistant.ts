@@ -197,6 +197,8 @@ const tools: Anthropic.Tool[] = [
 ];
 
 // ── Fetch user's business context ──
+const LANG_TO_LOCALE: Record<string, string> = { en: 'en-US', he: 'he-IL', es: 'es-ES' };
+
 async function getBusinessContext(userId: string) {
   const supabase = getSupabase();
   const context: any = { userId };
@@ -215,6 +217,13 @@ async function getBusinessContext(userId: string) {
       .eq('user_id', userId)
       .limit(5);
     if (agents?.length) context.agents = agents;
+
+    // Derive locale from agent language or business country
+    const agentLang = agents?.[0]?.language;
+    const country = profile?.country?.toLowerCase();
+    context.locale = agentLang
+      ? (LANG_TO_LOCALE[agentLang] || 'en-US')
+      : country === 'il' ? 'he-IL' : 'en-US';
 
     const { data: phones } = await supabase
       .from('phone_numbers')
