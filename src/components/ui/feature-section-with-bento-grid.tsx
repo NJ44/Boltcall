@@ -61,7 +61,7 @@ function Feature() {
 
               {/* Right side - Chart */}
               <div className="flex-1 flex items-center justify-center ml-6">
-                <div ref={chartRef} className="relative w-full h-48 bg-muted rounded-xl overflow-hidden">
+                <div className="relative w-full h-48 bg-muted rounded-xl overflow-hidden">
                   {/* Chart */}
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={isChartVisible ? chartData : []}>
