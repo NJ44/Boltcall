@@ -283,12 +283,12 @@ const WizardShell: React.FC = () => {
 
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <h1 className="text-4xl font-bold text-black">
-                Account Setup
+                {t('wizard.title')}
               </h1>
             </div>
 
             <div className="text-sm text-black font-medium">
-              Step {currentStep} of {setupSteps.length}
+              {t('wizard.stepOf', { current: currentStep, total: setupSteps.length })}
             </div>
           </div>
         </div>
