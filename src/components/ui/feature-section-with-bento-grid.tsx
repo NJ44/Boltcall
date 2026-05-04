@@ -105,16 +105,7 @@ function Feature() {
               viewport={{ once: true }}
               className="flex justify-center w-full"
             >
-              <Tilt
-                rotationFactor={15}
-                isRevese
-                springOptions={{
-                  stiffness: 26.7,
-                  damping: 4.1,
-                  mass: 0.2,
-                }}
-                className="rounded-xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300 w-full"
-              >
+              <div className="rounded-xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] transition-shadow duration-300 w-full">
                 <AnimatedCard className="shadow-xl w-full">
                   <CardVisual>
                     <Visual3 mainColor="#3b82f6" secondaryColor="#06b6d4" />
@@ -126,7 +117,7 @@ function Feature() {
                     </CardDescription>
                   </CardBody>
                 </AnimatedCard>
-              </Tilt>
+              </div>
             </motion.div>
 
             {/* Box Card - Text on Top */}
