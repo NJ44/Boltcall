@@ -86,6 +86,7 @@ export default function AuthSwitch({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [resetSent, setResetSent] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   const { login, signup, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } = useAuth();
   const navigate = useNavigate();
