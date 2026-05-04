@@ -350,7 +350,7 @@ const WizardShell: React.FC = () => {
             }`}
           >
             <ChevronLeft className="w-5 h-5" />
-            Previous
+            {t('wizard.back')}
           </button>
 
           <Button
@@ -358,7 +358,7 @@ const WizardShell: React.FC = () => {
             disabled={!isCurrentStepValid() || isLaunching}
             className="flex items-center gap-2 px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {currentStep === setupSteps.length ? 'Complete Setup' : 'Next'}
+            {currentStep === setupSteps.length ? t('wizard.complete') : t('wizard.next')}
             {currentStep < setupSteps.length && <ChevronRight className="w-5 h-5" />}
           </Button>
         </div>
