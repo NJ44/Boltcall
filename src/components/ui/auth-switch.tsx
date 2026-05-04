@@ -129,10 +129,12 @@ export default function AuthSwitch({
     try {
       setIsLoading(true);
       setError("");
+      setLoginFailed(false);
       await login(data);
       navigate(redirectTo);
     } catch {
-      setError("Invalid email or password. Please try again.");
+      setError("Invalid email or password.");
+      setLoginFailed(true);
     } finally {
       setIsLoading(false);
     }
