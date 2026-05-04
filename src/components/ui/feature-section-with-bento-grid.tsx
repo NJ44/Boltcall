@@ -39,18 +39,13 @@ function Feature() {
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl ml-0 sm:ml-8">
             {/* Wide Card - Text on Left */}
-            <motion.div 
-              ref={(el) => { cardRefs.current[0] = el; }}
-              onMouseMove={(e) => handleMouseMove(e, 0)}
-              onMouseLeave={() => handleMouseLeave(0)}
-              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-64 transition-transform duration-300 ease-out cursor-pointer w-full"
-              style={{ transformStyle: 'preserve-3d' }}
+            <motion.div
+              className="bg-muted rounded-xl lg:col-span-2 p-6 flex items-center shadow-2xl h-64 w-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
               onAnimationStart={() => {
-                // Start chart animation when card starts fading in
                 setTimeout(() => {
                   setIsChartVisible(true);
                 }, 100);
