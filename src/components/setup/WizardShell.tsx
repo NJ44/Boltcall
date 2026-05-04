@@ -2,6 +2,7 @@ import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
@@ -32,6 +33,7 @@ const WizardShell: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation('setup');
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -281,12 +283,12 @@ const WizardShell: React.FC = () => {
 
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <h1 className="text-4xl font-bold text-black">
-                Account Setup
+                {t('wizard.title')}
               </h1>
             </div>
 
             <div className="text-sm text-black font-medium">
-              Step {currentStep} of {setupSteps.length}
+              {t('wizard.stepOf', { current: currentStep, total: setupSteps.length })}
             </div>
           </div>
         </div>
@@ -325,7 +327,7 @@ const WizardShell: React.FC = () => {
                   <div className="flex items-center justify-center py-8">
                     <div className="text-center">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue mx-auto mb-4"></div>
-                      <p className="text-black/60">Loading...</p>
+                      <p className="text-black/60">{t('wizard.loading')}</p>
                     </div>
                   </div>
                 }>
@@ -348,7 +350,7 @@ const WizardShell: React.FC = () => {
             }`}
           >
             <ChevronLeft className="w-5 h-5" />
-            Previous
+            {t('wizard.back')}
           </button>
 
           <Button
@@ -356,7 +358,7 @@ const WizardShell: React.FC = () => {
             disabled={!isCurrentStepValid() || isLaunching}
             className="flex items-center gap-2 px-8 py-3 bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {currentStep === setupSteps.length ? 'Complete Setup' : 'Next'}
+            {currentStep === setupSteps.length ? t('wizard.complete') : t('wizard.next')}
             {currentStep < setupSteps.length && <ChevronRight className="w-5 h-5" />}
           </Button>
         </div>

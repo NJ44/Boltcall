@@ -1,0 +1,73 @@
+{
+  "wizard": {
+    "title": "Account Setup",
+    "stepOf": "Step {{current}} of {{total}}",
+    "back": "Previous",
+    "next": "Next",
+    "complete": "Complete Setup",
+    "loading": "Loading...",
+    "steps": {
+      "businessProfile": { "title": "Business Profile", "description": "Company information" },
+      "knowledgeBase": { "title": "Knowledge Base", "description": "Services, FAQs & documents" },
+      "survey": { "title": "Quick Questions", "description": "Help us personalize your experience" }
+    }
+  },
+  "businessProfile": {
+    "heading": "Tell Us About Your Business",
+    "businessName": "Business Name",
+    "businessPhone": "Business Phone",
+    "website": "Website URL",
+    "industry": "Industry / Category",
+    "country": "Country",
+    "language": "Language Spoken",
+    "address": "Address",
+    "city": "City",
+    "state": "State / Province",
+    "postalCode": "Postal Code",
+    "postalCodeIL": "מיקוד (Postal Code)",
+    "timezone": "Timezone",
+    "serviceAreas": "Service Areas",
+    "openingHours": "Business Hours",
+    "businessNamePlaceholder": "Acme Plumbing",
+    "phonePlaceholder": "+1 (555) 987-6543"
+  },
+  "agentConfig": {
+    "heading": "Configure Your AI Agent",
+    "agentName": "Agent Name",
+    "agentNamePlaceholder": "{{businessName}} AI Assistant",
+    "agentType": "Agent Type",
+    "voice": "Voice",
+    "language": "Agent Language",
+    "types": {
+      "inbound": { "label": "Inbound Receptionist", "description": "Answers incoming calls — booking, FAQs, transfers" },
+      "outbound_speed_to_lead": { "label": "Speed to Lead", "description": "Calls new leads within minutes of form submission" },
+      "outbound_reactivation": { "label": "Reactivation", "description": "Re-engages past leads or dormant customers" },
+      "outbound_reminder": { "label": "Appointment Reminder", "description": "Confirms upcoming appointments" },
+      "outbound_review": { "label": "Review Request", "description": "Asks satisfied customers for a Google review" }
+    }
+  },
+  "phone": {
+    "heading": "Phone Number",
+    "description": "Choose a phone number for your AI receptionist.",
+    "available": "Available Phone Numbers",
+    "loadingNumbers": "Loading available phone numbers...",
+    "purchased": "Phone number purchased successfully!",
+    "number": "Number: {{number}}",
+    "ilNotice": {
+      "title": "Israeli numbers — Twilio regulatory requirement",
+      "body": "To activate a +972 phone number, Twilio requires regulatory documents from the Israeli Ministry of Communications (משרד התקשורת):",
+      "individual": "Individual: Israeli ID (תעודת זהות)",
+      "business": "Business: Company registration (ח.פ. / ע.מ.) + proof of address",
+      "contact": "After selecting a number below, contact us at support@boltcall.org and we will guide you through submitting your bundle to Twilio.",
+      "alternative": "Alternative: Forward your existing Cellcom/Partner/Bezeq number to your Boltcall number using call forwarding — no regulatory documents needed."
+    }
+  },
+  "knowledge": {
+    "heading": "Knowledge Base",
+    "description": "Add your services, FAQs, and business documents so your AI agent can answer callers accurately."
+  },
+  "survey": {
+    "heading": "One Last Thing",
+    "description": "Help us personalize your AI agent."
+  }
+}

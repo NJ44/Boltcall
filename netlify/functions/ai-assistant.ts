@@ -197,6 +197,8 @@ const tools: Anthropic.Tool[] = [
 ];
 
 // ── Fetch user's business context ──
+const LANG_TO_LOCALE: Record<string, string> = { en: 'en-US', he: 'he-IL', es: 'es-ES' };
+
 async function getBusinessContext(userId: string) {
   const supabase = getSupabase();
   const context: any = { userId };
@@ -215,6 +217,13 @@ async function getBusinessContext(userId: string) {
       .eq('user_id', userId)
       .limit(5);
     if (agents?.length) context.agents = agents;
+
+    // Derive locale from agent language or business country
+    const agentLang = agents?.[0]?.language;
+    const country = profile?.country?.toLowerCase();
+    context.locale = agentLang
+      ? (LANG_TO_LOCALE[agentLang] || 'en-US')
+      : country === 'il' ? 'he-IL' : 'en-US';
 
     const { data: phones } = await supabase
       .from('phone_numbers')
@@ -550,9 +559,10 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
         .eq('user_id', ctx.userId)
         .gte('created_at', since);
 
+      const locale = ctx.locale || 'en-US';
       const lines = leads.map((l: any) => {
         const name = [l.first_name, l.last_name].filter(Boolean).join(' ') || 'Unknown';
-        const date = new Date(l.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const date = new Date(l.created_at).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
         return `• ${name} | ${l.phone || l.email || 'no contact'} | ${l.source} | ${l.status} | ${date}`;
       });
 
@@ -583,9 +593,10 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
       if (apptErr) return { result: `Failed to query appointments: ${apptErr.message}` };
       if (!appts?.length) return { result: `No ${upcoming ? 'upcoming' : 'past'} appointments in the next ${days} days.` };
 
+      const apptLocale = ctx.locale || 'en-US';
       const lines = appts.map((a: any) => {
-        const date = new Date(a.starts_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        const time = new Date(a.starts_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        const date = new Date(a.starts_at).toLocaleDateString(apptLocale, { weekday: 'short', month: 'short', day: 'numeric' });
+        const time = new Date(a.starts_at).toLocaleTimeString(apptLocale, { hour: 'numeric', minute: '2-digit', hour12: apptLocale !== 'he-IL' });
         return `• ${date} ${time} — ${a.client_name || 'Unknown'} (${a.service_name || 'General'}) [${a.status}]`;
       });
 

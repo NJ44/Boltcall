@@ -1,0 +1,73 @@
+{
+  "wizard": {
+    "title": "הגדרת חשבון",
+    "stepOf": "שלב {{current}} מתוך {{total}}",
+    "back": "הקודם",
+    "next": "הבא",
+    "complete": "סיום הגדרה",
+    "loading": "טוען...",
+    "steps": {
+      "businessProfile": { "title": "פרופיל עסקי", "description": "פרטי החברה" },
+      "knowledgeBase": { "title": "מאגר ידע", "description": "שירותים, שאלות נפוצות ומסמכים" },
+      "survey": { "title": "שאלות קצרות", "description": "עזור לנו להתאים אישית את החוויה שלך" }
+    }
+  },
+  "businessProfile": {
+    "heading": "ספר לנו על העסק שלך",
+    "businessName": "שם העסק",
+    "businessPhone": "טלפון עסקי",
+    "website": "כתובת אתר",
+    "industry": "תחום / קטגוריה",
+    "country": "מדינה",
+    "language": "שפה מדוברת",
+    "address": "כתובת",
+    "city": "עיר",
+    "state": "מחוז / מדינה",
+    "postalCode": "מיקוד (Postal Code)",
+    "postalCodeIL": "מיקוד",
+    "timezone": "אזור זמן",
+    "serviceAreas": "אזורי שירות",
+    "openingHours": "שעות פעילות",
+    "businessNamePlaceholder": "שרברבות כהן",
+    "phonePlaceholder": "+972 50-000-0000"
+  },
+  "agentConfig": {
+    "heading": "הגדר את סוכן הבינה המלאכותית",
+    "agentName": "שם הסוכן",
+    "agentNamePlaceholder": "עוזר AI של {{businessName}}",
+    "agentType": "סוג הסוכן",
+    "voice": "קול",
+    "language": "שפת הסוכן",
+    "types": {
+      "inbound": { "label": "פקיד קבלה נכנס", "description": "עונה לשיחות נכנסות — הזמנות, שאלות נפוצות, העברות" },
+      "outbound_speed_to_lead": { "label": "מהירות ל-ליד", "description": "מתקשר ללידים חדשים תוך דקות מהגשת הטופס" },
+      "outbound_reactivation": { "label": "הפעלה מחדש", "description": "מחזיר לידים ישנים או לקוחות רדומים" },
+      "outbound_reminder": { "label": "תזכורת פגישה", "description": "מאשר פגישות קרובות" },
+      "outbound_review": { "label": "בקשת ביקורת", "description": "מבקש מלקוחות מרוצים ביקורת בגוגל" }
+    }
+  },
+  "phone": {
+    "heading": "מספר טלפון",
+    "description": "בחר מספר טלפון לפקיד הקבלה הדיגיטלי שלך.",
+    "available": "מספרי טלפון זמינים",
+    "loadingNumbers": "טוען מספרי טלפון זמינים...",
+    "purchased": "מספר הטלפון נרכש בהצלחה!",
+    "number": "מספר: {{number}}",
+    "ilNotice": {
+      "title": "🇮🇱 מספרים ישראליים — דרישת רגולציה של Twilio",
+      "body": "להפעלת מספר +972, Twilio דורש מסמכים רגולטוריים ממשרד התקשורת:",
+      "individual": "יחיד: תעודת זהות ישראלית",
+      "business": "עסק: רישום חברה (ח.פ. / ע.מ.) + הוכחת כתובת",
+      "contact": "לאחר בחירת מספר, צור קשר בכתובת support@boltcall.org ונדריך אותך בהגשת החבילה ל-Twilio.",
+      "alternative": "חלופה: העבר את מספר הסלולרי הקיים שלך (Cellcom/Partner/Bezeq) למספר Boltcall באמצעות העברת שיחות — ללא צורך במסמכים רגולטוריים."
+    }
+  },
+  "knowledge": {
+    "heading": "מאגר ידע",
+    "description": "הוסף את השירותים, השאלות הנפוצות והמסמכים העסקיים שלך כדי שהסוכן יוכל לענות לשואלים בדיוק."
+  },
+  "survey": {
+    "heading": "עוד דבר אחד",
+    "description": "עזור לנו להתאים אישית את סוכן הבינה המלאכותית שלך."
+  }
+}
