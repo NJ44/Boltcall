@@ -2,6 +2,7 @@ import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSetupStore, setupSteps } from '../../stores/setupStore';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
