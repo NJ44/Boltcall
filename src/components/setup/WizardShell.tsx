@@ -33,6 +33,7 @@ const WizardShell: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation('setup');
 
   // Scroll to top when component mounts
   useEffect(() => {
