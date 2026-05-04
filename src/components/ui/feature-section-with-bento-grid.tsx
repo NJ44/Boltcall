@@ -19,7 +19,6 @@ import {
 import CountUp from "react-countup";
 
 function Feature() {
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [isChartVisible, setIsChartVisible] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -36,32 +35,6 @@ function Feature() {
   useEffect(() => {
     setIsChartVisible(false);
   }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    const card = cardRefs.current[index];
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    // Greatly reduce tilt for cards 0 (Instant Response) and 2 (Real-time Analytics)
-    const tiltDivisor = (index === 0 || index === 2) ? 50 : 10;
-    const rotateX = (y - centerY) / tiltDivisor;
-    const rotateY = (centerX - x) / tiltDivisor;
-    
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-  };
-
-  const handleMouseLeave = (index: number) => {
-    const card = cardRefs.current[index];
-    if (!card) return;
-    
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-  };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
