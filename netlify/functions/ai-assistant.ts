@@ -593,9 +593,10 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
       if (apptErr) return { result: `Failed to query appointments: ${apptErr.message}` };
       if (!appts?.length) return { result: `No ${upcoming ? 'upcoming' : 'past'} appointments in the next ${days} days.` };
 
+      const apptLocale = ctx.locale || 'en-US';
       const lines = appts.map((a: any) => {
-        const date = new Date(a.starts_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        const time = new Date(a.starts_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        const date = new Date(a.starts_at).toLocaleDateString(apptLocale, { weekday: 'short', month: 'short', day: 'numeric' });
+        const time = new Date(a.starts_at).toLocaleTimeString(apptLocale, { hour: 'numeric', minute: '2-digit', hour12: apptLocale !== 'he-IL' });
         return `• ${date} ${time} — ${a.client_name || 'Unknown'} (${a.service_name || 'General'}) [${a.status}]`;
       });
 
