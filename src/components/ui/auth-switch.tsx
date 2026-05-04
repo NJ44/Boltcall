@@ -86,6 +86,7 @@ export default function AuthSwitch({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [resetSent, setResetSent] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
 
   const { login, signup, signInWithGoogle, signInWithMicrosoft, signInWithFacebook } = useAuth();
   const navigate = useNavigate();
@@ -108,15 +109,20 @@ export default function AuthSwitch({
   useEffect(() => {
     if ((isLogin && loginHasValidationErrors) || (!isLogin && signupHasValidationErrors)) {
       setError("");
+      setLoginFailed(false);
     }
   }, [loginHasValidationErrors, signupHasValidationErrors, isLogin]);
 
-  const switchMode = (newMode: "login" | "signup") => {
-    if (newMode === mode) return;
+  const switchMode = (newMode: "login" | "signup", prefillEmail?: string) => {
+    if (newMode === mode && !prefillEmail) return;
     setError("");
     setResetSent(false);
+    setLoginFailed(false);
     loginForm.reset();
     signupForm.reset();
+    if (prefillEmail) {
+      signupForm.setValue("email", prefillEmail);
+    }
     setMode(newMode);
   };
 
@@ -124,10 +130,12 @@ export default function AuthSwitch({
     try {
       setIsLoading(true);
       setError("");
+      setLoginFailed(false);
       await login(data);
       navigate(redirectTo);
     } catch {
-      setError("Invalid email or password. Please try again.");
+      setError("Invalid email or password.");
+      setLoginFailed(true);
     } finally {
       setIsLoading(false);
     }
@@ -365,8 +373,17 @@ export default function AuthSwitch({
                     </div>
                   )}
                   {error && (
-                    <div className="bg-red-50 rounded-full px-4 py-2">
-                      <p className="text-red-500 text-xs text-center">{error}</p>
+                    <div className="bg-red-50 rounded-xl px-4 py-2.5 text-center">
+                      <p className="text-red-500 text-xs">{error}</p>
+                      {loginFailed && (
+                        <button
+                          type="button"
+                          onClick={() => switchMode("signup", loginForm.getValues("email"))}
+                          className="mt-1.5 text-xs text-blue-600 hover:text-blue-800 font-medium underline underline-offset-2 transition-colors"
+                        >
+                          No account? Sign up instead →
+                        </button>
+                      )}
                     </div>
                   )}
                   <div className="pt-2">{submitButton("LOGIN", "Signing in...")}</div>
