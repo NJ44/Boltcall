@@ -67,6 +67,19 @@ resource deploymentHeavy 'Microsoft.CognitiveServices/accounts/deployments@2023-
   }
 }
 
+// Image model: gpt-image-2 — social media images, blog headers, marketing assets
+// If gpt-image-2 is not yet available in your region, change name + model.name to 'dall-e-3'
+// Check availability: Azure Portal → OpenAI resource → Model deployments → + Deploy model
+resource deploymentImage 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  parent: openAI
+  name: 'gpt-image-2'
+  dependsOn: [deploymentHeavy]
+  sku: { name: 'Standard', capacity: 1 }
+  properties: {
+    model: { format: 'OpenAI', name: 'gpt-image-2', version: '1' }
+  }
+}
+
 // ─── 2. Azure Communication Services ─────────────────────────────────────────
 
 resource acs 'Microsoft.Communication/communicationServices@2023-04-01' = {
@@ -234,3 +247,6 @@ output n8nUrl string = 'https://${n8nApp.properties.configuration.ingress.fqdn}'
 
 @description('Log Analytics workspace ID')
 output logAnalyticsWorkspaceId string = logAnalytics.id
+
+@description('Image generation deployment name — set as AZURE_OPENAI_IMAGE_DEPLOYMENT in Netlify env + credentials.md')
+output azureImageDeployment string = deploymentImage.name

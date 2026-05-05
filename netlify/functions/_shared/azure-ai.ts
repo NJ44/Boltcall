@@ -90,6 +90,44 @@ async function azureChatCompletion(
   return data.choices?.[0]?.message?.content || '';
 }
 
+/**
+ * Image generation — returns base64-encoded PNG string.
+ * Requires Azure OpenAI to be configured (AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY).
+ * Uses AZURE_OPENAI_IMAGE_DEPLOYMENT env var (default: gpt-image-2).
+ */
+export async function generateImage(
+  prompt: string,
+  options: {
+    size?: '1024x1024' | '1536x1024' | '1024x1536';
+    quality?: 'low' | 'medium' | 'high';
+  } = {},
+): Promise<string> {
+  if (!isAzureConfigured()) {
+    throw new Error(
+      'Azure OpenAI not configured. Set AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY.',
+    );
+  }
+  const { size = '1024x1024', quality = 'high' } = options;
+  const endpoint = process.env.AZURE_OPENAI_ENDPOINT!.replace(/\/$/, '');
+  const apiKey = process.env.AZURE_OPENAI_API_KEY!;
+  const deployment = process.env.AZURE_OPENAI_IMAGE_DEPLOYMENT || 'gpt-image-2';
+  const url = `${endpoint}/openai/deployments/${deployment}/images/generations?api-version=2024-05-01-preview`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'api-key': apiKey },
+    body: JSON.stringify({ prompt, size, quality, n: 1, output_format: 'png' }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text().catch(() => '');
+    throw new Error(`Azure OpenAI image error ${res.status}: ${err}`);
+  }
+
+  const data = await res.json();
+  return data.data?.[0]?.b64_json || '';
+}
+
 async function anthropicChatCompletion(
   apiKey: string,
   systemPrompt: string,
