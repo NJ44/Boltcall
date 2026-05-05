@@ -6,6 +6,14 @@ import Floating, { FloatingElement } from './ui/parallax-floating';
 
 const ModalVideo = React.lazy(() => import('./ModalVideo'));
 
+const floatingImages = [
+  { url: "/images/hero/call.png",    alt: "Boltcall AI answering an incoming call" },
+  { url: "/images/hero/biz.png",     alt: "Local HVAC business website" },
+  { url: "/images/hero/sms.png",     alt: "SMS conversation between AI and a lead" },
+  { url: "/images/hero/ad.png",      alt: "Facebook ad for a local HVAC business" },
+  { url: "/images/hero/booking.png", alt: "Appointment booking confirmation" },
+];
+
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
@@ -16,150 +24,68 @@ const Hero: React.FC = () => {
         className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-hidden z-[1] bg-white"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
       >
-        {/* Parallax floating cards */}
+        {/* Parallax floating images */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <Floating sensitivity={-0.5} className="h-full">
 
-            {/* Top-left — Call answered */}
-            <FloatingElement depth={0.5} className="top-[26%] left-[8%] md:top-[28%] md:left-[10%]">
-              <motion.div
-                className="-rotate-[3deg] hover:scale-105 transition-transform duration-200"
+            {/* Top-left — incoming call (portrait) */}
+            <FloatingElement depth={0.5} className="top-[26%] left-[12%] md:top-[28%] md:left-[14%]">
+              <motion.img
+                src={floatingImages[0].url}
+                alt={floatingImages[0].alt}
+                className="w-16 h-28 sm:w-20 sm:h-36 md:w-24 md:h-40 lg:w-28 lg:h-48 object-cover rounded-2xl shadow-2xl -rotate-[3deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-              >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-40">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0 text-sm">📞</div>
-                    <div className="min-w-0">
-                      <p className="text-[11px] font-semibold text-gray-900 leading-tight">Call Answered</p>
-                      <p className="text-[10px] text-green-600 font-medium flex items-center gap-1">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>Live · 0.3s
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-gray-500">John M. · HVAC Repair</p>
-                </div>
-              </motion.div>
+              />
             </FloatingElement>
 
-            {/* Top-left large — Business stats */}
-            <FloatingElement depth={1} className="top-[12%] left-[4%] md:top-[14%] md:left-[6%]">
-              <motion.div
-                className="-rotate-12 hover:scale-105 transition-transform duration-200"
+            {/* Top-left large — local business website (landscape) */}
+            <FloatingElement depth={1} className="top-[12%] left-[8%] md:top-[14%] md:left-[10%]">
+              <motion.img
+                src={floatingImages[1].url}
+                alt={floatingImages[1].alt}
+                className="w-32 h-24 sm:w-40 sm:h-28 md:w-48 md:h-32 lg:w-52 lg:h-36 object-cover rounded-2xl shadow-2xl -rotate-12 hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
-              >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-52">
-                  <div className="flex items-center gap-2 mb-2.5">
-                    <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">🌐</div>
-                    <div>
-                      <p className="text-[11px] font-semibold text-gray-900">Mike's HVAC Tampa</p>
-                      <p className="text-[10px] text-gray-400">mikeshvac.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-center">
-                      <p className="text-[13px] font-bold text-gray-900">4.9★</p>
-                      <p className="text-[9px] text-gray-400">Rating</p>
-                    </div>
-                    <div className="w-px h-6 bg-gray-100"></div>
-                    <div className="text-center">
-                      <p className="text-[13px] font-bold text-gray-900">100%</p>
-                      <p className="text-[9px] text-gray-400">Response</p>
-                    </div>
-                    <div className="w-px h-6 bg-gray-100"></div>
-                    <div className="text-center">
-                      <p className="text-[13px] font-bold text-green-600">+$12k</p>
-                      <p className="text-[9px] text-gray-400">This mo.</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              />
             </FloatingElement>
 
-            {/* Bottom-left — SMS thread */}
-            <FloatingElement depth={4} className="top-[60%] left-[8%] md:top-[52%] md:left-[12%]">
-              <motion.div
-                className="-rotate-[4deg] hover:scale-105 transition-transform duration-200"
+            {/* Bottom-left — SMS conversation (portrait) */}
+            <FloatingElement depth={4} className="top-[60%] left-[12%] md:top-[52%] md:left-[16%]">
+              <motion.img
+                src={floatingImages[2].url}
+                alt={floatingImages[2].alt}
+                className="w-20 h-36 sm:w-24 sm:h-44 md:w-28 md:h-48 lg:w-32 lg:h-56 object-cover rounded-2xl shadow-2xl -rotate-[4deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
-              >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-44">
-                  <p className="text-[10px] font-semibold text-gray-400 mb-2">SMS · Just now</p>
-                  <div className="space-y-1.5">
-                    <div className="bg-gray-100 rounded-xl rounded-bl-sm px-2.5 py-1.5 max-w-[90%]">
-                      <p className="text-[10px] text-gray-800">Hi! Got your request — does 3pm Tue work?</p>
-                    </div>
-                    <div className="bg-blue-600 rounded-xl rounded-br-sm px-2.5 py-1.5 max-w-[75%] ml-auto">
-                      <p className="text-[10px] text-white">Yes, perfect!</p>
-                    </div>
-                    <div className="bg-gray-100 rounded-xl rounded-bl-sm px-2.5 py-1.5 max-w-[90%]">
-                      <p className="text-[10px] text-gray-800">✅ Booked for Tue 3pm. See you then!</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              />
             </FloatingElement>
 
-            {/* Top-right — New lead notification */}
-            <FloatingElement depth={2} className="top-[10%] left-[72%] md:top-[14%] md:left-[70%]">
-              <motion.div
-                className="rotate-[6deg] hover:scale-105 transition-transform duration-200"
+            {/* Top-right — Facebook ad (portrait) */}
+            <FloatingElement depth={2} className="top-[10%] left-[76%] md:top-[14%] md:left-[74%]">
+              <motion.img
+                src={floatingImages[3].url}
+                alt={floatingImages[3].alt}
+                className="w-24 h-32 sm:w-28 sm:h-40 md:w-32 md:h-44 lg:w-36 lg:h-48 object-cover rounded-2xl shadow-2xl rotate-[6deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.1 }}
-              >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-44">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 text-sm">🔔</div>
-                    <div>
-                      <p className="text-[11px] font-semibold text-gray-900">New Lead</p>
-                      <p className="text-[10px] text-gray-400">Via Facebook Ad</p>
-                    </div>
-                  </div>
-                  <div className="bg-orange-50 rounded-lg px-2 py-1.5">
-                    <p className="text-[10px] font-medium text-orange-800">AC Repair · Est. $1,200</p>
-                  </div>
-                  <p className="text-[9px] text-gray-400 mt-1.5">AI replied in 0.4s ✓</p>
-                </div>
-              </motion.div>
+              />
             </FloatingElement>
 
-            {/* Bottom-right — Appointment booked */}
-            <FloatingElement depth={1} className="top-[56%] left-[62%] md:top-[48%] md:left-[60%]">
-              <motion.div
-                className="rotate-[14deg] hover:scale-105 transition-transform duration-200"
+            {/* Bottom-right — booking confirmation (portrait) */}
+            <FloatingElement depth={1} className="top-[56%] left-[66%] md:top-[48%] md:left-[64%]">
+              <motion.img
+                src={floatingImages[4].url}
+                alt={floatingImages[4].alt}
+                className="w-24 h-32 sm:w-28 sm:h-40 md:w-32 md:h-44 lg:w-36 lg:h-52 object-cover rounded-2xl shadow-2xl rotate-[14deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.3 }}
-              >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-44">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">📅</div>
-                    <div>
-                      <p className="text-[11px] font-semibold text-gray-900">Appointment Booked</p>
-                      <p className="text-[10px] text-blue-600 font-medium">✓ Confirmed</p>
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="flex justify-between">
-                      <p className="text-[10px] text-gray-400">Date</p>
-                      <p className="text-[10px] font-medium text-gray-800">Tue, May 7 · 3pm</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="text-[10px] text-gray-400">Service</p>
-                      <p className="text-[10px] font-medium text-gray-800">AC Checkup</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="text-[10px] text-gray-400">Tech</p>
-                      <p className="text-[10px] font-medium text-gray-800">Mike R.</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              />
             </FloatingElement>
 
           </Floating>
