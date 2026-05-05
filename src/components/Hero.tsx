@@ -28,8 +28,8 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <Floating sensitivity={-0.5} className="h-full">
 
-            {/* Top-left — incoming call (portrait) */}
-            <FloatingElement depth={0.5} className="top-[18%] left-[18%] md:top-[22%] md:left-[20%]">
+            {/* Top-left — incoming call (portrait) — moved down + further left */}
+            <FloatingElement depth={0.5} className="top-[26%] left-[8%] md:top-[28%] md:left-[10%]">
               <motion.img
                 src={floatingImages[0].url}
                 alt={floatingImages[0].alt}
@@ -40,8 +40,8 @@ const Hero: React.FC = () => {
               />
             </FloatingElement>
 
-            {/* Top-left large — local business website (landscape) */}
-            <FloatingElement depth={1} className="top-[4%] left-[12%] md:top-[8%] md:left-[16%]">
+            {/* Top-left large — local business website (landscape) — moved down + further left */}
+            <FloatingElement depth={1} className="top-[12%] left-[4%] md:top-[14%] md:left-[6%]">
               <motion.img
                 src={floatingImages[1].url}
                 alt={floatingImages[1].alt}
@@ -52,8 +52,8 @@ const Hero: React.FC = () => {
               />
             </FloatingElement>
 
-            {/* Bottom-left — SMS conversation (portrait) */}
-            <FloatingElement depth={4} className="top-[70%] left-[14%] md:top-[62%] md:left-[18%]">
+            {/* Bottom-left — SMS conversation (portrait) — moved up */}
+            <FloatingElement depth={4} className="top-[60%] left-[8%] md:top-[52%] md:left-[12%]">
               <motion.img
                 src={floatingImages[2].url}
                 alt={floatingImages[2].alt}
@@ -64,8 +64,8 @@ const Hero: React.FC = () => {
               />
             </FloatingElement>
 
-            {/* Top-right — Facebook ad (portrait) */}
-            <FloatingElement depth={2} className="top-[2%] left-[66%] md:top-[6%] md:left-[62%]">
+            {/* Top-right — Facebook ad (portrait) — moved down + further right */}
+            <FloatingElement depth={2} className="top-[10%] left-[72%] md:top-[14%] md:left-[70%]">
               <motion.img
                 src={floatingImages[3].url}
                 alt={floatingImages[3].alt}
@@ -76,8 +76,8 @@ const Hero: React.FC = () => {
               />
             </FloatingElement>
 
-            {/* Bottom-right — booking confirmation (portrait) */}
-            <FloatingElement depth={1} className="top-[66%] left-[60%] md:top-[58%] md:left-[58%]">
+            {/* Bottom-right — booking confirmation (portrait) — moved up */}
+            <FloatingElement depth={1} className="top-[56%] left-[62%] md:top-[48%] md:left-[60%]">
               <motion.img
                 src={floatingImages[4].url}
                 alt={floatingImages[4].alt}
@@ -102,9 +102,10 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
             >
-              <span className="speakable-intro">NEVER MISS A</span>
+              <span className="speakable-intro">NEVER MISS</span>
               <LayoutGroup>
                 <motion.span layout className="flex items-center whitespace-pre">
+                  <span>A </span>
                   <TextRotate
                     texts={["CALL", "LEAD", "TEXT", "REVIEW", "REPLY"]}
                     mainClassName="overflow-hidden text-blue-600 py-0 pb-1 md:pb-2 rounded-xl"
