@@ -154,7 +154,7 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.4, ease: "easeOut", delay: 0.5 }}
             >
-              Every lead responded to instantly. Every opportunity booked on your calendar. 24/7, on autopilot.
+              The Speed To Lead System for local businesses
             </motion.p>
 
             {/* CTA Buttons — primary action first */}
