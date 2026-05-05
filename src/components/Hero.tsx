@@ -8,24 +8,24 @@ const ModalVideo = React.lazy(() => import('./ModalVideo'));
 
 const floatingImages = [
   {
-    url: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2340&auto=format&fit=crop",
-    alt: "Customer service representative",
+    url: "https://images.unsplash.com/photo-1758876201450-cf77ab8b95bc?q=80&w=800&auto=format&fit=crop",
+    alt: "Phone call being answered",
   },
   {
-    url: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2340&auto=format&fit=crop",
-    alt: "Business office meeting",
+    url: "https://images.unsplash.com/photo-1522202195465-df8a5f26fa15?q=80&w=800&auto=format&fit=crop",
+    alt: "Local business website on laptop",
   },
   {
-    url: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=2340&auto=format&fit=crop",
-    alt: "Business handshake",
+    url: "https://images.unsplash.com/photo-1606495813362-8efff01b8573?q=80&w=800&auto=format&fit=crop",
+    alt: "SMS text conversation",
   },
   {
-    url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2340&auto=format&fit=crop",
-    alt: "Phone conversation",
+    url: "https://images.unsplash.com/photo-1745848413078-f85af10e5bf2?q=80&w=800&auto=format&fit=crop",
+    alt: "Social media ad on phone",
   },
   {
-    url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2340&auto=format&fit=crop",
-    alt: "Happy business professional",
+    url: "https://images.unsplash.com/photo-1631972757546-a9c28c924c2b?q=80&w=800&auto=format&fit=crop",
+    alt: "Appointment calendar booking",
   },
 ];
 
