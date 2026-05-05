@@ -1,0 +1,92 @@
+# n8n on Azure Container Apps
+#
+# This file documents the Container Apps configuration produced by main.bicep.
+# Use it as a reference for manual CLI deployments or to understand what was provisioned.
+#
+# Quick-start CLI (after provisioning main.bicep):
+#   az containerapp update \
+#     --name boltcall-n8n \
+#     --resource-group boltcall-rg \
+#     --image docker.n8n.io/n8nio/n8n:latest
+#
+# Migrate existing workflows from Hostinger:
+#   1. Export all workflows from old n8n:
+#        n8n export:workflow --all --output=workflows-backup.json
+#   2. Import into new Azure n8n:
+#        n8n import:workflow --input=workflows-backup.json
+#   3. Re-enter credentials in the new instance (Settings → Credentials)
+#   4. Update all webhook URLs in Boltcall Netlify functions to point to the new n8n URL
+#   5. Update Telegram bot webhook to new n8n URL
+#   6. Decommission Hostinger VPS
+
+name: boltcall-n8n
+type: Microsoft.App/containerApps
+location: eastus
+
+# ── Container configuration ───────────────────────────────────────────────────
+container:
+  image: docker.n8n.io/n8nio/n8n:latest
+  name: n8n
+  resources:
+    cpu: 0.5
+    memory: 1Gi
+
+# ── Environment variables ─────────────────────────────────────────────────────
+env:
+  N8N_HOST: "0.0.0.0"
+  N8N_PORT: "5678"
+  N8N_PROTOCOL: "https"
+  WEBHOOK_URL: "https://boltcall-n8n.<your-container-apps-domain>"   # update after deploy
+  N8N_BASIC_AUTH_ACTIVE: "true"
+  N8N_BASIC_AUTH_USER: "boltcall"
+  N8N_BASIC_AUTH_PASSWORD: "<set-via-secret>"
+  N8N_RUNNERS_ENABLED: "true"
+  EXECUTIONS_DATA_PRUNE: "true"
+  EXECUTIONS_DATA_MAX_AGE: "336"   # 14 days in hours
+  N8N_LOG_LEVEL: "info"
+  N8N_METRICS: "true"
+
+# ── Persistent volume (Azure Files) ───────────────────────────────────────────
+volume:
+  name: n8n-data
+  type: AzureFile
+  storageName: n8n-storage       # created by main.bicep
+  mountPath: /home/node/.n8n     # n8n stores all data here
+
+# ── Ingress ───────────────────────────────────────────────────────────────────
+ingress:
+  external: true
+  targetPort: 5678
+  transport: http
+
+# ── Scale ─────────────────────────────────────────────────────────────────────
+scale:
+  minReplicas: 1   # always-on — n8n is stateful (SQLite + active cron jobs)
+  maxReplicas: 1   # single replica required for SQLite file-based DB
+
+# ── Migration checklist ───────────────────────────────────────────────────────
+# After the Container App is running:
+#
+# [ ] 1. Get the n8n URL from main.bicep outputs: az deployment group show ... | jq '.properties.outputs.n8nUrl'
+# [ ] 2. Open https://<n8n-url> and log in with the basic auth credentials
+# [ ] 3. Export workflows from old Hostinger n8n (Settings → Export All)
+# [ ] 4. Import workflows into new n8n (Settings → Import)
+# [ ] 5. Re-add all credentials (Supabase, Telegram, OpenAI, etc.) in new n8n
+# [ ] 6. Set AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY as n8n credentials
+#         (replace OpenAI credentials — same API format, different endpoint)
+# [ ] 7. Update AIOS Telegram webhook: Telegram → set webhook to new n8n URL
+# [ ] 8. Update all Netlify functions that call n8n webhooks with new URL
+# [ ] 9. Run test execution on each of the 14 active AIOS workflows
+# [ ] 10. Decommission Hostinger VPS (cancel subscription)
+
+# ── Cost estimate ─────────────────────────────────────────────────────────────
+# Container Apps Consumption Plan:
+#   - 0.5 vCPU × 1 replica × 730 hrs = 365 vCPU-hours/mo
+#   - Free tier: 180,000 vCPU-seconds/mo (~50 hrs) — covered by credits after
+#   - Estimated: ~$15-20/mo at 0.5 vCPU (charged against Azure credits)
+# Azure Files:
+#   - 10 GB share: ~$0.20/mo
+# Log Analytics:
+#   - ~1 GB/mo logs: ~$2/mo
+# Total estimated: ~$18/mo vs Hostinger VPS: $10-20/mo
+# Gain: auto-heal, managed SSL, 99.95% SLA, no SSH maintenance

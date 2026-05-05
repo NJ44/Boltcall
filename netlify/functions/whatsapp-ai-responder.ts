@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { getSupabase, deductTokens, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError, notifyInfo } from './_shared/notify';
+import { chatCompletion } from './_shared/azure-ai';
 
 /**
  * WhatsApp AI Responder — Generates AI replies for inbound WhatsApp messages.
@@ -274,35 +275,14 @@ ${conversationText}
 
 Generate a reply to the latest customer message and qualify the lead.`;
 
-    // 8. Call Claude API
-    const anthropicKey = process.env.ANTHROPIC_API_KEY;
-    if (!anthropicKey) {
-      return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }) };
-    }
-
-    const aiRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 512,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
-      }),
-    });
-
-    if (!aiRes.ok) {
-      const errText = await aiRes.text();
-      console.error('[whatsapp-ai-responder] Claude API error:', errText);
+    // 8. Call AI
+    let rawResponse: string;
+    try {
+      rawResponse = await chatCompletion(systemPrompt, userPrompt, { maxTokens: 512 });
+    } catch (aiErr: any) {
+      console.error('[whatsapp-ai-responder] AI error:', aiErr.message);
       return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'AI generation failed' }) };
     }
-
-    const aiData = await aiRes.json();
-    const rawResponse = aiData.content?.[0]?.text || '';
 
     // 9. Parse JSON from Claude response
     let parsed: any;

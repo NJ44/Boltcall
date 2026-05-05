@@ -1,8 +1,9 @@
 import { Handler } from '@netlify/functions';
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI, { AzureOpenAI } from 'openai';
 import Retell from 'retell-sdk';
 import { deductTokens, getSupabase, TOKEN_COSTS } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
+import { chatCompletion, getAzureDeployment } from './_shared/azure-ai';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -11,9 +12,15 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-function getClaude() {
-  const apiKey = process.env.ANTHROPIC_API_KEY || '';
-  return new Anthropic({ apiKey });
+function getOpenAIClient(): OpenAI {
+  if (process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_API_KEY) {
+    return new AzureOpenAI({
+      endpoint: process.env.AZURE_OPENAI_ENDPOINT,
+      apiKey: process.env.AZURE_OPENAI_API_KEY,
+      apiVersion: process.env.AZURE_OPENAI_API_VERSION || '2024-02-01',
+    });
+  }
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' });
 }
 
 function getRetell() {
@@ -21,176 +28,224 @@ function getRetell() {
   return new Retell({ apiKey });
 }
 
-// ── Tool definitions for Claude tool use ──
-const tools: Anthropic.Tool[] = [
+// ── Tool definitions (OpenAI format) ──
+const tools: OpenAI.Chat.ChatCompletionTool[] = [
   {
-    name: 'update_agent_greeting',
-    description: 'Update the AI agent greeting message (the first thing it says when answering a call)',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        greeting: { type: 'string', description: 'The new greeting message the agent should say' },
-      },
-      required: ['greeting'],
-    },
-  },
-  {
-    name: 'update_agent_prompt',
-    description: 'Update the AI agent system prompt (the instructions that control how it behaves on calls). Use this when the user wants to change the agent personality, tone, behavior, or what it talks about.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        instructions: { type: 'string', description: 'What the user wants the agent to do differently. This will be used to modify the existing prompt.' },
-      },
-      required: ['instructions'],
-    },
-  },
-  {
-    name: 'regenerate_agent_prompt',
-    description: 'Regenerate the entire agent prompt from scratch using the business profile data. Use when the user wants a fresh prompt or says the current one is broken.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        tone: { type: 'string', enum: ['friendly_concise', 'formal', 'playful', 'calm'], description: 'Optional tone override for the regenerated prompt' },
+    type: 'function',
+    function: {
+      name: 'update_agent_greeting',
+      description: 'Update the AI agent greeting message (the first thing it says when answering a call)',
+      parameters: {
+        type: 'object',
+        properties: {
+          greeting: { type: 'string', description: 'The new greeting message the agent should say' },
+        },
+        required: ['greeting'],
       },
     },
   },
   {
-    name: 'add_faq',
-    description: 'Add a new FAQ entry to the knowledge base so the AI agent can answer this question',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        question: { type: 'string', description: 'The question callers might ask' },
-        answer: { type: 'string', description: 'The answer the AI should give' },
+    type: 'function',
+    function: {
+      name: 'update_agent_prompt',
+      description: 'Update the AI agent system prompt (the instructions that control how it behaves on calls). Use this when the user wants to change the agent personality, tone, behavior, or what it talks about.',
+      parameters: {
+        type: 'object',
+        properties: {
+          instructions: { type: 'string', description: 'What the user wants the agent to do differently. This will be used to modify the existing prompt.' },
+        },
+        required: ['instructions'],
       },
-      required: ['question', 'answer'],
     },
   },
   {
-    name: 'add_service',
-    description: 'Add a new service to the business knowledge base',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        name: { type: 'string', description: 'Service name' },
-        duration: { type: 'number', description: 'Duration in minutes' },
-        price: { type: 'number', description: 'Price in dollars' },
-      },
-      required: ['name'],
-    },
-  },
-  {
-    name: 'update_business_hours',
-    description: 'Update business opening hours for one or more days',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        hours: {
-          type: 'object',
-          description: 'Object with day names as keys. Each value has open, close (HH:MM format), and closed (boolean). Example: {"monday": {"open": "09:00", "close": "17:00", "closed": false}}',
+    type: 'function',
+    function: {
+      name: 'regenerate_agent_prompt',
+      description: 'Regenerate the entire agent prompt from scratch using the business profile data. Use when the user wants a fresh prompt or says the current one is broken.',
+      parameters: {
+        type: 'object',
+        properties: {
+          tone: { type: 'string', enum: ['friendly_concise', 'formal', 'playful', 'calm'], description: 'Optional tone override for the regenerated prompt' },
         },
       },
-      required: ['hours'],
     },
   },
   {
-    name: 'get_agent_details',
-    description: 'Get the current agent configuration including prompt, greeting, voice, and status. Use this when the user asks what their agent currently does or to diagnose issues.',
-    input_schema: { type: 'object' as const, properties: {} },
-  },
-  {
-    name: 'get_call_stats',
-    description: 'Get recent call statistics: total calls, average duration, successful call rate',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        days: { type: 'number', description: 'Number of days to look back (default 7)' },
+    type: 'function',
+    function: {
+      name: 'add_faq',
+      description: 'Add a new FAQ entry to the knowledge base so the AI agent can answer this question',
+      parameters: {
+        type: 'object',
+        properties: {
+          question: { type: 'string', description: 'The question callers might ask' },
+          answer: { type: 'string', description: 'The answer the AI should give' },
+        },
+        required: ['question', 'answer'],
       },
     },
   },
   {
-    name: 'change_voice',
-    description: 'Change the AI agent voice. You can use friendly names like "Adrian", "Dorothy", "Charlie" or full IDs like "11labs-Adrian".',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        voice_id: { type: 'string', description: 'The voice name or ID (e.g. "Adrian", "Dorothy", "Charlie", or "11labs-Adrian")' },
-      },
-      required: ['voice_id'],
-    },
-  },
-  {
-    name: 'toggle_agent',
-    description: 'Enable or disable the AI agent. When disabled, the agent will not answer calls.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        enabled: { type: 'boolean', description: 'true to enable the agent, false to disable it' },
-      },
-      required: ['enabled'],
-    },
-  },
-  {
-    name: 'update_transfer_number',
-    description: 'Set or update the phone number that calls get transferred to (e.g. your personal phone or front desk).',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        phone_number: { type: 'string', description: 'The phone number to transfer calls to (e.g. "+1234567890")' },
-      },
-      required: ['phone_number'],
-    },
-  },
-  {
-    name: 'get_test_call_link',
-    description: 'Generate a web call link so the user can test their AI agent directly in the browser. No parameters needed.',
-    input_schema: { type: 'object' as const, properties: {} },
-  },
-  {
-    name: 'toggle_feature',
-    description: 'Enable or disable a dashboard feature/service. Features: speed_to_lead, reminders, reputation_manager (Google reviews), missed_call_textback, chatbot, instant_lead_response.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        feature: { type: 'string', description: 'Feature key: speed_to_lead, reminders, reputation_manager, missed_call_textback, chatbot, instant_lead_response' },
-        enabled: { type: 'boolean', description: 'true to enable, false to disable' },
-      },
-      required: ['feature', 'enabled'],
-    },
-  },
-  {
-    name: 'query_leads',
-    description: 'Search and retrieve leads data. Use when the user asks about their leads, how many leads they have, recent leads, leads by source, etc.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        status: { type: 'string', description: 'Filter by status: new, pending, contacted, qualified, lost. Leave empty for all.' },
-        source: { type: 'string', description: 'Filter by source: ai_receptionist, speed_to_lead, website_form, google_ads, facebook_ads, missed_call, manual. Leave empty for all.' },
-        days: { type: 'number', description: 'Only show leads from the last N days. Default: 30' },
-        limit: { type: 'number', description: 'Max results to return. Default: 10' },
+    type: 'function',
+    function: {
+      name: 'add_service',
+      description: 'Add a new service to the business knowledge base',
+      parameters: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Service name' },
+          duration: { type: 'number', description: 'Duration in minutes' },
+          price: { type: 'number', description: 'Price in dollars' },
+        },
+        required: ['name'],
       },
     },
   },
   {
-    name: 'query_appointments',
-    description: 'Retrieve appointment data. Use when the user asks about bookings, upcoming appointments, past appointments, or appointment counts.',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        upcoming: { type: 'boolean', description: 'true = only future appointments, false = past appointments. Default: true' },
-        days: { type: 'number', description: 'Look ahead/back this many days. Default: 7' },
-        limit: { type: 'number', description: 'Max results. Default: 10' },
+    type: 'function',
+    function: {
+      name: 'update_business_hours',
+      description: 'Update business opening hours for one or more days',
+      parameters: {
+        type: 'object',
+        properties: {
+          hours: {
+            type: 'object',
+            description: 'Object with day names as keys. Each value has open, close (HH:MM format), and closed (boolean). Example: {"monday": {"open": "09:00", "close": "17:00", "closed": false}}',
+          },
+        },
+        required: ['hours'],
       },
     },
   },
   {
-    name: 'get_dashboard_metrics',
-    description: 'Get business performance metrics from the dashboard. Use when the user asks about performance, conversion rates, trends, revenue, or "how is my business doing".',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        days: { type: 'number', description: 'Number of days to analyze. Default: 7' },
+    type: 'function',
+    function: {
+      name: 'get_agent_details',
+      description: 'Get the current agent configuration including prompt, greeting, voice, and status. Use this when the user asks what their agent currently does or to diagnose issues.',
+      parameters: { type: 'object', properties: {} },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_call_stats',
+      description: 'Get recent call statistics: total calls, average duration, successful call rate',
+      parameters: {
+        type: 'object',
+        properties: {
+          days: { type: 'number', description: 'Number of days to look back (default 7)' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'change_voice',
+      description: 'Change the AI agent voice. You can use friendly names like "Adrian", "Dorothy", "Charlie" or full IDs like "11labs-Adrian".',
+      parameters: {
+        type: 'object',
+        properties: {
+          voice_id: { type: 'string', description: 'The voice name or ID (e.g. "Adrian", "Dorothy", "Charlie", or "11labs-Adrian")' },
+        },
+        required: ['voice_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'toggle_agent',
+      description: 'Enable or disable the AI agent. When disabled, the agent will not answer calls.',
+      parameters: {
+        type: 'object',
+        properties: {
+          enabled: { type: 'boolean', description: 'true to enable the agent, false to disable it' },
+        },
+        required: ['enabled'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'update_transfer_number',
+      description: 'Set or update the phone number that calls get transferred to (e.g. your personal phone or front desk).',
+      parameters: {
+        type: 'object',
+        properties: {
+          phone_number: { type: 'string', description: 'The phone number to transfer calls to (e.g. "+1234567890")' },
+        },
+        required: ['phone_number'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_test_call_link',
+      description: 'Generate a web call link so the user can test their AI agent directly in the browser. No parameters needed.',
+      parameters: { type: 'object', properties: {} },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'toggle_feature',
+      description: 'Enable or disable a dashboard feature/service. Features: speed_to_lead, reminders, reputation_manager (Google reviews), missed_call_textback, chatbot, instant_lead_response.',
+      parameters: {
+        type: 'object',
+        properties: {
+          feature: { type: 'string', description: 'Feature key: speed_to_lead, reminders, reputation_manager, missed_call_textback, chatbot, instant_lead_response' },
+          enabled: { type: 'boolean', description: 'true to enable, false to disable' },
+        },
+        required: ['feature', 'enabled'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'query_leads',
+      description: 'Search and retrieve leads data. Use when the user asks about their leads, how many leads they have, recent leads, leads by source, etc.',
+      parameters: {
+        type: 'object',
+        properties: {
+          status: { type: 'string', description: 'Filter by status: new, pending, contacted, qualified, lost. Leave empty for all.' },
+          source: { type: 'string', description: 'Filter by source: ai_receptionist, speed_to_lead, website_form, google_ads, facebook_ads, missed_call, manual. Leave empty for all.' },
+          days: { type: 'number', description: 'Only show leads from the last N days. Default: 30' },
+          limit: { type: 'number', description: 'Max results to return. Default: 10' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'query_appointments',
+      description: 'Retrieve appointment data. Use when the user asks about bookings, upcoming appointments, past appointments, or appointment counts.',
+      parameters: {
+        type: 'object',
+        properties: {
+          upcoming: { type: 'boolean', description: 'true = only future appointments, false = past appointments. Default: true' },
+          days: { type: 'number', description: 'Look ahead/back this many days. Default: 7' },
+          limit: { type: 'number', description: 'Max results. Default: 10' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_dashboard_metrics',
+      description: 'Get business performance metrics from the dashboard. Use when the user asks about performance, conversion rates, trends, revenue, or "how is my business doing".',
+      parameters: {
+        type: 'object',
+        properties: {
+          days: { type: 'number', description: 'Number of days to analyze. Default: 7' },
+        },
       },
     },
   },
@@ -288,20 +343,11 @@ async function executeTool(name: string, args: any, ctx: any): Promise<{ result:
       const llm = await retell.llm.retrieve(llmId);
       const currentPrompt = (llm as any).general_prompt || '';
 
-      // Use Claude to modify the prompt
-      const claude = getClaude();
-      const editResponse = await claude.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 3000,
-        messages: [
-          {
-            role: 'user',
-            content: `You are a prompt editor. Given a current voice agent system prompt and user instructions, output ONLY the modified prompt. Keep the overall structure intact. Apply the requested changes precisely. Do not add commentary.\n\nCurrent prompt:\n\n${currentPrompt}\n\n---\nUser wants to change: ${args.instructions}\n\nOutput the modified prompt:`,
-          },
-        ],
-      });
-
-      const newPrompt = editResponse.content[0]?.type === 'text' ? editResponse.content[0].text : currentPrompt;
+      const newPrompt = await chatCompletion(
+        'You are a prompt editor. Output ONLY the modified prompt. Keep the overall structure intact. Apply the requested changes precisely. Do not add commentary.',
+        `Current prompt:\n\n${currentPrompt}\n\n---\nUser wants to change: ${args.instructions}\n\nOutput the modified prompt:`,
+        { maxTokens: 3000, heavy: true }
+      ) || currentPrompt;
       await retell.llm.update(llmId, { general_prompt: newPrompt } as any);
       await supabase.from('agents').update({ system_prompt: newPrompt }).eq('id', agent.id);
 
@@ -727,7 +773,8 @@ const handler: Handler = async (event) => {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'Messages required' }) };
     }
 
-    const claude = getClaude();
+    const openai = getOpenAIClient();
+    const deployment = getAzureDeployment(false);
 
     // Fetch user context
     let ctx: any = { userId };
@@ -740,18 +787,20 @@ const handler: Handler = async (event) => {
       ? `${SYSTEM_PROMPT}\n\n--- User's Business Context ---\n${contextStr}`
       : SYSTEM_PROMPT;
 
-    // Convert messages to Claude format
-    const claudeMessages: Anthropic.MessageParam[] = messages.slice(-20).map((m: any) => ({
-      role: m.role === 'assistant' ? 'assistant' as const : 'user' as const,
-      content: m.content,
-    }));
+    // Build messages array (system + history)
+    const currentMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+      { role: 'system', content: systemContent },
+      ...messages.slice(-20).map((m: any) => ({
+        role: (m.role === 'assistant' ? 'assistant' : 'user') as 'assistant' | 'user',
+        content: m.content as string,
+      })),
+    ];
 
     // First call — may include tool calls
-    let response = await claude.messages.create({
-      model: 'claude-sonnet-4-20250514',
+    let response = await openai.chat.completions.create({
+      model: deployment,
       max_tokens: 1000,
-      system: systemContent,
-      messages: claudeMessages,
+      messages: currentMessages,
       tools,
     });
 
@@ -759,59 +808,45 @@ const handler: Handler = async (event) => {
 
     // Process tool calls (up to 3 rounds to handle chained actions)
     let rounds = 0;
-    while (response.stop_reason === 'tool_use' && rounds < 3) {
+    while (response.choices[0]?.finish_reason === 'tool_calls' && rounds < 3) {
       rounds++;
 
-      // Collect tool use blocks
-      const toolUseBlocks = response.content.filter(
-        (block): block is Anthropic.ToolUseBlock => block.type === 'tool_use'
-      );
+      const assistantMsg = response.choices[0].message;
+      const toolCalls = assistantMsg.tool_calls || [];
 
-      // Execute each tool and build results
-      const toolResults: Anthropic.ToolResultBlockParam[] = [];
-      for (const tc of toolUseBlocks) {
-        console.log(`Executing tool: ${tc.name}`, tc.input);
+      // Append the assistant message (contains tool_calls) to history
+      currentMessages.push(assistantMsg as OpenAI.Chat.ChatCompletionMessageParam);
+
+      for (const tc of toolCalls) {
+        const toolArgs = JSON.parse(tc.function.arguments || '{}');
+        console.log(`Executing tool: ${tc.function.name}`, toolArgs);
         try {
-          const { result, actionTaken } = await executeTool(tc.name, tc.input, ctx);
+          const { result, actionTaken } = await executeTool(tc.function.name, toolArgs, ctx);
           if (actionTaken) actionsTaken.push(actionTaken);
-          toolResults.push({
-            type: 'tool_result',
-            tool_use_id: tc.id,
-            content: result,
-          });
+          currentMessages.push({ role: 'tool', tool_call_id: tc.id, content: result });
         } catch (toolErr) {
-          console.error(`Tool execution failed: ${tc.name}`, toolErr);
+          console.error(`Tool execution failed: ${tc.function.name}`, toolErr);
           await notifyError('ai-assistant: Tool execution failed', toolErr, {
-            toolName: tc.name, userId, input: JSON.stringify(tc.input).slice(0, 200),
+            toolName: tc.function.name, userId, input: JSON.stringify(toolArgs).slice(0, 200),
           });
-          toolResults.push({
-            type: 'tool_result',
-            tool_use_id: tc.id,
-            content: `Error executing ${tc.name}: ${toolErr instanceof Error ? toolErr.message : 'Unknown error'}`,
-            is_error: true,
+          currentMessages.push({
+            role: 'tool',
+            tool_call_id: tc.id,
+            content: `Error executing ${tc.function.name}: ${toolErr instanceof Error ? toolErr.message : 'Unknown error'}`,
           });
         }
       }
 
       // Follow-up call with tool results
-      response = await claude.messages.create({
-        model: 'claude-sonnet-4-20250514',
+      response = await openai.chat.completions.create({
+        model: deployment,
         max_tokens: 1000,
-        system: systemContent,
-        messages: [
-          ...claudeMessages,
-          { role: 'assistant', content: response.content },
-          { role: 'user', content: toolResults },
-        ],
+        messages: currentMessages,
         tools,
       });
     }
 
-    // Extract text reply
-    const textBlocks = response.content.filter(
-      (block): block is Anthropic.TextBlock => block.type === 'text'
-    );
-    const reply = textBlocks.map(b => b.text).join('\n') || 'Done!';
+    const reply = response.choices[0]?.message?.content || 'Done!';
 
     // Deduct 1 token for the AI chat message
     if (userId) {
