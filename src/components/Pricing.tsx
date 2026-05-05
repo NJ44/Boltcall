@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Section from './ui/Section';
 import { PricingTable } from './ui/pricing-table';
