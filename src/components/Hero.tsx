@@ -1,6 +1,7 @@
 ﻿import React, { useState, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, LayoutGroup } from 'framer-motion';
+import { Phone, Calendar, MessageSquare, Users, Star } from 'lucide-react';
 import { TextRotate } from './ui/text-rotate';
 import Floating, { FloatingElement } from './ui/parallax-floating';
 
@@ -16,148 +17,76 @@ const Hero: React.FC = () => {
         className="relative -mt-32 pb-32 md:pb-64 lg:-mt-40 lg:pb-96 overflow-hidden z-[1] bg-white"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
       >
-        {/* Parallax floating cards */}
+        {/* Parallax floating icon boxes */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <Floating sensitivity={-0.5} className="h-full">
 
-            {/* Top-left — Call answered */}
-            <FloatingElement depth={0.5} className="top-[26%] left-[12%] md:top-[28%] md:left-[14%]">
+            {/* Top-left — Phone */}
+            <FloatingElement depth={0.5} className="top-[14%] left-[8%] md:top-[15%] md:left-[10%]">
               <motion.div
-                className="-rotate-[3deg] hover:scale-105 transition-transform duration-200"
+                className="-rotate-[6deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-40">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0 text-sm">📞</div>
-                    <div className="min-w-0">
-                      <p className="text-[11px] font-semibold text-gray-900 leading-tight">Call Answered</p>
-                      <p className="text-[10px] text-green-600 font-medium flex items-center gap-1">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500"></span>Live · 0.3s
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-gray-500">John M. · HVAC Repair</p>
+                <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <Phone className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
 
-            {/* Top-left large — Business stats */}
-            <FloatingElement depth={1} className="top-[12%] left-[8%] md:top-[14%] md:left-[10%]">
+            {/* Middle-left — Users */}
+            <FloatingElement depth={1} className="top-[52%] left-[10%] md:top-[48%] md:left-[12%]">
               <motion.div
-                className="-rotate-12 hover:scale-105 transition-transform duration-200"
+                className="-rotate-[3deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
               >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-52">
-                  <div className="flex items-center gap-2 mb-2.5">
-                    <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">🌐</div>
-                    <div>
-                      <p className="text-[11px] font-semibold text-gray-900">Mike's HVAC Tampa</p>
-                      <p className="text-[10px] text-gray-400">mikeshvac.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-center">
-                      <p className="text-[13px] font-bold text-gray-900">4.9★</p>
-                      <p className="text-[9px] text-gray-400">Rating</p>
-                    </div>
-                    <div className="w-px h-6 bg-gray-100"></div>
-                    <div className="text-center">
-                      <p className="text-[13px] font-bold text-gray-900">100%</p>
-                      <p className="text-[9px] text-gray-400">Response</p>
-                    </div>
-                    <div className="w-px h-6 bg-gray-100"></div>
-                    <div className="text-center">
-                      <p className="text-[13px] font-bold text-green-600">+$12k</p>
-                      <p className="text-[9px] text-gray-400">This mo.</p>
-                    </div>
-                  </div>
+                <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <Users className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
 
-            {/* Bottom-left — SMS thread */}
-            <FloatingElement depth={4} className="top-[60%] left-[12%] md:top-[52%] md:left-[16%]">
+            {/* Bottom-left — Star */}
+            <FloatingElement depth={4} className="top-[68%] left-[6%] md:top-[65%] md:left-[8%]">
               <motion.div
-                className="-rotate-[4deg] hover:scale-105 transition-transform duration-200"
+                className="rotate-[5deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
               >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-44">
-                  <p className="text-[10px] font-semibold text-gray-400 mb-2">SMS · Just now</p>
-                  <div className="space-y-1.5">
-                    <div className="bg-gray-100 rounded-xl rounded-bl-sm px-2.5 py-1.5 max-w-[90%]">
-                      <p className="text-[10px] text-gray-800">Hi! Got your request — does 3pm Tue work?</p>
-                    </div>
-                    <div className="bg-blue-600 rounded-xl rounded-br-sm px-2.5 py-1.5 max-w-[75%] ml-auto">
-                      <p className="text-[10px] text-white">Yes, perfect!</p>
-                    </div>
-                    <div className="bg-gray-100 rounded-xl rounded-bl-sm px-2.5 py-1.5 max-w-[90%]">
-                      <p className="text-[10px] text-gray-800">✅ Booked for Tue 3pm. See you then!</p>
-                    </div>
-                  </div>
+                <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <Star className="w-7 h-7 md:w-8 md:h-8 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
 
-            {/* Top-right — New lead notification */}
-            <FloatingElement depth={2} className="top-[10%] left-[76%] md:top-[14%] md:left-[74%]">
+            {/* Top-right — Calendar */}
+            <FloatingElement depth={2} className="top-[12%] left-[78%] md:top-[15%] md:left-[76%]">
               <motion.div
                 className="rotate-[6deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.1 }}
               >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-44">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 text-sm">🔔</div>
-                    <div>
-                      <p className="text-[11px] font-semibold text-gray-900">New Lead</p>
-                      <p className="text-[10px] text-gray-400">Via Facebook Ad</p>
-                    </div>
-                  </div>
-                  <div className="bg-orange-50 rounded-lg px-2 py-1.5">
-                    <p className="text-[10px] font-medium text-orange-800">AC Repair · Est. $1,200</p>
-                  </div>
-                  <p className="text-[9px] text-gray-400 mt-1.5">AI replied in 0.4s ✓</p>
+                <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <Calendar className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
 
-            {/* Bottom-right — Appointment booked */}
-            <FloatingElement depth={1} className="top-[56%] left-[66%] md:top-[48%] md:left-[64%]">
+            {/* Bottom-right — MessageSquare */}
+            <FloatingElement depth={1} className="top-[55%] left-[70%] md:top-[50%] md:left-[68%]">
               <motion.div
-                className="rotate-[14deg] hover:scale-105 transition-transform duration-200"
+                className="-rotate-[8deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.3 }}
               >
-                <div className="bg-white rounded-2xl shadow-2xl p-3 w-44">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">📅</div>
-                    <div>
-                      <p className="text-[11px] font-semibold text-gray-900">Appointment Booked</p>
-                      <p className="text-[10px] text-blue-600 font-medium">✓ Confirmed</p>
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="flex justify-between">
-                      <p className="text-[10px] text-gray-400">Date</p>
-                      <p className="text-[10px] font-medium text-gray-800">Tue, May 7 · 3pm</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="text-[10px] text-gray-400">Service</p>
-                      <p className="text-[10px] font-medium text-gray-800">AC Checkup</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="text-[10px] text-gray-400">Tech</p>
-                      <p className="text-[10px] font-medium text-gray-800">Mike R.</p>
-                    </div>
-                  </div>
+                <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <MessageSquare className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
