@@ -22,9 +22,9 @@ const Hero: React.FC = () => {
           <Floating sensitivity={-0.5} className="h-full">
 
             {/* Top-left — Phone */}
-            <FloatingElement depth={0.5} className="top-[14%] left-[8%] md:top-[15%] md:left-[10%]">
+            <FloatingElement depth={0.5} className="top-[26%] left-[12%] md:top-[28%] md:left-[14%]">
               <motion.div
-                className="-rotate-[6deg] hover:scale-105 transition-transform duration-200"
+                className="-rotate-[3deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
@@ -35,10 +35,10 @@ const Hero: React.FC = () => {
               </motion.div>
             </FloatingElement>
 
-            {/* Middle-left — Users */}
-            <FloatingElement depth={1} className="top-[52%] left-[10%] md:top-[48%] md:left-[12%]">
+            {/* Top-left large — Users */}
+            <FloatingElement depth={1} className="top-[12%] left-[8%] md:top-[14%] md:left-[10%]">
               <motion.div
-                className="-rotate-[3deg] hover:scale-105 transition-transform duration-200"
+                className="-rotate-12 hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
@@ -49,22 +49,22 @@ const Hero: React.FC = () => {
               </motion.div>
             </FloatingElement>
 
-            {/* Bottom-left — Star */}
-            <FloatingElement depth={4} className="top-[68%] left-[6%] md:top-[65%] md:left-[8%]">
+            {/* Bottom-left — MessageSquare */}
+            <FloatingElement depth={4} className="top-[60%] left-[12%] md:top-[52%] md:left-[16%]">
               <motion.div
-                className="rotate-[5deg] hover:scale-105 transition-transform duration-200"
+                className="-rotate-[4deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
               >
-                <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <Star className="w-7 h-7 md:w-8 md:h-8 text-blue-600" strokeWidth={2.5} />
+                <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white border border-gray-100">
+                  <MessageSquare className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
 
             {/* Top-right — Calendar */}
-            <FloatingElement depth={2} className="top-[12%] left-[78%] md:top-[15%] md:left-[76%]">
+            <FloatingElement depth={2} className="top-[10%] left-[76%] md:top-[14%] md:left-[74%]">
               <motion.div
                 className="rotate-[6deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
@@ -77,16 +77,16 @@ const Hero: React.FC = () => {
               </motion.div>
             </FloatingElement>
 
-            {/* Bottom-right — MessageSquare */}
-            <FloatingElement depth={1} className="top-[55%] left-[70%] md:top-[50%] md:left-[68%]">
+            {/* Bottom-right — Star */}
+            <FloatingElement depth={1} className="top-[56%] left-[66%] md:top-[48%] md:left-[64%]">
               <motion.div
-                className="-rotate-[8deg] hover:scale-105 transition-transform duration-200"
+                className="rotate-[14deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.3 }}
               >
                 <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <MessageSquare className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
+                  <Star className="w-8 h-8 md:w-10 md:h-10 text-blue-600" strokeWidth={2.5} />
                 </div>
               </motion.div>
             </FloatingElement>
