@@ -108,19 +108,12 @@ const Pricing: React.FC = () => {
       </div>
 
       {/* New PricingTable Component */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        viewport={{ once: true, amount: 0.05 }}
-      >
         <PricingTable
           features={pricingFeatures}
           plans={pricingPlans}
           defaultPlan="pro"
           defaultInterval="monthly"
           onPlanSelect={(plan) => {
-            // Map pricing-table levels to plan keys
             const planMap: Record<string, string> = {
               starter: 'starter',
               pro: 'pro',
@@ -134,7 +127,6 @@ const Pricing: React.FC = () => {
           containerClassName="py-0"
           buttonClassName="bg-blue-600 hover:bg-blue-700"
         />
-      </motion.div>
 
       </Section>
     </>
