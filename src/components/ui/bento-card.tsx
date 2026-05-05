@@ -104,21 +104,6 @@ const BentoCard = () => {
         style={{ transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)" }}
       >
       <GlassBox variant="clear" clip="lg" rounded="rounded-3xl" className="w-full">
-        {/* Liquid glass colour wash — transparent blue tint */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: [
-              "radial-gradient(ellipse 90% 70% at 50%  0%,  rgba(29,78,216,0.42)  0%, rgba(37,99,235,0.20) 40%, transparent 70%)",
-              "radial-gradient(ellipse 55% 45% at 20%  0%,  rgba(99,102,241,0.28) 0%, transparent 58%)",
-              "radial-gradient(ellipse 50% 40% at 80%  0%,  rgba(14,165,233,0.25) 0%, transparent 55%)",
-              "radial-gradient(ellipse 45% 35% at 50% 35%,  rgba(37,99,235,0.16)  0%, transparent 50%)",
-              "radial-gradient(ellipse 50% 40% at 0%  100%, rgba(6,182,212,0.16)  0%, transparent 52%)",
-              "radial-gradient(ellipse 45% 38% at 100% 100%,rgba(59,130,246,0.14) 0%, transparent 50%)",
-            ].join(","),
-            borderRadius: "inherit",
-          }}
-        />
         <div className="p-4 sm:p-6 space-y-1.5 z-30 relative">
           <h2 className="text-[10px] text-blue-300/90 uppercase tracking-widest font-semibold">
             Platform Preview
