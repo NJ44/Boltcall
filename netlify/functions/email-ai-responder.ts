@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import { getSupabase, deductTokens } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 import { getValidAccessToken, type EmailAccount } from './_shared/email-token-refresh';
+import { chatCompletion } from './_shared/azure-ai';
 
 /**
  * Email AI Responder — Generates AI draft responses for inbound email threads.
@@ -137,12 +138,7 @@ Hours: ${biz.opening_hours || 'Not specified'}
 Service areas: ${Array.isArray(biz.service_areas) ? biz.service_areas.join(', ') : biz.service_areas || 'Not specified'}`
       : 'Business profile not configured.';
 
-    // 7. Call Claude API
-    const anthropicKey = process.env.ANTHROPIC_API_KEY;
-    if (!anthropicKey) {
-      return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }) };
-    }
-
+    // 7. Call AI
     const systemPrompt = `You are an AI email assistant for a local business. Your job is to draft professional, helpful email responses to inbound customer inquiries.
 
 ${bizContext}
@@ -165,29 +161,13 @@ ${conversationHistory}
 
 Draft a response to the latest message from ${latestInbound.from_address}.`;
 
-    const aiRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1024,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
-      }),
-    });
-
-    if (!aiRes.ok) {
-      const errData = await aiRes.text();
-      console.error('Claude API error:', errData);
+    let draftText: string;
+    try {
+      draftText = await chatCompletion(systemPrompt, userPrompt, { maxTokens: 1024, heavy: true });
+    } catch (aiErr: any) {
+      console.error('[email-ai-responder] AI error:', aiErr.message);
       return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'AI generation failed' }) };
     }
-
-    const aiData = await aiRes.json();
-    const draftText = aiData.content?.[0]?.text || '';
 
     if (!draftText) {
       return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Empty AI response' }) };
