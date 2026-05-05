@@ -42,75 +42,75 @@ const Hero: React.FC = () => {
         {/* Parallax floating images */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <Floating sensitivity={-0.5} className="h-full">
-            {/* Top-left small */}
+            {/* Top-left small — phone call */}
             <FloatingElement
               depth={0.5}
-              className="top-[18%] left-[2%] md:top-[22%] md:left-[4%]"
+              className="top-[20%] left-[8%] md:top-[24%] md:left-[12%]"
             >
               <motion.img
                 src={floatingImages[0].url}
                 alt={floatingImages[0].alt}
-                className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-cover rounded-2xl shadow-2xl -rotate-[3deg] hover:scale-105 transition-transform duration-200"
+                className="w-14 h-10 sm:w-20 sm:h-14 md:w-24 md:h-16 lg:w-28 lg:h-20 object-cover rounded-2xl shadow-2xl -rotate-[3deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               />
             </FloatingElement>
 
-            {/* Top-left large */}
+            {/* Top-left large — local business website */}
             <FloatingElement
               depth={1}
-              className="top-[3%] left-[6%] md:top-[8%] md:left-[9%]"
+              className="top-[4%] left-[10%] md:top-[8%] md:left-[14%]"
             >
               <motion.img
                 src={floatingImages[1].url}
                 alt={floatingImages[1].alt}
-                className="w-36 h-24 sm:w-44 sm:h-32 md:w-52 md:h-40 lg:w-56 lg:h-44 object-cover rounded-2xl shadow-2xl -rotate-12 hover:scale-105 transition-transform duration-200"
+                className="w-28 h-20 sm:w-36 sm:h-24 md:w-40 md:h-28 lg:w-44 lg:h-32 object-cover rounded-2xl shadow-2xl -rotate-12 hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
               />
             </FloatingElement>
 
-            {/* Bottom-left */}
+            {/* Bottom-left — SMS conversation */}
             <FloatingElement
               depth={4}
-              className="top-[72%] left-[4%] md:top-[65%] md:left-[6%]"
+              className="top-[74%] left-[8%] md:top-[66%] md:left-[12%]"
             >
               <motion.img
                 src={floatingImages[2].url}
                 alt={floatingImages[2].alt}
-                className="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-60 lg:h-60 object-cover rounded-2xl shadow-2xl -rotate-[4deg] hover:scale-105 transition-transform duration-200"
+                className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48 object-cover rounded-2xl shadow-2xl -rotate-[4deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
               />
             </FloatingElement>
 
-            {/* Top-right */}
+            {/* Top-right — social media ad */}
             <FloatingElement
               depth={2}
-              className="top-[2%] left-[84%] md:top-[4%] md:left-[80%]"
+              className="top-[2%] left-[76%] md:top-[4%] md:left-[72%]"
             >
               <motion.img
                 src={floatingImages[3].url}
                 alt={floatingImages[3].alt}
-                className="w-36 h-32 sm:w-44 sm:h-40 md:w-56 md:h-48 lg:w-60 lg:h-52 object-cover rounded-2xl shadow-2xl rotate-[6deg] hover:scale-105 transition-transform duration-200"
+                className="w-28 h-24 sm:w-36 sm:h-32 md:w-44 md:h-36 lg:w-48 lg:h-40 object-cover rounded-2xl shadow-2xl rotate-[6deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.1 }}
               />
             </FloatingElement>
 
-            {/* Bottom-right */}
+            {/* Bottom-right — calendar booking */}
             <FloatingElement
               depth={1}
-              className="top-[68%] left-[80%] md:top-[60%] md:left-[80%]"
+              className="top-[70%] left-[70%] md:top-[62%] md:left-[68%]"
             >
               <motion.img
                 src={floatingImages[4].url}
                 alt={floatingImages[4].alt}
-                className="w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover rounded-2xl shadow-2xl rotate-[14deg] hover:scale-105 transition-transform duration-200"
+                className="w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-56 lg:h-56 object-cover rounded-2xl shadow-2xl rotate-[14deg] hover:scale-105 transition-transform duration-200"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.3 }}
