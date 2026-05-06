@@ -49,6 +49,52 @@ const Home: React.FC = () => {
   useSchemaInjector([
     {
       "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Boltcall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall is a fully automated AI receptionist and speed-to-lead platform for local service businesses. Boltcall uses AI — not human receptionists — to answer every call 24/7, book appointments instantly, capture leads, and send follow-up text messages automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Boltcall an AI or a human answering service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall is a fully automated AI service. There are no human receptionists involved. The platform uses conversational AI to answer calls, qualify leads, and book appointments automatically — 24 hours a day, 7 days a week, with no staffing costs or hold times."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Boltcall cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall starts at $549 per month for the Starter plan. The Pro plan is $897 per month. All plans include unlimited AI call answering, appointment booking, lead capture, and follow-up texts with no per-call fees. Enterprise pricing is available for multi-location businesses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of businesses use Boltcall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall serves local service businesses including HVAC companies, plumbers, dentists, law firms, med spas, roofing contractors, and solar installers. Any business that receives phone inquiries and needs to respond quickly benefits from Boltcall's speed-to-lead automation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the speed-to-lead system work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall's speed-to-lead system automatically responds to every new lead within seconds — answering calls, replying to web form submissions, and sending follow-up texts without any human action required. Research shows the first business to respond wins the customer 78% of the time. Boltcall makes that response automatic and instant, even at 2am on weekends."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Boltcall",
       "url": "https://boltcall.org",

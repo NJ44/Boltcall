@@ -37,7 +37,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
         }
       },
       "datePublished": "2026-03-23",
-      "dateModified": "2026-03-23",
+      "dateModified": "2026-05-06",
       "image": {
         "@type": "ImageObject",
         "url": "https://boltcall.org/og-image.jpg",
@@ -62,7 +62,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
           "name": "Is Boltcall cheaper than Smith.ai?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on call volume. Smith.ai starts at $95/month for 50 calls, but charges $2.10–$2.40 per additional call. At 200+ calls per month, Boltcall's flat $389/month is cheaper. Boltcall also includes a website, chatbot, and speed-to-lead automation that Smith.ai does not offer."
+            "text": "It depends on call volume. Smith.ai starts at $95/month for 50 calls, but charges $2.10–$2.40 per additional call. At 240+ calls per month, Boltcall's flat $549/month Starter plan is cheaper. At 300 calls, Boltcall saves $146/month vs Smith.ai's $695. Boltcall also includes a website, chatbot, and speed-to-lead automation that Smith.ai does not offer."
           }
         },
         {
@@ -128,7 +128,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
   }, []);
 
   const comparisonData = [
-    { feature: 'Starting Price', boltcall: '$389/mo (flat)', smithai: '$95/mo + $2.40/call', boltcallYes: true, smithaiYes: true },
+    { feature: 'Starting Price', boltcall: '$549/mo (flat)', smithai: '$95/mo + $2.40/call', boltcallYes: true, smithaiYes: true },
     { feature: 'AI Phone Receptionist', boltcall: 'Yes, 24/7', smithai: 'Yes, with human backup', boltcallYes: true, smithaiYes: true },
     { feature: 'AI Chatbot Widget', boltcall: 'Yes, included', smithai: 'No', boltcallYes: true, smithaiYes: false },
     { feature: 'Speed-to-Lead Auto-Reply', boltcall: 'Yes, <60 seconds', smithai: 'No', boltcallYes: true, smithaiYes: false },
@@ -290,16 +290,16 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
                   <h3 className="text-xl font-bold text-blue-600 mb-4">Boltcall Pricing</h3>
                   <ul className="space-y-3">
                     <li className="flex justify-between">
-                      <span className="text-gray-700">Core Plan</span>
-                      <span className="font-bold text-gray-900">$389/mo</span>
+                      <span className="text-gray-700">Starter Plan</span>
+                      <span className="font-bold text-gray-900">$549/mo</span>
                     </li>
                     <li className="flex justify-between">
-                      <span className="text-gray-700">SEO Plan</span>
-                      <span className="font-bold text-gray-900">$489/mo</span>
+                      <span className="text-gray-700">Pro Plan</span>
+                      <span className="font-bold text-gray-900">$897/mo</span>
                     </li>
                     <li className="flex justify-between">
-                      <span className="text-gray-700">AI Full Plan</span>
-                      <span className="font-bold text-gray-900">$799/mo</span>
+                      <span className="text-gray-700">Ultimate Plan</span>
+                      <span className="font-bold text-gray-900">$4,997/mo</span>
                     </li>
                     <li className="border-t border-blue-200 pt-3 text-sm text-gray-600">
                       <CheckCircle className="h-4 w-4 text-green-500 inline mr-1" />
@@ -332,28 +332,28 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">The Math at 200 Calls Per Month</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">The Math at 300 Calls Per Month</h3>
               <p className="text-lg text-gray-700 mb-6">
-                A typical small business receives 150-300 calls per month. Here is what 200 calls costs on each platform:
+                A typical small business receives 150-300 calls per month. Here is what 300 calls costs on each platform:
               </p>
 
               <div className="bg-gray-100 rounded-xl p-6 mb-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <p className="text-sm font-semibold text-blue-600 mb-2">Boltcall (Core Plan)</p>
-                    <p className="text-3xl font-bold text-gray-900">$389/mo</p>
-                    <p className="text-sm text-gray-600 mt-1">Flat rate. 200 calls, 500 calls, unlimited. Same price.</p>
+                    <p className="text-sm font-semibold text-blue-600 mb-2">Boltcall (Starter Plan)</p>
+                    <p className="text-3xl font-bold text-gray-900">$549/mo</p>
+                    <p className="text-sm text-gray-600 mt-1">Flat rate. 300 calls, 500 calls, unlimited. Same price.</p>
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-gray-600 mb-2">Smith.ai AI Receptionist</p>
-                    <p className="text-3xl font-bold text-gray-900">$455/mo</p>
-                    <p className="text-sm text-gray-600 mt-1">$95 base + 150 extra calls x $2.40 = $455</p>
+                    <p className="text-3xl font-bold text-gray-900">$695/mo</p>
+                    <p className="text-sm text-gray-600 mt-1">$95 base + 250 extra calls x $2.40 = $695</p>
                   </div>
                 </div>
               </div>
 
               <p className="text-lg text-gray-700 mb-6">
-                At 200 calls per month, Boltcall saves you $66/month or $792/year. The gap widens as volume increases. At 400 calls, Smith.ai costs $935/month while Boltcall remains at $389. For a full breakdown of AI receptionist pricing, see our <Link to="/blog/ai-receptionist-cost-pricing" className="text-blue-600 hover:underline">AI receptionist pricing guide</Link>.
+                At 300 calls per month, Boltcall saves you $146/month or $1,752/year. The crossover point is around 240 calls — beyond that, Boltcall's flat pricing wins every month. At 400 calls, Smith.ai costs $935/month while Boltcall remains at $549. For a full breakdown of AI receptionist pricing, see our <Link to="/blog/ai-receptionist-cost-pricing" className="text-blue-600 hover:underline">AI receptionist pricing guide</Link>.
               </p>
 
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
@@ -381,7 +381,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
                 This is the single biggest difference. Boltcall charges a flat monthly rate regardless of call volume. Smith.ai charges per call after your base allotment. For low-volume businesses under 50 calls per month, Smith.ai's $95 entry point is cheaper. But most local businesses receive far more than 50 calls.
               </p>
               <p className="text-lg text-gray-700 mb-6">
-                The crossover point is around 175 calls per month. Beyond that, Boltcall's flat pricing saves money every single month. If your call volume is unpredictable, Boltcall eliminates the risk of surprise bills.
+                The crossover point is around 240 calls per month. Beyond that, Boltcall's flat pricing saves money every single month. If your call volume is unpredictable, Boltcall eliminates the risk of surprise bills.
               </p>
 
               <h3 className="text-2xl font-semibold text-gray-900 mb-4">2. All-in-One vs Phone Only</h3>
@@ -442,7 +442,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
                 <li className="flex items-start space-x-3">
                   <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
                   <span className="text-lg text-gray-700">
-                    <strong>You receive 150+ calls per month.</strong> Once you pass 175 calls, Boltcall is cheaper than Smith.ai every single month. The more calls you get, the bigger the savings.
+                    <strong>You receive 240+ calls per month.</strong> Once you pass 240 calls, Boltcall is cheaper than Smith.ai every single month. The more calls you get, the bigger the savings.
                   </span>
                 </li>
                 <li className="flex items-start space-x-3">
@@ -557,7 +557,7 @@ const CompareBoltcallVsSmithAi: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">Is Boltcall cheaper than Smith.ai?</h3>
                   <p className="text-lg text-gray-700">
-                    It depends on your call volume. Smith.ai starts at $95/month for 50 calls, making it cheaper for very low-volume businesses. But per-call fees of $2.10-$2.40 add up fast. At 200 calls per month, Smith.ai costs $455 while Boltcall costs $389. Beyond 175 calls, Boltcall is always cheaper. Plus, Boltcall includes a website, chatbot, and speed-to-lead automation that Smith.ai charges extra for or does not offer at all.
+                    It depends on your call volume. Smith.ai starts at $95/month for 50 calls, making it cheaper for very low-volume businesses. But per-call fees of $2.10-$2.40 add up fast. At 300 calls per month, Smith.ai costs $695 while Boltcall's Starter plan costs $549. The crossover is around 240 calls — beyond that, Boltcall is always cheaper. Plus, Boltcall includes a website, chatbot, and speed-to-lead automation that Smith.ai charges extra for or does not offer at all.
                   </p>
                 </div>
 

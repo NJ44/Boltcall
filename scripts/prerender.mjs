@@ -106,6 +106,7 @@ const ROUTES = [
   '/blog/complete-guide-to-seo',
   '/blog/best-ai-receptionist-tools',
   '/blog/how-ai-receptionist-works',
+  '/blog/what-is-ai-receptionist-guide',
   '/blog/is-ai-receptionist-worth-it',
   '/blog/how-to-make-ai-receptionist',
   '/blog/will-receptionists-be-replaced-by-ai',
