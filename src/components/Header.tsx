@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Zap, MessageSquare, Bell, Target, Globe, RotateCw, Gauge, Calculator, Sparkles, Scale, BookOpen, Book, Mail, ArrowRight, Filter } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import GiveawayBar from './GiveawayBar';
