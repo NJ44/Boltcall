@@ -118,6 +118,14 @@ const Comparisons: React.FC = () => {
       category: 'Virtual Receptionist',
       date: 'April 8, 2026',
       readTime: '8 min read'
+    },
+    {
+      title: '5 Best <span class="text-blue-600">Podium Alternatives</span> for Local Businesses (2026)',
+      description: 'Five Podium alternatives ranked by lead-conversion focus, response speed, and pricing transparency. Honest strengths and weaknesses for each.',
+      href: '/compare/podium-alternatives',
+      category: 'Roundup',
+      date: 'May 6, 2026',
+      readTime: '9 min read'
     }
   ];
 

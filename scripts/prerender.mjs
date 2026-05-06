@@ -96,6 +96,7 @@ const ROUTES = [
   '/compare/boltcall-vs-emitrr',
   '/compare/boltcall-vs-calomation',
   '/compare/boltcall-vs-smith-ai',
+  '/compare/podium-alternatives',
   // Blog index
   '/blog',
   // Blog posts
