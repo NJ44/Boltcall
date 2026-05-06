@@ -31,15 +31,15 @@ const DashboardPage: React.FC = () => {
     if (!user?.id) return;
     supabase
       .from('agents')
-      .select('direction, avatar, color, name')
+      .select('agent_type, name')
       .eq('user_id', user.id)
       .eq('status', 'active')
       .then(({ data }) => {
         if (data) {
           const customizations: AgentCustomization[] = data.map((a: any) => ({
-            direction: a.direction === 'outbound' ? 'outbound' : 'inbound',
-            avatar: a.avatar ?? null,
-            color: a.color ?? null,
+            direction: a.agent_type === 'speed_to_lead' ? 'outbound' : 'inbound',
+            avatar: null,
+            color: null,
             title: a.name,
           }));
           setAgentCustomizations(customizations);
