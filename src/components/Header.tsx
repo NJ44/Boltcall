@@ -47,7 +47,6 @@ const Header: React.FC = () => {
     { label: 'Lead Response Speed Test', href: '/speed-test', icon: Zap },
     { label: 'AI Revenue Audit', href: '/ai-revenue-audit', icon: Calculator },
     { label: 'Lead Response Scorecard', href: '/lead-response-scorecard', icon: Target },
-    { label: '5-Minute Response Playbook', href: '/tools/5-minute-response-playbook', icon: BookOpen },
     { label: 'Conversion Rate Optimizer', href: '/conversion-rate-optimizer', icon: Gauge },
     { label: 'Funnel Optimizer', href: '/funnel-optimizer', icon: Filter },
   ];
