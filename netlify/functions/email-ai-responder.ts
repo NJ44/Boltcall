@@ -3,6 +3,7 @@ import { getSupabase, deductTokens } from './_shared/token-utils';
 import { notifyError } from './_shared/notify';
 import { getValidAccessToken, type EmailAccount } from './_shared/email-token-refresh';
 import { chatCompletion } from './_shared/azure-ai';
+import { buildAgentContext } from './_shared/agent-context';
 
 /**
  * Email AI Responder — Generates AI draft responses for inbound email threads.
