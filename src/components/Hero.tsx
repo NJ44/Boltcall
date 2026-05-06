@@ -27,13 +27,14 @@ const Hero: React.FC = () => {
             {/* Top-left — Phone */}
             <FloatingElement depth={0.5} className="top-[26%] left-[17%] md:top-[28%] md:left-[19%]">
               <motion.div
-                className="-rotate-[3deg] hover:scale-105 transition-transform duration-200"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.55 }}
               >
-                <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <Phone className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                <div className="-rotate-[3deg] hover:scale-105 transition-transform duration-200">
+                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Phone className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                  </div>
                 </div>
               </motion.div>
             </FloatingElement>
@@ -41,13 +42,14 @@ const Hero: React.FC = () => {
             {/* Top-left large — Users */}
             <FloatingElement depth={1} className="top-[12%] left-[13%] md:top-[14%] md:left-[15%]">
               <motion.div
-                className="-rotate-12 hover:scale-105 transition-transform duration-200"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.70 }}
               >
-                <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <Users className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                <div className="-rotate-12 hover:scale-105 transition-transform duration-200">
+                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Users className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                  </div>
                 </div>
               </motion.div>
             </FloatingElement>
@@ -55,13 +57,14 @@ const Hero: React.FC = () => {
             {/* Bottom-left — MessageSquare */}
             <FloatingElement depth={4} className="top-[60%] left-[17%] md:top-[52%] md:left-[21%]">
               <motion.div
-                className="-rotate-[4deg] hover:scale-105 transition-transform duration-200"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.9 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.85 }}
               >
-                <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <MessageSquare className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                <div className="-rotate-[4deg] hover:scale-105 transition-transform duration-200">
+                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <MessageSquare className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                  </div>
                 </div>
               </motion.div>
             </FloatingElement>
@@ -69,13 +72,14 @@ const Hero: React.FC = () => {
             {/* Top-right — Calendar */}
             <FloatingElement depth={2} className="top-[10%] left-[81%] md:top-[14%] md:left-[79%]">
               <motion.div
-                className="rotate-[6deg] hover:scale-105 transition-transform duration-200"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.1 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.00 }}
               >
-                <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <Calendar className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                <div className="rotate-[6deg] hover:scale-105 transition-transform duration-200">
+                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Calendar className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                  </div>
                 </div>
               </motion.div>
             </FloatingElement>
@@ -83,27 +87,29 @@ const Hero: React.FC = () => {
             {/* Middle-right — Star */}
             <FloatingElement depth={1} className="top-[56%] left-[71%] md:top-[48%] md:left-[69%]">
               <motion.div
-                className="rotate-[14deg] hover:scale-105 transition-transform duration-200"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.3 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.15 }}
               >
-                <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <Star className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                <div className="rotate-[14deg] hover:scale-105 transition-transform duration-200">
+                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Star className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                  </div>
                 </div>
               </motion.div>
             </FloatingElement>
 
-            {/* Bottom-right — Zap */}
-            <FloatingElement depth={3} className="top-[70%] left-[78%] md:top-[66%] md:left-[76%]">
+            {/* Upper-right — Megaphone (ad) */}
+            <FloatingElement depth={3} className="top-[36%] left-[83%] md:top-[34%] md:left-[83%]">
               <motion.div
-                className="-rotate-[5deg] hover:scale-105 transition-transform duration-200"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 1.30 }}
               >
-                <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
-                  <Zap className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                <div className="-rotate-[5deg] hover:scale-105 transition-transform duration-200">
+                  <div className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl shadow-xl bg-white border border-gray-100">
+                    <Megaphone className="w-10 h-10 md:w-12 md:h-12 text-blue-600" strokeWidth={2.5} />
+                  </div>
                 </div>
               </motion.div>
             </FloatingElement>
