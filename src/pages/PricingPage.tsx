@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { usePricingVisitorTrack } from '../hooks/usePricingVisitorTrack';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 import GiveawayBar from '../components/GiveawayBar';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -58,6 +59,110 @@ const PricingPage: React.FC = () => {
     };
   }, []);
 
+  useSchemaInjector([
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Boltcall AI Receptionist",
+      "description": "AI receptionist that answers calls 24/7, books appointments, captures leads, and sends follow-up texts for local service businesses.",
+      "url": "https://boltcall.org/pricing",
+      "brand": { "@type": "Brand", "name": "Boltcall" },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Starter",
+          "price": "549",
+          "priceCurrency": "USD",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" },
+          "url": "https://boltcall.org/setup",
+          "availability": "https://schema.org/InStock",
+          "description": "AI receptionist, missed call text-back, instant lead reply, appointment reminders, reports dashboard."
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro",
+          "price": "897",
+          "priceCurrency": "USD",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" },
+          "url": "https://boltcall.org/setup",
+          "availability": "https://schema.org/InStock",
+          "description": "Everything in Starter plus full lead follow-up system, SMS conversations, website chat widget, custom AI voice."
+        },
+        {
+          "@type": "Offer",
+          "name": "Ultimate",
+          "price": "4997",
+          "priceCurrency": "USD",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" },
+          "url": "https://boltcall.org/setup",
+          "availability": "https://schema.org/InStock",
+          "description": "Everything in Pro plus multi-location support, dedicated account manager, AI audits."
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does Boltcall cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boltcall starts at $549/month for the Starter plan, $897/month for Pro, and $4,997/month for Ultimate. All plans include free setup and a 30-day money-back guarantee. No per-call or per-minute fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Boltcall pay for itself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most businesses recover the full cost of their Boltcall subscription within the first week. The average missed call to a local service business represents $300–$1,500 in lost revenue. At $897/month for the Pro plan, recovering even a handful of additional appointments per month generates 5–10× the subscription cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in every Boltcall plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every Boltcall plan includes 24/7 AI call answering, appointment booking into your calendar, instant SMS follow-up, automated appointment reminders that cut no-shows by 40%+, post-appointment Google review requests, and a monthly revenue report."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I upgrade or cancel my Boltcall plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can upgrade from Starter to Pro or Pro to Ultimate with one click from your dashboard. There are no long-term contracts — you can cancel at any time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between Boltcall Starter and Pro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Starter includes the core AI receptionist, missed call text-back, instant lead reply, and appointment reminders. Pro adds a full lead follow-up system, SMS conversations, automated post-job follow-ups, a website chat widget, custom AI voice and script, CRM integration, and Google review request automation."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Boltcall Pricing — AI Receptionist Plans",
+      "url": "https://boltcall.org/pricing",
+      "description": "Compare Boltcall pricing plans. AI receptionist starting at $549/month. Free setup included.",
+      "datePublished": "2024-01-01",
+      "dateModified": "2026-05-06",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Boltcall",
+        "url": "https://boltcall.org",
+        "logo": { "@type": "ImageObject", "url": "https://boltcall.org/logo.png" }
+      }
+    }
+  ]);
+
   return (
     <div className="min-h-screen bg-white">
       <GiveawayBar />
@@ -74,7 +179,7 @@ const PricingPage: React.FC = () => {
               ROI Analysis
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Boltcall Pays For Itself
+              Does Boltcall Pay for Itself?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Most businesses recover the full cost of their subscription within the first week — from a single appointment booked or emergency call answered after hours.
@@ -121,7 +226,7 @@ const PricingPage: React.FC = () => {
         </section>
       {/* Social Proof */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Trusted by Local Business Owners</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Do Boltcall Customers Say?</h2>
         <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
@@ -169,7 +274,7 @@ const PricingPage: React.FC = () => {
       {/* Plan Comparison Table */}
       <section className="bg-white py-10 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Feature Comparison by Plan</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Which Boltcall Plan Is Right for My Business?</h2>
           <p className="text-gray-500 text-sm text-center mb-6">Everything included in each Boltcall tier — no hidden fees</p>
           <div className="overflow-x-auto rounded-xl border border-gray-200">
             <table className="w-full text-sm">

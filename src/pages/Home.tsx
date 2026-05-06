@@ -1,5 +1,6 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { updateMetaDescription } from '../lib/utils';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import LazySection from '../components/LazySection';
@@ -44,6 +45,47 @@ const Home: React.FC = () => {
 
     return () => { speakableScript.remove(); };
   }, []);
+
+  useSchemaInjector([
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Boltcall",
+      "url": "https://boltcall.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://boltcall.org/logo.png"
+      },
+      "description": "AI-powered speed-to-lead and receptionist platform for local service businesses. Answers every call 24/7, books appointments instantly, and captures leads automatically.",
+      "sameAs": [
+        "https://www.linkedin.com/company/boltcall"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "url": "https://boltcall.org/book-a-call"
+      },
+      "knowsAbout": ["speed to lead", "AI receptionist", "lead capture", "appointment booking", "local service businesses"]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Boltcall",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://boltcall.org",
+      "description": "AI receptionist that answers calls 24/7, books appointments, captures leads, and sends follow-up texts for local service businesses.",
+      "offers": {
+        "@type": "Offer",
+        "price": "549",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2027-01-01",
+        "url": "https://boltcall.org/pricing"
+      },
+      "datePublished": "2024-01-01",
+      "dateModified": "2026-05-06"
+    }
+  ]);
 
   return (
     <div className="relative bg-brand-blue">
