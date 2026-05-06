@@ -10,6 +10,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import Button from '../components/ui/Button';
 import DropdownComponent from '../components/ui/dropdown-01';
 import { useNavigate } from 'react-router-dom';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 // ── Option lists ──
 const industryOptions = [
@@ -83,6 +84,39 @@ const loadingSteps = [
 ];
 
 const AIAuditPage: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What does a free AI business audit include?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Boltcall\'s free AI business audit scores your business across four dimensions: lead response speed, missed call rate, follow-up automation, and booking conversion. You receive a custom report with a revenue impact estimate and an AI readiness score.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long does Boltcall\'s AI audit take?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'The AI audit takes 2–3 minutes to complete. After answering 8 questions about your business, you instantly receive a personalized report showing your AI readiness score and estimated monthly revenue impact.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is the Boltcall AI audit free?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, the AI business audit is completely free. There is no obligation and no credit card required. You will receive your results immediately after completing the 2-minute questionnaire.',
+          },
+        },
+      ],
+    },
+  ]);
+
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0); // 0 = hero, 1-4 = form steps
   const [isSubmitting, setIsSubmitting] = useState(false);

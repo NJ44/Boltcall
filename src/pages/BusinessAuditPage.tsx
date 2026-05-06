@@ -7,8 +7,52 @@ import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import FAQ from '../components/FAQ';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 const BusinessAuditPage: React.FC = () => {
+    useSchemaInjector([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What does a free business audit check?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Boltcall\'s free business audit analyzes your online presence including your website, Google Business Profile, local directory listings, online reputation and reviews, and website optimization. You receive a report showing gaps that are costing you customers.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How do I know if my business is losing leads online?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Common signs your business is losing leads online include: slow website load times, missing or incomplete Google Business Profile, no reviews or negative ratings, inconsistent business information across directories, and no call-to-action on your website. A free business audit identifies which of these apply.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Is the business audit tool free?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes, the Boltcall business audit is completely free. Enter your website URL and email address and receive a full online presence report with no obligation and no credit card required.',
+            },
+          },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: 'Free Online Business Presence Audit Tool',
+        url: 'https://boltcall.org/business-audit',
+        applicationCategory: 'BusinessApplication',
+        isAccessibleForFree: true,
+        description: 'Free business audit tool that analyzes your online presence, local listings, reputation, and website to identify lead generation gaps.',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      },
+    ]);
+
     const [url, setUrl] = useState('');
     const [email, setEmail] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
