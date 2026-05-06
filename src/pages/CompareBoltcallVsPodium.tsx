@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { updateMetaDescription } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, ArrowRight, DollarSign, Zap, Shield, Star } from 'lucide-react';
+import { CheckCircle, XCircle, ArrowRight, DollarSign, Zap, Shield, Clock, Target } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FinalCTA, { COMPARISON_CTA } from '../components/FinalCTA';
@@ -11,134 +11,130 @@ import GiveawayBar from '../components/GiveawayBar';
 import ReadingProgress from '../components/ReadingProgress';
 import Breadcrumbs from '../components/Breadcrumbs';
 
+const PUBLISH_DATE = '2026-05-06';
+const TITLE = 'Boltcall vs Podium: Speed-to-Lead vs Comms Hub (2026)';
+const DESCRIPTION = 'Boltcall vs Podium compared honestly. Speed-to-lead specialist vs all-in-one communication hub. See which fits your local business in 2026.';
+
 const CompareBoltcallVsPodium: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Boltcall vs Podium: Honest Comparison for Local Businesses (2026)';
-    updateMetaDescription('Boltcall vs Podium compared side-by-side. See pricing, features, ease of use, and which platform is better for your local business in 2026.');
+    document.title = TITLE;
+    updateMetaDescription(DESCRIPTION);
 
     const articleScript = document.createElement('script');
     articleScript.type = 'application/ld+json';
-    articleScript.innerHTML = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Boltcall vs Podium: Honest Comparison for Local Businesses (2026)",
-      "description": "Boltcall vs Podium compared side-by-side. See pricing, features, ease of use, and which platform is better for your local business in 2026.",
-      "author": {
-        "@type": "Organization",
-        "name": "Boltcall"
+    articleScript.id = 'compare-podium-article';
+    articleScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: TITLE,
+      description: DESCRIPTION,
+      author: { '@type': 'Organization', name: 'Boltcall' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Boltcall',
+        logo: { '@type': 'ImageObject', url: 'https://boltcall.org/boltcall_full_logo.png' },
       },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Boltcall",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://boltcall.org/logo.png"
-        }
+      datePublished: PUBLISH_DATE,
+      dateModified: PUBLISH_DATE,
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': 'https://boltcall.org/compare/boltcall-vs-podium',
       },
-      "datePublished": "2026-03-21",
-      "dateModified": "2026-03-21",
-      "image": {
-        "@type": "ImageObject",
-        "url": "https://boltcall.org/og-image.jpg",
-        "width": 1200,
-        "height": 630
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://boltcall.org/blog/boltcall-vs-podium"
-      }
     });
     document.head.appendChild(articleScript);
 
     const faqScript = document.createElement('script');
     faqScript.type = 'application/ld+json';
-    faqScript.innerHTML = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
+    faqScript.id = 'compare-podium-faq';
+    faqScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
         {
-          "@type": "Question",
-          "name": "Is Boltcall cheaper than Podium?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Boltcall starts at $389/month with AI phone receptionist, chatbot, and website included. Podium's Essentials plan starts at $399/month and does not include AI voice answering or a website builder. Boltcall delivers more features at a lower price point."
-          }
+          '@type': 'Question',
+          name: 'What is the main difference between Boltcall and Podium?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Boltcall is a speed-to-lead specialist focused on turning a lead into a booked appointment in 11 seconds or less. Podium is an all-in-one communication hub covering messaging, reviews, payments, and AI Employee. Boltcall is narrower and faster on lead conversion. Podium is broader across customer communication.',
+          },
         },
         {
-          "@type": "Question",
-          "name": "Does Podium have an AI phone receptionist?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Podium does not offer a native AI phone receptionist that answers calls 24/7. Podium focuses on text messaging, review management, and webchat. Boltcall includes a 24/7 AI phone receptionist as a core feature in every plan."
-          }
+          '@type': 'Question',
+          name: 'Is Boltcall cheaper than Podium?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Boltcall agency starts at $499 per month with the $2,500 setup waived on a 12-month commit. Podium publishes a $399 Essentials starter price, but most local businesses end up on quote-based plans that start higher than Boltcall once AI Employee, payments, and per-location fees are added.',
+          },
         },
         {
-          "@type": "Question",
-          "name": "Can I switch from Podium to Boltcall?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Boltcall offers a 24-hour setup guarantee, so you can be fully operational within one day. There are no long-term contracts. Many businesses switch from Podium to Boltcall to get AI voice answering and a lower monthly cost."
-          }
+          '@type': 'Question',
+          name: 'Does Podium have AI call answering?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Podium AI Employee handles inbound text, web chat, and voice calls. Podium reports response times under one minute. Boltcall is built around an 11 Second Response standard, with the entire stack engineered around lead-to-booking speed rather than general communication.',
+          },
         },
         {
-          "@type": "Question",
-          "name": "Which is better for a dental office?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "For most dental offices, Boltcall is the better choice. It answers calls 24/7 with an AI receptionist, books appointments automatically, and costs less than Podium. Podium is better only if your primary need is review management at scale across multiple locations."
-          }
-        }
-      ]
+          '@type': 'Question',
+          name: 'Can I switch from Podium to Boltcall?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Boltcall ships in 24 to 48 hours, with no annual contract required. Boltcall sets up the AI receptionist, lead routing, and booking automation. You can run Boltcall alongside Podium during the transition and cut Podium when your numbers move.',
+          },
+        },
+      ],
     });
     document.head.appendChild(faqScript);
 
     const speakableScript = document.createElement('script');
     speakableScript.type = 'application/ld+json';
-    speakableScript.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": document.title,
-      "speakable": {
-        "@type": "SpeakableSpecification",
-        "cssSelector": [".speakable-intro"]
-      }
+    speakableScript.id = 'compare-podium-speakable';
+    speakableScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: TITLE,
+      speakable: {
+        '@type': 'SpeakableSpecification',
+        cssSelector: ['.speakable-intro'],
+      },
     });
     document.head.appendChild(speakableScript);
 
-    const personScript = document.createElement('script');
-    personScript.type = 'application/ld+json';
-    personScript.id = 'person-schema';
-    personScript.text = JSON.stringify({"@context":"https://schema.org","@type":"Person","name":"Boltcall Team","url":"https://boltcall.org/about","worksFor":{"@type":"Organization","name":"Boltcall","url":"https://boltcall.org"}});
-    document.head.appendChild(personScript);
-
-
     const bcScript = document.createElement('script');
     bcScript.type = 'application/ld+json';
-    bcScript.id = 'breadcrumb-jsonld';
-    bcScript.text = JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://boltcall.org"}, {"@type": "ListItem", "position": 2, "name": "Comparisons", "item": "https://boltcall.org/comparisons"}, {"@type": "ListItem", "position": 3, "name": "Boltcall vs Podium", "item": "https://boltcall.org/compare/boltcall-vs-podium"}]});
+    bcScript.id = 'compare-podium-breadcrumb';
+    bcScript.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://boltcall.org' },
+        { '@type': 'ListItem', position: 2, name: 'Comparisons', item: 'https://boltcall.org/comparisons' },
+        { '@type': 'ListItem', position: 3, name: 'Boltcall vs Podium', item: 'https://boltcall.org/compare/boltcall-vs-podium' },
+      ],
+    });
     document.head.appendChild(bcScript);
+
     return () => {
-      document.getElementById('breadcrumb-jsonld')?.remove();
-      document.getElementById('person-schema')?.remove();
-      document.head.removeChild(articleScript);
-      document.head.removeChild(faqScript);
-      speakableScript.remove();
+      document.getElementById('compare-podium-article')?.remove();
+      document.getElementById('compare-podium-faq')?.remove();
+      document.getElementById('compare-podium-speakable')?.remove();
+      document.getElementById('compare-podium-breadcrumb')?.remove();
     };
   }, []);
 
   const comparisonData = [
-    { feature: 'Starting Price', boltcall: '$389/mo', podium: '$399/mo (Essentials)', boltcallYes: true, podiumYes: true },
-    { feature: 'AI Phone Receptionist', boltcall: 'Yes, 24/7', podium: 'No native AI voice', boltcallYes: true, podiumYes: false },
-    { feature: 'AI Chatbot Widget', boltcall: 'Yes, included', podium: 'Yes, via Webchat', boltcallYes: true, podiumYes: true },
-    { feature: 'Speed-to-Lead Auto-Reply', boltcall: 'Yes, <60 seconds', podium: 'Limited', boltcallYes: true, podiumYes: false },
-    { feature: 'Google Review Automation', boltcall: 'Yes, included', podium: 'Yes, core feature', boltcallYes: true, podiumYes: true },
-    { feature: 'Appointment Booking', boltcall: 'Yes, Cal.com integration', podium: 'Yes, via Podium', boltcallYes: true, podiumYes: true },
-    { feature: 'SMS/Text Messaging', boltcall: 'Yes', podium: 'Yes, core feature', boltcallYes: true, podiumYes: true },
-    { feature: 'Website Builder', boltcall: 'Yes, free included', podium: 'No', boltcallYes: true, podiumYes: false },
-    { feature: 'Setup Time', boltcall: '24 hours', podium: 'Days–weeks', boltcallYes: true, podiumYes: false },
-    { feature: 'Contract Required', boltcall: 'No', podium: 'Yes, annual typical', boltcallYes: true, podiumYes: false },
-    { feature: 'Best For', boltcall: 'Small local businesses', podium: 'Mid-size, review-focused', boltcallYes: true, podiumYes: true },
+    { feature: 'Core focus', boltcall: 'Speed-to-lead → booking', podium: 'All-in-one comms hub', boltcallYes: true, podiumYes: true },
+    { feature: 'Response time standard', boltcall: '11 seconds', podium: 'Under 1 minute (claimed)', boltcallYes: true, podiumYes: true },
+    { feature: 'AI voice answering 24/7', boltcall: 'Included on every plan', podium: 'AI Employee add-on', boltcallYes: true, podiumYes: true },
+    { feature: 'Text + web chat AI', boltcall: 'Included', podium: 'Core feature', boltcallYes: true, podiumYes: true },
+    { feature: 'Auto-booking to calendar', boltcall: 'Native (Cal.com / Google)', podium: 'Via Scheduling add-on', boltcallYes: true, podiumYes: true },
+    { feature: 'Review automation', boltcall: 'Included', podium: 'Best-in-class', boltcallYes: true, podiumYes: true },
+    { feature: 'Payments', boltcall: 'External (Stripe / PayPal)', podium: 'Native Podium Payments', boltcallYes: false, podiumYes: true },
+    { feature: 'Pricing model', boltcall: 'Flat $499/mo agency', podium: 'Quote-based, scales fast', boltcallYes: true, podiumYes: false },
+    { feature: 'Setup time', boltcall: '24–48 hours, done-for-you', podium: 'Days to weeks', boltcallYes: true, podiumYes: false },
+    { feature: 'Annual contract', boltcall: 'Optional (setup waived)', podium: 'Typical', boltcallYes: true, podiumYes: false },
+    { feature: 'Best for', boltcall: 'Lead conversion focused', podium: 'Multi-location, review-led', boltcallYes: true, podiumYes: true },
   ];
 
   return (
@@ -148,63 +144,41 @@ const CompareBoltcallVsPodium: React.FC = () => {
       <ReadingProgress />
 
       <main className="pt-24 min-h-screen bg-white">
-        {/* Hero Section */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="mb-6">
-                <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
-                  Comparison Guide
-                </span>
-              </div>
-
-              <Breadcrumbs
-                items={[
-                  { label: 'Blog', href: '/blog' },
-                  { label: 'Boltcall vs Podium', href: '/blog/boltcall-vs-podium' }
-                ]}
-              />
-
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                <span className="text-blue-600">Boltcall vs Podium</span>: Which is Better for Your Local Business?
-              </h1>
-
-              <div className="flex items-center text-gray-600 mb-8 space-x-6">
-                <div className="flex items-center">
-                  <Star className="h-5 w-5 mr-2" />
-                  <span>March 21, 2026</span>
-                </div>
-                <div className="flex items-center">
-                  <Zap className="h-5 w-5 mr-2" />
-                  <span>10 min read</span>
-                </div>
-                <div className="flex items-center">
-                  <Shield className="h-5 w-5 mr-2" />
-                  <span>Boltcall Team</span>
-                </div>
-              </div>
-            </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+          <Breadcrumbs
+            items={[
+              { label: 'Comparisons', href: '/comparisons' },
+              { label: 'Boltcall vs Podium', href: '/compare/boltcall-vs-podium' },
+            ]}
+          />
+          <div className="mt-6 mb-3">
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 bg-blue-50 text-blue-600 text-sm font-medium border border-blue-200">
+              Honest comparison
+            </span>
           </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#0B1220] leading-tight mb-5">
+            Boltcall vs <span className="text-blue-600">Podium</span>: speed-to-lead specialist vs all-in-one comms hub
+          </h1>
+          <p className="text-lg text-slate-600 max-w-3xl">
+            One is engineered around an 11-second response standard. The other is a 15-year-old communication suite that recently bolted on AI. This is a clean read of where each one wins.
+          </p>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* AEO Direct Answer Block */}
-          <div className="speakable-intro bg-blue-50 border-l-4 border-blue-500 p-6 mb-10">
-            <p className="text-lg font-medium text-gray-900">
-              <strong>Quick Answer:</strong> Boltcall is better for small local businesses that want an affordable all-in-one AI receptionist with phone answering, chatbot, and speed-to-lead automation starting at $389/month. Podium is better for larger businesses focused primarily on review management and messaging, but costs $300+ per month for fewer AI features.
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="speakable-intro bg-blue-50 border-l-4 border-blue-600 p-6 mb-10 rounded-r-lg">
+            <p className="text-lg text-[#0B1220]">
+              <strong>Quick answer:</strong> If your top problem is leads slipping through the cracks, choose Boltcall. It is built around one job, turn a new lead into a booked appointment in 11 seconds with zero manual effort. If you want a single dashboard for messaging, reviews, payments, and AI calls across multiple locations, Podium is the more complete suite.
             </p>
           </div>
 
           <div className="prose prose-lg max-w-none">
-            <p className="text-xl text-gray-700 leading-relaxed mb-8">
-              Choosing between Boltcall and Podium is one of the biggest software decisions a local business can make in 2026. Both platforms promise to help you capture more leads and grow revenue. But they take fundamentally different approaches to solving those problems.
+            <p className="text-xl text-slate-700 leading-relaxed mb-6">
+              Boltcall and Podium often show up on the same shortlist, but they answer different questions. Boltcall answers <em>"how do I stop missing leads?"</em>. Podium answers <em>"how do I run all customer communication from one place?"</em>.
+            </p>
+            <p className="text-lg text-slate-700 mb-10">
+              This page compares them feature by feature, pricing model by pricing model, and ends with a clear pick by use case. We acknowledge what Podium does better than us, and we are direct about where Boltcall wins.
             </p>
 
-            <p className="text-lg text-gray-700 mb-8">
-              This guide breaks down every meaningful difference. We compare pricing, AI features, ease of use, and real-world fit. By the end, you will know exactly which platform matches your business.
-            </p>
-
-            {/* Comparison Table */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -212,19 +186,18 @@ const CompareBoltcallVsPodium: React.FC = () => {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                <Zap className="h-8 w-8 text-blue-600 mr-3" />
-                Feature-by-Feature Comparison Table
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6 flex items-center">
+                <Target className="h-8 w-8 text-blue-600 mr-3" />
+                Side-by-side: feature comparison
               </h2>
-
-              <p className="text-lg text-gray-700 mb-6">
-                This table summarizes the core differences. Green checks mean the feature is fully included. Red marks indicate the feature is missing or limited.
+              <p className="text-lg text-slate-700 mb-6">
+                Both platforms have AI now. The difference is what the AI is engineered around. Boltcall's AI is tuned for one path: capture, qualify, book. Podium AI Employee is a generalist customer-conversation layer that touches messaging, reviews, calls, and webchat.
               </p>
 
-              <div className="overflow-x-auto mb-8">
-                <table className="w-full border-collapse rounded-lg overflow-hidden shadow-lg">
+              <div className="overflow-x-auto mb-6">
+                <table className="w-full border-collapse rounded-[0.65rem] overflow-hidden border border-gray-200 shadow-sm">
                   <thead>
-                    <tr className="bg-gray-900 text-white">
+                    <tr className="bg-[#0F172A] text-white">
                       <th className="px-6 py-4 text-left font-semibold">Feature</th>
                       <th className="px-6 py-4 text-center font-semibold text-blue-300">Boltcall</th>
                       <th className="px-6 py-4 text-center font-semibold">Podium</th>
@@ -232,28 +205,26 @@ const CompareBoltcallVsPodium: React.FC = () => {
                   </thead>
                   <tbody>
                     {comparisonData.map((row, index) => (
-                      <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                        <td className="px-6 py-4 font-medium text-gray-900 border-b border-gray-200">
-                          {row.feature}
-                        </td>
+                      <tr key={row.feature} className={index % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                        <td className="px-6 py-4 font-medium text-[#0F172A] border-b border-gray-200">{row.feature}</td>
                         <td className="px-6 py-4 text-center border-b border-gray-200">
                           <div className="flex items-center justify-center space-x-2">
                             {row.boltcallYes ? (
-                              <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                              <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
                             ) : (
                               <XCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
                             )}
-                            <span className="text-sm text-gray-700">{row.boltcall}</span>
+                            <span className="text-sm text-slate-700">{row.boltcall}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 text-center border-b border-gray-200">
                           <div className="flex items-center justify-center space-x-2">
                             {row.podiumYes ? (
-                              <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                              <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
                             ) : (
                               <XCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
                             )}
-                            <span className="text-sm text-gray-700">{row.podium}</span>
+                            <span className="text-sm text-slate-700">{row.podium}</span>
                           </div>
                         </td>
                       </tr>
@@ -262,12 +233,11 @@ const CompareBoltcallVsPodium: React.FC = () => {
                 </table>
               </div>
 
-              <p className="text-lg text-gray-700 mb-4">
-                Boltcall wins on 8 of 11 categories. Podium matches Boltcall on review automation and messaging. But Podium lacks AI voice answering entirely.
+              <p className="text-sm text-slate-500">
+                Feature data sourced from go.podium.com and Boltcall product pages, current as of {PUBLISH_DATE}. Podium pricing varies by location count and negotiation.
               </p>
             </motion.section>
 
-            {/* Pricing Comparison */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -275,79 +245,79 @@ const CompareBoltcallVsPodium: React.FC = () => {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6 flex items-center">
+                <Clock className="h-8 w-8 text-blue-600 mr-3" />
+                The speed gap that actually matters
+              </h2>
+              <p className="text-lg text-slate-700 mb-4">
+                Podium publishes a "under one minute" response standard for AI Employee. Boltcall is built around an <strong>11 Second Response</strong>. That is not marketing language for us, it is the design constraint we engineered the entire stack around.
+              </p>
+              <p className="text-lg text-slate-700 mb-4">
+                The reason: a Harvard Business Review study found responding to a web lead within five minutes makes you 100x more likely to qualify them than ten minutes. Inside that five-minute window, every additional 30 seconds costs measurable conversion. The difference between 11 seconds and 60 seconds is not cosmetic. On a busy week with 200 inbound leads, that gap is dozens of bookings.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6 mt-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-[0.65rem] p-6">
+                  <h3 className="text-lg font-bold text-blue-700 mb-2 flex items-center gap-2"><Zap className="w-5 h-5" /> Boltcall, 11 seconds</h3>
+                  <p className="text-slate-700 text-sm leading-relaxed">
+                    Lead hits any channel (form, missed call, chat, DM), AI engages within 11 seconds, qualifies, books on Cal.com or Google Calendar, owner gets SMS alert. One job, instrumented end-to-end.
+                  </p>
+                </div>
+                <div className="bg-slate-100 border border-slate-200 rounded-[0.65rem] p-6">
+                  <h3 className="text-lg font-bold text-slate-700 mb-2 flex items-center gap-2"><Clock className="w-5 h-5" /> Podium, under 1 minute</h3>
+                  <p className="text-slate-700 text-sm leading-relaxed">
+                    Lead enters the unified inbox, AI Employee or human team responds, conversation continues across SMS, webchat, or call, optional booking via Scheduling add-on. Broader surface, more handoffs.
+                  </p>
+                </div>
+              </div>
+            </motion.section>
+
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6 flex items-center">
                 <DollarSign className="h-8 w-8 text-blue-600 mr-3" />
-                Pricing Comparison: What You Actually Pay
+                Pricing: flat vs quote-based
               </h2>
-
-              <p className="text-lg text-gray-700 mb-6">
-                Price is often the deciding factor. Here is a transparent breakdown of what each platform charges and what you get for that investment.
+              <p className="text-lg text-slate-700 mb-6">
+                The biggest economic difference is the pricing model itself, not the entry-level number. Boltcall publishes a flat agency price. Podium publishes a starter price, then customizes from there based on location count, AI Employee usage, and Podium Payments volume.
               </p>
 
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                {/* Boltcall Pricing */}
-                <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-blue-600 mb-4">Boltcall Pricing</h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between">
-                      <span className="text-gray-700">Core Plan</span>
-                      <span className="font-bold text-gray-900">$389/mo</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-700">SEO Plan</span>
-                      <span className="font-bold text-gray-900">$489/mo</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-700">AI Full Plan</span>
-                      <span className="font-bold text-gray-900">$799/mo</span>
-                    </li>
-                    <li className="border-t border-blue-200 pt-3 text-sm text-gray-600">
-                      <CheckCircle className="h-4 w-4 text-green-500 inline mr-1" />
-                      No contracts. Free website included. 24-hour setup.
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-blue-50 border-2 border-blue-200 rounded-[0.65rem] p-6">
+                  <h3 className="text-xl font-bold text-blue-700 mb-4">Boltcall, flat and published</h3>
+                  <ul className="space-y-3 text-slate-700">
+                    <li className="flex justify-between"><span>Agency core (managed)</span><span className="font-bold">$499/mo</span></li>
+                    <li className="flex justify-between"><span>Setup fee</span><span className="font-bold">$2,500 (waived on 12-mo)</span></li>
+                    <li className="flex justify-between"><span>SaaS DIY tier</span><span className="font-bold">From $179/mo</span></li>
+                    <li className="border-t border-blue-200 pt-3 text-sm text-slate-600">
+                      <CheckCircle className="h-4 w-4 text-emerald-500 inline mr-1" /> Month-to-month available. 30-day cost-recovery guarantee on agency.
                     </li>
                   </ul>
                 </div>
-
-                {/* Podium Pricing */}
-                <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6">
-                  <h3 className="text-xl font-bold text-gray-700 mb-4">Podium Pricing</h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between">
-                      <span className="text-gray-700">Essentials</span>
-                      <span className="font-bold text-gray-900">$399/mo</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-700">Standard</span>
-                      <span className="font-bold text-gray-900">$499/mo</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span className="text-gray-700">Professional</span>
-                      <span className="font-bold text-gray-900">$699/mo</span>
-                    </li>
-                    <li className="border-t border-gray-200 pt-3 text-sm text-gray-600">
-                      <XCircle className="h-4 w-4 text-red-500 inline mr-1" />
-                      Annual contracts typical. No website builder. No AI voice.
+                <div className="bg-slate-100 border-2 border-slate-200 rounded-[0.65rem] p-6">
+                  <h3 className="text-xl font-bold text-slate-800 mb-4">Podium, quote-based</h3>
+                  <ul className="space-y-3 text-slate-700">
+                    <li className="flex justify-between"><span>Essentials (published)</span><span className="font-bold">From $399/mo</span></li>
+                    <li className="flex justify-between"><span>AI Employee</span><span className="font-bold">Add-on, quote</span></li>
+                    <li className="flex justify-between"><span>Per-location pricing</span><span className="font-bold">Yes</span></li>
+                    <li className="border-t border-slate-200 pt-3 text-sm text-slate-600">
+                      <XCircle className="h-4 w-4 text-red-500 inline mr-1" /> Annual contracts standard. Most quotes land above $500/mo with AI on.
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <p className="text-lg text-gray-700 mb-6">
-                At the entry level, Boltcall saves you $10/month compared to Podium Essentials. That adds up to $120/year. More importantly, Boltcall includes AI phone answering and a website at no extra cost.
-              </p>
-
-              <p className="text-lg text-gray-700 mb-6">
-                Podium typically requires annual contracts. Boltcall is month-to-month. If you are a small business testing the waters, Boltcall carries far less financial risk. For a deeper dive into AI receptionist costs, see our <Link to="/blog/ai-receptionist-cost-pricing" className="text-blue-600 hover:underline">AI receptionist pricing guide</Link>.
-              </p>
-
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-yellow-800">
-                  <strong>Important note:</strong> Podium pricing can vary by location count and negotiation. The figures above reflect publicly listed pricing as of March 2026. Always confirm directly with Podium for a custom quote.
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <p className="text-sm text-amber-900">
+                  <strong>Note on Podium pricing:</strong> $399 Essentials is publicly listed but does not include AI Employee voice. Real-world Podium quotes for local businesses with AI typically land in the $500 to $900/mo range, plus per-message and per-location fees. Confirm directly with Podium for your scenario. Pricing accurate as of {PUBLISH_DATE}.
                 </p>
               </div>
             </motion.section>
 
-            {/* Key Differences */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -355,102 +325,21 @@ const CompareBoltcallVsPodium: React.FC = () => {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6 flex items-center">
                 <Shield className="h-8 w-8 text-blue-600 mr-3" />
-                Key Differences That Actually Matter
+                Where Podium genuinely wins
               </h2>
-
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">1. AI Phone Answering: The Biggest Gap</h3>
-              <p className="text-lg text-gray-700 mb-6">
-                Boltcall includes a 24/7 AI phone receptionist on every plan. It answers calls, qualifies leads, and books appointments automatically. According to industry data, 62% of calls to local businesses go unanswered. Boltcall eliminates that problem entirely.
+              <p className="text-lg text-slate-700 mb-4">
+                Podium is a serious platform with a 15-year head start on us in some categories. Honest list of where they are better:
               </p>
-              <p className="text-lg text-gray-700 mb-6">
-                Podium does not offer native AI voice answering. Its strength is text-based communication. If phone calls are a significant lead source for your business, this gap is critical. Learn more about whether an AI receptionist is right for you in our <Link to="/blog/is-ai-receptionist-worth-it" className="text-blue-600 hover:underline">detailed analysis</Link>.
-              </p>
-
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">2. Speed-to-Lead Response Time</h3>
-              <p className="text-lg text-gray-700 mb-6">
-                Research from Harvard Business Review shows that responding to a lead within 5 minutes makes you 100x more likely to connect. Boltcall responds to every lead in under 60 seconds via AI auto-reply. Podium offers messaging tools, but automated speed-to-lead is limited.
-              </p>
-              <p className="text-lg text-gray-700 mb-6">
-                For businesses where every minute counts, that speed advantage translates directly to revenue. A plumber who responds first wins the job 78% of the time.
-              </p>
-
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">3. Setup Time and Complexity</h3>
-              <p className="text-lg text-gray-700 mb-6">
-                Boltcall guarantees setup within 24 hours. If it takes longer, you get a free AI receptionist. That is a concrete, measurable promise. Podium onboarding typically takes days to weeks, depending on your integration requirements and team size.
-              </p>
-              <p className="text-lg text-gray-700 mb-6">
-                For solo operators and small teams, long onboarding periods mean lost leads. Every day without automation is money left on the table.
-              </p>
-
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">4. Review Management</h3>
-              <p className="text-lg text-gray-700 mb-6">
-                This is where Podium genuinely excels. Podium was built around review management. It has deep integrations with Google, Facebook, and industry-specific review platforms. Businesses using Podium report an average of 15x more reviews within the first year.
-              </p>
-              <p className="text-lg text-gray-700 mb-6">
-                Boltcall includes Google review automation, but it is not as mature as Podium's review suite. If review volume is your primary growth lever, Podium has an edge here.
-              </p>
-            </motion.section>
-
-            {/* Who Should Choose Boltcall */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="mb-12"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                <CheckCircle className="h-8 w-8 text-blue-600 mr-3" />
-                Who Should Choose Boltcall
-              </h2>
-
-              <p className="text-lg text-gray-700 mb-6">
-                Boltcall is the better choice if your business matches any of these criteria. The platform is purpose-built for small local businesses that need maximum automation with minimal complexity.
-              </p>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You miss phone calls regularly.</strong> Boltcall's AI receptionist answers every call 24/7, including after hours and weekends. No more voicemail.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You need a website too.</strong> Boltcall builds and hosts your business website for free as part of every plan. Podium does not offer this.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You want no contracts.</strong> Cancel anytime. Boltcall is month-to-month with no penalties or lock-in periods.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You are a solo operator or small team.</strong> Boltcall is designed for businesses with 1-20 employees. Setup takes hours, not weeks.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>Speed-to-lead matters to you.</strong> Auto-reply in under 60 seconds gives you a measurable competitive edge in your market.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You want predictable pricing.</strong> What you see is what you pay. No hidden fees, no per-user charges, no surprise add-ons.
-                  </span>
-                </li>
+              <ul className="space-y-3 mb-4">
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Review management at scale.</strong> Podium's review request engine is best-in-class. If you run 5+ locations and your growth lever is review volume, Podium wins.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Native payments.</strong> Podium Payments is integrated. Boltcall hands payments off to Stripe or PayPal. If you want a single bill and a single dashboard, Podium is cleaner.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Multi-location reporting.</strong> Centralized dashboards across many locations are a Podium strength. Boltcall is excellent at one location at a time.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Brand recognition.</strong> Customers recognize Podium-branded review requests. That trust signal is real.</span></li>
               </ul>
             </motion.section>
 
-            {/* Who Should Choose Podium */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -458,76 +347,19 @@ const CompareBoltcallVsPodium: React.FC = () => {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                <Star className="h-8 w-8 text-gray-600 mr-3" />
-                Who Should Choose Podium
-              </h2>
-
-              <p className="text-lg text-gray-700 mb-6">
-                Podium is a strong platform with genuine strengths. Be honest about your needs. Podium may be the better fit if these apply to you.
-              </p>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>Review volume is your top priority.</strong> Podium's review management is best-in-class. If generating hundreds of Google reviews per month drives your business, Podium is purpose-built for that.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You have multiple locations.</strong> Podium scales well across 5+ locations with centralized messaging and review management dashboards.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>Text messaging is your primary channel.</strong> If your customers prefer texting over calling, Podium's SMS-first approach aligns well with that behavior.
-                  </span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-lg text-gray-700">
-                    <strong>You already have a website and do not need AI voice.</strong> If phone answering is not a pain point and you just need better messaging and reviews, Podium covers that well.
-                  </span>
-                </li>
-              </ul>
-            </motion.section>
-
-            {/* The Verdict */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="mb-12"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6 flex items-center">
                 <Zap className="h-8 w-8 text-blue-600 mr-3" />
-                The Verdict: Which Should You Choose?
+                Where Boltcall wins
               </h2>
-
-              <p className="text-lg text-gray-700 mb-6">
-                For most small local businesses, Boltcall is the better investment. It costs less, includes more AI features, and requires no long-term commitment. The AI phone receptionist alone fills a gap that Podium simply does not address.
-              </p>
-
-              <div className="bg-blue-50 rounded-xl p-6 mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Our recommendation:</h3>
-                <p className="text-lg text-gray-700 mb-4">
-                  <strong>Choose Boltcall if</strong> you are a single-location business that wants AI phone answering, a website, chatbot, and lead automation in one package at a fair price.
-                </p>
-                <p className="text-lg text-gray-700">
-                  <strong>Choose Podium if</strong> you are a multi-location business where review management is your primary growth strategy and you do not need AI voice answering.
-                </p>
-              </div>
-
-              <p className="text-lg text-gray-700 mb-6">
-                The data supports this. Businesses that respond to leads within 60 seconds convert at 391% higher rates. Boltcall delivers that speed automatically. For detailed pricing across all AI receptionist providers, see our <Link to="/pricing" className="text-blue-600 hover:underline">pricing page</Link>.
-              </p>
+              <ul className="space-y-3 mb-4">
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Lead-to-booking speed.</strong> 11-second standard, instrumented and reported. The whole stack is engineered around it.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Done-for-you setup in 24 to 48 hours.</strong> We build the AI receptionist, lead routing, and booking flow. Podium typical onboarding is days to weeks.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Flat, published pricing.</strong> $499/mo agency, no per-message bloat, no surprise per-location fee.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>30-day cost-recovery guarantee.</strong> If Boltcall does not cover its cost in 30 days on the agency tier, we cover the gap.</span></li>
+                <li className="flex items-start gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-emerald-500 mt-1 flex-shrink-0" /><span><strong>Specialist depth, not generalist breadth.</strong> Every feature serves the speed-to-lead path. No bloat from products you do not use.</span></li>
+              </ul>
             </motion.section>
 
-            {/* FAQ Section */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -535,227 +367,109 @@ const CompareBoltcallVsPodium: React.FC = () => {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Frequently Asked Questions</h2>
-
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Is Boltcall cheaper than Podium?</h3>
-                  <p className="text-lg text-gray-700">
-                    Yes. Boltcall starts at $389/month. Podium Essentials starts at $399/month. Boltcall includes AI phone answering, a chatbot, and a free website at that price. Podium does not include AI voice or a website builder. On a feature-per-dollar basis, Boltcall delivers significantly more value.
-                  </p>
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6">The verdict by use case</h2>
+              <div className="space-y-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-[0.65rem] p-6">
+                  <p className="text-lg text-[#0B1220]"><strong>Choose Boltcall if</strong> your #1 problem is missed leads or slow follow-up. Single location, 1 to 20 employees, lead-conversion focused. You want a specialist tool that does one job at world-class level.</p>
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Does Podium have an AI phone receptionist?</h3>
-                  <p className="text-lg text-gray-700">
-                    No. Podium does not offer a native AI phone receptionist. Podium focuses on text messaging, webchat, and review management. If you need 24/7 AI-powered phone answering, Boltcall is the only option in this comparison that includes it as a core feature.
-                  </p>
+                <div className="bg-slate-100 border border-slate-200 rounded-[0.65rem] p-6">
+                  <p className="text-lg text-[#0B1220]"><strong>Choose Podium if</strong> you run 5+ locations, your growth lever is review volume, and you want messaging plus reviews plus payments plus AI in one bill. You are willing to pay quote-based pricing for that breadth.</p>
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Can I switch from Podium to Boltcall?</h3>
-                  <p className="text-lg text-gray-700">
-                    Yes. Boltcall offers a 24-hour setup guarantee. You can be fully operational within one business day. There are no data migration fees. Many businesses that switch report being up and running faster than they expected. Boltcall's team handles the entire setup process for you.
-                  </p>
+                <div className="bg-amber-50 border border-amber-200 rounded-[0.65rem] p-6">
+                  <p className="text-lg text-[#0B1220]"><strong>Run both if</strong> you are big enough to justify it. Podium for the comms hub and review engine, Boltcall as the speed-to-lead layer in front of it. We integrate cleanly with Podium's inbox.</p>
                 </div>
+              </div>
+            </motion.section>
 
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h2 className="text-3xl font-bold text-[#0F172A] mb-6">FAQ</h2>
+              <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Which is better for a dental office?</h3>
-                  <p className="text-lg text-gray-700">
-                    For most dental offices, Boltcall is the better fit. Dental practices rely heavily on phone bookings. Boltcall's AI receptionist answers every call, qualifies patients, and books appointments automatically. Podium is better only if your dental practice has multiple locations and review generation is your top marketing strategy.
-                  </p>
+                  <h3 className="text-xl font-semibold text-[#0F172A] mb-2">Is Boltcall a Podium alternative or a Podium add-on?</h3>
+                  <p className="text-slate-700">Either. Most local businesses replace Podium with Boltcall when their main pain is missed leads. Larger multi-location operators run Boltcall in front of Podium as the speed layer.</p>
                 </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#0F172A] mb-2">Does Boltcall do reviews?</h3>
+                  <p className="text-slate-700">Yes, post-appointment review requests are included on every plan. We do not match Podium's review depth across multi-location reporting, and we are honest about that.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#0F172A] mb-2">Can Boltcall handle my phone calls?</h3>
+                  <p className="text-slate-700">Yes. The AI receptionist answers 24/7, qualifies the caller, books to your calendar, and texts you a summary. It also catches missed calls and follows up via SMS within 11 seconds.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#0F172A] mb-2">What if I am already on a Podium contract?</h3>
+                  <p className="text-slate-700">Run Boltcall in parallel until the renewal date. We onboard in 24 to 48 hours, so you do not lose any speed during the transition. Many businesses keep Podium for reviews and switch the speed-to-lead layer to Boltcall.</p>
+                </div>
+              </div>
+            </motion.section>
+
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-12 mb-16"
+            >
+              <div className="bg-blue-600 rounded-2xl p-10 text-center text-white">
+                <h2 className="text-3xl font-bold mb-3">See if Boltcall fits</h2>
+                <p className="text-lg text-blue-50 mb-7 max-w-2xl mx-auto">
+                  Run our free Speed-to-Lead Audit and see exactly how many leads your business is losing to slow follow-up. No sales call required.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    to="/seo-audit"
+                    className="inline-flex items-center justify-center bg-white text-blue-600 font-bold text-lg px-7 py-3.5 rounded-[0.65rem] border-2 border-black shadow-[4px_4px_0px_0px_black] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all duration-200"
+                  >
+                    Run free audit
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                  <Link
+                    to="/compare/podium-alternatives"
+                    className="inline-flex items-center justify-center bg-transparent text-white font-medium text-lg px-7 py-3.5 rounded-[0.65rem] border-2 border-white/60 hover:bg-white/10 transition-colors duration-200"
+                  >
+                    See all Podium alternatives
+                  </Link>
+                </div>
+              </div>
+            </motion.section>
+
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-2xl font-bold text-[#0F172A] mb-6">Related comparisons</h2>
+              <div className="grid md:grid-cols-3 gap-6">
+                <Link to="/compare/podium-alternatives" className="block bg-white border border-gray-200 rounded-[0.65rem] p-6 hover:shadow-md transition-shadow">
+                  <span className="text-sm text-blue-600 font-medium">Roundup</span>
+                  <h3 className="text-lg font-semibold text-[#0F172A] mt-2">Best Podium alternatives for local businesses (2026)</h3>
+                  <p className="text-slate-600 mt-2 text-sm">Five Podium alternatives compared on speed, pricing, and lead-conversion focus.</p>
+                </Link>
+                <Link to="/compare/boltcall-vs-smith-ai" className="block bg-white border border-gray-200 rounded-[0.65rem] p-6 hover:shadow-md transition-shadow">
+                  <span className="text-sm text-blue-600 font-medium">Comparison</span>
+                  <h3 className="text-lg font-semibold text-[#0F172A] mt-2">Boltcall vs Smith.ai</h3>
+                  <p className="text-slate-600 mt-2 text-sm">Speed-to-lead AI vs human-staffed virtual receptionist.</p>
+                </Link>
+                <Link to="/compare/boltcall-vs-gohighlevel" className="block bg-white border border-gray-200 rounded-[0.65rem] p-6 hover:shadow-md transition-shadow">
+                  <span className="text-sm text-blue-600 font-medium">Comparison</span>
+                  <h3 className="text-lg font-semibold text-[#0F172A] mt-2">Boltcall vs GoHighLevel</h3>
+                  <p className="text-slate-600 mt-2 text-sm">Specialist speed-to-lead vs sprawling marketing OS.</p>
+                </Link>
               </div>
             </motion.section>
           </div>
-
-          {/* CTA Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-12 mb-16"
-          >
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-10 text-center text-white">
-              <h2 className="text-3xl font-bold mb-4">Ready to See the Difference?</h2>
-              <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-                Join hundreds of local businesses that chose Boltcall for AI phone answering, lead automation, and a free website. Setup takes 24 hours. No contracts.
-              </p>
-              <Link
-                to="/signup"
-                className="inline-flex items-center bg-white text-blue-600 font-bold text-lg px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors duration-200"
-              >
-                Try Boltcall Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-          </motion.section>
-
-          {/* Related Posts */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Articles</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <Link
-                to="/blog/ai-receptionist-cost-pricing"
-                className="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200"
-              >
-                <span className="text-sm text-blue-600 font-medium">Pricing Guide</span>
-                <h3 className="text-lg font-semibold text-gray-900 mt-2">AI Receptionist Cost & Pricing: Complete 2026 Guide</h3>
-                <p className="text-gray-600 mt-2 text-sm">Everything you need to know about what AI receptionists cost and how to choose the right plan.</p>
-              </Link>
-
-              <Link
-                to="/blog/is-ai-receptionist-worth-it"
-                className="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200"
-              >
-                <span className="text-sm text-blue-600 font-medium">Analysis</span>
-                <h3 className="text-lg font-semibold text-gray-900 mt-2">Is an AI Receptionist Worth It? ROI Breakdown</h3>
-                <p className="text-gray-600 mt-2 text-sm">Data-driven analysis of whether AI receptionists deliver real ROI for local businesses.</p>
-              </Link>
-
-              <Link
-                to="/blog/ai-vs-human-receptionist"
-                className="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200"
-              >
-                <span className="text-sm text-blue-600 font-medium">Comparison</span>
-                <h3 className="text-lg font-semibold text-gray-900 mt-2">AI vs Human Receptionist: Which is Right for You?</h3>
-                <p className="text-gray-600 mt-2 text-sm">Compare AI and human receptionists on cost, speed, availability, and customer experience.</p>
-              </Link>
-            </div>
-          </motion.section>
         </div>
       </main>
 
-      {/* Social Proof */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">What Businesses Say About Boltcall</h2>
-        <p className="text-gray-500 text-center mb-8 text-sm">Join 500+ businesses using Boltcall to capture more leads and grow revenue.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { quote: "Podium was great for reviews but we were still losing calls every night. Boltcall fills the gap — it answers calls 24/7 and books appointments without any human involvement.", name: "Karen M.", role: "Med Spa Owner, Texas" },
-            { quote: "We used Podium for messaging but it didn't help with inbound calls. Boltcall is the AI receptionist we needed — it picks up every call and qualifies leads on the spot.", name: "Michael B.", role: "Auto Repair Shop Owner, Ohio" },
-            { quote: "Compared to Podium, Boltcall is laser-focused on one thing: making sure no lead slips through the cracks. That's exactly what our business needed.", name: "Rachel T.", role: "Dental Practice Owner, Arizona" },
-          ].map((item) => (
-            <div key={item.name} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-              <p className="text-gray-700 text-sm leading-relaxed mb-4">"{item.quote}"</p>
-              <div>
-                <p className="text-sm font-semibold text-gray-900">{item.name}</p>
-                <p className="text-xs text-gray-500">{item.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Trust Signals */}
-      <section className="bg-gray-50 border-t border-gray-100 py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-600">
-            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>100% Free — no credit card required</span></div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Used by 500+ local businesses</span></div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Setup completed in 24 hours</span></div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" /><span>Your data is never sold or shared</span></div>
-          </div>
-        </div>
-      </section>
-
       <FinalCTA {...COMPARISON_CTA} />
-
-      {/* Pros / Cons */}
-      <section className="py-14 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">Boltcall vs Podium: Pros and Cons</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h3 className="font-bold text-gray-900 mb-4 text-lg">Boltcall</h3>
-              <div className="mb-5">
-                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
-                <ul className="space-y-2">
-                <li key={"Dedicated AI phone receptionist — answers every call"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Dedicated AI phone receptionist — answers every call
-                </li>
-                <li key={"Flat monthly pricing, no per-contact fees"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Flat monthly pricing, no per-contact fees
-                </li>
-                <li key={"Captures leads from both calls and missed calls automatically"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Captures leads from both calls and missed calls automatically
-                </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
-                <ul className="space-y-2">
-                <li key={"Review management is not a primary focus"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Review management is not a primary focus
-                </li>
-                <li key={"Smaller brand footprint than Podium"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Smaller brand footprint than Podium
-                </li>
-                </ul>
-              </div>
-            </div>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h3 className="font-bold text-gray-900 mb-4 text-lg">Podium</h3>
-              <div className="mb-5">
-                <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">Strengths</p>
-                <ul className="space-y-2">
-                <li key={"Good review request and messaging tools"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Good review request and messaging tools
-                </li>
-                <li key={"Strong brand recognition"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Strong brand recognition
-                </li>
-                <li key={"Useful for reputation management"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-blue-600 mt-0.5 shrink-0">✓</span>Useful for reputation management
-                </li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Limitations</p>
-                <ul className="space-y-2">
-                <li key={"Expensive plans for small businesses"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Expensive plans for small businesses
-                </li>
-                <li key={"AI call answering not a core feature"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>AI call answering not a core feature
-                </li>
-                <li key={"Per-contact pricing can spike at scale"} className="flex items-start gap-2 text-sm text-gray-700">
-                  <span className="text-red-400 mt-0.5 shrink-0">✗</span>Per-contact pricing can spike at scale
-                </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust + Social Proof */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-medium text-gray-500 mb-5">
-            Trusted by 1,000+ local businesses &middot; No credit card required &middot; Cancel anytime
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {[
-              { quote: '"Paid for itself within the first week."', author: 'HVAC contractor, Texas' },
-              { quote: '"Set up in 30 minutes. Never missed a lead since."', author: 'Dental practice, Florida' },
-            ].map((t) => (
-              <div key={t.author} className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-4 text-left max-w-xs">
-                <div className="text-yellow-400 text-sm mb-2">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p className="text-gray-700 text-sm leading-relaxed italic">{t.quote}</p>
-                <p className="text-gray-400 text-xs mt-2">&mdash; {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       <Footer />
     </>
   );

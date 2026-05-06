@@ -235,6 +235,7 @@ const CompareBoltcallVsBirdeye = React.lazy(() => import('../pages/CompareBoltca
 const CompareBoltcallVsEmitrr = React.lazy(() => import('../pages/CompareBoltcallVsEmitrr'));
 const CompareBoltcallVsCalomation = React.lazy(() => import('../pages/CompareBoltcallVsCalomation'));
 const CompareBoltcallVsSmithAi = React.lazy(() => import('../pages/CompareBoltcallVsSmithAi'));
+const PodiumAlternatives = React.lazy(() => import('../pages/PodiumAlternatives'));
 
 // ── Lazy loads — Feature pages ───────────────────────────────────────────
 const AIReceptionistPage = React.lazy(() => import('../pages/features/AIReceptionistPage'));
@@ -489,6 +490,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/compare/boltcall-vs-emitrr" element={<CompareBoltcallVsEmitrr />} />
         <Route path="/compare/boltcall-vs-calomation" element={<CompareBoltcallVsCalomation />} />
         <Route path="/compare/boltcall-vs-smith-ai" element={<CompareBoltcallVsSmithAi />} />
+        <Route path="/compare/podium-alternatives" element={<PodiumAlternatives />} />
         <Route path="/ai-agent-comparison" element={<TraditionalCallCentersVsBoltcall />} />
         <Route path="/ai-revenue-audit" element={<AIRevenueAudit />} />
         <Route path="/ai-revenue-calculator" element={<Navigate to="/ai-revenue-audit" replace />} />
