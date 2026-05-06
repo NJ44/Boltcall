@@ -44,11 +44,11 @@ const Header: React.FC = () => {
   ];
 
   const freeToolsItems = [
-    { label: 'SEO Audit', href: '/seo-audit', icon: Search },
-    { label: 'Website Health Check', href: '/speed-test', icon: Gauge },
-    { label: 'AI Revenue Audit', href: '/ai-revenue-calculator', icon: Calculator },
-    { label: 'Business Audit', href: '/business-audit', icon: Briefcase },
-    { label: 'SEO & AEO Report', href: '/seo-aeo-audit', icon: FileText },
+    { label: 'Lead Response Speed Test', href: '/speed-test', icon: Zap },
+    { label: 'AI Revenue Audit', href: '/ai-revenue-audit', icon: Calculator },
+    { label: 'Lead Response Scorecard', href: '/lead-response-scorecard', icon: Target },
+    { label: 'AI Receptionist ROI', href: '/ai-receptionist-roi', icon: Scale },
+    { label: 'AI Readiness Scorecard', href: '/ai-readiness-scorecard', icon: Sparkles },
   ];
 
 
