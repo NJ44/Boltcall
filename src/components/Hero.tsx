@@ -125,8 +125,8 @@ const Hero: React.FC = () => {
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-text-main flex flex-col items-center justify-center leading-tight space-y-1 md:space-y-2 mb-6"
               style={{ fontFamily: "'Sora', sans-serif" }}
               animate={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
+              initial={{ opacity: 0, y: 24 }}
+              transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.10 }}
             >
               <span className="speakable-intro">NEVER MISS</span>
               <LayoutGroup>
