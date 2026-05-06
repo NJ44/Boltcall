@@ -156,8 +156,8 @@ const Hero: React.FC = () => {
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4"
               animate={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.4, ease: "easeOut", delay: 0.7 }}
+              initial={{ opacity: 0, y: 24 }}
+              transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.40 }}
             >
               <Link
                 to="/signup"
