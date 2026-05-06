@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, LayoutGroup } from 'framer-motion';
 import { Phone, Calendar, MessageSquare, Users, Star, Megaphone } from 'lucide-react';
 
-const SMOOTH_EASE = [0.16, 1, 0.3, 1] as const;
+const SMOOTH_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const FADE_DURATION = 0.7;
 import { TextRotate } from './ui/text-rotate';
 import Floating, { FloatingElement } from './ui/parallax-floating';
