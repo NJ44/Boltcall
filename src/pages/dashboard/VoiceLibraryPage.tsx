@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Library, Mic } from 'lucide-react';
 import VoiceLibrary from '../../components/dashboard/VoiceLibrary';
+import VoiceClone from '../../components/dashboard/VoiceClone';
+
+type Tab = 'library' | 'clone';
 
 const VoiceLibraryPage: React.FC = () => {
+  const [tab, setTab] = useState<Tab>('library');
+
   return (
     <div className="space-y-6">
-      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex items-center justify-between"
+        className="flex items-center gap-2 border-b border-gray-200"
       >
+        <button
+          type="button"
+          onClick={() => setTab('library')}
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            tab === 'library'
+              ? 'border-brand-blue text-brand-blue'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <Library className="w-4 h-4" />
+          Voice Library
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab('clone')}
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            tab === 'clone'
+              ? 'border-brand-blue text-brand-blue'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <Mic className="w-4 h-4" />
+          Clone My Voice
+        </button>
       </motion.div>
 
-      {/* Voice Library Component */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        key={tab}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.4 }}
         className="bg-white rounded-lg border border-gray-200"
       >
-        <VoiceLibrary />
+        {tab === 'library' ? <VoiceLibrary /> : <VoiceClone />}
       </motion.div>
     </div>
   );
