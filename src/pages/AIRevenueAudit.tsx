@@ -9,6 +9,7 @@ import { Stepper, StepperPanel, StepperContent } from '../components/ui/stepper'
 import Button from '../components/ui/Button';
 import DropdownComponent from '../components/ui/dropdown-01';
 import { useNavigate } from 'react-router-dom';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 interface AuditInputs {
   // Step 1 - Lead Friction Category
@@ -102,6 +103,49 @@ const automatedFollowUpOptions = [
 ];
 
 const AIRevenueAudit: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is an AI Revenue Audit?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'An AI Revenue Audit is a free assessment that calculates how much revenue your business is losing today from slow lead response, missed calls, and manual follow-up — and projects the revenue you could recover by adding AI automation.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How much revenue am I losing to slow lead response?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Businesses that respond to leads within 5 minutes close 21x more than those that wait 30 minutes. Most local service businesses lose $30,000–$200,000 per year in potential revenue because leads are not followed up fast enough or at all.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What does Boltcall\'s AI Revenue Audit measure?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Boltcall\'s AI Revenue Audit measures your monthly lead volume, current response time, average job value, and close rate — then calculates your current revenue leak and the projected annual uplift from AI-powered instant lead response.',
+          },
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'AI Revenue Audit — Lead Response ROI Calculator',
+      url: 'https://boltcall.org/ai-revenue-audit',
+      applicationCategory: 'BusinessApplication',
+      isAccessibleForFree: true,
+      description: 'Free AI revenue audit tool that calculates how much revenue your business loses to slow lead response and how much you could recover with AI.',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+  ]);
+
   useEffect(() => {
     document.title = 'AI Revenue Audit Calculator - Calculate Earnings | Boltcall';
     updateMetaDescription('AI revenue audit calculator: calculate your potential earnings with AI receptionist. Free revenue analysis tool. Try now.');

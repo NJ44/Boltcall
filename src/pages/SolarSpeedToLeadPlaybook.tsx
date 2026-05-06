@@ -10,6 +10,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GiveawayBar from '../components/GiveawayBar';
 import { useNavigate } from 'react-router-dom';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 // ── Loading step messages ──
 const loadingSteps = [
@@ -24,6 +25,39 @@ const loadingSteps = [
 const WEBHOOK_URL = 'https://n8n.srv974118.hstgr.cloud/webhook/solar-speed-playbook';
 
 const SolarSpeedToLeadPlaybook: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is a speed-to-lead playbook for solar installers?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'A speed-to-lead playbook for solar is a step-by-step system for contacting every inbound solar lead within 5 minutes. It covers lead routing, AI phone response, follow-up sequences, and booking automation — designed to maximize the 78% of solar jobs that go to the first company to respond.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How fast should a solar installer respond to leads?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Solar leads should be contacted within 5 minutes of inquiry. Response time is the #1 predictor of close rate in solar sales. Studies show leads contacted in under 5 minutes are 21x more likely to qualify than those contacted after 30 minutes.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What percentage of solar leads are lost to slow response?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Industry data shows 67% of solar leads are lost when the first response takes longer than 5 minutes. Most solar companies average 47 minutes to first contact — meaning the majority of paid leads are never properly engaged.',
+          },
+        },
+      ],
+    },
+  ]);
+
   const navigate = useNavigate();
   const [companyName, setCompanyName] = useState('');
   const [monthlyLeads, setMonthlyLeads] = useState('');

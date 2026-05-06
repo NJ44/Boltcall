@@ -4,6 +4,7 @@ import { ArrowRight, Clock, Phone, Calendar, Shield, Brain, Bell, CheckCircle, X
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FinalCTA, { BLOG_CTA } from '../components/FinalCTA';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 const updateMetaDescription = (desc: string) => {
   let el = document.querySelector('meta[name="description"]');
@@ -178,6 +179,47 @@ function ComparisonCell({ value }: { value: string | boolean }) {
 }
 
 const SolarIndustryHub = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How can AI help solar installers win more leads?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'AI responds to every solar lead in under 11 seconds, 24/7. Since 78% of solar jobs go to the first installer to respond, an AI receptionist that answers every inquiry instantly — including after hours and weekends — directly increases close rates and booked site surveys.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What is the average lead response time in the solar industry?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'The average solar company takes 47 minutes to respond to a new lead. Top performers respond within 5 minutes and close at 3x the rate of slow responders. Boltcall\'s AI answers every solar inquiry in under 11 seconds.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does Boltcall work for solar companies?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Boltcall is purpose-built for local service businesses including solar installers. It answers inbound calls and web leads instantly, qualifies homeowners, books site survey appointments, and sends follow-up texts automatically — without any staff involvement.',
+          },
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'AI Receptionist for Solar Installers | Boltcall',
+      url: 'https://boltcall.org/solar',
+      description: 'Boltcall answers every solar lead in under 11 seconds, 24/7. Qualifies homeowners, books site surveys, and handles objections automatically for solar companies doing 20–60 jobs/month.',
+      dateModified: '2026-05-06',
+    },
+  ]);
+
   useEffect(() => {
     document.title = 'AI Receptionist for Solar Installers: 11-Second Lead Response | Boltcall';
     updateMetaDescription(

@@ -10,6 +10,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,6 +22,49 @@ const stagger = {
 };
 
 const HVACOverflowCalculator: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How many HVAC calls go unanswered during peak season?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'On average, HVAC companies miss 35–42% of inbound calls during peak season (summer cooling and winter heating). Each missed call is a potential $4,000–$8,000 install lost to a competitor who answered.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How much revenue does an HVAC company lose to missed calls?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'A typical HVAC company receiving 28 calls/day at peak misses roughly 10–12 calls daily. At an average ticket value of $5,500, that is $55,000–$66,000 in potential revenue walked out the door each peak month.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can AI handle HVAC after-hours calls?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Boltcall answers every HVAC call in under 11 seconds, 24/7 — including nights, weekends, and holiday peaks. It qualifies the homeowner, books the service appointment, and sends a confirmation text automatically.',
+          },
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'HVAC Overflow & Missed Revenue Calculator',
+      url: 'https://boltcall.org/tools/hvac-overflow-calculator',
+      applicationCategory: 'BusinessApplication',
+      isAccessibleForFree: true,
+      description: 'Free calculator that estimates how much revenue an HVAC company loses each year from missed calls during peak and off-peak seasons.',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+  ]);
+
   // Peak Season Volume
   const [peakCallsPerDay, setPeakCallsPerDay] = useState(28);
   const [peakMonths, setPeakMonths] = useState(4);

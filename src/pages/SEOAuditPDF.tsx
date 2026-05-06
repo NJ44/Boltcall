@@ -25,6 +25,7 @@ import FAQ from '../components/FAQ';
 import Breadcrumbs from '../components/Breadcrumbs';
 
 import { useNavigate } from 'react-router-dom';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 
 
@@ -53,6 +54,48 @@ const WEBHOOK_URL = 'https://n8n.srv974118.hstgr.cloud/webhook/seo-aeo-audit';
 
 
 const SEOAuditPDF: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What does a free SEO and AEO audit include?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Boltcall\'s free SEO and AEO audit checks your website for on-page SEO, technical SEO, AI Engine Optimization (AEO) readiness, schema markup, page speed, and content quality. You receive a branded PDF report with scores and a prioritized action plan.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How quickly will I receive my SEO audit PDF?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Your SEO and AEO audit PDF is generated in 2–3 minutes after you enter your website URL. The report is sent to your email and also available for immediate download.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What is AEO and why does it matter for my website?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'AEO (AI Engine Optimization) is the practice of optimizing your website to appear as a cited source in AI-generated answers from tools like ChatGPT, Perplexity, and Google\'s AI Overviews. As more searches are answered by AI, AEO is becoming as important as traditional SEO.',
+          },
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'Free SEO & AEO Audit PDF Report Tool',
+      url: 'https://boltcall.org/seo-aeo-audit',
+      applicationCategory: 'BusinessApplication',
+      isAccessibleForFree: true,
+      description: 'Free SEO and AEO audit tool that analyzes your website and generates a branded PDF report with scores, keyword insights, and action items.',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+  ]);
 
   const navigate = useNavigate();
 

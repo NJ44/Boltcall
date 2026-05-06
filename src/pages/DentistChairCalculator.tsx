@@ -27,6 +27,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -42,6 +43,49 @@ const fmt = (n: number) =>
 
 
 const DentistChairCalculator: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How much revenue does a dental practice lose per empty chair per hour?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'The average dental chair generates $350–$500 per hour in production value. An empty chair from a missed call or unanswered appointment request represents $350–$500 of lost revenue every 60 minutes — plus the lifetime patient value of $5,000–$15,000.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What percentage of dental calls go unanswered?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Studies show 25–40% of dental office calls go unanswered during peak hours, lunch breaks, and after hours. Each unanswered call is a potential new patient who books with a competing practice instead.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can AI help a dental office reduce no-shows and missed calls?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Boltcall answers every dental office call in under 11 seconds and automatically books appointments, sends appointment reminders, and follows up with patients who called but did not book — reducing no-shows and filling empty chairs 24/7.',
+          },
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'Dentist Chair Revenue Loss Calculator',
+      url: 'https://boltcall.org/tools/dentist-chair-calculator',
+      applicationCategory: 'BusinessApplication',
+      isAccessibleForFree: true,
+      description: 'Free calculator that estimates how much revenue a dental practice loses per year from empty chairs, missed calls, and unanswered appointment requests.',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+  ]);
+
   // Card 1: Practice Revenue
   const [revenuePerVisit, setRevenuePerVisit] = useState(350);
   const [hygieneValue, setHygieneValue] = useState(175);
