@@ -247,10 +247,22 @@ Service areas: ${Array.isArray(biz.service_areas) ? biz.service_areas.join(', ')
       })
       .join('\n');
 
-    // 7. Build Claude prompt
+    // Pull the user's primary agent + KB so WhatsApp replies share the same
+    // knowledge base as the Retell voice agent. Tier-2 search runs against
+    // the inbound WhatsApp body for relevance.
+    const agentCtx = await buildAgentContext(userId, message.body);
+
+    const agentBlock = agentCtx.agent
+      ? `Speaking on behalf of agent: ${agentCtx.agent.name} (${agentCtx.agent.agent_type}).`
+      : '';
+
+    // 7. Build prompt
     const systemPrompt = `You are an AI WhatsApp assistant for a local service business. You handle inbound WhatsApp messages: answering questions, qualifying leads, and booking appointments.
 
 ${bizContext}
+${agentBlock ? `\n${agentBlock}` : ''}
+${agentCtx.kbPromptBlock ? `\n${agentCtx.kbPromptBlock}` : ''}
+${agentCtx.kbSearchBlock ? `\n${agentCtx.kbSearchBlock}` : ''}
 
 RESPONSE RULES:
 - Tone: ${waSettings.response_tone}
