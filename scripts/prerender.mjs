@@ -158,6 +158,7 @@ const ROUTES = [
   '/blog/ai-receptionist-medspa-faq',
   '/blog/ai-receptionist-solar-faq',
   '/blog/ai-receptionist-vet-faq',
+  '/blog/ai-receptionist-real-estate-agents',
   // Industry calculator tools
   '/tools/5-minute-response-playbook',
   '/tools/vet-clinic-revenue-calculator',

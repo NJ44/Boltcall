@@ -28,6 +28,14 @@ const blogPosts: BlogPost[] = [
     category: 'Dental|AI Receptionist|Industry Guide',
   },
   {
+    title: 'AI Receptionist for <span className="text-blue-600">Real Estate Agents</span>: Convert Inbound Leads in Under 60 Seconds',
+    slug: '/blog/ai-receptionist-real-estate-agents',
+    excerpt: 'How real estate agents and brokerages use AI receptionists to qualify, route, and book inbound leads in under 60 seconds without losing the personal touch that closes deals.',
+    date: 'April 30, 2026',
+    readTime: '9 min read',
+    category: 'Real Estate|AI Receptionist|Speed to Lead',
+  },
+  {
     title: 'AI Receptionist for Med Spas: Never Miss a Booking Again',
     slug: '/blog/ai-receptionist-med-spas',
     excerpt: 'Med spas lose thousands monthly to missed booking calls. See how AI receptionists answer every inquiry, book treatments 24/7, and recover after-hours revenue.',

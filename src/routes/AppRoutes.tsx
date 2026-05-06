@@ -183,6 +183,7 @@ const BlogWillReceptionistsBeReplacedByAI = React.lazy(() => import('../pages/Bl
 const BlogWhatDoesInstantLeadReplyMean = React.lazy(() => import('../pages/BlogWhatDoesInstantLeadReplyMean'));
 const BlogHVACAILeadResponse = React.lazy(() => import('../pages/BlogHVACAILeadResponse'));
 const BlogDentalAILeadResponse = React.lazy(() => import('../pages/BlogDentalAILeadResponse'));
+const BlogAIReceptionistRealEstate = React.lazy(() => import('../pages/BlogAIReceptionistRealEstate'));
 const BlogAIAppointmentSchedulingHVAC = React.lazy(() => import('../pages/BlogAIAppointmentSchedulingHVAC'));
 const BlogHowToSetUpInstantLeadReply = React.lazy(() => import('../pages/BlogHowToSetUpInstantLeadReply'));
 const BlogHowDoesInstantLeadReplyWork = React.lazy(() => import('../pages/BlogHowDoesInstantLeadReplyWork'));
@@ -436,6 +437,7 @@ const NavigationWrapper: React.FC = () => {
         <Route path="/blog/instant-lead-reply-guide" element={<BlogWhatDoesInstantLeadReplyMean />} />
         <Route path="/blog/hvac-ai-lead-response" element={<BlogHVACAILeadResponse />} />
         <Route path="/blog/dental-ai-lead-response" element={<BlogDentalAILeadResponse />} />
+        <Route path="/blog/ai-receptionist-real-estate-agents" element={<BlogAIReceptionistRealEstate />} />
         <Route path="/blog/ai-appointment-scheduling-hvac" element={<BlogAIAppointmentSchedulingHVAC />} />
         <Route path="/blog/setup-instant-lead-reply" element={<BlogHowToSetUpInstantLeadReply />} />
         <Route path="/blog/how-instant-lead-reply-works" element={<BlogHowDoesInstantLeadReplyWork />} />
