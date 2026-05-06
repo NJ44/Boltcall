@@ -11,16 +11,18 @@
  *   3. Anthropic fallback  ANTHROPIC_API_KEY (disaster recovery only)
  *
  * Env vars:
- *   AZURE_OPENAI_FOUNDRY_ENDPOINT   https://<resource>.cognitiveservices.azure.com   [Foundry]
- *   AZURE_OPENAI_FOUNDRY_KEY        Foundry API key
- *   AZURE_OPENAI_FOUNDRY_API_VERSION optional, defaults to 2025-04-01-preview
+ *   AZURE_OPENAI_FOUNDRY_ENDPOINT       https://<resource>.cognitiveservices.azure.com  [Foundry]
+ *   AZURE_OPENAI_FOUNDRY_KEY            Foundry API key
+ *   AZURE_OPENAI_FOUNDRY_API_VERSION    optional, defaults to 2025-04-01-preview
+ *   AZURE_OPENAI_FOUNDRY_DEPLOYMENT         light tier   [default: gpt-5.4-mini]
+ *   AZURE_OPENAI_FOUNDRY_DEPLOYMENT_HEAVY   heavy tier   [default: gpt-5.5]
+ *   AZURE_OPENAI_FOUNDRY_DEPLOYMENT_NANO    routing/triage [default: gpt-5.4-nano]
+ *   AZURE_OPENAI_FOUNDRY_DEPLOYMENT_CODEX   code reasoning [default: gpt-5.3-codex]
+ *   AZURE_OPENAI_EMBEDDING_DEPLOYMENT       [default: text-embedding-3-large]
+ *   AZURE_OPENAI_AUDIO_DEPLOYMENT           [default: gpt-audio-1.5]
  *
- *   AZURE_OPENAI_DEPLOYMENT         light deployment   [default: gpt-5.4-mini if Foundry, gpt-4o-mini if legacy]
- *   AZURE_OPENAI_DEPLOYMENT_HEAVY   heavy deployment   [default: gpt-5.5 if Foundry, gpt-4o if legacy]
- *   AZURE_OPENAI_DEPLOYMENT_NANO    sub-second routing [default: gpt-5.4-nano]
- *   AZURE_OPENAI_DEPLOYMENT_CODEX   code reasoning     [default: gpt-5.3-codex]
- *   AZURE_OPENAI_EMBEDDING_DEPLOYMENT  [default: text-embedding-3-large]
- *   AZURE_OPENAI_AUDIO_DEPLOYMENT      [default: gpt-audio-1.5]
+ *   AZURE_OPENAI_DEPLOYMENT         legacy light deployment   [default: gpt-4o-mini]
+ *   AZURE_OPENAI_DEPLOYMENT_HEAVY   legacy heavy deployment   [default: gpt-4o]
  *
  *   AZURE_OPENAI_ENDPOINT           https://<resource>.openai.azure.com   [legacy fallback]
  *   AZURE_OPENAI_API_KEY            legacy API key
