@@ -139,11 +139,24 @@ Hours: ${biz.opening_hours || 'Not specified'}
 Service areas: ${Array.isArray(biz.service_areas) ? biz.service_areas.join(', ') : biz.service_areas || 'Not specified'}`
       : 'Business profile not configured.';
 
-    // 7. Call AI
+    // 7. Pull the user's primary agent + KB so email replies share the same
+    //    knowledge base as the Retell voice agent. Tier-2 search is keyed on
+    //    the latest inbound email body for relevance.
+    const inboundBody = (latestInbound.body_text || '').substring(0, 2000);
+    const agentCtx = await buildAgentContext(userId, inboundBody);
+
+    const agentBlock = agentCtx.agent
+      ? `Speaking on behalf of agent: ${agentCtx.agent.name} (${agentCtx.agent.agent_type}).`
+      : '';
+
+    // 8. Call AI
     const systemPrompt = `You are an AI email assistant for a local business. Your job is to draft professional, helpful email responses to inbound customer inquiries.
 
 ${bizContext}
 ${leadContext}
+${agentBlock ? `\n${agentBlock}` : ''}
+${agentCtx.kbPromptBlock ? `\n${agentCtx.kbPromptBlock}` : ''}
+${agentCtx.kbSearchBlock ? `\n${agentCtx.kbSearchBlock}` : ''}
 
 Response guidelines:
 - Tone: ${tone}
