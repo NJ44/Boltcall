@@ -7,12 +7,14 @@ import WhisperText from './ui/whisper-text';
 const Pricing: React.FC = () => {
   const navigate = useNavigate();
 
-  // PayPal payment page routes per plan level
-  const PAYPAL_PLAN_ROUTES: Record<string, string> = {
-    starter: '/payment/elite-starter',
-    pro: '/payment/pro',
-    ultimate: '/contact',
-    custom: '/contact',
+  // Self-serve plans (Starter / Pro / Ultimate) start the free trial via /setup;
+  // payment is handled inside the dashboard once the user is signed in.
+  // High-touch plans (Enterprise / Custom) route to /book-a-call for sales.
+  const PLAN_ROUTES: Record<string, string> = {
+    starter: '/setup',
+    pro: '/setup',
+    ultimate: '/setup',
+    custom: '/book-a-call',
   };
 
   // PricingTable data
@@ -120,7 +122,7 @@ const Pricing: React.FC = () => {
               custom: 'custom',
             };
             const planKey = planMap[plan] || plan;
-            const route = PAYPAL_PLAN_ROUTES[planKey] || '/pricing';
+            const route = PLAN_ROUTES[planKey] || '/setup';
             navigate(route);
           }}
           containerClassName="py-0"
