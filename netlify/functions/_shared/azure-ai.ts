@@ -58,31 +58,47 @@ export function getAzureDeployment(tier: Tier | boolean = 'light'): string {
   // Backward compat: accept boolean (true = heavy, false = light)
   const t: Tier = typeof tier === 'boolean' ? (tier ? 'heavy' : 'light') : tier;
 
+  // When Foundry is configured, prefer FOUNDRY_DEPLOYMENT_* env vars for resolution.
+  // Falls back to non-prefixed envs only if those aren't set, then to GPT-5 defaults.
+  if (isFoundryConfigured()) {
+    switch (t) {
+      case 'heavy':
+        return (
+          process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT_HEAVY ||
+          process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT ||
+          'gpt-5.5'
+        );
+      case 'nano':
+        return (
+          process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT_NANO ||
+          process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT ||
+          'gpt-5.4-nano'
+        );
+      case 'codex':
+        return (
+          process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT_CODEX ||
+          process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT_HEAVY ||
+          'gpt-5.3-codex'
+        );
+      case 'light':
+      default:
+        return process.env.AZURE_OPENAI_FOUNDRY_DEPLOYMENT || 'gpt-5.4-mini';
+    }
+  }
+
+  // Legacy resource path — uses old env var names + gpt-4o family defaults.
   switch (t) {
     case 'heavy':
       return (
         process.env.AZURE_OPENAI_DEPLOYMENT_HEAVY ||
         process.env.AZURE_OPENAI_DEPLOYMENT ||
-        (isFoundryConfigured() ? 'gpt-5.5' : 'gpt-4o')
+        'gpt-4o'
       );
     case 'nano':
-      return (
-        process.env.AZURE_OPENAI_DEPLOYMENT_NANO ||
-        process.env.AZURE_OPENAI_DEPLOYMENT ||
-        'gpt-5.4-nano'
-      );
     case 'codex':
-      return (
-        process.env.AZURE_OPENAI_DEPLOYMENT_CODEX ||
-        process.env.AZURE_OPENAI_DEPLOYMENT_HEAVY ||
-        'gpt-5.3-codex'
-      );
     case 'light':
     default:
-      return (
-        process.env.AZURE_OPENAI_DEPLOYMENT ||
-        (isFoundryConfigured() ? 'gpt-5.4-mini' : 'gpt-4o-mini')
-      );
+      return process.env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4o-mini';
   }
 }
 
