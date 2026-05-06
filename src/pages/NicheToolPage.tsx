@@ -58,7 +58,7 @@ const NicheToolPage: React.FC = () => {
         .select('*')
         .eq('slug', slug)
         .eq('is_deployed', true)
-        .single();
+        .maybeSingle();
 
       if (fetchError || !data) {
         setNotFound(true);
