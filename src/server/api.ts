@@ -11,7 +11,35 @@ const fallbackVoices = [
   { id: 'retell-Leland', name: 'Leland', accent: 'American', gender: 'male', provider: 'platform', preview: 'https://retell-utils-public.s3.us-west-2.amazonaws.com/minimax-Leland.mp3' },
 ];
 
+async function getClonedVoicesForCurrentUser(): Promise<any[]> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from('cloned_voices')
+      .select('id, name, accent, gender, retell_voice_id, preview_audio_url, status')
+      .eq('user_id', user.id)
+      .eq('status', 'ready');
+
+    if (error || !data) return [];
+
+    return data.map(v => ({
+      id: v.retell_voice_id,
+      name: v.name,
+      accent: v.accent || 'Custom',
+      gender: v.gender || 'neutral',
+      provider: 'cloned',
+      preview: v.preview_audio_url || '',
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function getVoices(): Promise<any[]> {
+  const cloned = await getClonedVoicesForCurrentUser();
+
   try {
     // Try to fetch from Supabase voices table first
     try {
@@ -22,14 +50,17 @@ export async function getVoices(): Promise<any[]> {
         .limit(20);
 
       if (!error && voices && voices.length > 0) {
-        return voices.map(voice => ({
-          id: voice.id,
-          name: voice.name,
-          accent: voice.accent,
-          gender: voice.gender,
-          provider: voice.provider,
-          preview: voice.preview_audio_url,
-        }));
+        return [
+          ...cloned,
+          ...voices.map(voice => ({
+            id: voice.id,
+            name: voice.name,
+            accent: voice.accent,
+            gender: voice.gender,
+            provider: voice.provider,
+            preview: voice.preview_audio_url,
+          })),
+        ];
       }
     } catch (supabaseError) {
       console.warn('Could not fetch from Supabase:', supabaseError);
@@ -40,18 +71,18 @@ export async function getVoices(): Promise<any[]> {
       const response = await fetch('/retell-voices.json');
       if (response.ok) {
         const voices = await response.json();
-        return voices;
+        return [...cloned, ...voices];
       }
     } catch (jsonError) {
       console.warn('Could not fetch from JSON file:', jsonError);
     }
 
     // Final fallback: use hardcoded voice data with verified preview URLs
-    return fallbackVoices;
+    return [...cloned, ...fallbackVoices];
 
   } catch (error) {
     console.error('Error fetching voices:', error);
-    return fallbackVoices;
+    return [...cloned, ...fallbackVoices];
   }
 }
 
