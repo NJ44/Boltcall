@@ -1,70 +1,173 @@
 /**
- * Azure OpenAI helper — replaces direct Anthropic API calls.
+ * Azure OpenAI helper — supports Foundry (Responses API) + legacy resource (chat/completions).
  *
- * Priority:
- *   1. Azure OpenAI  (AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY)
- *   2. Anthropic     (ANTHROPIC_API_KEY)  ← migration fallback
+ * Resource priority (highest first):
+ *   1. Foundry resource    AZURE_OPENAI_FOUNDRY_ENDPOINT + AZURE_OPENAI_FOUNDRY_KEY
+ *      → uses Responses API at /openai/responses?api-version=2025-04-01-preview
+ *      → model selected via "model" field in body (gpt-5.5, gpt-5.4-mini, etc.)
+ *   2. Legacy resource     AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY
+ *      → uses chat/completions at /openai/deployments/<name>/chat/completions
+ *      → model selected via deployment-name in URL (gpt-4o, gpt-4o-mini)
+ *   3. Anthropic fallback  ANTHROPIC_API_KEY (disaster recovery only)
  *
  * Env vars:
- *   AZURE_OPENAI_ENDPOINT          https://<resource>.openai.azure.com
- *   AZURE_OPENAI_API_KEY           Azure OpenAI API key
- *   AZURE_OPENAI_DEPLOYMENT        deployment name, e.g. gpt-4o-mini  [default: gpt-4o-mini]
- *   AZURE_OPENAI_DEPLOYMENT_HEAVY  heavier deployment, e.g. gpt-4o   [default: same as above]
- *   AZURE_OPENAI_API_VERSION       optional, defaults to 2024-02-01
+ *   AZURE_OPENAI_FOUNDRY_ENDPOINT   https://<resource>.cognitiveservices.azure.com   [Foundry]
+ *   AZURE_OPENAI_FOUNDRY_KEY        Foundry API key
+ *   AZURE_OPENAI_FOUNDRY_API_VERSION optional, defaults to 2025-04-01-preview
+ *
+ *   AZURE_OPENAI_DEPLOYMENT         light deployment   [default: gpt-5.4-mini if Foundry, gpt-4o-mini if legacy]
+ *   AZURE_OPENAI_DEPLOYMENT_HEAVY   heavy deployment   [default: gpt-5.5 if Foundry, gpt-4o if legacy]
+ *   AZURE_OPENAI_DEPLOYMENT_NANO    sub-second routing [default: gpt-5.4-nano]
+ *   AZURE_OPENAI_DEPLOYMENT_CODEX   code reasoning     [default: gpt-5.3-codex]
+ *   AZURE_OPENAI_EMBEDDING_DEPLOYMENT  [default: text-embedding-3-large]
+ *   AZURE_OPENAI_AUDIO_DEPLOYMENT      [default: gpt-audio-1.5]
+ *
+ *   AZURE_OPENAI_ENDPOINT           https://<resource>.openai.azure.com   [legacy fallback]
+ *   AZURE_OPENAI_API_KEY            legacy API key
+ *   AZURE_OPENAI_API_VERSION        legacy api-version, defaults to 2024-02-01
+ *   AZURE_OPENAI_IMAGE_DEPLOYMENT   image deployment  [default: gpt-image-2]
  */
 
-const AZURE_API_VERSION = process.env.AZURE_OPENAI_API_VERSION || '2024-02-01';
+const FOUNDRY_API_VERSION =
+  process.env.AZURE_OPENAI_FOUNDRY_API_VERSION || '2025-04-01-preview';
+const LEGACY_API_VERSION = process.env.AZURE_OPENAI_API_VERSION || '2024-02-01';
+const EMBEDDING_API_VERSION = '2023-05-15';
 
-export function getAzureDeployment(heavy = false): string {
-  if (heavy) {
-    return (
-      process.env.AZURE_OPENAI_DEPLOYMENT_HEAVY ||
-      process.env.AZURE_OPENAI_DEPLOYMENT ||
-      'gpt-4o'
-    );
-  }
-  return process.env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4o-mini';
+export type Tier = 'light' | 'heavy' | 'nano' | 'codex';
+
+function isFoundryConfigured(): boolean {
+  return !!(
+    process.env.AZURE_OPENAI_FOUNDRY_ENDPOINT &&
+    process.env.AZURE_OPENAI_FOUNDRY_KEY
+  );
+}
+
+function isLegacyAzureConfigured(): boolean {
+  return !!(
+    process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_API_KEY
+  );
 }
 
 export function isAzureConfigured(): boolean {
-  return !!(process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_API_KEY);
+  return isFoundryConfigured() || isLegacyAzureConfigured();
+}
+
+export function getAzureDeployment(tier: Tier | boolean = 'light'): string {
+  // Backward compat: accept boolean (true = heavy, false = light)
+  const t: Tier = typeof tier === 'boolean' ? (tier ? 'heavy' : 'light') : tier;
+
+  switch (t) {
+    case 'heavy':
+      return (
+        process.env.AZURE_OPENAI_DEPLOYMENT_HEAVY ||
+        process.env.AZURE_OPENAI_DEPLOYMENT ||
+        (isFoundryConfigured() ? 'gpt-5.5' : 'gpt-4o')
+      );
+    case 'nano':
+      return (
+        process.env.AZURE_OPENAI_DEPLOYMENT_NANO ||
+        process.env.AZURE_OPENAI_DEPLOYMENT ||
+        'gpt-5.4-nano'
+      );
+    case 'codex':
+      return (
+        process.env.AZURE_OPENAI_DEPLOYMENT_CODEX ||
+        process.env.AZURE_OPENAI_DEPLOYMENT_HEAVY ||
+        'gpt-5.3-codex'
+      );
+    case 'light':
+    default:
+      return (
+        process.env.AZURE_OPENAI_DEPLOYMENT ||
+        (isFoundryConfigured() ? 'gpt-5.4-mini' : 'gpt-4o-mini')
+      );
+  }
 }
 
 /**
  * Simple chat completion — returns raw text.
- * Uses Azure OpenAI when configured; falls back to Anthropic.
+ * Routes through Foundry Responses API when configured, else legacy chat/completions, else Anthropic.
  */
 export async function chatCompletion(
   systemPrompt: string,
   userPrompt: string,
-  options: { maxTokens?: number; heavy?: boolean } = {},
+  options: { maxTokens?: number; heavy?: boolean; tier?: Tier } = {},
 ): Promise<string> {
-  const { maxTokens = 512, heavy = false } = options;
+  const { maxTokens = 512, heavy = false, tier } = options;
+  const resolvedTier: Tier = tier ?? (heavy ? 'heavy' : 'light');
 
-  if (isAzureConfigured()) {
-    return azureChatCompletion(systemPrompt, userPrompt, maxTokens, heavy);
+  if (isFoundryConfigured()) {
+    return foundryResponsesCompletion(systemPrompt, userPrompt, maxTokens, resolvedTier);
+  }
+
+  if (isLegacyAzureConfigured()) {
+    return legacyAzureChatCompletion(systemPrompt, userPrompt, maxTokens, resolvedTier);
   }
 
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
   if (anthropicKey) {
-    return anthropicChatCompletion(anthropicKey, systemPrompt, userPrompt, maxTokens, heavy);
+    return anthropicChatCompletion(anthropicKey, systemPrompt, userPrompt, maxTokens, resolvedTier);
   }
 
   throw new Error(
-    'No AI provider configured. Set AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY, or ANTHROPIC_API_KEY.',
+    'No AI provider configured. Set AZURE_OPENAI_FOUNDRY_ENDPOINT + AZURE_OPENAI_FOUNDRY_KEY, or AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY, or ANTHROPIC_API_KEY.',
   );
 }
 
-async function azureChatCompletion(
+async function foundryResponsesCompletion(
   systemPrompt: string,
   userPrompt: string,
   maxTokens: number,
-  heavy: boolean,
+  tier: Tier,
+): Promise<string> {
+  const endpoint = process.env.AZURE_OPENAI_FOUNDRY_ENDPOINT!.replace(/\/$/, '');
+  const apiKey = process.env.AZURE_OPENAI_FOUNDRY_KEY!;
+  const model = getAzureDeployment(tier);
+  const url = `${endpoint}/openai/responses?api-version=${FOUNDRY_API_VERSION}`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': apiKey,
+    },
+    body: JSON.stringify({
+      model,
+      instructions: systemPrompt,
+      input: userPrompt,
+      max_output_tokens: maxTokens,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text().catch(() => '');
+    throw new Error(`Azure Foundry Responses error ${res.status}: ${err}`);
+  }
+
+  const data = await res.json();
+  // Responses API returns { output: [{ type: 'message', content: [{ type: 'output_text', text: '...' }] }] }
+  const output = data.output;
+  if (!Array.isArray(output)) return '';
+  for (const item of output) {
+    if (item?.type === 'message' && Array.isArray(item.content)) {
+      for (const c of item.content) {
+        if (c?.type === 'output_text' && typeof c.text === 'string') return c.text;
+      }
+    }
+  }
+  return '';
+}
+
+async function legacyAzureChatCompletion(
+  systemPrompt: string,
+  userPrompt: string,
+  maxTokens: number,
+  tier: Tier,
 ): Promise<string> {
   const endpoint = process.env.AZURE_OPENAI_ENDPOINT!.replace(/\/$/, '');
   const apiKey = process.env.AZURE_OPENAI_API_KEY!;
-  const deployment = getAzureDeployment(heavy);
-  const url = `${endpoint}/openai/deployments/${deployment}/chat/completions?api-version=${AZURE_API_VERSION}`;
+  const deployment = getAzureDeployment(tier);
+  const url = `${endpoint}/openai/deployments/${deployment}/chat/completions?api-version=${LEGACY_API_VERSION}`;
 
   const res = await fetch(url, {
     method: 'POST',
@@ -91,9 +194,94 @@ async function azureChatCompletion(
 }
 
 /**
+ * Generate an embedding vector for a single string.
+ * Uses Foundry resource if configured (text-embedding-3-large = 3072-dim).
+ * Embeddings haven't moved to the Responses API — still uses /openai/deployments/<name>/embeddings.
+ */
+export async function generateEmbedding(text: string): Promise<number[]> {
+  const endpoint = (
+    process.env.AZURE_OPENAI_FOUNDRY_ENDPOINT || process.env.AZURE_OPENAI_ENDPOINT
+  )?.replace(/\/$/, '');
+  const apiKey =
+    process.env.AZURE_OPENAI_FOUNDRY_KEY || process.env.AZURE_OPENAI_API_KEY;
+
+  if (!endpoint || !apiKey) {
+    throw new Error(
+      'Azure not configured for embeddings. Set AZURE_OPENAI_FOUNDRY_ENDPOINT + AZURE_OPENAI_FOUNDRY_KEY (preferred) or AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY.',
+    );
+  }
+
+  const deployment =
+    process.env.AZURE_OPENAI_EMBEDDING_DEPLOYMENT || 'text-embedding-3-large';
+  const url = `${endpoint}/openai/deployments/${deployment}/embeddings?api-version=${EMBEDDING_API_VERSION}`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'api-key': apiKey },
+    body: JSON.stringify({ input: text }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text().catch(() => '');
+    throw new Error(`Azure embedding error ${res.status}: ${err}`);
+  }
+
+  const data = await res.json();
+  const emb = data.data?.[0]?.embedding;
+  if (!Array.isArray(emb)) {
+    throw new Error('Azure embedding response missing data[0].embedding');
+  }
+  return emb;
+}
+
+/**
+ * Transcribe audio to text using gpt-audio-1.5 (replaces Whisper).
+ * Audio is sent as base64 inside the chat/completions input array; output is plain text.
+ */
+export async function transcribeAudio(
+  audioBase64: string,
+  format: 'wav' | 'mp3' | 'ogg' | 'webm' | 'm4a' = 'ogg',
+): Promise<string> {
+  if (!isFoundryConfigured()) {
+    throw new Error(
+      'Audio transcription requires Foundry resource. Set AZURE_OPENAI_FOUNDRY_ENDPOINT + AZURE_OPENAI_FOUNDRY_KEY.',
+    );
+  }
+
+  const endpoint = process.env.AZURE_OPENAI_FOUNDRY_ENDPOINT!.replace(/\/$/, '');
+  const apiKey = process.env.AZURE_OPENAI_FOUNDRY_KEY!;
+  const deployment = process.env.AZURE_OPENAI_AUDIO_DEPLOYMENT || 'gpt-audio-1.5';
+  const url = `${endpoint}/openai/deployments/${deployment}/chat/completions?api-version=2025-01-01-preview`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'api-key': apiKey },
+    body: JSON.stringify({
+      modalities: ['text'],
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: 'Transcribe this audio verbatim. Output only the transcript, no commentary.' },
+            { type: 'input_audio', input_audio: { data: audioBase64, format } },
+          ],
+        },
+      ],
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text().catch(() => '');
+    throw new Error(`Azure audio transcription error ${res.status}: ${err}`);
+  }
+
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || '';
+}
+
+/**
  * Image generation — returns base64-encoded PNG string.
- * Requires Azure OpenAI to be configured (AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY).
- * Uses AZURE_OPENAI_IMAGE_DEPLOYMENT env var (default: gpt-image-2).
+ * Uses the legacy westus3 resource that hosts gpt-image-2 (separate from Foundry chat resource).
  */
 export async function generateImage(
   prompt: string,
@@ -102,9 +290,9 @@ export async function generateImage(
     quality?: 'low' | 'medium' | 'high';
   } = {},
 ): Promise<string> {
-  if (!isAzureConfigured()) {
+  if (!isLegacyAzureConfigured()) {
     throw new Error(
-      'Azure OpenAI not configured. Set AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY.',
+      'Image gen requires legacy resource. Set AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY (gpt-image-2 hosted on westus3).',
     );
   }
   const { size = '1024x1024', quality = 'high' } = options;
@@ -133,9 +321,12 @@ async function anthropicChatCompletion(
   systemPrompt: string,
   userPrompt: string,
   maxTokens: number,
-  heavy: boolean,
+  tier: Tier,
 ): Promise<string> {
-  const model = heavy ? 'claude-sonnet-4-20250514' : 'claude-haiku-4-5-20251001';
+  const model =
+    tier === 'heavy' || tier === 'codex'
+      ? 'claude-sonnet-4-20250514'
+      : 'claude-haiku-4-5-20251001';
 
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
