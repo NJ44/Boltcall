@@ -112,11 +112,23 @@ export const handler: Handler = async (event) => {
       .map(h => `[${h.direction === 'inbound' ? 'CUSTOMER' : 'BUSINESS'}] ${h.body}`)
       .join('\n');
 
+    // Pull the user's primary agent + KB so SMS replies share the same
+    // knowledge as the Retell voice agent. Tier-2 search is keyed on the
+    // most recent inbound message body for relevance.
+    const agentCtx = await buildAgentContext(userId, message.body);
+
+    const agentBlock = agentCtx.agent
+      ? `Speaking on behalf of agent: ${agentCtx.agent.name} (${agentCtx.agent.agent_type}).`
+      : '';
+
     const systemPrompt = `You are an AI SMS assistant for a local business. You handle inbound text messages: answering questions, qualifying leads, and booking appointments.
 
 ${bizContext}
 ${leadContext ? `\n${leadContext}` : ''}
 ${availabilityContext ? `\nAvailable appointment slots:\n${availabilityContext}` : ''}
+${agentBlock ? `\n${agentBlock}` : ''}
+${agentCtx.kbPromptBlock ? `\n${agentCtx.kbPromptBlock}` : ''}
+${agentCtx.kbSearchBlock ? `\n${agentCtx.kbSearchBlock}` : ''}
 
 RESPONSE RULES:
 - Tone: ${smsSettings.response_tone}
