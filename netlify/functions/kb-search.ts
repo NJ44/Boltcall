@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
+import { generateEmbedding } from './_shared/azure-ai';
 
 /**
  * Knowledge Base Search Function
@@ -19,7 +20,6 @@ import { getSupabase } from './_shared/token-utils';
  *   - update: Update a KB entry (re-embeds)
  */
 
-const OPENAI_KEY = process.env.OPENAI_API_KEY || '';
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
 
 const headers = {
@@ -29,28 +29,15 @@ const headers = {
   'Content-Type': 'application/json; charset=utf-8',
 };
 
-// Generate embedding — tries OpenAI, falls back to Supabase Edge Function
+// Generate embedding via Azure (text-embedding-3-large, 3072-dim).
+// Falls back to Supabase Edge Function if Azure not configured or fails.
 async function getEmbedding(text: string): Promise<number[] | null> {
-  // Try OpenAI first
-  if (OPENAI_KEY) {
-    try {
-      const res = await fetch('https://api.openai.com/v1/embeddings', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENAI_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ model: 'text-embedding-3-small', input: text }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const emb = data.data?.[0]?.embedding;
-        if (emb) return emb;
-      }
-    } catch { /* fall through */ }
+  try {
+    return await generateEmbedding(text);
+  } catch (err) {
+    console.warn('[kb-search] Azure embedding failed, trying Supabase fallback:', err instanceof Error ? err.message : err);
   }
 
-  // Fallback: Supabase Edge Function for embeddings (if configured)
   if (SUPABASE_URL) {
     try {
       const serviceKey = process.env.SUPABASE_SERVICE_KEY || '';
