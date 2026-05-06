@@ -31,6 +31,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FinalCTA, { CALCULATOR_CTA } from '../components/FinalCTA';
 import GiveawayBar from '../components/GiveawayBar';
+import { useSchemaInjector } from '../hooks/useSchemaInjector';
 
 /* ───────── animation helpers ───────── */
 const fadeUp = {
@@ -248,6 +249,49 @@ const MetricCard: React.FC<{
    MAIN COMPONENT
    ═══════════════════════════════════════════ */
 const LawyerIntakeCalculator: React.FC = () => {
+  useSchemaInjector([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How much revenue does a law firm lose from missed intake calls?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Law firms lose an average of $35,000–$150,000 per year from unanswered intake calls. In personal injury, a single missed case can represent $15,000–$100,000 in contingency fees. Studies show 42% of potential clients call only once and move to the next firm if no one answers.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What percentage of law firm leads go unanswered?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Research indicates that 38–45% of law firm intake calls go unanswered, especially outside business hours. Evening and weekend calls — when people search after an accident or legal emergency — are particularly at risk.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can AI handle legal intake calls 24/7?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Boltcall answers every intake call in under 11 seconds, qualifies the potential client, collects key case details, and books a consultation on the attorney\'s calendar — automatically, any time of day or night.',
+          },
+        },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'Law Firm Intake Revenue Loss Calculator',
+      url: 'https://boltcall.org/tools/lawyer-intake-calculator',
+      applicationCategory: 'BusinessApplication',
+      isAccessibleForFree: true,
+      description: 'Free calculator for law firms to estimate annual revenue lost from missed intake calls and slow lead response.',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+  ]);
+
   /* ── state ── */
   const [practiceArea, setPracticeArea] = useState('Personal Injury');
   const [avgCaseValue, setAvgCaseValue] = useState(15000);
