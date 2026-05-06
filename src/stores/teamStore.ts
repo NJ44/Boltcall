@@ -416,25 +416,26 @@ export const useTeamStore = create<TeamState>((set, get) => ({
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) throw new Error('Not authenticated');
 
-    // Generate a random API key
-    const rawKey = `bc_${crypto.randomUUID().replace(/-/g, '')}`;
-    const keyPrefix = rawKey.substring(0, 11); // "bc_" + 8 chars
-
-    const { error } = await supabase.from('api_keys').insert({
-      workspace_id: session.user.id,
-      name,
-      key_prefix: keyPrefix,
-      key_hash: rawKey, // In production, hash this server-side
-      permissions,
-      status: 'active',
-      expires_at: expiresAt || null,
-      created_by: session.user.id,
-      rate_limit: 60,
+    // Route through team-api-keys function so the raw key is hashed server-side
+    // before persistence. Storing the raw key in the DB defeats the purpose of
+    // the hash check in validate-api-key.ts and is a credential-disclosure risk.
+    const res = await fetch(`${FUNCTIONS_BASE}/team-api-keys`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({ name, permissions, expiresAt }),
     });
 
-    if (error) throw error;
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Failed to create key' }));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+
+    const { key: rawKey } = await res.json();
     await get().fetchApiKeys(session.user.id);
-    return rawKey; // Return full key only on creation
+    return rawKey; // Return full key only on creation — never persisted client-side
   },
 
   revokeApiKey: async (keyId: string) => {
