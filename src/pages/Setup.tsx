@@ -12,7 +12,8 @@ import {
 } from 'lucide-react';
 import { useSetupStore } from '../stores/setupStore';
 import { useAuth } from '../contexts/AuthContext';
-import { useSubscription } from '../contexts/SubscriptionContext';
+import { SubscriptionProvider, useSubscription } from '../contexts/SubscriptionContext';
+import { TokenProvider } from '../contexts/TokenContext';
 import { createUserWorkspaceAndProfile } from '../lib/database';
 import { createAgentAndKnowledgeBase } from '../lib/webhooks';
 import { LocationService } from '../lib/locations';
@@ -91,7 +92,7 @@ const contentVariants = {
   exit: { opacity: 0, x: -50, transition: { duration: 0.2 } },
 };
 
-const Setup: React.FC = () => {
+const SetupInner: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { planLevel, isTrialing } = useSubscription();
@@ -679,5 +680,16 @@ const Setup: React.FC = () => {
     </div>
   );
 };
+
+// Wrap Setup with its required providers so the route is self-contained.
+// This is defensive: even if AppRoutes' wrapper is missing/broken (as has happened
+// during build minification), Setup still mounts inside the providers it needs.
+const Setup: React.FC = () => (
+  <SubscriptionProvider>
+    <TokenProvider>
+      <SetupInner />
+    </TokenProvider>
+  </SubscriptionProvider>
+);
 
 export default Setup;
