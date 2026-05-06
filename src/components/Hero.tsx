@@ -147,8 +147,8 @@ const Hero: React.FC = () => {
             <motion.p
               className="text-base md:text-xl text-text-muted mb-8 max-w-2xl mx-auto px-2 md:px-0 leading-relaxed"
               animate={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.4, ease: "easeOut", delay: 0.5 }}
+              initial={{ opacity: 0, y: 24 }}
+              transition={{ duration: FADE_DURATION, ease: SMOOTH_EASE, delay: 0.25 }}
             >
               The Speed To Lead System for local businesses
             </motion.p>
