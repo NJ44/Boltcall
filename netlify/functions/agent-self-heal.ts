@@ -274,6 +274,19 @@ export const handler: Handler = async (event) => {
       // Step 4: Apply the prompt fix
       const { oldPrompt, newPrompt } = await applyPromptFix(llmId, analysis.promptFix);
 
+      // Mirror the new prompt to Supabase so SMS/email/WhatsApp pick it up.
+      try {
+        await supabase
+          .from('agents')
+          .update({
+            system_prompt: newPrompt,
+            system_prompt_synced_at: new Date().toISOString(),
+          })
+          .eq('retell_agent_id', agentId);
+      } catch (mirrorErr) {
+        console.warn('[agent-self-heal] system_prompt mirror failed:', mirrorErr instanceof Error ? mirrorErr.message : mirrorErr);
+      }
+
       // Step 5: Retest with the fixed prompt (3 runs — enough to verify)
       const { chatAgentId: healedChatAgentId } = await createTempChatAgent(agentId);
       let passedAfterFix = 0;
@@ -293,12 +306,24 @@ export const handler: Handler = async (event) => {
       const fixSuccessRate = Math.round((passedAfterFix / VERIFY_RUNS) * 100);
       const fixVerified = fixSuccessRate >= 66; // 2 of 3 must pass
 
-      // If fix didn't work (< 80% pass rate), revert the prompt
+      // If fix didn't work (< 80% pass rate), revert the prompt — and mirror
+      // the revert back into Supabase so text channels stay in sync with voice.
       if (!fixVerified) {
         await retellFetch(`/update-retell-llm/${llmId}`, {
           method: 'PATCH',
           body: JSON.stringify({ general_prompt: oldPrompt }),
         });
+        try {
+          await supabase
+            .from('agents')
+            .update({
+              system_prompt: oldPrompt,
+              system_prompt_synced_at: new Date().toISOString(),
+            })
+            .eq('retell_agent_id', agentId);
+        } catch (mirrorErr) {
+          console.warn('[agent-self-heal] system_prompt revert mirror failed:', mirrorErr instanceof Error ? mirrorErr.message : mirrorErr);
+        }
       }
 
       const elapsedMs = Date.now() - startTime;
