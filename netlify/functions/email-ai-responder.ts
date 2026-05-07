@@ -140,21 +140,23 @@ Service areas: ${Array.isArray(biz.service_areas) ? biz.service_areas.join(', ')
       : 'Business profile not configured.';
 
     // 7. Pull the user's primary agent + KB so email replies share the same
-    //    knowledge base as the Retell voice agent. Tier-2 search is keyed on
-    //    the latest inbound email body for relevance.
+    //    knowledge AND the same master system_prompt as the Retell voice
+    //    agent. Tier-2 search is keyed on the latest inbound email body.
     const inboundBody = (latestInbound.body_text || '').substring(0, 2000);
     const agentCtx = await buildAgentContext(userId, inboundBody);
 
-    const agentBlock = agentCtx.agent
-      ? `Speaking on behalf of agent: ${agentCtx.agent.name} (${agentCtx.agent.agent_type}).`
-      : '';
+    // Prefer the agent's canonical system_prompt (mirrored from Retell) when
+    // available — same identity / knowledge as voice. Fall back to legacy
+    // preamble if not synced yet.
+    const basePrompt = agentCtx.systemPrompt
+      ? `${agentCtx.systemPrompt}\n\n--- CHANNEL: EMAIL ---\nThis conversation is happening over email, not voice. Apply your usual identity and knowledge but follow the email response guidelines below.`
+      : `You are an AI email assistant for a local business. Your job is to draft professional, helpful email responses to inbound customer inquiries.`;
 
     // 8. Call AI
-    const systemPrompt = `You are an AI email assistant for a local business. Your job is to draft professional, helpful email responses to inbound customer inquiries.
+    const systemPrompt = `${basePrompt}
 
 ${bizContext}
 ${leadContext}
-${agentBlock ? `\n${agentBlock}` : ''}
 ${agentCtx.kbPromptBlock ? `\n${agentCtx.kbPromptBlock}` : ''}
 ${agentCtx.kbSearchBlock ? `\n${agentCtx.kbSearchBlock}` : ''}
 
