@@ -87,12 +87,17 @@ const PlanBillingPage: React.FC = () => {
     { label: 'Tokens Used', used: tokensUsed, limit: tokenLimit || 1000 },
   ];
 
-  // PayPal payment page routes per plan
-  const PAYPAL_PLAN_ROUTES: Record<string, string> = {
-    starter: '/payment/elite-starter',
-    pro: '/payment/pro',
-    ultimate: '/contact',
-    enterprise: '/contact',
+  // The legacy /payment/elite-starter and /payment/pro pages render PayPal
+  // hosted-buttons that are broken (the hardcoded button IDs return an error
+  // for the configured client_id). Until the PayPal Subscriptions API
+  // migration lands (see Boltcall_QA/paypal-subscriptions-api-guide.md), every
+  // upgrade routes to /book-a-call so a human picks it up. Enterprise/Ultimate
+  // were already routing there.
+  const PLAN_ROUTES: Record<string, string> = {
+    starter: '/book-a-call',
+    pro: '/book-a-call',
+    ultimate: '/book-a-call',
+    enterprise: '/book-a-call',
   };
 
   const PLAN_RANK: Record<string, number> = {
@@ -105,11 +110,11 @@ const PlanBillingPage: React.FC = () => {
   const handlePlanChange = async (plan: PlanLevel) => {
     setUpgrading(plan);
     if (isUpgrade(plan)) {
-      // Upgrade: go to PayPal payment page
-      const route = PAYPAL_PLAN_ROUTES[plan] || '/pricing';
+      const route = PLAN_ROUTES[plan] || '/book-a-call';
       window.location.href = route;
     } else {
-      // Downgrade: open PayPal subscription management to change plan
+      // Downgrade: open the customer portal (Stripe today; PayPal once
+      // openCustomerPortal is migrated alongside Subscriptions API).
       try {
         await openCustomerPortal();
       } catch (error) {
