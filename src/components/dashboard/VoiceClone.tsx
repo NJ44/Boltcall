@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Loader2, Upload, Trash2, Mic, Play, Pause, AlertCircle } from 'lucide-react';
+import { Loader2, Upload, Trash2, Mic, Play, Pause, AlertCircle, Square, RotateCcw } from 'lucide-react';
 import Button from '../ui/Button';
 import { Input } from '../ui/input';
 import Card from '../ui/Card';
@@ -24,6 +24,7 @@ const FUNC_BASE = import.meta.env.DEV
 
 const ACCEPTED_TYPES = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/webm', 'audio/ogg', 'audio/m4a', 'audio/mp4'];
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+const MAX_RECORD_SECONDS = 120;
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -37,6 +38,14 @@ function fileToBase64(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
+
+function formatTime(seconds: number): string {
+  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const s = (seconds % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+type InputMode = 'upload' | 'record';
 
 const VoiceClone: React.FC = () => {
   const { user } = useAuth();
@@ -54,8 +63,33 @@ const VoiceClone: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Input mode
+  const [inputMode, setInputMode] = useState<InputMode>('upload');
+
+  // Recording state
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
+  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
+  const [recordedMime, setRecordedMime] = useState('audio/webm');
+  const [recordPlayback, setRecordPlayback] = useState(false);
+
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const chunksRef = useRef<BlobPart[]>([]);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const recordAudioRef = useRef<HTMLAudioElement>(null);
+
   const [playingId, setPlayingId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const stopStream = useCallback(() => {
+    streamRef.current?.getTracks().forEach(t => t.stop());
+    streamRef.current = null;
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+  }, []);
+
+  useEffect(() => () => stopStream(), [stopStream]);
 
   const refresh = useCallback(async () => {
     if (!user?.id) return;
@@ -73,16 +107,11 @@ const VoiceClone: React.FC = () => {
     }
   }, [user?.id]);
 
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
+  useEffect(() => { refresh(); }, [refresh]);
 
   const handleFile = (f: File | null) => {
     setError(null);
-    if (!f) {
-      setFile(null);
-      return;
-    }
+    if (!f) { setFile(null); return; }
     if (!ACCEPTED_TYPES.includes(f.type)) {
       setError('Unsupported file type. Use MP3, WAV, M4A, OGG, or WebM.');
       return;
@@ -94,20 +123,106 @@ const VoiceClone: React.FC = () => {
     setFile(f);
   };
 
+  const switchMode = (mode: InputMode) => {
+    setError(null);
+    setFile(null);
+    setRecordedBlob(null);
+    setRecordingSeconds(0);
+    setRecordPlayback(false);
+    if (isRecording) {
+      mediaRecorderRef.current?.stop();
+      stopStream();
+      setIsRecording(false);
+    }
+    setInputMode(mode);
+  };
+
+  const startRecording = async () => {
+    setError(null);
+    setRecordedBlob(null);
+    setRecordingSeconds(0);
+    chunksRef.current = [];
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : MediaRecorder.isTypeSupported('audio/webm')
+        ? 'audio/webm'
+        : 'audio/ogg';
+
+      setRecordedMime(mimeType.split(';')[0]);
+
+      const recorder = new MediaRecorder(stream, { mimeType });
+      mediaRecorderRef.current = recorder;
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunksRef.current.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: mimeType });
+        setRecordedBlob(blob);
+        stopStream();
+        setIsRecording(false);
+      };
+
+      recorder.start(250);
+      setIsRecording(true);
+
+      timerRef.current = setInterval(() => {
+        setRecordingSeconds(prev => {
+          if (prev + 1 >= MAX_RECORD_SECONDS) {
+            recorder.stop();
+            return MAX_RECORD_SECONDS;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    } catch {
+      setError('Microphone access denied. Allow microphone access in your browser and try again.');
+    }
+  };
+
+  const stopRecording = () => {
+    mediaRecorderRef.current?.stop();
+  };
+
+  const playRecording = () => {
+    if (!recordedBlob || !recordAudioRef.current) return;
+    if (recordPlayback) {
+      recordAudioRef.current.pause();
+      setRecordPlayback(false);
+      return;
+    }
+    const url = URL.createObjectURL(recordedBlob);
+    recordAudioRef.current.src = url;
+    recordAudioRef.current.play()
+      .then(() => setRecordPlayback(true))
+      .catch(() => setRecordPlayback(false));
+  };
+
+  const getAudioFile = (): File | null => {
+    if (inputMode === 'upload') return file;
+    if (inputMode === 'record' && recordedBlob) {
+      const ext = recordedMime.includes('ogg') ? 'ogg' : 'webm';
+      return new File([recordedBlob], `recording.${ext}`, { type: recordedMime });
+    }
+    return null;
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    if (!user?.id) {
-      setError('You must be signed in.');
-      return;
-    }
-    if (!name.trim()) {
-      setError('Give your voice a name.');
-      return;
-    }
-    if (!file) {
-      setError('Upload an audio sample.');
+    if (!user?.id) { setError('You must be signed in.'); return; }
+    if (!name.trim()) { setError('Give your voice a name.'); return; }
+
+    const audioFile = getAudioFile();
+    if (!audioFile) {
+      setError(inputMode === 'upload' ? 'Upload an audio sample.' : 'Record an audio sample first.');
       return;
     }
     if (!consent) {
@@ -117,7 +232,7 @@ const VoiceClone: React.FC = () => {
 
     setSubmitting(true);
     try {
-      const audio_base64 = await fileToBase64(file);
+      const audio_base64 = await fileToBase64(audioFile);
       const res = await fetch(`${FUNC_BASE}/elevenlabs-clone-voice`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -128,8 +243,8 @@ const VoiceClone: React.FC = () => {
           gender: gender || undefined,
           accent: accent.trim() || undefined,
           audio_base64,
-          mime_type: file.type,
-          file_name: file.name,
+          mime_type: audioFile.type,
+          file_name: audioFile.name,
           consent_confirmed: true,
         }),
       });
@@ -140,12 +255,13 @@ const VoiceClone: React.FC = () => {
         return;
       }
 
-      // Reset form
       setName('');
       setDescription('');
       setGender('');
       setAccent('');
       setFile(null);
+      setRecordedBlob(null);
+      setRecordingSeconds(0);
       setConsent(false);
       await refresh();
     } catch (err: any) {
@@ -177,6 +293,8 @@ const VoiceClone: React.FC = () => {
       audioRef.current.play().then(() => setPlayingId(v.id)).catch(() => setPlayingId(null));
     }
   };
+
+  const recordingProgress = (recordingSeconds / MAX_RECORD_SECONDS) * 100;
 
   return (
     <div className="p-4 space-y-6">
@@ -237,29 +355,137 @@ const VoiceClone: React.FC = () => {
             </div>
           </div>
 
+          {/* Audio sample — toggle upload / record */}
           <div>
-            <label className="block text-sm font-medium mb-1">Audio sample</label>
-            <div className="flex items-center gap-3">
-              <label className="inline-flex items-center gap-2 px-3 py-2 border-2 border-border rounded-base cursor-pointer hover:bg-black/5 text-sm">
-                <Upload className="w-4 h-4" />
-                <span>{file ? 'Replace file' : 'Upload audio'}</span>
-                <input
-                  type="file"
-                  className="hidden"
-                  accept={ACCEPTED_TYPES.join(',')}
-                  onChange={e => handleFile(e.target.files?.[0] || null)}
-                  disabled={submitting}
-                />
-              </label>
-              {file && (
-                <span className="text-xs opacity-70 truncate max-w-[260px]">
-                  {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
-                </span>
-              )}
+            <label className="block text-sm font-medium mb-2">Audio sample</label>
+
+            <div className="flex gap-1 p-1 bg-black/5 rounded-lg w-fit mb-3">
+              <button
+                type="button"
+                onClick={() => switchMode('upload')}
+                disabled={submitting}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  inputMode === 'upload'
+                    ? 'bg-white shadow-sm text-foreground'
+                    : 'text-foreground/60 hover:text-foreground/80'
+                }`}
+              >
+                <Upload className="w-3.5 h-3.5" />
+                Upload file
+              </button>
+              <button
+                type="button"
+                onClick={() => switchMode('record')}
+                disabled={submitting}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  inputMode === 'record'
+                    ? 'bg-white shadow-sm text-foreground'
+                    : 'text-foreground/60 hover:text-foreground/80'
+                }`}
+              >
+                <Mic className="w-3.5 h-3.5" />
+                Record voice
+              </button>
             </div>
-            <p className="text-xs opacity-60 mt-2">
-              MP3, WAV, M4A, OGG, or WebM. Up to 10 MB. For best quality use 60–90 s of clean speech, no background noise.
-            </p>
+
+            {inputMode === 'upload' && (
+              <div>
+                <div className="flex items-center gap-3">
+                  <label className="inline-flex items-center gap-2 px-3 py-2 border-2 border-border rounded-base cursor-pointer hover:bg-black/5 text-sm">
+                    <Upload className="w-4 h-4" />
+                    <span>{file ? 'Replace file' : 'Upload audio'}</span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept={ACCEPTED_TYPES.join(',')}
+                      onChange={e => handleFile(e.target.files?.[0] || null)}
+                      disabled={submitting}
+                    />
+                  </label>
+                  {file && (
+                    <span className="text-xs opacity-70 truncate max-w-[260px]">
+                      {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs opacity-60 mt-2">
+                  MP3, WAV, M4A, OGG, or WebM · up to 10 MB · 60–90 s of clean speech recommended.
+                </p>
+              </div>
+            )}
+
+            {inputMode === 'record' && (
+              <div className="space-y-3">
+                {!recordedBlob ? (
+                  <div className="flex items-center gap-3">
+                    {!isRecording ? (
+                      <Button
+                        type="button"
+                        variant="primary"
+                        onClick={startRecording}
+                        disabled={submitting}
+                      >
+                        <Mic className="w-4 h-4 mr-2" />
+                        Start recording
+                      </Button>
+                    ) : (
+                      <div className="flex items-center gap-3 w-full">
+                        <button
+                          type="button"
+                          onClick={stopRecording}
+                          className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-base text-sm font-medium transition-colors shrink-0"
+                        >
+                          <Square className="w-3.5 h-3.5 fill-current" />
+                          Stop
+                        </button>
+                        <span className="relative flex h-2 w-2 shrink-0">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                        </span>
+                        <span className="text-sm font-mono shrink-0">{formatTime(recordingSeconds)}</span>
+                        <div className="flex-1 bg-black/10 rounded-full h-1.5 overflow-hidden">
+                          <div
+                            className="h-full bg-red-500 transition-all duration-500"
+                            style={{ width: `${recordingProgress}%` }}
+                          />
+                        </div>
+                        <span className="text-xs opacity-50 shrink-0">{formatTime(MAX_RECORD_SECONDS)}</span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-sm text-green-600 font-medium">
+                      ✓ Recorded {formatTime(recordingSeconds)}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={playRecording}
+                      className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-base text-sm hover:bg-black/5 transition-colors"
+                    >
+                      {recordPlayback ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                      {recordPlayback ? 'Pause' : 'Preview'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRecordedBlob(null);
+                        setRecordingSeconds(0);
+                        setRecordPlayback(false);
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-1.5 border border-border rounded-base text-sm hover:bg-black/5 transition-colors opacity-70"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      Re-record
+                    </button>
+                  </div>
+                )}
+                <p className="text-xs opacity-60">
+                  Record 60–90 s of clean speech for best cloning quality. No background noise.
+                </p>
+                <audio ref={recordAudioRef} onEnded={() => setRecordPlayback(false)} preload="none" />
+              </div>
+            )}
           </div>
 
           <label className="flex items-start gap-3 text-sm cursor-pointer">
@@ -284,15 +510,13 @@ const VoiceClone: React.FC = () => {
             </div>
           )}
 
-          <div>
-            <Button type="submit" variant="primary" disabled={submitting}>
-              {submitting ? (
-                <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Cloning…</>
-              ) : (
-                <><Mic className="w-4 h-4 mr-2" />Clone voice</>
-              )}
-            </Button>
-          </div>
+          <Button type="submit" variant="primary" disabled={submitting}>
+            {submitting ? (
+              <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Cloning…</>
+            ) : (
+              <><Mic className="w-4 h-4 mr-2" />Clone voice</>
+            )}
+          </Button>
         </form>
       </Card>
 
@@ -303,7 +527,9 @@ const VoiceClone: React.FC = () => {
             <Loader2 className="w-4 h-4 animate-spin" /> Loading…
           </div>
         ) : voices.length === 0 ? (
-          <p className="text-sm opacity-60">You haven't cloned any voices yet. Use the form above to create your first.</p>
+          <p className="text-sm opacity-60">
+            You haven't cloned any voices yet. Use the form above to create your first.
+          </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {voices.map(v => (
