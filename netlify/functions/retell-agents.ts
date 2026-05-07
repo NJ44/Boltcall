@@ -594,6 +594,10 @@ export const handler: Handler = async (event) => {
                 voice_id: agent.voice_id || body.voice_id || null,
                 language: body.language || 'en',
                 retell_agent_id: agent.agent_id,
+                // Mirror the prompt to Supabase so SMS/email/WhatsApp responders
+                // can read the same canonical prompt the voice agent uses.
+                system_prompt: generalPrompt || null,
+                system_prompt_synced_at: generalPrompt ? new Date().toISOString() : null,
               })
               .select('id')
               .single();
