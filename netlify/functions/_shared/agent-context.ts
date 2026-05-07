@@ -49,7 +49,7 @@ export async function buildAgentContext(
   // 1. Find the user's primary active agent (most recently updated wins).
   const { data: agent } = await supabase
     .from('agents')
-    .select('id, name, agent_type, retell_agent_id')
+    .select('id, name, agent_type, retell_agent_id, system_prompt')
     .eq('user_id', userId)
     .eq('status', 'active')
     .order('updated_at', { ascending: false })
