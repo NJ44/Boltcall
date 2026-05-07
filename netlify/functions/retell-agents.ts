@@ -755,7 +755,35 @@ export const handler: Handler = async (event) => {
         const { llm_id, ...llmUpdates } = body;
         delete llmUpdates.action;
         const llm = await client.llm.update(llm_id, llmUpdates as any);
-        return { statusCode: 200, headers, body: JSON.stringify({ success: true, llm_id: llm.llm_id, prompt_length: (llm as any).general_prompt?.length || 0 }) };
+        const updatedPrompt = (llm as any).general_prompt as string | undefined;
+
+        // Mirror new prompt to Supabase so text responders match voice. Find
+        // the matching agent row by retell_agent_id (must look up via the LLM
+        // since the request only has llm_id).
+        if (updatedPrompt) {
+          try {
+            const sb = getSupabaseAdmin();
+            if (sb) {
+              const allAgents = await client.agent.list();
+              const matchingAgent = (allAgents || []).find(
+                (a: any) => a.response_engine?.llm_id === llm_id,
+              );
+              if (matchingAgent?.agent_id) {
+                await sb
+                  .from('agents')
+                  .update({
+                    system_prompt: updatedPrompt,
+                    system_prompt_synced_at: new Date().toISOString(),
+                  })
+                  .eq('retell_agent_id', matchingAgent.agent_id);
+              }
+            }
+          } catch (mirrorErr) {
+            console.warn('[retell-agents] system_prompt mirror failed:', mirrorErr instanceof Error ? mirrorErr.message : mirrorErr);
+          }
+        }
+
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, llm_id: llm.llm_id, prompt_length: updatedPrompt?.length || 0 }) };
       }
 
       // Update agent
