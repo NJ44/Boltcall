@@ -113,20 +113,23 @@ export const handler: Handler = async (event) => {
       .join('\n');
 
     // Pull the user's primary agent + KB so SMS replies share the same
-    // knowledge as the Retell voice agent. Tier-2 search is keyed on the
-    // most recent inbound message body for relevance.
+    // knowledge AND the same master system_prompt as the Retell voice agent.
+    // Tier-2 search is keyed on the latest inbound message body.
     const agentCtx = await buildAgentContext(userId, message.body);
 
-    const agentBlock = agentCtx.agent
-      ? `Speaking on behalf of agent: ${agentCtx.agent.name} (${agentCtx.agent.agent_type}).`
-      : '';
+    // Prefer the agent's canonical system_prompt (mirrored from Retell) when
+    // available — that's how voice currently behaves, so text matches voice.
+    // Falls back to the legacy "AI SMS assistant" preamble if no agent prompt
+    // has been synced yet (new accounts, agents without Retell wiring).
+    const basePrompt = agentCtx.systemPrompt
+      ? `${agentCtx.systemPrompt}\n\n--- CHANNEL: SMS ---\nThis conversation is happening over SMS, not voice. Apply your usual identity and knowledge but follow the SMS response rules below.`
+      : `You are an AI SMS assistant for a local business. You handle inbound text messages: answering questions, qualifying leads, and booking appointments.`;
 
-    const systemPrompt = `You are an AI SMS assistant for a local business. You handle inbound text messages: answering questions, qualifying leads, and booking appointments.
+    const systemPrompt = `${basePrompt}
 
 ${bizContext}
 ${leadContext ? `\n${leadContext}` : ''}
 ${availabilityContext ? `\nAvailable appointment slots:\n${availabilityContext}` : ''}
-${agentBlock ? `\n${agentBlock}` : ''}
 ${agentCtx.kbPromptBlock ? `\n${agentCtx.kbPromptBlock}` : ''}
 ${agentCtx.kbSearchBlock ? `\n${agentCtx.kbSearchBlock}` : ''}
 
