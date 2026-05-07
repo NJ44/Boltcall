@@ -114,6 +114,7 @@ export async function buildAgentContext(
       agent_type: agent.agent_type,
       retell_agent_id: agent.retell_agent_id,
     },
+    systemPrompt: agent.system_prompt || '',
     kbPromptBlock,
     kbSearchBlock,
   };
