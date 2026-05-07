@@ -248,19 +248,21 @@ Service areas: ${Array.isArray(biz.service_areas) ? biz.service_areas.join(', ')
       .join('\n');
 
     // Pull the user's primary agent + KB so WhatsApp replies share the same
-    // knowledge base as the Retell voice agent. Tier-2 search runs against
-    // the inbound WhatsApp body for relevance.
+    // knowledge AND the same master system_prompt as the Retell voice agent.
+    // Tier-2 search runs against the inbound WhatsApp body.
     const agentCtx = await buildAgentContext(userId, message.body);
 
-    const agentBlock = agentCtx.agent
-      ? `Speaking on behalf of agent: ${agentCtx.agent.name} (${agentCtx.agent.agent_type}).`
-      : '';
+    // Prefer the agent's canonical system_prompt (mirrored from Retell) when
+    // available — same identity / knowledge as voice. Fall back to legacy
+    // preamble if not synced yet.
+    const basePrompt = agentCtx.systemPrompt
+      ? `${agentCtx.systemPrompt}\n\n--- CHANNEL: WHATSAPP ---\nThis conversation is happening over WhatsApp, not voice. Apply your usual identity and knowledge but follow the WhatsApp response rules below.`
+      : `You are an AI WhatsApp assistant for a local service business. You handle inbound WhatsApp messages: answering questions, qualifying leads, and booking appointments.`;
 
     // 7. Build prompt
-    const systemPrompt = `You are an AI WhatsApp assistant for a local service business. You handle inbound WhatsApp messages: answering questions, qualifying leads, and booking appointments.
+    const systemPrompt = `${basePrompt}
 
 ${bizContext}
-${agentBlock ? `\n${agentBlock}` : ''}
 ${agentCtx.kbPromptBlock ? `\n${agentCtx.kbPromptBlock}` : ''}
 ${agentCtx.kbSearchBlock ? `\n${agentCtx.kbSearchBlock}` : ''}
 
