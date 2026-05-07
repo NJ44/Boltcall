@@ -19,6 +19,8 @@ import { generateEmbedding } from './azure-ai';
 export interface AgentContext {
   /** Active agent linked to this user, or null if no agent is configured. */
   agent: { id: string; name: string; agent_type: string; retell_agent_id: string | null } | null;
+  /** Canonical system prompt mirrored from Retell. Empty string if not synced yet. */
+  systemPrompt: string;
   /** Tier-1 KB ("prompt"): always-injected business knowledge wrapped in <knowledge_base>. Empty if none. */
   kbPromptBlock: string;
   /** Tier-2 KB ("search"): top vector matches against the inbound message, formatted as bullets. Empty if no message or no matches. */
@@ -27,6 +29,7 @@ export interface AgentContext {
 
 const EMPTY: AgentContext = {
   agent: null,
+  systemPrompt: '',
   kbPromptBlock: '',
   kbSearchBlock: '',
 };
