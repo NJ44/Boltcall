@@ -742,7 +742,12 @@ export const handler: Handler = async (event) => {
         };
       }
 
-      // Migrate all existing agents to use the Azure custom LLM WebSocket brain
+      // Migrate all existing agents to use the Azure custom LLM WebSocket brain.
+      // Retell does not allow changing response_engine type in-place, so the strategy is:
+      // 1. Get current Retell agent config (voice, webhook, etc.)
+      // 2. Create a new agent with custom-llm engine and the same config
+      // 3. Update Supabase retell_agent_id with the new agent ID
+      // 4. Delete the old Retell agent
       if (action === 'migrate_to_azure') {
         const wsUrl = process.env.RETELL_LLM_WEBSOCKET_URL;
         if (!wsUrl) {
@@ -754,28 +759,56 @@ export const handler: Handler = async (event) => {
         }
         const { data: agentRows, error: fetchErr } = await sb
           .from('agents')
-          .select('retell_agent_id')
+          .select('id, retell_agent_id')
           .not('retell_agent_id', 'is', null);
         if (fetchErr) {
           return { statusCode: 500, headers, body: JSON.stringify({ error: fetchErr.message }) };
         }
         let updated = 0;
+        let skipped = 0;
         let failed = 0;
+        const results: Array<{ old_id: string; new_id?: string; status: string }> = [];
         for (const row of (agentRows || [])) {
           try {
-            await client.agent.update(row.retell_agent_id, {
-              response_engine: { type: 'custom-llm', llm_websocket_url: wsUrl },
+            // Get current Retell agent to check engine type and preserve settings
+            const existing = await client.agent.retrieve(row.retell_agent_id);
+            if ((existing.response_engine as any)?.type === 'custom-llm') {
+              skipped++;
+              results.push({ old_id: row.retell_agent_id, status: 'already_custom_llm' });
+              continue;
+            }
+            // Create replacement agent with custom-llm, preserving all voice/webhook settings
+            const newAgent = await client.agent.create({
+              agent_name: existing.agent_name,
+              response_engine: { type: 'custom-llm' as const, llm_websocket_url: wsUrl },
+              voice_id: existing.voice_id,
+              language: existing.language as any,
+              webhook_url: existing.webhook_url,
+              enable_backchannel: existing.enable_backchannel,
+              backchannel_frequency: existing.backchannel_frequency,
+              backchannel_words: existing.backchannel_words,
+              ambient_sound: existing.ambient_sound as any,
+              interruption_sensitivity: existing.interruption_sensitivity,
+              begin_message_delay_ms: existing.begin_message_delay_ms,
+              max_call_duration_ms: existing.max_call_duration_ms,
+              end_call_after_silence_ms: existing.end_call_after_silence_ms,
             } as any);
+            // Update Supabase with new agent ID
+            await sb.from('agents').update({ retell_agent_id: newAgent.agent_id }).eq('id', row.id);
+            // Delete the old agent (no phone number check — callers should verify first)
+            await client.agent.delete(row.retell_agent_id);
             updated++;
+            results.push({ old_id: row.retell_agent_id, new_id: newAgent.agent_id, status: 'migrated' });
           } catch (e) {
             console.error(`[migrate_to_azure] Failed for ${row.retell_agent_id}:`, e);
             failed++;
+            results.push({ old_id: row.retell_agent_id, status: 'failed' });
           }
         }
         return {
           statusCode: 200,
           headers,
-          body: JSON.stringify({ success: true, updated, failed, websocket_url: wsUrl }),
+          body: JSON.stringify({ success: true, updated, skipped, failed, websocket_url: wsUrl, results }),
         };
       }
 
