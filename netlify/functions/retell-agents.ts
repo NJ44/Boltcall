@@ -486,14 +486,16 @@ export const handler: Handler = async (event) => {
           responseEngine = { type: 'retell-llm' as const, llm_id: body.llm_id };
         } else if (body.llm_websocket_url) {
           responseEngine = { type: 'custom-llm' as const, llm_websocket_url: body.llm_websocket_url };
+        } else if (process.env.RETELL_LLM_WEBSOCKET_URL) {
+          // Azure custom LLM — skip Retell LLM creation; system prompt lives in Supabase agents table
+          responseEngine = { type: 'custom-llm' as const, llm_websocket_url: process.env.RETELL_LLM_WEBSOCKET_URL };
         } else {
-          // Build general_tools with transfer, availability, booking, SMS, and KB search
+          // Fallback: Retell-managed LLM (gpt-4o-mini) when no Azure WS configured
           const generalTools = buildGeneralTools({
             transferNumber: body.transfer_number || '',
             baseUrl,
           });
 
-          // Create LLM WITHOUT Retell KB — KB is in the prompt + search tool
           const llmConfig: any = {
             model: 'gpt-4o-mini',
             general_prompt: generalPrompt,
@@ -598,6 +600,7 @@ export const handler: Handler = async (event) => {
                 // can read the same canonical prompt the voice agent uses.
                 system_prompt: generalPrompt || null,
                 system_prompt_synced_at: generalPrompt ? new Date().toISOString() : null,
+                begin_message: beginMessage || null,
               })
               .select('id')
               .single();
@@ -739,10 +742,47 @@ export const handler: Handler = async (event) => {
         };
       }
 
+      // Migrate all existing agents to use the Azure custom LLM WebSocket brain
+      if (action === 'migrate_to_azure') {
+        const wsUrl = process.env.RETELL_LLM_WEBSOCKET_URL;
+        if (!wsUrl) {
+          return { statusCode: 400, headers, body: JSON.stringify({ error: 'RETELL_LLM_WEBSOCKET_URL env var not set' }) };
+        }
+        const sb = getSupabaseAdmin();
+        if (!sb) {
+          return { statusCode: 500, headers, body: JSON.stringify({ error: 'Supabase not configured' }) };
+        }
+        const { data: agentRows, error: fetchErr } = await sb
+          .from('agents')
+          .select('retell_agent_id')
+          .not('retell_agent_id', 'is', null);
+        if (fetchErr) {
+          return { statusCode: 500, headers, body: JSON.stringify({ error: fetchErr.message }) };
+        }
+        let updated = 0;
+        let failed = 0;
+        for (const row of (agentRows || [])) {
+          try {
+            await client.agent.update(row.retell_agent_id, {
+              response_engine: { type: 'custom-llm', llm_websocket_url: wsUrl },
+            } as any);
+            updated++;
+          } catch (e) {
+            console.error(`[migrate_to_azure] Failed for ${row.retell_agent_id}:`, e);
+            failed++;
+          }
+        }
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ success: true, updated, failed, websocket_url: wsUrl }),
+        };
+      }
+
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Invalid action. Use: create_kb, create_agent, create_full, create_web_call, or sync_kb' }),
+        body: JSON.stringify({ error: 'Invalid action. Use: create_kb, create_agent, create_full, create_web_call, sync_kb, or migrate_to_azure' }),
       };
     }
 

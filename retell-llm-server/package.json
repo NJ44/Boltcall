@@ -1,0 +1,23 @@
+{
+  "name": "retell-llm-server",
+  "version": "1.0.0",
+  "description": "WebSocket relay — Retell custom LLM backed by Azure OpenAI gpt-5.4-mini",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node --esm src/index.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.58.0",
+    "express": "^4.21.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.8.3"
+  }
+}
