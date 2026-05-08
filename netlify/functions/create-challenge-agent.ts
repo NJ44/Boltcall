@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import Retell from 'retell-sdk';
+import { createClient } from '@supabase/supabase-js';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -119,49 +120,59 @@ const handler: Handler = async (event) => {
 
   const client = new Retell({ apiKey: retellApiKey });
 
+  const BEGIN_MESSAGE =
+    'Hey! You reached the Break Our AI challenge. I am Aria. Give me just one second to get ready for you.';
+
+  const generalTools = [
+    {
+      type: 'end_call' as any,
+      name: 'end_call',
+      description:
+        'End the call politely after the challenge window has closed and the caller has no further questions.',
+    },
+    {
+      type: 'custom' as any,
+      name: 'book_appointment',
+      description:
+        'Book a 5-minute Boltcall demo. Collect the caller name and preferred date and time before calling this.',
+      parameters: {
+        type: 'object',
+        properties: {
+          caller_name: { type: 'string', description: 'Full name of the caller' },
+          preferred_time: { type: 'string', description: 'Preferred date and time for the demo' },
+        },
+        required: ['caller_name', 'preferred_time'],
+      },
+      url: `${process.env.URL}/.netlify/functions/book-demo`,
+    },
+  ];
+
   try {
     const prompt = buildChallengePrompt();
+    const wsUrl = process.env.RETELL_LLM_WEBSOCKET_URL;
 
-    // Step 1: Create the LLM template.
-    // {{secret_word}} and {{challenge_type}} are placeholders resolved by Retell
-    // at call start time via retell_llm_dynamic_variables.
-    const llm = await client.llm.create({
-      model: 'gpt-4o',
-      general_prompt: prompt,
-      begin_message:
-        "Hey! You reached the Break Our AI challenge. I am Aria. Give me just one second to get ready for you.",
-      general_tools: [
-        {
-          type: 'end_call' as any,
-          name: 'end_call',
-          description:
-            'End the call politely after the challenge window has closed and the caller has no further questions.',
-        },
-        {
-          type: 'custom' as any,
-          name: 'book_appointment',
-          description:
-            'Book a 5-minute Boltcall demo. Collect the caller name and preferred date and time before calling this.',
-          parameters: {
-            type: 'object',
-            properties: {
-              caller_name: { type: 'string', description: 'Full name of the caller' },
-              preferred_time: { type: 'string', description: 'Preferred date and time for the demo' },
-            },
-            required: ['caller_name', 'preferred_time'],
-          },
-          url: `${process.env.URL}/.netlify/functions/book-demo`,
-        },
-      ],
-    });
+    let responseEngine: any;
+    let llmId: string | undefined;
 
-    // Step 2: Create the agent linked to this LLM.
+    if (wsUrl) {
+      // Azure custom LLM path — no Retell LLM created; prompt lives in Supabase.
+      // The retell-llm-server reads system_prompt by retell_agent_id.
+      responseEngine = { type: 'custom-llm', llm_websocket_url: wsUrl };
+    } else {
+      // Fallback: Retell-managed LLM (gpt-4o).
+      const llm = await client.llm.create({
+        model: 'gpt-4o',
+        general_prompt: prompt,
+        begin_message: BEGIN_MESSAGE,
+        general_tools: generalTools,
+      } as any);
+      llmId = llm.llm_id;
+      responseEngine = { type: 'retell-llm', llm_id: llmId };
+    }
+
     const agent = await client.agent.create({
       agent_name: 'Break Our AI - Challenge Agent',
-      response_engine: {
-        type: 'retell-llm',
-        llm_id: llm.llm_id,
-      },
+      response_engine: responseEngine,
       voice_id: '11labs-Willa',
       language: 'en-US',
       enable_backchannel: true,
@@ -172,7 +183,35 @@ const handler: Handler = async (event) => {
       interruption_sensitivity: 0.8,
       end_call_after_silence_ms: 30000,
       max_call_duration_ms: 120000,
-    });
+      // begin_message and general_tools sit on the agent when using custom-llm
+      ...(wsUrl ? { begin_message: BEGIN_MESSAGE, general_tools: generalTools } : {}),
+    } as any);
+
+    // If using Azure path, persist the challenge prompt to Supabase so the
+    // retell-llm-server can load it by retell_agent_id.
+    if (wsUrl) {
+      try {
+        const sbUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+        const sbKey = process.env.SUPABASE_SERVICE_KEY;
+        if (sbUrl && sbKey) {
+          const sb = createClient(sbUrl, sbKey);
+          await sb.from('agents').upsert(
+            {
+              retell_agent_id: agent.agent_id,
+              name: 'Break Our AI - Challenge Agent',
+              agent_type: 'challenge',
+              system_prompt: prompt,
+              system_prompt_synced_at: new Date().toISOString(),
+              begin_message: BEGIN_MESSAGE,
+              status: 'active',
+            },
+            { onConflict: 'retell_agent_id' },
+          );
+        }
+      } catch (sbErr) {
+        console.warn('[create-challenge-agent] Supabase prompt save failed (non-blocking):', sbErr);
+      }
+    }
 
     return {
       statusCode: 200,
@@ -180,7 +219,8 @@ const handler: Handler = async (event) => {
       body: JSON.stringify({
         success: true,
         agent_id: agent.agent_id,
-        llm_id: llm.llm_id,
+        llm_id: llmId,
+        brain: wsUrl ? 'azure-custom-llm' : 'retell-managed',
         supported_modes: ['guard'],
         usage_note:
           'Pass retell_llm_dynamic_variables: { secret_word: "..." } when starting each call.',
