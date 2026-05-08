@@ -6,19 +6,22 @@ import { chatCompletion } from './_shared/azure-ai';
 /**
  * Agent Self-Healing Pipeline
  *
- * Triggered after a failed call is detected by retell-webhook.
+ * Triggered after a failed conversation is detected (by conversation-outcome.ts or retell-webhook.ts).
  * Flow:
- *   1. Analyze the call transcript to identify the failure type
- *   2. Generate a targeted test scenario for that failure
- *   3. Clone voice agent → chat agent, run 3 tests to reproduce
- *   4. Fix the prompt automatically
- *   5. Retest 10 times to confirm the fix
- *   6. Deploy the updated prompt to the live agent
- *   7. Notify the business owner via Telegram + store in DB
+ *   1. Analyze the transcript to identify the failure type and root cause
+ *   2. Generate 4 test scenarios: 3 similar variations + 1 exact replay
+ *   3. Clone voice agent → chat agent, reproduce the failure
+ *   4. Fix the prompt
+ *   5. Retest all 4 — ALL must pass (100% threshold)
+ *   6. If not all pass, re-analyze and re-fix (up to MAX_HEAL_ITERATIONS attempts)
+ *   7. Deploy the verified fix or revert after max attempts
+ *   8. Notify via Telegram + store in DB
  */
 
 const RETELL_API = 'https://api.retellai.com';
 const RETELL_KEY = process.env.RETELL_API_KEY || '';
+const MAX_HEAL_ITERATIONS = 3;
+const VERIFY_RUNS = 4; // 3 similar + 1 exact, all must pass
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -48,7 +51,7 @@ async function askLLM(systemPrompt: string, userPrompt: string): Promise<string>
   return chatCompletion(systemPrompt, userPrompt, { maxTokens: 4000 });
 }
 
-// ─── Step 1: Analyze the failed call transcript ─────────────────────────────
+// ─── Types ───────────────────────────────────────────────────────────────────
 
 interface FailureAnalysis {
   failureType: string;
@@ -59,12 +62,30 @@ interface FailureAnalysis {
   severity: 'low' | 'medium' | 'high' | 'critical';
 }
 
-async function analyzeFailure(transcript: string, agentPrompt: string, callAnalysis: any): Promise<FailureAnalysis> {
-  const systemPrompt = `You are an expert AI voice agent debugger. Analyze a failed call transcript and the agent's current prompt to identify:
+interface HealScenario {
+  label: 'similar_1' | 'similar_2' | 'similar_3' | 'exact';
+  messages: string[];
+}
+
+// ─── Step 1: Analyze failure ──────────────────────────────────────────────────
+
+async function analyzeFailure(
+  transcript: string,
+  agentPrompt: string,
+  callAnalysis: unknown,
+  priorFailedFixes?: string[],
+): Promise<FailureAnalysis> {
+  const priorFixContext = priorFailedFixes && priorFailedFixes.length > 0
+    ? `\n\n## Prior Fix Attempts (all failed verification)\n${priorFailedFixes.map((f, i) => `Fix ${i + 1}: ${f}`).join('\n')}`
+    : '';
+
+  const systemPrompt = `You are an expert AI voice agent debugger. Analyze a failed conversation transcript and the agent's current prompt to identify:
 1. What went wrong (the failure type)
 2. Why it went wrong (root cause in the prompt)
 3. Test messages that would reproduce this exact failure
 4. A specific prompt fix (the exact text to add/change)
+
+${priorFailedFixes && priorFailedFixes.length > 0 ? 'IMPORTANT: Previous fix attempts have already been tried and failed. Propose a different, more targeted fix.' : ''}
 
 Respond in JSON only with this structure:
 {
@@ -83,19 +104,61 @@ ${JSON.stringify(callAnalysis || {}, null, 2)}
 ${transcript}
 
 ## Current Agent Prompt
-${agentPrompt}
+${agentPrompt}${priorFixContext}
 
-Analyze why this call failed and provide the fix.`;
+Analyze why this conversation failed and provide the fix.`;
 
   const response = await askLLM(systemPrompt, userPrompt);
-
-  // Parse JSON from response (handle markdown code blocks)
   const jsonMatch = response.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error('Failed to parse failure analysis');
   return JSON.parse(jsonMatch[0]);
 }
 
-// ─── Step 2: Create temp chat agent and run tests ───────────────────────────
+// ─── Step 2: Generate 4 targeted test scenarios (3 similar + 1 exact) ────────
+
+async function generateHealScenarios(
+  transcript: string,
+  analysis: FailureAnalysis,
+): Promise<HealScenario[]> {
+  const systemPrompt = `You are an AI agent test engineer. Given a failed conversation transcript and failure analysis, generate exactly 4 test scenarios:
+
+1. similar_1: Same failure topic but rephrased — different wording, same underlying issue
+2. similar_2: Same failure topic but from a different angle — different lead persona or context
+3. similar_3: Same failure topic edge case — pushes harder or uses unexpected phrasing
+4. exact: Replays the ACTUAL failed conversation turn by turn — use exact user phrases from the real transcript
+
+Respond in JSON array only:
+[
+  { "label": "similar_1", "messages": ["user msg 1", "user msg 2", ...] },
+  { "label": "similar_2", "messages": ["user msg 1", "user msg 2", ...] },
+  { "label": "similar_3", "messages": ["user msg 1", "user msg 2", ...] },
+  { "label": "exact",     "messages": ["exact user msg 1", "exact user msg 2", ...] }
+]
+
+Each scenario: 3-6 user messages. For 'exact', extract ONLY the user turns from the transcript in order.`;
+
+  const userPrompt = `## Failure Type: ${analysis.failureType}
+## Root Cause: ${analysis.rootCause}
+## Original test messages: ${JSON.stringify(analysis.testMessages)}
+
+## Actual Transcript:
+${transcript}`;
+
+  const response = await askLLM(systemPrompt, userPrompt);
+  const jsonMatch = response.match(/\[[\s\S]*\]/);
+  if (!jsonMatch) {
+    // Fallback: derive scenarios from analysis.testMessages
+    return [
+      { label: 'similar_1', messages: analysis.testMessages },
+      { label: 'similar_2', messages: analysis.testMessages.map(m => m + ' please') },
+      { label: 'similar_3', messages: ['Actually, ' + (analysis.testMessages[0] || 'I need help')] },
+      { label: 'exact',     messages: analysis.testMessages },
+    ];
+  }
+  return JSON.parse(jsonMatch[0]) as HealScenario[];
+}
+
+// ─── Step 3: Create/delete temp chat agent ────────────────────────────────────
 
 async function createTempChatAgent(voiceAgentId: string): Promise<{ chatAgentId: string; llmId: string }> {
   const voiceAgent = await retellFetch(`/get-agent/${voiceAgentId}`);
@@ -113,7 +176,10 @@ async function createTempChatAgent(voiceAgentId: string): Promise<{ chatAgentId:
   return { chatAgentId: chatAgent.agent_id, llmId };
 }
 
-async function runChatTest(chatAgentId: string, messages: string[]): Promise<{ conversation: Array<{ role: string; content: string }>; analysis: any }> {
+async function runChatTest(
+  chatAgentId: string,
+  messages: string[],
+): Promise<{ conversation: Array<{ role: string; content: string }>; analysis: unknown }> {
   const chat = await retellFetch('/create-chat', {
     method: 'POST',
     body: JSON.stringify({ agent_id: chatAgentId }),
@@ -163,14 +229,17 @@ async function deleteTempChatAgent(chatAgentId: string) {
   } catch { /* ignore */ }
 }
 
-// ─── Step 3: Apply prompt fix ───────────────────────────────────────────────
+// ─── Step 4: Apply prompt fix ─────────────────────────────────────────────────
 
-async function applyPromptFix(llmId: string, promptFix: string): Promise<{ oldPrompt: string; newPrompt: string }> {
+async function applyPromptFix(
+  llmId: string,
+  promptFix: string,
+  iteration: number,
+): Promise<{ oldPrompt: string; newPrompt: string }> {
   const llm = await retellFetch(`/get-retell-llm/${llmId}`);
   const oldPrompt = llm.general_prompt || '';
 
-  // Append the fix to the existing prompt under a self-heal section
-  const fixSection = `\n\n## AUTO-FIX (${new Date().toISOString().split('T')[0]})\n${promptFix}`;
+  const fixSection = `\n\n## AUTO-FIX v${iteration} (${new Date().toISOString().split('T')[0]})\n${promptFix}`;
   const newPrompt = oldPrompt + fixSection;
 
   await retellFetch(`/update-retell-llm/${llmId}`, {
@@ -181,17 +250,15 @@ async function applyPromptFix(llmId: string, promptFix: string): Promise<{ oldPr
   return { oldPrompt, newPrompt };
 }
 
-// ─── Main Handler ───────────────────────────────────────────────────────────
+// ─── Main Handler ─────────────────────────────────────────────────────────────
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
   }
-
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
-
   if (!RETELL_KEY) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'RETELL_API_KEY not configured' }) };
   }
@@ -200,18 +267,17 @@ export const handler: Handler = async (event) => {
     const body = JSON.parse(event.body || '{}');
     const { action } = body;
 
-    // ─── ACTION: analyze ─ Analyze a failed call and return the diagnosis ────
+    // ─── ACTION: analyze ──────────────────────────────────────────────────────
     if (action === 'analyze') {
       const { transcript, agentPrompt, callAnalysis } = body;
       if (!transcript) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'transcript required' }) };
       }
-
       const analysis = await analyzeFailure(transcript, agentPrompt || '', callAnalysis);
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, analysis }) };
     }
 
-    // ─── ACTION: heal ─ Full self-healing pipeline ──────────────────────────
+    // ─── ACTION: heal ─────────────────────────────────────────────────────────
     if (action === 'heal') {
       const { agentId, callId, transcript, callAnalysis, userId } = body;
       if (!agentId || !transcript) {
@@ -221,7 +287,7 @@ export const handler: Handler = async (event) => {
       const supabase = getSupabase();
       const startTime = Date.now();
 
-      // ── Daily heal cap: max 5 heals per agent per day to prevent API drain ──
+      // Daily heal cap: max 5 heals per agent per day
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
       const { count: healsToday } = await supabase
@@ -235,7 +301,7 @@ export const handler: Handler = async (event) => {
         return { statusCode: 429, headers, body: JSON.stringify({ error: 'Daily heal limit reached (5 per agent). Try again tomorrow.' }) };
       }
 
-      // ── Token gate: deduct tokens before running the pipeline ──
+      // Token gate
       if (userId) {
         const deductResult = await deductTokens(userId, TOKEN_COSTS.ai_self_heal, 'ai_self_heal', `Self-heal pipeline for agent ${agentId}`);
         if (!deductResult.success) {
@@ -243,7 +309,7 @@ export const handler: Handler = async (event) => {
         }
       }
 
-      // Step 1: Get the agent's current prompt
+      // Get current agent + prompt
       const voiceAgent = await retellFetch(`/get-agent/${agentId}`);
       const llmId = voiceAgent.response_engine?.llm_id;
       if (!llmId) {
@@ -251,84 +317,112 @@ export const handler: Handler = async (event) => {
       }
 
       const llm = await retellFetch(`/get-retell-llm/${llmId}`);
-      const currentPrompt = llm.general_prompt || '';
+      const originalPrompt = llm.general_prompt || '';
 
-      // Step 2: Analyze the failure
-      const analysis = await analyzeFailure(transcript, currentPrompt, callAnalysis);
+      // Initial failure analysis
+      let analysis = await analyzeFailure(transcript, originalPrompt, callAnalysis);
 
-      // Step 3: Create temp chat agent and reproduce the issue (3 runs)
-      const { chatAgentId } = await createTempChatAgent(agentId);
+      // Reproduce the failure (3 quick runs)
+      const { chatAgentId: reproAgentId } = await createTempChatAgent(agentId);
       let reproduced = 0;
-
       try {
         for (let i = 0; i < 3; i++) {
-          const result = await runChatTest(chatAgentId, analysis.testMessages);
-          if (result.analysis?.call_successful === false) {
-            reproduced++;
-          }
+          const result = await runChatTest(reproAgentId, analysis.testMessages);
+          if (result.analysis && (result.analysis as any).call_successful === false) reproduced++;
         }
       } finally {
-        await deleteTempChatAgent(chatAgentId);
+        await deleteTempChatAgent(reproAgentId);
       }
 
-      // Step 4: Apply the prompt fix
-      const { oldPrompt, newPrompt } = await applyPromptFix(llmId, analysis.promptFix);
+      // Generate 4 targeted test scenarios (3 similar + 1 exact)
+      const healScenarios = await generateHealScenarios(transcript, analysis);
 
-      // Mirror the new prompt to Supabase so SMS/email/WhatsApp pick it up.
-      try {
-        await supabase
-          .from('agents')
-          .update({
-            system_prompt: newPrompt,
-            system_prompt_synced_at: new Date().toISOString(),
-          })
-          .eq('retell_agent_id', agentId);
-      } catch (mirrorErr) {
-        console.warn('[agent-self-heal] system_prompt mirror failed:', mirrorErr instanceof Error ? mirrorErr.message : mirrorErr);
-      }
-
-      // Step 5: Retest with the fixed prompt (3 runs — enough to verify)
-      const { chatAgentId: healedChatAgentId } = await createTempChatAgent(agentId);
+      // ── Retry loop: fix → test all 4 → re-analyze if any fail ──────────────
+      let fixVerified = false;
       let passedAfterFix = 0;
-      const VERIFY_RUNS = 3;
+      let iteration = 0;
+      let currentPromptFix = analysis.promptFix;
+      const priorFailedFixes: string[] = [];
+      let failedScenarioLabels: string[] = [];
 
-      try {
-        for (let i = 0; i < VERIFY_RUNS; i++) {
-          const result = await runChatTest(healedChatAgentId, analysis.testMessages);
-          if (result.analysis?.call_successful !== false) {
-            passedAfterFix++;
-          }
-        }
-      } finally {
-        await deleteTempChatAgent(healedChatAgentId);
-      }
+      while (iteration < MAX_HEAL_ITERATIONS && !fixVerified) {
+        iteration++;
 
-      const fixSuccessRate = Math.round((passedAfterFix / VERIFY_RUNS) * 100);
-      const fixVerified = fixSuccessRate >= 66; // 2 of 3 must pass
+        // Apply the fix
+        const { oldPrompt } = await applyPromptFix(llmId, currentPromptFix, iteration);
 
-      // If fix didn't work (< 80% pass rate), revert the prompt — and mirror
-      // the revert back into Supabase so text channels stay in sync with voice.
-      if (!fixVerified) {
-        await retellFetch(`/update-retell-llm/${llmId}`, {
-          method: 'PATCH',
-          body: JSON.stringify({ general_prompt: oldPrompt }),
-        });
+        // Mirror updated prompt to Supabase for text channels
         try {
+          const llmAfterFix = await retellFetch(`/get-retell-llm/${llmId}`);
           await supabase
             .from('agents')
             .update({
-              system_prompt: oldPrompt,
+              system_prompt: llmAfterFix.general_prompt || '',
               system_prompt_synced_at: new Date().toISOString(),
             })
             .eq('retell_agent_id', agentId);
         } catch (mirrorErr) {
-          console.warn('[agent-self-heal] system_prompt revert mirror failed:', mirrorErr instanceof Error ? mirrorErr.message : mirrorErr);
+          console.warn('[agent-self-heal] system_prompt mirror failed:', mirrorErr instanceof Error ? mirrorErr.message : mirrorErr);
+        }
+
+        // Test all 4 scenarios — ALL must pass
+        const { chatAgentId: verifyAgentId } = await createTempChatAgent(agentId);
+        passedAfterFix = 0;
+        failedScenarioLabels = [];
+
+        try {
+          for (const scenario of healScenarios) {
+            const result = await runChatTest(verifyAgentId, scenario.messages);
+            const passed = result.analysis === null || (result.analysis as any).call_successful !== false;
+            if (passed) {
+              passedAfterFix++;
+            } else {
+              failedScenarioLabels.push(scenario.label);
+            }
+          }
+        } finally {
+          await deleteTempChatAgent(verifyAgentId);
+        }
+
+        fixVerified = passedAfterFix === VERIFY_RUNS;
+
+        if (!fixVerified && iteration < MAX_HEAL_ITERATIONS) {
+          // Re-analyze: inform LLM which scenarios still failed
+          priorFailedFixes.push(currentPromptFix);
+          analysis = await analyzeFailure(transcript, originalPrompt, callAnalysis, priorFailedFixes);
+          currentPromptFix = analysis.promptFix;
+
+          // Revert the failed fix before applying the next one
+          await retellFetch(`/update-retell-llm/${llmId}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ general_prompt: oldPrompt }),
+          });
         }
       }
 
-      const elapsedMs = Date.now() - startTime;
+      // If still not verified after all iterations, revert to original prompt
+      if (!fixVerified) {
+        await retellFetch(`/update-retell-llm/${llmId}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ general_prompt: originalPrompt }),
+        });
+        try {
+          await supabase
+            .from('agents')
+            .update({ system_prompt: originalPrompt, system_prompt_synced_at: new Date().toISOString() })
+            .eq('retell_agent_id', agentId);
+        } catch { /* ignore */ }
+      }
 
-      // Step 6: Store the result in Supabase
+      const elapsedMs = Date.now() - startTime;
+      const fixSuccessRate = Math.round((passedAfterFix / VERIFY_RUNS) * 100);
+      const finalStatus = fixVerified
+        ? 'fixed'
+        : iteration >= MAX_HEAL_ITERATIONS
+          ? 'max_attempts_reached'
+          : 'reverted';
+
+      // Store result in Supabase
       const healRecord = {
         agent_id: agentId,
         call_id: callId || null,
@@ -338,14 +432,16 @@ export const handler: Handler = async (event) => {
         root_cause: analysis.rootCause,
         severity: analysis.severity,
         reproduced_count: reproduced,
-        prompt_fix_applied: analysis.promptFix,
+        prompt_fix_applied: currentPromptFix,
         fix_verified: fixVerified,
         fix_success_rate: fixSuccessRate,
         fix_pass_count: passedAfterFix,
         fix_total_runs: VERIFY_RUNS,
         prompt_reverted: !fixVerified,
         elapsed_ms: elapsedMs,
-        status: fixVerified ? 'fixed' : 'reverted',
+        status: finalStatus,
+        heal_iterations: iteration,
+        failed_scenario_labels: failedScenarioLabels.length > 0 ? failedScenarioLabels.join(',') : null,
       };
 
       const { data: insertedRecord, error: insertError } = await supabase
@@ -358,13 +454,21 @@ export const handler: Handler = async (event) => {
         console.error('[self-heal] Failed to store record:', insertError);
       }
 
-      // Step 7: Notify via Telegram
-      const statusEmoji = fixVerified ? '✅' : '⚠️';
-      const notification = `${statusEmoji} *Agent Self\\-Heal*\n\n` +
+      // Notify via Telegram
+      const statusEmoji = fixVerified ? '✅' : finalStatus === 'max_attempts_reached' ? '🔴' : '⚠️';
+      const fixStatus = fixVerified
+        ? `Verified \\(all 4/4 passed, ${iteration} iteration${iteration > 1 ? 's' : ''}\\)`
+        : finalStatus === 'max_attempts_reached'
+          ? `Max attempts reached \\(${MAX_HEAL_ITERATIONS}\\) \\— reverted`
+          : 'Reverted \\— fix did not hold';
+
+      const notification =
+        `${statusEmoji} *Agent Self\\-Heal*\n\n` +
         `🤖 *Agent:* ${voiceAgent.agent_name?.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&') || 'Unknown'}\n` +
         `❌ *Failure:* ${analysis.failureSummary.replace(/[_*[\]()~`>#+\-=|{}.!]/g, '\\$&')}\n` +
         `🔍 *Type:* ${analysis.failureType}\n` +
-        `🔧 *Fix:* ${fixVerified ? `Verified \\(${fixSuccessRate}% pass rate\\)` : 'Reverted \\- fix did not hold'}\n` +
+        `🧪 *Tests:* ${passedAfterFix}/${VERIFY_RUNS} passed \\(3 similar \\+ 1 exact\\)\n` +
+        `🔧 *Fix:* ${fixStatus}\n` +
         `⏱ *Time:* ${Math.round(elapsedMs / 1000)}s`;
 
       await notifyInfo(notification);
@@ -381,24 +485,23 @@ export const handler: Handler = async (event) => {
             rootCause: analysis.rootCause,
             severity: analysis.severity,
           },
-          reproduction: {
-            runs: 3,
-            reproduced,
-          },
+          reproduction: { runs: 3, reproduced },
           fix: {
             applied: true,
             verified: fixVerified,
             successRate: fixSuccessRate,
             passedRuns: passedAfterFix,
             totalRuns: VERIFY_RUNS,
+            iterations: iteration,
             reverted: !fixVerified,
+            status: finalStatus,
           },
           elapsedMs,
         }),
       };
     }
 
-    // ─── ACTION: history ─ Get self-healing history for an agent ─────────────
+    // ─── ACTION: history ──────────────────────────────────────────────────────
     if (action === 'history') {
       const { agentId, userId, limit: queryLimit } = body;
       const supabase = getSupabase();
@@ -415,11 +518,7 @@ export const handler: Handler = async (event) => {
       const { data, error } = await query;
       if (error) throw error;
 
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ success: true, records: data || [] }),
-      };
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, records: data || [] }) };
     }
 
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid action. Use: analyze, heal, history' }) };
