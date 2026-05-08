@@ -10,6 +10,7 @@ import { VoicePicker } from '../../components/ui/voice-picker';
 import { PopButton } from '../../components/ui/pop-button';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
 import { updateRetellAgent } from '../../lib/retell';
+import { authedFetch } from '../../lib/authedFetch';
 import { AgentAvatar } from '../../components/ui/AgentAvatar';
 import { InlineRename } from '../../components/ui/InlineRename';
 import { EmojiColorPicker } from '../../components/ui/EmojiColorPicker';
@@ -74,7 +75,7 @@ const AgentDetailPage: React.FC = () => {
     if (!agentId) return;
     setFoldersLoading(true);
     try {
-      const res = await fetch(`${FUNC_BASE}/kb-search`, {
+      const res = await authedFetch(`${FUNC_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'get_agent_folders', agentId }),
@@ -93,7 +94,7 @@ const AgentDetailPage: React.FC = () => {
   const fetchAllFolders = useCallback(async () => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`${FUNC_BASE}/kb-search`, {
+      const res = await authedFetch(`${FUNC_BASE}/kb-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'list_folders', userId: user.id }),
@@ -435,13 +436,13 @@ const AgentDetailPage: React.FC = () => {
                     onChange={async () => {
                       const FUNC = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
                       if (isLinked) {
-                        await fetch(`${FUNC}/kb-search`, {
+                        await authedFetch(`${FUNC}/kb-search`, {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
                           body: JSON.stringify({ action: 'unlink_agent_folder', agentId: agent.id, kbFolderId: folder.id }),
                         });
                       } else {
-                        await fetch(`${FUNC}/kb-search`, {
+                        await authedFetch(`${FUNC}/kb-search`, {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
                           body: JSON.stringify({ action: 'link_agent_folder', agentId: agent.id, kbFolderId: folder.id }),

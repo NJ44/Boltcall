@@ -1,6 +1,7 @@
 // Twilio SMS & Phone Numbers client — proxied through Netlify functions
 
 import { FUNCTIONS_BASE } from './api';
+import { authedFetch } from './authedFetch';
 
 // === SMS ===
 
@@ -259,7 +260,7 @@ export interface AvailablePhoneNumber {
  * List owned phone numbers
  */
 export async function listPhoneNumbers(): Promise<OwnedPhoneNumber[]> {
-  const response = await fetch(`${FUNCTIONS_BASE}/twilio-numbers`);
+  const response = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers`);
   if (!response.ok) {
     throw new Error(`Failed to list numbers: ${response.status}`);
   }
@@ -281,7 +282,7 @@ export async function searchAvailableNumbers(params?: {
   if (params?.area_code) searchParams.set('area_code', params.area_code);
   if (params?.contains) searchParams.set('contains', params.contains);
 
-  const response = await fetch(`${FUNCTIONS_BASE}/twilio-numbers?${searchParams.toString()}`);
+  const response = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers?${searchParams.toString()}`);
   if (!response.ok) {
     throw new Error(`Failed to search numbers: ${response.status}`);
   }
@@ -295,7 +296,7 @@ export async function purchasePhoneNumber(
   phoneNumber: string,
   options?: { voice_url?: string; sms_url?: string; friendly_name?: string }
 ): Promise<{ success: boolean; sid: string; phone_number: string; friendly_name: string }> {
-  const response = await fetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -320,7 +321,7 @@ export async function configurePhoneNumber(
   sid: string,
   config: { voice_url?: string; sms_url?: string; friendly_name?: string }
 ): Promise<{ success: boolean; phone_number: string }> {
-  const response = await fetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: 'configure', sid, ...config }),
@@ -338,7 +339,7 @@ export async function configurePhoneNumber(
  * Release (delete) a phone number
  */
 export async function releasePhoneNumber(sid: string): Promise<{ success: boolean }> {
-  const response = await fetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: 'release', sid }),

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Bot, Building2, ArrowRight, ArrowLeft, Loader2, CheckCircle2, Zap, Shield, MessageSquare } from 'lucide-react';
 import { FUNCTIONS_BASE } from '../lib/api';
+import { authedFetch } from '../lib/authedFetch';
 
 type FormData = {
   name: string;
@@ -118,7 +119,7 @@ export default function VoiceAgentOnboarding() {
         payload.additional_info ? `Additional Info: ${payload.additional_info}` : '',
       ].filter(Boolean).join('\n\n');
 
-      const agentRes = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+      const agentRes = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -137,7 +138,7 @@ export default function VoiceAgentOnboarding() {
       setStatus('provisioning');
 
       // Step 2: Search and purchase a phone number via Twilio
-      const searchRes = await fetch(`${FUNCTIONS_BASE}/twilio-numbers?action=available&country=US`, {
+      const searchRes = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers?action=available&country=US`, {
         method: 'GET',
       });
 
@@ -146,7 +147,7 @@ export default function VoiceAgentOnboarding() {
         const numbers = await searchRes.json();
         if (numbers.length > 0) {
           // Purchase the first available number
-          const purchaseRes = await fetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
+          const purchaseRes = await authedFetch(`${FUNCTIONS_BASE}/twilio-numbers`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

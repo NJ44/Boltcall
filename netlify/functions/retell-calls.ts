@@ -1,7 +1,6 @@
 import { Handler } from '@netlify/functions';
 import Retell from 'retell-sdk';
-import { authenticateApiKey } from './_shared/validate-api-key';
-import { getSupabase } from './_shared/token-utils';
+import { requireAuth, getUserAgentIds } from './_shared/require-auth';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -15,24 +14,16 @@ export const handler: Handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
-  // Optional API key auth — if present, scope calls to user's agents
-  const auth = await authenticateApiKey(event.headers as Record<string, string>, event.queryStringParameters);
-  if (auth.hasKey && !auth.userId) {
-    return { statusCode: 401, headers, body: JSON.stringify({ error: auth.error || 'Invalid API key' }) };
-  }
+  // ── Auth gate — required, never optional ──
+  const auth = await requireAuth(event);
+  if (!auth.ok) return auth.response;
 
-  // If authenticated, look up the user's Retell agent IDs to filter results
-  let userAgentIds: string[] | null = null;
-  if (auth.userId) {
-    const supabase = getSupabase();
-    const { data: agents } = await supabase
-      .from('agents')
-      .select('api_keys')
-      .eq('user_id', auth.userId);
-    if (agents?.length) {
-      userAgentIds = agents
-        .map((a: any) => a.api_keys?.retell_agent_id)
-        .filter(Boolean);
+  const userAgentIds = await getUserAgentIds(auth.userId);
+  // If the user has no Retell agents at all, return an empty list rather than
+  // leaking the org-wide call history. Same pattern for single-call retrieve.
+  if (userAgentIds.length === 0) {
+    if (event.httpMethod === 'GET' || event.httpMethod === 'POST') {
+      return { statusCode: 200, headers, body: JSON.stringify([]) };
     }
   }
 
@@ -46,54 +37,46 @@ export const handler: Handler = async (event) => {
   }
 
   const client = new Retell({ apiKey });
+  const ownedSet = new Set(userAgentIds);
 
   try {
-    // GET /retell-calls?call_id=xxx — get single call details
+    // GET /retell-calls?call_id=xxx — get single call details (only if owned)
     if (event.httpMethod === 'GET') {
       const callId = event.queryStringParameters?.call_id;
       if (callId) {
         const call = await client.call.retrieve(callId);
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify(call),
-        };
+        if (!ownedSet.has((call as any).agent_id)) {
+          return { statusCode: 404, headers, body: JSON.stringify({ error: 'Not found' }) };
+        }
+        return { statusCode: 200, headers, body: JSON.stringify(call) };
       }
 
-      // GET /retell-calls — list recent calls (no body needed)
-      const listFilter: Record<string, any> = {};
-      if (userAgentIds?.length) listFilter.agent_id = userAgentIds;
-
+      // GET /retell-calls — list calls scoped to user's agents
       const calls = await client.call.list({
-        filter_criteria: Object.keys(listFilter).length ? listFilter : undefined,
+        filter_criteria: { agent_id: userAgentIds },
         sort_order: 'descending',
         limit: 50,
       });
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify(calls),
-      };
+      return { statusCode: 200, headers, body: JSON.stringify(calls) };
     }
 
     // POST /retell-calls — list calls with filters
     if (event.httpMethod === 'POST') {
       const body = JSON.parse(event.body || '{}');
 
-      const filterCriteria: Record<string, any> = {};
-
+      // If caller passes explicit agent_ids, intersect with owned set —
+      // never let a request widen scope beyond the user's agents.
+      let scopedAgentIds: string[] = userAgentIds;
       if (body.agent_ids?.length) {
-        filterCriteria.agent_id = body.agent_ids;
-      } else if (userAgentIds?.length) {
-        // Scope to authenticated user's agents
-        filterCriteria.agent_id = userAgentIds;
+        scopedAgentIds = body.agent_ids.filter((id: string) => ownedSet.has(id));
+        if (scopedAgentIds.length === 0) {
+          return { statusCode: 200, headers, body: JSON.stringify([]) };
+        }
       }
-      if (body.call_status?.length) {
-        filterCriteria.call_status = body.call_status;
-      }
-      if (body.direction?.length) {
-        filterCriteria.direction = body.direction;
-      }
+
+      const filterCriteria: Record<string, any> = { agent_id: scopedAgentIds };
+      if (body.call_status?.length) filterCriteria.call_status = body.call_status;
+      if (body.direction?.length) filterCriteria.direction = body.direction;
       if (body.start_date || body.end_date) {
         filterCriteria.start_timestamp = {};
         if (body.start_date) {
@@ -105,24 +88,16 @@ export const handler: Handler = async (event) => {
       }
 
       const calls = await client.call.list({
-        filter_criteria: Object.keys(filterCriteria).length ? filterCriteria : undefined,
+        filter_criteria: filterCriteria,
         sort_order: body.sort_order || 'descending',
         limit: body.limit || 50,
         pagination_key: body.pagination_key,
       });
 
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify(calls),
-      };
+      return { statusCode: 200, headers, body: JSON.stringify(calls) };
     }
 
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   } catch (error) {
     console.error('retell-calls error:', error);
     return {

@@ -1,6 +1,7 @@
 // Retell AI API integration — proxied through Netlify functions for security
 
 import { FUNCTIONS_BASE } from './api';
+import { authedFetch } from './authedFetch';
 
 export interface RetellKnowledgeBaseText {
   text: string;
@@ -149,7 +150,7 @@ A: ${policyParts.join('. ')}.
 export const createRetellKnowledgeBase = async (data: CreateKnowledgeBaseData): Promise<RetellKnowledgeBaseResponse> => {
   const knowledgeBaseTexts = buildKnowledgeBaseTexts(data);
 
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -181,7 +182,7 @@ export const createRetellAgent = async (data: {
   languages: string[];
   voiceId?: string;
 }): Promise<RetellAgentResponse> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -242,7 +243,7 @@ export const createRetellAgentAndKnowledgeBase = async (data: CreateKnowledgeBas
     transferNumber: data.transferNumber,
   };
 
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -311,7 +312,7 @@ export const generateAgentPrompt = async (config: {
 
 // List all agents
 export const listRetellAgents = async (): Promise<any[]> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`);
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`);
   if (!response.ok) {
     throw new Error(`Failed to list agents: ${response.status}`);
   }
@@ -320,7 +321,7 @@ export const listRetellAgents = async (): Promise<any[]> => {
 
 // Get single agent
 export const getRetellAgentDetails = async (agentId: string): Promise<any> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents?agent_id=${agentId}`);
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents?agent_id=${agentId}`);
   if (!response.ok) {
     throw new Error(`Failed to get agent: ${response.status}`);
   }
@@ -329,7 +330,7 @@ export const getRetellAgentDetails = async (agentId: string): Promise<any> => {
 
 // Update agent
 export const updateRetellAgent = async (agentId: string, updates: Record<string, any>): Promise<any> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ agent_id: agentId, ...updates }),
@@ -343,7 +344,7 @@ export const updateRetellAgent = async (agentId: string, updates: Record<string,
 
 // Delete agent
 export const deleteRetellAgent = async (agentId: string): Promise<void> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents?agent_id=${agentId}`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents?agent_id=${agentId}`, {
     method: 'DELETE',
   });
   if (!response.ok) {
@@ -390,7 +391,7 @@ export const getRetellCallHistory = async (params: {
   callStatus?: string[];
   direction?: string[];
 }): Promise<RetellCallsResponse> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-calls`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-calls`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -420,7 +421,7 @@ export const getRetellCallHistory = async (params: {
 
 // Get single call details via Netlify function
 export const getRetellCallDetails = async (callId: string): Promise<RetellCall> => {
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-calls?call_id=${callId}`);
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-calls?call_id=${callId}`);
   if (!response.ok) {
     const err = await response.json();
     throw new Error(err.details || err.error || `Failed: ${response.status}`);

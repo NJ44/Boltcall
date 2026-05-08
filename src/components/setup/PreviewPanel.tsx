@@ -5,6 +5,7 @@ import { useToast } from '../../contexts/ToastContext';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
 import { FUNCTIONS_BASE } from '../../lib/api';
+import { authedFetch } from '../../lib/authedFetch';
 
 const PreviewPanel: React.FC = () => {
   const { account, businessProfile, calendar, callFlow, knowledgeBase } = useSetupStore();
@@ -37,7 +38,7 @@ const PreviewPanel: React.FC = () => {
       }
 
       // Create a web call via our Netlify function
-      const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+      const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'create_web_call', agent_id: agentId }),

@@ -16,6 +16,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
 import { generateAgentPrompt, updateRetellAgent } from '../../lib/retell';
+import { authedFetch } from '../../lib/authedFetch';
 import AgentTestsPage from './AgentTestsPage';
 import { PopButton } from '../../components/ui/pop-button';
 import TalkToAgentModal from '../../components/TalkToAgentModal';
@@ -297,7 +298,7 @@ const AgentsPage: React.FC = () => {
     setIsCreating(true);
     try {
       const FUNC_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
-      const res = await fetch(`${FUNC_BASE}/retell-agents`, {
+      const res = await authedFetch(`${FUNC_BASE}/retell-agents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -733,7 +734,7 @@ ${template.sampleQuestions.map(q => `- ${q}`).join('\n')}`;
       if (!user?.id) return;
       try {
         const FUNC_BASE = import.meta.env.DEV ? 'http://localhost:8888/.netlify/functions' : '/.netlify/functions';
-        const res = await fetch(`${FUNC_BASE}/kb-search`, {
+        const res = await authedFetch(`${FUNC_BASE}/kb-search`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'list_folders', userId: user.id }),

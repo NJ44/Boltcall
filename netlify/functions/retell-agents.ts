@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import Retell from 'retell-sdk';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth, getUserAgentIds, userOwnsAgent } from './_shared/require-auth';
 
 function getSupabaseAdmin() {
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
@@ -299,6 +300,11 @@ export const handler: Handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
+  // ── Auth gate — every method requires a valid Supabase JWT or bc_ API key ──
+  const auth = await requireAuth(event);
+  if (!auth.ok) return auth.response;
+  const userId = auth.userId;
+
   const apiKey = process.env.RETELL_API_KEY;
   if (!apiKey) {
     return {
@@ -311,22 +317,41 @@ export const handler: Handler = async (event) => {
   const client = new Retell({ apiKey });
 
   try {
-    // GET /retell-agents — list all agents
-    // GET /retell-agents?agent_id=xxx — get single agent
+    // GET /retell-agents — list THIS user's agents only
+    // GET /retell-agents?agent_id=xxx — get single agent (only if owned by user)
     if (event.httpMethod === 'GET') {
       const agentId = event.queryStringParameters?.agent_id;
       const llmId = event.queryStringParameters?.llm_id;
 
+      const ownedAgentIds = await getUserAgentIds(userId);
+
       if (llmId) {
+        // Fetching an LLM exposes the system prompt — only allow if the LLM
+        // belongs to one of the user's agents.
         const llm = await client.llm.retrieve(llmId);
+        const agentsForUser = await Promise.all(
+          ownedAgentIds.map((id) => client.agent.retrieve(id).catch(() => null)),
+        );
+        const ownsLlm = agentsForUser.some(
+          (a: any) => a?.response_engine?.llm_id === llmId,
+        );
+        if (!ownsLlm) {
+          return { statusCode: 404, headers, body: JSON.stringify({ error: 'Not found' }) };
+        }
         return { statusCode: 200, headers, body: JSON.stringify(llm) };
       }
       if (agentId) {
+        if (!ownedAgentIds.includes(agentId)) {
+          return { statusCode: 404, headers, body: JSON.stringify({ error: 'Not found' }) };
+        }
         const agent = await client.agent.retrieve(agentId);
         return { statusCode: 200, headers, body: JSON.stringify(agent) };
       }
-      const agents = await client.agent.list();
-      return { statusCode: 200, headers, body: JSON.stringify(agents) };
+      // List — return only agents owned by this user, not the org-wide list
+      const allAgents = await client.agent.list();
+      const ownedSet = new Set(ownedAgentIds);
+      const filtered = (allAgents || []).filter((a: any) => ownedSet.has(a.agent_id));
+      return { statusCode: 200, headers, body: JSON.stringify(filtered) };
     }
 
     // POST /retell-agents — create agent with knowledge base
@@ -831,6 +856,19 @@ export const handler: Handler = async (event) => {
       if (body.action === 'update_llm' && body.llm_id) {
         const { llm_id, ...llmUpdates } = body;
         delete llmUpdates.action;
+
+        // Verify the LLM belongs to one of the user's agents before mutating.
+        const ownedAgentIds = await getUserAgentIds(userId);
+        const userAgents = await Promise.all(
+          ownedAgentIds.map((id) => client.agent.retrieve(id).catch(() => null)),
+        );
+        const ownsLlm = userAgents.some(
+          (a: any) => a?.response_engine?.llm_id === llm_id,
+        );
+        if (!ownsLlm) {
+          return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not authorized to modify this LLM' }) };
+        }
+
         const llm = await client.llm.update(llm_id, llmUpdates as any);
         const updatedPrompt = (llm as any).general_prompt as string | undefined;
 
@@ -868,6 +906,9 @@ export const handler: Handler = async (event) => {
       if (!agent_id) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'agent_id required' }) };
       }
+      if (!(await userOwnsAgent(userId, agent_id))) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not authorized to modify this agent' }) };
+      }
       const agent = await client.agent.update(agent_id, updates as any);
       return { statusCode: 200, headers, body: JSON.stringify({ success: true, agent }) };
     }
@@ -877,6 +918,9 @@ export const handler: Handler = async (event) => {
       const agentId = event.queryStringParameters?.agent_id;
       if (!agentId) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'agent_id required' }) };
+      }
+      if (!(await userOwnsAgent(userId, agentId))) {
+        return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not authorized to delete this agent' }) };
       }
       await client.agent.delete(agentId);
       return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
