@@ -2,6 +2,7 @@ import { Handler } from '@netlify/functions';
 import { notifyError } from './_shared/notify';
 import { getSupabase } from './_shared/token-utils';
 import { generateEmbedding } from './_shared/azure-ai';
+import { requireAuth } from './_shared/require-auth';
 
 /**
  * Knowledge Base Search Function
@@ -68,8 +69,17 @@ export const handler: Handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
+  // ── Auth gate — never trust client-supplied userId. Always derive from JWT ──
+  const auth = await requireAuth(event);
+  if (!auth.ok) return auth.response;
+  const authedUserId = auth.userId;
+
   try {
     const body = JSON.parse(event.body || '{}');
+    // Override any client-supplied userId with the authenticated one. This
+    // single line closes the spoofable-userId vulnerability across every
+    // action below.
+    body.userId = authedUserId;
     const { action } = body;
     const supabase = getSupabase();
 

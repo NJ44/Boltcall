@@ -3,6 +3,7 @@
 
 import { searchAvailableNumbers, purchasePhoneNumber as purchaseTwilioNumber } from './twilio';
 import { FUNCTIONS_BASE } from './api';
+import { authedFetch } from './authedFetch';
 
 export interface PhoneNumber {
   phone_number: string;
@@ -129,7 +130,7 @@ export const createAgentAndKnowledgeBase = async (data: {
     transferNumber: data.transferNumber,
   };
 
-  const response = await fetch(`${FUNCTIONS_BASE}/retell-agents`, {
+  const response = await authedFetch(`${FUNCTIONS_BASE}/retell-agents`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

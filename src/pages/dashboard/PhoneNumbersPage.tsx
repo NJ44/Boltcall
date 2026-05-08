@@ -8,6 +8,7 @@ import CardTableWithPanel from '../../components/ui/CardTableWithPanel';
 import ModalShell from '../../components/ui/modal-shell';
 import { Magnetic } from '../../components/ui/magnetic';
 import { supabase } from '../../lib/supabase';
+import { authedFetch } from '../../lib/authedFetch';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useTokens } from '../../contexts/TokenContext';
@@ -132,7 +133,7 @@ const PhoneNumbersPage: React.FC = () => {
       const params = new URLSearchParams({ action: 'available', country });
       if (areaCode) params.set('area_code', areaCode);
 
-      const response = await fetch(`/.netlify/functions/twilio-numbers?${params.toString()}`);
+      const response = await authedFetch(`/.netlify/functions/twilio-numbers?${params.toString()}`);
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.details || err.error || 'Failed to search numbers');
@@ -176,7 +177,7 @@ const PhoneNumbersPage: React.FC = () => {
 
     try {
       // Step 1: Purchase via Twilio
-      const response = await fetch('/.netlify/functions/twilio-numbers', {
+      const response = await authedFetch('/.netlify/functions/twilio-numbers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

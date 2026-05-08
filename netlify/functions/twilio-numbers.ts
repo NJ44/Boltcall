@@ -1,4 +1,5 @@
 import { Handler } from '@netlify/functions';
+import { requireAuth, getUserPhoneNumbers, userOwnsPhoneNumber } from './_shared/require-auth';
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -25,6 +26,11 @@ export const handler: Handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
   }
+
+  // ── Auth gate — every method requires a valid Supabase JWT or bc_ API key ──
+  const authResult = await requireAuth(event);
+  if (!authResult.ok) return authResult.response;
+  const userId = authResult.userId;
 
   try {
     const { accountSid, auth } = getTwilioAuth();
@@ -64,23 +70,31 @@ export const handler: Handler = async (event) => {
         return { statusCode: 200, headers, body: JSON.stringify(numbers) };
       }
 
-      // Default: list owned numbers
+      // Default: list owned numbers — scope to numbers owned by this user.
+      const userNumbers = await getUserPhoneNumbers(userId);
+      if (userNumbers.length === 0) {
+        return { statusCode: 200, headers, body: JSON.stringify([]) };
+      }
+      const userNumberSet = new Set(userNumbers);
+
       const url = `${TWILIO_API_BASE}/Accounts/${accountSid}/IncomingPhoneNumbers.json`;
       const response = await fetch(url, {
         headers: { 'Authorization': `Basic ${auth}` },
       });
       const data = await response.json();
 
-      const numbers = (data.incoming_phone_numbers || []).map((num: any) => ({
-        sid: num.sid,
-        phone_number: num.phone_number,
-        friendly_name: num.friendly_name,
-        status: num.status,
-        voice_url: num.voice_url,
-        sms_url: num.sms_url,
-        capabilities: num.capabilities,
-        date_created: num.date_created,
-      }));
+      const numbers = (data.incoming_phone_numbers || [])
+        .filter((num: any) => userNumberSet.has(num.phone_number))
+        .map((num: any) => ({
+          sid: num.sid,
+          phone_number: num.phone_number,
+          friendly_name: num.friendly_name,
+          status: num.status,
+          voice_url: num.voice_url,
+          sms_url: num.sms_url,
+          capabilities: num.capabilities,
+          date_created: num.date_created,
+        }));
 
       return { statusCode: 200, headers, body: JSON.stringify(numbers) };
     }
@@ -138,6 +152,18 @@ export const handler: Handler = async (event) => {
           return { statusCode: 400, headers, body: JSON.stringify({ error: 'sid required' }) };
         }
 
+        // Verify the SID resolves to a phone number owned by this user before
+        // letting them rewrite voice/SMS webhooks (call-hijack vector).
+        const lookupUrl = `${TWILIO_API_BASE}/Accounts/${accountSid}/IncomingPhoneNumbers/${sid}.json`;
+        const lookupResp = await fetch(lookupUrl, { headers: { 'Authorization': `Basic ${auth}` } });
+        if (!lookupResp.ok) {
+          return { statusCode: 404, headers, body: JSON.stringify({ error: 'Phone number not found' }) };
+        }
+        const lookupData = await lookupResp.json();
+        if (!(await userOwnsPhoneNumber(userId, lookupData.phone_number))) {
+          return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not authorized to configure this number' }) };
+        }
+
         const formData = new URLSearchParams();
         if (voice_url) formData.set('VoiceUrl', voice_url);
         if (sms_url) formData.set('SmsUrl', sms_url);
@@ -170,6 +196,17 @@ export const handler: Handler = async (event) => {
         const { sid } = body;
         if (!sid) {
           return { statusCode: 400, headers, body: JSON.stringify({ error: 'sid required' }) };
+        }
+
+        // Verify ownership before releasing.
+        const lookupUrl = `${TWILIO_API_BASE}/Accounts/${accountSid}/IncomingPhoneNumbers/${sid}.json`;
+        const lookupResp = await fetch(lookupUrl, { headers: { 'Authorization': `Basic ${auth}` } });
+        if (!lookupResp.ok) {
+          return { statusCode: 404, headers, body: JSON.stringify({ error: 'Phone number not found' }) };
+        }
+        const lookupData = await lookupResp.json();
+        if (!(await userOwnsPhoneNumber(userId, lookupData.phone_number))) {
+          return { statusCode: 403, headers, body: JSON.stringify({ error: 'Not authorized to release this number' }) };
         }
 
         const url = `${TWILIO_API_BASE}/Accounts/${accountSid}/IncomingPhoneNumbers/${sid}.json`;
