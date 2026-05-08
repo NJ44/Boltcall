@@ -54,12 +54,12 @@ export const handler: Handler = async (event) => {
   ] = await Promise.all([
     supa.auth.admin.listUsers({ perPage: 1000 }),
     supa.from('workspaces').select('id, name, user_id, created_at'),
-    supa.from('agents').select('id, user_id, agent_name, created_at'),
+    supa.from('agents').select('id, user_id, name, created_at'),
     supa.from('leads').select('id, user_id, created_at'),
     supa.from('conversation_wins').select('id, user_id, channel, outcome_type, created_at').gte('created_at', todayIso),
-    supa.from('agent_self_heal_log').select('id, user_id, status, heal_iterations, created_at').gte('created_at', todayIso),
+    supa.from('agent_self_heal_log').select('id, user_id, status, fix_pass_count, fix_total_runs, created_at').gte('created_at', todayIso),
     supa.from('conversation_wins').select('id, user_id, channel, outcome_type, summary, created_at').order('created_at', { ascending: false }).limit(20),
-    supa.from('agent_self_heal_log').select('id, user_id, status, heal_iterations, created_at').order('created_at', { ascending: false }).limit(20),
+    supa.from('agent_self_heal_log').select('id, user_id, status, fix_pass_count, fix_total_runs, created_at').order('created_at', { ascending: false }).limit(20),
     supa.from('phone_numbers').select('id, user_id, phone_number'),
     supa.from('business_profiles').select('id, user_id, business_name, industry'),
   ]);

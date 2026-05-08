@@ -401,8 +401,8 @@ const AdminPanel: React.FC = () => {
                           h.status === 'max_attempts_reached' ? 'bg-rose-50 text-rose-700' :
                           'bg-amber-50 text-amber-700'
                         }`}>{h.status || 'in progress'}</span>
-                        {h.heal_iterations != null && (
-                          <span className="ml-2 text-xs text-gray-500">{h.heal_iterations} iteration{h.heal_iterations !== 1 ? 's' : ''}</span>
+                        {h.fix_total_runs != null && (
+                          <span className="ml-2 text-xs text-gray-500">{h.fix_pass_count}/{h.fix_total_runs} passed</span>
                         )}
                       </div>
                       <span className="text-xs text-gray-400 flex-shrink-0 ml-2">
