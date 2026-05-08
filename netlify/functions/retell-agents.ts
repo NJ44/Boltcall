@@ -109,7 +109,11 @@ function buildResponseEngine(body: any) {
       llm_websocket_url: body.llm_websocket_url,
     };
   }
-  // Default: no response engine provided — caller must provide one
+  // Default: use Azure custom LLM brain if configured
+  const wsUrl = process.env.RETELL_LLM_WEBSOCKET_URL;
+  if (wsUrl) {
+    return { type: 'custom-llm' as const, llm_websocket_url: wsUrl };
+  }
   return null;
 }
 
