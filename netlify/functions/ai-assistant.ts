@@ -13,6 +13,15 @@ const headers = {
 };
 
 function getOpenAIClient(): OpenAI {
+  // Foundry resource (preferred) — gpt-5.x family
+  if (process.env.AZURE_OPENAI_FOUNDRY_ENDPOINT && process.env.AZURE_OPENAI_FOUNDRY_KEY) {
+    return new AzureOpenAI({
+      endpoint: process.env.AZURE_OPENAI_FOUNDRY_ENDPOINT,
+      apiKey: process.env.AZURE_OPENAI_FOUNDRY_KEY,
+      apiVersion: process.env.AZURE_OPENAI_FOUNDRY_API_VERSION || '2025-04-01-preview',
+    });
+  }
+  // Legacy resource — gpt-4o family
   if (process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_API_KEY) {
     return new AzureOpenAI({
       endpoint: process.env.AZURE_OPENAI_ENDPOINT,
@@ -20,7 +29,9 @@ function getOpenAIClient(): OpenAI {
       apiVersion: process.env.AZURE_OPENAI_API_VERSION || '2024-02-01',
     });
   }
-  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' });
+  throw new Error(
+    'No Azure OpenAI configured. Set AZURE_OPENAI_FOUNDRY_ENDPOINT + AZURE_OPENAI_FOUNDRY_KEY (preferred) or AZURE_OPENAI_ENDPOINT + AZURE_OPENAI_API_KEY.',
+  );
 }
 
 function getRetell() {
