@@ -11,13 +11,8 @@ import { verifyRetellSignature } from './_shared/verify-signatures';
  *
  * Two pipelines:
  *   A) Missed-call text-back — SMS follow-up for unanswered calls
- *   B) Self-healing — auto-detect failed calls, trigger prompt fix pipeline
- *
- * Self-healing triggers:
- *   - call_analysis.call_successful === false
- *   - user_sentiment is 'Negative' or 'Very Negative'
- *   - call ended in error
- *   - call_analysis.call_summary mentions failure keywords
+ *   B) Outcome evaluation — routes all completed calls through conversation-outcome.ts
+ *      which records wins in `conversation_wins` or triggers self-heal for failures
  */
 
 const MISSED_CALL_THRESHOLD_MS = 15000;
