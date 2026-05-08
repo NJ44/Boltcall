@@ -1,4 +1,5 @@
 import { Handler } from '@netlify/functions';
+import { getSupabase } from './_shared/token-utils';
 
 const RETELL_API = 'https://api.retellai.com';
 const RETELL_KEY = process.env.RETELL_API_KEY || '';
@@ -80,14 +81,60 @@ async function retellFetch(path: string, options: RequestInit = {}) {
   return res.json();
 }
 
-// Step 1: Clone voice agent's LLM into a temporary chat agent
-async function createTempChatAgent(voiceAgentId: string): Promise<{ chatAgentId: string; llmId: string }> {
-  // Get the voice agent to find its LLM
+// Step 1: Build a temporary chat agent that mirrors the voice agent's behaviour.
+//
+// Two paths:
+//   - retell-llm voice agent → reuse the existing llm_id directly.
+//   - custom-llm voice agent (Boltcall's Azure-hosted LLM) → fetch the
+//     mirrored system_prompt from the agents table, spin up a brand-new
+//     Retell LLM with that prompt, and use that for the chat session.
+//     Cleanup deletes both the chat agent AND the temp LLM.
+//
+// `tempLlmId` is non-null only when we created a one-off LLM and need to
+// release it after the test run.
+async function createTempChatAgent(
+  voiceAgentId: string,
+): Promise<{ chatAgentId: string; llmId: string; tempLlmId: string | null }> {
   const voiceAgent = await retellFetch(`/get-agent/${voiceAgentId}`);
-  const llmId = voiceAgent.response_engine?.llm_id;
+  const engineType = voiceAgent.response_engine?.type;
+  let llmId: string | undefined = voiceAgent.response_engine?.llm_id;
+  let tempLlmId: string | null = null;
+
+  // Custom-llm path — pull the mirrored system_prompt from Supabase and
+  // synthesize a temporary retell-llm so chat-completion has something to
+  // run against. (Retell's chat API only supports retell-llm engines.)
+  if (!llmId && engineType === 'custom-llm') {
+    const supabase = getSupabase();
+    const { data: agentRow } = await supabase
+      .from('agents')
+      .select('system_prompt, name')
+      .eq('retell_agent_id', voiceAgentId)
+      .maybeSingle();
+
+    const promptFromDb: string | null = agentRow?.system_prompt || null;
+    if (!promptFromDb) {
+      throw new Error(
+        'Voice agent uses custom-llm but no mirrored system_prompt was found in agents table. ' +
+        'Save the agent prompt via the dashboard first, then retry.',
+      );
+    }
+
+    const newLlm = await retellFetch('/create-retell-llm', {
+      method: 'POST',
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        general_prompt: promptFromDb,
+      }),
+    });
+    if (!newLlm?.llm_id) {
+      throw new Error('Failed to create temporary Retell LLM for custom-llm test');
+    }
+    llmId = newLlm.llm_id;
+    tempLlmId = newLlm.llm_id;
+  }
+
   if (!llmId) throw new Error('Voice agent has no LLM configured');
 
-  // Create a chat agent with the same LLM
   const chatAgent = await retellFetch('/create-chat-agent', {
     method: 'POST',
     body: JSON.stringify({
@@ -96,7 +143,7 @@ async function createTempChatAgent(voiceAgentId: string): Promise<{ chatAgentId:
     }),
   });
 
-  return { chatAgentId: chatAgent.agent_id, llmId };
+  return { chatAgentId: chatAgent.agent_id, llmId, tempLlmId };
 }
 
 // Step 2: Run a single test scenario
@@ -160,11 +207,16 @@ async function runScenario(chatAgentId: string, scenario: typeof DEFAULT_SCENARI
   };
 }
 
-// Step 3: Delete temp chat agent
-async function deleteTempChatAgent(chatAgentId: string) {
+// Step 3: Tear down the temp chat agent (and the temp LLM, if we created one).
+async function deleteTempChatAgent(chatAgentId: string, tempLlmId: string | null = null) {
   try {
     await retellFetch(`/delete-chat-agent/${chatAgentId}`, { method: 'DELETE' });
   } catch { /* ignore */ }
+  if (tempLlmId) {
+    try {
+      await retellFetch(`/delete-retell-llm/${tempLlmId}`, { method: 'DELETE' });
+    } catch { /* ignore */ }
+  }
 }
 
 export const handler: Handler = async (event) => {
@@ -189,8 +241,8 @@ export const handler: Handler = async (event) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'agentId is required' }) };
       }
 
-      // Step 1: Create temp chat agent
-      const { chatAgentId, llmId } = await createTempChatAgent(agentId);
+      // Step 1: Create temp chat agent (and possibly a temp LLM for custom-llm)
+      const { chatAgentId, llmId, tempLlmId } = await createTempChatAgent(agentId);
 
       try {
         // Step 2: Run all scenarios
@@ -225,8 +277,8 @@ export const handler: Handler = async (event) => {
           }),
         };
       } finally {
-        // Step 4: Cleanup
-        await deleteTempChatAgent(chatAgentId);
+        // Step 4: Cleanup (deletes the chat agent AND the temp LLM if any)
+        await deleteTempChatAgent(chatAgentId, tempLlmId);
       }
     }
 
@@ -235,7 +287,7 @@ export const handler: Handler = async (event) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'agentId and scenario are required' }) };
       }
 
-      const { chatAgentId } = await createTempChatAgent(agentId);
+      const { chatAgentId, tempLlmId } = await createTempChatAgent(agentId);
 
       try {
         const result = await runScenario(chatAgentId, body.scenario);
@@ -245,7 +297,7 @@ export const handler: Handler = async (event) => {
           body: JSON.stringify({ success: true, result }),
         };
       } finally {
-        await deleteTempChatAgent(chatAgentId);
+        await deleteTempChatAgent(chatAgentId, tempLlmId);
       }
     }
 
