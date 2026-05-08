@@ -223,11 +223,10 @@ export const handler: Handler = async (event) => {
               }),
             }).catch(err => console.error('[retell-webhook] Completed call CRM sync failed:', err));
           }
-        }
-      }
 
-        // ── Outcome evaluation: record win or trigger self-heal ───────────
-        await triggerOutcomeEvaluation(call, agentId, agentOwner?.user_id || null);
+          // ── Outcome evaluation: record win or trigger self-heal ──────────
+          await triggerOutcomeEvaluation(call, agentId, agentOwner.user_id);
+        }
       }
 
       return {
