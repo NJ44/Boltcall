@@ -3514,6 +3514,13 @@ export const handler: Handler = async (event) => {
       };
     }
 
+    // Strip trailing punctuation/whitespace from businessName so templates
+    // like "thank you for calling ${name}." don't produce "Apex Co..".
+    body.businessProfile.businessName = body.businessProfile.businessName
+      .trim()
+      .replace(/[.!?,;:]+$/, '')
+      .trim();
+
     if (!body.agentType) {
       body.agentType = 'inbound';
     }

@@ -208,6 +208,30 @@ async function handleEnroll(supabase: any, body: any) {
     };
   }
 
+  // Verify the sequence exists and belongs to the user before doing anything
+  // else. Returning a clean 404 is friendlier (and safer) than letting the
+  // FK violation surface as a raw Postgres error.
+  const { data: sequence } = await supabase
+    .from('followup_sequences')
+    .select('id, user_id')
+    .eq('id', sequenceId)
+    .maybeSingle();
+
+  if (!sequence) {
+    return {
+      statusCode: 404,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Sequence not found' }),
+    };
+  }
+  if (sequence.user_id !== userId) {
+    return {
+      statusCode: 403,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Sequence does not belong to this user' }),
+    };
+  }
+
   // Check if already enrolled
   const { data: existing } = await supabase
     .from('followup_enrollments')
@@ -254,7 +278,14 @@ async function handleEnroll(supabase: any, body: any) {
     .single();
 
   if (error) {
-    return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: error.message }) };
+    // Don't leak Postgres internals to the client. Log details server-side
+    // and return a generic 500.
+    console.error('[sms-sequence-processor] enroll insert failed:', error);
+    return {
+      statusCode: 500,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Failed to enroll contact in sequence' }),
+    };
   }
 
   return {
