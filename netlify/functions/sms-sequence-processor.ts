@@ -167,6 +167,19 @@ export const handler: Handler = async (event) => {
           processed++;
         } else {
           console.error(`[sms-sequence-processor] Send failed for enrollment ${enrollment.id}:`, sendResult.error);
+
+          // Push the next attempt 15 minutes out so a transient Twilio
+          // failure doesn't cause the enrollment to be re-processed on
+          // every cron tick (which would burn credits + log volume).
+          const retryAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+          await supabase
+            .from('followup_enrollments')
+            .update({
+              next_step_at: retryAt,
+              last_processed_at: new Date().toISOString(),
+            })
+            .eq('id', enrollment.id);
+
           failed++;
         }
       } catch (stepErr) {
