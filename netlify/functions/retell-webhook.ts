@@ -226,10 +226,14 @@ export const handler: Handler = async (event) => {
         }
       }
 
+        // ── Outcome evaluation: record win or trigger self-heal ───────────
+        await triggerOutcomeEvaluation(call, agentId, agentOwner?.user_id || null);
+      }
+
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ ok: true, missed: false, selfHealTriggered }),
+        body: JSON.stringify({ ok: true, missed: false, outcomeEvaluationTriggered: true }),
       };
     }
 
